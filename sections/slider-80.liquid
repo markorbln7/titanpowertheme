@@ -1,0 +1,211 @@
+<div class="new-slider new-slider-{{ section.id }}">
+  {% if section.settings.himage != blank %}
+  <div class="maintexts">
+    {% render 'titan-image'
+      image: section.settings.himage 
+    %}
+  </div>
+  {%endif%}
+  <h1 class="maintexts">
+    {{section.settings.bg_text}}
+  </h1>
+    
+  <div class="swiper mySwiper">
+      <div class="swiper-wrapper"> 
+        {%for block in section.blocks%}
+          <div class="swiper-slide">
+            <a href="{{block.settings.slidelink}}">
+              {% render 'titan-image'
+              image: block.settings.image,
+              mobile_image: block.settings.image2
+              %}
+            </a>
+          </div>
+        {%endfor%}
+      </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</div>
+
+
+{% schema %}
+
+{
+  "name": "Titan Slider",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "slide_bg",
+      "label": "Slide Arrow Color",
+      "default": "#000",
+      "info": "Color behind slides"
+    }, {
+      "type": "text",
+      "id": "bg_text",
+      "label": "Titan Text"
+    }, {
+      "type": "image_picker",
+      "id": "himage",
+      "label": "BG Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": " Desktop Image"
+        }, {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Mobile Image"
+        }, {
+          "type": "url",
+          "id": "slidelink",
+          "label": "Slide Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Titan Slider",
+      "blocks": [
+        {
+          "type": "slide"
+        }, {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
+
+
+<style>
+.new-slider-{{ section.id }}  
+.swiper {
+	width: 100%;
+	height: 100%;
+  z-index: 0;
+  background: transparent;
+}
+
+
+.new-slider-{{ section.id }}
+.swiper-button-next, .new-slider-{{ section.id }} .swiper-rtl .swiper-button-prev,
+.new-slider-{{ section.id }} .swiper-button-prev:after, 
+.new-slider-{{ section.id }} .swiper-rtl .swiper-button-next:after {  
+  color: {{section.settings.slide_bg}};
+}
+ 
+.new-slider-{{ section.id }} .swiper-slide {
+	background-position: center;
+	background-size: cover;
+}
+
+.new-slider-{{ section.id }} .swiper-slide {
+	display: block;
+	width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-bottom: 50px;
+}
+
+.new-slider-{{ section.id }} .maintexts .titan-image img,
+.new-slider-{{ section.id }} .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.new-slider-{{ section.id }} .swiper-container {
+  transition:opacity .1s ease; 
+}
+
+.new-slider-{{ section.id }} .maintexts .titan-image {
+  width: 70%;
+  margin: auto;
+  height: 50%;
+}
+.new-slider-{{ section.id }} .maintexts .titan-image {
+  height: fit-content;
+  margin-bottom: 20px;
+}
+.new-slider-{{ section.id }} .maintexts  {
+    text-align-last: center;
+    margin: 0;
+    margin-bottom: -120px;
+    font-weight: normal;
+    font-size: 160px;
+    line-height: 211px;
+    color: #58CC4B; 
+    opacity: 0.15; 
+    z-index: 999; 
+}
+
+@media only screen and (min-width: 1200px) {
+.new-slider-{{ section.id }} .swiper-slide img {
+    margin: auto;
+  	max-width: 80%;
+    object-fit: contain;
+  }
+.new-slider-{{ section.id }} .maintexts  {
+    width: 70%;
+    margin: auto;
+  }
+}
+@media only screen and (min-width: 1300px) {
+.new-slider-{{ section.id }} .swiper-slide img {
+  max-width: 1500px;
+  width: 90% !important;
+  object-fit: contain;
+}
+.new-slider-{{ section.id }} .maintexts  {
+    width: 70%;
+    margin: auto;
+    margin-bottom: -130px;
+    }
+}
+  
+@media only screen and (max-width: 1100px) {
+.new-slider-{{ section.id }}  .maintexts {
+   display: none; 
+ }
+.new-slider-{{ section.id }} .swiper-slide  { 
+  margin-bottom: 50px;
+}
+
+
+</style>
+
+<script crossorigin="anonymous" integrity="sha512-+1MtN0rwSlEnZo0agG99mCQChlBtfe8hyHItwWtgiD33mWvaNVZkZB9yX2S92z5HgDg1+EcitjutZejbHUcZAg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.min.js"  defer="defer" ></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.css" integrity="sha512-SID9h7gl6DWMEv9gG4Msa2+Cv6Th1HK9Bswoy7ArayNta2hdRkUhhzprlgocF7X+LYH2QiroQVnYloED73SdrA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+
+  <script>
+      var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      effect: 'fade',      
+      fadeEffect: {
+      crossFade: true
+      },
+      speed: 3000,
+      keyboard: {
+          enabled: true,
+      },
+       autoplay: {
+          delay: 2500,
+          disableOnInteraction: true,
+      },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>

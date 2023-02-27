@@ -1,0 +1,38 @@
+.video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    padding-top: 56.25%;
+    display: block;
+    position: relative;
+  }
+
+  &.video--slideshow::after{
+    padding-top: calc(4 / 3 * 100%);
+
+    @media (--s) {
+      padding-top: 56.25%;
+    }
+  }
+}
+
+.video__el {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--transition-timing) var(--transition-easing);
+  visibility: hidden;
+  object-fit: cover;
+
+  .is-loaded & {
+    opacity: 1;
+    visibility: visible;
+  }
+}

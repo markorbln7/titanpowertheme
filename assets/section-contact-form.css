@@ -1,0 +1,67 @@
+.contact img {
+  max-width: 100%;
+}
+
+.contact .form__message {
+  align-items: flex-start;
+}
+
+.contact .icon-success {
+  margin-top: 0.2rem;
+}
+
+.contact .field {
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .contact .field {
+    margin-bottom: 2rem;
+  }
+}
+
+.contact__button {
+  margin-top: 3rem;
+  width: 99%;
+  background-color: transparent !important;
+
+}
+
+@media screen and (min-width: 750px) {
+  .contact__button {
+    margin-top: 4rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .contact__fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+  }
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.newcontact {
+  display: flex;
+  flex-direction: column;
+}
+
+  @media only screen and(max-width: 750px) { 
+ .section-{{ section.id }}-padding {
+    display: flex !important;
+    flex-direction: column-reverse;
+  }
+
+  .contact img {
+    display: none;
+  }
+}
+  @media only screen and(max-width: 900px) {
+    p.ctext {
+      width: 80vw !important; 
+    }
+  }

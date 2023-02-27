@@ -1,0 +1,114 @@
+.d-table {
+  display: table;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.static {
+  position: static;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.block {
+  display: block;
+}
+
+.block--xs {
+  @media (--xs) {
+    display: block;
+  }
+}
+
+.block--s {
+  @media (--s) {
+    display: block;
+  }
+}
+
+.block--m {
+  @media (--m) {
+    display: block;
+  }
+}
+
+.block--ml {
+  @media (--ml) {
+    display: block;
+  }
+}
+
+.block--l {
+  @media (--l) {
+    display: block;
+  }
+}
+
+.block--xl {
+  @media (--xl) {
+    display: block;
+  }
+}
+
+/* critical:start */
+.hide {
+  display: none;
+}
+
+/* critical:end */
+
+.hide--xs {
+  @media (--xs) {
+    display: none;
+  }
+}
+
+.hide--s {
+  @media (--s) {
+    display: none;
+  }
+}
+
+.hide--m {
+  @media (--m) {
+    display: none;
+  }
+}
+
+.hide--ml {
+  @media (--ml) {
+    display: none;
+  }
+}
+
+.hide--l {
+  @media (--l) {
+    display: none;
+  }
+}
+
+.hide--xl {
+  @media (--xl) {
+    display: none;
+  }
+}

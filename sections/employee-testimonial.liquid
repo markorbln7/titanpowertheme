@@ -1,0 +1,305 @@
+<div class="employeetestimonial-{{section.id}}">
+  <div class="etextual-{{section.id}}">
+    <h>
+      {{section.settings.caption}}
+    </h>
+    <h1 style="color: {{section.settings.eheadercol}};">
+      {{section.settings.header}}
+    </h1>
+    {{section.settings.desc}}
+  </div>
+
+  <div class="etests-{{section.id}}">
+    {% for block in section.blocks %}
+      <div class="etestimonial-{{block.id}}">
+        <article class="tweetCard">
+          <div class="tweetCardBody">
+            <div class="cardContent">
+              <div class="headerContent">
+                <div class="headerImgHolder">
+                  {% render 'titan-image'
+                      image: block.settings.etimage
+                  %}
+                </div>
+                <div class="headerContentText">
+                  <h3>{{block.settings.etname}}</h3>
+                  <p>{{block.settings.role}}</p>
+                </div>
+              </div>
+              <p class="etd">
+                {{block.settings.etdescription}}
+              </p>
+            </div>
+          </div>
+
+        </article>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+
+{
+  "name": "Employee Testimonials",
+  "class": "section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION SETTINGS"
+    }, {
+      "type": "range",
+      "id": "margintop",
+      "label": "Margin TOP",
+      "unit": "px",
+      "min": -50,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    }, {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding- TOP&BOTTOM",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 1
+    }, {
+      "type": "color",
+      "label": "Section Background Color",
+      "id": "bg",
+      "default": "#000000",
+      "info": "Background applies to the whole"
+    }, {
+      "type": "color",
+      "id": "cardbg",
+      "label": "Card Background",
+      "default": "transparent"
+    }, {
+      "type": "header",
+      "content": "TEXTUAL SETTINGS"
+    }, {
+      "type": "color",
+      "id": "eheadercol",
+      "label": "Header Color",
+      "default": "#000000"
+    }, {
+      "type": "text",
+      "id": "caption",
+      "label": "CAPTION",
+      "default": "Caption"
+    }, {
+      "type": "text",
+      "label": "HEADER TEXT",
+      "id": "header"
+    }, {
+      "type": "html",
+      "label": "DESCRIPTION",
+      "id": "desc"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "etimage",
+          "label": "Employee Photo"
+        }, {
+          "type": "text",
+          "id": "etname",
+          "label": "Employee Name"
+        }, {
+          "type": "text",
+          "id": "role",
+          "label": "Employee Role"
+        }, {
+          "type": "textarea",
+          "id": "etdescription",
+          "label": "Testimonial Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Employee Testimonials ",
+      "blocks": []
+    }
+  ]
+}
+
+{% endschema %}
+
+
+<style>
+  .employeetestimonial-{{section.id}}{
+    /* width: 80vw; */
+    display: flex;
+    flex-direction: row; 
+    padding: {{section.settings.padding}}px 0;
+    background: {{section.settings.bg}};
+    margin-top: {{section.settings.margintop}}px;
+  } 
+  /*  */ 
+  .etests-{{section.id}}{
+    display: flex;
+    flex-wrap: wrap; 
+    width: 50vw;
+    margin: auto;
+  }
+
+  .etextual-{{section.id}}{
+    width: 30vw;
+    margin: auto;
+  }
+
+
+  /* TESTIMONIAL */
+
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+  .tweetCard {
+    /* height: 250px; */
+    width: 24vw;
+    margin: 5px;
+  }
+  .tweetCardBody {
+    border-radius: 25px;
+    height: 40vh;
+    width: 23vw;
+    background-color:{{section.settings.cardbg}};
+  }
+
+ 
+  .tweetCardBody .headerContent {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    align-items: center;
+  }
+  .tweetCardBody .headerContent .headerImgHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .tweetCardBody .headerContent .headerContentText {
+    margin-left: 5px;
+  }
+  .tweetCardBody .headerContent .headerContentText h3 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 15;
+  }
+  .tweetCardBody .headerContent .headerContentText p {
+    font-size: 14px;
+    margin: 0;
+    color: #84868a;
+  }
+  .tweetCard img {
+    height: 85px;
+    width: 85px;
+    border-radius: 50%;
+    border: 1px solid {{section.settings.bg}};
+  }
+</style>
+
+
+<style>
+  {% for block in section.blocks %}
+    .etestimonial-{{block.id}}{
+      ;
+      /* width: 40vw; */
+    }
+    .etd {
+      max-height: 22vh;
+      width: 22vw;
+      overflow-y: auto;
+    }
+
+    .etd::-webkit-scrollbar {
+    display: block;
+    background: {{section.settings.bg}} !important;
+    max-width: 5px;
+}
+
+
+@media only screen  
+  and (min-width: 766px) 
+  and (max-width: 1024px)  {
+  .employeetestimonial-{{section.id}}{
+    flex-direction:column;
+	}
+
+  .tweetCard {
+    /* height: 250px; */
+    width: 40vw;
+    margin: 5px;
+  }
+  .tweetCardBody {
+    width: 40vw;
+  }
+  .etests-{{section.id}}{
+  width: 90vw;
+  justify-content: center;
+  }
+  .etd {
+    width: 38vw;
+  }
+
+  .etextual-{{section.id}}{ 
+    width: 90vw;
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 765px) {
+  .etests-{{section.id}} {
+     display: flex;
+     flex-direction: row !important;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+   .employeetestimonial-{{section.id}}{ 
+      flex-direction: column;
+   }
+   
+  .tweetCard {
+    /* height: 250px; */
+    width: 80vw;
+    /* margin: 5px; */
+  }
+  
+  .tweetCardBody {
+    width: 80vw;  
+  }
+  
+  .etests-{{section.id}} {
+  width: 100vw;
+  /* justify-content: center; */
+  }
+
+  .etd {
+    width: 70vw;
+  }
+
+  .etextual-{{section.id}} { 
+    width: 90vw;
+    text-align: center;
+  }
+}
+  {% endfor %}
+</style>

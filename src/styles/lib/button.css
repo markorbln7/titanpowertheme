@@ -1,0 +1,53 @@
+.btn-new {
+  @mixin label-text;
+
+  display: inline-block;
+  padding: 12px 20px 11px;
+  border: 1px solid;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: var(--white) !important;
+    color: var(--blue) !important;
+  }
+}
+.btn-white-transparent {
+  color:#fff;
+  background-color: transparent;
+  border:1px solid #fff;
+  transition: all .6s ease-in;
+  &:hover {
+    transition: all .6s ease-out;
+    background-color:white;
+    color:#000;
+  }
+}
+.btn-black-transparent {
+  color:#000;
+  background-color: transparent;
+  border:1px solid #000;
+  transition: all .6s ease-in;
+  &:hover {
+    transition: all .6s ease-out;
+    background-color:#000;
+    color:#fff;
+  }
+}
+.btn {
+  font-family: 'Helvetica Neue';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  font-size: 12px;
+  line-height: 14px;
+  text-transform: uppercase;
+  padding: 12px 0 12px;
+  text-align: center;
+  min-width: 203px;
+  @media only screen and (min-width: 768px) {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

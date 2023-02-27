@@ -1,0 +1,9 @@
+.product-form__btn[disabled] {
+  display: none !important;
+}
+
+.product-form__btn.disabled {
+  background: var(--button-hover);
+  color: var(--button-text);
+  pointer-events: none;
+}

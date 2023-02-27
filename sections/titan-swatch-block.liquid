@@ -1,0 +1,763 @@
+{{ 'titan-fp.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'component-switch-blocks.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .switch-blocks .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 70vw;
+    margin: auto;
+  }
+  .switch-blocks .buttons-container button {
+    min-width: 120px;
+    max-width: 300px;
+    margin: 0 10px;
+    outline: none;
+    font-weight: 900;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: background 100ms linear;
+    cursor: pointer;
+    height: 30vh;
+    max-width:15vw; 
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5%;
+  }
+  .switch-blocks .inner {
+    max-width: 100vw;
+    margin: auto;
+  }
+  .switch-blocks-{{ section.id }}- .inner   {
+    padding: 0 {{ section.settings.padding }}vw ;
+
+    margin-bottom: 20px;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content {
+ 	display: flex;
+    flex-direction: row;
+   max-height: 40vh;
+   align-items: center;
+   justify-items: center;
+    
+    max-width: 80vw;
+    margin: auto;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+    margin-right: 10px;
+    max-height: 40vh;
+    
+    max-width: 40vw;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+    margin-left: 10px;
+    width: 40vw;
+    max-height: 40vh;
+    
+    max-width: 40vw;
+  } 
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings {
+    text-align: left !important;
+    text-transform: uppercase;
+    /* margin-top: 40px; */
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings .inner-heading {
+    font-size: 48px;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings .inner-subheading {
+    font-size: 14px;
+}
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .contents-btn {
+    text-align: center;
+    margin-top: 15px;
+    padding: 0 !important;
+    margin-bottom: 50px;
+ 
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .contents-btn a {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #58cc4b;
+    color: white;
+    font-size: 12px;
+    min-width: 150px;
+    max-width: 200px;
+    border: 1px solid #58cc4b ;
+    border-radius: 50px;
+    padding: 10px;
+    letter-spacing: 1.5px;
+    }
+
+ 
+  .switch-blocks-{{ section.id }}- .inner .inner-content .content-desc p {
+    margin: 0;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    font-weight: 100;
+  }
+  .switch-blocks-{{ section.id }}- {
+    background: {{ section.settings.background }};
+  }
+  .switch-blocks-{{ section.id }}- .switch-block {
+    display: none;
+  }
+  .switch-blocks-{{ section.id }}- :first-child .switch-block {
+    display: block;
+  }
+  .switch-blocks-{{ section.id }}- .content-img img{
+    display: block;
+    max-width: 100%;
+    ;
+  }
+  .switch-blocks-{{ section.id }}- .main-image img  {
+    display: block;
+    max-width: 100%;
+  }
+  .switch-blocks-{{ section.id }}- .content-img {
+    margin: 20px 0;
+  }
+  .switch-blocks-{{ section.id }}- .main-image .titan-image img  {
+  max-height: 40vh;
+  width: 38vw;
+  object-fit: contain;
+	min-width: 38vw;
+}
+/* Mobile */
+@media only screen and (max-width:768px) {
+    .switch-blocks-{{ section.id }}- .inner .inner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40vh;
+    max-height: 40vh;
+    margin-bottom: 5%;
+  	}
+  
+    .switch-blocks-{{ section.id }}- .buttons-container {
+    display: flex !important;
+    flex-direction: row; 
+    height: max-content !important;
+      overflow: scroll;
+    justify-items: center;
+  }
+      .switch-blocks-{{ section.id }}- .main-image .titan-image img  {
+  max-height: 20vh;
+  width: 100%;
+  object-fit: contain;
+	height: 100%;
+      }
+    .switch-blocks-{{ section.id }}-  .main-image .titan-image {
+      min-height: 20vh;
+      max-height: 20vh;
+    }
+
+  	.buttontext {
+    min-height: 5vh;
+    display: flex;
+    margin: 5px 0;
+    align-items: center;
+	}
+  .switch-blocks-{{ section.id }}- .buttons-container {
+   overflow-y: scroll;
+  }
+	
+    /* .switch-blocks-{{ section.id }}- .buttons-container button {
+    min-width: 80vw !important;
+    max-width: 80vw !important;
+    } */
+
+
+  h1.subheading-{{ block.id }}  {
+    text-align: left;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+    margin-right: 10px;
+    width: 80vw;
+    text-align: center;
+  }
+
+  .content-desc{
+    text-align: left;
+  }
+   .switch-blocks-{{ section.id }}- .inner {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .switch-blocks-{{ section.id }}- .inner .main-subheading {
+      font-size: 12px !important;
+    }
+    .switch-blocks-{{ section.id }}- .inner .main-heading {
+      font-size: 22px !important;
+      letter-spacing: 1.4px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-content {
+      margin-top: 50px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-headings {
+      padding-top: 0px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-headings > * {
+      text-align: center;
+    }
+    .switch-blocks-{{ section.id }}- .inner-content {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+
+    }
+    .switch-blocks-{{ section.id }}-  {}
+    .switch-blocks-{{ section.id }}- .main-image img  {
+      max-width: 100%;
+      height: 100%;
+    }
+
+    .switch-blocks-{{ section.id }}- .titan-image {
+      margin: 0;
+      padding: 0;
+
+
+    }
+    .switch-blocks-{{ section.id }}- .buttons-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 300px;
+      margin: auto;
+    }
+    .switch-blocks-{{ section.id }}- .buttons-container button {
+      margin: 0 2px;
+      min-width: 110px;
+    }
+    .switch-blocks-{{ section.id }}- .buttons-container button img {
+      /* min-height: 200px !important;
+      max-height: 200px !important; */
+    } 
+    .switch-blocks-{{ section.id }}- .contents-btn a {
+      margin: auto;
+    }
+     .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+     margin-right: 0px;
+     max-width: 80vw;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+      margin-left: 0px;
+      height: 100%;
+    } 
+  
+
+      @keyframes shadow-pulse
+      {
+        0% {
+          box-shadow: 0 0 0 0px var(--btnColor);
+        }
+        100% {
+          box-shadow: 0 0 0 4px rgba(255, 255, 255, 0);
+        }
+      }
+
+
+  .switch-blocks .buttons-container  {
+    display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  min-width: 95vw;
+  margin-top: 40px; 
+  max-width: 98vw;
+  }
+  .switch-blocks-{{ section.id }}- h1, .h1 {
+    font-size: 7vmin;
+  }
+
+  .switch-blocks-{{ section.id }}- .buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    height: max-content;
+        justify-items: center;
+  }
+
+  .switch-blocks-{{ section.id }}- .buttons-container button { 
+     min-width: 40vw !important; 
+     height: 25vh;
+     margin-bottom: 10px;
+  }
+
+  .switch-blocks .buttons-container button img { 
+    height: 100%;
+    max-width: 27vw !important;
+    width: 100% !important;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    min-height: 15vh !important;
+    max-height: 15vh !important;
+  }
+
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .contents-btn { 
+
+    margin-bottom: 0px;
+  }
+  
+}
+/* TABLET */
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1144px) {
+
+
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .contents-btn { 
+
+    float: left;
+  }
+      .switch-blocks-{{ section.id }}- .inner .inner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 40vh;
+    max-height: 40vh;
+    margin: auto;
+    padding: 0;
+  }
+      .switch-blocks-{{ section.id }}- h1, .h1 {
+    font-size: 5vmin;
+  } 
+  .buttontext {
+    margin-bottom: 10px !important;
+  }
+    h1, .h1 {
+      font-size: 35px;
+      text-align: left;
+    }
+     .switch-blocks-{{ section.id }}- .buttons-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;  
+    height: max-content !important;
+    justify-items: center;
+  }
+    
+
+     .switch-blocks-{{ section.id }}- .main-image .titan-image img  { 
+      min-height: 30vh !important;
+      max-height: 30vh !important;
+
+     }
+.switch-blocks .buttons-container .block-btn-{{block.id}} {
+
+      width: 250px;
+    height: 250px;
+}
+
+  .switch-blocks .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 98vw;
+  }
+  .switch-blocks .buttons-container button {
+    min-width: 120px;
+    max-width: 300px;
+    margin: 0 10px;
+    outline: none;
+    font-weight: 900;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 12px !important;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: background 100ms linear;
+    cursor: pointer;
+    height: 25vh;
+    max-width:40vw;
+    width:40vw;
+    display: flex;
+    grid-template-rows: 1fr 1fr;
+    margin-bottom: 20px;
+  }
+  .switch-blocks .buttons-container button img {
+     min-height: 15vh !important;
+     max-width: 17vh !important;
+     width: 100% !important;
+     height: 100%;
+     justify-self: center;
+     padding: 5px
+  }
+
+  .titan-image {
+    margin: 0;
+  }
+  }
+</style>
+
+<div class="switch-blocks switch-blocks-{{ section.id }}-" style="padding-bottom: 100px; 
+    
+    margin: auto; margin-top: 100px; margin-bottom: 50px;">
+  <div class="inner">
+    {% unless section.settings.heading == blank and section.settings.subheading == blank %}
+    
+    
+    {% endunless %}
+
+  
+    {% for block in section.blocks %}
+    {% assign products = all_products[block.settings.product] %}
+    <style>
+      .subheading-{{ block.id }} {
+        color:{{ section.settings.switch_btn_color }};
+        font-family: "Raleway";
+        font-size: 4vmin; 
+      }
+    </style>
+      <div class="switch-block switch-block-{{ block.id }}-" {% unless forloop.first %} style="display: none;" {% endunless %} data-id={{ block.id }}>
+    {%if section.settings.showcontent %}
+        <div class="inner-content">
+
+           <div class="inner-content__right">
+          <div class="main-image">
+            {% if block.settings.main_image != blank %}
+              {% render 'titan-image' 
+                image: block.settings.main_image
+                mobile_image: block.settings.mobile_main_image
+                lazy_loading: false
+            %} 
+        
+               {% endif %}
+          </div>
+        </div>
+          <div class="inner-content__left">
+            <!-- Content heading -->
+       
+          
+              <h1 class="inner-subheading subheading-{{ block.id }}" style="margin:0; color: {{section.settings.heading_color}};">{{ block.settings.content_subheading }}</h1>
+      
+       
+            <div class="content-img">
+              {% if block.settings.desc_img != blank %}
+                {% render 'titan-image' 
+                  image: block.settings.desc_img
+                  mobile_image: block.settings.mobile_desc_img
+                %}
+              {% endif %}
+            </div>
+            {% unless block.settings.content.desc != blank %}
+            <div class="content-desc">
+              <p>{{ block.settings.content_desc }}</p>
+            </div>
+            {% endunless %}
+            {% unless block.settings.content_btn == blank %}
+            <div class="contents-btn titanbutton">
+              <a href="{{ block.settings.content_btn_url }}">{{ block.settings.content_btn }}</a>
+            </div>
+            {% endunless %}
+          </div>
+         
+        </div>
+      </div>{% endif%}
+    {% endfor %}
+  </div>  
+  <div class="buttons-container titanbutton">
+    {% for block in section.blocks %}
+  
+    <style>
+      {%if section.settings.animate%}
+      .switch-blocks .buttons-container .block-btn-{{ block.id }} {
+     
+        animation: shadow-pulse 1s infinite;
+        --btnColor: {{ block.settings.switch_btn_color }};
+      }
+
+      {%endif%}
+      .switch-blocks .buttons-container .block-btn-{{ block.id }} {
+    border: {{section.settings.border_w}}px solid {{ section.settings.btn_border }}; 
+    border-radius: 10px;
+   
+    }
+   .switch-blocks .buttons-container button img {
+      min-height: 23vh;
+      max-height: 23vh;
+      width: 15vw;
+      object-fit: contain;
+    }
+    .buttontext {
+      height: 5vh;
+      margin: 5px 0;
+      font-family: 'Raleway';
+    }
+
+      .switch-blocks .buttons-container .selected-{{ block.id }} {
+        background: {{ block.settings.switch_btn_color }};
+        animation: none;
+      }
+      .switch-blocks .buttons-container .block-btn-{{ block.id }}:hover { 
+        opacity: 0.8;
+
+      }
+
+      .switch-blocks .buttons-container .block-btn-{{ block.id }}:hover {
+        /* background: {{ block.settings.switch_btn_color }}; */
+      }
+
+      .block-btn block-btn-{{ block.id }} img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+ <div data-slick='{"slidesToShow": 1, "slidesToScroll": 1}'>
+      <button class="block-btn block-btn-{{ block.id }} {% if forloop.first %} selected-{{block.id}} {% endif %}" data-id={{ block.id }}>
+        <img src="{{block.settings.sub_image | image_url: width:250}}" alt="{{block.settings.sub_image.alt | escape }}"  loading="lazy" >
+        <div class="buttontext">
+        {{ block.settings.switch_btn_title }}
+      </div>
+        <a href="{{ block.settings.product.url}}" style="text-decoration: none;">
+          {%if section.settings.show_price %}
+            <h2 class="product__title {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                {%- if product.title != blank -%}
+                  {{ product.title | escape }}
+                {%- else -%}
+                  {{ 'onboarding.product_title' | t }}
+                {%- endif -%}
+         <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+              </div>
+        {%endif%} 
+    </a> 
+      </button>
+    </div>
+ 
+
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  const switchBlocks = () => {
+    const switchButtons = document.querySelectorAll('.switch-blocks-{{ section.id }}- .block-btn');
+    const switchBlocks = document.querySelectorAll('.switch-blocks-{{ section.id }}- .switch-block');
+    switchButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-id')
+        btn.classList.add(`selected-${id}`);
+        console.log(e.target)
+        switchButtons.forEach(el => {
+          const id = el.getAttribute('data-id')
+          if (e.target.getAttribute('data-id') !== id) {
+            el.classList.remove(`selected-${id}`);
+          }
+          
+        })
+        const btnId = btn.getAttribute('data-id');
+        switchBlocks.forEach(block => {
+          const blockId = block.getAttribute('data-id');
+          if ( btnId === blockId ) {
+            block.style.display = 'block';
+          } else {
+            block.style.display = 'none';
+          }
+        })
+      })
+    })
+  } 
+  switchBlocks();
+  document.addEventListener('shopify:section:load', switchBlocks);
+</script>
+
+
+{% schema %}
+{
+  "name":"Switch blocks 2",
+  "tag":"section",
+  "settings": [
+    
+   {
+     "type": "color",
+     "id": "heading_color",
+     "label": "Block Heading Colors",
+     "default": "#FFFFFF"
+
+   },{
+    "type": "checkbox",      
+    "id": "showcontent",
+    "label": "Show Content",
+    "default": true
+  }, 
+  {
+    "type": "range",
+    "id": "border_w",
+    "label": "Border Width",
+    "unit": "px",
+    "min": 1,
+    "max": 10,
+    "step": 1,
+    "default": 1
+  },
+   {
+     "type": "color",
+     "id": "btn_border",
+     "label": "Switch Block Border Color",
+     "default": "#000000"
+   },
+  {
+    "type": "checkbox",      
+    "id": "animate",
+    "label": "Pulsating Animation",
+    "default": true
+  },   
+  {
+    "type": "checkbox",      
+    "id": "show_price",
+    "label": "Show Price On Blocks ",
+    "default": true
+  },
+    {
+      "type":"header",
+      "content": "general"
+    },
+    {
+      "type":"color_background",
+      "id":"background",
+      "label":"Section background",
+      "default":"#3d3d3d"
+    },
+     {
+      "type":"select",
+      "id":"padding",
+      "label":"Vertical padding",
+      "default":"10",
+      "options":[
+        {
+          "value":"2",
+          "label":"Small"
+        },
+        {
+          "value":"6",
+          "label":"Medium"
+        },
+        {
+          "value":"10",
+          "label":"Large"
+        }
+      ],
+      "info":"Vertical padding in view heights (2/6/10)"
+    }
+  ],
+    "blocks": [
+    {
+      "type": "text",
+      "name": "Content block",
+      "settings": [
+        {
+          "type":"header",
+          "content": "buttons"
+        },
+        {
+          "type":"text",
+          "id":"switch_btn_title",
+          "label":"Switch button title",
+          "default":"Switch Button"
+        },
+       {
+         "type": "product",
+         "id": "product",
+         "label": "Switch Product"
+        
+       },
+        { 
+          "type":"color", 
+          "id":"switch_btn_color",
+          "label":"Switch button color"
+        },
+        {
+          "type":"header",
+          "content": "content on the left"
+        },
+       
+        {
+          "type":"text",
+          "id":"content_subheading",
+          "label":"Content heading"
+        },
+       
+        {
+          "type":"image_picker",
+          "id":"sub_image",
+          "label":"Button image"
+        },
+        {
+          "type":"html",
+          "id":"content_desc",
+          "label":"Content description"
+        },
+        {
+          "type":"text",
+          "id":"content_btn",
+          "label":"Content button"
+        },
+        {
+          "type":"url",
+          "id":"content_btn_url",
+          "label":"Content button url"
+        },
+       {
+         "type": "color",
+         "id": "btn_bg",
+         "label": "Button Background",
+         "default": "#58cc4b"
+       },
+        {
+          "type":"header",
+          "content": "Mobile"
+        },
+        {
+          "type":"image_picker",
+          "id":"mobile_desc_img",
+          "label":"Mobile description image"
+        },
+        {
+          "type":"header",
+          "content": "content on the left"
+        },
+        {
+          "type":"image_picker",
+          "id":"main_image",
+          "label":"Main image",
+          "info":"Main image on the left"
+        },
+        {
+          "type":"header",
+          "content": "Mobile"
+        },
+        {
+          "type":"image_picker",
+          "id":"mobile_main_image",
+          "label":"Mobile main image"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Switch blocks 2"
+    }
+  ]
+}
+{% endschema %}

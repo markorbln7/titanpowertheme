@@ -1,0 +1,324 @@
+<script crossorigin="anonymous" integrity="sha512-+1MtN0rwSlEnZo0agG99mCQChlBtfe8hyHItwWtgiD33mWvaNVZkZB9yX2S92z5HgDg1+EcitjutZejbHUcZAg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.css" integrity="sha512-SID9h7gl6DWMEv9gG4Msa2+Cv6Th1HK9Bswoy7ArayNta2hdRkUhhzprlgocF7X+LYH2QiroQVnYloED73SdrA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<div class="half-slider-{{section.id}}">
+      <div class="stillside" data-aos="fade-right" data-aos-delay="150" data-aos-offset="100" data-aos-duration="700">
+        {% render 'titan-image'
+        image: section.settings.stillimg,
+        mobile_image: section.settings.sliderimgmobile
+          %}
+      </div>
+  
+  <!-- Slider main container -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for block in section.blocks %}
+
+
+        <div class="swiper-slide">
+            {%if block.settings.sliderimg != blank %}
+          {% render 'titan-image'
+                    image: block.settings.sliderimg,
+                    %}
+          {%endif%}
+            {%if block.settings.sliderheading != blank %}
+            <div class="textslide-{{block.id}}">
+            <div class="txts"> 
+             <h1 style="font-family: 'Work Sans';">  {{block.settings.sliderheading}}  </h1>
+                    {{block.settings.sliderdesc}}
+            </div>
+           
+            </div> 
+             {%endif %}
+        </div>
+
+      {%endfor %}
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-scrollbar"></div>
+
+  </div>
+</div>
+{% schema %}
+
+{
+  "name": "Half Page Slider",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg",
+      "default": "#FAFAFA",
+      "label": "Section/Slider Border"
+    }, {
+      "type": "image_picker",
+      "id": "stillimg",
+      "label": "Still Image",
+      "info": "Pick the image that will not be a part of the slider - Still Imsge"
+    }, {
+      "type": "image_picker",
+      "id": "sliderimgmobile",
+      "label": "Slider Image On Mobile",
+      "info": "If 'Hide on Mobile' is selected, leave this blank"
+    }, {
+      "type": "checkbox",
+      "id": "hideonmobile",
+      "default": false,
+      "label": "Hide Still Image On Mobile",
+      "info": "Switch to mobile view to decide if you want to hide this image on mobile"
+    }, {
+      "type": "color",
+      "id": "boxshadow",
+      "label": "Box Shadow Color",
+      "default": "#FAFAFA",
+      "info": "Set to transparent if you don't need any box shadow"
+    }, {
+      "type": "range",
+      "id": "margin",
+      "label": "Top and Bottom Margin",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    }, {
+      "type": "range",
+      "id": "shd",
+      "label": "Slider Heading Size - Desktop",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "info": "This applies to ALL step headings."
+    }, {
+      "type": "range",
+      "id": "shm",
+      "label": "Slider Heading Size - Mobile",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 12,
+      "info": "Switch to mobile screen to better access the size"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Textual Content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "sliderheading",
+          "label": "Slider Heading"
+        }, {
+          "type": "html",
+          "id": "sliderdesc",
+          "label": "Slider Text"
+        }, {
+          "type": "color_background",
+          "id": "bgcol",
+          "label": "Background Color",
+          "default": "transparent"
+        }, {
+          "type": "image_picker",
+          "id": "bgimg",
+          "label": "Background Image"
+        }
+      ]
+    }, {
+      "type": "Slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sliderimg",
+          "label": "Slider Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Half Slider ",
+      "blocks": []
+    }
+  ]
+}
+
+{% endschema %}
+
+
+<script>
+      var swiper = new Swiper(".mySwiper", {
+        direction: "vertical", 
+        loop: true,
+        mousewheel: true,
+        autoplay: {
+        delay: 5000,
+        },
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: false,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+
+              document.addEventListener('shopify:section:load', () => {
+                  var swiper = new Swiper(".mySwiper", {
+        direction: "vertical", 
+        loop: true,
+        autoplay: {
+        delay: 5000,
+        },
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: false,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+          })
+
+</script>
+
+<script>
+  AOS.init();
+  document.addEventListener("shopify:section:load", () => {
+    AOS.init();
+  }) 
+</script>
+<style>
+  .swiper,
+  .textslide,
+  .stillside {
+    max-height: 50vh;
+    width: 40vw;
+  }
+  .stillside .titan-image {
+    max-height: 50vh;
+    object-fit: contain;
+  }
+  .half-slider-{{section.id}} h1, .h1 {
+  font-size: {{section.settings.shd}}px;
+
+}
+  
+ 
+  .stillside {
+    width: 40vw;
+  }
+  .swiper .titan-image img,
+  .stillside .titan-image img {
+    height: 100%;
+    width: 100%;
+    max-height: 50vh;
+    min-height: 48vh;
+    object-fit: contain;
+
+  }
+
+  .half-slider-{{section.id}}{
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    margin: auto;
+    border: 1px solid {{section.settings.bg}};
+    box-shadow: 0px 0px 13px 3px {{section.settings.boxshadow}};
+    margin: {{section.settings.margin}}px auto;
+    max-width: 1200px;
+  }
+
+  .swiper-button-prev, .swiper-button-next {
+    top: 90%;
+    transform: rotateZ(90deg);
+    left: 93%;
+  }
+
+
+  .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
+    font-size: 30px;
+    width: 30px;
+    color:{{section.settings.boxshadow}} ;
+  }
+    .swiper-vertical > .swiper-pagination-bullets .swiper-pagination-bullet, 
+  .swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet {
+    background-color:{{section.settings.boxshadow}} ;
+  }
+  {% for block in section.blocks %}
+  .textslide-{{block.id}} {
+    background-image:url('{{ block.settings.bgimg | img_url: 'master' }}');
+    loading="lazy"  
+    background: {{block.settings.bgcol}};
+    height: 50vh;
+    text-align: center;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    place-content: space-evenly;
+  }
+
+  .txts { 
+    width: 80%;
+    place-self: center;
+  }
+  {% endfor %} 
+/* MOBILE */
+  @media only screen and (max-width: 760px) {
+     .half-slider-{{section.id}}{
+       display: flex;
+       flex-direction: column;
+     }
+
+  {% if section.settings.hideonmobile%}
+     .stillside {
+       display: none;
+
+     }
+     {% endif %}
+
+     .swiper, .textslide, .stillside {
+       width: 78vw;
+     }
+     .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
+       visibility: hidden;
+     }
+       h1, .h1 {
+    font-size: {{section.settings.shm}}px;
+
+}
+  }
+
+</style>

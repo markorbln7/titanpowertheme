@@ -1,0 +1,242 @@
+<style>
+
+.testimonials_item{
+    padding-left: 1.5rem;
+    
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+  	border: 0px;
+		max-width: 1000px;
+}
+.svg-inline--fa {
+    height: 30px !important;
+}
+  
+ .testimonials_item img { 
+    margin-right: 10px;
+    border-radius: 20px;
+}
+.testimonials_item__text {
+	font-style: normal; 
+}
+
+@media only  screen and (max-width: 767px) {
+  .testimonials_item{
+    padding-left: 1.5rem;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.testimonials_item__text {
+	font-size: 14px;
+}
+.svg-inline--fa {
+    display: none;
+}
+.testimonials_item img {
+	margin: auto;
+}
+}
+</style>
+
+
+<div class="container" style="
+    max-width: 90vw;
+    margin: auto;
+">
+	{% if section.settings.title.size > 0 %}
+		<h2 class="section_heading" style=" 
+    font-family: Raleway;
+    color: rgb(96, 198, 85);   font-size: 30px;
+    line-height: 1.4; text-align: center;">{{ section.settings.title | escape }}</h2>
+	{% endif %}
+
+	{% if section.blocks.size < 4 %}
+		<div class="row">
+			{% for block in section.blocks %}
+				<div class="col-sm-4">
+					<blockquote class="testimonials_item">
+             <img
+                      srcset="{%- if block.settings.timg.width >= 550 -%}{{ block.settings.timg | img_url: '550x' }} 550w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 720 -%}{{ block.settings.timg | img_url: '720x' }} 720w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 990 -%}{{ block.settings.timg | img_url: '990x' }} 990w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 1100 -%}{{ block.settings.timg | img_url: '1100x' }} 1100w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 1500 -%}{{ block.settings.timg | img_url: '1500x' }} 1500w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 2200 -%}{{ block.settings.timg | img_url: '2200x' }} 2200w,{%- endif -%}
+                        {%- if block.settings.timg.width >= 3000 -%}{{ block.settings.timg | img_url: '3000x' }} 3000w,{%- endif -%}
+                        {{ block.settings.timg | img_url: 'master' }} {{ block.settings.timg.width }}w"
+                      src="{{ block.settings.timg | img_url: '1500x' }}"
+                      sizes="(min-width: {{ settings.page_width }}px) {% if section.blocks.size == 1 %}calc({{ settings.page_width }}px - 100px){% else %}{{ settings.page_width | minus: 100 | times: 0.67 | round }}px{% endif %}, (min-width: 750px){% if section.blocks.size == 1 %} calc(100vw - 100px){% else %} 500px{% endif %}, calc(100vw - 30px)"
+                      alt="{{ block.settings.timg.alt | escape }}"
+                      loading="lazy"
+                      width=150px;
+                      height=150px;
+                    >
+						<i class="fa fa-quote-left testimonials_item__icon" aria-hidden="true"></i>
+
+						{% if block.settings.quote.size > 0 %}
+           
+                    <div class="authtext">
+							<p class="testimonials_item__text">{{ block.settings.quote }}</p>
+						{% endif %}
+
+						{% if block.settings.author.size > 0 %}
+                      <cite class="testimonials_item__author">{{ block.settings.author | escape }}</cite> <br>
+                      <cite class="testimonials_item__author">{{ block.settings.authorsocial | escape }}</cite>
+						{% endif %}
+            </div>
+					</blockquote>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<div class="testimonials_slider swiper-container" id="testimonials_{{ section.id }}">
+			<div class="swiper-wrapper">
+				{% for block in section.blocks %}
+					<div class="swiper-slide">
+						<blockquote class="testimonials_item">
+							<i class="fa fa-quote-left testimonials_item__icon" aria-hidden="true"></i>
+
+							{% if block.settings.quote.size > 0 %}
+								<p class="testimonials_item__text">{{ block.settings.quote }}</p>
+							{% endif %}
+
+							{% if block.settings.author.size > 0 %}
+								<cite class="testimonials_item__author">{{ block.settings.author | escape }}</cite>
+							{% endif %}
+						</blockquote>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div id="pagination_{{ section.id }}" class="swiper_pagination"></div>
+		</div>
+	{% endif %}
+  {% if section.settings.title2.size > 0 %}
+		<h2 class="section_heading"style=" 
+    font-family: Raleway; text-align: center;
+    color: rgb(96, 198, 85);   font-size: 30px;
+    line-height: 1.4;">{{ section.settings.title2 | escape }}</h2>
+	{% endif %}
+</div>
+
+{% schema %}
+{
+	"name": "Testimonials",
+	"class": "section section_homepage section_testimonials",
+	"max_blocks": 9,
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Heading",
+			"default": "Testimonials"
+		},{
+			"type": "text",
+			"id": "title2",
+			"label": "Text",
+			"default": "Testimonials"
+		}
+	],
+	"blocks": [
+		{
+			"type": "quote",
+			"name": "Quote",
+			"settings": [
+     {
+       "type": "image_picker",
+       "id": "timg",
+       "label": "Image"
+     },
+				{
+					"type": "html",
+					"id": "quote",
+					"label": "Quote Text",
+					"default": "Add customer reviews and testimonials to showcase your store’s happy customers."
+				},
+				{
+					"type": "text",
+					"id": "author",
+					"label": "Quote Author",
+					"default": "Author's name"
+				},{
+					"type": "text",
+					"id": "authorsocial",
+					"label": "Quote Author Socials",
+					"default": "Author's social"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Testimonials",
+			"category": "Text",
+			"blocks": [
+				{
+					"type": "quote"
+				},
+				{
+					"type": "quote"
+				},
+				{
+					"type": "quote"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+<script>
+jQuery(document).ready(function($) {
+	$('.section_testimonials').each(function() {
+
+		var sectionId = $(this).attr('id').replace('shopify-section-', '');
+
+		var testimonialSliderTag = '#testimonials_' + sectionId;
+		var testimonialSliderPagination = '#pagination_' + sectionId;
+
+
+		var testimonialsLoad = function() {
+
+			if( $(testimonialSliderTag).length ) {
+
+				var testimonialSlider = new Swiper(testimonialSliderTag, {
+					slidesPerView: 3,
+					breakpoints: {
+						768: {
+							slidesPerView: 2
+						},
+						480: {
+							slidesPerView: 1
+						}
+					},
+					spaceBetween: 30,
+					pagination: testimonialSliderPagination,
+					paginationClickable: true,
+				});
+
+			};
+
+		};
+
+
+		// LOADING SLIDERS
+		testimonialsLoadTrigger = true;
+
+		$(document).on('shopify:section:load', '#shopify-section-' + sectionId, function() {
+			testimonialsLoad();
+			testimonialsLoadTrigger = false;
+		});
+
+		if ( testimonialsLoadTrigger = true ) {
+			testimonialsLoad();
+		};
+
+	});
+});
+</script>

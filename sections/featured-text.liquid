@@ -1,0 +1,386 @@
+<div class="featuredtp-{{section.id}}" style="background: {{section.settings.bg}}; padding-top: {{section.settings.padding_top | times: 0.75 | round: 0}}px;
+                                                                                                                                          padding-bottom: {{section.settings.padding_bottom | times: 0.75 | round: 0}}px;
+                                                                                                                                          ">
+  <div class="contents">
+    <div class="content">
+      <h1 style="color: {{section.settings.heading_color}};">
+        {{section.settings.heading}}
+      </h1>
+      <p style="color: {{section.settings.paragraph_color}}; margin-bottom: 5%;
+                                                                                                                                                                                                                                                           ">{{section.settings.paragraph}}</p>
+
+      <a class="btnb titanbutton" href="{{section.settings.btn_url}}" style="text-decoration: none; color: white; font-weight: 900;text-transform:none;">
+        {{section.settings.btn_text}}
+      </a>
+    </div>
+
+    <div class="fproducts">
+      <div class="fp">
+        {%if section.settings.fp1 != blank %}
+
+          {% render 'titan-image',
+            image: section.settings.fp1_image%}
+
+          <a class="fp1btn titanbutton" href="{{section.settings.first_btn}}" style="text-decoration: none; color: #000;">
+
+
+            {{section.settings.fp1_title}}
+          </a>
+
+
+        {% endif %}
+      </div>
+
+      <div class="fp">
+        {%if section.settings.fp2 != blank %}
+
+          {% render 'titan-image',
+          image: section.settings.fp2_image%}
+
+          <a class="fp1btn titanbutton" href="{{section.settings.second_btn}}" style="text-decoration: none; color: #000;">
+
+            {{section.settings.fp2_title}}
+          </a>
+
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+  .featuredtp-{{section.id}} {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2% 0;
+    max-width: 100wv;
+    align-items: center;
+
+  }
+
+  .fproducts .titan-image img {
+   filter: drop-shadow({{section.settings.hs}}px {{section.settings.vs}}px {{section.settings.bs}}px {{section.settings.bc}});
+  }
+  .contents {
+    display: flex;
+    max-width: 85vw;
+    margin: auto;
+    place-content: center;
+    justify-content: space-around;
+  }
+
+  .content {
+    max-width: 40%;
+  }
+
+  .featuredtp-{{section.id}} .titan-image {
+    margin: 10px;
+    height: 250px; s
+  }
+  .fproducts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+  }
+  .fp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center; 
+  }
+  .btnb {
+    background: {{section.settings.btn_color}};
+    color: black;
+  }
+  .fp1btn {
+    padding: 10px 50px;
+    width:max-content;
+    text-align: center;
+    margin: 0; 
+    border: 1px solid {{section.settings.fp1_btn}};
+    
+  }
+  
+  .fp1btn:hover {
+ background: {{section.settings.button_hover_bg}} !important;
+ border:1px solid {{section.settings.button_hover_border_color}} !important;
+    color:{{section.settings.button_hover_text_color}} !important;
+}
+ 
+  .fproducts .titan-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+
+  }
+
+@media only screen and (max-width: 760px) {
+  .contents {
+    display: flex;
+    max-width: 85vw;
+    margin: auto;
+    flex-direction: column;
+    place-content: center;
+  }
+  .content {
+    max-width: 90vw;
+    margin-bottom: 40px;
+  }
+.fproducts {
+    display: flex;
+  	margin-top: 10px;
+    flex-direction: column;
+    max-width: 99vw;
+/*     overflow: auto; */
+}
+.fp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
+    max-width: 50vw;
+    align-self: center;
+}
+.fp1btn {
+  padding: 5px 10px;
+}
+
+}
+@media only screen 
+  and (min-width: 760px) 
+  and (max-width: 1124px) {
+.fproducts {
+
+flex-direction: row;
+}
+
+
+
+.content {
+  max-width: 100%;
+}
+
+.contents {
+  flex-direction: column !important;
+}
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "Featured Products  Text",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    }, {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    },
+
+	{
+	"type": "header",
+	"content": "Section settings"
+	},
+
+	{
+	"type": "color",
+	"label": "Section background color",
+	"id": "bg",
+	"default": "#FAFAFA",
+	"info": "Background color of whole section"
+	},
+
+	{
+	"type": "header",
+	"content": "Text Setting"
+	},
+
+	{
+	"type": "text",
+	"id": "heading",
+	"label": "Heading Text",
+	"default": "Heading"
+	},
+ {
+   "type": "color",
+   "id": "heading_color",
+   "label": "Heading Color",
+   "default": "#FAFAFA"
+ },
+
+	{
+	"type": "textarea",
+	"id": "paragraph",
+	"label": "Text Content"
+	},
+ {
+   "type": "color",
+   "id": "paragraph_color",
+   "label": "Paragraph Color",
+   "default": "#FAFAFA"
+ },
+	{
+	"type": "text",
+	"id": "btn_text",
+	"label": "Button Text",
+	"info": "If button is shown, type in the button text",
+	"default": "Button Text"
+	},
+
+	{
+	"type": "url",
+	"label": "Button Url",
+	"id": "btn_url"
+	},
+
+	{
+	"type": "color",
+	"label": "Button Color",
+	"id": "btn_color"
+	},
+{
+	"type": "color",
+	"label": "Button outline color",
+	"id": "fp1_btn",
+	"default": "#000000"
+	},
+      {
+          "type": "color",
+          "id": "button_hover_bg",
+          "label": "Button Hover Background"
+        },
+       
+        {
+          "type": "color",
+          "id": "button_hover_text_color",
+          "default": "#FAFAFA",
+          "label": "Button Text Color on Hover"
+        },
+       
+        {
+          "type": "color",
+          "id": "button_hover_border_color",
+          "default": "#000000",
+          "label": "Button Hover Border Color"
+        },
+
+	{
+	"type": "header",
+	"content": "Products"
+	},
+
+	{
+	"type": "product",
+	"label": "Featured product 1",
+	"id": "fp1",
+	"info": "Product will appear on right side"
+	},
+	{
+	"type": "url",
+	"label": "Button Url",
+	"id": "first_btn"
+	},
+	{
+	"type": "image_picker",
+	"label": "Product Image",
+	"id": "fp1_image",
+	"info": "This image will appear as first product image"
+	},
+
+	{
+	"type": "text",
+	"id": "fp1_title",
+	"label": "First Product's Name",
+	"default": "Product 1"
+	},
+
+
+
+  	{
+	"type": "product",
+	"label": "Featured product 2",
+	"id": "fp2",
+	"info": "Product will appear on right side"
+	},
+  	{
+	"type": "url",
+	"label": "Button Url",
+	"id": "second_btn"
+	},
+
+	{
+	"type": "image_picker",
+	"label": "Product Image",
+	"id": "fp2_image",
+	"info": "This image will appear as first product image"
+	},
+
+	{
+	"type": "text",
+	"id": "fp2_title",
+	"label": "Secont Product's Name",
+	"default": "Product 2"
+	},
+  	{
+	"type": "header",
+	"content": "Image Shadow"
+	},
+ {
+   "type": "range",
+   "id": "hs",
+   "label": "Horizontal Offset",
+   "unit": "px",
+   "min": 1,
+   "max": 100,
+   "step": 1,
+   "default": 1
+ }, {
+   "type": "range",
+   "id": "vs",
+   "label": "Vertical Offset",
+   "unit": "px",
+   "min": 1,
+   "max": 100,
+   "step": 1,
+   "default": 1
+ },{
+   "type": "range",
+   "id": "bs",
+   "label": "Blur Shaddow ",
+   "unit": "px",
+   "min": 1,
+   "max": 100,
+   "step": 1,
+   "default": 1
+ },
+{
+  "type": "color",
+  "id": "bc",
+  "label": "Shadow Color",
+  "default": "#000"
+}
+],
+  "presets":[
+  {
+    "name":"Featured Product+Text"
+  }
+  ]
+}
+{% endschema %}

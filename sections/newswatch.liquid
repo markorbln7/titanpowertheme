@@ -1,0 +1,598 @@
+<noscript>{{ 'base.css' | asset_url | stylesheet_tag }}</noscript>
+
+<style>
+  .switch-blocks .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .switch-blocks .buttons-container button {
+    min-width: 120px;
+    max-width: 300px;
+    padding: 12px;
+    margin: 0 10px;
+    outline: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: background 100ms linear;
+    cursor: pointer;
+    }
+
+
+  .switch-blocks .inner {
+    max-width: 1350px;
+    margin: auto;
+  }
+  .switch-blocks-{{ section.id }}- .inner {
+    padding: {{ section.settings.padding }}vh 20px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    justify-content: space-evenly;
+    width: 80vw;
+    margin: auto;
+    max-width: 1200px;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+    margin-right: 10px;
+    width: 38vw;
+
+    text-align: -webkit-center;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+    margin-left: 10px;
+    width: 40vw;
+    max-width: 40vw;
+  } 
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings {
+    text-align: left !important;
+    text-transform: uppercase;
+    margin-top: 40px;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings .inner-heading {
+    font-size: 48px;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .inner-headings .inner-subheading {
+    font-size: 14px;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .content-btn {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left .content-btn a {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+    min-width: 150px;
+    max-width: 180px;
+    padding: 10px;
+    letter-spacing: 1.5px;
+    
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .content-desc p {
+    margin: 0;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    font-weight: 100;
+  }
+  .switch-blocks-{{ section.id }}- {
+    /* background: {{ section.settings.background }}; */
+  }
+  .switch-blocks-{{ section.id }}- .switch-block {
+    display: none;
+  }
+  .switch-blocks-{{ section.id }}- :first-child .switch-block {
+    display: block;
+  }
+  .switch-blocks-{{ section.id }}- .content-img img{
+    display: block;
+    max-width: 100%;
+  }
+  .switch-blocks-{{ section.id }}- .main-image img  {
+    display: block;
+    max-width: 100%;
+  }
+  .switch-blocks-{{ section.id }}- .content-img {
+    margin: 20px 0;
+  }
+  .switch-blocks .buttons-container button {
+    min-width: 275px;
+  }
+  .switch-blocks .buttons-container button img {
+    width: 80%;
+    height:  80%;
+    margin: auto;
+    object-fit: contain;
+  }
+
+  .switch-blocks-{{ section.id }}- .main-image  .titan-image {
+    height: 200px;
+  }
+{% for block in section.blocks %}
+.content-img-{{block.id}} img {
+  max-height: 400px;
+}
+
+.titanbutton-{{block.id}} {  
+  background: {{ block.settings.switch_btn_color }};
+  width: fit-content; 
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.content-img-{{block.id}} .titan-image {
+ height: 400px;
+ width: 400px;
+}
+.content-img-{{block.id}} .titan-image img {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* TABLET */
+@media only screen 
+  and (min-width: 768px) 
+  and (max-width: 1144px)  {
+
+      .switch-blocks-{{ section.id }}- .inner .inner-content { 
+        display: flex;
+        flex-direction: column;
+      }
+     .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+    margin-right: 10px;
+    width: 88vw;
+
+    text-align: -webkit-center;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+    min-width: 80vw;
+    max-width: 80vw;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    text-align: left;
+  }
+    .switch-blocks .buttons-container {
+     display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+    margin: auto;
+    }
+
+  .content-img-{{block.id}} .titan-image {
+    height: 250px;
+    width: 250px;
+  }
+  .prh-{{block.id}} {
+    font-size: 4vw;
+    color: {{ block.settings.switch_btn_color }};
+  }
+}
+/* END  TABLET*/
+
+@media only screen 
+  and (min-width: 1250px)  {
+  .prh-{{block.id}} { 
+    font-size: 2vw;}
+  }
+
+/* MOBILE */
+@media only screen 
+  and (min-width: 1px) 
+  and (max-width: 768px)  {
+    .switch-blocks-{{ section.id }}- .inner {
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 98vw;
+
+    }
+
+      .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+    margin-right: 10px;
+    width: 80vw;
+
+    text-align: -webkit-center;
+  }
+  .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+    min-width: 80vw;
+    margin-bottom: 20px;
+  }
+
+  .switch-blocks-{{ section.id }}- .inner .inner-content {
+    display: flex;
+    flex-direction: column !important;
+     width: 90vw;
+  }
+
+
+    .switch-blocks-{{ section.id }}- .inner .main-subheading {
+      font-size: 12px !important;
+    }
+    .switch-blocks-{{ section.id }}- .inner .main-heading {
+      font-size: 22px !important;
+      letter-spacing: 1.4px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-content {
+      margin-top: 0px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-headings {
+      padding-top: 0px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-headings > * {
+      text-align: center;
+    }
+    .switch-blocks-{{ section.id }}- .inner-content {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+
+    }
+
+    
+    .switch-blocks-{{ section.id }}- .main-image img  {
+      max-width: 100%;
+    }
+    .switch-blocks-{{ section.id }}- .buttons-container {
+    display: flex;
+    overflow-x: auto;
+    max-width: 90vw;
+    grid-gap: 10px;
+    min-width: 40vw;
+    margin: auto;
+    width: 100vw;
+    justify-content: flex-start;
+    }
+
+    .switch-blocks .buttons-container button {
+    min-width: 175px;
+  }
+   .switch-blocks-{{ section.id }}- .main-image  .titan-image {
+    height: 100px;
+  }
+  .switch-blocks .buttons-container button img {
+    width: 80%;
+    height:  80%;
+    margin: auto;
+    object-fit: contain;
+  }
+      .content-img-{{block.id}} .titan-image {
+    height: 180px;
+    width: 180px;
+  }
+  .prh-{{block.id}} {
+    font-size: 5vw;
+    color: {{ block.settings.switch_btn_color }};
+  } 
+    .switch-blocks-{{ section.id }}- .buttons-container button {
+      margin: 0 2px;
+      min-width: 200px;
+      margin-bottom: 10px;
+    }
+    .switch-blocks-{{ section.id }}- .content-btn a {
+      margin: auto;
+    }
+     .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__left {
+     margin-right: 0px;
+    }
+    .switch-blocks-{{ section.id }}- .inner .inner-content .inner-content__right {
+      margin-left: 0px;
+    } 
+  }
+
+      @keyframes shadow-pulse
+      {
+        0% {
+          box-shadow: 0 0 0 0px var(--btnColor);
+        }
+        100% {
+          box-shadow: 0 0 0 4px rgba(255, 255, 255, 0);
+        }
+      }
+      {%endfor %}
+</style>
+
+<div class="switch-blocks switch-blocks-{{ section.id }}-">
+  <div class="inner">
+
+    <div class="buttons-container">
+      {% for block in section.blocks %}
+      
+      {% unless block.settings.switch_btn_title == blank %}
+      <style>
+        .switch-blocks .buttons-container .block-btn-{{ block.id }} {
+          border: .2px solid {{ block.settings.switch_btn_color }};
+          border-radius: 10px;
+          /* animation: shadow-pulse 1s infinite; */
+          /* --btnColor: {{ block.settings.switch_btn_color }}; */
+        }
+        .switch-blocks .buttons-container .selected-{{ block.id }} {
+          /* background: {{ block.settings.switch_btn_color }};  */
+          animation: none;
+        }
+        .switch-blocks .buttons-container .block-btn-{{ block.id }}:hover {
+          /* background: {{ block.settings.switch_btn_color }}; */
+        }
+      </style>
+        <button class="block-btn block-btn-{{ block.id }} {% if forloop.first %} selected-{{block.id}} {% endif %}" data-id={{ block.id }}>
+            <div class="main-image">
+            {% if block.settings.main_image != blank %}
+              {% render 'titan-image' 
+                image: block.settings.main_image
+                mobile_image: block.settings.mobile_main_image
+                lazy_loading: false
+            %} 
+            {% else %}
+              <img src="http://placehold.jp/{font size}/{background color}/{font color}/376x475.png" alt="" width="" height="" loading="lazy">
+            {% endif %}
+        
+          </div>
+
+    {{ block.settings.switch_btn_title }}
+
+        </button>
+        
+        {% endunless %}
+      {% endfor %}
+
+    </div>
+    {% for block in section.blocks %}
+    <style>
+      .subheading-{{ block.id }} {
+        color:{{ block.settings.switch_btn_color }};
+      }
+    </style>
+    
+      <div class="switch-block switch-block-{{ block.id }}-" {% unless forloop.first %} style="display: none;" {% endunless %} data-id={{ block.id }}>
+            {%if section.settings.showcontent %}  <div class="inner-content">
+            
+          <div class="inner-content__left">
+            <!-- Content heading -->
+            {% if block.settings.content_heading != blank and block.settings.content_subheading != blank %}
+            <div class="inner-headings">
+              <h1 class="inner-heading">{{ block.settings.content_heading }}</h1>
+              <h2 class="inner-subheading subheading-{{ block.id }}">{{ block.settings.content_subheading }}</h2>
+            </div>
+            {% endif %}
+
+            <div class="content-img-{{block.id}}">
+              {% if block.settings.desc_img != blank %}
+                {% render 'titan-image' 
+                  image: block.settings.desc_img 
+                  mobile_image: block.settings.mobile_desc_img
+                %}
+              {% endif %}
+            </div>
+            {% unless block.settings.content.desc != blank %}
+            <div class="content-desc">
+              <p>{{ block.settings.content_desc }}</p>
+            </div>
+            {% endunless %}
+            {% unless block.settings.content_btn == blank %}
+        
+            {% endunless %}
+          </div>
+          <div class="inner-content__right">
+      <h1 class="prh-{{block.id}}" style="color: {{ block.settings.switch_btn_color }};;"> {{block.settings.header}} </h1> 
+<p>{{block.settings.product}} </p>
+<div class="titanbutton-{{block.id}}"> 
+  <a href="{{block.settings.content_btn_url}}" style="text-decoration: none; text-transform: uppercase; color: white;"> {{block.settings.content_btn}} </a>
+</div>
+        </div>
+        </div> 
+      </div> {%endif %}
+    {% endfor %}
+  </div>
+</div>
+<script>
+  const switchBlocks = () => {
+    const switchButtons = document.querySelectorAll('.switch-blocks-{{ section.id }}- .block-btn');
+    const switchBlocks = document.querySelectorAll('.switch-blocks-{{ section.id }}- .switch-block');
+    switchButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-id')
+        btn.classList.add(`selected-${id}`);
+        console.log(e.target)
+        switchButtons.forEach(el => {
+          const id = el.getAttribute('data-id')
+          if (e.target.getAttribute('data-id') !== id) {
+            el.classList.remove(`selected-${id}`);
+          }
+          
+        })
+        const btnId = btn.getAttribute('data-id');
+        switchBlocks.forEach(block => {
+          const blockId = block.getAttribute('data-id');
+          if ( btnId === blockId ) {
+            block.style.display = 'block';
+          } else {
+            block.style.display = 'none';
+          }
+        })
+      })
+    })
+  }
+  switchBlocks();
+  document.addEventListener('shopify:section:load', switchBlocks);
+</script>
+{% schema %}
+{
+  "name":"Switch blocks",
+  "tag":"section",
+  "settings": [
+    {
+      "type":"header",
+      "content": "headings"
+    },{
+    "type": "checkbox",      
+    "id": "showcontent",
+    "label": "Show Content",
+    "default": true
+  }, 
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Section heading"
+    },
+    {
+      "type":"text",
+      "id":"subheading",
+      "label":"Section subheading"
+    },
+    {
+      "type":"header",
+      "content": "general"
+    },
+    {
+      "type":"color_background",
+      "id":"background",
+      "label":"Section background",
+      "default":"#3d3d3d"
+    },
+     {
+      "type":"select",
+      "id":"padding",
+      "label":"Vertical padding",
+      "default":"10",
+      "options":[
+        {
+          "value":"2",
+          "label":"Small"
+        },
+        {
+          "value":"6",
+          "label":"Medium"
+        },
+        {
+          "value":"10",
+          "label":"Large"
+        }
+      ],
+      "info":"Vertical padding in view heights (2/6/10)"
+    }
+  ],
+    "blocks": [
+    {
+      "type": "text",
+      "name": "Content block",
+      "settings": [
+        {
+          "type":"header",
+          "content": "buttons"
+        },
+        {
+          "type":"text",
+          "id":"switch_btn_title",
+          "label":"Switch button title",
+          "default":"Switch Button"
+        },
+       {
+         "type": "text",
+         "id": "header",
+         "label": "Header",
+         "default": "Titan Power Plus Product"
+       },
+      {
+        "type": "textarea",
+        "id": "product",
+        "label": "product",
+        "default": "This is <Br> product </br>  description TPP"
+      },
+        {
+          "type":"color",
+          "id":"switch_btn_color",
+          "label":"Switch button color",
+          "default":"#fff"
+        },
+        {
+          "type":"header",
+          "content": "content on the left"
+        },
+        {
+          "type":"text",
+          "id":"content_heading",
+          "label":"Content heading"
+        },
+        {
+          "type":"text",
+          "id":"content_subheading",
+          "label":"Content subheading"
+        },
+        {
+          "type":"image_picker",
+          "id":"desc_img",
+          "label":"Description image",
+          "info":"Image on the LEFT, above the description element"
+        },
+        {
+          "type":"textarea",
+          "id":"content_desc",
+          "label":"Content description"
+        },
+        {
+          "type":"text",
+          "id":"content_btn",
+          "label":"Content button",
+          "default": "Learn More"
+        },
+        {
+          "type":"url",
+          "id":"content_btn_url",
+          "label":"Content button url"
+        },
+        {
+          "type":"header",
+          "content": "Mobile"
+        },
+        {
+          "type":"image_picker",
+          "id":"mobile_desc_img",
+          "label":"Mobile description image"
+        },
+        {
+          "type":"header",
+          "content": "content on the right"
+        },
+        {
+          "type":"image_picker",
+          "id":"main_image",
+          "label":"Main image",
+          "info":"Main image on the right"
+        },
+        {
+          "type":"header",
+          "content": "Mobile"
+        },
+        {
+          "type":"image_picker",
+          "id":"mobile_main_image",
+          "label":"Mobile main image"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Switch blocks"
+    }
+  ]
+}
+{% endschema %}

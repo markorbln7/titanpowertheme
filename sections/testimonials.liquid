@@ -1,0 +1,371 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js" defer=”defer”></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js" defer=”defer”></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" />
+{%- style -%}
+
+.section-{{section.id}}-padding
+{
+  padding-top: {{section.settings.padding_top | times: 0.75 | round: 0}}px;
+  padding-bottom: {{section.settings.padding_bottom | times: 0.75 | round: 0}}px;
+  max-width: 1200px;
+  width: 80vw;
+  margin: auto;
+}
+
+@media only screen and only screen and screen and(min-width: 750px)
+{
+  .section-{{section.id}}-padding
+  {
+    padding-top: {{section.settings.padding_top}}px;
+    padding-bottom: {{section.settings.padding_bottom}}px;
+  }
+  .custom-block.testimonial-{{block.id}}{
+    height: 40vh !important;
+  }
+
+
+}
+
+{%- endstyle -%}
+
+
+<section class="teamtestimonial color-{{ section.settings.color_scheme }} gradient   section-{{ section.id }}-padding" style="background-color: {{section.settings.sbg}};" >
+{% if section.settings.enable_testimonial_section %}
+
+  {% if section.settings.title != blank %}
+  <div class="text-center " style="text-align: center;text-align: -webkit-center;">
+    <h4 class="testimonial-title" style="max-width: 80%; margin-bottom: 5%; text-align: center; ">{{ section.settings.title | escape }}</h4>
+  </div>
+  {% endif %}
+
+  <div class="testimonial-section color-{{ section.settings.color_scheme }} gradient" id="testimonial-slide">
+    {% for block in section.blocks %}
+    <div class="custom-block testimonial-{{block.id}}" style="  padding-top: 10px;">
+      <div class="custom__item-inner custom__item-inner–{{ block.type }}" style="text-align-last:center;;">
+
+        <div class="testimonial-block">
+          <div class="text-block-{{block.id}}">
+              {% render 'titan-image'
+              image: block.settings.image %}
+         
+            {% if block.settings.titletext != blank %}
+            <p class="user-name">{{ block.settings.titletext }}</p>
+            {% endif %}
+            {% if block.settings.place_text != blank %}
+            <p class="place">{{ block.settings.place_text }}</p>
+            {% endif %}
+            {% if block.settings.review_text != blank %}
+            <p class="review">{{ block.settings.review_text }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+
+{% endif %}
+</section>
+
+<style>
+  .custom-block{
+    float:left;
+    width:53%
+    -webkit-tap-highlight-color:transparent;
+  }
+  .testimonial-title{
+    font-size:50px;
+    margin:10px 0 20px 0;
+  }
+  .testimonial-image{
+    border-radius:50%;
+    width:100%;
+  }
+  .image-block{
+    width:50%;
+    margin-left:30%;
+    height: 180px;
+  }
+  .text-block-{{block.id}} {
+    width: 80%;
+    margin-left: 10%;
+  }
+  .user-name{
+    text-align:left;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom: -10px;
+  }
+  .place{
+    text-align:left;
+    font-size:16px;
+    font-weight:normal;
+    margin-bottom: 10px;
+  }
+  .review{
+    text-align:left;
+    font-weight:normal;
+
+    overflow: scroll;
+    max-height: 15vh;
+
+  }
+
+    .review::-webkit-scrollbar {
+    display: none;
+}
+
+  @media only screen and  (max-width:768px){
+    .testimonial-title{
+      font-size:30px;
+    }
+    .slick-next, .slick-prev {
+      display: none !important;
+    }
+  }
+  @media only screen and     (max-width:780px){
+    .testimonial-title{
+      font-size:25px;
+    }
+    
+  }
+  {%for block in section.blocks %}
+  .custom-block.testimonial-{{block.id}} {
+	background: {{block.settings.container_color_scheme}};
+  border: 1px solid {{block.settings.border}};
+	margin:15px;
+	border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 11px 5px {{block.settings.bshadow}};
+   height: 50vh !important;
+  /* min-width: 300px; */
+}
+
+  .testimonial-section {
+	margin-top: -1% !important;
+  /* max-width: 1200px; */
+  margin: auto;
+  background-color: {{section.settings.sbg}};
+
+}
+/*   .slick-prev {
+	left: -15px;
+}
+  .testimonial-section .slick-next {
+	left: -15px;
+} */ 
+  .testimonial-section .slick-dots {
+	bottom: 0;
+  display: none !important;
+}
+
+.text-block-{{block.id}} .titan-image {
+max-width: 100px ;
+max-height: 100px ;
+text-align: -webkit-center;
+margin: auto;
+object-fit: contain;
+border-radius: 50%;
+border: 1px solid;
+overflow: hidden;
+}
+.text-block-{{block.id}} .titan-image img {
+max-width: 100px ;
+max-height: 100px ;
+min-height: 100px;
+overflow: hidden;
+  text-align: -webkit-center;
+  object-fit: contain;
+}
+{% endfor %}
+</style>
+
+{% schema %}
+
+{
+  "class": "testimonial-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    }, {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    }, {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    }, {
+      "type": "color",
+      "id": "sbg",
+      "label": "Section BG Color",
+      "default": "#000"
+    }, {
+      "type": "checkbox",
+      "id": "enable_testimonial_section",
+      "label": "Enable Testimonial Section",
+      "default": true
+    }, {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.rich-text.settings.color_scheme.options__1.label"
+        }, {
+          "value": "accent-2",
+          "label": "t:sections.rich-text.settings.color_scheme.options__2.label"
+        }, {
+          "value": "background-1",
+          "label": "t:sections.rich-text.settings.color_scheme.options__3.label"
+        }, {
+          "value": "background-2",
+          "label": "t:sections.rich-text.settings.color_scheme.options__4.label"
+        }, {
+          "value": "inverse",
+          "label": "t:sections.rich-text.settings.color_scheme.options__5.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.rich-text.settings.color_scheme.label"
+    }, {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Custom content"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Testimonial Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }, {
+          "type": "text",
+          "id": "titletext",
+          "label": "User Name"
+        }, {
+          "type": "text",
+          "id": "place_text",
+          "label": "Designation"
+        }, {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review"
+        }, {
+          "type": "color_background",
+          "id": "container_color_scheme",
+          "label": "Block Background",
+          "default": "#000"
+        }, {
+          "type": "color",
+          "id": "border",
+          "label": "Border Color",
+          "default": "#FAFAFA"
+        }, {
+          "type": "color",
+          "id": "bshadow",
+          "label": "Box Shadow Color",
+          "default": "#55cc4b"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial",
+      "category": "Testimonial Section",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $("#testimonial-slide").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+              autoplay: true,
+                      responsive: [{
+                          breakpoint: 1200,
+                          settings: {
+                              slidesToShow: 2,
+                              slidesToScroll: 1,
+                          }
+                      },{
+                          breakpoint: 1023, 
+                          settings: {
+                              slidesToShow: 2,
+                              slidesToScroll: 1,
+                          }
+                      },
+                      {
+                          breakpoint: 650,
+                          settings: {
+                              slidesToShow: 1,
+                              slidesToScroll: 1,
+                          }
+                      }
+                      ]
+            });
+        });
+
+            document.addEventListener('shopify:section:load', () => {
+
+            $("#testimonial-slide").slick({
+                dots: true,
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+              autoplay: true,
+                      responsive: [{
+                          breakpoint: 1200,
+                          settings: {
+                              slidesToShow: 4,
+                              slidesToScroll: 1,
+                          }
+                      },{
+                          breakpoint: 1023, 
+                          settings: {
+                              slidesToShow: 3,
+                              slidesToScroll: 1,
+                          }
+                      },
+                      {
+                          breakpoint: 650,
+                          settings: {
+                              slidesToShow: 1,
+                              slidesToScroll: 1,
+                          }
+                      }
+                      ]
+            });
+                       })
+
+  </script>

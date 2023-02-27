@@ -1,0 +1,321 @@
+<div class="tripleblocks-{{section.id}}" style="background: {{section.settings.bg}}; padding: 5% 0 0 0;">
+  <div class="triples">
+    {% for block in section.blocks %}
+
+      {% case block.type %}
+        {% when 'Text' %}
+          <div class="textual-triple-{{block.id}}">
+            <h1 style="text-align: {{block.settings.text_align}};   color: {{block.settings.header_color}}; margin:0; ">
+              {{block.settings.triple_header}}
+            </h1>
+
+            <p style="color: {{block.settings.text_color}}; text-align:{{block.settings.text_align}};
+                                                                                    margin: 30px 0px !important; line-height: {{section.settings.line_height}}; margin: 0; padding: 0;">
+              {{block.settings.triple_text}}
+            </p>
+
+            <div class="triple-btn-{{block.id}} titanbutton">
+              <a href="{{block.settings.url}}" style=" text-decoration: none; color: {{block.settings.button_text_color}};">
+                {{block.settings.url_text}}
+              </a>
+            </div>
+          </div>
+
+
+        {%when 'Image'%}
+
+          <div class="triple-image-{{block.id}}" style="
+                                                                          align-self: center;
+                                                                      ">
+            {%render 'titan-image'
+          image: block.settings.image;
+          mobile_image: block.settings.mobile_image 
+          %}
+
+
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+{% for block in section.blocks %}
+  <style>
+.triple-image-{{block.id}} .titan-image img {
+  max-width: 100%;
+  object-fit: contain;
+  max-height: 400px;
+  max-width: 400px;
+  height: 100%;
+  margin:auto;
+
+}
+.titanbutton {
+  padding: 10px 20px !important;
+  border-radius: 25px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.triples {
+    max-height: 400px;
+    display: grid;
+    max-width: {{section.settings.spacing}}vw;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: auto;
+}
+.triple-btn-{{block.id}} {
+ background: {{block.settings.button_bg}};
+ float: {{block.settings.text_align}}; 
+
+ border: 1px solid {{block.settings.button_border_color}};
+}
+.triple-btn-{{block.id}}:hover {
+ background: {{block.settings.button_hover_bg}} !important;
+ border:1px solid {{block.settings.button_hover_border_color}} !important;
+}
+.triple-btn-{{block.id}} a:hover { 
+  color: {{block.settings.button_hover_text_color}} !important;
+
+ border:1px solid {{block.settings.button_hover_border_color}} !important;
+}
+
+{% if block.settings.centerit == true %}
+.textual-triple-{{block.id}} {
+align-self: center;
+}
+
+{%endif%}
+
+@media only screen and (max-width:1100px) {
+  
+.tripleblocks-{{section.id}},
+  .triples{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 5% 5% !important; 
+}
+.triples {
+    max-height: max-content !important; 
+     
+    margin: auto;
+}
+
+.textual-triple-{{block.id}} h1,
+ .textual-triple-{{block.id}} p{
+  text-align: left !important;
+}
+button.triple-btn {
+  float: left !important;
+}
+  .triple-image-{{block.id}} .titan-image img {
+  max-width: 100% !important;
+  object-fit: contain !importants;
+  margin: 20px 0 40px 0;
+  height: 100%;
+}
+  .content {
+  margin-bottom: 80px !important;
+  }
+
+}
+
+/* TABLET */
+@media only screen  
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px)   {
+.tripleblocks-{{section.id}},
+  .triples{
+  display: grid;
+  text-align: left;
+  min-width: 95vw;
+  padding: 20px !important; 
+}
+.triple-image-{{block.id}} .titan-image img { 
+  max-width: 250px;
+  max-height: 250px;
+  display: flex !important;
+justify-content: center !important;
+margin: auto;
+
+}
+/* .triples{ 
+  width: 99vw;
+  max-width: 99vw; */
+/* } */
+
+.textual-triple-{{block.id}} {
+  min-width: 100%;
+}
+  }
+    
+    @media only screen and (min-width: 1300px) {
+      .triples {
+      max-width: 1200px;
+      }
+    }
+
+</style>
+
+{% endfor %}
+
+
+{% schema %}
+{
+  "name": "Triple Column",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg", 
+      "default": "#FAFAFA",
+      "label": "Section background Color"
+    }, {
+      "type": "range",
+      "id": "line_height",
+      "label": "Text Line Height",
+      "unit": "px",
+      "min": 1,
+      "max": 10,
+      "step": 0.1,
+      "default": 1
+    },
+   {
+     "type": "range",
+     "id": "spacing",
+     "label": "Spacing",
+     "unit": "vw",
+     "min": 1,
+     "max": 100,
+     "step": 1,
+     "default": 70
+   }
+  ],
+  "blocks": [
+    {
+      "type": "Text",
+      "name": "Text",
+      "settings": [
+     {
+       "type": "checkbox",
+       "id": "centerit",
+       "label": "Center The Text",
+       "default": false
+     },
+        
+        {
+          "type": "text",
+          "id": "triple_header",
+          "label": "Header"
+        },
+      
+        {
+          "type": "color",
+          "id": "header_color",
+          "default": "#000000",
+          "label": "Header Color"
+        },
+         {
+         "type": "textarea",
+         "id": "triple_text",
+         "label": "Text",
+         "default": "Content"
+       },
+        {
+          "type": "color",
+          "id": "text_color",
+          "default": "#000000",
+          "label": "Text Color"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Button URL "
+        },
+        { 
+          "type": "text",
+          "id": "url_text",
+          "default": "URL TEXT",
+          "label": "Button Text"
+        },
+        {
+          "type": "color",
+          "id": "button_bg",
+          "default": "#FAFAFA",
+          "label": " Button Background"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_bg",
+          "label": "Button Hover Background"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "default": "#000000",
+          "label": "Button Text Color"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_text_color",
+          "default": "#FAFAFA",
+          "label": "Button Text Color on Hover"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "default": "#FAFAFA",
+          "label": "Button Border Color"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_border_color",
+          "default": "#000000",
+          "label": "Button Hover Border Color"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "options": [
+            {
+              "value": "left",
+              "label": "left"
+            },
+            {
+              "value": "center",
+              "label": "center"
+            },
+            {
+              "value": "right",
+              "label": "right"
+            }
+          ],
+          "default": "left",
+          "label": "Pick the alignment of your text [header included]"
+        }
+      ]
+    },
+    {
+      "type": "Image",
+      "name": "Triple Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":"Triple blocks"
+    }
+  ]
+}
+{% endschema %}

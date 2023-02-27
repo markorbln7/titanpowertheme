@@ -1,0 +1,41 @@
+:root {
+  --transition-duration: 400ms;
+  --transition-timing: ease-in-out;
+  --transition-default: var(--transition-duration) var(--transition-timing);
+
+  --container-edge: 18px;
+  --container-edge-tablet: 18px;
+  --container-edge-desktop: 24px;
+  --container-edge-compact: 12px;
+  --container-edge-page: 18px;
+  --container-max-width: 1288px;
+  --field-height: 48px;
+
+  --grid-gutter-default: 12px;
+
+  --gutter-s: 12px;
+  --gutter-sm: 12px;
+  --gutter-ml: 24px;
+
+  --xxxs: 320px;
+  --xs: 620px;
+  --s: 768px;
+  --m: 1000px;
+  --ml: 1160px;
+  --l: 1280px;
+  --xl: 1440px;
+
+  --carousel-arrow-size: 48px;
+  --carousel-arrow-icon-size: 24px;
+  --carousel-dots-size: 10px;
+  --carousel-dots-margin: 5px;
+
+  --font-heading-bold: 'PalatinoLTPro-Bold', serif;
+  --font-heading: 'Palatino', serif;
+  --font-secondary: 'Gothic A1', sans-serif;
+  --font-tertiary: 'FoundersGrotesk', sans-serif;
+
+  --white: #fff;
+  --blue: #539FBF;
+  --grey: #DEDFDA;
+}

@@ -1,0 +1,129 @@
+<div class="shopify-section divider-section" style="padding-top: 120px;"> 
+	<div class="dzenana404">
+		{%render '404_animation'%}
+    	</div>
+		<div class="template-404 page-width page-margin center" style="width: 100%; text-align: center; ">
+ 	 		<h1 class="title">
+			sorry, we can't find the page you're looking for
+  			</h1>
+  			<a href="https://titanpowerplus.com/pages/shop-sale#10297372" class="button">
+   			CONTINUE SHOPPING
+  			</a>
+				</div>
+					</div>
+
+          
+
+{%if section.settings.continueshopping %}
+<style>
+.button {
+  }
+  </style>
+
+  {%else%}
+<style>
+  .button {
+  display: none; }
+</style>
+{%endif%}
+<style>
+.template-404 .title+* {
+	margin-top: 1rem;
+}
+  
+  .xbox {
+    margin-top: {{section.settings.topmargin}}px;
+  margin-bottom: {{section.settings.bottommargin}}px;}
+  
+.button { 
+    color: #FFFFFF;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-family: 'Work Sans';
+    border-radius: 20px;
+    padding-top: 22px;
+    padding-bottom: 22px; 
+    padding-right: 40px;
+    padding-left: 40px;
+    border: 2px solid #60C655;
+    background-color: #60C655;
+    transition: .5s ease-in-out;
+}
+  
+.button:hover{ 
+	background:black;
+    cursor:pointer
+}
+
+  
+
+@media screen and (min-width: 750px) {
+	.template-404 .title+* {
+		margin-top: 2rem;
+	}
+
+
+	.dzenana404 {
+		height: 200px;
+		padding-top: 30px;
+		z-index: 1;
+	}
+}
+  
+  
+@media screen and (max-width: 750px) { 
+	.dzenana404 {
+		height: fit-content !important;
+	}
+  
+   .title {
+    color: #f7f7f7;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.125;
+    max-width: 80%;
+    margin: auto;
+	}
+}
+  
+</style>
+
+
+{% schema %}
+{
+  "settings": [
+    {
+      "type": "range",
+      "id": "topmargin",
+	  "label": "Top Margin",
+      "min": -90,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "bottommargin",
+	  "label": "Bottom Margin",
+      "min": -90,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+	  "label": "Show Continue Shopping Button",
+      "id": "continueshopping",
+      "default": true
+    }
+  ],
+  "presets":[
+    {
+      "name":"404 Animated"
+    }
+  ]
+}
+{% endschema %}

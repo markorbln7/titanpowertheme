@@ -1,0 +1,498 @@
+<script crossorigin="anonymous" integrity="sha512-+1MtN0rwSlEnZo0agG99mCQChlBtfe8hyHItwWtgiD33mWvaNVZkZB9yX2S92z5HgDg1+EcitjutZejbHUcZAg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.min.js" ></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.css" integrity="sha512-SID9h7gl6DWMEv9gG4Msa2+Cv6Th1HK9Bswoy7ArayNta2hdRkUhhzprlgocF7X+LYH2QiroQVnYloED73SdrA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+
+
+<style>
+{% if section.settings.section_img != blank %}
+  .vertical-slider-{{section.id}}{
+    background: url('{{ section.settings.section_img | img_url: 'master' }}');
+    loading="lazy"  
+    background-size: cover;
+    box-shadow: 0 19px 32px 10px #000 inset;
+    background-position: center;
+    height: 60vh;
+    padding-top: 4%;
+  }
+  {% else %}.vertical-slider-{{section.id}}{
+    background: {{section.settings.section_bg}};
+  }
+{% endif %}
+
+.productpack {
+  width: 400px; 
+  height: 50vh;
+  object-fit: contain;
+}
+
+ 
+	.vertical-slider-{{section.id}} 
+    .swiper-container-vertical 
+    .swiper-button-next,
+    .vertical-slider-{{section.id}}
+    .swiper-button-prev {
+    left: 50%;
+	transform-origin: left center;
+  	}
+
+    .vertical-slider-{{section.id}}
+    .swiper-button-prev {
+    top: 10px;
+    }
+
+    .vertical-slider-{{section.id}}
+    .swiper-button-next {
+    top: auto;
+    bottom: 10px;
+    }
+</style>
+
+
+<div class="vertical-slider-{{section.id}}" style="max-width: 100%;"> 
+  <div class="swiper swiperino"  style="max-width: 100%;"> 
+    <div class="swiper-wrapper" style="max-width: 100%;"> 
+      <!-- Slides -->
+      {%for block in section.blocks%}
+      <div class="swiper-slide">
+        <div class="featured-content" style="max-width: 1600px;">
+                <div class="productpack">
+                    {% render 'titan-image'
+                    image: block.settings.image_packaging
+                    %}
+                </div>
+                <div class="texts">
+                  <h1 style=" color:{{ block.settings.text_color }}; word-break:keep-all;">  
+                    {{block.settings.text}} 
+                  </h1>
+                  <p> 
+                      {{block.settings.description}}
+                  </p>
+                  <div class="scontents-btn titanbutton">
+                    <a href="{{ block.settings.button_url}}" style="text-decoration: none;">{{ block.settings.button_text }}</a>
+                  </div>
+                </div>  
+                <div class="productimage">
+                    {% render 'titan-image'
+                      image: block.settings.image
+                    %}   
+                  <div class="swiper-button-next"></div> 
+                </div>
+        </div>
+      </div>
+        {%endfor%}
+    </div>
+  </div> 
+    
+</div> 
+
+ 
+
+<script>
+     var swiper = new Swiper(".swiperino", {
+   
+
+  // Optional parameters
+  direction: 'vertical',
+  loop: true,
+  autoplay: {
+   delay: 5000,
+ },
+    disableOnInteraction: true,
+
+  slidesPerView:1,
+        spaceBetween: 200,
+   
+  
+  keyboard: {
+    enabled: true,
+    onlyInViewport: false,
+  },
+  lazy: {
+    loadPrevNext: true,
+  },
+
+  controller: {
+    inverse: true,
+  },  
+  grabCursor: true,
+ 
+
+  
+  // If we need pagination
+
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});
+</script>
+
+
+
+<style>
+/* Mobile and tablet */
+@media only screen and (max-width: 1020px) {
+  
+    .vertical-slider-{{section.id}}
+    .swiper-backface-hidden .swiper-slide {
+      /* height: auto !important; */
+    }
+  
+   .vertical-slider-{{section.id}}{
+    background: url('{{ section.settings.section_img | img_url: 'master' }}');
+    background-size: cover;
+    box-shadow: 0 19px 32px 10px #000 inset;
+    background-position: center;
+	height: 75vh;
+	padding-top: 10%;
+  	}
+  
+	.productpack {
+	display: none;
+	}
+  
+	.productimage .titan-image img,
+	.productpack .titan-image img {
+	max-height: 23.5vh;
+	max-width: 400px;
+	margin: auto;
+    object-fit: contain;
+	}
+  
+    .vertical-slider-{{section.id}}
+	.featured-content {
+    max-width: 98vw;
+    margin: auto;
+	display: flex !important;
+	flex-direction: column-reverse !important;
+	place-content: space-evenly; 
+	height: 60vh;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.productimage {
+	height: 21.5vh;
+	}
+  
+	.texts {
+	max-width: 90vw;
+	text-align: -webkit-left;
+    margin-left: 15%;
+    margin-right: 5%;
+    }
+  
+  	.vertical-slider-{{section.id}} 
+	.titan-image,
+  	.vertical-slider-{{section.id}} .titan-image img {
+	height: 21.5vh;
+	}
+
+	.scontents-btn {
+	width: 150px;
+	text-align: center;
+	text-transform: uppercase;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.swiper {
+	width: 100vw;
+	height: 60vh;
+	}
+	
+  	.vertical-slider-{{section.id}}
+  	.swiper-button-prev {
+    transform: rotateZ(90deg);
+    left: 90.8vw;
+    top: 80%;
+  	}
+  
+    .vertical-slider-{{section.id}}
+    .swiper-button-next {
+    transform: rotateZ(90deg);
+    top: 90%;
+    justify-content: flex-start;
+    left: 4vw;
+  	}
+}
+  
+/* Desktop */
+
+@media only screen and (min-width: 1021px) {
+	.texts {
+    /* height: auto; */
+    max-width: 40vw;
+    max-height: 40vh;
+    height: 40vh;
+    width: 40vw;
+	  }
+  
+    .vertical-slider-{{section.id}}
+    .swiper-button-prev,
+    .vertical-slider-{{section.id}}
+    .swiper-button-next {
+	  top: 80%;
+  	}
+
+	.vertical-slider-{{section.id}}
+	.swiper {
+	  width: 100vw;
+	  height: auto;
+    max-height: 50vh;
+	  }
+
+	.featured-content {
+    max-width: 99vw;
+    margin: auto;
+	  display: flex;
+	/* max-height:    50vh; */
+    height: auto;
+	  flex-direction: row;
+	  place-items: center;
+	  justify-content: space-evenly;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.productimage .titan-image img {
+	max-height: 100%;
+	width: 400px;
+	object-fit: contain;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.productimage {
+	width: 400px;
+	height: 50vh;
+	object-fit: contain;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.titan-image {
+	height: 50vh;
+	width: 400px;
+	max-width: 400px;
+	object-fit: contain;
+	}
+  
+  	.vertical-slider-{{section.id}} .titan-image img {
+    height: 100%;
+	width: 100%;
+	max-width: 100%;
+	object-fit: contain;
+	}
+  
+	.productpack .titan-image img {
+	padding: 2%;
+	height: 95%;
+	}
+  
+  	.vertical-slider-{{section.id}}
+  	.swiper-button-prev {
+	transform: rotateZ(87deg);
+	left: 98.3vw;
+	}
+  
+  	.vertical-slider-{{section.id}}
+  	.swiper-button-next {
+	transform: rotateZ(90deg);
+	top: 95%;
+    justify-content: flex-start;
+    left: 4vw;
+	}
+}
+
+/* Global */
+    .vertical-slider-{{section.id}}
+    .swiper-backface-hidden .swiper-slide {
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	/* height: 50vh !important; */
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.swiper-button-prev:after,
+  	.vertical-slider-{{section.id}}
+	.swiper-button-next:after {
+	font-size: 20px;
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.swiper-button-prev,
+  	.vertical-slider-{{section.id}}
+	.swiper-button-next {
+	color: {{	section.settings.arrow_color}};
+	}
+  
+  	.vertical-slider-{{section.id}}
+	.swiper-pagination-bullet {
+	background: transparent;
+	border: 1px solid {{section.settings.pagination_color}};
+	}
+
+	.scontents-btn a {
+	color: {{section.settings.button_text_color}};
+	}
+  
+	.scontents-btn {
+	width: 200px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: {{section.settings.button_bg}};
+	border: 1px solid {{section.settings.button_border}};
+	}
+  
+	.scontents-btn:hover {
+	background: {{section.settings.button_bg_hover}};
+	}
+
+
+  /* tablet */
+@media only screen 
+and (min-width: 768px) 
+and (max-width: 1021px) { 
+   
+  	.vertical-slider-{{section.id}}
+	.swiper {
+	width: 100vw;
+	height: 70vh;
+	}
+  
+    .vertical-slider-{{section.id}}
+    .productimage .titan-image img, 
+    .vertical-slider-{{section.id}}
+    .productpack .titan-image img {
+    max-height: 30.5vh;
+    max-width: 400px;
+    margin: auto;
+    object-fit: contain;
+  	}
+  
+ 	.vertical-slider-{{section.id}} 
+	.titan-image,
+  	.vertical-slider-{{section.id}} 
+  	.titan-image img {
+	height: 28.5vh;
+	}
+  
+  	.vertical-slider-{{section.id}}
+  	.productimage {
+    height: 30.5vh;
+	}
+ }
+
+  
+</style>
+ 
+
+
+{% schema %}
+
+{
+  "name": "Vertical Product Scroll",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "section_bg",
+      "label": "Secrion Background",
+      "default": "#000000",
+      "info": "Background backup - if block background isn't set"
+    }, {
+      "type": "image_picker",
+      "id": "section_img",
+      "label": "Section Background Image"
+    }, {
+      "type": "header",
+      "content": "Navigation"
+    }, {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow Color",
+      "default": "#000000"
+    }, {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Vertical Pagination Color",
+      "default": "#000000",
+      "info": "This setting changes the active dot color"
+    }, {
+      "type": "color",
+      "id": "button_bg_hover",
+      "label": "Button Hover Background",
+      "default": "#000000"
+    }, {
+      "type": "color_background",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#000000"
+    }, {
+      "type": "color",
+      "id": "button_border",
+      "label": "Button Border Color",
+      "default": "#FFFFFF"
+    }, {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Product",
+      "name": "Product Picker",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Heading"
+        }, {
+          "type": "html",
+          "id": "description",
+          "label": "Description",
+          "default": "Description <br> Of <br> Product"
+        }, {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button Text"
+        }, {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        }, {
+          "type": "color",
+          "id": "text_color",
+          "default": "#FFFFFF",
+          "label": "Heading Color"
+        }, {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }, {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        }, {
+          "type": "image_picker",
+          "id": "image_packaging",
+          "label": "Product Packaging Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vertical Slider",
+      "blocks": []
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,366 @@
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- https://michalsnik.github.io/aos/ -->
+<style>
+/* GLOBAL */
+  {% if secton.settings.full_width %}
+  .iwt-{{section.id}} .iwt-inner { 
+    max-width: 100%;
+  }
+  {% endif %}
+  .iwt-{{section.id}} .iwt-inner {
+    margin: auto;
+  }
+  {% if section.settings.full_width == false %}
+  .iwt-{{section.id}},  .iwt-{{section.id}} .iwt-inner {
+    max-width: {{ section.settings.width }}px;
+    margin: auto;
+  }
+
+  {% else %}
+  /* Dynamic section width END */
+  .iwt-{{section.id}} .iwt-inner {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  {%endif%}
+
+  .textual-{{section.id}} {
+    text-align:{{section.settings.plus_slideshow_text_align}} !important;
+  }
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__image {
+    max-width: 100%;
+    height: {{ section.settings.height }}px;
+  }
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__text {
+    width: 90vw;
+    margin: auto;
+    text-align:{{section.settings.plus_slideshow_text_align}}  !important ;
+  }
+  .iwt-{{section.id}} picture { 
+    height: 100%;
+    width: 100%;
+  }
+  .iwt-{{section.id}} picture img {
+    width: {{section.settings.image_width}}px;
+    height: {{section.settings.image_height}}px;
+    max-width: 90vw;
+    object-fit: {{ section.settings.image_fit }};
+    border-radius: {{section.settings.circle}}%;
+  }
+/*   RESIZING IMAGE FOR TABLET */
+  @media only screen 
+  and (min-width: 768px) 
+  and (max-width: 1024px)  {
+    .iwt-{{section.id}} picture img {
+    width: calc({{section.settings.image_width}}px / 1.5);
+    margin: auto;
+    }
+    }
+/*  DESKTOPS */
+@media only screen and (min-width:768px) {
+  {% if section.settings.bgimage != blank %}
+  
+  .iwt-{{section.id}} {
+    background:url('{{ section.settings.bgimage | img_url: 'master' }}');
+    background-size: cover !important;
+    box-shadow: 5px 5px 43px 40px #000 inset;
+    background-repeat: round;
+  }
+  {% endif %}
+  .iwt-{{section.id}} .iwt-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+  }
+  
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__image {
+    width: 46%;
+  }
+
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__text {
+    width: 46%;
+      /* text-align: center; */
+  }
+}
+/* MOBILE */
+@media only screen and (max-width: 768px) {
+  {% if section.settings.swap_lg == true %}
+  .iwt-{{section.id}} .iwt-inner {
+    flex-direction: column-reverse !important;
+  }
+  {% endif %}
+
+  {% if section.settings.diffmobile == false %}
+  .iwt-{{section.id}} .iwt-inner {
+    background:url('{{ section.settings.bgimage | img_url: 'master' }}');
+    background-size: cover !important;
+    box-shadow: 5px 5px 43px 40px #000 inset;
+  }  
+  {% else %}
+  .iwt-{{section.id}} .iwt-inner {
+    background: transparent;
+  }
+  {% endif %}
+  /* .iwt-{{section.id}} .iwt-inner .iwt-inner__image   {
+    height: calc({{ section.settings.image_height }}px - 50%);  
+  } */
+
+  .textual-{{section.id}}  {
+    max-width: 98vw;
+    margin: auto;
+    text-align-last:{{ section.settings.mobile_align }} !important;
+  }
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__image  img,
+  .iwt-{{section.id}} .iwt-inner .iwt-inner__image,
+  .iwt-{{section.id}} picture img { 
+    width: {{section.settings.mobile_image_width}}vw;
+    height: {{section.settings.mobile_image_height}}vh;
+    object-fit: {{section.settings.mobile_fit}};
+    margin: auto;  
+  }
+ 
+  /* .iwt-{{section.id}} .iwt-inner .iwt-inner__image  img  {
+    max-height: calc({{ section.settings.image_height }}px - 80px);  
+  } */
+}
+</style>
+
+
+<div class="iwt iwt-{{ section.id }}" style="overflow: hidden;">
+  <div class="iwt-inner">
+    <div class="iwt-inner__image" {% if section.settings.aos == true %} data-aos="zoom-in" data-aos-delay="150" data-aos-offset="100" data-aos-duration="700" {% endif %} {% if section.settings.swap_lg == true %} style="order: 1" {% endif %}>
+      {% if section.settings.image != blank %}
+        {% render 'titan-image' 
+          image: section.settings.image
+          mobile_image: section.settings.image_sm
+        %}
+      {% endif %}
+    </div>
+    <div class="iwt-inner__text">
+      <div class="textual-{{section.id}}">
+        {{section.settings.text_content}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  AOS.init();
+  document.addEventListener("shopify:section:load", () => {
+    AOS.init();
+  }) 
+</script>
+
+{% schema %}
+{
+  "name":"Titan - image with text",
+  "tag":"section",
+  "settings":[
+    {
+      "type":"header",
+      "content":"General"
+    },  {
+      "type":"image_picker",
+      "id":"bgimage",
+      "label":"Background image"
+    },
+  {
+    "type": "checkbox",
+    "id": "diffmobile",
+    "label": "Don't use bg on mobile",
+    "default": true
+  },
+    {
+      "type":"image_picker",
+      "id":"image",
+      "label":"Desktop image",
+      "info":"Image for screensizes greater than 768 pixels"
+    },
+    {
+      "type":"image_picker",
+      "id":"image_sm",
+      "label":"Mobile image"
+    },
+   {
+     "type": "range",
+     "id": "image_width",
+     "label": "Image Width",
+     "unit": "px",
+     "min": 100,
+     "max": 1000,
+     "step": 10,
+     "default": 400
+   },
+   {
+    "type": "range",
+    "id": "image_height",
+    "label": "Image Height",
+    "unit": "px",
+    "min": 100,
+    "max": 1000,
+    "step": 10,
+    "default": 400
+  },
+   {
+          "type": "range",
+          "id": "mobile_image_width",
+          "label": "Mobile Image Width",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vw",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_height",
+          "label": "Mobile Image Height",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vh",
+          "default": 70
+        },
+  {
+    "type": "range",
+    "id": "circle",
+    "label": "Border Radius",
+    "unit": "%",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "default": 10
+  },
+    {
+      "type":"header",
+      "content":"Appearance"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "default": "cover",
+      "label":"Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+     {
+      "type": "select",
+      "id": "mobile_fit",
+      "default": "contain",
+      "label":"Image fit on mobile",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type":"checkbox",
+      "id":"full_width",
+      "default": true,
+      "label":"Full width"
+    },
+    {
+      "type":"checkbox",
+      "id":"swap_lg",
+      "default": false,
+      "label":"Swap sides"
+    },
+    {
+      "type":"checkbox",
+      "id":"aos",
+      "default": false,
+      "label":"Animate on scroll"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "min": 800,
+      "max": 1600,
+      "step": 10,
+      "unit": "px",
+      "default": 1000,
+      "label":"Boxed width"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "default": 600,
+      "label":"Section height"
+    },
+    {
+      "type":"header",
+      "content":"Text"
+    },
+  
+    {
+      "type":"html",
+      "id":"text_content",
+      "label":"Text content"
+       },{ 
+      "type": "select", 
+      "id": "plus_slideshow_text_align", 
+      "label": "Text alignment", 
+      "options": [ 
+        { 
+          "value": "left", 
+          "label": "Left" 
+        }, 
+        { 
+          "value": "center", 
+          "label": "Center" 
+        }, 
+        { 
+          "value": "right", 
+          "label": "Right" 
+        } 
+       ],
+      "default": "center" 
+    },{ 
+      "type": "select", 
+      "id": "mobile_align", 
+      "label": "Text alignment", 
+      "options": [ 
+        { 
+          "value": "left", 
+          "label": "Left" 
+        }, 
+        { 
+          "value": "center", 
+          "label": "Center" 
+        }, 
+        { 
+          "value": "right", 
+          "label": "Right" 
+        } 
+       ],
+      "default": "center" 
+    }
+
+  ],
+  "presets":[{
+    "name":"Titan image with text"
+  }]
+}
+{% endschema %}

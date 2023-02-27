@@ -1,0 +1,28 @@
+.featured-heading {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.titan-collections {
+  display: flex;
+  max-height: 500px !important;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 15%;
+}
+
+.titan-collections img {
+  height: 500px;
+  object-fit: contain;
+}
+.colltit {
+  display: block;
+  text-align: center;
+  margin-top: -250px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+}
+
+a {
+  text-decoration: none;
+}

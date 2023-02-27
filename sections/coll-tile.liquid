@@ -1,0 +1,294 @@
+<div class="tiles-{{section.id}}" style="background: {{section.settings.bg}};">
+  {% for block in section.blocks %}
+    <div class="tilesection">
+      <div class="tile-{{block.id}}" data-bg-text="{{block.settings.tile_bg_text}}">
+        <background style="height: 100%;">
+          {{block.settings.title_bg_text}}
+        </background>
+        <div class="text-content" style="z-index: 9;">
+          {{block.settings.tile_html}}
+          <h2 style="font-weight: lighter;">
+            <a href="{{block.settings.tile_link}}" style="text-decoration: none; color: white;">
+              {{block.settings.tile_title}}
+            </a>
+          </h2>
+          {% if block.settings.includebrowse %}
+            <a href="{{block.settings.tile_link}}" style="text-decoration: none; color: white; display:flex; align-items: center;">
+              <img src="https://img.icons8.com/ios/50/26e07f/minus.png" style="height: 15px; margin-right: 5px;">
+              Browse Now
+            </a>
+          {% endif %}
+        </div>
+        <div class="tileimg-{{block.id}}" style="z-index: 2;">
+          <a href="{{block.settings.tile_link}}" style="text-decoration: none;">
+            {% render 'titan-image'
+        		image: block.settings.tile_image 
+            %}
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% for block in section.blocks %}
+  <style>
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-evenly;
+}
+	
+
+  .tiles-{{section.id}} {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-gap: 2vw;
+    margin: auto;
+    padding: 5%;
+    z-index: 2;
+    max-width: 80vw;
+}
+    
+  .tile-{{block.id}} {
+    display: flex;
+    border: {{section.settings.border_width}}px solid {{section.settings.border_color}};
+    border-radius: 15px;
+    /* padding: 10px; */
+    position: relative;
+    max-width: 40vw;
+    overflow: hidden;
+    height: 35vh;
+    justify-content: flex-start;
+    padding-left: 30px;
+    }
+  
+  .tile-{{block.id}}:after {
+	font-weight: 900;
+    content: attr(data-bg-text);
+    display: block;
+    font-size: calc(var(--font-heading-scale) * 100px);
+    line-height: 1;
+    position: absolute;
+    bottom: -3px;
+    left: 5px;
+    opacity: .3;
+    margin-bottom: 10px;
+    color: {{block.settings.tile_bg_color}};
+    z-index: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width:39.5vw;
+  }
+
+  .tileimg-{{block.id}} {
+    max-height: 40vh;
+    width:100%;
+    max-width: 20vw;
+  }
+  
+  .tile {
+    background-attachment: scroll;
+  }
+  
+  .tileimg-{{block.id}} .titan-image img {
+  	/* max-width: 20vw; */
+    width: 100%;
+    height: 100%;
+    transition: transform 1.5s ease;
+    object-fit: contain;
+  }
+  
+	{% if section.settings.glow %}
+    .tile-{{block.id}}:hover {
+  	color: rgba(255, 255, 255, 1);
+  	box-shadow: 5px 20px 35px rgba(28, 136, 28, 0.4);
+	}
+ 	{% endif %}
+  
+  .tileimg-{{block.id}} .titan-image img:hover {
+ 	transform: scale(1.03);
+  }
+
+  .tileimg-{{block.id}} .titan-image  {
+    z-index: 2;
+    height: 35vh;
+    max-height: 35vh;
+   }
+  
+/* TABLET SCREEN   */
+@media only screen 
+  and (min-device-width: 765px) 
+  and (max-device-width: 1024px)  {
+    
+  .tiles-{{section.id}} { 
+   	display: grid;
+   	grid-template-columns: 1fr 1fr;
+   	min-width: 98vw;
+   	align-items: center;
+   	justify-content: center; 
+  }
+    
+ .tile-{{block.id}} {
+    min-width: 45vw;
+    height: 25vh;
+ }
+    
+ .text-content h2 {
+    font-size: 24px;
+  }
+
+  .tileimg-{{block.id}} .titan-image  { 
+    height: 30vh;
+    object-fit: fill;
+    max-height: 30vh;
+    min-height: 30vh;
+  } 
+    
+  .tileimg-{{block.id}} .titan-image  img { 
+    object-fit: contain;
+    height: 100%;
+  }  
+}
+  
+/* MOBILE */
+@media only screen and (max-width: 760px){
+  
+  .tiles-{{section.id}} {
+    display: flex;
+    min-width: 95vw;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .tile-{{block.id}} {
+    min-width: 90vw;
+    height: 25vh;
+  }
+    
+  .text-content {
+    width: 50%;
+  }
+  
+  .text-content h2 {
+    font-size: 20px;
+  }
+  
+  .tileimg-{{block.id}} .titan-image img { 
+    min-width: 40vw;
+    object-fit: fill;
+    height: 25vh;
+  }
+  
+  .tile-{{block.id}}:after {
+    font-size: calc(var(--font-heading-scale) * 80px);
+    max-width: calc(80vw - 5%);
+  }
+}
+</style>
+
+
+{% endfor %}
+
+
+{% schema %}
+
+{
+  "name": "Titan Tiles",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    }, {
+      "type": "color",
+      "label": "Background color",
+      "id": "bg",
+      "default": "#000000",
+      "info": "Background color that applies to whole section."
+    }, {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#FAFAFA"
+    }, {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border Width",
+      "unit": "px",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 2
+    }, {
+      "type": "checkbox",
+      "id": "glow",
+      "label": "Glow On Hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Tiles",
+      "name": "Coll Tiles",
+      "settings": [
+        {
+          "type": "html",
+          "label": "Custom Text",
+          "id": "tile_html",
+          "default": "<div><p>Some HTML content</p></div>"
+        }, {
+          "type": "text",
+          "id": "tile_title",
+          "label": "Collection Name",
+          "default": "Collection Name"
+        }, {
+          "type": "checkbox",
+          "id": "includebrowse",
+          "label": "Include Browse Now text",
+          "default": true
+        }, {
+          "type": "url",
+          "label": "Collection Link",
+          "id": "tile_link"
+        }, {
+          "type": "collection",
+          "label": "Featured collection",
+          "id": "tile_collection"
+        }, {
+          "type": "paragraph",
+          "content": "Visual"
+        }, {
+          "type": "image_picker",
+          "label": "Collection Image",
+          "id": "tile_image"
+        }, {
+          "type": "color",
+          "label": "Tile background color",
+          "id": "tile_bg",
+          "default": "#000000"
+        }, {
+          "type": "text",
+          "id": "tile_bg_text",
+          "label": "Tile Background Text",
+          "info": "Leave blank if you don't want any text as background.",
+          "default": "TITAN"
+        }, {
+          "type": "color",
+          "id": "tile_bg_color",
+          "label": "Background Text Color",
+          "default": "#333333"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Tiles"
+    }
+  ]
+}
+
+{% endschema %}

@@ -1,0 +1,35 @@
+<div id="index-mp4-video" style="padding: 0 10%;">
+  <video autoplay loop muted playsinline width="100%">
+    <source src="{{ section.settings.description }}" type="video/mp4" id="PipelineVideo">
+  </video>
+</div>
+<script type="text/javascript">
+  document.getElementById("PipelineVideo").play();
+  $(function () {
+    if (!navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+      $("video").prop("muted", false);
+    }
+  });
+</script>
+
+
+{% schema %}
+{
+    "name": "Video MP4",
+    "settings": [
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Video URL",
+        "default": "https://cdn.shopify.com/s/files/1/2018/8867/files/ice.mp4"
+      }
+    ],
+  
+    "presets": [
+      {
+        "name": "MP4 Video",
+        "category": "Video"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,60 @@
+textarea,
+select {
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--c-white) inset !important;
+}
+
+.select-block {
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    right: 16px;
+    display: block;
+    width: 11px;
+    height: 13px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='%231A262F' d='m441.9 167.3-19.8-19.8c-4.7-4.7-12.3-4.7-17 0L224 328.2 42.9 147.5c-4.7-4.7-12.3-4.7-17 0L6.1 167.3c-4.7 4.7-4.7 12.3 0 17l209.4 209.4c4.7 4.7 12.3 4.7 17 0l209.4-209.4c4.7-4.7 4.7-12.3 0-17z'/></svg>");
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+  }
+}
+
+.select-block__el {
+  @mixin transition border-color;
+  @mixin form-input;
+
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  outline: none;
+  color: var(--c-text);
+  appearance: none;
+}
+
+.select-block__label {
+  @mixin transition color;
+  @mixin label-focus;
+
+  position: absolute;
+  top: -2px;
+  left: 12px;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 0 7px 0 4px;
+  background: var(--c-white);
+  color: var(--c-dark-gray-5);
+}

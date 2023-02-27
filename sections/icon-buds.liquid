@@ -1,0 +1,192 @@
+<script crossorigin="anonymous" integrity="sha512-+1MtN0rwSlEnZo0agG99mCQChlBtfe8hyHItwWtgiD33mWvaNVZkZB9yX2S92z5HgDg1+EcitjutZejbHUcZAg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.css" integrity="sha512-SID9h7gl6DWMEv9gG4Msa2+Cv6Th1HK9Bswoy7ArayNta2hdRkUhhzprlgocF7X+LYH2QiroQVnYloED73SdrA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+<div class="buds-icons-{{section.id}}">
+
+
+  {% for block in section.blocks %}
+    <div class="inner-{{section.id}}">
+    
+      <div class="icons-{{block.id}}">
+        {% render 'titan-image',
+          image: block.settings.icono
+        %}
+        {{block.settings.icon_text}}
+      </div>
+      {%endfor%}
+      <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for block in section.blocks %}
+
+
+        <div class="swiper-slide">
+          <div class="mainimg-{{block.id}}">
+        
+              {% render 'titan-image',
+          image: block.settings.main_image,
+      
+            </div>
+          </div>
+        </div>
+            {%endfor %}
+      </div>
+
+    </div>
+
+  {% endfor %}
+
+
+</div>
+
+<script>
+      var swiper = new Swiper(".mySwiper", {
+        direction: "vertical", 
+        loop: true,
+        mousewheel: true,
+        autoplay: {
+        delay: 5000,
+        },
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: false,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+
+              document.addEventListener('shopify:section:load', () => {
+                  var swiper = new Swiper(".mySwiper", {
+        direction: "vertical", 
+        loop: true,
+        autoplay: {
+        delay: 5000,
+        },
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: false,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+          })
+
+</script>
+  <style>
+  /* GLOBAL STYLE */
+ .inner-{{section.id}} {
+    display: flex;
+    flex-direction: row !important;
+  }
+
+  {% for block in section.blocks %}
+
+{% if block.settings.fullwidthimage  %}
+.inner-{{section.id}},
+.buds-icons-{{section.id}} {
+  display: flex !important;
+
+}
+
+{% else %}
+.inner-{{section.id}} {
+  display: flex;
+
+}
+
+{% endif %}
+
+.icons-{{block.id}} .titan-image img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain !important;
+}
+
+/* END GLOBAL STYLE */
+  {% endfor %}
+</style>
+  {% schema %}
+  {
+    "name": "Icons WIth Text",
+    "class": "Section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg",
+        "default": "#FAFAFA",
+        "label": "Section Background"
+      },
+      {
+        "type": "checkbox",
+        "id": "fullwidthimage",
+        "default": false,
+        "label": "If Image Is fullwidth (icons bg) use this"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Icons",
+        "name": "Icons",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icono",
+            "label": "icon"
+  
+          },
+          {
+            "type": "html",
+            "id": "icon_text",
+            "label": "Icon Text"
+          }
+        ]
+      },
+      {
+        "type": "Image",
+        "name": "Image",
+    
+        "settings": [
+          { 
+            "type": "image_picker",
+            "id": "main_image",
+            "label": "Main Image"
+          }
+        ]
+      }
+   ],
+    "presets": [
+      {
+        "name": "Buds Icons"
+      }
+    ]
+  }
+
+  {% endschema %}

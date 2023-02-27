@@ -1,0 +1,36 @@
+image: solislab/shopify-ci:standard-js
+stages:
+  - merge_request
+  - build
+  - test
+  - deploy
+create_merge_request:
+  stage: test
+  only:
+    - /^(feature|bugfix|support)\/.*/
+  script:
+    - ./scripts/gitlab/merge-request.sh
+test_build_lint:
+  image: node:12.22.10
+  stage: test
+  before_script:
+    - node -v
+  script: npm ci && npm run test:js && npm run build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME - $CI_COMMIT_SHA"
+    expire_in: 3 days
+# deploy_develop:
+#   only:
+#     - develop
+#   stage: deploy
+#   before_script:
+#     - theme configure --password=${API_SECRET} --store=${STORE} --themeid=${THEME_ID} --env=staging --ignored-file=settings_data.json
+#   script:
+#     - theme deploy -e staging -d src
+#   environment:
+#     name: Staging
+#     url: "https://${STORE}/?preview_theme_id=${THEME_ID}"

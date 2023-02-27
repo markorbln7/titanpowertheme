@@ -1,0 +1,440 @@
+<div class="linked-image-{{section.id}}" style="max-width: 100vw; overlfow: hidden; background: {{section.settings.bg}};
+            background-attachment: fixed; background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;">
+  {% for block in section.blocks %}
+    {% case block.type %}
+
+      {% when 'Image' %}
+        <div class="linkedimg-{{block.id}}">
+          {% render 'titan-image',
+            image: block.settings.image,
+            mobile_image: block.settings.mobile_image 
+          %}
+        </div>
+      {% when 'Link' %}
+        <div class="lnkd-{{block.id}}">
+          <a class="linked-{{block.id}}" href="{{block.settings.url}}" style="display: block !important;"></a>
+        </div>
+      {% when 'Text' %}
+        <div class="lnkd-{{block.id}}">
+          <div class="linked-{{block.id}} textinjo">
+            {{block.settings.textl}}</div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% for block in section.blocks %}
+  <style>
+
+/* TABLET */
+
+@media only screen 
+  and (min-width: 768px) 
+  and (max-width: 1124px) {
+ 
+     .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      position: absolute;
+      margin-left: {{ block.settings.mobile_horizontal_position}}vw;
+      margin-top:  -{{ block.settings.mobile_vertical_position }}vh;
+      min-height: {{ block.settings.mobile_height }}px !important;
+      width: {{block.settings.mobile_width }}px;
+    }
+     .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      display: none !important;
+      
+      position: absolute;
+      margin-left: {{ block.settings.mobile_horizontal_position}}vw;
+      margin-top:  -{{ block.settings.mobile_vertical_position }}vh;
+      min-height: {{ block.settings.mobile_height }}px !important;
+      width: {{block.settings.mobile_width }}px;
+    }
+.textinjo {
+  width: 96% !important;
+}
+  .linked-image-{{section.id}} .titan-image img {
+   height: fit-content !important;
+    object-fit: contain !important;
+    }
+    .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      position: absolute;
+      margin-left: {{ block.settings.mobile_horizontal_position}}vw !important;
+      margin-top:  -{{ block.settings.mobile_vertical_position }}% !important;
+      min-height: {{ block.settings.mobile_height }}px !important;
+      width: {{block.settings.mobile_width }}px !important;
+    }
+    }
+    /*  End tablet */
+  
+    .linked-image-{{section.id}} {
+    overflow: hidden !important;
+     max-height: {{ block.settings.image_height }}vh;
+     max-width: {{ block.settings.image_width }}vh;
+     }
+
+    .linked-image-{{section.id}} {
+    margin-top: {{section.settings.margin-top}}px;
+    }
+    
+    
+    .linked-image-{{section.id}} .titan-image  {
+    margin: auto;
+  	aspect-ratio: {{block.settings.aspect_ratio}}; 
+    max-height: {{ block.settings.image_height }}vh;
+    height: {{ block.settings.image_height }}vh;
+    position: relative;
+    
+    width:{{ block.settings.image_width }}vw; 
+    }
+  .linked-image-{{section.id}} .titan-image img {
+    height: 100%;
+    width: 100%;
+ 	 object-fit: {{block.settings.position}};}
+    .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      position: absolute;
+      margin-left: {{ block.settings.horizontal_position}}vw;
+      margin-top:  -{{ block.settings.vertical_position }}vh;
+      min-height: {{ block.settings.lnkd_height }}px;
+      height: {{ block.settings.lnkd_height }}px;
+      width: {{block.settings.lnkd_width }}px;
+      z-index: 9;
+      
+    }
+
+    {%if request.design_mode%}
+    .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      border: 2px solid;
+    }
+    {%endif%}
+
+    @media only screen and (max-width: 790px) {
+    .linked-image-{{section.id}} .titan-image  {
+    width: {{ block.settings.mobile_image_width }}vw;
+    margin: auto;
+    height: {{block.settings.mobile_image_height }}vh;
+    position: relative;
+
+    }
+
+        .linked-image-{{section.id}} .titan-image img { 
+          height: 100%;
+          width: 100%;
+          object-fit: {{block.settings.mobile_fit}};
+        }
+      .textinjo {
+  width: 96% !important;
+}
+
+    .lnk-{{block.id}},
+    .linked-{{block.id}} {
+      position: absolute;
+      margin-left: {{ block.settings.mobile_horizontal_position}}vw;
+      margin-top:  -{{ block.settings.mobile_vertical_position }}vh;
+      min-height: {{ block.settings.mobile_height }}px !important;
+      width: {{block.settings.mobile_width }}px;
+    }
+    }
+    
+    .textinjo {
+  width: 40%;
+}
+   </style>
+{% endfor %}
+
+{% schema %}
+{
+  "name": "Linked Image",
+  "class": "linked-image",
+  "settings": [
+    
+    {
+      "type": "color_background",
+      "id": "bg",
+      "label": "Background Color",
+      "default": "#FAFAFA",
+      "info": "Section background color [will appear if image is transparent, or doesn't fit whole screen]"
+    } , {
+   "type": "range",
+   "id": "margin-top",
+   "label": "Top Margin",
+   "unit": "px",
+   "min": -100,
+   "max": 100,
+   "step": 5,
+   "default": 0
+ }
+  ],
+  "blocks": [
+  
+    {
+      "type": "Image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": " Desktop Image"
+        },
+        {
+          "type": "range",
+          "id": "image_height",
+          "label": "Desktop Image Height",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vh",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "Desktop Image Width",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vw",
+          "default": 70
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": " Mobile Image "
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_width",
+          "label": "Mobile Image Width",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vw",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_height",
+          "label": "Mobile Image Height",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "vh",
+          "default": 70
+        }, {
+          "type": "select",
+          "options": [
+            {
+              "value": "1/1",
+              "label": "1 / 1"
+            },
+            {
+              "value": "2/1",
+              "label": "2 / 1"
+            }, {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "id": "aspect_ratio",
+          "label": "Image Aspect Ratio",
+          "default": "none",
+          "info": "Choose 1/1 if image is square"  
+    },
+        {
+          "type": "select",
+          "options": [
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "fill",
+              "label": "fill"
+            }
+          ],
+          "id": "position",
+          "default": "contain",
+          "info": "Image fit",
+          "label": "Image Fit"
+        },   {
+          "type": "select",
+          "options": [
+            {
+              "value": "contain",
+              "label": "Contain"
+            },
+            {
+              "value": "cover",
+              "label": "Cover"
+            },
+            {
+              "value": "fill",
+              "label": "fill"
+            }
+          ],
+          "id": "mobile_fit",
+          "default": "contain",
+          "info": "Image fit on mobile",
+          "label": "Mobile Image Fit"
+        }
+      ]
+    },
+      
+    {
+      "type": "Link",
+      "name": "Link on Image",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "range",
+          "id": "vertical_position",
+          "label": "Link Vertical Position",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position",
+          "label": "Link Horizontal Position",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "mobile_vertical_position",
+          "label": "Link Vertical Position - Mobile",
+          "min": 2,
+          "max": 200,
+          "step": 2,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "mobile_horizontal_position",
+          "label": "Link Horizontal Position - Mobile",
+          "min": 2,
+          "max": 200,
+          "step": 2,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "lnkd_height",
+          "label": "Clickable Area Height",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "lnkd_width",
+          "label": "Clickable Area Width",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "mobile_height",
+           "label": "Clickable Area Height: Mobile",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "mobile_width",
+           "label": "Clickable Area Width - Mobile",
+          "min": 10,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        }
+      ]
+    },    {
+      "type": "Text",
+      "name": "Text on Image",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "textl",
+          "label": "Text"
+        },
+        {
+          "type": "range",
+          "id": "vertical_position",
+          "label": "Text Vertical Position",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position",
+          "label": "Text Horizontal Position",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "mobile_vertical_position",
+          "label": "Text Vertical Position - Mobile",
+          "min": 2,
+          "max": 200,
+          "step": 2,
+          "unit": "%",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "mobile_horizontal_position",
+          "label": "Text Horizontal Position - Mobile",
+          "min": 2,
+          "max": 200,
+          "step": 2,
+          "unit": "%",
+          "default": 10
+        }
+      ]
+    }
+   ],
+  "presets":[
+  {
+    "name":"Linked Image"
+  }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,237 @@
+@define-mixin heading {
+  font-size: 44px;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+}
+
+.heading {
+  @mixin heading;
+}
+
+@define-mixin heading-2 {
+  font-size: 32px;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+
+  @media (--sm) {
+    font-size: 36px;
+  }
+}
+
+.heading-2 {
+  @mixin heading-2;
+}
+
+@define-mixin heading-3 {
+  font-size: 24px;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+
+  @media (--sm) {
+    font-size: 32px;
+  }
+
+  @media (--l) {
+    font-size: 36px;
+  }
+}
+
+.heading-3 {
+  @mixin heading-3;
+}
+
+
+@define-mixin heading-4 {
+  font-size: 16px;
+  line-height: 1.1;
+  font-family: var(--font-heading-bold);
+}
+
+.heading-4 {
+  @mixin heading-4;
+}
+
+@define-mixin heading-5 {
+  font-size: 20px;
+  line-height: 1.1;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.heading-5 {
+  @mixin heading-5;
+}
+
+@define-mixin heading-5-secondary {
+  font-size: 22px;
+  line-height: 1.1;
+  font-family: 'PalatinoLTPro-Bold';
+  font-weight: 700;
+}
+
+.heading-5-secondary {
+  @mixin heading-5-secondary;
+}
+
+@define-mixin label-text {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.label-text {
+  @mixin label-text;
+}
+
+@define-mixin label-text-2 {
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.label-text-2 {
+  @mixin label-text-2;
+}
+
+@define-mixin nav-text {
+  font-size: 12px;
+  line-height: 1.1;
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+}
+
+.nav-text {
+  @mixin nav-text;
+}
+
+@define-mixin p-normal {
+  font-size: 16px;
+  line-height: 1.25;
+  font-family: var(--font-secondary);
+}
+
+.p-normal {
+  @mixin p-normal;
+}
+
+@define-mixin p-small {
+  font-size: 12px;
+  line-height: 1.25;
+  font-family: var(--font-secondary);
+}
+
+.p-small {
+  @mixin p-small;
+}
+
+@define-mixin label {
+  font-size: 48px;
+  font-family: 'CoronetCom', serif;
+  font-style: italic;
+  line-height: 1.34;
+  font-weight: 400;
+}
+
+.label {
+  @mixin label;
+}
+
+@define-mixin title-1 {
+  font-family: var(--font-heading-bold);
+  font-size: 56px;
+  font-weight: bold;
+  line-height: 1.1;
+
+  @media (--sm) {
+    font-size: 64px;
+  }
+}
+
+.title-1 {
+  @mixin title-1;
+}
+
+@define-mixin p-1 {
+  font-family: var(--font-secondary);
+  font-size: 20px;
+  line-height: 1.25;
+
+  @media (--sm) {
+    font-size: 24px;
+  }
+
+  @media (--l) {
+    font-size: 30px;
+  }
+}
+
+.p-1 {
+  @mixin p-1;
+}
+
+@define-mixin text-normal {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  line-height: 1.25;
+
+  @media (--sm) {
+    font-size: 14px;
+  }
+
+  @media (--l) {
+    font-size: 12px;
+  }
+}
+
+.text-normal {
+  @mixin text-normal;
+}
+
+@define-mixin text-normal-2 {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  line-height: 1.25;
+
+  @media (--l) {
+    font-size: 14px;
+  }
+}
+
+.text-normal-2 {
+  @mixin text-normal-2;
+}
+
+@define-mixin bold {
+  font-weight: 600;
+}
+
+@define-mixin fw-500 {
+  font-weight: 500;
+}
+
+@define-mixin text-1 {
+  font-family: var(--font-tertiary);
+  font-size: 14px;
+  line-height: 1.18;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.text-1 {
+  @mixin text-1;
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url('https://cdn.shopify.com/s/files/1/0262/9350/2036/files/font.woff2?v=1675677450');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'SangBleu OG Sans Trial';
+  src: url('https://cdn.shopify.com/s/files/1/0658/1570/7869/files/SangBleuOGSansTrial-Regular.otf?v=1675895643');
+  font-weight: 400;
+}
+/* .font-helvetica-normal {
+  font-family: 'Helvetica';
+} */

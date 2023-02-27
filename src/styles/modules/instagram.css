@@ -1,0 +1,20 @@
+.ooo-instagram-header__title {
+  margin-bottom: 12px;
+
+  @media (--sm) {
+    margin-bottom: 24px;
+  }
+
+  @media (--l) {
+    margin-bottom: 36px;
+  }
+}
+
+.ooo-instagram-feed__list {
+  display: flex;
+  align-items: center;
+}
+
+.ooo-instagram-feed {
+  padding-left: 18px;
+}

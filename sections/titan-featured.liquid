@@ -1,0 +1,82 @@
+{{ 'titan-featured.css' | asset_url | stylesheet_tag }}
+
+
+<div class="titanfeatured featured-{{ section.id }}">
+  {%unless section.settings.title == blank %}
+    <h1 class="featured-heading">
+      {{section.settings.title}}
+    </h1>
+  {% endunless %}
+  <div class="titan-collections">
+
+    {%- for block in section.blocks -%}
+
+      {%if block.settings.collection_image !=blank %}
+        <a href="{{ block.settings.collection.url}}">
+          <img srcset="{{ block.settings.collection_image | img_url: 'master'}}">
+          {% if block.settings.collection_title != blank %}
+          <h2 class="colltit">     {{ block.settings.collection_title }}   </h2>
+          {% else %}
+          <h2 class="colltit">     {{block.settings.collection.title}}    </h2>
+          {% endif %}  </a>
+
+      {% else %}
+        <a href="{{ block.settings.collection.url}}">
+          <img src="{{ block.settings.collection | img_url: 'master' }}">
+       
+        {% if block.settings.collection_title != blank %}
+        <h2 class="colltit">    {{ block.settings.collection_title }}   </h2>
+        {% else %}
+        <h2 class="colltit">    {{block.settings.collection.title}}    </h2>
+        {% endif %}
+
+      </a>
+      {%endif%}
+
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+
+{
+  "name":"Titan Featured Collection",
+  "tag":"section",
+  "settings":[
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Heading",
+    "default": "Featured collection"
+  }],
+  "blocks": [
+  {
+    "type": "featured_collection",
+    "name": "t:sections.collection-list.blocks.featured_collection.name",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "t:sections.collection-list.blocks.featured_collection.settings.collection.label"
+      },
+      {
+        "type": "image_picker",
+        "id": "collection_image",
+        "label": "Titan Collection Image"
+      },  {
+        "type": "text",
+        "id": "collection_title",
+        "placeholder": "collection_title",
+        "label": "Collection Tittle"
+      }
+    ]
+  }
+],
+  "presets":[
+  {
+    "name":"Titan featured"
+  }
+  ]
+}
+{% endschema %}

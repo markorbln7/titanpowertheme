@@ -1,0 +1,346 @@
+<script crossorigin="anonymous" integrity="sha512-+1MtN0rwSlEnZo0agG99mCQChlBtfe8hyHItwWtgiD33mWvaNVZkZB9yX2S92z5HgDg1+EcitjutZejbHUcZAg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.0.3/swiper-bundle.css" integrity="sha512-SID9h7gl6DWMEv9gG4Msa2+Cv6Th1HK9Bswoy7ArayNta2hdRkUhhzprlgocF7X+LYH2QiroQVnYloED73SdrA==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+<div class="buds-slider-{{section.id}}" style="background: {{section.settings.bg}};
+     background-attachment: fixed; background-position: center;                                  
+background-repeat: no-repeat;  
+background-size: cover;">
+      <div class="stillside" data-aos="fade-right" data-aos-delay="150" data-aos-offset="100" data-aos-duration="700">
+       {% for block in section.blocks %}
+       {% case block.type%}
+       {% when 'Icons'%}
+       <div class="iconobud">
+        {% render 'titan-image'
+        image: block.settings.icono,
+        mobile_image: section.settings.sliderimgmobile
+          %}
+             {{block.settings.icon_text}}
+             </div>
+      {% endcase %}
+  {%endfor%}
+       </div>
+  <!-- Slider main container -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for block in section.blocks %}
+    {% case block.type%}
+       {% when 'Slider'%}
+
+        <div class="swiper-slide">
+            {%if block.settings.sliderimg != blank %}
+          {% render 'titan-image'
+                    image: block.settings.sliderimg,
+                    %}
+          {%endif%}
+            {%if block.settings.sliderheading != blank %}
+            <div class="textslide-{{block.id}}">
+            <div class="txts"> 
+             <h1 style="font-family: 'Work Sans';">  {{block.settings.sliderheading}}  </h1>
+                    {{block.settings.sliderdesc}}
+            </div>
+           
+            </div> 
+             {%endif %}
+        </div>
+{%endcase%}
+      {%endfor %}
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-button-next"></div>    
+    <div class="swiper-scrollbar"></div>
+
+  </div>
+</div>
+
+<style>
+
+
+  .swiper-button-prev:after, .swiper-button-next:after {
+  font-size: 12px;
+  color: white;    padding: 0px 25px;
+  
+  }
+  .swiper-button-prev, .swiper-button-next {
+    top: 90%;
+    border-radius: 50%;
+    width: 40px;
+    background-color: {{section.settings.arrow}};
+  }
+
+
+  .swiper,
+  .textslide,
+  .stillside {
+    max-height: 50vh;
+    width: 50%;
+    align-self: center;
+  }
+  .stillside .titan-image,
+   .stillside .titan-image img  {
+    max-height: 40px;
+    max-width: 40px;
+    object-fit: scale-down;
+    margin: 10px;
+    margin-right: 20px;
+  }
+  .buds-slider-{{section.id}} h1, .h1 {
+  font-size: {{section.settings.shd}}px;
+
+}
+   
+ 
+  .stillside {
+    width: 50%;
+    align-items: center;
+  }
+  .swiper .titan-image img {
+    height: 100%;
+    width: 100%;
+    max-height: 50vh;
+    min-height: 48vh;
+    object-fit: scale-down;
+
+  }
+
+  .buds-slider-{{section.id}}{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    margin: auto;
+    margin: {{section.settings.margin}}px auto;
+  }
+
+  .swiper-button-next {
+    top: 50%;
+    left: 85%;
+  }
+
+
+  .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
+    font-size: 30px;
+    width: 30px;
+    color:{{section.settings.boxshadow}} ;
+  }
+    .swiper-vertical > .swiper-pagination-bullets .swiper-pagination-bullet, 
+  .swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet {
+    background-color:{{section.settings.boxshadow}} ;
+  }
+  {% for block in section.blocks %}
+  .textslide-{{block.id}} {
+    background-image:url('{{ block.settings.bgimg | img_url: 'master' }}');
+    background: {{block.settings.bgcol}};
+    height: 50vh;
+    text-align: center;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    place-content: space-evenly;
+  }
+
+  .txts { 
+    width: 80%;
+    place-self: center;
+  }
+
+  .iconobud {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    justify-content: flex-start;
+    margin-left: 30%;
+  }
+  {% endfor %} 
+/* MOBILE */
+  @media only screen and (max-width: 760px) {
+     .buds-slider-{{section.id}}{
+       display: flex;
+       flex-direction: column;
+     }
+    .iconobud {
+      margin-left: 10%;
+    }
+        .stillside {
+     width: 98vw;
+     }
+	.swiper {
+    max-height: 50vh;
+    width: 90%;
+    align-self: center;
+    margin: auto;
+    object-fit: contain;
+}
+
+  {% if section.settings.hideonmobile %}
+     .stillside {
+     width: 98vw;
+     }
+
+     .swiper .mySwiper,
+     .swiper, .textslide {
+       display: none;
+     }
+
+    .iconobud {
+      margin-left: 10%;
+    }
+     {% endif %}
+  }
+
+</style>
+<script>
+      var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        mousewheel: true,
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: true,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+
+              document.addEventListener('shopify:section:load', () => {
+                  var swiper = new Swiper(".mySwiper", {
+       
+        loop: true,
+        autoplay: {
+        delay: 5000,
+        },
+        keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+        grabCursor: true,
+        speed: 1000,
+        paginationClickable: true,
+        parallax: true,
+        autoplay: true,
+        effect: "slide",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,  
+        },
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+      });
+          })
+
+</script>
+{% schema %}
+
+{
+  "name": "buds Page Slider",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "bg",
+      "default": "#FAFAFA",
+      "label": "Section/Slider Background"
+    }, {
+      "type": "image_picker",
+      "id": "stillimg",
+      "label": "Still Image",
+      "info": "Pick the image that will not be a part of the slider - Still Imsge"
+    }, {
+      "type": "image_picker",
+      "id": "sliderimgmobile",
+      "label": "Slider Image On Mobile",
+      "info": "If 'Hide on Mobile' is selected, leave this blank"
+    }, {
+      "type": "checkbox",
+      "id": "hideonmobile",
+      "default": false,
+      "label": "Hide Slider  On Mobile",
+      "info": "Switch to mobile view to decide if you want to hide this image on mobile"
+    }, {
+      "type": "color",
+      "id": "boxshadow",
+      "label": "Arrow Colorr",
+      "default": "#FAFAFA"
+    }, {
+      "type": "range",
+      "id": "margin",
+      "label": "Top and Bottom Margin",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    }, {
+      "type": "range",
+      "id": "shd",
+      "label": "Slider Heading Size - Desktop",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "info": "This applies to ALL step headings."
+    }, {
+      "type": "range",
+      "id": "shm",
+      "label": "Slider Heading Size - Mobile",
+      "unit": "px",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 12,
+      "info": "Switch to mobile screen to better access the size"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Icons",
+      "name": "Icons",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icono",
+          "label": "icon"
+        }, {
+          "type": "html",
+          "id": "icon_text",
+          "label": "Icon Text"
+        }
+      ]
+    }, {
+      "type": "Slider",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sliderimg",
+          "label": "Slider Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buds Slider ",
+      "blocks": []
+    }
+  ]
+}
+
+{% endschema %}

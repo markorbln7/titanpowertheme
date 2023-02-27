@@ -1,0 +1,97 @@
+{{ 'section-product-template.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template.js' | asset_url | script_tag }}
+{% assign product = all_products['5-x-titan-smart-cable™-black-friday-2'] %}
+{% assign product2 = all_products['2-x-titan-smart-cable™-black-friday-1'] %}
+{% assign product4 = all_products['4-x-titan-smart-cable™-black-friday-1'] %}
+<section id="product-template" class="product-template titan-bg-black">
+  <div class="container">
+    <div class="product-template__wrapper f ais jcc">
+        <div class="product-template__wrapper--image column">
+            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+            <img class="w-100" src="{{ featured_image | img_url: 'master' }}" alt="{{ featured_image.alt }}">
+        </div>
+        <div class="product-template__wrapper--content column">
+            <div class="product-template__wrapper--content__review">
+                <span class="product-template__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </span>
+                <span class="product-template__wrapper--content__review--mark font-sans color-white">4.81 </span>
+                <span class="product-template__wrapper--content__review--number color-gray font-lato">(5502)</span>
+            </div>
+              <h2 class="product-template__wrapper--content__title color-white">
+                  "The only cable that you will ever need"
+              </h2>
+              <div class="product-template__wrapper--content__features font-sans">
+                  <div class="product-template__wrapper--content__features--name">New & Improved design</div>
+                  <div class="product-template__wrapper--content__features--name">Unique 90° head</div>
+                  <div class="product-template__wrapper--content__features--name">Now even faster</div>
+              </div>
+              <div class="product-template__wrapper--content__selection">
+                  <div class="product-template__wrapper--content__selection">
+                      Choose your offer:
+                  </div>
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcc">
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>5x Titan Cable (60% + 10% discount + free cable)</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>4x Titan Cable (60% + 10% discount)</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>4x Titan Cable (60% discount)</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="product-template__wrapper--content__selection">
+                  <div class="product-template__wrapper--content__selection">
+                      Choose your phone type:
+                  </div>
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcc">
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>Iphone</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>Type-C</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>Micro Usb</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="product-template__wrapper--content__selection">
+                  <div class="product-template__wrapper--content__selection">
+                      Choose your cable length:
+                  </div>
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcc">
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>4ft</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>6ft</span>
+                      </div>
+                      <div class="product-template__wrapper--content__selection--wrapper__single">
+                        <span>10ft</span>
+                      </div>
+                  </div>
+              </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Template",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Template",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

@@ -341,7 +341,8 @@ window.addEventListener('load', () => {
 <!-- End of Taboola Pixel Code -->
   
 {%endif %}
-
+{{ 'main.css' | asset_url | stylesheet_tag }}
+{{ 'main.js' | asset_url | script_tag }}
 {% render 'gsf-conversion-pixels' %}
 </head>
 

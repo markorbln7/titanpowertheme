@@ -1,3 +1,46 @@
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/lib/index.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/product-template/product-template.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+.product-template__wrapper {
+        gap:40px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+        .product-template__wrapper--content__review {
+                line-height: 1.6;
+                font-size: 20px;
+            }
+        .product-template__wrapper--content__review--mark {
+                    font-weight: 600;
+                    font-size: 28px;
+                }
+        .product-template__wrapper--content__review--number {
+                    font-size: 18px;
+                }
+        .product-template__wrapper--content__title {
+                margin: 8px 0 20px;
+                animation: light 3s linear;
+                letter-spacing: 0.06rem;
+            }
+        .product-template__wrapper--content__features {
+                font-size: 21px;
+                line-height: 25px;
+                color:#efefef;
+                font-weight: 200;
+            }
+        @media only screen and (max-width: 991px) {
+        .product-template__wrapper--content__features {
+                font-size:19x;
+        }
+}
+        @media only screen and (max-width: 768px) {
+        .product-template__wrapper--content__features {
+                font-size:18x;
+        }
+}
+        .product-template__wrapper--content__features--name {
+                    margin: 8px 0;
+}
 /*!**********************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/lib/index.js!./src/styles/main.css ***!
   \**********************************************************************************************************************************/
@@ -402,43 +445,60 @@ Import all other libs using this markup
 .color-white {
   color:#fff;
 }
+.color-titan-green {
+  color:#60C655;
+}
+.bg-titan-green {
+  background-color:#60C655;
+}
+.color-titan-yellow {
+  color: #F2C054;
+}
+.color-gray {
+  color:#EFEFEF;
+}
+.titan-bg-black {
+  background-color: #000;
+}
+.column {
+  flex-basis: calc(50% - 40px);
+  max-width: calc(50% - 40px);
+}
+@media only screen and (max-width: 768px) {
+  .column {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+.custom-qty {
+  border:none;
+  margin: 0;
+  text-align: center;
+}
+.icon-thunder {
+  font-size: 35px;
+}
+@media only screen and (max-width: 991px) {
+  .icon-thunder {
+    font-size:24px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .icon-thunder {
+    font-size:22px;
+  }
+}
 .w-100 {
   width:100%;
-}
-img {
-  display:block;
-}
-.relative {
-  position:relative;
-}
-.cart-form {
-  max-width: calc(100% - 40px);
-}
-@media only screen and (min-width: 768px) {
-  .cart-form {
-    max-width: calc(100% - 120px);
-  }
-}
-.cart-form {
-  margin: 0 auto;
-}
-.cart-form .cart-row.new-row {
-    border: 1px solid black;
-    padding: 20px;
-    margin-top: 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    margin-top:0;
-}
-.cart-form .h2 {
-    margin-left: 60px;
-    margin-bottom:20px;
-}
-@media only screen and (min-width: 768px) {
-  .cart-form .h2 {
-    margin-left: 20px;
-  }
 }
 .mha, .mxa {
   margin-left: auto;

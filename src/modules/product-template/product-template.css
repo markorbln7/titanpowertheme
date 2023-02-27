@@ -1,0 +1,40 @@
+.product-template {
+    &__wrapper {
+        gap:40px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        &--content {
+            &__review {
+                line-height: 1.6;
+                font-size: 20px;
+                &--mark {
+                    font-weight: 600;
+                    font-size: 28px;
+                }
+                &--number {
+                    font-size: 18px;
+                }
+            }
+            &__title {
+                margin: 8px 0 20px;
+                animation: light 3s linear;
+                letter-spacing: 0.06rem;
+            }
+            &__features {
+                font-size: 21px;
+                line-height: 25px;
+                color:#efefef;
+                font-weight: 200;
+                @media only screen and (max-width: 991px) {
+                    font-size:19x;
+                }
+                @media only screen and (max-width: 768px) {
+                    font-size:18x;
+                }
+                &--name {
+                    margin: 8px 0;
+                }
+            }
+        }
+    }
+}

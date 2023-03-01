@@ -1,0 +1,59 @@
+{{ 'section-product-icons.css' | asset_url | stylesheet_tag }}
+<div class="product-icons">
+    <div class="container">
+        <div class="product-icons__wrapper f jcb aic">
+            <div class="product-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/1954QxFyEoMXi0mutTt3Vu-3B-k=/fit-in/700x0/bd60ffb1d1be471095dbc4a714f03468/titan-smart-cable-iphone-charging-cable-titan-power-type-c.png">
+                <div class="product-icons__wrapper--icon__title">Unique 90° Head</div>
+            </div>
+            <div class="product-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/aYr_asoXXczKOkzm3rHBS2zr2v0=/fit-in/700x0/9ab956038ba241d09fd274a6303608dc/titan-smart-cable-iphone-charging-cable-titan-power-type-c-4.png">
+                <div class="product-icons__wrapper--icon__title">Lightning-Fast Charging</div>
+            </div>
+             <div class="product-template__wrapper--content__review f fdc text-center asfe">
+                <span class="product-template__wrapper--content__review--stars color-titan-green font-sans mb-15">★ ★ ★ ★ ★ 4.9</span>
+                <span class="product-template__wrapper--content__review--number color-gray font-lato">Based on 11345 reviews</span>
+            </div>
+            <div class="product-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/81Y_tNgPXgbc76h7hLhc46hrqvk=/fit-in/700x0/6eb5a2fc82f844e4bcf5a6013f7f80d0/icons8-usb-disconnected-100.png">
+                <div class="product-icons__wrapper--icon__title">Cable Auto Disconect</div>
+            </div>
+            <div class="product-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/dDTB_lNP5wT5A_sg2nU727aZFLM=/fit-in/700x0/4e980c50f32745018532f8e993d16278/titan-smart-cable-iphone-charging-cable-titan-power-type-c-2.png">
+                <div class="product-icons__wrapper--icon__title">90 Day Guarantee</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Product Icons",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "icons",
+      "name": "Add icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "info": "Choose Image",
+          "label":"Choose Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "info": "Text",
+          "label":"Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Icons",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

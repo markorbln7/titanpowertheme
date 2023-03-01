@@ -235,6 +235,9 @@ Import all other libs using this markup
 .jce { justify-content: flex-end; }
 .jcc { justify-content: center; }
 .jcb { justify-content: space-between; }
+.asfe {
+  align-self: flex-end;
+}
 .fa {
   flex: 1 1 auto;
   min-width: 0;
@@ -476,6 +479,12 @@ input[type=number]
 }
 .w-100 {
   width:100%;
+}
+.text-center {
+  text-align: center;
+}
+.mb-15 {
+  margin-bottom: 15px;
 }
 .mha, .mxa {
   margin-left: auto;

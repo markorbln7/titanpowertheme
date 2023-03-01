@@ -1,27 +1,35 @@
 {
-    "sections": {
-      "main": {
-        "type": "main-page",
-        "disabled": true,
-        "settings": {
-          "padding_top": 36,
-          "padding_bottom": 36
-        }
-      },
-      "f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f": {
-        "type": "product-template",
-        "settings": {
-        }
-      },
-      "33fe5d57-5fd8-4b2b-89b2-30e750ff97eb": {
-        "type": "product-icons",
-        "settings": {
-        }
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
-    "order": [
-      "main",
-      "f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f",
-      "33fe5d57-5fd8-4b2b-89b2-30e750ff97eb"
-    ]
-  }
+    "f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f": {
+      "type": "product-template",
+      "settings": {
+      }
+    },
+    "33fe5d57-5fd8-4b2b-89b2-30e750ff97eb": {
+      "type": "product-icons",
+      "settings": {
+      }
+    },
+    "ebd5207d-3e9f-44a7-92f6-ed30d96a4c33": {
+      "type": "product-image",
+      "settings": {
+        "text": "",
+        "title": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f",
+    "33fe5d57-5fd8-4b2b-89b2-30e750ff97eb",
+    "ebd5207d-3e9f-44a7-92f6-ed30d96a4c33"
+  ]
+}

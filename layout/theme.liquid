@@ -343,6 +343,8 @@ window.addEventListener('load', () => {
 {%endif %}
 {{ 'main.css' | asset_url | stylesheet_tag }}
 {{ 'main.js' | asset_url | script_tag }}
+{{ 'section-product-template.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template.js' | asset_url | script_tag }}
 {% render 'gsf-conversion-pixels' %}
 </head>
 
@@ -402,7 +404,7 @@ window.addEventListener('load', () => {
 
 <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
 
-
+{{ 'override.js' | asset_url | script_tag }}
 
 
 <!-- PF EDT START -->

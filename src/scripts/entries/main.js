@@ -1,11 +1,13 @@
 import { set, isIEorEdge, isTouch } from 'lib/utils'
 import { initComponent } from 'lib/components'
 
-import ProductTemplate from 'modules/product-template/product-template'
+import Video from 'modules/video/video'
+import ContactForm from 'modules/contact-form/contact-form'
 
 import 'styles/main.css'
 
-initComponent(ProductTemplate, 'ProductTemplate')
+initComponent(Video, 'video')
+initComponent(ContactForm, 'contact-form')
 
 document.addEventListener('DOMContentLoaded', () => {
   if (isIEorEdge()) set(document.body, 'ie')

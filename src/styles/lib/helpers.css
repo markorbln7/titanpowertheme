@@ -80,6 +80,22 @@
     max-width: 100%;
   }
 }
+.column-left {
+  flex-basis: calc(45% - 40px);
+  max-width: calc(45% - 40px);
+  @media only screen and (max-width: 768px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+.column-right {
+  flex-basis: calc(55% - 40px);
+  max-width: calc(55% - 40px);
+  @media only screen and (max-width: 768px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
 {

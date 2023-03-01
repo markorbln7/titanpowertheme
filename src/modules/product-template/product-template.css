@@ -4,6 +4,37 @@
         flex-direction: row;
         flex-wrap: wrap;
         &--content {
+            &__add {
+                width:100%;
+                color:white;
+                font-size:17px;
+                &--colored {
+                    position: relative;
+                    background-color: #141414;
+                    border-radius: 10px;
+                    padding: 15px 20px;
+                }
+                a {
+                    text-decoration: underline;
+                    color:white;
+                }
+                &--title {
+                    padding-left: 60px;
+                    &:before {
+                        position: absolute;
+                        top: 50%;
+                        left: 20px;
+                        width: 37px;
+                        height: 37px;
+                        transform: translateY(-50%);
+                        content: "";
+                        border: 2px solid rgba(96, 198, 85, .8);
+                    }
+                }
+                &--image {
+                    max-width: 15%;
+                }
+            }
             &__selection {
                 margin-bottom: 10px;
                 font-size:18px;
@@ -48,8 +79,12 @@
                         letter-spacing: 0.05em;
                         cursor: pointer;
                         justify-content:center;
+                        -webkit-transition: all 1s; /* For Safari 3.0 to 6.0 */
+                        transition: all 1s; /* For modern browsers */
                         &:hover {
                             background-color: rgba(96, 198, 85, .8);
+                            -webkit-transition: all 1s; /* For Safari 3.0 to 6.0 */
+                            transition: all 1s; /* For modern browsers */
                         }
                         &.active {
                             background-color: rgba(96, 198, 85, .8);
@@ -72,8 +107,12 @@
                         border: 2px solid rgba(96, 198, 85, .5);
                         text-align: center;
                         cursor: pointer;
+                        -webkit-transition: all 1s; /* For Safari 3.0 to 6.0 */
+                            transition: all 1s; /* For modern browsers */
                         &:hover {
                             border: 2px solid rgba(96, 198, 85, 1);
+                            -webkit-transition: all 1s; /* For Safari 3.0 to 6.0 */
+                            transition: all 1s; /* For modern browsers */
                         }
                         &.active {
                             border: 2px solid rgba(96, 198, 85, 1);
@@ -113,6 +152,7 @@
                 line-height: 25px;
                 color:#efefef;
                 font-weight: 200;
+                margin-bottom:20px;
                 @media only screen and (max-width: 991px) {
                     font-size:19x;
                 }

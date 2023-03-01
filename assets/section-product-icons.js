@@ -15,7 +15,9 @@
   \****************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _product_icons_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./product-icons.css */ \"./src/modules/product-icons/product-icons.css\");\n\nconsole.log('ajmo ajde svi u napadfff');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvbW9kdWxlcy9wcm9kdWN0LWljb25zL3Byb2R1Y3QtaWNvbnMuanMuanMiLCJtYXBwaW5ncyI6Ijs7QUFBQTtBQUVBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdGl0YW5wb3dlci8uL3NyYy9tb2R1bGVzL3Byb2R1Y3QtaWNvbnMvcHJvZHVjdC1pY29ucy5qcz9iOTU4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAnLi9wcm9kdWN0LWljb25zLmNzcydcblxuY29uc29sZS5sb2coJ2FqbW8gYWpkZSBzdmkgdSBuYXBhZGZmZicpXG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/modules/product-icons/product-icons.js\n");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _product_icons_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./product-icons.css */ "./src/modules/product-icons/product-icons.css");
+
 
 /***/ }),
 

@@ -1,6 +1,7 @@
 {% assign product = all_products['5-x-titan-smart-cable™-black-friday-2'] %}
 {% assign product2 = all_products['2-x-titan-smart-cable™-black-friday-1'] %}
 {% assign product4 = all_products['4-x-titan-smart-cable™-black-friday-1'] %}
+{% assign plug = all_products['titan-45w-nano-pd-plug™-1']%}
 <section id="product-template tt" class="product-template titan-bg-black">
   <div class="container">
     <div class="product-template__wrapper f ais jcc">
@@ -10,9 +11,9 @@
         </div>
         <div class="product-template__wrapper--content column-right">
             <div class="product-template__wrapper--content__review">
-                <span class="product-template__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </span>
-                <span class="product-template__wrapper--content__review--mark font-sans color-white">4.9 </span>
-                <span class="product-template__wrapper--content__review--number color-gray font-lato">(11345)</span>
+                <span class="product-template__wrapper--content__review--stars color-titan-green font-sans">★ ★ ★ ★ ★ </span>
+                <span class="product-template__wrapper--content__review--mark font-sans color-white">4.7 </span>
+                <span class="product-template__wrapper--content__review--number color-gray font-lato">(21956)</span>
             </div>
               <h1 class="h1 product-template__wrapper--content__title color-white">
                  Titan Smart Cable™
@@ -33,7 +34,7 @@
               </div>
               <div class="product-template__wrapper--content__selection">
                   <div class="product-template__wrapper--content__selection">
-                      Choose your offer:
+                      Choose your limited offer:
                   </div>
                   <div class="product-template__wrapper--content__selection--wrapper f aic jcb">
                       <div data-count="5x" data-id="{{product.id}}" data-product="5-x-titan-smart-cable%E2%84%A2-black-friday-2" class="active js-product-selector product-template__wrapper--content__selection--wrapper__single fdc">
@@ -86,6 +87,18 @@
                       <div data-length="10ft(3.0m)" class="js-length-selector product-template__wrapper--content__selection--wrapper__single">
                         10ft (3.0m)
                       </div>
+                  </div>
+              </div>
+              <div class="product-template__wrapper--content__add">
+                  <div class="product-template__wrapper--content__selection">
+                          Bundle Up and Save another 30%
+                  </div>
+                  <div class="f jcb aic product-template__wrapper--content__add--colored">
+                    <div class="product-template__wrapper--content__add--title">Add <a href="{{plug.url}}">{{plug.title}}</a> for only {{plug.price | money }}</div>
+                    <div class="product-template__wrapper--content__add--image">
+                        {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
+                        <img class="w-100" src="{{ featured_image_plug | img_url: 'master' }}" alt="{{ featured_image_plug.alt }}">
+                    </div>
                   </div>
               </div>
               <div class="product-template__wrapper--content__form--atc">

@@ -1,0 +1,69 @@
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/lib/index.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/product-zig/product-zig.css ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+.product-zig {
+    padding: 50px 0;
+}
+    .product-zig__bigtitle {
+        font-size:32px;
+        line-height:40px;
+        text-align: center;
+        color:white;
+        max-width: 600px;
+        margin:0 auto;
+        margin-bottom:50px
+    }
+    .product-zig__bigtitle:before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1.5px;
+    background-color: #60c655;
+    border-radius:10px;
+    margin: 0 auto 20px;
+}
+    .product-zig__single {
+        margin-bottom: 80px
+    }
+    .product-zig__single.reverse {
+    flex-direction: row-reverse;
+}
+    .product-zig__single.reverse .product-zig__single--content {
+                padding-right: 0;
+}
+    .product-zig__single.reverse .product-zig__single--image {
+                padding-right: 5%;
+}
+    .product-zig__single--content {
+            width: 50%;
+            padding-right: 5%;
+            padding-left: 0;
+}
+    .product-zig__single--content__title {
+                margin-bottom: 20px;
+                font-size: 22px;
+                line-height: 1.5;
+                font-weight:700;
+                color:white;
+            }
+    .product-zig__single--content__text {
+                margin-bottom: 20px;
+                font-size: 18px;
+                line-height: 1.5;
+                color:white
+            }
+    .product-zig__single--image {
+            width: 50%;
+            max-height: 350px;
+            overflow: hidden;
+}
+    .product-zig__single--image img {
+                width: 100%;
+                height: 350px;
+                -o-object-fit: cover;
+                   object-fit: cover;
+            }
+    .product-rev {
+    background-color: #141414;
+    padding-top: 50px;
+}

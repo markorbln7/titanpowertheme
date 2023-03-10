@@ -22,7 +22,8 @@
                     color:white;
                 }
         .product-template__wrapper--content__add--title {
-                    padding-left: 60px
+                    padding-left: 60px;
+                    font-size: 19px
                 }
         .product-template__wrapper--content__add--title:before {
         position: absolute;
@@ -33,6 +34,18 @@
         transform: translateY(-50%);
         content: "";
         border: 2px solid rgba(96, 198, 85, .8);
+}
+        .product-template__wrapper--content__add--title:after {
+        display: none;
+        position: absolute;
+        top: 42%;
+        left: 22px;
+        width: 37px;
+        height: 46px;
+        transform: translateY(-50%);
+        content: "";
+        z-index: 2;
+        background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2731%27 height=%2723%27 fill=%27none%27%3E%3Cpath d=%27M2 10.667L11.22 20 29 2%27 stroke=%27%2360C655%27 stroke-width=%273%27/%3E%3C/svg%3E") no-repeat 1.61290323% 23px;
 }
         .product-template__wrapper--content__add--image {
                     max-width: 15%;
@@ -53,6 +66,7 @@
         position: relative;
 }
         .product-template__wrapper--content__selection--wrapper__save {
+                        pointer-events: none;
                         position: absolute;
                         top: -15px;
                         border-radius: 20px;
@@ -72,21 +86,32 @@
         .product-template__wrapper--content__selection--wrapper__single {
                         cursor: pointer;
                         flex: 0 0 33.333%;
-                        min-height: 5rem;
-                        text-align: center;
-                        position: relative;
-                        display: flex;
-                        align-items: center;
-                        height: 100%;
-                        grid-gap: 3px;
-                        gap: 3px;
-                        padding: 10px 5px;
-                        font-size: 16px;
-                        line-height: 1.57;
-                        letter-spacing: 0.05em;
-                        cursor: pointer;
-                        justify-content:center; /* For Safari 3.0 to 6.0 */
-                        transition: all 1s; /* For modern browsers */
+}
+        @media only screen and (max-width: 768px) {
+        .product-template__wrapper--content__selection--wrapper__single {
+                flex: 0 0 100%;
+        }
+}
+        .product-template__wrapper--content__selection--wrapper__single {
+        min-height: 5rem;
+        text-align: center;
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        grid-gap: 3px;
+        gap: 3px;
+        padding: 10px 5px;
+        font-size: 16px;
+        line-height: 1.57;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        justify-content:center; /* For Safari 3.0 to 6.0 */
+        transition: all 1s; /* For modern browsers */
+        border-right:1px solid rgba(96, 198, 85, 1);
+}
+        .product-template__wrapper--content__selection--wrapper__single:last-child {
+        border-right:none;
 }
         .product-template__wrapper--content__selection--wrapper__single:hover {
         background-color: rgba(96, 198, 85, .8); /* For Safari 3.0 to 6.0 */
@@ -125,17 +150,18 @@
                 color:white;
                 opacity: 1;
                 font-size:18px;
-            }
+}
         .product-template__wrapper--content__offerDiscount {
                 font-weight: 800;
                 color: #60C655;
                 line-height: 1.2;
                 font-size: 24px;
-            }
+}
         .product-template__wrapper--content__review {
+                cursor:pointer;
                 line-height: 1.6;
                 font-size: 20px;
-            }
+}
         .product-template__wrapper--content__review--mark {
                     font-weight: 600;
                     font-size: 28px;
@@ -147,14 +173,14 @@
                 margin: 8px 0 20px;
                 animation: light 3s linear;
                 letter-spacing: 0.06rem;
-            }
+}
         .product-template__wrapper--content__features {
                 font-size: 21px;
                 line-height: 25px;
                 color:#efefef;
                 font-weight: 200;
                 margin-bottom:20px;
-            }
+}
         @media only screen and (max-width: 991px) {
         .product-template__wrapper--content__features {
                 font-size:19x;
@@ -318,4 +344,10 @@
         }
         .js-crossed-price {
     text-decoration: line-through;
+}
+        .added .product-template__wrapper--content__add--title:after {
+        display:block;
+    }
+        .phone-icon {
+    max-width: 35px;
 }

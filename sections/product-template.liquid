@@ -10,20 +10,20 @@
             <img class="w-100" src="{{ featured_image | img_url: 'master' }}" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template__wrapper--content column-right">
-            <div class="product-template__wrapper--content__review">
+            <div class="product-template__wrapper--content__review js-section-scroll">
                 <span class="product-template__wrapper--content__review--stars color-titan-green font-sans">★ ★ ★ ★ ★ </span>
                 <span class="product-template__wrapper--content__review--mark font-sans color-white">4.7 </span>
                 <span class="product-template__wrapper--content__review--number color-gray font-lato">(21956)</span>
             </div>
               <h1 class="h1 product-template__wrapper--content__title color-white">
-                 Titan Smart Cable™
+                 "The only cable that you will ever need"
               </h1>
-              <h2 class="product-template__wrapper--content__title color-white">
+              {% comment %} <h2 class="product-template__wrapper--content__title color-white">
                   "The only cable that you will ever need"
-              </h2>
-              <div class="product-template__wrapper--content__offer font-sans">
+              </h2> {% endcomment %}
+              {% comment %} <div class="product-template__wrapper--content__offer font-sans">
                   Get our limited supply offer TODAY
-              </div>
+              </div> {% endcomment %}
               <div class="product-template__wrapper--content__offerDiscount font-sans">
                   UP TO 70% OFF + FREE CABLE TODAY!
               </div>
@@ -34,22 +34,25 @@
               </div>
               <div class="product-template__wrapper--content__selection">
                   <div class="product-template__wrapper--content__selection">
-                      Choose your limited offer:
+                      Choose your LIMITED offer:
                   </div>
-                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb">
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb fw">
                       <div data-count="5x" data-id="{{product.id}}" data-product="5-x-titan-smart-cable%E2%84%A2-black-friday-2" class="active js-product-selector product-template__wrapper--content__selection--wrapper__single fdc">
-                          5x Titan Cable
+                          <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/5_x_decoy.jpg?v=1678267382"></div>
                           <div>from {{product.price | money }}</div>
+                          <div class="crossed titan-red bold">from {{product.compare_at_price | money }}</div>
                           <span class="product-template__wrapper--content__selection--wrapper__save">Save 70% + free cable</span>
                       </div>
                       <div data-count="4x" data-id="{{product4.id}}" data-product="4-x-titan-smart-cable%E2%84%A2-black-friday-1" class="js-product-selector product-template__wrapper--content__selection--wrapper__single fdc">
-                         4x Titan Cable<br>
+                         <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_decoy.jpg?v=1678267382"></div>
                          <div>from {{product4.price | money }}</div>
+                         <div class="crossed titan-red bold">from {{product4.compare_at_price | money }}</div>
                          <span class="product-template__wrapper--content__selection--wrapper__save">Save 60% + 10%</span>
                       </div>
                       <div data-count="2x" data-id="{{product2.id}}" data-product="2-x-titan-smart-cable%E2%84%A2-black-friday-1" class="js-product-selector product-template__wrapper--content__selection--wrapper__single fdc">
-                          2x Titan Cable<br>
+                          <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_x_decoy.jpg?v=1678267382"></div>
                           <div>from {{product2.price | money }}</div>
+                           <div class="crossed titan-red bold">from {{product2.compare_at_price | money }}</div>
                           <span class="product-template__wrapper--content__selection--wrapper__save">Save 60%</span>
                       </div>
                   </div>
@@ -58,18 +61,18 @@
                   <div class="product-template__wrapper--content__selection">
                       Choose your phone type:
                   </div>
-                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top">
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top fw">
                       <div data-type="iPhone" class="active js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                      {% render 'iphone' %}
-                          IPhone
+                          <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_iphone_to_Type_A.png?v=1678267382"></div>
+                          <div>IPhone</div>
                       </div>
                       <div data-type="Type-C" class="js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                      {% render 'usbC' %}
-                         Type-C
+                          <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_Type-C_to_Type_A.png?v=1678267382"></div>
+                          <div>Type-C</div>
                       </div>
                       <div data-type="Micro-USB" class="js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                      {% render 'usb' %}
-                         Micro Usb
+                      <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_Micro-USB_to_Type_A.png?v=1678267382"></div>
+                          <div>Micro Usb</div>
                       </div>
                   </div>
               </div>
@@ -77,7 +80,7 @@
                   <div class="product-template__wrapper--content__selection">
                       Choose your cable length:
                   </div>
-                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top">
+                  <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top fw">
                       <div data-length="4ft(1.2m)" class="active js-length-selector product-template__wrapper--content__selection--wrapper__single">
                         4ft (1.2m)
                       </div>
@@ -91,10 +94,10 @@
               </div>
               <div class="product-template__wrapper--content__add">
                   <div class="product-template__wrapper--content__selection">
-                          Bundle Up and Save another 30%
+                          Bundle Up and Save another 50%
                   </div>
-                  <div class="f jcb aic product-template__wrapper--content__add--colored">
-                    <div class="product-template__wrapper--content__add--title">Add <a href="{{plug.url}}">{{plug.title}}</a> for only {{plug.price | money }}</div>
+                  <div data-addon="{{plug.first_available_variant.id}}" class="f jcb aic product-template__wrapper--content__add--colored js-add">
+                    <div class="product-template__wrapper--content__add--title">Add {{plug.title}} for only {{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
                     <div class="product-template__wrapper--content__add--image">
                         {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
                         <img class="w-100" src="{{ featured_image_plug | img_url: 'master' }}" alt="{{ featured_image_plug.alt }}">
@@ -103,7 +106,7 @@
               </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <span id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price"></span> <span class="js-crossed-price"></span></span>
+                    <span id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price"></span> <span class="js-crossed-price titan-red"></span></span>
                   </button>
               </div>
               <div class="product-template__icons">

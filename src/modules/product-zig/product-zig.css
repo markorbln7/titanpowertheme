@@ -1,5 +1,8 @@
 .product-zig {
     padding: 50px 0;
+    @media only screen and (max-width: 768px) {
+        padding: 50px 20px;
+    }
     &__bigtitle {
         font-size:32px;
         line-height:40px;
@@ -20,8 +23,18 @@
     }
     &__single {
         margin-bottom: 80px;
+        @media only screen and (max-width: 768px) {
+            margin-bottom: 40px;
+        }
+        flex-direction: row;
+        @media only screen and (max-width: 768px) {
+            flex-direction: column;
+        }
         &.reverse {
             flex-direction: row-reverse;
+            @media only screen and (max-width: 768px) {
+                flex-direction: column;
+            }
             .product-zig__single--content {
                 padding-right: 0;
             }
@@ -33,6 +46,10 @@
             width: 50%;
             padding-right: 5%;
             padding-left: 0;
+            @media only screen and (max-width: 768px) {
+                width: 100%;
+                padding-right: 0%;
+            }
             &__title {
                 margin-bottom: 20px;
                 font-size: 22px;
@@ -51,6 +68,10 @@
             width: 50%;
             max-height: 350px;
             overflow: hidden;
+            @media only screen and (max-width: 768px) {
+                width: 100%;
+                max-height: unset;
+            }
             img {
                 width: 100%;
                 height: 350px;
@@ -61,6 +82,7 @@
 }
 .product-rev {
     background-color: #141414;
+    padding: 0 10px;
     padding-top: 50px;
 }
 .slide-content {
@@ -202,6 +224,7 @@
 .faq {
     margin-top:80px;
     margin-bottom: 40px;
+    padding: 0 20px;
     .product-image__title slider-section__title {
         margin-bottom:30px;
     }

@@ -1,6 +1,9 @@
 .product-image {
     padding-top: 50px;
     padding-bottom: 50px;
+    @media only screen and (max-width: 768px) {
+        padding: 50px 20px;
+    }
     &__button {
         max-width: 400px;
         margin:30px auto;
@@ -29,6 +32,8 @@
         margin-bottom: 50px;
     }
     &__image {
+        max-width: 500px;
+        margin:0 auto;
         img {
             display: block;
             margin: 0 auto;

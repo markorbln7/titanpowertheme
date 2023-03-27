@@ -168,3 +168,85 @@ accordions.forEach((accordion) => {
     }
   }
 })
+
+const plus = document.querySelector('.js-plus')
+const minus = document.querySelector('.js-minus')
+const atcQty = document.querySelector('.js-atc-qty')
+const qNumber = document.querySelector('.js-qty-number')
+const addMore = document.querySelector('.js-add-more-message')
+const rules = {
+  1: 'Add 1 more for additional 10% discount',
+  2: 'Add 2 more for additional 25% discount',
+  3: 'Add 1 more for additional 25% discount',
+  4: 'Add 4 more for additional 50% discount',
+  5: 'Add 3 more for additional 50% discount',
+  6: 'Add 2 more for additional 50% discount',
+  7: 'Add 1 more for additional 50% discount',
+  8: 'Add 1 more and get free plug'
+}
+
+if (plus) {
+  plus.addEventListener('click', function () {
+    const starterQ = parseInt(atcQty.getAttribute('data-quantity'))
+    const newQ = starterQ + 1
+    atcQty.setAttribute('data-quantity', newQ)
+    qNumber.textContent = newQ
+    addMore.textContent = rules[newQ]
+  })
+}
+if (minus) {
+  minus.addEventListener('click', function () {
+    const starterQ = parseInt(atcQty.getAttribute('data-quantity'))
+    let newQ
+    if (starterQ === 1) {
+      newQ = 1
+    } else {
+      newQ = starterQ - 1
+    }
+    atcQty.setAttribute('data-quantity', newQ)
+    qNumber.textContent = newQ
+    addMore.textContent = rules[newQ]
+  })
+}
+
+atcQty.addEventListener('click', (e) => {
+  const productSelection = window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+  const qty = atcQty.getAttribute('data-quantity')
+  let addItems
+  if (window.selectLogic.addon !== '') {
+    addItems = [
+      {
+        id: window.products[productSelection],
+        quantity: qty
+      },
+      {
+        id: window.selectLogic.addon,
+        quantity: 1
+      }
+    ]
+  } else {
+    addItems = [
+      {
+        id: window.products[productSelection],
+        quantity: qty
+      }
+    ]
+  }
+  console.log(window.products, window.products[productSelection], productSelection)
+  const formData = {
+    items: addItems
+  }
+  fetch(window.Shopify.routes.root + 'cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      return response.json()
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
+})

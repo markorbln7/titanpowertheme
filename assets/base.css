@@ -312,7 +312,10 @@ body,
 }
 
 .hidden {
-  display: none !important;
+  display: none;
+}
+.zpa-published-page-holder .hidden {
+  display: block !important;
 }
 
 .visually-hidden {

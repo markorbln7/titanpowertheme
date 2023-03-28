@@ -103,7 +103,7 @@
                         line-height: 1;
 }
         .product-template__wrapper--content__selection--wrapper__save .free-cable {
-                            color:rgba(96, 198, 85, 1)
+                            color:#35FF2E;
                         }
         @media only screen and (max-width: 768px) {
         .product-template__wrapper--content__selection--wrapper__save {
@@ -245,6 +245,9 @@
                 margin: 8px 0 20px;
                 animation: light 3s linear;
                 letter-spacing: 0.06rem;
+}
+        .product-template__wrapper--content__imageSelection {
+                margin: 20px 0 30px;
 }
         .product-template__wrapper--content__features {
                 font-size: 21px;
@@ -441,7 +444,8 @@
     display: flex;
     width:100%;
     justify-content: center;
-    gap: 10px;
+    flex-direction:column;
+    gap: 0px;
 }
         @media only screen and (max-width: 768px) {
         .decoy-content {
@@ -533,3 +537,135 @@
     line-height: 1;
     margin-top: 2rem;
 }
+        .value-slider {
+    animation: fade-in-up 1s backwards;
+}
+        .value-slider .slider {
+        position: relative;
+        width: 300px;
+        height: 200px;
+    }
+        @media only screen and (max-width: 768px) {
+        .value-slider .slider {
+                width: 150px;
+                height: 100px;
+        }
+}
+        .value-slider .slider {
+        margin: auto;
+}
+        .value-slider .slider div {
+            position: absolute;
+            display: inline-block;
+            width: 300px;
+}
+        @media only screen and (max-width: 768px) {
+        .value-slider .slider div {
+                width: 150px;
+        }
+}
+        .value-slider .slider div {
+        height: auto;
+        line-height: 42px;
+        text-align: center;
+        margin: auto;
+        left: 0;
+        top: 0;
+        transition: .3s;
+        transform: scale(0);
+        color: #fff;
+        opacity: 0.5;
+}
+        .value-slider .slider .active {
+            z-index: 10;
+            transform: scale(1);
+            box-shadow: 0px 0px 7px #000000;
+            opacity: 1;
+}
+        .value-slider .slider .one-behind {
+            transform: scale(0.7);
+            z-index: 9;
+}
+        .value-slider .slider .one-behind.left {
+        left: -80%;
+}
+        .value-slider .slider .one-behind.right {
+        left: 90%;
+}
+        .value-slider .slider .two-behind {
+            transform: scale(0.6);
+            z-index: 8;
+}
+        .value-slider .slider .two-behind.left {
+        left: -60%;
+}
+        .value-slider .slider .two-behind.right {
+        left: 60%;
+}
+        .value-slider .slider-arrows {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+}
+        .value-slider .slider-arrows .prev, .value-slider .slider-arrows .next {
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: relative;
+            border: none
+        }
+        .value-slider .slider-arrows .prev::before, .value-slider .slider-arrows .prev::after, .value-slider .slider-arrows .next::before, .value-slider .slider-arrows .next::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 35%;
+        height: 2px;
+        background-color: $ingredients;
+}
+        .value-slider .slider-arrows .prev:disabled, .value-slider .slider-arrows .next:disabled {
+        background-color: #b8b8b8;
+}
+        .value-slider .slider-arrows .prev {
+            margin-right: 5px
+        }
+        .value-slider .slider-arrows .prev:before {
+        transform: rotate(-45deg);
+        top: 37%;
+        left: 28%;
+}
+        .value-slider .slider-arrows .prev:after {
+        transform: rotate(45deg);
+        top: 60%;
+        left: 28%;
+}
+        .value-slider .slider-arrows .next:before {
+        transform: rotate(45deg);
+        top: 37%;
+        left: 33%;
+}
+        .value-slider .slider-arrows .next:after {
+        transform: rotate(-45deg);
+        top: 60%;
+        left: 33%;
+}
+        @keyframes fade-in-up {
+    0% {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+        .master-product {
+    box-shadow: rgba(96, 198, 85, .8) 0px 8px 24px;
+    border:2px solid #35FF2E;
+}
+        .master-product .decoy-content__price {
+        color:#35FF2E;
+    }

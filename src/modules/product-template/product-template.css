@@ -67,7 +67,7 @@
                     position: relative;
                     &__save {
                         .free-cable {
-                            color:rgba(96, 198, 85, 1)
+                            color:#35FF2E;
                         }
                         pointer-events: none;
                         position: absolute;
@@ -226,6 +226,9 @@
                 margin: 8px 0 20px;
                 animation: light 3s linear;
                 letter-spacing: 0.06rem;
+            }
+            &__imageSelection {
+                margin: 20px 0 30px;
             }
             &__features {
                 font-size: 21px;
@@ -420,7 +423,8 @@
     display: flex;
     width:100%;
     justify-content: center;
-    gap: 10px;
+    flex-direction:column;
+    gap: 0px;
     @media only screen and (max-width: 768px) {
         font-size:12px;
         flex-direction:column;
@@ -520,4 +524,172 @@
     font-weight: bold;
     line-height: 1;
     margin-top: 2rem;
+}
+
+
+.value-slider {
+    animation: fade-in-up 1s backwards;
+
+    .slider {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        @media only screen and (max-width: 768px) {
+            width: 150px;
+            height: 100px;
+        }
+        margin: auto;
+
+        div {
+            position: absolute;
+            display: inline-block;
+            width: 300px;
+            @media only screen and (max-width: 768px) {
+                width: 150px;
+            }
+            height: auto;
+            line-height: 42px;
+            text-align: center;
+            margin: auto;
+            left: 0;
+            top: 0;
+            transition: .3s;
+            transform: scale(0);
+            color: #fff;   
+            opacity: 0.5; 
+        }
+        
+        .active {
+            z-index: 10;
+            transform: scale(1);
+            box-shadow: 0px 0px 7px #000000;
+            opacity: 1;
+        }
+
+        .one-behind {
+            transform: scale(0.7);
+            z-index: 9;          
+            
+            &.left {
+                left: -80%;
+            }
+            
+            &.right {
+                left: 90%;
+            }
+        }
+        
+        .two-behind {
+            transform: scale(0.6);
+            z-index: 8;
+
+            &.left {
+                left: -60%;
+            }
+
+            &.right {
+                left: 60%
+            }
+        }
+    }
+
+    .slider-arrows {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+
+        .prev,
+        .next {
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: relative;
+            border: none;
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 35%;
+                height: 2px;
+                background-color: $ingredients;
+            }
+
+            &:disabled {
+                background-color: #b8b8b8;
+            }
+        }
+
+        .prev {
+            margin-right: 5px;
+
+            &:before {
+                transform: rotate(-45deg);
+                top: 37%;
+                left: 28%;
+    
+            }
+
+            &:after {
+                transform: rotate(45deg);
+                top: 60%;
+                left: 28%;
+            }
+        }
+
+        .next {
+            &:before {
+                transform: rotate(45deg);
+                top: 37%;
+                left: 33%;
+    
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+                top: 60%;
+                left: 33%;
+            }
+        }
+    }
+}
+@-webkit-keyframes fade-in-up {
+    0% {
+      display: none;
+      opacity: 0;
+      -webkit-transform: translateY(10px);
+              transform: translateY(10px);
+    }
+    100% {
+      display: block;
+      opacity: 1;
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in-up {
+    0% {
+      display: none;
+      opacity: 0;
+      -webkit-transform: translateY(10px);
+              transform: translateY(10px);
+    }
+    100% {
+      display: block;
+      opacity: 1;
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+  }
+
+.master-product {
+    box-shadow: rgba(96, 198, 85, .8) 0px 8px 24px;
+    border:2px solid #35FF2E;
+    .decoy-content__price {
+        color:#35FF2E;
+    }
 }

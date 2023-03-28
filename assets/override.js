@@ -2,11 +2,11 @@
 /* eslint-disable no-unused-vars */
 console.log('thisss')
 window.selectLogic = {
-  productCount: '5x',
+  productCount: '3x',
   productHandle: '',
   productId: '',
   phoneType: 'iPhone',
-  cableLength: '4ft(1.2m)',
+  cableLength: '10ft(3.0m)',
   addon: ''
 }
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -16,6 +16,14 @@ const addToCarts = document.querySelectorAll('.js-atc')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
 const addUpsell = document.querySelector('.js-add')
+const imageChange = document.querySelector('.js-image-change')
+// const swiper2 = new Swiper('.mySwiperSecond', {
+//   slidesPerView: 3,
+//   spaceBetween: 30,
+//   centeredSlides: true,
+//   loop: true
+// })
+// swiper2.slideTo(1, '100', true)
 const priceDisplay = () => {
   const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
   price.innerHTML = window.prices[productSelection]
@@ -48,6 +56,45 @@ productSelectors.forEach(productSelector => {
     window.selectLogic.productHandle = product
     window.selectLogic.productCount = count
     console.log(window.selectLogic)
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    imageChange.src = window.images[productSelection]
+    const sliderActive = _this.getAttribute('data-slide')
+    if (sliderActive === '.three') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.two').classList.remove('active')
+      document.querySelector('.two').classList.add('one-behind')
+      document.querySelector('.two').classList.add('left')
+      document.querySelector('.two').classList.remove('right')
+      document.querySelector('.one').classList.remove('active')
+      document.querySelector('.one').classList.add('one-behind')
+      document.querySelector('.one').classList.add('right')
+      document.querySelector('.one').classList.remove('left')
+    }
+    if (sliderActive === '.two') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.one').classList.remove('active')
+      document.querySelector('.one').classList.add('one-behind')
+      document.querySelector('.one').classList.add('left')
+      document.querySelector('.one').classList.remove('right')
+      document.querySelector('.three').classList.remove('active')
+      document.querySelector('.three').classList.add('one-behind')
+      document.querySelector('.three').classList.add('right')
+      document.querySelector('.three').classList.remove('left')
+    }
+    if (sliderActive === '.one') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.two').classList.remove('active')
+      document.querySelector('.two').classList.add('one-behind')
+      document.querySelector('.two').classList.add('right')
+      document.querySelector('.two').classList.remove('left')
+      document.querySelector('.three').classList.remove('active')
+      document.querySelector('.three').classList.add('one-behind')
+      document.querySelector('.three').classList.add('left')
+      document.querySelector('.three').classList.remove('right')
+    }
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -62,6 +109,9 @@ typeSelectors.forEach(typeSelector => {
     })
     _this.classList.add('active')
     window.selectLogic.phoneType = phoneType
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(window.images[productSelection], productSelection, 'productSelectionproductSelectionproductSelectionproductSelection')
+    imageChange.src = window.images[productSelection]
     console.log(window.selectLogic)
   })
 })
@@ -74,6 +124,8 @@ lengthSelectors.forEach(lengthSelector => {
     })
     _this.classList.add('active')
     window.selectLogic.cableLength = lenght
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    imageChange.src = window.images[productSelection]
     console.log(window.selectLogic)
   })
 })
@@ -209,44 +261,44 @@ if (minus) {
   })
 }
 
-atcQty.addEventListener('click', (e) => {
-  const productSelection = window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-  const qty = atcQty.getAttribute('data-quantity')
-  let addItems
-  if (window.selectLogic.addon !== '') {
-    addItems = [
-      {
-        id: window.products[productSelection],
-        quantity: qty
-      },
-      {
-        id: window.selectLogic.addon,
-        quantity: 1
-      }
-    ]
-  } else {
-    addItems = [
-      {
-        id: window.products[productSelection],
-        quantity: qty
-      }
-    ]
-  }
-  console.log(window.products, window.products[productSelection], productSelection)
-  const formData = {
-    items: addItems
-  }
-  fetch(window.Shopify.routes.root + 'cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-    .then(response => {
-      return response.json()
-    })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
-})
+// atcQty.addEventListener('click', (e) => {
+//   const productSelection = window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+//   const qty = atcQty.getAttribute('data-quantity')
+//   let addItems
+//   if (window.selectLogic.addon !== '') {
+//     addItems = [
+//       {
+//         id: window.products[productSelection],
+//         quantity: qty
+//       },
+//       {
+//         id: window.selectLogic.addon,
+//         quantity: 1
+//       }
+//     ]
+//   } else {
+//     addItems = [
+//       {
+//         id: window.products[productSelection],
+//         quantity: qty
+//       }
+//     ]
+//   }
+//   console.log(window.products, window.products[productSelection], productSelection)
+//   const formData = {
+//     items: addItems
+//   }
+//   fetch(window.Shopify.routes.root + 'cart/add.js', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(formData)
+//   })
+//     .then(response => {
+//       return response.json()
+//     })
+//     .catch((error) => {
+//       console.error('Error:', error)
+//     })
+// })

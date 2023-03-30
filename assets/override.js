@@ -15,21 +15,32 @@ const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const addToCarts = document.querySelectorAll('.js-atc')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
+const savedPrice = document.querySelector('.js-saving')
 const addUpsell = document.querySelector('.js-add')
 const imageChange = document.querySelector('.js-image-change')
-// const swiper2 = new Swiper('.mySwiperSecond', {
-//   slidesPerView: 3,
-//   spaceBetween: 30,
-//   centeredSlides: true,
-//   loop: true
-// })
-// swiper2.slideTo(1, '100', true)
+const mainImageChange = document.querySelector('.js-main-image-change')
+const discountMessageHolder = document.querySelector('.js-discount')
+const originalOne = document.querySelector('.js-price-discount-one')
+const discOne = document.querySelector('.js-price-original-one')
+const originalTwo = document.querySelector('.js-price-discount-two')
+const discTwo = document.querySelector('.js-price-original-two')
+const originalThree = document.querySelector('.js-price-discount-three')
+const discThree = document.querySelector('.js-price-original-three')
+
 const priceDisplay = () => {
   const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+  console.log(productSelection, 'productSelection')
   price.innerHTML = window.prices[productSelection]
   crossedPrice.innerHTML = window.comparePrices[productSelection]
+  savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
 }
 window.addEventListener('load', (event) => {
+  originalOne.innerHTML = window.length['1x10ft(3.0m)']
+  discOne.innerHTML = window.compareLength['1x10ft(3.0m)']
+  originalTwo.innerHTML = window.length['2x10ft(3.0m)']
+  discTwo.innerHTML = window.compareLength['2x10ft(3.0m)']
+  originalThree.innerHTML = window.length['3x10ft(3.0m)']
+  discThree.innerHTML = window.compareLength['3x10ft(3.0m)']
   priceDisplay()
 })
 function fetchProduct (el) {
@@ -46,6 +57,7 @@ productSelectors.forEach(productSelector => {
     const product = _this.getAttribute('data-product')
     const productId = _this.getAttribute('data-id')
     const count = _this.getAttribute('data-count')
+    const discountMessage = _this.getAttribute('data-discount')
     productSelectors.forEach(productSelector => {
       productSelector.classList.remove('active')
     })
@@ -58,7 +70,9 @@ productSelectors.forEach(productSelector => {
     console.log(window.selectLogic)
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
     const sliderActive = _this.getAttribute('data-slide')
+    discountMessageHolder.textContent = discountMessage
     if (sliderActive === '.three') {
       document.querySelector(sliderActive).classList.add('active')
       document.querySelector(sliderActive).classList.remove('one-behind')
@@ -112,7 +126,11 @@ typeSelectors.forEach(typeSelector => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     console.log(window.images[productSelection], productSelection, 'productSelectionproductSelectionproductSelectionproductSelection')
     imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
     console.log(window.selectLogic)
+    setTimeout(() => {
+      priceDisplay()
+    }, '500')
   })
 })
 lengthSelectors.forEach(lengthSelector => {
@@ -126,7 +144,17 @@ lengthSelectors.forEach(lengthSelector => {
     window.selectLogic.cableLength = lenght
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
     console.log(window.selectLogic)
+    originalOne.innerHTML = window.length['1x' + lenght]
+    discOne.innerHTML = window.compareLength['1x' + lenght]
+    originalTwo.innerHTML = window.length['2x' + lenght]
+    discTwo.innerHTML = window.compareLength['2x' + lenght]
+    originalThree.innerHTML = window.length['3x' + lenght]
+    discThree.innerHTML = window.compareLength['3x' + lenght]
+    setTimeout(() => {
+      priceDisplay()
+    }, '500')
   })
 })
 addUpsell.addEventListener('click', (e) => {

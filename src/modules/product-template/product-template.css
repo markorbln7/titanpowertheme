@@ -57,9 +57,9 @@
                 margin-bottom: 10px;
                 font-size:18px;
                 &--wrapper {
-                    margin: 20px 0 30px;
+                    margin: 10px 0 20px;
                     @media only screen and (max-width: 768px) {
-                        margin: 20px 0 20px;
+                        margin: 10px 0 20px;
                     }
                     &.small-top {
                         margin-top:10px;
@@ -294,6 +294,7 @@
                 &--atc {
                     margin: 40px 0 15px;
                     button {
+                        flex-direction: column;
                         width:100%;
                         letter-spacing: 0.1em;
                         border:none;
@@ -311,6 +312,9 @@
                             color:#60c655;
                             -webkit-transition: all 1s; /* For Safari 3.0 to 6.0 */
                             transition: all 1s; /* For modern browsers */
+                            .js-price {
+                                color:white;
+                            }
                         }
                         @media only screen and (max-width: 991px) {
                             font-size:18px;
@@ -361,7 +365,7 @@
         display:flex;
         justify-content: center;
         margin-bottom: 30px;
-        margin-top: 25px;
+        margin-top: 15px;
         grid-gap: 25px;
         gap: 25px;
         &--item {
@@ -532,18 +536,18 @@
 
     .slider {
         position: relative;
-        width: 300px;
-        height: 200px;
+        width: 200px;
+        height: 90px;
         @media only screen and (max-width: 768px) {
-            width: 150px;
-            height: 100px;
+            width: 125px;
+            height: 75px;
         }
         margin: auto;
 
         div {
             position: absolute;
             display: inline-block;
-            width: 300px;
+            width: 200px;
             @media only screen and (max-width: 768px) {
                 width: 150px;
             }
@@ -692,4 +696,10 @@
     .decoy-content__price {
         color:#35FF2E;
     }
+}
+.js-price {
+    color:black;
+}
+.js-saving {
+    margin-top:-10px;
 }

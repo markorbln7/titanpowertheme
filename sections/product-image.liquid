@@ -1,0 +1,41 @@
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+<div class="product-image">
+    <div class="product-image__title">Tired of expensive cables constantly breaking?</div>
+    <div class="product-image__text">Bending leads to failure, our 90° head prevents bending! Resulting in a lifetime cable that does not fray or wear under common use. With the right angle design, this cable will never get in the way when holding and charging. </div>
+    <div class="product-image__image">
+        <img class="w-100" src="https://cdn05.zipify.com/3IwVVVgL3NVlpwoK7n2SCwmFZdA=/fit-in/1080x0/dcbd1d7334d24057b44a9e7fbb2d849f/cable-features-lines.jpeg">
+    </div>
+    <div class="product-template__wrapper--content__form--atc product-image__button">
+        <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+        <span id="addToCartText-{{ section.id }}">ADD TO CART</span>
+        </button>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Product Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Image",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

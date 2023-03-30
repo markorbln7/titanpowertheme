@@ -1,0 +1,101 @@
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+<div class="product-zig-icons">
+    <div class="small-container">
+        <div class="product-zig-icons__wrapper f jcb ais fw">
+            <div class="product-zig-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/cFDlyTofR6SYiVhddzNer_p9HPo=/fit-in/700x0/129603480742441692b8d4a7c7db106d/titan-smart-cable-iphone-charging-cable-titan-power-type-c-3.png">
+                <div class="product-zig-icons__wrapper--icon__title">Android & Apple</div>
+            </div>
+            <div class="product-zig-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/NUzJExJCKTnKOI9VpVsjNgplC_w=/fit-in/700x0/916976102d7b47df9d103385a24662c0/icons8-muscle-100.png">
+                <div class="product-zig-icons__wrapper--icon__title">Ultra-Durable Design</div>
+            </div>
+            <div class="product-zig-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/i-raxrfMNYgY8jVR5wj1vzUqeJ8=/fit-in/700x0/c252279b8b5a4b85821fd4e28e09ff77/icons8-sustainable-energy-100.png">
+                <div class="product-zig-icons__wrapper--icon__title">Tidy Cable Tie</div>
+            </div>
+            <div class="product-zig-icons__wrapper--icon">
+                <img src="https://cdn05.zipify.com/EVSHUTnBaomwz0mFT-CHeZbiyCk=/fit-in/700x0/0ac283508e5a40c38c976eb4efe819c7/icons8-party-100.png">
+                <div class="product-zig-icons__wrapper--icon__title">21000+ Happy Customers</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-zig">
+    <div class="small-container">
+        <div class="product-zig__bigtitle">Why Titan Smart Cable™?</div>
+        <div class="product-zig__single f aic">
+            <div class="product-zig__single--content">
+                <div class="product-zig__single--content__title">1. NEVER FRAY WEAR OR SNAP</div>
+                <div class="product-zig__single--content__text">The internal layout is designed to drastically reinforce the cable heads, which is where most cables tend to fail. With a phenomenal 25,000 in the bend test, this cable will easily outlive your device.</div>
+            </div>
+            <div class="product-zig__single--image">
+                <img src="https://cdn05.zipify.com/qmzgWC3M1j92M8Vfiy1_Tmt4hJQ=/fit-in/4096x0/ac71e4e4d5f3407c9228a4e89555ebb4/4.jpeg">
+            </div>
+        </div>
+        <div class="product-zig__single f aic reverse">
+            <div class="product-zig__single--content">
+                <div class="product-zig__single--content__title">2. CHARGE UP TO 2.4x FASTER</div>
+                <div class="product-zig__single--content__text">Far from your everyday cord, the Titan Cable delivers lightning-fast charging with its thicker internal wires, higher 2.4A amperage capabilities and highly conductive materials.</div>
+            </div>
+            <div class="product-zig__single--image">
+                <img src="https://cdn05.zipify.com/QLOEtiuKm5lp4RuxYvMm2QH0aWA=/fit-in/4096x0/08ada72c368b46ad94bb9a3b01a3f5c8/3.jpeg">
+            </div>
+        </div>
+         <div class="product-zig__single f aic">
+            <div class="product-zig__single--content">
+                <div class="product-zig__single--content__title">3. COMPATIBLE WITH ALL DEVICES</div>
+                <div class="product-zig__single--content__text">Charge your speakers, camera or even your Xbox controller with our cable to keep all your devices boosted and ready to go!</div>
+            </div>
+            <div class="product-zig__single--image">
+                <img src="https://cdn05.zipify.com/EOT_k3YEAg2s2NAE6jdwLe4Rs4g=/fit-in/4096x0/d1cb2143e0a348099a758d1446f87a20/2.jpeg">
+            </div>
+        </div>
+        <div class="product-zig__single f aic reverse">
+            <div class="product-zig__single--content">
+                <div class="product-zig__single--content__title">4. HOLD WITH SUPREME COMFORT</div>
+                <div class="product-zig__single--content__text">The 90° design keeps the cable flat and out of the way. Perfect for watching shows or gaming with your friends!</div>
+            </div>
+            <div class="product-zig__single--image">
+                <img src="https://cdn05.zipify.com/lQm8J8RK1leaiQ5t7cFTa9jx_n0=/fit-in/4096x0/7f189f76774147a5a1ab32ac4071807f/ageag.jpeg">
+            </div>
+        </div>
+    </div>
+    <div class="product-template__wrapper--content__form--atc product-image__button">
+        <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+        <span id="addToCartText-{{ section.id }}">ADD TO CART</span>
+        </button>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Product Zig",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "icons",
+      "name": "Add icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "info": "Choose Image",
+          "label":"Choose Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "info": "Text",
+          "label":"Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Zig",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

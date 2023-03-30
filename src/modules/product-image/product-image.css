@@ -1,0 +1,42 @@
+.product-image {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    @media only screen and (max-width: 768px) {
+        padding: 50px 20px;
+    }
+    &__button {
+        max-width: 400px;
+        margin:30px auto;
+    }
+    &__title {
+        font-size:32px;
+        line-height:40px;
+        text-align: center;
+        color:white;
+        max-width: 600px;
+        margin:0 auto;
+        &:before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1.5px;
+            background-color: #60c655;
+            border-radius:10px;
+            margin: 0 auto 20px;
+        }
+    }
+    &__text {
+        max-width: 800px;
+        text-align: center;
+        margin: 14px auto 0;
+        margin-bottom: 50px;
+    }
+    &__image {
+        max-width: 500px;
+        margin:0 auto;
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

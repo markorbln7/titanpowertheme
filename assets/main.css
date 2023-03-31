@@ -494,8 +494,11 @@ input[type=number]
   text-decoration: line-through;
 }
 .titan-red {
-  color:#C14444;
+  color:#C14444 !important;
 }
+.titan-red .money {
+    color:#C14444 !important;
+  }
 .bold {
   font-weight: 700;
 }

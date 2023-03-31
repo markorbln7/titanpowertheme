@@ -1,6 +1,9 @@
 .product-template {
     &__wrapper {
         gap:40px;
+        @media only screen and (max-width: 768px) {
+            gap:10px;
+         }
         flex-direction: row;
         flex-wrap: wrap;
         &--content {
@@ -13,6 +16,9 @@
                     background-color: #141414;
                     border-radius: 10px;
                     padding: 15px 20px;
+                    @media only screen and (max-width: 768px) {
+                        padding: 10px 20px;
+                     }
                 }
                 a {
                     text-decoration: underline;
@@ -22,6 +28,9 @@
                     padding-left: 60px;
                     font-size: 19px;
                     font-weight: bold;
+                    .money {
+                        color: #60c655cc;
+                    }
                     @media only screen and (max-width: 768px) {
                        font-size:13px;
                        text-align:center;
@@ -119,7 +128,7 @@
                         height: 100%;
                         grid-gap: 3px;
                         gap: 3px;
-                        padding: 10px 5px;
+                        padding: 5px 5px;
                         font-size: 16px;
                         line-height: 1.57;
                         letter-spacing: 0.05em;
@@ -241,6 +250,7 @@
                 }
                 @media only screen and (max-width: 768px) {
                     font-size:18x;
+                    margin-bottom:20px;
                 }
                 &--name {
                     margin: 8px 0;
@@ -293,6 +303,9 @@
                 }
                 &--atc {
                     margin: 40px 0 15px;
+                    @media only screen and (max-width: 768px) {
+                        margin: 20px 0 15px;
+                    }
                     button {
                         flex-direction: column;
                         width:100%;
@@ -528,6 +541,9 @@
     font-weight: bold;
     line-height: 1;
     margin-top: 2rem;
+    @media only screen and (max-width: 768px) {
+        font-size: 18px;
+    }
 }
 
 
@@ -537,7 +553,7 @@
     .slider {
         position: relative;
         width: 200px;
-        height: 90px;
+        height: 105px;
         @media only screen and (max-width: 768px) {
             width: 125px;
             height: 75px;
@@ -691,7 +707,7 @@
   }
 
 .master-product {
-    box-shadow: rgba(96, 198, 85, .8) 0px 8px 24px;
+    box-shadow: #35ff2e 1px 1px 24px 4px;
     border:2px solid #35FF2E;
     .decoy-content__price {
         color:#35FF2E;

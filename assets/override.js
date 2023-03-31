@@ -28,11 +28,19 @@ const originalThree = document.querySelector('.js-price-discount-three')
 const discThree = document.querySelector('.js-price-original-three')
 
 const priceDisplay = () => {
-  const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-  console.log(productSelection, 'productSelection')
-  price.innerHTML = window.prices[productSelection]
-  crossedPrice.innerHTML = window.comparePrices[productSelection]
-  savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
+  if (addUpsell.classList.contains('added')) {
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(productSelection, 'productSelection')
+    price.innerHTML = window.jointPrice[productSelection]
+    crossedPrice.innerHTML = window.jointComparePrice[productSelection]
+    savedPrice.innerHTML = window.jointSavePrices[productSelection] + ' SAVED'
+  } else {
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(productSelection, 'productSelection')
+    price.innerHTML = window.prices[productSelection]
+    crossedPrice.innerHTML = window.comparePrices[productSelection]
+    savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
+  }
 }
 window.addEventListener('load', (event) => {
   originalOne.innerHTML = window.length['1x10ft(3.0m)']
@@ -162,10 +170,12 @@ addUpsell.addEventListener('click', (e) => {
   if (addUpsell.classList.contains('added')) {
     const addonId = addUpsell.getAttribute('data-addon')
     window.selectLogic.addon = addonId
+    priceDisplay()
     console.log(window.selectLogic)
   } else {
     console.log('addon je sklonjen')
     window.selectLogic.addon = ''
+    priceDisplay()
     console.log(window.selectLogic)
   }
 })

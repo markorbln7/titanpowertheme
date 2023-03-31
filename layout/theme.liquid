@@ -344,7 +344,17 @@ window.addEventListener('load', () => {
 <!-- End of Taboola Pixel Code -->
   
 {%endif %}
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+{{ 'main.css' | asset_url | stylesheet_tag }}
+{{ 'main.js' | asset_url | script_tag }}
+{{ 'section-product-template.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template.js' | asset_url | script_tag }}
 {% render 'gsf-conversion-pixels' %}
 </head>
 
@@ -404,7 +414,7 @@ window.addEventListener('load', () => {
 
 <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
 
-
+{{ 'override.js' | asset_url | script_tag }}
 
 
 <!-- PF EDT START -->

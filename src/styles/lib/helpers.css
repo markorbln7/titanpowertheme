@@ -57,36 +57,95 @@
 .color-white {
   color:#fff;
 }
+.color-titan-green {
+  color:#60C655;
+}
+.bg-titan-green {
+  background-color:#60C655;
+}
+.color-titan-yellow {
+  color: #F2C054;
+}
+.color-gray {
+  color:#EFEFEF;
+}
+.titan-bg-black {
+  background-color: #000;
+}
+.column {
+  flex-basis: calc(50% - 40px);
+  max-width: calc(50% - 40px);
+  @media only screen and (max-width: 768px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+.column-left {
+  flex-basis: calc(45% - 40px);
+  max-width: calc(45% - 40px);
+  @media only screen and (max-width: 768px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+.column-right {
+  flex-basis: calc(55% - 40px);
+  max-width: calc(55% - 40px);
+  @media only screen and (max-width: 768px) {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+.custom-qty {
+  border:none;
+  margin: 0;
+  text-align: center;
+}
+.icon-thunder {
+  font-size: 35px;
+  @media only screen and (max-width: 991px) {
+    font-size:24px;
+  }
+  @media only screen and (max-width: 768px) {
+      font-size:22px;
+  }
+}
 .w-100 {
   width:100%;
 }
-img {
-  display:block;
+.text-center {
+  text-align: center;
 }
-.relative {
-  position:relative;
+.mb-15 {
+  margin-bottom: 15px;
 }
-
-.cart-form {
-  max-width: calc(100% - 40px);
-  @media only screen and (min-width: 768px) {
-    max-width: calc(100% - 120px);
+.small-container {
+  max-width: 1100px;
+  margin:0 auto;
+}
+.crossed {
+  text-decoration: line-through;
+}
+.titan-red {
+  color:#C14444 !important;
+  .money {
+    color:#C14444 !important;
   }
-  margin: 0 auto;
-  .cart-row.new-row {
-    border: 1px solid black;
-    padding: 20px;
-    margin-top: 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    margin-top:0;
-  }
-  .h2 {
-    margin-left: 60px;
-    margin-bottom:20px;
-    @media only screen and (min-width: 768px) {
-      margin-left: 20px;
-    }
-  }
+}
+.bold {
+  font-weight: 700;
+}
+.align-self-end {
+  align-self: flex-end;
 }

@@ -65,6 +65,12 @@
 .product-icons__wrapper--icon {
     text-align: center;
 }
+@media only screen and (max-width: 768px) {
+    .product-icons__wrapper--icon__title {
+        max-width:140px;
+        margin:0 auto;
+    }
+}
 .product-icons img {
         display: block;
         text-align:center;

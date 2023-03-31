@@ -2,11 +2,11 @@
 /* eslint-disable no-unused-vars */
 console.log('thisss')
 window.selectLogic = {
-  productCount: '5x',
+  productCount: '3x',
   productHandle: '',
   productId: '',
   phoneType: 'iPhone',
-  cableLength: '4ft(1.2m)',
+  cableLength: '10ft(3.0m)',
   addon: ''
 }
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -15,13 +15,40 @@ const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const addToCarts = document.querySelectorAll('.js-atc')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
+const savedPrice = document.querySelector('.js-saving')
 const addUpsell = document.querySelector('.js-add')
+const imageChange = document.querySelector('.js-image-change')
+const mainImageChange = document.querySelector('.js-main-image-change')
+const discountMessageHolder = document.querySelector('.js-discount')
+const originalOne = document.querySelector('.js-price-discount-one')
+const discOne = document.querySelector('.js-price-original-one')
+const originalTwo = document.querySelector('.js-price-discount-two')
+const discTwo = document.querySelector('.js-price-original-two')
+const originalThree = document.querySelector('.js-price-discount-three')
+const discThree = document.querySelector('.js-price-original-three')
+
 const priceDisplay = () => {
-  const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-  price.innerHTML = window.prices[productSelection]
-  crossedPrice.innerHTML = window.comparePrices[productSelection]
+  if (addUpsell.classList.contains('added')) {
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(productSelection, 'productSelection')
+    price.innerHTML = window.jointPrice[productSelection]
+    crossedPrice.innerHTML = window.jointComparePrice[productSelection]
+    savedPrice.innerHTML = window.jointSavePrices[productSelection] + ' SAVED'
+  } else {
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(productSelection, 'productSelection')
+    price.innerHTML = window.prices[productSelection]
+    crossedPrice.innerHTML = window.comparePrices[productSelection]
+    savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
+  }
 }
 window.addEventListener('load', (event) => {
+  originalOne.innerHTML = window.length['1x10ft(3.0m)']
+  discOne.innerHTML = window.compareLength['1x10ft(3.0m)']
+  originalTwo.innerHTML = window.length['2x10ft(3.0m)']
+  discTwo.innerHTML = window.compareLength['2x10ft(3.0m)']
+  originalThree.innerHTML = window.length['3x10ft(3.0m)']
+  discThree.innerHTML = window.compareLength['3x10ft(3.0m)']
   priceDisplay()
 })
 function fetchProduct (el) {
@@ -38,6 +65,7 @@ productSelectors.forEach(productSelector => {
     const product = _this.getAttribute('data-product')
     const productId = _this.getAttribute('data-id')
     const count = _this.getAttribute('data-count')
+    const discountMessage = _this.getAttribute('data-discount')
     productSelectors.forEach(productSelector => {
       productSelector.classList.remove('active')
     })
@@ -48,6 +76,47 @@ productSelectors.forEach(productSelector => {
     window.selectLogic.productHandle = product
     window.selectLogic.productCount = count
     console.log(window.selectLogic)
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
+    const sliderActive = _this.getAttribute('data-slide')
+    discountMessageHolder.textContent = discountMessage
+    if (sliderActive === '.three') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.two').classList.remove('active')
+      document.querySelector('.two').classList.add('one-behind')
+      document.querySelector('.two').classList.add('left')
+      document.querySelector('.two').classList.remove('right')
+      document.querySelector('.one').classList.remove('active')
+      document.querySelector('.one').classList.add('one-behind')
+      document.querySelector('.one').classList.add('right')
+      document.querySelector('.one').classList.remove('left')
+    }
+    if (sliderActive === '.two') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.one').classList.remove('active')
+      document.querySelector('.one').classList.add('one-behind')
+      document.querySelector('.one').classList.add('left')
+      document.querySelector('.one').classList.remove('right')
+      document.querySelector('.three').classList.remove('active')
+      document.querySelector('.three').classList.add('one-behind')
+      document.querySelector('.three').classList.add('right')
+      document.querySelector('.three').classList.remove('left')
+    }
+    if (sliderActive === '.one') {
+      document.querySelector(sliderActive).classList.add('active')
+      document.querySelector(sliderActive).classList.remove('one-behind')
+      document.querySelector('.two').classList.remove('active')
+      document.querySelector('.two').classList.add('one-behind')
+      document.querySelector('.two').classList.add('right')
+      document.querySelector('.two').classList.remove('left')
+      document.querySelector('.three').classList.remove('active')
+      document.querySelector('.three').classList.add('one-behind')
+      document.querySelector('.three').classList.add('left')
+      document.querySelector('.three').classList.remove('right')
+    }
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -62,7 +131,14 @@ typeSelectors.forEach(typeSelector => {
     })
     _this.classList.add('active')
     window.selectLogic.phoneType = phoneType
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    console.log(window.images[productSelection], productSelection, 'productSelectionproductSelectionproductSelectionproductSelection')
+    imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
     console.log(window.selectLogic)
+    setTimeout(() => {
+      priceDisplay()
+    }, '500')
   })
 })
 lengthSelectors.forEach(lengthSelector => {
@@ -74,7 +150,19 @@ lengthSelectors.forEach(lengthSelector => {
     })
     _this.classList.add('active')
     window.selectLogic.cableLength = lenght
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
     console.log(window.selectLogic)
+    originalOne.innerHTML = window.length['1x' + lenght]
+    discOne.innerHTML = window.compareLength['1x' + lenght]
+    originalTwo.innerHTML = window.length['2x' + lenght]
+    discTwo.innerHTML = window.compareLength['2x' + lenght]
+    originalThree.innerHTML = window.length['3x' + lenght]
+    discThree.innerHTML = window.compareLength['3x' + lenght]
+    setTimeout(() => {
+      priceDisplay()
+    }, '500')
   })
 })
 addUpsell.addEventListener('click', (e) => {
@@ -82,10 +170,12 @@ addUpsell.addEventListener('click', (e) => {
   if (addUpsell.classList.contains('added')) {
     const addonId = addUpsell.getAttribute('data-addon')
     window.selectLogic.addon = addonId
+    priceDisplay()
     console.log(window.selectLogic)
   } else {
     console.log('addon je sklonjen')
     window.selectLogic.addon = ''
+    priceDisplay()
     console.log(window.selectLogic)
   }
 })
@@ -168,3 +258,85 @@ accordions.forEach((accordion) => {
     }
   }
 })
+
+const plus = document.querySelector('.js-plus')
+const minus = document.querySelector('.js-minus')
+const atcQty = document.querySelector('.js-atc-qty')
+const qNumber = document.querySelector('.js-qty-number')
+const addMore = document.querySelector('.js-add-more-message')
+const rules = {
+  1: 'Add 1 more for additional 10% discount',
+  2: 'Add 2 more for additional 25% discount',
+  3: 'Add 1 more for additional 25% discount',
+  4: 'Add 4 more for additional 50% discount',
+  5: 'Add 3 more for additional 50% discount',
+  6: 'Add 2 more for additional 50% discount',
+  7: 'Add 1 more for additional 50% discount',
+  8: 'Add 1 more and get free plug'
+}
+
+if (plus) {
+  plus.addEventListener('click', function () {
+    const starterQ = parseInt(atcQty.getAttribute('data-quantity'))
+    const newQ = starterQ + 1
+    atcQty.setAttribute('data-quantity', newQ)
+    qNumber.textContent = newQ
+    addMore.textContent = rules[newQ]
+  })
+}
+if (minus) {
+  minus.addEventListener('click', function () {
+    const starterQ = parseInt(atcQty.getAttribute('data-quantity'))
+    let newQ
+    if (starterQ === 1) {
+      newQ = 1
+    } else {
+      newQ = starterQ - 1
+    }
+    atcQty.setAttribute('data-quantity', newQ)
+    qNumber.textContent = newQ
+    addMore.textContent = rules[newQ]
+  })
+}
+
+// atcQty.addEventListener('click', (e) => {
+//   const productSelection = window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+//   const qty = atcQty.getAttribute('data-quantity')
+//   let addItems
+//   if (window.selectLogic.addon !== '') {
+//     addItems = [
+//       {
+//         id: window.products[productSelection],
+//         quantity: qty
+//       },
+//       {
+//         id: window.selectLogic.addon,
+//         quantity: 1
+//       }
+//     ]
+//   } else {
+//     addItems = [
+//       {
+//         id: window.products[productSelection],
+//         quantity: qty
+//       }
+//     ]
+//   }
+//   console.log(window.products, window.products[productSelection], productSelection)
+//   const formData = {
+//     items: addItems
+//   }
+//   fetch(window.Shopify.routes.root + 'cart/add.js', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(formData)
+//   })
+//     .then(response => {
+//       return response.json()
+//     })
+//     .catch((error) => {
+//       console.error('Error:', error)
+//     })
+// })

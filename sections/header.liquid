@@ -634,7 +634,9 @@ class StickyHeader extends HTMLElement {
 
   closeSearchModal() {
     this.searchModal = this.searchModal || this.header.querySelector('details-modal');
-    this.searchModal.close(false);
+    if(this.searchModal) {
+      this.searchModal.close(false);
+    }
   }
 }
 

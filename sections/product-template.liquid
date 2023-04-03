@@ -16,16 +16,18 @@
                 <span class="product-template__wrapper--content__review--number color-gray font-lato">(21956)</span>
             </div>
               <h1 class="h1 product-template__wrapper--content__title color-white">
-                 "Finally! A charger that doesn't break."
+                 "{{section.settings.punchline}}"
               </h1>
 
               <div class="product-template__wrapper--content__features font-sans">
-                  <div class="product-template__wrapper--content__features--name">New & Improved design</div>
-                  <div class="product-template__wrapper--content__features--name">Unique 90° head</div>
-                  <div class="product-template__wrapper--content__features--name">Now even faster</div>
+                  {% for block in section.blocks %}
+                    {% if block.type == 'bullets'%}
+                      <div class="product-template__wrapper--content__features--name">{{block.settings.text}}</div>
+                    {% endif %}
+                  {% endfor %}
               </div>
               <div class="product-template__wrapper--content__offerDiscount font-sans js-discount text-center">
-                  60% OFF + FREE CABLE TODAY!
+                  {{section.settings.d1}}
               </div>
 
               <div class="relative">
@@ -38,15 +40,11 @@
                 </div>
               </div>
               <div class="product-template__wrapper--content__imageSelection">
-                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_2.jpg?v=1680176374">
+                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374">
               </div>
               <div class="product-template__wrapper--content__selection">
-                  {% comment %} <div class="product-template__wrapper--content__selection">
-                      Choose your LIMITED offer:
-                  </div> {% endcomment %}
                   <div class="product-template__wrapper--content__selection--wrapper f aic jcb fw">
-                      <div data-discount="60% OFF + FREE CABLE TODAY!" data-slide=".three" data-count="3x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="master-product active js-product-selector product-template__wrapper--content__selection--wrapper__single f">
-                          {% comment %} <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/5_x_decoy.jpg?v=1678267382"></div> {% endcomment %}
+                      <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="3x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="master-product active js-product-selector product-template__wrapper--content__selection--wrapper__single f">
                           <div class="decoy-title">3x Pack</div>
                           <div class="decoy-content">
                             <div class="decoy-content__price js-price-discount-three"></div>
@@ -54,8 +52,7 @@
                             <span class="product-template__wrapper--content__selection--wrapper__save">60% OFF<br><span class="free-cable">+ 1 FREE</span></span>
                           </div>
                       </div>
-                      <div data-discount="60% OFF" data-slide=".two" data-count="2x" data-id="{{product4.id}}" data-product="2-x-titan-smart-cable™-2" class="js-product-selector product-template__wrapper--content__selection--wrapper__single f">
-                         {% comment %} <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_decoy.jpg?v=1678267382"></div> {% endcomment %}
+                      <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="2x" data-id="{{product4.id}}" data-product="2-x-titan-smart-cable™-2" class="js-product-selector product-template__wrapper--content__selection--wrapper__single f">
                          <div class="decoy-title">2x Pack</div>
                          <div class="decoy-content">
                           <div class="decoy-content__price js-price-discount-two"></div>
@@ -63,8 +60,7 @@
                           <span class="product-template__wrapper--content__selection--wrapper__save">60% OFF</span>
                          </div>
                       </div>
-                      <div data-discount="50% OFF" data-slide=".one" data-count="" data-id="{{product2.id}}" data-product="1-x-titan-smart-cable™" class="js-product-selector product-template__wrapper--content__selection--wrapper__single f">
-                          {% comment %} <div class="decoy-image"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_x_decoy.jpg?v=1678267382"></div> {% endcomment %}
+                      <div data-discount="{{section.settings.d3}}" data-slide=".one" data-count="" data-id="{{product2.id}}" data-product="1-x-titan-smart-cable™" class="js-product-selector product-template__wrapper--content__selection--wrapper__single f">
                           <div class="decoy-title">1x Pack</div>
                           <div class="decoy-content">
                             <div class="decoy-content__price js-price-discount-one"></div>
@@ -75,44 +71,33 @@
                   </div>
               </div>
               <div class="product-template__wrapper--content__selection small-top">
-                  {% comment %} <div class="product-template__wrapper--content__selection">
-                      Choose your phone type:
-                  </div> {% endcomment %}
                   <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top fw">
                       <div data-type="iPhone" class="active js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                          {% comment %} <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_iphone_to_Type_A.png?v=1678267382"></div> {% endcomment %}
                           <div>IPhone</div>
                       </div>
                       <div data-type="Type-C" class="js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                          {% comment %} <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_Type-C_to_Type_A.png?v=1678267382"></div> {% endcomment %}
                           <div>Type-C</div>
                       </div>
                       <div data-type="Micro-USB" class="js-type-selector product-template__wrapper--content__selection--wrapper__single">
-                      {% comment %} <div><img class="phone-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TP_Micro-USB_to_Type_A.png?v=1678267382"></div> {% endcomment %}
                           <div>Micro Usb</div>
                       </div>
                   </div>
               </div>
               <div class="product-template__wrapper--content__selection">
-                  {% comment %} <div class="product-template__wrapper--content__selection">
-                      Choose your cable length:
-                  </div> {% endcomment %}
                   <div class="product-template__wrapper--content__selection--wrapper f aic jcb small-top fw">
-                      <div data-length="10ft(3.0m)" class="active js-length-selector product-template__wrapper--content__selection--wrapper__single">
-                        3.0m
+            
+                      <div data-length="4ft(1.2m)" class="active js-length-selector product-template__wrapper--content__selection--wrapper__single">
+                        1.2m
                       </div>
                       <div data-length="6ft(1.8m)" class="js-length-selector product-template__wrapper--content__selection--wrapper__single">
                         1.8m
                       </div>
-                      <div data-length="4ft(1.2m)" class="js-length-selector product-template__wrapper--content__selection--wrapper__single">
-                        1.2m
+                      <div data-length="10ft(3.0m)" class="js-length-selector product-template__wrapper--content__selection--wrapper__single">
+                        3.0m
                       </div>
                   </div>
               </div>
               <div class="product-template__wrapper--content__add">
-                  {% comment %} <div class="product-template__wrapper--content__selection">
-                          Bundle Up and Save another 50%
-                  </div> {% endcomment %}
                   <div data-addon="{{plug.first_available_variant.id}}" class="f jcb aic product-template__wrapper--content__add--colored js-add">
                     <div class="product-template__wrapper--content__add--title font-bold">ADD TITAN PD PLUG <br>{{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
                     <div class="product-template__wrapper--content__add--image">
@@ -140,13 +125,69 @@
               <div class="product-template__info">
                   <img class="product-template__info--svg" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-light-on-100_256x256_crop_center.png?v=1677605481" alt="">
                   <div>
-                      <p>This cable takes an incredible 1,500 lbs of force to break! Whilst allowing charging up to 2.4x faster!</p>
+                      <p>{{section.settings.idea}}</p>
                   </div>
               </div>    
         </div>
     </div>
   </div>
 </section>
+{% schema %}
+{
+  "name": "Product Template",
+  "settings": [
+    {
+      "type": "text",
+      "id": "punchline",
+      "label": "Punch Line",
+      "default": "Finally! A charger that doesn't break."
+    },
+    {
+      "type": "text",
+      "id": "d1",
+      "label": "Discount message 1",
+      "default": "60% OFF + FREE CABLE TODAY!"
+    },
+    {
+      "type": "text",
+      "id": "d2",
+      "label": "Discount message 2",
+      "default": "60% OFF"
+    },
+    {
+      "type": "text",
+      "id": "d3",
+      "label": "Discount message 3",
+      "default": "50% OFF"
+    },
+    {
+      "type": "text",
+      "id": "idea",
+      "label": "Pro Tip",
+      "default": "This cable takes an incredible 1,500 lbs of force to break! Whilst allowing charging up to 2.4x faster!"
+    }
+  ],
+  "blocks": [
+    {
+        "type": "bullets",
+        "name": "Bullet Points",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+  ],
+  "presets": [
+    {
+      "name": "Product Template",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}
 <script>
 window.jointPrice = {
     {% for variant in product.variants %}
@@ -366,21 +407,3 @@ window.mainImages = {
    "2xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839"
 }
 </script>
-{% schema %}
-{
-  "name": "Product Template",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product Template",
-      "category": "Home Page"
-    }
-  ]
-}
-{% endschema %}

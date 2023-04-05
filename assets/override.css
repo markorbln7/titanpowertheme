@@ -1,0 +1,155 @@
+/*Background colour for selectors*/
+
+.product-template__wrapper--content__selection--wrapper__single.active {
+    background-color: #1e1e1e;
+    color: #35ff2e;
+    border-color: #35ff2e;
+}
+
+/*Borders for wrappers*/
+
+.product-template__wrapper--content__selection--wrapper__single {
+    min-height: 5rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    grid-gap: 3px;
+    gap: 2px;
+    padding: 5px;
+    font-size: 15px;
+    line-height: 1.57;
+    letter-spacing: .05em;
+    cursor: pointer;
+    justify-content: center;
+    transition: all 1s;
+    border-left: 1px solid #515151;
+    border-top: 1px solid #515151;
+    border-bottom: 1px solid #515151;
+    border-right: 1px solid #515151;;
+    margin-bottom: 0;
+}
+
+
+/*Text for 3x Pack*/
+
+.product-template__wrapper--content__selection--wrapper__single.active .decoy-title {
+    color: #35ff2e;
+}
+
+.product-template__wrapper--content__selection--wrapper__single:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-right: 1px solid #515151;
+}
+
+
+/*Box shadow glow*/
+
+.master-product {
+    box-shadow: #35ff2e 1px 1px 9px 5px;
+    border: 1px solid #35FF2E;
+}
+
+/*Bullet point spacing */
+
+.product-template__wrapper--content__features--name {
+    margin: 6px 0;
+    position: relative;
+    padding-left: 30px;
+    font-size: 18px;
+}
+
+/*+1 FREE colour*/
+
+.product-template__wrapper--content__selection--wrapper__save .free-cable {
+    color: #000000;
+}
+
+/*Small discount badges neon green background*/
+
+.product-template__wrapper--content__selection--wrapper__save {
+    pointer-events: none;
+    position: absolute;
+    top: -30px;
+    border-radius: 10px;
+    padding: 0 10px;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #60c655fc;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.57;
+    letter-spacing: .05em;
+    width: -moz-max-content;
+    width: max-content;
+    border: 1.5px solid #35ff2e;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    min-height: 40px;
+    line-height: 1;
+    box-shadow: #35ff2e 1px 1px 3px 0px;
+}
+
+/*Pack title spacing*/
+
+.decoy-title {
+    margin-top: 1rem;
+}
+
+/*MArgin above and below option selectors*/
+
+.product-template__wrapper--content__selection--wrapper {
+    margin: 10px 0 15px;
+}
+
+/*Top section font styles*/
+
+.product-template__wrapper--content__title {
+    margin: 8px 0 10px;
+    letter-spacing: .04rem;
+    font-style: italic;
+}
+
+@media only screen and (max-width: 768px)
+.product-template__wrapper--content__review {
+    line-height: 1.2;
+    margin-top: -10px;
+}
+
+
+.product-template__wrapper--content__features {
+    margin-bottom: 15px;
+}
+
+/*Bullet point text*/
+
+.product-template__wrapper--content__features {
+    font-size: 18px;
+    line-height: 18px;
+    color: #a0ff95;
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+.decoy-title {
+    font-size: 16px;
+}
+
+.product-template__icons--item {
+    font-weight: 300;
+    line-height: normal;
+    margin-left: 23px;
+}
+
+.product-template__wrapper--content__form--atc button {
+    border-radius: 25px;
+    padding: 10px 20px; 
+}

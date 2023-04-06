@@ -1,7 +1,7 @@
 {% assign product = all_products['3-x-titan-smart-cable™'] %}
 {% assign product2 = all_products['1-x-titan-smart-cable™'] %}
 {% assign product4 = all_products['2-x-titan-smart-cable™-2'] %}
-{% assign plug = all_products['titan-45w-nano-pd-plug™-1']%}
+{% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off']%}
 <section id="product-template tt" class="product-template titan-bg-black">
   <div class="container">
     <div class="product-template__wrapper f ais jcc">
@@ -106,11 +106,15 @@
                     </div>
                   </div>
               </div>
+              <div class="text-center price-div">
+                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+              </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price"></span> <span class="js-crossed-price titan-red"></span></div><br>
-                    <div class="js-saving"></div>
+                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
                   </button>
+                  <div class="amazon-notice"><span>Note:</span> Not Available on Amazon or eBay</div>
               </div>
               <div class="product-template__icons">
                   <div class="product-template__icons--item">

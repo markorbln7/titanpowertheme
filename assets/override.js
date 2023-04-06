@@ -6,7 +6,7 @@ window.selectLogic = {
   productHandle: '',
   productId: '',
   phoneType: 'iPhone',
-  cableLength: '10ft(3.0m)',
+  cableLength: '4ft(1.2m)',
   addon: ''
 }
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -43,12 +43,12 @@ const priceDisplay = () => {
   }
 }
 window.addEventListener('load', (event) => {
-  originalOne.innerHTML = window.length['1x10ft(3.0m)']
-  discOne.innerHTML = window.compareLength['1x10ft(3.0m)']
-  originalTwo.innerHTML = window.length['2x10ft(3.0m)']
-  discTwo.innerHTML = window.compareLength['2x10ft(3.0m)']
-  originalThree.innerHTML = window.length['3x10ft(3.0m)']
-  discThree.innerHTML = window.compareLength['3x10ft(3.0m)']
+  originalOne.innerHTML = window.length['1x4ft(1.2m)']
+  discOne.innerHTML = window.compareLength['1x4ft(1.2m)']
+  originalTwo.innerHTML = window.length['2x4ft(1.2m)']
+  discTwo.innerHTML = window.compareLength['2x4ft(1.2m)']
+  originalThree.innerHTML = window.length['3x4ft(1.2m)']
+  discThree.innerHTML = window.compareLength['3x4ft(1.2m)']
   priceDisplay()
 })
 function fetchProduct (el) {

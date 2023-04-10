@@ -68,7 +68,15 @@
             width: 50%;
             max-height: 350px;
             overflow: hidden;
+            display:block;
+            &__mobile {
+                display: none !important;
+                @media only screen and (max-width: 768px) {
+                    display: block !important; 
+                }
+            }
             @media only screen and (max-width: 768px) {
+                display:none;
                 width: 100%;
                 max-height: unset;
             }

@@ -26,6 +26,9 @@
                 <div class="product-zig__single--image">
                     <img src="{{block.settings.image | img_url:'master'}}">
                 </div>
+                <div class="product-zig__single--image product-zig__single--image__mobile">
+                    <img src="{{block.settings.mobile_image | img_url:'master'}}">
+                </div>
             </div>
             {% endif %}
         {% endfor %}
@@ -56,6 +59,12 @@
         {
           "type": "image_picker",
           "id": "image",
+          "info": "Choose Image",
+          "label":"Choose Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
           "info": "Choose Image",
           "label":"Choose Image"
         },

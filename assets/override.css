@@ -3,7 +3,10 @@
 .product-template__wrapper--content__selection--wrapper__single.active {
     background-color: #1b1b1b;
     color: #35ff2e;
-    border-color: #35ff2e;
+    border-color: #35ff2e !important;
+}
+.product-template__wrapper--content__selection--wrapper__single.active:last-child {
+
 }
 
 /*Borders for wrappers*/
@@ -148,3 +151,37 @@
     line-height: normal;
     margin-left: 23px;
 }
+
+.product-template__icons--item {
+    font-weight: 300;
+    line-height: normal;
+    margin-left: 23px;
+ }
+ .product-template__wrapper--content__form--atc button {
+    border-radius: 25px;
+    padding: 10px 20px;
+ }
+ .product-template__wrapper--content__offerDiscount {
+    display: none;
+ }
+ .product-template__info p {
+    line-height: 1.5;
+ }
+ .product-zig__single--content__text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #F4F4F4;
+ }
+ .product-zig__bigtitle {
+    font-family: 'Raleway';
+ }
+ .product-template__wrapper--content__form--atc button {
+    font-size: 21px;
+    font-weight: 900;
+    padding: 25px;
+    font-family: 'Work Sans';
+    border-radius: 25px;
+ }
+ .product-image__title {
+    font-family: 'Raleway';
+ }

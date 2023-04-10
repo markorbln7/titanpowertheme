@@ -85,9 +85,19 @@
             width: 50%;
             max-height: 350px;
             overflow: hidden;
+            display:block;
+}
+.product-zig__single--image__mobile {
+                display: none !important;
+            }
+@media only screen and (max-width: 768px) {
+    .product-zig__single--image__mobile {
+        display: block !important;
+    }
 }
 @media only screen and (max-width: 768px) {
     .product-zig__single--image {
+        display:none;
         width: 100%;
         max-height: unset;
     }

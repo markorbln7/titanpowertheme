@@ -478,7 +478,7 @@
         }
 }
 .decoy-content__price {
-        color:#60c655cc;
+        color:#35ff2e;
 } /* QTY */
 .js-qty-selector {
     display:flex;
@@ -691,11 +691,13 @@
     }
   }
 .master-product {
-    box-shadow: #35ff2e 1px 1px 24px 4px;
     border:2px solid #35FF2E;
 }
 .master-product .decoy-content__price {
         color:#35FF2E;
+    }
+.master-product .product-template__wrapper--content__selection--wrapper__save {
+        box-shadow: #35ff2e 1px 1px 12px 0px;
     }
 .js-price {
     color: #35ff2e;

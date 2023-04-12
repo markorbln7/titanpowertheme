@@ -455,7 +455,7 @@
         gap:0;
     }
     &__price {
-        color:#60c655cc;
+        color:#35ff2e;
     }
 }
 
@@ -715,10 +715,12 @@
   }
 
 .master-product {
-    box-shadow: #35ff2e 1px 1px 24px 4px;
     border:2px solid #35FF2E;
     .decoy-content__price {
         color:#35FF2E;
+    }
+    .product-template__wrapper--content__selection--wrapper__save {
+        box-shadow: #35ff2e 1px 1px 12px 0px;
     }
 }
 .js-price {

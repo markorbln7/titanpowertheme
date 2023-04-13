@@ -1,4 +1,103 @@
 .product-template {
+    label {
+        cursor: pointer;
+        width: 180px;
+        height: 65px;
+        background: #1b1b1b;;
+        display: block;
+        border-radius: 30px;
+        position: relative;
+        margin:20px auto 0px;
+        /* @media only screen and (max-width: 768px) {
+            width: 100px;
+            height: 35px;
+        } */
+    }
+    .label-holder {
+        margin-bottom: -50px;
+        @media only screen and (max-width: 768px) {
+            margin-bottom: -35px;
+        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__image {
+            max-width: 70px;
+            &:last-child {
+                margin-left: 10px;
+            }
+            .speed-pd {
+                display: block;
+                width: auto;
+                max-width: 50px;
+                height: 100%;
+                margin-left: 30px;
+                margin-top: 28px;
+                &.hidden {
+                    display:none;
+                }
+            }
+            .speed-usb {
+                display: block;
+                width: auto;
+                max-width: 50px;
+                height: 100%;
+                margin-left: 30px;
+                margin-top: 28px;
+                &.hidden {
+                    display:none;
+                }
+            }
+        }
+        &__speed {
+            text-align:center;
+            font-weight: bold;
+            font-style: italic;
+        }
+        &__title {
+            color:white;
+            font-size:15px;
+            font-weight:bold;
+            font-style:italic;
+            z-index: 9999;
+            display: block;
+            position: relative;
+            text-align: center;       
+        }
+    }
+    
+    label:after {
+        content: 'USB-A';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 85px;
+        height: 55px;
+        background: #60c655;
+        border-radius: 25px;
+        transition: 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:black;
+        font-weight:bold;
+    }
+    
+    input:checked + label {
+        background: #1b1b1b;;
+    }
+    input:checked + label:after {
+        content: 'PD';
+    }
+    
+    input:checked + label:after {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+    }
+    
+    label:active:after {
+        width: 130px;
+    }
     &__wrapper {
         gap:40px;
         @media only screen and (max-width: 768px) {
@@ -28,6 +127,7 @@
                     padding-left: 60px;
                     font-size: 19px;
                     font-weight: bold;
+                    text-align: center;
                     .money {
                         color: #60c655cc;
                     }
@@ -754,5 +854,63 @@
     @media only screen and (max-width: 768px) {
         padding: 10px 20px; 
         font-size:18px;
+    }
+}
+.product-template__wrapper--content__add.pd-add {
+    margin-top: 60px;
+    @media only screen and (max-width: 768px) {
+        margin-top: 60px;
+    }
+}
+.switch {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    color:#60c655;
+    font-weight: bold;
+    font-style: italic;
+    .usba {
+        margin-left:15px;
+    }
+    .pd {
+        margin-right:37px;
+    }
+}
+.pd-disable {
+    &.disabled {
+        opacity: .3;
+        cursor:not-allowed;
+        pointer-events:none;
+        border-left: 1px solid #515151;
+        border-top: 1px solid #515151;
+        border-bottom: 1px solid #515151;
+        border-right: 1px solid #515151;
+        border-color: #515151 !important;
+        color:white !important;
+        &:hover {
+            background: transparent;
+        }
+        &.active {
+            border-color: #515151 !important;
+            color:white !important;
+            background-color: black !important;
+        }
+    }
+}
+.plug-ports {
+    color:white;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 14px;
+    justify-content: center;
+    span {
+        color: #60c655cc;
+        font-style:italic;
+        margin-left:5px;
+    }
+    img {
+        max-width: 30px;
+        margin-left: 5px;
     }
 }

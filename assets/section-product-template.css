@@ -923,9 +923,10 @@
     justify-content: center;
     flex: 0 0 auto;
     animation-name: pulse;
-    animation-duration: 1.5s;
+    animation-duration: 2s;
     animation-iteration-count:infinite;
     margin-left:-10px;
+    color: #35ff2e;
 }
     .arrow-left {
     transform: rotate(90deg);
@@ -934,8 +935,10 @@
     flex: 0 0 auto;
     margin-right: 8px;
     animation-name: pulse90;
-    animation-duration: 1.5s;
+    animation-duration: 2s;
     animation-iteration-count:infinite;
+    margin-left:-10px;
+    color: #35ff2e;
 }
     @keyframes pulse {
     0% {

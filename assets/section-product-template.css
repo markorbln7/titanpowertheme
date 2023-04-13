@@ -3,7 +3,7 @@
   \*******************************************************************************************************************************************************************************************************************************************/
 .product-template label {
         cursor: pointer;
-        width: 180px;
+        width: 195px;
         height: 65px;
         background: #1b1b1b;;
         display: block;
@@ -29,7 +29,11 @@
         justify-content: center;
 }
     .product-template .label-holder__image {
-            max-width: 70px;
+            max-width: 45px;
+            margin-bottom: 22px;
+}
+    .product-template .label-holder__image:first-child {
+        margin-right: 16px;
 }
     .product-template .label-holder__image:last-child {
         margin-left: 10px;
@@ -60,6 +64,7 @@
             text-align:center;
             font-weight: bold;
             font-style: italic;
+            opacity: .5;
 }
     .product-template .label-holder__title {
             color:white;
@@ -76,7 +81,7 @@
         position: absolute;
         top: 5px;
         left: 5px;
-        width: 85px;
+        width: 95px;
         height: 55px;
         background: #60c655;
         border-radius: 25px;
@@ -121,11 +126,17 @@
                     position: relative;
                     background-color: #141414;
                     border-radius: 10px;
-                    padding: 15px 20px;
+                    padding: 10px 20px 5px;
+                    box-shadow: 1px 2px 8px #35ff2ec2;
+                    margin-top: 25px
                 }
+    .product-template__wrapper--content__add--colored.pd {
+        margin-top: -10px;
+        z-index: 99999;
+}
     @media only screen and (max-width: 768px) {
         .product-template__wrapper--content__add--colored {
-                padding: 10px 20px;
+                padding: 10px 20px 5px;
         }
 }
     .product-template__wrapper--content__add a {
@@ -134,7 +145,7 @@
 }
     .product-template__wrapper--content__add--title {
                     padding-left: 60px;
-                    font-size: 19px;
+                    font-size: 15px;
                     font-weight: bold;
                     text-align: center;
 }
@@ -156,7 +167,7 @@
         height: 37px;
         transform: translateY(-50%);
         content: "";
-        border: 2px solid rgba(96, 198, 85, .8);
+        border: 2px solid #35ff2e;
 }
     .product-template__wrapper--content__add--title:after {
         display: none;
@@ -677,6 +688,7 @@
 }
     .value-slider {
     animation: fade-in-up 1s backwards;
+    margin-top:-10px;
 }
     .value-slider .slider {
         position: relative;
@@ -719,7 +731,7 @@
             transform: scale(1);
             box-shadow: 0px 0px 7px #000000;
             opacity: 1;
-            margin-left: -10px;
+            margin-left: 0px;
 }
     .value-slider .slider .one-behind {
             transform: scale(0.7);
@@ -729,7 +741,7 @@
         left: -100%;
 }
     .value-slider .slider .one-behind.right {
-        left: 80%;
+        left: 90%;
 }
     .value-slider .slider .two-behind {
             transform: scale(0.6);
@@ -808,7 +820,7 @@
         color:#35FF2E;
     }
     .master-product .product-template__wrapper--content__selection--wrapper__save {
-        box-shadow: #35ff2e 1px 1px 12px 0px;
+        box-shadow: #35FF2E 1px 0px 9px 5px;
     }
     .js-price {
     color: #35ff2e;
@@ -905,3 +917,52 @@
         max-width: 30px;
         margin-left: 5px;
     }
+    .arrow-right {
+    transform: rotate(270deg);
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    animation-iteration-count:infinite;
+    margin-left:-10px;
+}
+    .arrow-left {
+    transform: rotate(90deg);
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin-right: 8px;
+    animation-name: pulse90;
+    animation-duration: 1.5s;
+    animation-iteration-count:infinite;
+}
+    @keyframes pulse {
+    0% {
+      transform: rotate(270deg) scale(1);
+    }
+  
+    50% {
+      transform: rotate(270deg) scale(1.2);
+    }
+  
+    100% {
+      transform: rotate(270deg) scale(1);
+    }
+}
+    @keyframes pulse90 {
+    0% {
+      transform: rotate(90deg) scale(1);
+    }
+  
+    50% {
+      transform: rotate(90deg) scale(1.2);
+    }
+  
+    100% {
+      transform: rotate(90deg) scale(1);
+    }
+}
+    .product-template__wrapper--content__add--title-pd {
+    width:100%;
+}

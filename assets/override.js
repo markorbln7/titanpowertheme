@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-console.log('thisss')
 window.selectLogic = {
   productCount: '3x',
   productHandle: '',
@@ -13,6 +12,7 @@ const productSelectors = document.querySelectorAll('.js-product-selector')
 const typeSelectors = document.querySelectorAll('.js-type-selector')
 const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const addToCarts = document.querySelectorAll('.js-atc')
+const atcScroll = document.querySelectorAll('.js-atc-scroll')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
 const savedPrice = document.querySelector('.js-saving')
@@ -26,6 +26,67 @@ const originalTwo = document.querySelector('.js-price-discount-two')
 const discTwo = document.querySelector('.js-price-original-two')
 const originalThree = document.querySelector('.js-price-discount-three')
 const discThree = document.querySelector('.js-price-original-three')
+const pdSwitch = document.querySelector('.js-pd-switch')
+const pdDisabled = document.querySelectorAll('.pd-disable')
+
+if (pdSwitch) {
+  pdSwitch.addEventListener('click', function () {
+    const status = pdSwitch.checked
+    if (status) {
+      const startCount = window.selectLogic.productCount
+      window.selectLogic.productCount = 'pd-' + startCount
+      const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
+      productSelectors.forEach(productSelector => {
+        const attribute = productSelector.getAttribute('data-count')
+        productSelector.setAttribute('data-count', 'pd-' + attribute)
+      })
+      setTimeout(() => {
+        priceDisplay()
+        originalOne.innerHTML = window.length['pd-1x' + lenght]
+        discOne.innerHTML = window.compareLength['pd-1x' + lenght]
+        originalTwo.innerHTML = window.length['pd-2x' + lenght]
+        discTwo.innerHTML = window.compareLength['pd-2x' + lenght]
+        originalThree.innerHTML = window.length['pd-3x' + lenght]
+        discThree.innerHTML = window.compareLength['pd-3x' + lenght]
+      }, '500')
+      if (window.selectLogic.phoneType === 'Micro-USB') {
+        window.selectLogic.phoneType = 'iPhone'
+        document.querySelector('.pd-default-phone').classList.add('active')
+      }
+      if (window.selectLogic.cableLength === '10ft(3.0m)') {
+        window.selectLogic.cableLength = '4ft(1.2m)'
+        document.querySelector('.pd-default-length').classList.add('active')
+      }
+      pdDisabled.forEach(pdDisable => {
+        pdDisable.classList.add('disabled')
+        pdDisable.classList.remove('active')
+      })
+    } else {
+      pdDisabled.forEach(pdDisable => {
+        pdDisable.classList.remove('disabled')
+      })
+      productSelectors.forEach(productSelector => {
+        const attribute = productSelector.getAttribute('data-count')
+        productSelector.setAttribute('data-count', attribute.substring(3))
+      })
+      const newStartCount = window.selectLogic.productCount
+      window.selectLogic.productCount = newStartCount.substring(3)
+      const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
+      setTimeout(() => {
+        priceDisplay()
+        originalOne.innerHTML = window.length['1x' + lenght]
+        discOne.innerHTML = window.compareLength['1x' + lenght]
+        originalTwo.innerHTML = window.length['2x' + lenght]
+        discTwo.innerHTML = window.compareLength['2x' + lenght]
+        originalThree.innerHTML = window.length['3x' + lenght]
+        discThree.innerHTML = window.compareLength['3x' + lenght]
+      }, '500')
+    }
+    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    imageChange.src = window.images[productSelection]
+    mainImageChange.src = window.mainImages[productSelection]
+  })
+}
 
 const priceDisplay = () => {
   if (addUpsell.classList.contains('added')) {
@@ -58,7 +119,6 @@ function fetchProduct (el) {
       console.log(data)
     })
 }
-console.log('productSelectors', productSelectors)
 productSelectors.forEach(productSelector => {
   productSelector.addEventListener('click', async (e) => {
     const _this = productSelector
@@ -70,12 +130,9 @@ productSelectors.forEach(productSelector => {
       productSelector.classList.remove('active')
     })
     _this.classList.add('active')
-    console.log(productSelector.classList, 'seleectoree')
-    console.log(product, 'product')
     window.selectLogic.productId = productId
     window.selectLogic.productHandle = product
     window.selectLogic.productCount = count
-    console.log(window.selectLogic)
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
@@ -132,10 +189,8 @@ typeSelectors.forEach(typeSelector => {
     _this.classList.add('active')
     window.selectLogic.phoneType = phoneType
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-    console.log(window.images[productSelection], productSelection, 'productSelectionproductSelectionproductSelectionproductSelection')
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
-    console.log(window.selectLogic)
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -153,13 +208,21 @@ lengthSelectors.forEach(lengthSelector => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
-    console.log(window.selectLogic)
-    originalOne.innerHTML = window.length['1x' + lenght]
-    discOne.innerHTML = window.compareLength['1x' + lenght]
-    originalTwo.innerHTML = window.length['2x' + lenght]
-    discTwo.innerHTML = window.compareLength['2x' + lenght]
-    originalThree.innerHTML = window.length['3x' + lenght]
-    discThree.innerHTML = window.compareLength['3x' + lenght]
+    if (pdSwitch && pdSwitch.checked) {
+      originalOne.innerHTML = window.length['pd-1x' + lenght]
+      discOne.innerHTML = window.compareLength['pd-1x' + lenght]
+      originalTwo.innerHTML = window.length['pd-2x' + lenght]
+      discTwo.innerHTML = window.compareLength['pd-2x' + lenght]
+      originalThree.innerHTML = window.length['pd-3x' + lenght]
+      discThree.innerHTML = window.compareLength['pd-3x' + lenght]
+    } else {
+      originalOne.innerHTML = window.length['1x' + lenght]
+      discOne.innerHTML = window.compareLength['1x' + lenght]
+      originalTwo.innerHTML = window.length['2x' + lenght]
+      discTwo.innerHTML = window.compareLength['2x' + lenght]
+      originalThree.innerHTML = window.length['3x' + lenght]
+      discThree.innerHTML = window.compareLength['3x' + lenght]
+    }
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -171,12 +234,9 @@ addUpsell.addEventListener('click', (e) => {
     const addonId = addUpsell.getAttribute('data-addon')
     window.selectLogic.addon = addonId
     priceDisplay()
-    console.log(window.selectLogic)
   } else {
-    console.log('addon je sklonjen')
     window.selectLogic.addon = ''
     priceDisplay()
-    console.log(window.selectLogic)
   }
 })
 addToCarts.forEach(addToCart => {
@@ -202,7 +262,6 @@ addToCarts.forEach(addToCart => {
         }
       ]
     }
-    console.log(window.products, window.products[productSelection], productSelection)
     const formData = {
       items: addItems
     }
@@ -225,6 +284,14 @@ addToCarts.forEach(addToCart => {
 $('.js-section-scroll').on('click', function (e) {
   e.preventDefault()
   const $section = $('#product-rev')
+
+  $('html, body').animate({
+    scrollTop: $section.offset().top + 'px'
+  }, 1000)
+})
+$('.js-atc-scroll').on('click', function (e) {
+  e.preventDefault()
+  const $section = $('.product-template__wrapper--content__features--name')
 
   $('html, body').animate({
     scrollTop: $section.offset().top + 'px'

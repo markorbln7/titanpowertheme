@@ -57,8 +57,14 @@
 .color-white {
   color:#fff;
 }
+.color-black {
+  color:#000;
+}
 .color-titan-green {
   color:#60C655;
+}
+.color-titan-neon-green {
+  color: #35ff2e;
 }
 .bg-titan-green {
   background-color:#60C655;
@@ -132,6 +138,10 @@ input[type=number]
 }
 .small-container {
   max-width: 1100px;
+  margin:0 auto;
+}
+.big-container {
+  max-width: 1400px;
   margin:0 auto;
 }
 .crossed {

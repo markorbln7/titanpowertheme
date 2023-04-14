@@ -38,10 +38,10 @@ const priceDisplay = () => {
 window.addEventListener('load', (event) => {
   originalOne.innerHTML = window.length['1x4ft(1.2m)']
   discOne.innerHTML = window.compareLength['1x4ft(1.2m)']
-  originalTwo.innerHTML = window.length['2x4ft(1.2m)']
-  discTwo.innerHTML = window.compareLength['2x4ft(1.2m)']
-  originalThree.innerHTML = window.length['8x4ft(1.2m)']
-  discThree.innerHTML = window.compareLength['8x4ft(1.2m)']
+  originalTwo.innerHTML = window.length['8x4ft(1.2m)']
+  discTwo.innerHTML = window.compareLength['8x4ft(1.2m)']
+  originalThree.innerHTML = window.length['4x4ft(1.2m)']
+  discThree.innerHTML = window.compareLength['4x4ft(1.2m)']
   priceDisplay()
 })
 function fetchProduct (el) {
@@ -142,10 +142,10 @@ lengthSelectors.forEach(lengthSelector => {
     mainImageChange.src = window.mainImages[productSelection]
     originalOne.innerHTML = window.length['1x' + lenght]
     discOne.innerHTML = window.compareLength['1x' + lenght]
-    originalTwo.innerHTML = window.length['2x' + lenght]
-    discTwo.innerHTML = window.compareLength['2x' + lenght]
-    originalThree.innerHTML = window.length['8x' + lenght]
-    discThree.innerHTML = window.compareLength['8x' + lenght]
+    originalTwo.innerHTML = window.length['8x' + lenght]
+    discTwo.innerHTML = window.compareLength['8x' + lenght]
+    originalThree.innerHTML = window.length['4x' + lenght]
+    discThree.innerHTML = window.compareLength['4x' + lenght]
     setTimeout(() => {
       priceDisplay()
     }, '500')

@@ -12,6 +12,7 @@ const productSelectors = document.querySelectorAll('.js-product-selector')
 const typeSelectors = document.querySelectorAll('.js-type-selector')
 const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const addToCarts = document.querySelectorAll('.js-atc')
+const atcScroll = document.querySelectorAll('.js-atc-scroll')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
 const savedPrice = document.querySelector('.js-saving')
@@ -283,6 +284,14 @@ addToCarts.forEach(addToCart => {
 $('.js-section-scroll').on('click', function (e) {
   e.preventDefault()
   const $section = $('#product-rev')
+
+  $('html, body').animate({
+    scrollTop: $section.offset().top + 'px'
+  }, 1000)
+})
+$('.js-atc-scroll').on('click', function (e) {
+  e.preventDefault()
+  const $section = $('.product-template__wrapper--content__features--name')
 
   $('html, body').animate({
     scrollTop: $section.offset().top + 'px'

@@ -2,7 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/lib/index.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/product-icons/product-icons.css ***!
   \*************************************************************************************************************************************************************************************************************************************/
 .product-zig-icons {
-    background-color: #141414;
+    background-color: #DFDFDF;
     padding: 50px 0;
 }
 @media only screen and (max-width: 768px) {
@@ -12,10 +12,11 @@
 }
 .product-zig-icons {
     font-size: 16px;
-    margin-top:50px;
+    margin-top:0px;
 }
 .product-zig-icons__wrapper--icon {
             width:25%;
+            color:black;
         }
 @media only screen and (max-width: 768px) {
     .product-zig-icons__wrapper--icon {
@@ -32,7 +33,7 @@
         max-width: 50px;
 }
 .product-icons {
-    background-color: #141414;
+    background-color: #DFDFDF;
     padding: 50px 0;
 }
 @media only screen and (max-width: 768px) {
@@ -42,7 +43,7 @@
 }
 .product-icons {
     font-size: 16px;
-    margin-top:50px;
+    margin-top:0px;
 }
 .product-icons .product-template__wrapper--content__review {
         width:20%;
@@ -56,6 +57,7 @@
 }
 .product-icons__wrapper--icon {
             width:20%;
+            color:black;
         }
 @media only screen and (max-width: 768px) {
     .product-icons__wrapper--icon {

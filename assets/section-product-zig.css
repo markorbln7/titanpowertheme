@@ -17,22 +17,26 @@
         max-width: 600px;
         margin:0 auto;
         margin-bottom:50px;
-}
-.product-zig__bigtitle:before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 1.5px;
-    background-color: #60c655;
-    border-radius:10px;
-    margin: 0 auto 20px;
+        font-style:italic;
+        letter-spacing: 0.07em;
+        /* &:before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1.5px;
+            background-color: #60c655;
+            border-radius:10px;
+            margin: 0 auto 20px;
+        } */
 }
 .product-zig__single {
         margin-bottom: 80px;
+        padding: 250px 1.28%;
 }
 @media only screen and (max-width: 768px) {
     .product-zig__single {
         margin-bottom: 40px;
+        padding: 0;
     }
 }
 .product-zig__single {
@@ -68,12 +72,45 @@
         padding-right: 0%;
     }
 }
+.product-zig__single--content__number {
+                font-size: 80px;
+                line-height: 40px;
+                font-style: italic;
+                letter-spacing: .07em;
+                font-family: 'Raleway';
+                margin-bottom: 25px;
+}
+@media only screen and (max-width: 768px) {
+    .product-zig__single--content__number {
+        font-size: 60px;
+    }
+}
+.product-zig__single--content__uptitle {
+                font-weight: 500;
+                color: #22FF05;
+                font-style: normal;
+                font-size: 21px;
+                line-height: 1.4;
+                font-family: "Work Sans";
+                text-transform:uppercase;
+                letter-spacing: 0.2em;
+}
+@media only screen and (max-width: 768px) {
+    .product-zig__single--content__uptitle {
+        font-size: 18px;
+    }
+}
 .product-zig__single--content__title {
                 margin-bottom: 20px;
-                font-size: 22px;
-                line-height: 1.5;
+                font-size: 35px;
+                line-height: 1.1;
                 font-weight:700;
                 color:white;
+}
+@media only screen and (max-width: 768px) {
+    .product-zig__single--content__title {
+        font-size: 30px;
+    }
 }
 .product-zig__single--content__text {
                 margin-bottom: 20px;
@@ -83,7 +120,6 @@
 }
 .product-zig__single--image {
             width: 50%;
-            max-height: 350px;
             overflow: hidden;
             display:block;
 }
@@ -104,9 +140,15 @@
 }
 .product-zig__single--image img {
                 width: 100%;
-                height: 350px;
-                -o-object-fit: cover;
-                   object-fit: cover;
+}
+@media only screen and (max-width: 768px) {
+    .product-zig__single--image img {
+        height: auto;
+    }
+}
+.product-zig__single--image img {
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 .product-rev {
     background-color: #141414;
@@ -130,8 +172,8 @@
 .slide-content__image {
         max-width: 200px;
         width: 100%;
-        height: 245px;
-        overflow:hidden;
+        /* height: 245px; */
+        /* overflow:hidden; */
 }
 @media only screen and (max-width: 768px) {
     .slide-content__image {
@@ -142,9 +184,10 @@
 }
 .slide-content__image img {
             width:100%;
-            height: 245px;
-            -o-object-fit: cover;
-               object-fit: cover;
+            box-shadow:0px 0px 12px #35ff2ec2;
+            border: 1px solid #35ff2ec2;
+            /* height: 245px; */
+            /* object-fit: cover; */
 }
 .slide-content__text {
         width:calc(100% - 200px);
@@ -162,14 +205,6 @@
             margin-top:20px;
             font-size: 20px;
             margin-bottom:10px;
-}
-.slider-section {
-    margin: 120px auto 80px;
-}
-@media only screen and (max-width: 768px) {
-    .slider-section {
-        margin: 60px auto 60px;
-    }
 }
 .slider-section {
     max-width: 1240px;
@@ -266,3 +301,18 @@
 .faq .product-image__title slider-section__title {
         margin-bottom:30px;
     }
+.slider-outer {
+    background-color: #141414;
+    padding: 30px 0;
+    margin: 90px auto 0px;
+}
+@media only screen and (max-width: 768px) {
+    .slider-outer {
+        margin: 30px auto 0px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .zig-background {
+        background:none !important;
+    }
+}

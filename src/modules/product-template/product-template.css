@@ -72,7 +72,7 @@
     }
     
     label:after {
-        content: 'PD';
+        content: 'USB-A';
         position: absolute;
         top: 5px;
         left: 5px;
@@ -92,7 +92,7 @@
         background: #1b1b1b;;
     }
     input:checked + label:after {
-        content: 'USB-A';
+        content: 'PD';
     }
     
     input:checked + label:after {
@@ -995,5 +995,28 @@
     }
     .arrow-left {
         margin-left: 15px;
+    }
+    label:after {
+        content: 'PD';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 95px;
+        height: 55px;
+        background: #60c655;
+        border-radius: 25px;
+        transition: 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:black;
+        font-weight:bold;
+    }
+    
+    input:checked + label {
+        background: #1b1b1b;;
+    }
+    input:checked + label:after {
+        content: 'USB-A';
     }
 }

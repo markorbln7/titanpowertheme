@@ -72,7 +72,7 @@
     }
     
     label:after {
-        content: 'USB-A';
+        content: 'PD';
         position: absolute;
         top: 5px;
         left: 5px;
@@ -92,7 +92,7 @@
         background: #1b1b1b;;
     }
     input:checked + label:after {
-        content: 'PD';
+        content: 'USB-A';
     }
     
     input:checked + label:after {
@@ -985,4 +985,15 @@
 
 .product-template__wrapper--content__add--title-pd {
     width:100%;
+}
+.label-holder.reverse-holder {
+    .switch .pd {
+        margin-right: 15px;
+    }
+    .arrow-right {
+        margin-left:10px;
+    }
+    .arrow-left {
+        margin-left: 15px;
+    }
 }

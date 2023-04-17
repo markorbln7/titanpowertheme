@@ -77,7 +77,7 @@
             text-align: center;
 }
     .product-template label:after {
-        content: 'USB-A';
+        content: 'PD';
         position: absolute;
         top: 5px;
         left: 5px;
@@ -96,7 +96,7 @@
         background: #1b1b1b;
 }
     .product-template input:checked + label:after {
-        content: 'PD';
+        content: 'USB-A';
 }
     .product-template input:checked + label:after {
         left: calc(100% - 5px);
@@ -969,3 +969,12 @@
     .product-template__wrapper--content__add--title-pd {
     width:100%;
 }
+    .label-holder.reverse-holder .switch .pd {
+        margin-right: 15px;
+    }
+    .label-holder.reverse-holder .arrow-right {
+        margin-left:10px;
+    }
+    .label-holder.reverse-holder .arrow-left {
+        margin-left: 15px;
+    }

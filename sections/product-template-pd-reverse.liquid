@@ -34,24 +34,24 @@
               <div class="product-template__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div>
-            <div class="label-holder">
+            <div class="label-holder reverse-holder">
                 <div class="label-holder__image">
                    <div class="label-holder__speed">SPEED</div>
-                  <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_x_lightning.jpg?v=1681381825">
+                  <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_x_lightning.jpg?v=1681381825">
                 </div>
                 <div>
                   <input hidden class="js-pd-switch" type="checkbox" id="switch" />
-                  <label class="switch" for="switch">
-                      <div class="usba">USB-A</div>
+                  <label class="switch" for="switch" checked>
+                      <div class="usba">PD</div>
                       <i class="arrow-left fa fa-angle-down fa-2x animated"></i>
                       <i class="arrow-right fa fa-angle-down fa-2x animated"></i>
-                      <div class="pd">PD</div>
+                      <div class="pd">USB-a</div>
                   </label>
                   <div class="label-holder__title">WALL PORT</div>
                 </div>
                 <div class="label-holder__image">
                 <div class="label-holder__speed">SPEED</div>
-                  <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_x_lightning.jpg?v=1681381825">
+                  <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_x_lightning.jpg?v=1681381825">
                 </div>
             </div>
 
@@ -593,4 +593,4 @@ window.mainImages = {
    "pd-2xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_2pack.jpg?v=1681487088"
 }
 </script>
-{{ 'override.js' | asset_url | script_tag }}
+{{ 'overridepdreverse.js' | asset_url | script_tag }}

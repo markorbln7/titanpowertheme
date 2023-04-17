@@ -21,10 +21,66 @@ const discThree = document.querySelector('.js-price-original-three')
 const pdSwitch = document.querySelector('.js-pd-switch')
 const pdDisabled = document.querySelectorAll('.pd-disable')
 
+window.addEventListener('load', (event) => {
+  const status = pdSwitch.checked
+  if (!status) {
+    const startCount = window.selectLogic.productCount
+    window.selectLogic.productCount = 'pd-' + startCount
+    const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
+    productSelectors.forEach(productSelector => {
+      const attribute = productSelector.getAttribute('data-count')
+      productSelector.setAttribute('data-count', 'pd-' + attribute)
+    })
+    setTimeout(() => {
+      priceDisplay()
+      originalOne.innerHTML = window.length['pd-1x' + lenght]
+      discOne.innerHTML = window.compareLength['pd-1x' + lenght]
+      originalTwo.innerHTML = window.length['pd-2x' + lenght]
+      discTwo.innerHTML = window.compareLength['pd-2x' + lenght]
+      originalThree.innerHTML = window.length['pd-3x' + lenght]
+      discThree.innerHTML = window.compareLength['pd-3x' + lenght]
+    }, '500')
+    if (window.selectLogic.phoneType === 'Micro-USB') {
+      window.selectLogic.phoneType = 'iPhone'
+      document.querySelector('.pd-default-phone').classList.add('active')
+    }
+    if (window.selectLogic.cableLength === '10ft(3.0m)') {
+      window.selectLogic.cableLength = '4ft(1.2m)'
+      document.querySelector('.pd-default-length').classList.add('active')
+    }
+    pdDisabled.forEach(pdDisable => {
+      pdDisable.classList.add('disabled')
+      pdDisable.classList.remove('active')
+    })
+  } else {
+    pdDisabled.forEach(pdDisable => {
+      pdDisable.classList.remove('disabled')
+    })
+    productSelectors.forEach(productSelector => {
+      const attribute = productSelector.getAttribute('data-count')
+      productSelector.setAttribute('data-count', attribute.substring(3))
+    })
+    const newStartCount = window.selectLogic.productCount
+    window.selectLogic.productCount = newStartCount.substring(3)
+    const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
+    setTimeout(() => {
+      priceDisplay()
+      originalOne.innerHTML = window.length['1x' + lenght]
+      discOne.innerHTML = window.compareLength['1x' + lenght]
+      originalTwo.innerHTML = window.length['2x' + lenght]
+      discTwo.innerHTML = window.compareLength['2x' + lenght]
+      originalThree.innerHTML = window.length['3x' + lenght]
+      discThree.innerHTML = window.compareLength['3x' + lenght]
+    }, '500')
+  }
+  const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+  imageChange.src = window.images[productSelection]
+  mainImageChange.src = window.mainImages[productSelection]
+})
 if (pdSwitch) {
   pdSwitch.addEventListener('click', function () {
     const status = pdSwitch.checked
-    if (status) {
+    if (!status) {
       const startCount = window.selectLogic.productCount
       window.selectLogic.productCount = 'pd-' + startCount
       const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
@@ -200,7 +256,7 @@ lengthSelectors.forEach(lengthSelector => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
-    if (pdSwitch && pdSwitch.checked) {
+    if (pdSwitch && !pdSwitch.checked) {
       originalOne.innerHTML = window.length['pd-1x' + lenght]
       discOne.innerHTML = window.compareLength['pd-1x' + lenght]
       originalTwo.innerHTML = window.length['pd-2x' + lenght]

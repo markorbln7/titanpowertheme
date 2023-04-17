@@ -4,7 +4,6 @@ const productSelectors = document.querySelectorAll('.js-product-selector')
 const typeSelectors = document.querySelectorAll('.js-type-selector')
 const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const addToCarts = document.querySelectorAll('.js-atc')
-const atcScroll = document.querySelectorAll('.js-atc-scroll')
 const price = document.querySelector('.js-price')
 const crossedPrice = document.querySelector('.js-crossed-price')
 const savedPrice = document.querySelector('.js-saving')
@@ -20,65 +19,6 @@ const originalThree = document.querySelector('.js-price-discount-three')
 const discThree = document.querySelector('.js-price-original-three')
 const pdSwitch = document.querySelector('.js-pd-switch')
 const pdDisabled = document.querySelectorAll('.pd-disable')
-
-if (pdSwitch) {
-  pdSwitch.addEventListener('click', function () {
-    const status = pdSwitch.checked
-    if (status) {
-      const startCount = window.selectLogic.productCount
-      window.selectLogic.productCount = 'pd-' + startCount
-      const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
-      productSelectors.forEach(productSelector => {
-        const attribute = productSelector.getAttribute('data-count')
-        productSelector.setAttribute('data-count', 'pd-' + attribute)
-      })
-      setTimeout(() => {
-        priceDisplay()
-        originalOne.innerHTML = window.length['pd-1x' + lenght]
-        discOne.innerHTML = window.compareLength['pd-1x' + lenght]
-        originalTwo.innerHTML = window.length['pd-2x' + lenght]
-        discTwo.innerHTML = window.compareLength['pd-2x' + lenght]
-        originalThree.innerHTML = window.length['pd-3x' + lenght]
-        discThree.innerHTML = window.compareLength['pd-3x' + lenght]
-      }, '500')
-      if (window.selectLogic.phoneType === 'Micro-USB') {
-        window.selectLogic.phoneType = 'iPhone'
-        document.querySelector('.pd-default-phone').classList.add('active')
-      }
-      if (window.selectLogic.cableLength === '10ft(3.0m)') {
-        window.selectLogic.cableLength = '4ft(1.2m)'
-        document.querySelector('.pd-default-length').classList.add('active')
-      }
-      pdDisabled.forEach(pdDisable => {
-        pdDisable.classList.add('disabled')
-        pdDisable.classList.remove('active')
-      })
-    } else {
-      pdDisabled.forEach(pdDisable => {
-        pdDisable.classList.remove('disabled')
-      })
-      productSelectors.forEach(productSelector => {
-        const attribute = productSelector.getAttribute('data-count')
-        productSelector.setAttribute('data-count', attribute.substring(3))
-      })
-      const newStartCount = window.selectLogic.productCount
-      window.selectLogic.productCount = newStartCount.substring(3)
-      const lenght = document.querySelector('.js-length-selector.active').getAttribute('data-length')
-      setTimeout(() => {
-        priceDisplay()
-        originalOne.innerHTML = window.length['1x' + lenght]
-        discOne.innerHTML = window.compareLength['1x' + lenght]
-        originalTwo.innerHTML = window.length['2x' + lenght]
-        discTwo.innerHTML = window.compareLength['2x' + lenght]
-        originalThree.innerHTML = window.length['3x' + lenght]
-        discThree.innerHTML = window.compareLength['3x' + lenght]
-      }, '500')
-    }
-    const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-    imageChange.src = window.images[productSelection]
-    mainImageChange.src = window.mainImages[productSelection]
-  })
-}
 
 const priceDisplay = () => {
   if (addUpsell.classList.contains('added')) {
@@ -98,10 +38,10 @@ const priceDisplay = () => {
 window.addEventListener('load', (event) => {
   originalOne.innerHTML = window.length['1x4ft(1.2m)']
   discOne.innerHTML = window.compareLength['1x4ft(1.2m)']
-  originalTwo.innerHTML = window.length['2x4ft(1.2m)']
-  discTwo.innerHTML = window.compareLength['2x4ft(1.2m)']
-  originalThree.innerHTML = window.length['3x4ft(1.2m)']
-  discThree.innerHTML = window.compareLength['3x4ft(1.2m)']
+  originalTwo.innerHTML = window.length['8x4ft(1.2m)']
+  discTwo.innerHTML = window.compareLength['8x4ft(1.2m)']
+  originalThree.innerHTML = window.length['4x4ft(1.2m)']
+  discThree.innerHTML = window.compareLength['4x4ft(1.2m)']
   priceDisplay()
 })
 function fetchProduct (el) {
@@ -200,21 +140,12 @@ lengthSelectors.forEach(lengthSelector => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
-    if (pdSwitch && pdSwitch.checked) {
-      originalOne.innerHTML = window.length['pd-1x' + lenght]
-      discOne.innerHTML = window.compareLength['pd-1x' + lenght]
-      originalTwo.innerHTML = window.length['pd-2x' + lenght]
-      discTwo.innerHTML = window.compareLength['pd-2x' + lenght]
-      originalThree.innerHTML = window.length['pd-3x' + lenght]
-      discThree.innerHTML = window.compareLength['pd-3x' + lenght]
-    } else {
-      originalOne.innerHTML = window.length['1x' + lenght]
-      discOne.innerHTML = window.compareLength['1x' + lenght]
-      originalTwo.innerHTML = window.length['2x' + lenght]
-      discTwo.innerHTML = window.compareLength['2x' + lenght]
-      originalThree.innerHTML = window.length['3x' + lenght]
-      discThree.innerHTML = window.compareLength['3x' + lenght]
-    }
+    originalOne.innerHTML = window.length['1x' + lenght]
+    discOne.innerHTML = window.compareLength['1x' + lenght]
+    originalTwo.innerHTML = window.length['8x' + lenght]
+    discTwo.innerHTML = window.compareLength['8x' + lenght]
+    originalThree.innerHTML = window.length['4x' + lenght]
+    discThree.innerHTML = window.compareLength['4x' + lenght]
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -276,14 +207,6 @@ addToCarts.forEach(addToCart => {
 $('.js-section-scroll').on('click', function (e) {
   e.preventDefault()
   const $section = $('#product-rev')
-
-  $('html, body').animate({
-    scrollTop: $section.offset().top + 'px'
-  }, 1000)
-})
-$('.js-atc-scroll').on('click', function (e) {
-  e.preventDefault()
-  const $section = $('.product-template__wrapper--content__features--name')
 
   $('html, body').animate({
     scrollTop: $section.offset().top + 'px'
@@ -357,45 +280,3 @@ if (minus) {
     addMore.textContent = rules[newQ]
   })
 }
-
-// atcQty.addEventListener('click', (e) => {
-//   const productSelection = window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
-//   const qty = atcQty.getAttribute('data-quantity')
-//   let addItems
-//   if (window.selectLogic.addon !== '') {
-//     addItems = [
-//       {
-//         id: window.products[productSelection],
-//         quantity: qty
-//       },
-//       {
-//         id: window.selectLogic.addon,
-//         quantity: 1
-//       }
-//     ]
-//   } else {
-//     addItems = [
-//       {
-//         id: window.products[productSelection],
-//         quantity: qty
-//       }
-//     ]
-//   }
-//   console.log(window.products, window.products[productSelection], productSelection)
-//   const formData = {
-//     items: addItems
-//   }
-//   fetch(window.Shopify.routes.root + 'cart/add.js', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(formData)
-//   })
-//     .then(response => {
-//       return response.json()
-//     })
-//     .catch((error) => {
-//       console.error('Error:', error)
-//     })
-// })

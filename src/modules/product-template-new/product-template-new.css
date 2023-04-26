@@ -727,10 +727,10 @@
         
         .active {
             z-index: 10;
-            transform: scale(1);
+            transform: scale(1.1);
             box-shadow: 0px 0px 7px #000000;
             opacity: 1;
-            margin-left: 0px;
+            margin-left: -10px;
         }
 
         .one-behind {
@@ -1016,7 +1016,7 @@
 }
 .label-holder.reverse-holder {
     .switch .pd {
-        margin-right: 15px;
+        margin-right: 12px;
     }
     .arrow-right {
         margin-left:10px;

@@ -216,13 +216,13 @@
     border-bottom-right-radius: 25px;
 }
 
-
+@media only screen and (max-width: 768px)
 .product-template-new__wrapper--content__selection--wrapper__save {
     font-size: 10px;
     min-height: 32px;
     line-height: 1;
     padding-left: 20px;
-
+}
 
   .js-price {
     font-size: 20px;
@@ -233,6 +233,7 @@
     font-size: 14px;
   }
 
+  @media only screen and (max-width: 768px)
   .titan-red, .titan-red .money {
     font-size: 12px;
     padding-bottom: 8px;

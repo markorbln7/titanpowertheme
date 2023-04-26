@@ -262,11 +262,15 @@
 }
 
   product-template-new__wrapper--content__review--mark {
-    font-size: 25px;
+    font-size: 24px;
   }
 
   @media only screen and (max-width: 768px)
-    margin-top: -15px;
+    .product-template-new__wrapper--content__review {
+    font-size: 20px;
+    margin-top: -32px;
+    margin-bottom: 10px;
+    text-align: center;
 }
   
   .product-template-new label {
@@ -296,3 +300,4 @@
   .value-slider .slider div {
     opacity: .3;
 }
+  

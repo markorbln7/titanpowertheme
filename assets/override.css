@@ -185,3 +185,68 @@
  .product-image__title {
     font-family: 'Raleway';
  }
+
+
+/*New additions*/
+
+.label-holder.reverse-holder label:after {
+    height: 45px;
+}
+
+
+.amazon-notice span {
+    display: none;
+}
+
+.product-template-new label {
+    height: 55px;
+}
+
+.product-template-new__wrapper--content__selection--wrapper__single.active:after {
+    border-radius: 25px;
+}
+
+.product-template-new__wrapper--content__selection--wrapper__single:first-child {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.product-template-new__wrapper--content__selection--wrapper__single:last-child {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+
+.product-template-new__wrapper--content__selection--wrapper__save {
+    font-size: 10px;
+    min-height: 32px;
+    line-height: 1;
+    padding-left: 20px;
+
+
+  .js-price {
+    font-size: 20px;
+}
+
+  .titan-red, .titan-red .money {
+    font-size: 12px;
+    padding-bottom: 8px;
+}
+
+  .product-template-new__wrapper--content__add--title:before {
+    width: 25px;
+    height: 25px;
+  }
+
+  @media only screen and (max-width: 768px)
+.product-template-new__wrapper--content__selection--wrapper {
+    margin: 5px 0 15px;
+}
+
+  .product-template-new__wrapper--content__add--colored {
+    border-radius: 25px
+  }
+
+  .product-template-new__wrapper--content__imageSelection {
+    margin: 25px 0 20px;
+}

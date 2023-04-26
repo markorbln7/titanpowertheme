@@ -515,6 +515,26 @@ input[type=number]
 .align-self-end {
   align-self: flex-end;
 }
+.zindex {
+  z-index: 9999;
+}
+.transform {
+  text-transform: uppercase;
+  font-style: italic;
+  color:#60C655
+}
+.active .transform {
+  color:black;
+}
+.vertical-separator {
+  display: block !important;
+  height: 80%;
+  background: black;
+  width: 2px;
+  position: absolute;
+  right: 0;
+  top: 10%;
+}
 .mha, .mxa {
   margin-left: auto;
   margin-right: auto;

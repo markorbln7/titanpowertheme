@@ -4,7 +4,7 @@
 .product-template-new label {
         cursor: pointer;
         width: 195px;
-        height: 65px;
+        height: 50px;
         background: #1b1b1b;;
         display: block;
         border-radius: 30px;
@@ -30,7 +30,7 @@
 }
     .product-template-new .label-holder__image {
             max-width: 45px;
-            margin-bottom: 22px;
+            margin-bottom: -5px;
 }
     .product-template-new .label-holder__image:first-child {
         margin-right: 16px;
@@ -67,7 +67,7 @@
             opacity: .5;
 }
     .product-template-new .label-holder__title {
-            color:#60c655;
+            color:white;
             font-size:15px;
             font-weight:bold;
             font-style:italic;
@@ -163,8 +163,8 @@
         position: absolute;
         top: 50%;
         left: 20px;
-        width: 37px;
-        height: 37px;
+        width: 25px;
+        height: 25px;
         transform: translateY(-50%);
         content: "";
         border: 2px solid #35ff2e;
@@ -187,13 +187,18 @@
         }
 }
     .product-template-new__wrapper--content__add--image {
-                    max-width: 18%;
+                    max-width: 13%;
                     margin-right: 5px;
+}
+    @media only screen and (max-width: 768px) {
+        .product-template-new__wrapper--content__add--image {
+                max-width: 18%;
+        }
 }
     .product-template-new__wrapper--content__add--image img {
                         box-shadow: 1px 3px 7px 0px #35ff2e;
                         border-radius:5px;
-                    }
+}
     .product-template-new__wrapper--content__selection {
                 margin-bottom: 10px;
                 font-size:18px;
@@ -215,7 +220,7 @@
     .product-template-new__wrapper--content__selection--wrapper__save {
                         pointer-events: none;
                         position: absolute;
-                        top: -20px;
+                        top: -35px;
                         border-radius: 5px;
                         padding: 0 10px;
                         left: 50%;
@@ -247,6 +252,7 @@
                 font-size: 13px;
                 min-height: 36px;
                 line-height: 1;
+                top: -20px;
         }
 }
     .product-template-new__wrapper--content__selection--wrapper__single {
@@ -298,8 +304,8 @@
         }
 }
     .product-template-new__wrapper--content__selection--wrapper__single:first-child {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
 }
     .product-template-new__wrapper--content__selection--wrapper__single:last-child {
         border-top-right-radius: 10px;
@@ -340,7 +346,7 @@
         background-color: rgba(96, 198, 85, .8);
         top:6%;
         left:6%;
-        border-radius: 10px;
+        border-radius: 25px;
 }
     .product-template-new__wrapper--content__selection--wrapper__single.active .decoy-title {
                                 color:black;
@@ -414,7 +420,7 @@
                 line-height: 25px;
                 color:#60c655;
                 font-weight: 200;
-                margin-bottom:40px;
+                margin-bottom:20px;
 }
     @media only screen and (max-width: 991px) {
         .product-template-new__wrapper--content__features {
@@ -753,6 +759,9 @@
         color: #fff;
         opacity: 0.5;
 }
+    .value-slider .slider img {
+            margin-bottom:-40px;
+}
     .value-slider .slider .active {
             z-index: 10;
             transform: scale(1.1);
@@ -760,6 +769,10 @@
             opacity: 1;
             margin-left: -10px;
 }
+    .value-slider .slider .active img {
+                margin-top: 20px;
+                margin-bottom:0;
+            }
     .value-slider .slider .one-behind {
             transform: scale(0.7);
             z-index: 9;
@@ -1012,7 +1025,7 @@
         top: 5px;
         left: 5px;
         width: 95px;
-        height: 55px;
+        height: 40px;
         background: #60c655;
         border-radius: 25px;
         transition: 0.3s;

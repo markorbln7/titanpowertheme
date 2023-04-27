@@ -204,42 +204,42 @@ addToCarts.forEach(addToCart => {
   })
 })
 
-$('.js-section-scroll').on('click', function (e) {
-  e.preventDefault()
-  const $section = $('#product-rev')
+// $('.js-section-scroll').on('click', function (e) {
+//   e.preventDefault()
+//   const $section = $('#product-rev')
 
-  $('html, body').animate({
-    scrollTop: $section.offset().top + 'px'
-  }, 1000)
-})
+//   $('html, body').animate({
+//     scrollTop: $section.offset().top + 'px'
+//   }, 1000)
+// })
 
-const accordions = document.querySelectorAll('.accordion')
+// const accordions = document.querySelectorAll('.accordion')
 
-const openAccordion = (accordion) => {
-  const content = accordion.querySelector('.accordion__content')
-  accordion.classList.add('accordion__active')
-  content.style.maxHeight = content.scrollHeight + 'px'
-}
+// const openAccordion = (accordion) => {
+//   const content = accordion.querySelector('.accordion__content')
+//   accordion.classList.add('accordion__active')
+//   content.style.maxHeight = content.scrollHeight + 'px'
+// }
 
-const closeAccordion = (accordion) => {
-  const content = accordion.querySelector('.accordion__content')
-  accordion.classList.remove('accordion__active')
-  content.style.maxHeight = null
-}
+// const closeAccordion = (accordion) => {
+//   const content = accordion.querySelector('.accordion__content')
+//   accordion.classList.remove('accordion__active')
+//   content.style.maxHeight = null
+// }
 
-accordions.forEach((accordion) => {
-  const intro = accordion.querySelector('.accordion__intro')
-  const content = accordion.querySelector('.accordion__content')
+// accordions.forEach((accordion) => {
+//   const intro = accordion.querySelector('.accordion__intro')
+//   const content = accordion.querySelector('.accordion__content')
 
-  intro.onclick = () => {
-    if (content.style.maxHeight) {
-      closeAccordion(accordion)
-    } else {
-      accordions.forEach((accordion) => closeAccordion(accordion))
-      openAccordion(accordion)
-    }
-  }
-})
+//   intro.onclick = () => {
+//     if (content.style.maxHeight) {
+//       closeAccordion(accordion)
+//     } else {
+//       accordions.forEach((accordion) => closeAccordion(accordion))
+//       openAccordion(accordion)
+//     }
+//   }
+// })
 
 const plus = document.querySelector('.js-plus')
 const minus = document.querySelector('.js-minus')

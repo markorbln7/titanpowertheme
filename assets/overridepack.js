@@ -69,7 +69,7 @@ productSelectors.forEach(productSelector => {
     imageChange.src = window.images[productSelection]
     mainImageChange.src = window.mainImages[productSelection]
     const sliderActive = _this.getAttribute('data-slide')
-    discountMessageHolder.textContent = discountMessage
+    // discountMessageHolder.textContent = discountMessage
     if (sliderActive === '.three') {
       document.querySelector(sliderActive).classList.add('active')
       document.querySelector(sliderActive).classList.remove('one-behind')

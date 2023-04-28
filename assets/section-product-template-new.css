@@ -1012,6 +1012,21 @@
     .product-template__wrapper--content__add--title-pd {
     width:100%;
 }
+    .label-holder.new-holder label:after {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 95px;
+        height: 40px;
+        background: #60c655;
+        border-radius: 25px;
+        transition: 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:black;
+        font-weight:bold;
+    }
     .label-holder.reverse-holder .switch .pd {
         margin-right: 12px;
     }

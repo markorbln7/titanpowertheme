@@ -2,7 +2,7 @@
 {{ 'section-product-template-new.js' | asset_url | script_tag }}
 {% assign product = all_products['3-x-titan-smart-cable™'] %}
 {% assign product2 = all_products['1-x-titan-smart-cable™'] %}
-{% assign product4 = all_products['2-x-titan-smart-cable™-2'] %}
+{% assign product4 = all_products['2-x-titan-smart-cable™'] %}
 
 {% assign pd1 = all_products['1-x-titan-pd-cable™-1'] %}
 {% assign pd2 = all_products['4-x-titan-pd-cable™-black-friday'] %}
@@ -14,7 +14,7 @@
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_3pack.jpg?v=1681487089" alt="{{ featured_image.alt }}">
+            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusbc.png?v=1682924899" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -82,39 +82,40 @@
               <div class="relative">
                 <div class="value-slider">
                   <div class="slider">
-                      <div class="one-behind left two"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_pack_-_3_pack_decoy_1.jpg?v=1682600774"></div>
-                      <div class="active three"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_pack_-_3_pack_decoy.jpg?v=1682545880"></div>
-                      <div class="one-behind right one"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1_pack.jpg?v=1682545880"></div>
+                      <div class="active two"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_Page_Icons_3_pack_decoy_efa6bb3d-22ca-45ea-8cab-3d38020e6341.png?v=1682923953"></div>
+                      <div class="one-behind left three"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_Page_Icons_3_pack_decoy.png?v=1682923885"></div>
+                      <div class="one-behind right one"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1.jpg?v=1682924135"></div>
                   </div>
                 </div>
               </div>
 
               <div class="product-template-new__wrapper--content__imageSelection">
-                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_3.jpg?v=16813887134">
+                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_PD_5e383e9b-97b2-436a-bfdd-334f0abd1f3c.jpg?v=1681403938">
               </div>
 
 
               {% comment %} <button class="js-pd-switch">CHANGE TO PD</button> {% endcomment %}
               <div class="product-template-new__wrapper--content__selection">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic fw">
-                      <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="3x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="master-product active js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2">
+                      <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="4x" data-id="{{product4.id}}" data-product="4-x-titan-smart-cable™-black-friday" class="active master-product js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2">
+                         <div class="decoy-title">4x Pack</div>
+                         <div class="decoy-content">
+                          <div class="decoy-content__price js-price-discount-two"></div>
+                          <div class="crossed titan-red bold js-price-original-two"></div>
+                          <span class="product-template-new__wrapper--content__selection--wrapper__save">BEST VALUE</span>
+                         </div>
+                         <div class="vertical-separator"></div>
+                      </div>
+                      <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="3x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2">
                           <div class="decoy-title">3x Pack</div>
                           <div class="decoy-content">
                             <div class="decoy-content__price js-price-discount-three"></div>
                             <div class="crossed titan-red bold js-price-original-three"></div>
-                            <span class="product-template-new__wrapper--content__selection--wrapper__save">BEST VALUE</span>
+                            {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">BEST VALUE</span> {% endcomment %}
                           </div>
                           <div class="vertical-separator"></div>
                       </div>
-                      <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="2x" data-id="{{product4.id}}" data-product="2-x-titan-smart-cable™-2" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2">
-                         <div class="decoy-title">2x Pack</div>
-                         <div class="decoy-content">
-                          <div class="decoy-content__price js-price-discount-two"></div>
-                          <div class="crossed titan-red bold js-price-original-two"></div>
-                          {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">65% OFF</span> {% endcomment %}
-                         </div>
-                         <div class="vertical-separator"></div>
-                      </div>
+                      
                       <div data-discount="{{section.settings.d3}}" data-slide=".one" data-count="" data-id="{{product2.id}}" data-product="1-x-titan-smart-cable™" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2">
                           <div class="decoy-title">1x Pack</div>
                           <div class="decoy-content">
@@ -258,7 +259,7 @@
 {% endschema %}
 <script>
 window.selectLogic = {
-  productCount: '3x',
+  productCount: '4x',
   productHandle: '',
   productId: '',
   phoneType: 'iPhone',
@@ -339,13 +340,13 @@ window.length = {
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '2x4ft(1.2m)' : '{{ variant.price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.price | money }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '2x6ft(1.8m)' : '{{ variant.price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.price | money }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '2x10ft(3.0m)' : '{{ variant.price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.price | money }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
@@ -372,13 +373,13 @@ window.length = {
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-2x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.price | money }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-2x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.price | money }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-2x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.price | money }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
@@ -407,13 +408,13 @@ window.compareLength = {
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '2x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '2x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '2x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
@@ -440,13 +441,13 @@ window.compareLength = {
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-2x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-2x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-2x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
@@ -560,15 +561,15 @@ window.images = {
    "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.2m.jpg?v=1681404221",
    "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.8m.jpg?v=1681404262",
    "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_3.0m.jpg?v=1681404304",
-   "2xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_7e3ba6f2-0a61-41e4-859b-17213cb29bfb.jpg?v=1681403888",
-   "2xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_40bc9f85-bcaa-4ae2-bad7-e3ea5f67d561.jpg?v=1681404000",
-   "2xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_ef332f96-7e94-4214-b011-4b42d4da0ed4.jpg?v=1681404121",
-   "2xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_itype-c_1.2m_73179fc3-03f3-477f-a451-4030697cdc5d.jpg?v=1681404177",
-   "2xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_3.jpg?v=1681388713",
-   "2xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_3.0m_2.jpg?v=1680176374",
-   "2xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.2m.jpg?v=1681404221",
-   "2xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.8m.jpg?v=1681404262",
-   "2xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_3.0m.jpg?v=1681404304",
+   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_7e3ba6f2-0a61-41e4-859b-17213cb29bfb.jpg?v=1681403888",
+   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_40bc9f85-bcaa-4ae2-bad7-e3ea5f67d561.jpg?v=1681404000",
+   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_ef332f96-7e94-4214-b011-4b42d4da0ed4.jpg?v=1681404121",
+   "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_itype-c_1.2m_73179fc3-03f3-477f-a451-4030697cdc5d.jpg?v=1681404177",
+   "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_3.jpg?v=1681388713",
+   "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_3.0m_2.jpg?v=1680176374",
+   "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.2m.jpg?v=1681404221",
+   "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_1.8m.jpg?v=1681404262",
+   "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro_3.0m.jpg?v=1681404304",
    "pd-3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_PD_5e383e9b-97b2-436a-bfdd-334f0abd1f3c.jpg?v=16814039383",
    "pd-3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_PD_baa17223-e6de-462e-be97-b7eeceaacad1.jpg?v=1681404041",
    "pd-3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_PD_1_0ef451a4-17b8-40e8-ab96-04c72b231229.jpg?v=1681406212",
@@ -577,15 +578,15 @@ window.images = {
    "pd-iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_PD_baa17223-e6de-462e-be97-b7eeceaacad1.jpg?v=1681404041",
    "pd-Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_PD_1_0ef451a4-17b8-40e8-ab96-04c72b231229.jpg?v=1681406212",
    "pd-Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_PD_62f94879-8740-418d-8f95-8c5a476563f5.jpg?v=1681406281",
-   "pd-2xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_PD_5e383e9b-97b2-436a-bfdd-334f0abd1f3c.jpg?v=1681403938",
-   "pd-2xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_PD_baa17223-e6de-462e-be97-b7eeceaacad1.jpg?v=1681404041",
-   "pd-2xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_PD_1_0ef451a4-17b8-40e8-ab96-04c72b231229.jpg?v=1681406212",
-   "pd-2xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_PD_62f94879-8740-418d-8f95-8c5a476563f5.jpg?v=1681406281"
+   "pd-4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_PD_5e383e9b-97b2-436a-bfdd-334f0abd1f3c.jpg?v=1681403938",
+   "pd-4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_PD_baa17223-e6de-462e-be97-b7eeceaacad1.jpg?v=1681404041",
+   "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_PD_1_0ef451a4-17b8-40e8-ab96-04c72b231229.jpg?v=1681406212",
+   "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_PD_62f94879-8740-418d-8f95-8c5a476563f5.jpg?v=1681406281"
 }
 window.mainImages = {
-   "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_3pack.jpg?v=1681487089",
-   "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_3pack.jpg?v=1681487089",
-   "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_3pack.jpg?v=1681487089",
+   "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3iphoneusba.png?v=1682931911",
+   "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3iphoneusba.png?v=1682931911",
+   "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3iphoneusba.png?v=1682931911",
    "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_3pack.jpg?v=1681487089",
    "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_3pack.jpg?v=1681487089",
    "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_3pack.jpg?v=1681487089",
@@ -601,27 +602,27 @@ window.mainImages = {
    "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-microp-usb_1pack.jpg?v=1681487089",
    "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-microp-usb_1pack.jpg?v=1681487089",
    "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-microp-usb_1pack.jpg?v=1681487089",
-   "2xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_2pack.jpg?v=1681487088",
-   "2xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_2pack.jpg?v=1681487088",
-   "2xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-iphone_2pack.jpg?v=1681487088",
-   "2xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
-   "2xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
-   "2xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
-   "2xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
-   "2xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
-   "2xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
-   "pd-3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_3pack.jpg?v=1681487088",
-   "pd-3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_3pack.jpg?v=1681487088",
-   "pd-3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_3pack.jpg?v=1681487088",
-   "pd-3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_3pack.jpg?v=1681487088",
+   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusba.png?v=1682931911",
+   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusba.png?v=1682931911",
+   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusba.png?v=1682931911",
+   "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
+   "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
+   "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-A-type-c_2pack.jpg?v=1681487088",
+   "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
+   "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
+   "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_cord_charger_decoy_2-pack_micro.jpg?v=1680171839",
+   "pd-3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3iphoneusbc.png?v=1682924899",
+   "pd-3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3iphoneusbc.png?v=1682924899",
+   "pd-3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3usbcusbc.png?v=1682924899",
+   "pd-3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3usbcusbc.png?v=1682924899",
    "pd-iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_1pack.jpg?v=1681487088",
    "pd-iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_1pack.jpg?v=1681487088",
    "pd-Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_1pack.jpg?v=1681487089",
    "pd-Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_1pack.jpg?v=1681487089",
-   "pd-2xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_2pack.jpg?v=1681487088",
-   "pd-2xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-IPHONE_2pack.jpg?v=1681487088",
-   "pd-2xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_2pack.jpg?v=1681487088",
-   "pd-2xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_smart_cable_titan_power_plus_fast_charge_pd_cord_charger_Usb-C-TYPE-C_2pack.jpg?v=1681487088"
+   "pd-4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusbc.png?v=1682924899",
+   "pd-4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4iphoneusbc.png?v=1682924899",
+   "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4usbcusbc.png?v=1682924898",
+   "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4usbcusbc.png?v=1682924898"
 }
 </script>
 <script>
@@ -642,4 +643,4 @@ removeFromDom()
 
 
 </script>
-{{ 'overridepdreverse.js' | asset_url | script_tag }}
+{{ 'overridepdreversedecoy4.js' | asset_url | script_tag }}

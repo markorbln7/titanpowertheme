@@ -75,7 +75,7 @@ window.addEventListener('load', (event) => {
   }
   const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
   imageChange.src = window.images[productSelection]
-  mainImageChange.src = window.mainImages[productSelection]
+  // mainImageChange.src = window.mainImages[productSelection]
 })
 if (pdSwitch) {
   pdSwitch.addEventListener('click', function () {
@@ -132,7 +132,7 @@ if (pdSwitch) {
     }
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
-    mainImageChange.src = window.mainImages[productSelection]
+    // mainImageChange.src = window.mainImages[productSelection]
   })
 }
 
@@ -183,7 +183,7 @@ productSelectors.forEach(productSelector => {
     window.selectLogic.productCount = count
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
-    mainImageChange.src = window.mainImages[productSelection]
+    // mainImageChange.src = window.mainImages[productSelection]
     const sliderActive = _this.getAttribute('data-slide')
     console.log(sliderActive, 'sliderActivesliderActivesliderActive')
     // discountMessageHolder.textContent = discountMessage
@@ -239,7 +239,7 @@ typeSelectors.forEach(typeSelector => {
     window.selectLogic.phoneType = phoneType
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
-    mainImageChange.src = window.mainImages[productSelection]
+    // mainImageChange.src = window.mainImages[productSelection]
     setTimeout(() => {
       priceDisplay()
     }, '500')
@@ -256,7 +256,7 @@ lengthSelectors.forEach(lengthSelector => {
     window.selectLogic.cableLength = lenght
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     imageChange.src = window.images[productSelection]
-    mainImageChange.src = window.mainImages[productSelection]
+    // mainImageChange.src = window.mainImages[productSelection]
     if (pdSwitch && !pdSwitch.checked) {
       originalOne.innerHTML = window.length['pd-1x' + lenght]
       discOne.innerHTML = window.compareLength['pd-1x' + lenght]

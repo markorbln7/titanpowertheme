@@ -10,12 +10,12 @@
 {% assign pd3 = all_products['3-x-titan-pd-cable™'] %}
 
 {% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off']%}
-<section id="product-template-new tt product-template-new-pd" class="product-template-new titan-bg-black">
+<section id="product-template-new tt product-template-new-pd" class="b3g2f product-template-new titan-bg-black">
   <div class="container">
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/pd_2.png?v=1683044910" alt="{{ featured_image.alt }}">
+            <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/replace-1.webp?v=1683290051" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -55,6 +55,7 @@
                     {% endif %}
                   {% endfor %}
               </div>
+              <div style="color: white;font-size:30px;font-weight:800;margin-top: -20px;" class="">GET 2 FREE TODAY</div>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}
@@ -80,7 +81,7 @@
                 </div>
             </div>
 
-              <div style="margin-top:-50px"  class="relative">
+              <div style="margin-top:0px"  class="relative">
                 {% comment %} <div class="value-slider">
                   <div class="slider">
                       <div class="active two"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_Page_Icons_3_pack_decoy_efa6bb3d-22ca-45ea-8cab-3d38020e6341.png?v=1682923953"></div>
@@ -89,7 +90,11 @@
                   </div>
                 </div> {% endcomment %}
               </div>
-
+              <div class="relative text-center price-div new-price-div">
+                <div style="color: white;font-size: 12px;">Your Price: <span style="color: #22FF05;font-size: 12px;">(Includes 5-Cables)</span></div>
+                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}} </div>
+              </div>
               <div class="product-template-new__wrapper--content__imageSelection">
                 <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_PD_5e383e9b-97b2-436a-bfdd-334f0abd1f3c.jpg?v=1681403938">
               </div>
@@ -131,15 +136,15 @@
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
                       <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">IPhone</div>
+                          <div class="zindex transform">5x IPhone</div>
                           <div class="vertical-separator"></div>
                       </div>
                       <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">Type-C</div>
+                          <div class="zindex transform">5x Type-C</div>
                           <div class="vertical-separator"></div>
                       </div>
                       <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">Micro Usb</div>
+                          <div class="zindex transform">5x Micro Usb</div>
                       </div>
                   </div>
               </div>
@@ -172,10 +177,7 @@
                     </div>
                   </div>
               </div>
-              <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
-              </div>
+              
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
                     <div id="addToCartText-{{ section.id }}">ADD TO CART</div>

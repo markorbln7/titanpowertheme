@@ -315,3 +315,78 @@
 .product-template-new__icons {
     line-height: 1.3;
 }
+
+
+
+
+
+
+/*New additions Mobile May 5th*/
+
+.product-template-new .label-holder__title {
+    color: #ffffffbf;
+}
+
+.product-template-new .label-holder__title {
+    margin-bottom: -22px;
+}
+
+.product-template-new label {
+    height: 45px;
+}
+
+.label-holder.reverse-holder label:after {
+    height: 35px;
+}
+
+.js-saving {
+    margin-top: -5px;
+}
+
+.product-template-new__wrapper--content__selection--wrapper__single.active:after {
+    background-color: #60c655;
+}
+
+.product-template-new__wrapper--content__selection--wrapper__single {
+    min-height: 3.5rem;
+}
+
+.master-product {
+    box-shadow: inset 1px 0 14px #35ff2e;
+}
+
+.decoy-title {
+    font-size: 16px;
+    margin-top: 0.4rem;
+    text-transform: none;
+    font-style: normal;
+}
+
+.transform {
+    text-transform: none;
+    font-style: normal;
+}
+
+.product-template-new__wrapper--content__add--image img {
+    box-shadow: 1px 1px 7px #35ff2e;
+    border-radius: 6px;
+}
+
+.product-template-new__wrapper--content__add--colored {
+    position: relative;
+    background-color: #0d0d0d;
+    border-radius: 10px;
+    padding: 10px 20px 5px;
+    box-shadow: inset 0px 0px 7px 2px #35ff2ec2;
+    margin-top: 25px;
+}
+
+
+@media only screen and (max-width: 768px)
+.product-template-new__wrapper--content__selection--wrapper {
+    margin: 10px 0 18px;
+}
+
+.product-template-new__wrapper--content__add--colored.pd {
+    margin-top: 0px;
+}

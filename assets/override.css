@@ -390,3 +390,16 @@
 .product-template-new__wrapper--content__add--colored.pd {
     margin-top: 0px;
 }
+
+.product-template-new__wrapper--content__selection--wrapper__single.active .decoy-content__price {
+    color: #000;
+}
+
+.product-template-new__icons--item__icon {
+    margin-left: 25px;
+}
+
+@media only screen and (max-width: 768px)
+.product-template-new__wrapper--content__selection--wrapper__save {
+    top: -23px;
+}

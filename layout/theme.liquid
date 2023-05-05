@@ -451,8 +451,7 @@ $('.js-section-scroll').on('click', function (e) {
 })
 $('.js-atc-scroll').on('click', function (e) {
   e.preventDefault()
-  console.log('lkalaa')
-  const $section = $('.product-template__wrapper--content__features--name')
+  const $section = $('.js-scroll')
 
   $('html, body').animate({
     scrollTop: $section.offset().top + 'px'

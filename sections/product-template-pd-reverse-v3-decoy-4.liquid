@@ -168,10 +168,10 @@
               <div class="product-template-new__wrapper--content__add pd-add">
                   <div data-addon="{{plug.first_available_variant.id}}" class="f jcb aic product-template-new__wrapper--content__add--colored js-add pd">
                     <div class="product-template-new__wrapper--content__add--title font-bold product-template-new__wrapper--content__add--title-pd">
-                    ADD 4 PORT PD PLUG <br>
+                    ADD 4 PORT PD PLUG & USB-A PLUG <br>
                     {% comment %} <div class="plug-ports">1x<span>PD</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/type-c_pd.png?v=1681382319"></div>
                     <div class="plug-ports">3x<span>USB-A</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/USB_A.png?v=1681382319"></div> {% endcomment %}
-                    {{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
+                    {{plug.price | money }} <span class="d-none crossed titan-red">{{plug.compare_at_price | money }}</span></div>
                     <div class="product-template-new__wrapper--content__add--image">
                         {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
                         <img class="w-100" src="{{ featured_image_plug | img_url: 'master' }}" alt="{{ featured_image_plug.alt }}">

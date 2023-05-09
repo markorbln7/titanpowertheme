@@ -104,7 +104,9 @@
     background-size: contain;
 }
 .price-div {
-    margin-top: -10px;
+    margin-top: -15px !important;
+    z-index: 999999999999;
+    position: relative;
 }
 .value-slider .slider div {
     opacity: .3;

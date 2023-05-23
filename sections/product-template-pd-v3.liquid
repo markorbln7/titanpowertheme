@@ -92,10 +92,10 @@
                 </div>
               </div>
 
-<div class="text-center price-div">
+{% comment %} <div class="text-center price-div">
                 <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
-              </div>
+              </div> {% endcomment %}
 
               
 
@@ -107,7 +107,7 @@
                          <div class="decoy-title">4x Pack</div>
                          <div class="decoy-content">
                           <div class="decoy-content__price js-price-discount-two"></div>
-                          <div class="d-none crossed titan-red bold js-price-original-two"></div>
+                          <div class="crossed titan-red bold js-price-original-two"></div>
                           <span class="product-template-new__wrapper--content__selection--wrapper__save">FREE CABLE</span>
                          </div>
                          <div class="vertical-separator"></div>
@@ -116,7 +116,7 @@
                           <div class="decoy-title">3x Pack</div>
                           <div class="decoy-content">
                             <div class="decoy-content__price js-price-discount-three"></div>
-                            <div class="d-none crossed titan-red bold js-price-original-three"></div>
+                            <div class="crossed titan-red bold js-price-original-three"></div>
                             {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">BEST VALUE</span> {% endcomment %}
                           </div>
                           <div class="vertical-separator"></div>
@@ -126,7 +126,7 @@
                           <div class="decoy-title">1x Pack</div>
                           <div class="decoy-content">
                             <div class="decoy-content__price js-price-discount-one"></div>
-                            <div class="d-none crossed titan-red bold js-price-original-one"></div>
+                            <div class="crossed titan-red bold js-price-original-one"></div>
                             {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">50% OFF</span> {% endcomment %}
                           </div>
                           <div class="vertical-separator"></div>
@@ -178,7 +178,10 @@
                     </div>
                   </div>
               </div>
-              
+              <div class="text-center price-div">
+                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+              </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
                     <div id="addToCartText-{{ section.id }}">ADD TO CART</div>

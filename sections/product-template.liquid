@@ -428,3 +428,22 @@ window.mainImages = {
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
 {{ 'override.js' | asset_url | script_tag }}
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+
+	<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>

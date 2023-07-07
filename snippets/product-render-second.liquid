@@ -1,0 +1,103 @@
+{% assign product = all_products['pd-cable-45-plug'] %}
+<div class="bundle-wrapper__product">
+    <div class="bundle-wrapper__product--image">
+        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
+    </div>
+    <div class="bundle-wrapper__product--title">{{product.title}}</div>
+    {{product_var}}
+    {% if tick1 != blank %}
+    <div class="product-template__wrapper--content__features font-sans">
+        <div class="js-scroll product-template__wrapper--content__features--name">{{tick1}}</div>
+        <div class="js-scroll product-template__wrapper--content__features--name">{{tick2}}</div> 
+        <div class="js-scroll product-template__wrapper--content__features--name">{{tick3}}</div>
+    </div>
+    {% endif %}
+
+    {% assign productVariants = product.variants %}
+
+    {% assign productOptionNames = product.options | json %}
+
+    {% assign productList = product.handle | append: '-extend' | replace:' ' | split:',' %}
+    {% for productListHandle in productList %}
+        {% assign productListItem = all_products[productListHandle] %}
+        {% assign productHandle = all_products[product.handle] %}
+        {% assign productListOption = productListItem.options | json %}
+        {% unless productListOption == productOptionNames %}{% continue %}{% endunless %}
+        {% assign productVariants = productVariants | concat:productListItem.variants %}
+        {% assign extendOptions = productListItem.options_with_values %}
+    {% endfor %}
+    {% assign realOptions = product.options_with_values%}
+    {% assign concatOptions = extendOptions | concat:realOptions %}
+
+    <div class="hidden">{{realOptions | json }}</div>
+    <select hidden name="id" id="ProductSelect">
+        {% for variant in productVariants %}
+            <option value="{{ variant.id }}">{{ variant.title }} ({{ variant.id }})</option>
+        {% endfor %}
+    </select>
+    {% assign sofav = product.selected_or_first_available_variant %}
+    {% if product.options_with_values.size > 1%}
+    <section class="product-description-wrapper bg-black atc-wrapper">
+        <div class="product-description">
+            <div class="materials description-expand">
+                {% for product_option in product.options_with_values %}
+                    <div class="materials__single">
+                            {% for value in product_option.values %}
+                                <div class="js-option-name option-name">{{ value }}</div>
+                                {% break %}
+                            {% endfor %}
+                            <div class="variants-holder">
+                                {% for value in product_option.values %}
+                                    <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="{% if forloop.index == 1 %}active{% endif%} swatch-holder d-flex flex-column">
+                                        <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po swatch {{value | handleize}}"></div>
+                                        <div data-product-name="{{product.handle}}" data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po color-white mb-4 h4 materials__single--option__name small">
+                                            {{ value }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+                {% endfor %}
+                <div class="variants-hidden hidden">
+                    {% for variant in productVariants %}
+                        <div data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                </div>
+                <div class="bundle-wrapper__footer">
+                    <div class="price type--m">
+                        {% if product.variants.size > 1 %}
+                            <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                            <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                            {% assign prId = product.first_available_variant.id %}
+                        {% else %}
+                            <span class="js-price ">{{product.price | money }}</span>
+                            <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                            {% assign prId = product.variants[0].id %}
+                        {% endif %}
+                    </div>
+                    {% unless hidecart == true%}
+                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="{{sofav.id}}">
+                    {% endunless %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <div class="bundle-wrapper__footer">
+        <div class="js-price price type--m">
+            {% if product.variants.size > 1 %}
+                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                {% assign prId = product.first_available_variant.id %}
+            {% else %}
+                <span class="js-price ">{{product.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                {% assign prId = product.variants[0].id %}
+            {% endif %}
+        </div>
+        {% unless hidecart == true%}
+            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="{{sofav.id}}">
+        {% endunless %}
+    </div>
+    {% endif %}
+</div>

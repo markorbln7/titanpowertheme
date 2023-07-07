@@ -150,7 +150,7 @@
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunktitanpower"] = self["webpackChunktitanpower"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunkshopify_base_2_0"] = self["webpackChunkshopify_base_2_0"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	}();

@@ -63,6 +63,7 @@ const popUpControler = document.querySelector('.product-popup__wrapper')
 const close = document.querySelector('.close')
 close.addEventListener('click', (e) => {
   popUpControler.classList.toggle('hidden')
+  body.classList.toggle('overflow-hidden')
 })
 
 pos.forEach((po) => {
@@ -200,6 +201,7 @@ addToCart.addEventListener('click', (e) => {
       addItems()
   } else {
     popUpControler.classList.toggle('hidden')
+    body.classList.toggle('overflow-hidden')
   }
 })
 addToCartCheckout.addEventListener('click', (e) => {

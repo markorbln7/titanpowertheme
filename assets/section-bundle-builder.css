@@ -270,12 +270,14 @@
                 width:100%;
             }
 .product-popup__wrapper {
+    overflow: scroll;
     z-index: 999999;
     position: fixed;
     width:100%;
     height: 100%;
     display: block;
-    background-color: #000000
+    background-color: #000000;
+    padding-bottom: 200px
 }
 .product-popup__wrapper.hidden {
     display: none;

@@ -243,7 +243,7 @@ variantClicks.forEach(variantClick => {
         let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
         let leftToGift = 3 - numberOfSelected;
         if(leftToGift === 0) {
-            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! ADD TO CART TO CLAIM IT !`
+            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! FINISH KIT TO CLAIM IT !`
             bar.style.setProperty("--progress", "100%");
             return
         }

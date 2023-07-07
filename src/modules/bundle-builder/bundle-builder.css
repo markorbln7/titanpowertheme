@@ -92,13 +92,31 @@
         input {
             background: transparent;
             box-shadow: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             appearance: none;
             border: none;
             text-transform: uppercase;
             color: #35ff2e;
-            font-size: 20px;
+            font-size: 16px;
             padding-left: 0;
             text-align: center;
+            border-radius: 10px;
+            font-family: 'Work Sans';
+            color: #000000;
+            font-style: normal;
+            font-weight: 700;
+            background-color: #35FF2E;
+            border-width: 1px;
+            border-color: #22FF05;
+            width: 160px;
+            max-width: 160px;
+            margin: 0 auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 24px;
+            padding-left: 24px;
+            width: auto;
             @media only screen and (max-width: 768px) {
                 text-align: center;
             }
@@ -303,5 +321,13 @@
         .progress {
             margin: 0;
         }
+    }
+}
+.product-template__wrapper--content__form--atc button {
+    max-width: 300px;
+    margin:0 auto;
+    @media only screen and (max-width: 768px) {
+        max-width: 16px;
+        margin:0 auto;
     }
 }

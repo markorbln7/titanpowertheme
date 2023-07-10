@@ -348,3 +348,19 @@
         padding-left: 16px;
     }
 }
+.desktop {
+    display: block;
+}
+@media only screen and (max-width: 768px) {
+    .desktop {
+        display: none;
+    }
+}
+.mobile {
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+    .mobile {
+        display: block;
+    }
+}

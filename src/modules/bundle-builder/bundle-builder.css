@@ -110,7 +110,7 @@
             border-width: 1px;
             border-color: #22FF05;
             width: 160px;
-            max-width: 160px;
+            max-width: 100%;
             margin: 0 auto;
             padding-top: 10px;
             padding-bottom: 10px;
@@ -119,6 +119,8 @@
             width: auto;
             @media only screen and (max-width: 768px) {
                 text-align: center;
+                font-size:12px;
+                padding-left: 16px;
             }
         }
     }
@@ -327,7 +329,12 @@
     max-width: 300px;
     margin:0 auto;
     @media only screen and (max-width: 768px) {
-        max-width: 16px;
+        max-width: 160px;
         margin:0 auto;
+    }
+}
+.product-image__title {
+    @media only screen and (max-width: 768px) {
+        padding-left: 16px;
     }
 }

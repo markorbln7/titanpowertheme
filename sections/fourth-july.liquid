@@ -88,7 +88,7 @@
 <div class="hero_image mobile">
   <img src="https://cdn05.zipify.com/YPhnQgvnN4hSneCvNAooYV44MVQ=/fit-in/540x0/f16a31dd06a04248a6b56f0d8aed5afe/bybuild-a-charging-kit-desktop-m.jpeg">
 </div>
-<div class="info-bar">ADD ANY 3 AND CHOOSE 1 FREE GIFT BELOW</div>
+<div class="info-bar">ADD ANY 3 OR MORE AND CHOOSE 1 FREE GIFT BELOW</div>
 <div class="bundle-wrapper offer-intro-wrapper">
    <div class="bundle-wrapper__product">
       <div class="bundle-wrapper__product--image">
@@ -172,7 +172,7 @@
     {% render 'product-render' product_var:'titan-magnetic-wireless-power-bank-bundle-offer-1' tick1: 'Wireless Charge' tick2:'Magnetic holder' tick3:'10,000mAh capacity' %}
     {% render 'product-render' product_var:'titan-3-in-1-mothership-dock™' tick1: 'No more messy wires' tick2:'15W Wireless Charge' tick3:'Charge 3 Devices' %}
     {% render 'product-render' product_var:'1-pd-cable-pd-bluetooth-car-charger™' tick1: 'In-car Phone Audio' tick2:'Handsfree calls' tick3:'Rapid PD Charging'%}
-    {% render 'product-render' product_var:'copy-of-1-pd-cable-45w-pd-travel-plug™-test' hidecart: true tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%}
+    {% render 'product-render' product_var:'pd-cable-45-plug' tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%}
     
 </div>
 
@@ -349,7 +349,7 @@ variantClicks.forEach(variantClick => {
             let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
             let leftToGift = 3 - numberOfSelected;
             console.log(leftToGift,'leftToGift')
-            if(leftToGift === 0) {
+            if(leftToGift <= 0) {
                 infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! CLICK FINISH KIT TO CLAIM IT !`
                 bar.style.setProperty("--progress", "100%");
                 return
@@ -370,7 +370,7 @@ variantClicks.forEach(variantClick => {
         _this.value = 'added'
         let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
         let leftToGift = 3 - numberOfSelected;
-        if(leftToGift === 0) {
+        if(leftToGift <= 0) {
             infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! FINISH KIT TO CLAIM IT !`
             bar.style.setProperty("--progress", "100%");
             return

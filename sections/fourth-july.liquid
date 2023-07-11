@@ -1,5 +1,7 @@
 {{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
 {{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle-builder.js' | asset_url | script_tag }}
 <div class="product-popup__wrapper hidden">
   <div class="close">
@@ -9,151 +11,60 @@
   </div>
   <div class="info-bar">CHOOSE 1 FREE GIFT BELOW</div>
   <div class="product-popup__holder">
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/TPP_Banner_C_v1copy_3.jpg?v=1668780084" alt="Titan 15W Wireless Turbo Charge Dock™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan 15W Wireless Turbo Charge Dock™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Rapid 15W Charge</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">No More Messy Wires</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Charges with case</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="37938985861298">Default Title (37938985861298)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="2598" doubly-currency-rsd="279531.7041297431" doubly-currency="RSD">2,795.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="6495" doubly-currency-rsd="698829.2603243578" doubly-currency="RSD">6,988.45 RSD</span></span>
-         </div>
-         <input data-product-name="titan-15w-wireless-fast-charging-dock" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="37938985861298">
-      </div>
-   </div>
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/TitanDualMountWirelessCarCharger.jpg?v=1658753247" alt="Titan Dual Mount Wireless Charger™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan Dual Mount Wireless Charger™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Charges With Case</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Wireless Charging</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">In Car or at Home</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="31439734767734">Default Title (31439734767734)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="3397" doubly-currency-rsd="365500.07656995277" doubly-currency="RSD">3,655.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="6794" doubly-currency-rsd="731000.1531399055" doubly-currency="RSD">7,310.45 RSD</span></span>
-         </div>
-         <input data-product-name="titan-wireless-car-charging-holder" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="31439734767734">
-      </div>
-   </div>
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/titan-3-in-1-multi-cable-182652.jpg?v=1649946022" alt="Titan 3-in-1 Multi Cable™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan 3-in-1 Multi Cable™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Changeable Length</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Charge Any Device</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Retractable Cable</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="32022846799990">Default Title (32022846799990)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="2797" doubly-currency-rsd="300943.1010203585" doubly-currency="RSD">3,009.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="7991" doubly-currency-rsd="859791.3193613461" doubly-currency="RSD">8,597.45 RSD</span></span>
-         </div>
-         <input data-product-name="titan-3-in-1-multi-cable" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="32022846799990">
-      </div>
-   </div>
-</div>
+    {% for product in collections['frree-gift'].products %}
+      {% if forloop.index == 1%}
+        {% assign one = 'Rapid 15W Charge'%}
+        {% assign two = 'No More Messy Wires'%}
+        {% assign three = 'Charges with case'%}
+      {% endif %}
+      {% if forloop.index == 2%}
+        {% assign one = 'Charges With Case'%}
+        {% assign two = 'Wireless Charging'%}
+        {% assign three = 'In Car or at Home'%}
+      {% endif %}
+      {% if forloop.index == 3 %}
+        {% assign one = 'Charge Any Device'%}
+        {% assign two = 'Retractable Cable'%}
+        {% assign three = 'Changeable Lengt'%}
+      {% endif %}
+      {% render 'product-render' cart_title:'+ PICK A GIFT' hidecart:false product_var:product.handle %}
+      {% comment %} {% render 'product-render' product_var:'titan-15w-wireless-fast-charging-dock' tick1: 'Rapid 15W Charge' tick2:'No More Messy Wires' tick3:'Charges with case' %}
+      {% render 'product-render' product_var:'titan-wireless-car-charging-holder' tick1: 'Charges With Case' tick2:'Wireless Charging' tick3:'In Car or at Home' %}
+      {% render 'product-render' product_var:'titan-3-in-1-multi-cable' tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%} {% endcomment %}
+    {% endfor %}
+  </div>
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
     <button class="js-add-to-cart-popup f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
     </button>
   </div>
 </div>
-<div class="hero_image desktop">
+<div class="hero_image desktop hd">
   <img src="https://cdn05.zipify.com/YQYlWOcyp2ED2x0bfTtcYbXhcuw=/fit-in/3840x0/b84c767804c542d69e61df1b65dcc63d/patriot-package-banner.jpeg">
 </div>
-<div class="hero_image mobile">
+<div class="hero_image mobile md">
   <img src="https://cdn05.zipify.com/YPhnQgvnN4hSneCvNAooYV44MVQ=/fit-in/540x0/f16a31dd06a04248a6b56f0d8aed5afe/bybuild-a-charging-kit-desktop-m.jpeg">
 </div>
-<div class="info-bar">ADD ANY 3 OR MORE AND CHOOSE 1 FREE GIFT BELOW</div>
+<div id="info-bar" class="info-bar">ADD ANY 3 OR MORE AND CHOOSE 1 FREE GIFT BELOW</div>
 <div class="bundle-wrapper offer-intro-wrapper">
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/TPP_Banner_C_v1copy_3.jpg?v=1668780084" alt="Titan 15W Wireless Turbo Charge Dock™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan 15W Wireless Turbo Charge Dock™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Rapid 15W Charge</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">No More Messy Wires</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Charges with case</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="37938985861298">Default Title (37938985861298)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="2598" doubly-currency-rsd="279531.7041297431" doubly-currency="RSD">2,795.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="6495" doubly-currency-rsd="698829.2603243578" doubly-currency="RSD">6,988.45 RSD</span></span>
-         </div>
-      </div>
-   </div>
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/TitanDualMountWirelessCarCharger.jpg?v=1658753247" alt="Titan Dual Mount Wireless Charger™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan Dual Mount Wireless Charger™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Charges With Case</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Wireless Charging</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">In Car or at Home</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="31439734767734">Default Title (31439734767734)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="3397" doubly-currency-rsd="365500.07656995277" doubly-currency="RSD">3,655.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="6794" doubly-currency-rsd="731000.1531399055" doubly-currency="RSD">7,310.45 RSD</span></span>
-         </div>
-      </div>
-   </div>
-   <div class="bundle-wrapper__product">
-      <div class="bundle-wrapper__product--image">
-         <img src="//titanpowerplus.com/cdn/shop/products/titan-3-in-1-multi-cable-182652.jpg?v=1649946022" alt="Titan 3-in-1 Multi Cable™ - Titan Power Plus" loading="lazy">
-      </div>
-      <div class="bundle-wrapper__product--title">Titan 3-in-1 Multi Cable™</div>
-      <div class="product-template__wrapper--content__features font-sans">
-         <div class="js-scroll product-template__wrapper--content__features--name">Changeable Length</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Charge Any Device</div>
-         <div class="js-scroll product-template__wrapper--content__features--name">Retractable Cable</div>
-      </div>
-      <div class="hidden">[{"name":"Title","position":1,"values":["Default Title"]}]</div>
-      <select hidden="" name="id" id="ProductSelect">
-         <option value="32022846799990">Default Title (32022846799990)</option>
-      </select>
-      <div class="bundle-wrapper__footer">
-         <div class="js-price price type--m">
-            <span class="js-price "><span class="money" doubly-currency-usd="2797" doubly-currency-rsd="300943.1010203585" doubly-currency="RSD">3,009.45 RSD</span></span>
-            <span class="js-red-price crossed titan-red"><span class="money" doubly-currency-usd="7991" doubly-currency-rsd="859791.3193613461" doubly-currency="RSD">8,597.45 RSD</span></span>
-         </div>
-      </div>
-   </div>
-</div>
+    {% for product in collections['frree-gift'].products %}
+    {% if forloop.index == 1%}
+        {% assign one = 'Rapid 15W Charge'%}
+        {% assign two = 'No More Messy Wires'%}
+        {% assign three = 'Charges with case'%}
+      {% endif %}
+      {% if forloop.index == 2%}
+        {% assign one = 'Charges With Case'%}
+        {% assign two = 'Wireless Charging'%}
+        {% assign three = 'In Car or at Home'%}
+      {% endif %}
+      {% if forloop.index == 3 %}
+        {% assign one = 'Charge Any Device'%}
+        {% assign two = 'Retractable Cable'%}
+        {% assign three = 'Changeable Lengt'%}
+      {% endif %}
+      {% render 'product-render' hidecart:true product_var:product.handle tick1: one tick2:two tick3:three %}    {% endfor %}
+    </div>
 <div class="intro">
   <div class="intro__title">GRAB OVER 50% RRP OFF ALL ITEMS BELOW AND CHOOSE YOUR FREE GIFT FROM THE POP UP</div>
   <div class="intro__subtitle">Don't want 3 options? Just head to the cart with the FINISH KIT button at the bottom of the page.</div>
@@ -165,14 +76,17 @@
   </div>
 </div>
 <div class="bundle-wrapper">
-    {% render 'product-render' product_var:'3-x-titan-pd-cable™-black-friday'%}
+    {% for product in collections['patriot-pack'].products %}
+       {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle %}
+    {% endfor %}
+    {% comment %} {% render 'product-render' product_var:'3-x-titan-pd-cable™-black-friday'%}
     {% render 'product-render' product_var:'3-x-titan-smart-cable™'%}
     {% render 'product-render' product_var:'2x-titan-portable-wireless-3-in-1-charger™' tick1: '3 Devices At Once' tick2:'Super Compact' tick3:'Wireless Charge Buds' %}
     {% render 'product-render' product_var:'the-titan-buds-bundle-offer' tick1: 'Unbeatable Comfort' tick2:'Supreme Audio' tick3:'Wireless Charging'%}
     {% render 'product-render' product_var:'titan-magnetic-wireless-power-bank-bundle-offer-1' tick1: 'Wireless Charge' tick2:'Magnetic holder' tick3:'10,000mAh capacity' %}
     {% render 'product-render' product_var:'titan-3-in-1-mothership-dock™' tick1: 'No more messy wires' tick2:'15W Wireless Charge' tick3:'Charge 3 Devices' %}
     {% render 'product-render' product_var:'1-pd-cable-pd-bluetooth-car-charger™' tick1: 'In-car Phone Audio' tick2:'Handsfree calls' tick3:'Rapid PD Charging'%}
-    {% render 'product-render' product_var:'pd-cable-45-plug' tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%}
+    {% render 'product-render' product_var:'pd-cable-45-plug' tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%} {% endcomment %}
     
 </div>
 
@@ -352,6 +266,7 @@ variantClicks.forEach(variantClick => {
             if(leftToGift <= 0) {
                 infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! CLICK FINISH KIT TO CLAIM IT !`
                 bar.style.setProperty("--progress", "100%");
+                {% comment %} popUpControler.classList.remove('hidden'); {% endcomment %}
                 return
             }
             infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE`
@@ -371,8 +286,9 @@ variantClicks.forEach(variantClick => {
         let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
         let leftToGift = 3 - numberOfSelected;
         if(leftToGift <= 0) {
-            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! FINISH KIT TO CLAIM IT !`
+            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! CLICK FINISH KIT TO CLAIM IT !`
             bar.style.setProperty("--progress", "100%");
+            {% comment %} popUpControler.classList.remove('hidden'); {% endcomment %}
             return
         }
         infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE`
@@ -383,7 +299,7 @@ variantClicks.forEach(variantClick => {
             bar.style.setProperty("--progress", "33%");
         }
         if(leftToGift === 3) {
-                bar.style.setProperty("--progress", "0%");
+            bar.style.setProperty("--progress", "0%");
         }
         console.log(leftToGift, numberOfSelected, 'numberOfSelected')
     })
@@ -396,7 +312,7 @@ optionNames.forEach((optionName) => {
         _this.nextSibling.nextSibling.classList.toggle('open');
     })
 }) 
-{% comment %} stickyElem = document.querySelector(".sticky-div");
+stickyElem = document.querySelector(".sticky-div");
 currStickyPos = stickyElem.getBoundingClientRect().top + window.pageYOffset;
 var lastScrollTop = 0;
     $(window).scroll(function(event){
@@ -423,5 +339,14 @@ var lastScrollTop = 0;
             }
         }
         lastScrollTop = st;
-    }); {% endcomment %}
+    });
+console.log($('.hero_image'), 'hero_image')
+$('.hero_image').on('click', function (e) {
+  e.preventDefault()
+  const $section = $('#info-bar')
+
+  $('html, body').animate({
+    scrollTop: $section.offset().top + 'px'
+  }, 1000)
+})
 </script>

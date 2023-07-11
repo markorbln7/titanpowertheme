@@ -14,7 +14,7 @@
 
     {% assign productVariants = product.variants %}
 
-    {% assign productOptionNames = product.options | json %}
+    {% comment %} {% assign productOptionNames = product.options | json %}
 
     {% assign productList = product.handle | append: '-extend' | replace:' ' | split:',' %}
     {% for productListHandle in productList %}
@@ -26,7 +26,7 @@
         {% assign extendOptions = productListItem.options_with_values %}
     {% endfor %}
     {% assign realOptions = product.options_with_values%}
-    {% assign concatOptions = extendOptions | concat:realOptions %}
+    {% assign concatOptions = extendOptions | concat:realOptions %} {% endcomment %}
 
     <div class="hidden">{{realOptions | json }}</div>
     <select hidden name="id" id="ProductSelect">
@@ -75,7 +75,7 @@
                         {% endif %}
                     </div>
                     {% unless hidecart == true%}
-                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="{{sofav.id}}">
+                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
                     {% endunless %}
                 </div>
             </div>
@@ -95,7 +95,7 @@
             {% endif %}
         </div>
         {% unless hidecart == true%}
-            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="+ ADD TO KIT" data-variant-id="{{sofav.id}}">
+            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
         {% endunless %}
     </div>
     {% endif %}

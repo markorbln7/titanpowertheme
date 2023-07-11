@@ -45,6 +45,7 @@
     padding: 0px 20px;
     display:flex;
     gap:20px;
+    justify-content: center;
     flex-wrap:wrap;
     &__product {
         &:nth-child(1) {
@@ -281,7 +282,8 @@
 }
 .product-popup__wrapper {
     overflow: scroll;
-    z-index: 999999;
+    z-index: 9999999999999999;
+    top:0;
     position: fixed;
     width:100%;
     height: 100%;
@@ -349,4 +351,7 @@
     @media only screen and (max-width: 768px) {
         display: block;
     }
+}
+.product-zig {
+    display: none;
 }

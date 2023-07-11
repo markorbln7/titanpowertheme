@@ -47,6 +47,7 @@
     padding: 0px 20px;
     display:flex;
     gap:20px;
+    justify-content: center;
     flex-wrap:wrap;
 }
 .bundle-wrapper__buttonAdd {
@@ -289,7 +290,8 @@
             }
 .product-popup__wrapper {
     overflow: scroll;
-    z-index: 999999;
+    z-index: 9999999999999999;
+    top:0;
     position: fixed;
     width:100%;
     height: 100%;
@@ -363,4 +365,7 @@
     .mobile {
         display: block;
     }
+}
+.product-zig {
+    display: none;
 }

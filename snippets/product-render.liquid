@@ -75,7 +75,7 @@
                         {% endif %}
                     </div>
                     {% unless hidecart == true%}
-                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
                     {% endunless %}
                 </div>
             </div>
@@ -95,7 +95,7 @@
             {% endif %}
         </div>
         {% unless hidecart == true%}
-            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
         {% endunless %}
     </div>
     {% endif %}

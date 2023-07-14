@@ -9,7 +9,7 @@
       <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
     </svg>
   </div>
-  <div class="info-bar">CHOOSE 1 FREE GIFT BELOW</div>
+  <div class="info-bar">YOU UNLOCKED 1 FREE GIFT! CHOOSE IT BELOW</div>
   <div class="product-popup__holder">
     {% for product in collections['frree-gift'].products %}
       {% if forloop.index == 1%}
@@ -27,17 +27,23 @@
         {% assign two = 'Retractable Cable'%}
         {% assign three = 'Changeable Lengt'%}
       {% endif %}
-      {% render 'product-render' cart_title:'+ PICK A GIFT' hidecart:false product_var:product.handle %}
-      {% comment %} {% render 'product-render' product_var:'titan-15w-wireless-fast-charging-dock' tick1: 'Rapid 15W Charge' tick2:'No More Messy Wires' tick3:'Charges with case' %}
-      {% render 'product-render' product_var:'titan-wireless-car-charging-holder' tick1: 'Charges With Case' tick2:'Wireless Charging' tick3:'In Car or at Home' %}
-      {% render 'product-render' product_var:'titan-3-in-1-multi-cable' tick1: 'Changeable Length' tick2:'Charge Any Device' tick3:'Retractable Cable'%} {% endcomment %}
+      {% render 'product-render' checkout:'checkout' cart_title:'+ PICK A GIFT' hidecart:false product_var:product.handle %}
     {% endfor %}
   </div>
-  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
+  {% comment %} <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
     <button class="js-add-to-cart-popup f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
     </button>
-  </div>
+  </div> {% endcomment %}
+</div>
+<div class="product-addtocart hidden">
+    <div class="container">
+      <div id="battery">
+        <div id="charge" class="active"></div>
+        <div id="charge-level">ADDING..</div>
+      </div>
+      <div id="charging-time"></div>
+    </div>
 </div>
 <div class="hero_image desktop hd">
   <img src="https://cdn05.zipify.com/YQYlWOcyp2ED2x0bfTtcYbXhcuw=/fit-in/3840x0/b84c767804c542d69e61df1b65dcc63d/patriot-package-banner.jpeg">
@@ -45,7 +51,7 @@
 <div class="hero_image mobile md">
   <img src="https://cdn05.zipify.com/YPhnQgvnN4hSneCvNAooYV44MVQ=/fit-in/540x0/f16a31dd06a04248a6b56f0d8aed5afe/bybuild-a-charging-kit-desktop-m.jpeg">
 </div>
-<div id="info-bar" class="info-bar">ADD ANY 3 OR MORE AND CHOOSE 1 FREE GIFT BELOW</div>
+<div id="info-bar" class="info-bar">ADD ANY 3 AND CHOOSE 1 FREE GIFT BELOW</div>
 <div class="bundle-wrapper offer-intro-wrapper">
     {% for product in collections['frree-gift'].products %}
     {% if forloop.index == 1%}
@@ -70,13 +76,18 @@
   <div class="intro__subtitle">Don't want 3 options? Just head to the cart with the FINISH KIT button at the bottom of the page.</div>
 </div>
 <div class="sticky-div w-100">
-  <div class="js-info-bar">ADD 3 MORE AND PICK 1 FREE</div>
+  <div class="js-info-bar">ADD 1 AND GET FREE PRIORITY SHIPPING</div>
   <div class="progress">
     <div class="bar"></div>
   </div>
 </div>
 <div class="bundle-wrapper">
     {% for product in collections['patriot-pack'].products %}
+    {% if forloop.index < 3%}
+        {% assign one = ''%}
+        {% assign two = ''%}
+        {% assign three = ''%}
+      {% endif %}
       {% if forloop.index == 3%}
         {% assign one = '3 Devices At Once'%}
         {% assign two = 'Super Compact'%}
@@ -97,16 +108,12 @@
         {% assign two = '15W Wireless Charge'%}
         {% assign three = 'Charge 3 Devices'%}
       {% endif %}
-      {% if forloop.index == 7%}
-        {% assign one = 'In-car Phone Audio'%}
-        {% assign two = 'Handsfree calls'%}
-        {% assign three = 'Rapid PD Charging'%}
+      {% if forloop.index > 6%}
+        {% assign one = ''%}
+        {% assign two = ''%}
+        {% assign three = ''%}
       {% endif %}
-      {% if forloop.index == 8 %}
-        {% assign one = 'Changeable Length'%}
-        {% assign two = 'Charge Any Device'%}
-        {% assign three = 'Retractable Cable'%}
-      {% endif %}
+      
       {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle tick1: one tick2:two tick3:three  %}
     {% endfor %}
     {% comment %} {% render 'product-render' product_var:'3-x-titan-pd-cable™-black-friday'%}
@@ -134,6 +141,7 @@ const pos = document.querySelectorAll('.po')
 const titleArray = []
 let optionNames = document.querySelectorAll('.js-option-name')
 const popUpControler = document.querySelector('.product-popup__wrapper')
+const popUpLoadControler = document.querySelector('.product-addtocart')
 const close = document.querySelector('.close')
 close.addEventListener('click', (e) => {
   popUpControler.classList.toggle('hidden')
@@ -199,11 +207,14 @@ pos.forEach((po) => {
   })
 })
 const addToCart = document.querySelector('.js-add-to-cart')
-const addToCartCheckout = document.querySelector('.js-add-to-cart-popup')
-let addItems = () => {
+{% comment %} const addToCartCheckout = document.querySelector('.js-add-to-cart-popup') {% endcomment %}
+let addItems = (selector) => {
   const variantsPickers = document.querySelectorAll('.js-variant-selector.selected')
   const productIds = []
-  const addItems = []
+  let addItems = []
+  if(selector) {
+    productIds.push('43165644488882')
+  }
   variantsPickers.forEach((variantsPicker) => {
     productIds.push(variantsPicker.getAttribute('data-variant-id'))
   })
@@ -233,10 +244,13 @@ let addItems = () => {
       console.error('Error:', error)
     })
 }
-let addItemsCheckout = () => {
+let addItemsCheckout = (selector) => {
   const variantsPickers = document.querySelectorAll('.js-variant-selector.selected')
   const productIds = []
-  const addItems = []
+  let addItems = []
+  if(selector) {
+    productIds.push('43165644488882')
+  }
   variantsPickers.forEach((variantsPicker) => {
     productIds.push(variantsPicker.getAttribute('data-variant-id'))
   })
@@ -271,16 +285,22 @@ let addItemsCheckout = () => {
 }
 addToCart.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  if(numberOfSelected < 3) {
-      addItems()
-  } else {
+  if(numberOfSelected < 2) {
+    popUpLoadControler.classList.remove('hidden')
+     addItemsCheckout()
+  }
+  if(numberOfSelected == 2) {
+      popUpLoadControler.classList.remove('hidden')
+      addItemsCheckout(true)
+  } 
+  if(numberOfSelected == 3) {
     popUpControler.classList.toggle('hidden')
     body.classList.toggle('overflow-hidden')
   }
 })
-addToCartCheckout.addEventListener('click', (e) => {
+{% comment %} addToCartCheckout.addEventListener('click', (e) => {
   addItemsCheckout()
-})
+}) {% endcomment %}
 const infoBar = document.querySelector('.js-info-bar')
 const variantClicks = document.querySelectorAll('.js-variant-selector')
 variantClicks.forEach(variantClick => {
@@ -296,21 +316,36 @@ variantClicks.forEach(variantClick => {
             let leftToGift = 3 - numberOfSelected;
             console.log(leftToGift,'leftToGift')
             if(leftToGift <= 0) {
-                infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! CLICK FINISH KIT TO CLAIM IT !`
+                infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT!`
                 bar.style.setProperty("--progress", "100%");
-                {% comment %} popUpControler.classList.remove('hidden'); {% endcomment %}
+                popUpControler.classList.remove('hidden');
+                if(variantClick.classList.contains('checkout')) {
+                    setTimeout(() => {
+                      popUpLoadControler.classList.remove('hidden')
+                      addItemsCheckout()
+                    }, "500");
+                }
                 return
             }
-            infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE`
+            {% comment %} infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE` {% endcomment %}
             if(leftToGift === 1) {
                 bar.style.setProperty("--progress", "66%");
+                infoBar.innerHTML = `ADD 1 MORE AND GET FREE PREMIUM GIFT!`
             }
             if(leftToGift === 2) {
                 bar.style.setProperty("--progress", "33%");
+                infoBar.innerHTML = `ADD 1 MORE AND GET FREE MISTERY GIFT!`
             }
             if(leftToGift === 3) {
+               infoBar.innerHTML = `ADD 1 AND GET FREE PRIORITY SHIPPING`
                 bar.style.setProperty("--progress", "0%");
             }
+            if(variantClick.classList.contains('checkout')) {
+                    setTimeout(() => {
+                      popUpLoadControler.classList.remove('hidden')
+                      addItemsCheckout()
+                    }, "500");
+                }
             return
         }
         _this.classList.add('selected')
@@ -318,21 +353,36 @@ variantClicks.forEach(variantClick => {
         let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
         let leftToGift = 3 - numberOfSelected;
         if(leftToGift <= 0) {
-            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT! CLICK FINISH KIT TO CLAIM IT !`
+            infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT!`
             bar.style.setProperty("--progress", "100%");
-            {% comment %} popUpControler.classList.remove('hidden'); {% endcomment %}
+            popUpControler.classList.remove('hidden');
+            if(variantClick.classList.contains('checkout')) {
+                    setTimeout(() => {
+                      popUpLoadControler.classList.remove('hidden')
+                      addItemsCheckout()
+                    }, "500");
+                }
             return
         }
-        infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE`
+        {% comment %} infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE` {% endcomment %}
         if(leftToGift === 1) {
             bar.style.setProperty("--progress", "66%");
+            infoBar.innerHTML = `ADD 1 MORE AND GET FREE PREMIUM GIFT!`
         }
         if(leftToGift === 2) {
             bar.style.setProperty("--progress", "33%");
+            infoBar.innerHTML = `ADD 1 MORE AND GET FREE MISTERY GIFT!`
         }
         if(leftToGift === 3) {
+            infoBar.innerHTML = `ADD 1 AND GET FREE PRIORITY SHIPPING`
             bar.style.setProperty("--progress", "0%");
         }
+        if(variantClick.classList.contains('checkout')) {
+                    setTimeout(() => {
+                      popUpLoadControler.classList.remove('hidden')
+                      addItemsCheckout()
+                    }, "500");
+                }
         console.log(leftToGift, numberOfSelected, 'numberOfSelected')
     })
 });
@@ -381,4 +431,7 @@ $('.hero_image').on('click', function (e) {
     scrollTop: $section.offset().top + 'px'
   }, 1000)
 })
+
+
+
 </script>

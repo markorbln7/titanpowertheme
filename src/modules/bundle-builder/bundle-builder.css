@@ -168,9 +168,8 @@
     background-repeat: repeat;
     box-shadow: 0 0 10px 0px #35ff2e;
     animation: 
-      shine 2s ease-in infinite,
-      end 1s ease-out 1 1s;
-    transition: width 1s ease 1s;
+      shine 2s ease-in;
+    transition: width 1s ease-in;
     display: block;
   }
   
@@ -354,4 +353,77 @@
 }
 .product-zig {
     display: none;
+}
+.product-addtocart {
+    overflow: scroll;
+    z-index: 9999999999999999999;
+    top:0;
+    position: fixed;
+    width:100%;
+    height: 100%;
+    display: block;
+    background-color: #000000;
+    padding-bottom: 200px;
+    &.hidden {
+        display: none;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height:100%;
+    }
+}
+#battery {
+    box-sizing: content-box;
+    height: 7.8em;
+    width: 17.5em;
+    border: 0.6em solid #35ff2e;
+    margin: auto;
+    border-radius: 0.6em;
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  #battery:before {
+    position: absolute;
+    content: "";
+    height: 5em;
+    width: 1.1em;
+    background-color: #35ff2e;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    right: -1.6em;
+    border-radius: 0 0.3em 0.3em 0;
+  }
+  #charge {
+    position: absolute;
+    height: 6.5em;
+    width: 16.25em;
+    background-color: #35ff2e;
+    top: 0.6em;
+    left: 0.6em;
+    display:block;
+  }
+  #charge-level {
+    position: absolute;
+    font-size: 2em;
+    font-weight: 500;
+  }
+  #charging-time {
+    text-align: center;
+    font-size: 1.7em;
+    margin-top: 1.4em;
+  }
+  .active {
+    animation: charge-animation 3s infinite linear;
+  }
+@keyframes charge-animation {
+0% {
+    width: 0;
+}
+100% {
+    width: 16.25em;
+}
 }

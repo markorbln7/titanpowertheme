@@ -322,7 +322,7 @@ variantClicks.forEach(variantClick => {
                 if(variantClick.classList.contains('checkout')) {
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
-                      addItemsCheckout()
+                      addItemsCheckout(true)
                     }, "500");
                 }
                 return
@@ -343,7 +343,7 @@ variantClicks.forEach(variantClick => {
             if(variantClick.classList.contains('checkout')) {
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
-                      addItemsCheckout()
+                      addItemsCheckout(true)
                     }, "500");
                 }
             return
@@ -359,7 +359,7 @@ variantClicks.forEach(variantClick => {
             if(variantClick.classList.contains('checkout')) {
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
-                      addItemsCheckout()
+                      addItemsCheckout(true)
                     }, "500");
                 }
             return
@@ -367,20 +367,20 @@ variantClicks.forEach(variantClick => {
         {% comment %} infoBar.innerHTML = `ADD ${leftToGift} MORE AND GET 1 FREE` {% endcomment %}
         if(leftToGift === 1) {
             bar.style.setProperty("--progress", "66%");
-            infoBar.innerHTML = `ADD 1 MORE AND GET FREE PREMIUM GIFT!`
+            infoBar.innerHTML = `ADD 1 MORE AND GET FREE MISTERY GIFT + PREMIUM GIFT!`
         }
         if(leftToGift === 2) {
             bar.style.setProperty("--progress", "33%");
             infoBar.innerHTML = `ADD 1 MORE AND GET FREE MISTERY GIFT!`
         }
         if(leftToGift === 3) {
-            infoBar.innerHTML = `ADD 1 AND GET FREE PRIORITY SHIPPING`
+            infoBar.innerHTML = `ADD 1 AND GET FREE PRIORITY SHIPPING!`
             bar.style.setProperty("--progress", "0%");
         }
         if(variantClick.classList.contains('checkout')) {
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
-                      addItemsCheckout()
+                      addItemsCheckout(true)
                     }, "500");
                 }
         console.log(leftToGift, numberOfSelected, 'numberOfSelected')

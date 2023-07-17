@@ -36,6 +36,13 @@
     </button>
   </div> {% endcomment %}
 </div>
+<div class="product-popup__animation hidden">
+  <div class="container">
+        <div class="ring">
+            <h1>Preparing gifts...</h1>
+        </div>
+  </div>
+</div>
 <div class="product-addtocart hidden">
     <div class="container">
       <div id="battery">
@@ -142,6 +149,7 @@ const titleArray = []
 let optionNames = document.querySelectorAll('.js-option-name')
 const popUpControler = document.querySelector('.product-popup__wrapper')
 const popUpLoadControler = document.querySelector('.product-addtocart')
+const popUpAnimationControler = document.querySelector('.product-popup__animation')
 const close = document.querySelector('.close')
 close.addEventListener('click', (e) => {
   popUpControler.classList.toggle('hidden')
@@ -295,6 +303,10 @@ addToCart.addEventListener('click', (e) => {
   } 
   if(numberOfSelected == 3) {
     popUpControler.classList.toggle('hidden')
+    popUpAnimationControler.classList.remove('hidden')
+    setTimeout(() => {
+      popUpAnimationControler.classList.add('hidden')
+    }, "1000");
     body.classList.toggle('overflow-hidden')
   }
 })
@@ -319,7 +331,12 @@ variantClicks.forEach(variantClick => {
                 infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT!`
                 bar.style.setProperty("--progress", "100%");
                 popUpControler.classList.remove('hidden');
+                popUpAnimationControler.classList.remove('hidden')
+                setTimeout(() => {
+                  popUpAnimationControler.classList.add('hidden')
+                }, "1000");
                 if(variantClick.classList.contains('checkout')) {
+                    popUpAnimationControler.classList.add('hidden')
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
                       addItemsCheckout(true)
@@ -341,6 +358,7 @@ variantClicks.forEach(variantClick => {
                 bar.style.setProperty("--progress", "0%");
             }
             if(variantClick.classList.contains('checkout')) {
+               popUpAnimationControler.classList.add('hidden')
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
                       addItemsCheckout(true)
@@ -356,7 +374,12 @@ variantClicks.forEach(variantClick => {
             infoBar.innerHTML = `YOU UNLOCKED 1 FREE GIFT!`
             bar.style.setProperty("--progress", "100%");
             popUpControler.classList.remove('hidden');
+            popUpAnimationControler.classList.remove('hidden')
+            setTimeout(() => {
+              popUpAnimationControler.classList.add('hidden')
+            }, "1000");
             if(variantClick.classList.contains('checkout')) {
+              popUpAnimationControler.classList.add('hidden')
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
                       addItemsCheckout(true)
@@ -378,6 +401,7 @@ variantClicks.forEach(variantClick => {
             bar.style.setProperty("--progress", "0%");
         }
         if(variantClick.classList.contains('checkout')) {
+          popUpAnimationControler.classList.add('hidden')
                     setTimeout(() => {
                       popUpLoadControler.classList.remove('hidden')
                       addItemsCheckout(true)

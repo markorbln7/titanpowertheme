@@ -187,12 +187,12 @@
               </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc-now f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">BUY NOW AND SAVE 5%</div>
+                    <div id="addToCartText-{{ section.id }}">BUY NOW FOR - <span class="js-price-button-now titan-green">{{product.price | money}}</span></div>
                   </button>
               </div>
               <div class="product-template__wrapper--content__form--atc reverse">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
+                    <div id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price-button titan-green">{{product.price | money}}</span> </div>
                   </button>
                   <div class="amazon-notice"><span>Only Here:</span> Not Available on Amazon or eBay</div>
               </div>
@@ -299,6 +299,26 @@ window.jointPrice = {
     {% endfor %}
     {% for variant in pd3.variants %}
       'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+    {% endfor %}
+}
+window.jointPricePercent = {
+    {% for variant in product.variants %}
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | times: 0.95 | plus: plug.price | money }}',
+    {% endfor %}
+    {% for variant in product2.variants %}
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | plus: plug.price | money  }}',
+    {% endfor %}
+    {% for variant in product4.variants %}
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | plus: plug.price | money  }}',
+    {% endfor %}
+    {% for variant in pd1.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | plus: plug.price | money  }}',
+    {% endfor %}
+    {% for variant in pd2.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95| plus: plug.price | money  }}',
+    {% endfor %}
+    {% for variant in pd3.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | plus: plug.price | money  }}',
     {% endfor %}
 }
 window.jointComparePrice = {
@@ -515,6 +535,26 @@ window.prices = {
     {% endfor %}
      {% for variant in pd3.variants %}
       'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+    {% endfor %}
+}
+window.pricesPercented = {
+   {% for variant in product.variants %}
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | times: 0.95 | money }}',
+    {% endfor %}
+    {% for variant in product2.variants %}
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | money }}',
+    {% endfor %}
+    {% for variant in product4.variants %}
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | money}}',
+    {% endfor %}
+    {% for variant in pd1.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | money}}',
+    {% endfor %}
+     {% for variant in pd2.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | money}}',
+    {% endfor %}
+     {% for variant in pd3.variants %}
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | times: 0.95 | money}}',
     {% endfor %}
 }
 window.comparePrices = {

@@ -8,6 +8,8 @@ const addToCartsNow = document.querySelectorAll('.js-atc-now')
 const popUpLoadControler = document.querySelector('.product-addtocart')
 const atcScroll = document.querySelectorAll('.js-atc-scroll')
 const price = document.querySelector('.js-price')
+const buttonprice = document.querySelector('.js-price-button')
+const buttonpricenow = document.querySelector('.js-price-button-now')
 const crossedPrice = document.querySelector('.js-crossed-price')
 const savedPrice = document.querySelector('.js-saving')
 const addUpsell = document.querySelector('.js-add')
@@ -143,12 +145,15 @@ const priceDisplay = () => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     console.log(productSelection, 'productSelection')
     price.innerHTML = window.jointPrice[productSelection]
+    buttonprice.innerHTML = window.jointPrice[productSelection]
     crossedPrice.innerHTML = window.jointComparePrice[productSelection]
     savedPrice.innerHTML = window.jointSavePrices[productSelection] + ' SAVED'
   } else {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
     console.log(productSelection, 'productSelection')
     price.innerHTML = window.prices[productSelection]
+    buttonprice.innerHTML = window.prices[productSelection]
+    buttonpricenow.innerHTML = window.pricesPercented[productSelection]
     crossedPrice.innerHTML = window.comparePrices[productSelection]
     savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
   }

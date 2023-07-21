@@ -23,7 +23,8 @@
     {{ checkout_scripts }}
   </head>
   <body>
-
+<style>
+.tags-list {display:none !important; }</style>
     {%- unless request.path contains 'thank_you' -%}
 
   {% render 'elevar-checkout-end' %}

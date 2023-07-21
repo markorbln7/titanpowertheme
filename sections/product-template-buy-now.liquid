@@ -185,7 +185,7 @@
                 <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
-              <div class="product-template__wrapper--content__form--atc">
+              <div class="product-template__wrapper--content__form--atc" style="margin-top: -55px;">
                   <button class="js-atc-now f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
                     <div id="addToCartText-{{ section.id }}">BUY NOW (-5%) - <span class="js-price-button-now titan-green">{{product.price | money}}</span></div>
                   </button>

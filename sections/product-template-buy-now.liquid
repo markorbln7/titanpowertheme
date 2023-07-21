@@ -181,9 +181,9 @@
                     </div>
                   </div>
               </div>
-              <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+              <div class="text-center price-div" style="margin-bottom:20px;">
+                {% comment %} <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div> {% endcomment %}
               </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc-now f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">

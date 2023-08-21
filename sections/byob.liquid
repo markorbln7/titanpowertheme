@@ -468,13 +468,14 @@ optionNames.forEach((optionName) => {
 }) 
 stickyElem = document.querySelector(".sticky-div");
 currStickyPos = stickyElem.getBoundingClientRect().top + window.pageYOffset;
+let panel = document.querySelector('.header-wrapper')
 var lastScrollTop = 0;
     $(window).scroll(function(event){
       var st = $(this).scrollTop();
         if (st > lastScrollTop){
             if(window.pageYOffset > currStickyPos) {
                 stickyElem.style.position = "fixed";
-                stickyElem.style.top = "60px";
+                stickyElem.style.top = panel.scrollHeight + 'px';
                 stickyElem.classList.add('sticky');
             } else {
                 stickyElem.style.position = "relative";
@@ -484,7 +485,7 @@ var lastScrollTop = 0;
         } else {
             if(window.pageYOffset > currStickyPos) {
                 stickyElem.style.position = "fixed";
-                stickyElem.style.top = "60px";
+                stickyElem.style.top = panel.scrollHeight + 'px';
                 stickyElem.classList.add('sticky');
             } else {
                 stickyElem.style.position = "relative";

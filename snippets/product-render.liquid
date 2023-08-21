@@ -3,7 +3,7 @@
     <div class="bundle-wrapper__product--image">
         <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
     </div>
-    <div class="bundle-wrapper__product--title">{{product.title}}</div>
+    <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
     {% if tick1 != blank %}
     <div class="product-template__wrapper--content__features font-sans">
         <div class="js-scroll product-template__wrapper--content__features--name">{{tick1}}</div>
@@ -74,6 +74,11 @@
                             {% assign prId = product.variants[0].id %}
                         {% endif %}
                     </div>
+                    <div class="c-quantity f aic p dm-sans-normal color-white">
+                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white">-</button>
+                        <div class="c-quantity__amount">1</div>
+                        <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+                    </div>
                     {% unless hidecart == true%}
                         <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
                     {% endunless %}
@@ -93,6 +98,11 @@
                 <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                 {% assign prId = product.variants[0].id %}
             {% endif %}
+        </div>
+        <div class="c-quantity f aic p dm-sans-normal color-white">
+            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white">-</button>
+            <div class="c-quantity__amount">1</div>
+            <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
         </div>
         {% unless hidecart == true%}
             <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">

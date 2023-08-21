@@ -133,13 +133,17 @@
     }
 }
 .js-info-bar, .info-bar {
-    font-family: var(--font-heading-family);
-    font-weight: 400;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
     color: #60C655;
     font-style: normal;
-    font-size: 24px;
+    font-size: 22px;
     text-align: center;
-    margin: 20px 0;
+    margin: 10px 0;
+    @media only screen and (max-width: 768px) {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
 }
 .js-progress-bar {
     max-width: 100%;
@@ -308,15 +312,15 @@
     &.sticky {
         .js-info-bar {
             @media only screen and (max-width: 768px) {
-                font-size: 16px;
+                font-size: 14px;
                 margin-bottom: 0;
             }
         }
-        background-color: black;
+        background: linear-gradient(133deg, rgba(0, 0, 0, 0.84) 59%, rgba(0, 0, 0, 0.64) 85.974%, rgba(96, 198, 85, 0.34) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap:20px;
+        gap:10px;
         z-index: 99999;
         @media only screen and (max-width: 768px) {
             flex-direction: column;

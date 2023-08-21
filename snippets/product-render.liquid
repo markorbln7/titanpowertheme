@@ -63,13 +63,13 @@
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">
-                    <div class="price type--m">
+                    <div class="price type--m hhhhh">
                         {% if product.variants.size > 1 %}
-                            <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
                             <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
                             {% assign prId = product.first_available_variant.id %}
                         {% else %}
-                            <span class="js-price ">{{product.price | money }}</span>
+                            <span class="js-price ">{{product.price | money }}</span><br>
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
                         {% endif %}

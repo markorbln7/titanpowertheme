@@ -356,6 +356,11 @@ window.addEventListener('load', () => {
 />
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<style>
+  body.no-scroll {
+    overflow: hidden;
+  }
+</style>
 {{ 'main.css' | asset_url | stylesheet_tag }}
 {{ 'main.js' | asset_url | script_tag }}
 {{ 'section-product-template.css' | asset_url | stylesheet_tag }}

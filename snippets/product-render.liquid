@@ -59,7 +59,7 @@
                 {% endfor %}
                 <div class="variants-hidden hidden">
                     {% for variant in productVariants %}
-                        <div data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">

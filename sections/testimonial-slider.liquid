@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <div class="slider-outer">
   <div class="swiper mySwiper slider-section">
-    <div class="product-image__title slider-section__title product-image__title--zig">
+    <div class="product-image__title slider-section__title product-image__title--zig color-black">
         <div class="product-image__title--stars product-template__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </div>
         {{section.settings.title}}
-        <div class="product-image__title--sub">{{section.settings.subtitle}}</div>
+        <div class="product-image__title--sub color-black">{{section.settings.subtitle}}</div>
     </div>
     <div class="swiper-wrapper">
      {% for block in section.blocks %}
@@ -14,8 +14,8 @@
               <img src="{{block.settings.image | img_url: 'master'}}">
             </div>
             <div class="slide-content__text">
-              <div class="slide-content__text--title">{{block.settings.text}}</div>
-              {% if block.settings.name %}<div class="slide-content__text--signature">{{block.settings.name}}</div>{% endif %}
+              <div class="slide-content__text--title color-black">{{block.settings.text}}</div>
+              {% if block.settings.name %}<div class="slide-content__text--signature color-black">{{block.settings.name}}</div>{% endif %}
               <div class="product-image__title--teststars product-template__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </div>
             </div>
          </div>

@@ -394,7 +394,7 @@ window.addEventListener('load', () => {
     <main class="content-for-layout focus-none" id="MainContent" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
-
+{{ 'globallight.css' | asset_url | stylesheet_tag }}
     {% section 'footer' %}
 
 

@@ -1,7 +1,7 @@
 {{ 'section-product-image.css' | asset_url | stylesheet_tag }}
 <div class="product-image">
-    <div class="product-image__title">{{section.settings.title}}</div>
-    <div class="product-image__text">{{section.settings.text}}</div>
+    <div class="product-image__title color-black">{{section.settings.title}}</div>
+    <div class="product-image__text color-black">{{section.settings.text}}</div>
     <div class="product-image__image">
         <img class="w-100" src="{{section.settings.image | img_url:'master' }}">
     </div>
@@ -11,9 +11,9 @@
         </button>
     </div>
 </div>
-<div class="">
+{% comment %} <div class="">
 <img class="w-100 big-image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-cable-titan-power-plus-durable-tough-strong-iphone-charger-desktop.webp?v=1681468046">
-</div>
+</div> {% endcomment %}
 {% schema %}
 {
   "name": "Product Image",

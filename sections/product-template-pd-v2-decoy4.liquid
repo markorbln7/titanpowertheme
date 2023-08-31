@@ -52,7 +52,7 @@
                       <div class="usba">USB-A</div>
                       <i class="arrow-left fa fa-angle-down fa-2x animated"></i>
                       <i class="arrow-right fa fa-angle-down fa-2x animated"></i>
-                      <div class="pd">PD</div>
+                      <div class="pd">USB-C</div>
                   </label>
                   
                 </div>
@@ -77,8 +77,41 @@
 
 
               {% comment %} <button class="js-pd-switch">CHANGE TO PD</button> {% endcomment %}
+              
+              <div class="product-template-new__wrapper--content__selection small-top">
+                  <div class="label-holder__title color-black new-label">PHONE PORT</div>
+                  <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
+                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                          <div class="zindex transform">IPhone</div>
+                      </div>
+                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                          <div class="zindex transform">Usb-C</div>
+                      </div>
+                      <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                          <div class="zindex transform">Micro Usb</div>
+                      </div>
+                  </div>
+              </div>
               <div class="product-template-new__wrapper--content__selection">
-                  <div class="product-template-new__wrapper--content__selection--wrapper f aic fw light-wrapper">
+                  <div class="label-holder__title color-black new-label">CABLE LENGTH</div>
+                  <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
+            
+                      
+                      <div data-length="4ft(1.2m)" class="relative pd-default-length js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                        <div class="zindex">1.2m</div>
+                      </div>
+                     
+                      <div data-length="6ft(1.8m)" class="relative js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                        <div class="zindex">1.8m</div>
+                      </div>
+                      
+                       <div data-length="10ft(3.0m)" class="relative pd-disable active js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                        <div class="zindex">3.0m</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="product-template-new__wrapper--content__selection">
+                  <div class="product-template-new__wrapper--content__selection--wrapper f fw light-wrapper">
                       <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="4x" data-id="{{product4.id}}" data-product="4-x-titan-smart-cable™-black-friday" class="active master-product js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
                          <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_pack.jpg?v=1693387225"></div>
                          <div class="decoy-content">
@@ -108,48 +141,7 @@
                       </div>
                   </div>
               </div>
-              <div class="product-template-new__wrapper--content__selection small-top">
-                  <div class="label-holder__title color-black new-label">PHONE PORT</div>
-                  <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
-                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">IPhone</div>
-                      </div>
-                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">Usb-C</div>
-                      </div>
-                      <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">Micro Usb</div>
-                      </div>
-                  </div>
-              </div>
-              <div class="product-template-new__wrapper--content__selection">
-                  <div class="label-holder__title color-black new-label">CABLE LENGTH</div>
-                  <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
-            
-                      
-                      
-                      <div data-length="10ft(3.0m)" class="relative pd-disable active js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                        <div class="zindex">3.0m</div>
-                      </div>
-                      <div data-length="6ft(1.8m)" class="relative js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                        <div class="zindex">1.8m</div>
-                      </div>
-                      <div data-length="4ft(1.2m)" class="relative pd-default-length js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                        <div class="zindex">1.2m</div>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
-              </div>
-              <div class="product-template__wrapper--content__form--atc">
-                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
-                  </button>
-                  <div class="amazon-notice color-black"><span>Only Here:</span> Not Available on Amazon or eBay</div>
-              </div>
+
               <div class="product-template-new__wrapper--content__add pd-add">
                   <div data-addon="{{plug.first_available_variant.id}}" class="f aic product-template-new__wrapper--content__add--colored js-add pd">
                     <div class="product-template-new__wrapper--content__add--title font-bold product-template-new__wrapper--content__add--title-pd">
@@ -163,6 +155,18 @@
                     </div>
                   </div>
               </div>
+              
+              <div class="text-center price-div">
+                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+              </div>
+              <div class="product-template__wrapper--content__form--atc">
+                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
+                  </button>
+                  <div class="amazon-notice color-black"><span>Only Here:</span> Not Available on Amazon or eBay</div>
+              </div>
+              
               {% comment %} <div class="product-template-new__icons">
                   <div class="product-template-new__icons--item color-black">
                       <img class="product-template-new__icons--item__icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-deliver-food-50_256x256_crop_center.png?v=1677604414" alt="">

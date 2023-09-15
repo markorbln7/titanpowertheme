@@ -78,15 +78,20 @@
       {% endif %}
       {% render 'product-render' hidecart:true product_var:product.handle tick1: one tick2:two tick3:three %}    {% endfor %}
 </div> {% endcomment %}
-{% comment %} <div class="intro">
-  <div class="intro__title">GRAB OVER 50% RRP OFF ALL ITEMS BELOW AND CHOOSE YOUR FREE GIFT FROM THE POP UP</div>
-  <div class="intro__subtitle">Don't want 3 options? Just head to the cart with the FINISH KIT button at the bottom of the page.</div>
-</div> {% endcomment %}
+<div class="intro">
+  <div class="intro__title">ADD MORE TO SAVE MORE</div>
+  <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
+</div>
 <div class="sticky-div w-100">
   <div class="js-info-bar">ADD 4 AND SAVE 55%</div>
   <div class="progress">
     <div class="bar"></div>
   </div>
+  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
+    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+      <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
+  </button>
+</div>
 </div>
 <div class="bundle-wrapper">
     {% for product in collections['build-your-own-bundle'].products %}
@@ -368,6 +373,7 @@ pos.forEach((po) => {
   })
 })
 const addToCart = document.querySelector('.js-add-to-cart')
+const addToCartSticky = document.querySelector('.js-add-to-cart-sticky')
 {% comment %} const addToCartCheckout = document.querySelector('.js-add-to-cart-popup') {% endcomment %}
 let addItems = (selector) => {
   const variantsPickers = document.querySelectorAll('.js-variant-selector.selected')
@@ -445,6 +451,11 @@ let addItemsCheckout = (selector) => {
     })
 }
 addToCart.addEventListener('click', (e) => {
+  let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
+  popUpLoadControler.classList.remove('hidden')
+  addItemsCheckout()
+})
+addToCartSticky.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
   popUpLoadControler.classList.remove('hidden')
   addItemsCheckout()

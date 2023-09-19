@@ -1,0 +1,626 @@
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/buds/buds.css ***!
+  \******************************************************************************************************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Work+Sans:wght@400;500;700&display=swap);
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/buds/buds.css (1) ***!
+  \**********************************************************************************************************************************************************************************************************************/
+.buds-hero {
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.buds-hero__image {
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+    }
+.buds-hero__image img {
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+               object-fit: cover;
+        }
+.buds-hero__content {
+        z-index: 99;
+        position: relative;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 664px;
+        display: flex;
+        margin: 0 auto;
+    }
+.buds-hero__content--intro {
+            box-sizing: border-box;
+            margin: 0 auto;
+            color: rgb(255, 255, 255);
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Work Sans', sans-serif;
+            height: 24px;
+            letter-spacing:1.7px;
+            line-height:24px;
+            margin-bottom:20px;
+            text-align:center;
+            text-transform: uppercase;
+            width: 592px;
+        }
+.buds-hero__content--title {
+            font-weight: 700;
+            font-size: 40px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color:white;
+        }
+.buds-hero__content--subtitle {
+            font-weight: 500;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 20px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color:white;
+            margin-bottom: 20px;
+        }
+.buds-hero__content--button {
+            border-radius: 24px;
+            text-align: center;
+            padding: 10px 32px;
+            background-color:#60C655;;
+            color: rgb(25, 24, 23);
+            font-weight: 500;
+            font-family: 'Work Sans', sans-serif;
+            letter-spacing: 0px;
+            line-height: 1.15;
+            border: 2px solid transparent;
+            cursor: pointer;
+            max-width: 190px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+.buds-product {
+    background-color: rgb(250, 250, 250);
+}
+.buds-product__inner {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1512px;
+        margin: 0 auto;
+        padding-left: 36px;
+        padding-right: 36px;
+        padding-top: 64px;
+        padding-bottom: 24px;
+    }
+.buds-product__inner--image {
+            flex-basis: 50%;
+            max-width: 50%;
+            box-shadow: 0px 3px 6px 0px #474747;
+            border-radius: 30px;
+        }
+.buds-product__inner--image img {
+                max-width: 100%;
+                border-radius: 30px;
+                height: 100%;
+                -o-object-fit: cover;
+                   object-fit: cover;
+            }
+.buds-product__inner--content {
+            max-width: 580px;
+            padding: 40px 1rem 0px 40px;
+            display: flex;
+            flex: 1 1 0%;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+        }
+.buds-product__inner--content__title {
+                display: block;
+                margin-bottom: 5px;
+                text-transform: uppercase;
+                color: rgb(0, 0, 0);
+                font-size: 16px;
+            }
+.buds-product__inner--content__subtitle {
+                font-size: 36px;
+                font-weight: 500;
+                font-family: 'Work Sans', sans-serif;
+                margin-bottom: 20px;
+                color: rgb(0, 0, 0);
+                letter-spacing: -0.5px;
+                line-height: 54px;
+            }
+.buds-product__inner--content__description {
+                font-size: 16px;
+                font-weight: 500;
+                font-family: 'Work Sans', sans-serif;
+                margin-bottom: 20px;
+                color: rgb(0, 0, 0);
+            }
+.buds-product__inner--content__atc {
+                margin-left: 0;
+            }
+.buds-product__inner--content__price {
+                font-size: 24px;
+                font-weight: 500;
+                font-family: 'Work Sans', sans-serif;
+                line-height: 36px;
+                color:black;
+                margin-bottom: 10px;
+                font-family: 'Work Sans', sans-serif;
+            }
+.buds-var {
+    background-color: rgb(250, 250, 250);
+}
+.buds-var__wrapper {
+        border-top: 1px solid rgb(241, 241, 241);
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1512px;
+        margin: 0 auto;
+        padding: 25px 0px;
+        padding-left: 36px;
+        padding-right: 36px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+.buds-var__wrapper--column {
+            display: block;
+            padding-bottom: 10px;
+            color: rgb(85, 85, 85);
+        }
+.buds-var__wrapper--column__block {
+                display: flex;
+                gap:10px;
+            }
+.buds-var__wrapper--column__block--text {
+                    color: rgb(85, 85, 85);
+                    font-size: 14px;
+                }
+.buds-var__fullimage {
+        width: 100%;
+    }
+.buds-var__fullimage img {
+            width: 100%;
+            display: block;
+        }
+.buds-points {
+    width: 100%;
+    text-align: center;
+    background: white;
+}
+.buds-points__wrapper {
+        width: 100%;
+        max-width: 1512px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 36px;
+        padding-right: 36px;
+    }
+.buds-points__wrapper--holder {
+            margin-left: 8.33333333%;
+            max-width: 84.33333333%;
+        }
+.buds-points__wrapper--holder__content {
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                display: flex;
+                flex-direction: row;
+            }
+.buds-points__wrapper--holder__content--text {
+                    padding: 60px 0px;
+                    color: rgb(0, 0, 0);
+                    font-size: 22px;
+                    font-weight: 500;
+                    font-family: 'Work Sans', sans-serif;
+                    line-height: 36px;
+                    letter-spacing: 0px;
+                    flex-basis: 25%;
+                    max-width: 25%;
+                }
+.buds-zig {
+    background-color: white;
+}
+.buds-zig__wrapper--box {
+            padding-top: 60px;
+            padding-bottom: 60px;
+            width: 100%;
+            max-width: 1512px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 36px;
+            padding-right: 36px;
+        }
+.buds-zig__wrapper--box__inner {
+                background-color: rgb(250, 250, 250);
+                margin: 0px;
+                padding: 0px;
+            }
+.buds-zig__wrapper--box__inner--content {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: row
+                }
+.buds-zig__wrapper--box__inner--content.reverse {
+    flex-direction: row-reverse;
+}
+.buds-zig__wrapper--box__inner--content__wrapper--image {
+                            flex-basis: 50%;
+                            max-width: 50%;
+                            padding-right: 1rem;
+                            padding-left: 1rem;
+                            flex: 0 0 auto;
+                        }
+.buds-zig__wrapper--box__inner--content__wrapper--image img {
+                                width:100%;
+                                height: 100%;
+                                -o-object-fit: contain;
+                                   object-fit: contain;
+                            }
+.buds-zig__wrapper--box__inner--content__wrapper--content {
+                            flex-basis: 50%;
+                            max-width: 50%;
+                            flex: 0 0 auto;
+                            padding-right: 1rem;
+                            padding-left: 1rem;
+                        }
+.buds-zig__wrapper--box__inner--content__wrapper--content__inner {
+                                padding-top: 60px;
+                                padding-bottom: 60px;
+                                height: 100%;
+                                display: flex;
+                                flex-direction: row;
+                            }
+.buds-zig__wrapper--box__inner--content__wrapper--content__inner--column {
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    margin-left: 16.66666667%;
+                                    flex-basis: 66.66666667%;
+                                    max-width: 66.66666667%;
+                                    flex: 0 0 auto;
+                                    padding-right: 1rem;
+                                    padding-left: 1rem;
+                                    color:black;
+                                }
+.buds-zig__wrapper--box__inner--content__wrapper--content__inner--column__text--title {
+                                            font-size: 24px;
+                                            font-weight: 500;
+                                            line-height: 36px;
+                                            margin-bottom: 20px;
+                                            color:black;
+                                        }
+.buds-zig__wrapper--box__inner--content__wrapper--content__inner--column__text--content {
+                                            font-size: 16px;
+                                            font-weight: 400;
+                                            line-height:26px;
+                                            color:rgb(85, 85, 85);
+                                            letter-spacing: 0.2px;
+                                        }
+.buds-cards {
+    background-color: white;
+    color:black;
+}
+.buds-cards__wrapper {
+        max-width: 1400px;
+        padding-left: 36px;
+        padding-right: 36px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+.buds-cards__wrapper--inner {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 0 auto;
+            flex-direction: row;
+        }
+.buds-cards__wrapper--inner__card {
+                flex-basis: 33.33333333%;
+                max-width: 33.33333333%;
+                padding-right: 1rem;
+                padding-left: 1rem;
+            }
+.buds-cards__wrapper--inner__card--image {
+                    width:100%;
+                    height: 230px;
+                }
+.buds-cards__wrapper--inner__card--image img {
+                        width:100%;
+                        height: 230px;
+                        -o-object-fit: cover;
+                           object-fit: cover;
+                    }
+.buds-cards__wrapper--inner__card--content {
+                    min-height: 30px;
+                    padding-top: 14px;
+                }
+.buds-cards__wrapper--inner__card--content__title {
+                        font-size: 24px;
+                        font-weight: 500;
+                        line-height: 36px;
+                        color:black;
+                    }
+.buds-cards__wrapper--inner__card--content__text {
+                        font-size: 16px;
+                        color:rgb(85, 85, 85);
+                        letter-spacing: 0.2px;
+                        line-height: 26px;
+                        margin-top: 20px;
+                    }
+.copyright__content {
+    display: none !important;
+}
+.buds-slider {
+    background-color: white;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+.buds-slider__top {
+        max-width: 50%;
+        margin-left: 25%;
+        text-align: center;
+    }
+.buds-slider__top--title {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 36px;
+            margin-bottom: 20px;
+            color:black;
+        }
+.buds-slider__top--text {
+            color:rgb(85, 85, 85);
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.2;
+            line-height: 26px;
+        }
+.buds-slider__slides {
+        width: 100%;
+        max-width: 1512px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 36px;
+        position: relative;
+    }
+.buds-slider__slides .swiper-slide {
+            height: 600px;
+        }
+.buds-slider__slides .swiper-slide img {
+                width: 100%;
+                height: 600px;
+                -o-object-fit: cover;
+                   object-fit: cover;
+            }
+.buds-slider__slides .sw-arrows {
+            background: #fafafa;
+            border-radius: 50%;
+            height: 42px;
+            width: 42px
+        }
+.buds-slider__slides .sw-arrows::after {
+    font-size: 20px !important;
+    color:rgb(85, 85, 85);
+}
+.buds-slider__slides:hover .sw-arrows {
+                display: flex !important;
+}
+.buds-tech {
+    background-color: rgb(250, 250, 250);
+}
+.buds-tech__inner--row {
+            width: 100%;
+            max-width: 1512px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 36px;
+            padding-right: 36px;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+.buds-tech__inner--row__flex {
+                display: flex;
+                flex-direction: row;
+            }
+.buds-tech__inner--row__bottom {
+                flex-basis: 83.33333333%;
+                max-width: 83.33333333%;
+                margin-left: 8.33333333%;
+                display: flex;
+                flex-direction: column;
+                padding-right: 1rem;
+                padding-left: 1rem;
+                margin-top: 100px;
+            }
+.buds-tech__inner--row__bottom .accordion {
+                    padding: 20px 0px;
+                    border-top: 1px solid rgb(229, 229, 229);
+                }
+.buds-tech__inner--row__bottom .accordion__intro {
+                        color:black;
+                        font-size: 16px;
+                        font-weight: 500;
+                        letter-spacing: 1.7px;
+                        line-height: 24px;
+                        text-transform: uppercase;
+                        margin:0;
+                        cursor: pointer;
+                    }
+.buds-tech__inner--row__bottom .accordion__content--title {
+                            font-size: 14px;
+                            color:black;
+                            letter-spacing: 0.1px;
+                            line-height: 24px;
+                            font-weight: 400;
+                        }
+.buds-tech__inner--row__bottom .accordion__content--text {
+                            font-size: 14px;
+                            color:rgb(85, 85, 85);
+                            letter-spacing: 0.1px;
+                            line-height: 24px;
+                            font-weight: 400;
+                        }
+.buds-tech__inner--row__bottom .accordion__content--wrapper {
+                            padding-left: 16px;
+                            margin-bottom: 20px
+                        }
+.buds-tech__inner--row__bottom .accordion__content--wrapper:first-child {
+    margin-top: 40px;
+}
+.buds-tech__inner--row__bottom .accordion__content--wrapper:last-child {
+    margin-bottom: 0;
+}
+.buds-tech__inner--row__bottom .accordion__content {
+                    max-height: 0;
+                    overflow: hidden;
+                    will-change: max-height;
+                    transition: all 0.25s ease-out;
+                    opacity: 0;
+                }
+.buds-tech__inner--row__bottom .accordion__active .accordion__content {
+                        opacity: 1;
+                    }
+.buds-tech__inner--row__top {
+                flex-basis: 83.33333333%;
+                max-width: 83.33333333%;
+                margin-left: 8.33333333%;
+                display: flex;
+                flex-direction: row;
+            }
+.buds-tech__inner--row__top--image {
+                    text-align: center;
+                    flex-basis: 50%;
+                    max-width: 50%;
+                    padding-right: 1rem;
+                    padding-left: 1rem;
+                    height: 300px;
+                }
+.buds-tech__inner--row__top--image img {
+                        width:100%;
+                        height: 300px;
+                        -o-object-fit: cover;
+                           object-fit: cover;
+                    }
+.buds-tech__inner--row__top--content {
+                    flex-basis: 50%;
+                    max-width: 50%;
+                    padding-right: 1rem;
+                    padding-left: 1rem;
+                }
+.buds-tech__inner--row__top--content__title {
+                        font-size: 18px;
+                        text-transform: uppercase;
+                        letter-spacing: 1.7px;
+                        line-height: 24px;
+                        margin-bottom: 20px;
+                        color:black;
+                        font-weight: 500;
+                    }
+.buds-tech__inner--row__top--content ul {
+                        color: rgb(85, 85, 85);
+                        font-size: 16px;
+                    }
+.buds-test {
+    background-color: white;
+}
+.buds-test__wrapper {
+        width: 100%;
+        max-width: 1512px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 60px 36px;
+    }
+.buds-test__wrapper--title {
+            font-size: 24px;
+            margin-bottom: 40px;
+            font-weight: 500;
+            line-height: 36px;
+            color:black;
+        }
+.buds-test__wrapper .sw-arrows {
+            background: #fafafa;
+            border-radius: 50%;
+            height: 42px;
+            width: 42px
+        }
+.buds-test__wrapper .sw-arrows::after {
+    font-size: 20px !important;
+    color:rgb(85, 85, 85);
+}
+.buds-test__wrapper:hover .sw-arrows {
+                display: flex !important;
+}
+.buds-test__inner {
+        max-width: 58.33333333%;
+        margin-left: 16.66666667%;
+        color:black;
+    }
+.buds-test .test-swiper .swiper-wrapper {
+            align-items: center;
+        }
+.buds-test .test-swiper .swiper-slide {
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            display: flex;
+            gap:20px;
+        }
+.buds-test .test-swiper .swiper-slide span {
+                text-transform: uppercase;
+            }
+.buds-test .test-swiper .sw-arrows {
+            background: #fafafa;
+            border-radius: 50%;
+            height: 42px;
+            width: 42px
+        }
+.buds-test .test-swiper .sw-arrows::after {
+    font-size: 20px !important;
+    color:rgb(85, 85, 85);
+}
+.atc-fixed {
+    background: white;
+    position: fixed;
+    bottom: 0;
+    z-index: 99999999999;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in;
+    border-top: 1px solid rgb(229,229,229);
+    background-color: #fafafa;
+}
+.atc-fixed .buds-product__inner--content__subtitle {
+        font-size: 25px;
+        margin-bottom: 0;
+    }
+.atc-fixed .buds-product__inner--content__atc {
+        margin: 0;
+    }
+.atc-fixed__container {
+        max-width: 1512px;
+        margin: 0 auto;
+        padding: 10px 36px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+.atc-fixed.show {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in;
+}

@@ -75,7 +75,7 @@
   </div>
 
   <div class="cart__form {% if cart.item_count == 0 %}is-hidden{% endif %}" data-current-discount="{{ cart.total_discount }}">
-    <form action="{{ routes.cart_url }}" method="post" id="cart_form" class="{% if cart.item_count == 0 %}visuallyhidden{% endif %} quantity-box-enabled-{{ section.settings.display_product_quantity_cart }}">
+    <form action="/checkout?force_checkout=redesign" method="post" id="cart_form" class="{% if cart.item_count == 0 %}visuallyhidden{% endif %} quantity-box-enabled-{{ section.settings.display_product_quantity_cart }}">
 
       <div class="container medium-down--hide" style="border-bottom: 1px solid #1c1a1a;">
         <div class="cart__headings column">

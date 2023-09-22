@@ -3,10 +3,11 @@
     "cart-items": {
       "type": "main-cart-items",
       "custom_css": [
-        ".line-item-discount__container {color: {{settings.sale_color}}; background: #185a1136; border-radius: 20px; padding: 7px; margin: 5px 0; font-size: 11px;}"
+        ".line-item-discount__container {color: {{settings.sale_color}}; background: #185a1136; border-radius: 20px; padding: 7px; margin: 5px 0; font-size: 11px;}",
+        ".booster-cart-item-success-notes {display:none; }"
       ],
       "settings": {
-        "display_product_quantity_cart": true,
+        "display_product_quantity_cart": false,
         "display_savings": false,
         "cart_message": "",
         "continue_shopping_url": "",

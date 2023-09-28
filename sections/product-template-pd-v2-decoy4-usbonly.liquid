@@ -164,9 +164,15 @@
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc">
-                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
+                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
+                    <div class="container-bar hide js-bar">
+                        <div class="bar"></div>
+                    </div>
+                    <div class="atc-text js-atc-text scroll-reveal" id="addToCartText-{{ section.id }}">
+                          ADD TO CART
+                    </div>
                   </button>
+                  <a class="view-cart js-view-cart hidden" href="/cart">View Cart</a>
                   <div class="amazon-notice color-black"><span>Only Here:</span> Not Available on Amazon or eBay</div>
               </div>
               
@@ -190,6 +196,16 @@
     </div>
   </div>
 </section>
+<div class="atc-fixed">
+    <div class="atc-fixed__container">
+        <div class="buds-product__inner--content__subtitle">
+                    TITAN POWER CABLE
+        </div>
+        <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+                ADD TO CART
+        </button>
+    </div>
+</div>
 {% schema %}
 {
   "name": "Product Template",
@@ -627,8 +643,6 @@ let removeFromDom = () => {
     elementDesktop.remove()
   }
 }
-
-removeFromDom()
 
 
 </script>

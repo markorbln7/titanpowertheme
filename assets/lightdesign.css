@@ -413,53 +413,67 @@
     border-top: 1px solid rgb(229,229,229);
     background-color: #fafafa;
 }
-.atc-fixed .buds-product__inner--content__subtitle {
-        font-size: 25px;
-        margin-bottom: 0;
-    }
+
 .atc-fixed .buds-product__inner--content__atc {
         margin: 0;
     }
 .atc-fixed__container {
-        max-width: 1512px;
-        margin: 0 auto;
-        padding: 10px 36px;
-        background: #fafafa;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+    max-width: 1512px;
+    margin: 0 auto;
+    padding: 20px 36px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 9px #474747;
+    padding-top: 11px;
+    background-color: white;
+    background-image: linear-gradient(to right, #D6E1E1 , #fff);
+}
 .atc-fixed.show {
     visibility: visible;
     opacity: 1;
     transition: all 0.3s ease-in;
 }
-.sticky-button {
-    border-radius: 24px;
-    text-align: center;
-    padding: 10px 32px;
-    background-color: #60c655;
-    color: #191817;
-    font-weight: 500;
+
+.atc-fixed .buds-product__inner--content__subtitle {
+    font-weight: 100;
     font-family: Work Sans,sans-serif;
-    letter-spacing: 0px;
+    color: #000;
+    letter-spacing: 2px;
+    line-height: 30px;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.sticky-button {
+    border-radius: 18px;
+    text-align: center;
+    padding: 15px 32px;
+    background-color: #60C655;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-family: Work Sans,sans-serif;
+    letter-spacing: 1px;
     line-height: 1.15;
     border: 2px solid transparent;
     cursor: pointer;
     font-size: 16px;
-}
-.atc-fixed .buds-product__inner--content__subtitle {
-    font-weight: 500;
-    font-family: Work Sans,sans-serif;
-    margin-bottom: 20px;
-    color: #000;
-    letter-spacing: -.5px;
-    line-height: 54px;
-    font-size: 25px;
-    margin-bottom: 0;
-}
+    width: 40%;
+} 
+
 @media only screen and (max-width: 600px) {
     .atc-fixed__container {
         flex-direction: column;
+    }
+    .sticky-button {
+        width: 80%;
+        padding: 10px 32px;
+    }
+    .atc-fixed .buds-product__inner--content__subtitle {
+        font-size: 17px;
+    }
+    .atc-fixed__container {
+        padding: 10px 36px;
     }
 }

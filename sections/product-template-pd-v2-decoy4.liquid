@@ -164,7 +164,7 @@
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc">
-                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white ovaj">
                     <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
                   </button>
                   <div class="amazon-notice color-black"><span>Only Here:</span> Not Available on Amazon or eBay</div>
@@ -627,8 +627,6 @@ let removeFromDom = () => {
     elementDesktop.remove()
   }
 }
-
-removeFromDom()
 
 
 </script>

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -199,6 +200,11 @@ addUpsell.addEventListener('click', (e) => {
 addToCarts.forEach(addToCart => {
   addToCart.addEventListener('click', (e) => {
     const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+    const bar = document.querySelector('.js-bar')
+    const atcText = document.querySelector('.js-atc-text')
+    const viewCart = document.querySelector('.js-view-cart')
+    bar.classList.remove('hide')
+    atcText.innerHTML = 'ADDING TO CART..'
     let addItems
     if (window.selectLogic.addon !== '') {
       addItems = [
@@ -230,10 +236,32 @@ addToCarts.forEach(addToCart => {
       body: JSON.stringify(formData)
     })
       .then(response => {
+        console.log(response.status, 'ok')
+        if (response.status === 200) {
+          console.log(addToCart, 'ok')
+          setTimeout(() => {
+            bar.classList.add('hide')
+            viewCart.classList.remove('hidden')
+            atcText.innerHTML = 'ADDED TO CART'
+          }, '1000')
+        }
         return response.json()
       })
       .catch((error) => {
         console.error('Error:', error)
       })
   })
+})
+
+const distance = $('.scroll-reveal').offset().top
+$(window).scroll(function () {
+  const top_of_element = $('#shopify-section-footer').offset().top
+  const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+  const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+  const top_of_screen = $(window).scrollTop()
+  if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+    $('.atc-fixed').addClass('show')
+  } else {
+    $('.atc-fixed').removeClass('show')
+  }
 })

@@ -65,7 +65,7 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.1"},f
    {% render 'meta-tags' %}
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}"></script>
    {% render 'header-scripts.zipifypages', renderctx: 'thm' %}
    
 
@@ -425,7 +425,7 @@ window.addEventListener('load', () => {
     </script>
 
     {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'predictive-search.js' | asset_url }}"></script>
     {%- endif -%}
 
 
@@ -510,7 +510,7 @@ if(accordions) {
 
 	{{ shop.metafields.loox["global_html_body"] }}
     
-    <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
+    <script src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
     </body>
  
 </html>

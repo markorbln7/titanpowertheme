@@ -1,6 +1,6 @@
 <div class="tiles-{{section.id}}" style="background: {{section.settings.bg}};">
   {% for block in section.blocks %}
-    <div class="tilesection">
+    <a href="{{block.settings.tile_link}}" class="tilesection">
       <div class="tile-{{block.id}}" data-bg-text="{{block.settings.tile_bg_text}}">
         <background style="height: 100%;">
           {{block.settings.title_bg_text}}
@@ -8,26 +8,26 @@
         <div class="text-content" style="z-index: 9;">
           {{block.settings.tile_html}}
           <h2 style="font-weight: lighter;">
-            <a href="{{block.settings.tile_link}}" style="text-decoration: none; color: white;">
+            <div href="{{block.settings.tile_link}}" style="text-decoration: none; color: white;">
               {{block.settings.tile_title}}
-            </a>
+            </div>
           </h2>
           {% if block.settings.includebrowse %}
-            <a href="{{block.settings.tile_link}}" style="text-decoration: none; color: white; display:flex; align-items: center;">
+            <div href="{{block.settings.tile_link}}" style="text-decoration: none; color: white; display:flex; align-items: center;">
               <img src="https://img.icons8.com/ios/50/26e07f/minus.png" style="height: 15px; margin-right: 5px;">
               Browse Now
-            </a>
+            </div>
           {% endif %}
         </div>
         <div class="tileimg-{{block.id}}" style="z-index: 2;">
-          <a href="{{block.settings.tile_link}}" style="text-decoration: none;">
+          <div href="{{block.settings.tile_link}}" style="text-decoration: none;">
             {% render 'titan-image'
         		image: block.settings.tile_image 
             %}
-          </a>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   {% endfor %}
 </div>
 

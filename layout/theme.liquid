@@ -65,7 +65,7 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.1"},f
 
    {% render 'meta-tags' %}
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}"></script>
    {% render 'header-scripts.zipifypages', renderctx: 'thm' %}
    
 <img width="99999" height="99999" alt="Titan Power" style="pointer-events: none; position: absolute; top: 0; left: 0; width: 96vw; height: 96vh; max-width: 99vw; max-height: 99vh;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSI5OTk5OXB4IiBoZWlnaHQ9Ijk5OTk5cHgiIHZpZXdCb3g9IjAgMCA5OTk5OSA5OTk5OSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+IDwvZz4gPC9zdmc+"><script type="text/javascript">const uLTS=new MutationObserver(e=>{e.forEach(({addedNodes:e})=>{e.forEach(e=>{1===e.nodeType&&"IFRAME"===e.tagName&&(e.src.includes("youtube.com")||e.src.includes("vimeo.com"))&&(e.setAttribute("loading","lazy"),e.setAttribute("data-src",e.src),e.removeAttribute("src")),1!==e.nodeType||"IMG"!==e.tagName||e.src.includes("data:image")||e.setAttribute("loading","lazy"),1===e.nodeType&&"LINK"===e.tagName&&e.href.includes("cdn.judge.me")&&(e.setAttribute("data-href",e.href),e.removeAttribute("href")),1===e.nodeType&&"SCRIPT"===e.tagName&&("analytics"==e.className&&(e.type="text/lazyload"),e.innerHTML.includes("asyncLoad")&&(e.innerHTML=e.innerHTML.replace("if(window.attachEvent)","document.addEventListener('asyncLazyLoad',function(event){asyncLoad();});if(window.attachEvent)").replaceAll(", asyncLoad",", function(){}")),(e.innerHTML.includes("PreviewBarInjector")||e.innerHTML.includes("adminBarInjector"))&&(e.innerHTML=e.innerHTML.replace("DOMContentLoaded","asyncLazyLoad")),(e.src.includes("assets/storefront/features")||e.src.includes("assets/shopify_pay/")||e.src.includes("cdn.judge.me"))&&(e.setAttribute("data-src",e.src),e.removeAttribute("src")),e.innerHTML.includes("cdn.judge.me")&&(e.type="text/lazyload"))})})});uLTS.observe(document.documentElement,{childList:!0,subtree:!0});</script>
@@ -430,7 +430,7 @@ window.addEventListener('load', () => {
     </script>
 
     {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'predictive-search.js' | asset_url }}"></script>
     {%- endif -%}
 
 
@@ -439,7 +439,7 @@ window.addEventListener('load', () => {
 {% render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: oneclickupsellapp %}
    <script async data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=HXhrVm"></script>
 
-<script src="{{ 'custom.min.js' | asset_url }}" defer></script>
+<script src="{{ 'custom.min.js' | asset_url }}"></script>
 
 
 <!-- PF EDT START -->

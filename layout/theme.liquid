@@ -512,6 +512,9 @@ if(accordions) {
 }
 </script>
 
+ <script src="{{ 'runtime.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'commons.js' | asset_url }}" defer="defer"></script>
+
 	{{ shop.metafields.loox["global_html_body"] }}
   <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
     {% render 'rebuy-smartcart-extensions' %}

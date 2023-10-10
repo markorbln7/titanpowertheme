@@ -1,0 +1,78 @@
+{{ 'section-home-product-block.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-product-block.js' | asset_url | script_tag }}
+
+<div class="hero">
+    <div class="hero_image desktop hd">
+    <img src="{{section.settings.desktop_image | img_url: 'master'}}">
+    </div>
+    <div class="hero_image mobile md">
+    <img src="{{section.settings.mobile_image | img_url: 'master' }}">
+    </div>
+</div>
+<div class="products">
+    <div class="products__title">{{section.settings.title}}</div>
+    <div class="products__list">
+        {% for block in section.blocks%}
+            {% assign product = block.settings.product %}
+            <div class="product__list--single"> 
+                <div class="product__list--single--image">
+                    <img class="w-100" src="{{product | img_url: 'master'}}">
+                </div>
+                <div class="product__list--single--title color-white">
+                    {{product.title}}
+                </div>    
+                <div class="product__list--single--price color-white">
+                    <span>{{product.compare_at_price | money }}</span> {{product.price | money}}
+                </div>  
+                <div data-product="{{product.first_available_variant.id}}" class="js-atc product__list--single--atc">
+                    +ADD TO CART
+                </div>
+            </div>
+        {% endfor%}
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Home Product Block",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Products Tile",
+      "default": "OUR <span>BEST SELLING</span> OFFER"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Product Block"
+    }
+  ]
+}
+{% endschema %}

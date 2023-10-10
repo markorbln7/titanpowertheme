@@ -1,0 +1,89 @@
+{{ 'section-home-scroll-block.css' | asset_url | stylesheet_tag }}
+{{ 'section-home-scroll-block.js' | asset_url | script_tag }}
+
+
+<div class="hero">
+    <div class="hero_image desktop hd">
+    <img src="{{section.settings.desktop_image | img_url: 'master'}}">
+    </div>
+    <div class="hero_image mobile md">
+    <img src="{{section.settings.mobile_image | img_url: 'master' }}">
+    </div>
+</div>
+<div class="scroll-icons">
+    {% for block in section.blocks%}
+        <div data-scroll-id="{{section.settings.title_id}}" class="scroll-icons__single js-scroll">
+            <div class="scroll-icons__single--image">
+                <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
+            </div>
+            <div class="scroll-icons__single--title">
+                {{block.settings.title}}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+$('.js-scroll').on('click', function (e) {
+  e.preventDefault()
+  const $section = $('#' + $(this).data('scroll-id'))
+
+  $('html, body').animate({
+    scrollTop: $section.offset().top + 'px'
+  }, 1000)
+})
+</script>
+
+
+{% schema %}
+{
+  "name": "Home Scroll Block",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Products Tile",
+      "default": "OUR <span>BEST SELLING</span> OFFER"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Scroll icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_id",
+          "label": "Id of a scrolled section"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Scroll Block"
+    }
+  ]
+}
+{% endschema %}

@@ -34,6 +34,9 @@
     }
 .product__list--single {
     width:calc(25% - 23px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 @media only screen and (max-width: 768px) {
             .product__list--single {

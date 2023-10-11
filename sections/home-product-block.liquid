@@ -17,7 +17,7 @@
             {% assign product = block.settings.product %}
             <div class="product__list--single"> 
                 <div class="product__list--single--image">
-                    <img class="w-100" src="{{product | img_url: 'master'}}">
+                    <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
                 </div>
                 <div class="product__list--single--title color-white">
                     {{product.title}}
@@ -71,6 +71,11 @@
           "type": "product",
           "id": "product",
           "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
         }
       ]
     }

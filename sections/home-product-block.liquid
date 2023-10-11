@@ -1,14 +1,15 @@
 {{ 'section-home-product-block.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-product-block.js' | asset_url | script_tag }}
-
-<div class="hero">
-    <div class="hero_image desktop hd">
-    <img src="{{section.settings.desktop_image | img_url: 'master'}}">
-    </div>
-    <div class="hero_image mobile md">
-    <img src="{{section.settings.mobile_image | img_url: 'master' }}">
-    </div>
-</div>
+{% if section.settings.desktop_image %}
+  <a href="{{section.settings.url}}" class="hero">
+      <div class="hero_image desktop hd">
+      <img src="{{section.settings.desktop_image | img_url: 'master'}}">
+      </div>
+      <div class="hero_image mobile md">
+      <img src="{{section.settings.mobile_image | img_url: 'master' }}">
+      </div>
+  </a>
+{% endif %}
 <div class="products">
     <div class="products__title">{{section.settings.title}}</div>
     <div class="products__list">
@@ -39,6 +40,11 @@
   "name": "Home Product Block",
   "tag": "section",
   "settings": [
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Image Link"
+    },
     {
       "type": "image_picker",
       "id": "desktop_image",

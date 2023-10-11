@@ -1,7 +1,7 @@
 {{ 'section-home-scroll-block.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-scroll-block.js' | asset_url | script_tag }}
 
-
+{% if section.settings.desktop_image %}
 <div class="hero">
     <div class="hero_image desktop hd">
     <img src="{{section.settings.desktop_image | img_url: 'master'}}">
@@ -10,6 +10,7 @@
     <img src="{{section.settings.mobile_image | img_url: 'master' }}">
     </div>
 </div>
+{% endif %}
 <div class="scroll-icons">
     {% for block in section.blocks%}
         <div data-scroll-id="{{section.settings.title_id}}" class="scroll-icons__single js-scroll">

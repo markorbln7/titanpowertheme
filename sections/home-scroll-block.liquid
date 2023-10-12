@@ -13,7 +13,7 @@
 {% endif %}
 <div class="scroll-icons">
     {% for block in section.blocks%}
-        <div data-scroll-id="{{section.settings.title_id}}" class="scroll-icons__single js-scroll">
+        <div data-scroll-id="{{block.settings.title_id}}" class="scroll-icons__single js-scroll">
             <div class="scroll-icons__single--image">
                 <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
             </div>

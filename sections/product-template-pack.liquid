@@ -1,5 +1,7 @@
+{{ 'section-product-template.css' | asset_url | stylesheet_tag }}
 {{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
 {{ 'section-product-template-new.js' | asset_url | script_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 {% assign product = all_products['the-titan-smart-cable™-4-pack-black-friday'] %}
 {% assign product2 = all_products['the-titan-smart-cable™-15-pack-black-friday'] %}
 {% assign product4 = all_products['the-titan-smart-cable™-8-pack-black-friday'] %}
@@ -13,25 +15,28 @@
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
-                <span class="product-template-new__wrapper--content__review--stars color-titan-green font-sans">★ ★ ★ ★ ★ </span>
-                <span class="product-template-new__wrapper--content__review--mark font-sans color-white">4.7 </span>
-                <span class="product-template-new__wrapper--content__review--number color-gray font-lato">(21956)</span>
+                <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </span>
+                <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7 </span>
+                <span class="product-template-new__wrapper--content__review--number color-black font-lato">(21956)</span>
             </div>
-              <h1 class="h1 product-template-new__wrapper--content__title color-white">
+              <h1 class="h1 product-template-new__wrapper--content__title color-black">
                  "{{section.settings.punchline}}"
               </h1>
 
               <div class="product-template-new__wrapper--content__features font-sans">
                   {% for block in section.blocks %}
                     {% if block.type == 'bullets'%}
-                      <div class="js-scroll product-template-new__wrapper--content__features--name">{{block.settings.text}}</div>
+                      <div class="bullet-wrapper f aic">
+                        <div class="bullet"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt_bullet_point_cable_page.jpg?v=1693472629"></div>
+                        <div class="js-scroll product-template-new__wrapper--content__features--name color-black">{{block.settings.text}}</div>
+                      </div>
                     {% endif %}
                   {% endfor %}
               </div>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}
-
+{% comment %} 
               <div class="relative">
                 <div class="value-slider">
                   <div class="slider">
@@ -40,49 +45,18 @@
                       <div class="one-behind right one"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/15_pack.jpg?v=1681712970"></div>
                   </div>
                 </div>
-              </div>
-              <div class="product-template-new__wrapper--content__imageSelection">
+              </div> {% endcomment %}
+              {% comment %} <div class="product-template-new__wrapper--content__imageSelection">
                 <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374">
-              </div>
-              <div class="product-template-new__wrapper--content__selection">
-                  <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb fw">
-                      <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="4x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="master-product active js-product-selector product-template-new__wrapper--content__selection--wrapper__single f">
-                          <div class="decoy-title">4x Pack</div>
-                          <div class="decoy-content">
-                            <div class="decoy-content__price js-price-discount-three"></div>
-                            <div class="crossed titan-red bold js-price-original-three"></div>
-                            <span class="product-template-new__wrapper--content__selection--wrapper__save"><span class="free-cable">MOST POPULAR</span></span>
-                          </div>
-                          <div class="vertical-separator"></div>
-                      </div>
-                      <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="8x" data-id="{{product4.id}}" data-product="2-x-titan-smart-cable™-2" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f">
-                         <div class="decoy-title">8x Pack</div>
-                         <div class="decoy-content">
-                          <div class="decoy-content__price js-price-discount-two"></div>
-                          <div class="crossed titan-red bold js-price-original-two"></div>
-                          {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">75% off</span> {% endcomment %}
-                         </div>
-                         <div class="vertical-separator"></div>
-                      </div>
-                      <div data-discount="{{section.settings.d3}}" data-slide=".one" data-count="15x" data-id="{{product2.id}}" data-product="1-x-titan-smart-cable™" class="master-product js-product-selector product-template-new__wrapper--content__selection--wrapper__single f">
-                          <div class="decoy-title">15x Pack</div>
-                          <div class="decoy-content">
-                            <div class="decoy-content__price js-price-discount-one"></div>
-                            <div class="crossed titan-red bold js-price-original-one"></div>
-                            <span class="product-template-new__wrapper--content__selection--wrapper__save"><span class="free-cable">BEST VALUE</span></span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+              </div> {% endcomment %}
+              
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
                       <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">IPhone</div>
-                          <div class="vertical-separator"></div>
                       </div>
                       <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Type-C</div>
-                          <div class="vertical-separator"></div>
                       </div>
                       <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Micro Usb</div>
@@ -94,14 +68,43 @@
             
                       <div data-length="4ft(1.2m)" class="relative pd-default-length active js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                         <div class="zindex">1.2m</div>
-                        <div class="vertical-separator"></div>
                       </div>
                       <div data-length="6ft(1.8m)" class="relative js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                         <div class="zindex">1.8m</div>
-                        <div class="vertical-separator"></div>
                       </div>
                       <div data-length="10ft(3.0m)" class="relative pd-disable js-length-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                         <div class="zindex">3.0m</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="product-template-new__wrapper--content__selection">
+                  <div class="product-template-new__wrapper--content__selection--wrapper f fw light-wrapper">
+                      <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="4x" data-id="{{product4.id}}" data-product="3-x-titan-smart-cable™" class="active master-product js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
+                         <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_pack.jpg?v=1693387225"></div>
+                         <div class="decoy-content">
+                         <div class="crossed titan-red bold js-price-original-two"></div>
+                          <div class="decoy-content__price js-price-discount-two"></div>
+                          
+                         </div>
+                      </div>
+                      <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="8x" data-id="{{product.id}}" data-product="2-x-titan-smart-cable™-2" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
+                          <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_pack.jpg?v=1693387225"></div>
+                          <div class="decoy-content">
+                          <div class="crossed titan-red bold js-price-original-three"></div>
+                            <div class="decoy-content__price js-price-discount-three"></div>
+                            
+                            {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">BEST VALUE</span> {% endcomment %}
+                          </div>
+                      </div>
+                      
+                      <div data-discount="{{section.settings.d3}}" data-slide=".one" data-count="15x" data-id="{{product2.id}}" data-product="1-x-titan-smart-cable™" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
+                          <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1_pack_a2041875-4c18-4025-9a94-92d4298a37ab.jpg?v=1693387225"></div>
+                          <div class="decoy-content">
+                          <div class="crossed titan-red bold js-price-original-one"></div>
+                            <div class="decoy-content__price js-price-discount-one"></div>
+                            
+                            {% comment %} <span class="product-template-new__wrapper--content__selection--wrapper__save">50% OFF</span> {% endcomment %}
+                          </div>
                       </div>
                   </div>
               </div>
@@ -110,7 +113,7 @@
                     <div class="product-template-new__wrapper--content__add--title font-bold">ADD TITAN PD PLUG <br>{{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
                     <div class="product-template-new__wrapper--content__add--image">
                         {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
-                        <img class="w-100" src="{{ featured_image_plug | img_url: 'master' }}" alt="{{ featured_image_plug.alt }}">
+                        <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/new_45W_plug_upsell_cable_page.png?v=1693482318" alt="{{ featured_image_plug.alt }}">
                     </div>
                   </div>
               </div>
@@ -118,13 +121,19 @@
                 <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
-              <div class="product-template__wrapper--content__form--atc">
-                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART</div>
+               <div class="product-template__wrapper--content__form--atc">
+                  <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
+                    <div class="container-bar hide js-bar">
+                        <div class="bar"></div>
+                    </div>
+                    <div class="atc-text js-atc-text scroll-reveal" id="addToCartText-{{ section.id }}">
+                          ADD TO CART
+                    </div>
                   </button>
-                  <div class="amazon-notice"><span>Only Here:</span> Not Available on Amazon or eBay</div>
+                  <a class="view-cart js-view-cart hidden" href="/cart">View Cart</a>
+                  <div class="amazon-notice color-black"><span>Only Here:</span> Not Available on Amazon or eBay</div>
               </div>
-              <div class="product-template-new__icons">
+              {% comment %} <div class="product-template-new__icons">
                   <div class="product-template-new__icons--item">
                       <img class="product-template-new__icons--item__icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-deliver-food-50_256x256_crop_center.png?v=1677604414" alt="">
                       <span>Free Delivery</span>
@@ -133,7 +142,7 @@
                       <img style="margin-top:0" class="product-template-new__icons--item__icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-ecommerce-warranty-64_256x256_crop_center.png?v=1677604692" alt="">
                       <span>Lifetime Warranty</span>
                   </div>
-              </div>   
+              </div>    {% endcomment %}
               <div class="product-template-new__info">
                   <img class="product-template-new__info--svg" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-light-on-100_256x256_crop_center.png?v=1677605481" alt="">
                   <div>
@@ -144,6 +153,16 @@
     </div>
   </div>
 </section>
+<div class="atc-fixed">
+    <div class="atc-fixed__container">
+        <div class="buds-product__inner--content__subtitle">
+                    TITAN POWER CABLE
+        </div>
+        <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+                ORDER NOW ☝
+        </button>
+    </div>
+</div>
 {% schema %}
 {
   "name": "Product Template",
@@ -421,4 +440,4 @@ window.mainImages = {
    "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224"
 }
 </script>
-{{ 'overridepack.js' | asset_url | script_tag }}
+{{ 'overridepacklight.js' | asset_url | script_tag }}

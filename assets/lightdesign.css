@@ -1,5 +1,5 @@
 .titan-bg-black {
-    background-color: #E4EAEA;
+    background-color: #E4EAEA !important;
 }
 .product-template-new {
     padding: 40px 1.28%;
@@ -474,4 +474,23 @@
     .atc-fixed__container {
         padding: 10px 36px;
     }
+}
+.product-template__info p, .product-template-new__info p {
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.faq {
+    background-color: #d6e1e1 !important;
+}
+.faq .product-image__title {
+    color: #393939!important;
+}
+.faq .accordion h4, .faq .accordion p {
+    color: #393939!important;
+}
+.faq .accordion {
+    border-bottom: 2px solid black;
+}
+.faq {
+    padding: 80px 20px 80px !important;
 }

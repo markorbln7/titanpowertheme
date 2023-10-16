@@ -9,29 +9,24 @@
   margin: 0;
 }
 
-.totals > h3 {
+.totals > h2 {
   font-size: calc(var(--font-heading-scale) * 1.6rem);
-  margin-left: -50px;
-  display: flex;
-  align-self: flex-start;
-  min-width: fit-content;
 }
 
 .totals * {
   line-height: 1;
-  color: white;
 }
 
 .totals > * + * {
   margin-left: 2rem;
 }
 
-.totals__subtotal-value {
-  font-size: 1.8rem;
-  text-align-last: end;
+.totals__total {
+  margin-top: .5rem;
+}
 
-  line-height: 2;
-  margin-bottom: 20px !important;
+.totals__total-value {
+  font-size: 1.8rem;
 }
 
 .cart__ctas + .totals {

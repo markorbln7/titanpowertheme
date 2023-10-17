@@ -83,6 +83,31 @@
         "padding_bottom": 0
       }
     },
+    "459b0cab-7c8e-40c7-b786-6ba18d5c1404": {
+      "type": "home-product-block",
+      "blocks": {
+        "0dcf3521-7cae-4c15-a2cf-45f8c0acc492": {
+          "type": "product",
+          "settings": {
+            "product": "pd-cable-45-plug"
+          }
+        },
+        "1ee62681-a752-44d1-abda-6167b68d9a13": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "0dcf3521-7cae-4c15-a2cf-45f8c0acc492",
+        "1ee62681-a752-44d1-abda-6167b68d9a13"
+      ],
+      "settings": {
+        "url": "",
+        "title": "OUR <span>BEST SELLING<\/span> OFFER"
+      }
+    },
     "d04f181b-262a-41b4-9edc-a53b7131bc03": {
       "type": "featured-collection-single-product",
       "blocks": {
@@ -373,7 +398,7 @@
         "d74d5f2f-a3a1-4729-bd35-f1e7d768097c"
       ],
       "custom_css": [
-        "h2 {color: black !important;}"
+        "h2,.h2 {color: red !important;}"
       ],
       "settings": {
         "bg": "#141414",
@@ -656,6 +681,7 @@
   "order": [
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
     "image-with-text",
+    "459b0cab-7c8e-40c7-b786-6ba18d5c1404",
     "d04f181b-262a-41b4-9edc-a53b7131bc03",
     "featured-collection",
     "16454291024c32671a",

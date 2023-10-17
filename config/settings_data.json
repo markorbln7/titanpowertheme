@@ -1,11 +1,419 @@
 {
-    "current": {
-      "logo": "shopify:\/\/shop_images\/titan_power_logo2.png",
-      "logo_width": 300,
-      "favicon": "shopify:\/\/shop_images\/Titan_Power_Logo_square_black_a0edef9d-0409-477c-9224-d94f64ce5acd.jpg",
-      "type_header_font": "raleway_n9",
+  "current": {
+    "logo": "shopify:\/\/shop_images\/titan_power_logo2.png",
+    "logo_width": 300,
+    "favicon": "shopify:\/\/shop_images\/Titan_Power_Logo_square_black_a0edef9d-0409-477c-9224-d94f64ce5acd.jpg",
+    "type_header_font": "raleway_n9",
+    "heading_scale": 130,
+    "type_body_font": "work_sans_n4",
+    "body_scale": 100,
+    "page_width": 1200,
+    "spacing_sections": 36,
+    "spacing_grid_horizontal": 40,
+    "spacing_grid_vertical": 40,
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "none",
+    "buttons_border_thickness": 1,
+    "buttons_border_opacity": 15,
+    "buttons_radius": 16,
+    "buttons_shadow_opacity": 0,
+    "buttons_shadow_horizontal_offset": 0,
+    "buttons_shadow_vertical_offset": 0,
+    "buttons_shadow_blur": 5,
+    "variant_pills_border_thickness": 0,
+    "variant_pills_border_opacity": 55,
+    "variant_pills_radius": 16,
+    "variant_pills_shadow_opacity": 0,
+    "variant_pills_shadow_horizontal_offset": 0,
+    "variant_pills_shadow_vertical_offset": 4,
+    "variant_pills_shadow_blur": 5,
+    "inputs_border_thickness": 1,
+    "inputs_border_opacity": 55,
+    "inputs_radius": 20,
+    "inputs_shadow_opacity": 0,
+    "inputs_shadow_horizontal_offset": 0,
+    "inputs_shadow_vertical_offset": 4,
+    "inputs_shadow_blur": 5,
+    "card_style": "card",
+    "card_image_padding": 0,
+    "card_text_alignment": "center",
+    "card_color_scheme": "background-1",
+    "card_border_thickness": 0,
+    "card_border_opacity": 10,
+    "card_corner_radius": 12,
+    "card_shadow_opacity": 5,
+    "card_shadow_horizontal_offset": 10,
+    "card_shadow_vertical_offset": 10,
+    "card_shadow_blur": 35,
+    "collection_card_style": "card",
+    "collection_card_image_padding": 0,
+    "collection_card_text_alignment": "center",
+    "collection_card_color_scheme": "background-1",
+    "collection_card_border_thickness": 0,
+    "collection_card_border_opacity": 10,
+    "collection_card_corner_radius": 12,
+    "collection_card_shadow_opacity": 5,
+    "collection_card_shadow_horizontal_offset": 10,
+    "collection_card_shadow_vertical_offset": 10,
+    "collection_card_shadow_blur": 35,
+    "blog_card_style": "card",
+    "blog_card_image_padding": 0,
+    "blog_card_text_alignment": "center",
+    "blog_card_color_scheme": "background-1",
+    "blog_card_border_thickness": 0,
+    "blog_card_border_opacity": 10,
+    "blog_card_corner_radius": 12,
+    "blog_card_shadow_opacity": 5,
+    "blog_card_shadow_horizontal_offset": 10,
+    "blog_card_shadow_vertical_offset": 10,
+    "blog_card_shadow_blur": 35,
+    "text_boxes_border_thickness": 0,
+    "text_boxes_border_opacity": 10,
+    "text_boxes_radius": 24,
+    "text_boxes_shadow_opacity": 0,
+    "text_boxes_shadow_horizontal_offset": 10,
+    "text_boxes_shadow_vertical_offset": 12,
+    "text_boxes_shadow_blur": 20,
+    "media_border_thickness": 0,
+    "media_border_opacity": 10,
+    "media_radius": 12,
+    "media_shadow_opacity": 10,
+    "media_shadow_horizontal_offset": 10,
+    "media_shadow_vertical_offset": 12,
+    "media_shadow_blur": 20,
+    "popup_border_thickness": 1,
+    "popup_border_opacity": 10,
+    "popup_corner_radius": 22,
+    "popup_shadow_opacity": 10,
+    "popup_shadow_horizontal_offset": 10,
+    "popup_shadow_vertical_offset": 12,
+    "popup_shadow_blur": 20,
+    "drawer_border_thickness": 1,
+    "drawer_border_opacity": 10,
+    "drawer_shadow_opacity": 0,
+    "drawer_shadow_horizontal_offset": 0,
+    "drawer_shadow_vertical_offset": 4,
+    "drawer_shadow_blur": 5,
+    "badge_position": "bottom left",
+    "badge_corner_radius": 20,
+    "sale_badge_color_scheme": "accent-2",
+    "sold_out_badge_color_scheme": "inverse",
+    "brand_headline": "",
+    "brand_description": "<p><\/p>",
+    "brand_image_width": 100,
+    "social_facebook_link": "https:\/\/www.facebook.com\/titanpowerplus\/",
+    "social_instagram_link": "https:\/\/instagram.com\/titan.power.plus\/",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UCudlSPFdykPEWBI8czumOQg",
+    "social_tiktok_link": "",
+    "social_twitter_link": "",
+    "social_snapchat_link": "",
+    "social_pinterest_link": "",
+    "social_tumblr_link": "",
+    "social_vimeo_link": "",
+    "predictive_search_enabled": false,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": true,
+    "currency_code_enabled": false,
+    "cart_type": "drawer",
+    "show_vendor": false,
+    "show_cart_note": false,
+    "cart_drawer_collection": "",
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-image": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white.png",
+            "image_width": 200,
+            "alignment": "center"
+          }
+        },
+        "footer-text-0": {
+          "type": "text",
+          "settings": {
+            "heading": "",
+            "subtext": "<p><strong>With free tracked shipping on all orders,  24\/7 support and hassle free returns, you will LOVE shopping with us!<\/strong><\/p>",
+            "text_color": "#60c655"
+          }
+        },
+        "footer-linklist": {
+          "type": "link_list",
+          "settings": {
+            "heading": "",
+            "menu": "footer"
+          }
+        },
+        "footer-text-1": {
+          "type": "text",
+          "settings": {
+            "heading": "",
+            "subtext": "<p><strong>e-mail: info@titanpowerplus.com<\/strong><\/p>",
+            "text_color": "#60c655"
+          }
+        }
+      },
+      "block_order": [
+        "footer-image",
+        "footer-text-0",
+        "footer-linklist",
+        "footer-text-1"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "copyright_text": "",
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": true,
+        "margin_top": 44,
+        "padding_top": 60,
+        "padding_bottom": 52
+      }
+    },
+    "sections": {
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+          "color_scheme": "background-1"
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+          "color_scheme": "background-1"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "91964de9-e398-45ee-bc2b-5ce257d9f3a9": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/titan_power_logo2.png",
+              "image_width": 300,
+              "alignment": "center"
+            }
+          },
+          "a9733e25-40c5-463b-90ac-9d54dbf3d049": {
+            "type": "text",
+            "settings": {
+              "heading": "",
+              "subtext": "<p><strong>With free tracked shipping on all orders,  24\/7 support and hassle free returns, you will LOVE shopping with us!<\/strong><\/p>"
+            }
+          },
+          "1dbd2317-f97b-4de5-824a-8d1ca9d85167": {
+            "type": "link_list",
+            "settings": {
+              "heading": "",
+              "menu": "footer"
+            }
+          },
+          "8145ba08-c4a5-4b67-8ec8-fe56fd513f03": {
+            "type": "text",
+            "settings": {
+              "heading": "",
+              "subtext": "<p><strong>e-mail: info@titanpowerplus.com<\/strong><\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "91964de9-e398-45ee-bc2b-5ce257d9f3a9",
+          "a9733e25-40c5-463b-90ac-9d54dbf3d049",
+          "1dbd2317-f97b-4de5-824a-8d1ca9d85167",
+          "8145ba08-c4a5-4b67-8ec8-fe56fd513f03"
+        ],
+        "settings": {
+          "color_scheme": "",
+          "newsletter_enable": false,
+          "newsletter_heading": "Subscribe to our emails",
+          "enable_follow_on_shop": false,
+          "show_social": true,
+          "enable_country_selector": true,
+          "enable_language_selector": true,
+          "payment_enable": true,
+          "show_policy": false,
+          "margin_top": 0,
+          "padding_top": 60,
+          "padding_bottom": 52
+        }
+      }
+    },
+    "content_for_index": [
+
+    ],
+    "blocks": {
+      "6610233760104865948": {
+        "type": "shopify:\/\/apps\/pushowl\/blocks\/pushowl-app-embed-3d2ff2b5\/fa20c3ba-38bf-43e0-ba5c-431f6ae07d95",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "3667842014806057753": {
+        "type": "shopify:\/\/apps\/one-click-upsell-zipify-ocu\/blocks\/app-embed\/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "11532412952436166569": {
+        "type": "shopify:\/\/apps\/loox-product-reviews-photos\/blocks\/loox-inject\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "14327677521557774844": {
+        "type": "shopify:\/\/apps\/simprosys-google-shopping-feed\/blocks\/core_settings_block\/1f0b859e-9fa6-4007-97e8-4513aff5ff3b",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "12744183809741338556": {
+        "type": "shopify:\/\/apps\/simprosys-google-shopping-feed\/blocks\/gcr_block\/1f0b859e-9fa6-4007-97e8-4513aff5ff3b",
+        "disabled": true,
+        "settings": {
+        }
+      }
+    },
+    "color_schemes": {
+      "background-1": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(228, 234, 234, 1) 98%)",
+          "text": "#2e2a39",
+          "button": "#60c655",
+          "button_label": "#fdfbf7",
+          "secondary_button_label": "#60c655",
+          "shadow": "#2e2a39"
+        }
+      },
+      "background-2": {
+        "settings": {
+          "background": "#e4eaea",
+          "background_gradient": "radial-gradient(rgba(228, 234, 234, 1), rgba(255, 255, 255, 1) 25%, rgba(214, 225, 225, 1) 100%)",
+          "text": "#212121",
+          "button": "#60c655",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#2e2a39",
+          "shadow": "#2e2a39"
+        }
+      },
+      "inverse": {
+        "settings": {
+          "background": "#2e2a39",
+          "background_gradient": "",
+          "text": "#fdfbf7",
+          "button": "#fdfbf7",
+          "button_label": "#2e2a39",
+          "secondary_button_label": "#fdfbf7",
+          "shadow": "#2e2a39"
+        }
+      },
+      "accent-1": {
+        "settings": {
+          "background": "#000000",
+          "background_gradient": "",
+          "text": "#fdfbf7",
+          "button": "#fdfbf7",
+          "button_label": "#60c655",
+          "secondary_button_label": "#fdfbf7",
+          "shadow": "#2e2a39"
+        }
+      },
+      "accent-2": {
+        "settings": {
+          "background": "#60c655",
+          "background_gradient": "linear-gradient(320deg, rgba(96, 198, 85, 1), rgba(0, 0, 0, 1) 100%)",
+          "text": "#000000",
+          "button": "#60c655",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#fdfbf7",
+          "shadow": "#2e2a39"
+        }
+      },
+      "scheme-5061e01e-2a17-4232-a41e-6d666d2e8273": {
+        "settings": {
+          "background": "#60c655",
+          "background_gradient": "linear-gradient(180deg, rgba(228, 234, 234, 1), rgba(228, 234, 234, 1) 98%)",
+          "text": "#2e2a39",
+          "button": "#212121",
+          "button_label": "#fdfbf7",
+          "secondary_button_label": "#2e2a39",
+          "shadow": "#2e2a39"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "logo_width": 70,
+      "color_schemes": {
+        "background-1": {
+          "settings": {
+            "background": "#FDFBF7",
+            "background_gradient": "linear-gradient(180deg, rgba(240, 244, 236, 1), rgba(241, 235, 226, 1) 100%)",
+            "text": "#2E2A39",
+            "button": "#9B046F",
+            "button_label": "#FDFBF7",
+            "secondary_button_label": "#2E2A39",
+            "shadow": "#2E2A39"
+          }
+        },
+        "background-2": {
+          "settings": {
+            "background": "#EDFFA7",
+            "background_gradient": "radial-gradient(rgba(255, 229, 229, 1), rgba(255, 224, 218, 1) 25%, rgba(215, 255, 137, 1) 100%)",
+            "text": "#2E2A39",
+            "button": "#2E2A39",
+            "button_label": "#EDFFA7",
+            "secondary_button_label": "#2E2A39",
+            "shadow": "#2E2A39"
+          }
+        },
+        "inverse": {
+          "settings": {
+            "background": "#2E2A39",
+            "background_gradient": "",
+            "text": "#FDFBF7",
+            "button": "#FDFBF7",
+            "button_label": "#2E2A39",
+            "secondary_button_label": "#FDFBF7",
+            "shadow": "#2E2A39"
+          }
+        },
+        "accent-1": {
+          "settings": {
+            "background": "#9B046F",
+            "background_gradient": "",
+            "text": "#FDFBF7",
+            "button": "#FDFBF7",
+            "button_label": "#9B046F",
+            "secondary_button_label": "#FDFBF7",
+            "shadow": "#2E2A39"
+          }
+        },
+        "accent-2": {
+          "settings": {
+            "background": "#5E3653",
+            "background_gradient": "linear-gradient(320deg, rgba(134, 16, 106, 1), rgba(94, 54, 83, 1) 100%)",
+            "text": "#FDFBF7",
+            "button": "#FDFBF7",
+            "button_label": "#5E3653",
+            "secondary_button_label": "#FDFBF7",
+            "shadow": "#2E2A39"
+          }
+        }
+      },
+      "type_header_font": "harmonia_sans_n6",
       "heading_scale": 130,
-      "type_body_font": "work_sans_n4",
+      "type_body_font": "harmonia_sans_n4",
       "body_scale": 100,
       "page_width": 1200,
       "spacing_sections": 36,
@@ -14,22 +422,22 @@
       "animations_reveal_on_scroll": true,
       "animations_hover_elements": "none",
       "buttons_border_thickness": 1,
-      "buttons_border_opacity": 15,
-      "buttons_radius": 16,
+      "buttons_border_opacity": 55,
+      "buttons_radius": 10,
       "buttons_shadow_opacity": 0,
       "buttons_shadow_horizontal_offset": 0,
-      "buttons_shadow_vertical_offset": 0,
+      "buttons_shadow_vertical_offset": 4,
       "buttons_shadow_blur": 5,
       "variant_pills_border_thickness": 0,
-      "variant_pills_border_opacity": 55,
-      "variant_pills_radius": 16,
+      "variant_pills_border_opacity": 10,
+      "variant_pills_radius": 10,
       "variant_pills_shadow_opacity": 0,
       "variant_pills_shadow_horizontal_offset": 0,
       "variant_pills_shadow_vertical_offset": 4,
       "variant_pills_shadow_blur": 5,
       "inputs_border_thickness": 1,
       "inputs_border_opacity": 55,
-      "inputs_radius": 20,
+      "inputs_radius": 10,
       "inputs_shadow_opacity": 0,
       "inputs_shadow_horizontal_offset": 0,
       "inputs_shadow_vertical_offset": 4,
@@ -100,79 +508,24 @@
       "sold_out_badge_color_scheme": "inverse",
       "brand_headline": "",
       "brand_description": "<p><\/p>",
-      "brand_image_width": 100,
-      "social_facebook_link": "https:\/\/www.facebook.com\/titanpowerplus\/",
-      "social_instagram_link": "https:\/\/instagram.com\/titan.power.plus\/",
-      "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UCudlSPFdykPEWBI8czumOQg",
-      "social_tiktok_link": "",
+      "brand_image_width": "100",
       "social_twitter_link": "",
-      "social_snapchat_link": "",
+      "social_facebook_link": "",
       "social_pinterest_link": "",
+      "social_instagram_link": "",
+      "social_tiktok_link": "",
       "social_tumblr_link": "",
+      "social_snapchat_link": "",
+      "social_youtube_link": "",
       "social_vimeo_link": "",
-      "predictive_search_enabled": false,
+      "predictive_search_enabled": true,
       "predictive_search_show_vendor": false,
       "predictive_search_show_price": true,
-      "currency_code_enabled": false,
-      "cart_type": "drawer",
+      "currency_code_enabled": true,
+      "cart_type": "notification",
       "show_vendor": false,
-      "show_cart_note": false,
+      "show_cart_note": true,
       "cart_drawer_collection": "",
-      "footer": {
-        "type": "footer",
-        "blocks": {
-          "footer-image": {
-            "type": "image",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white.png",
-              "image_width": 200,
-              "alignment": "center"
-            }
-          },
-          "footer-text-0": {
-            "type": "text",
-            "settings": {
-              "heading": "",
-              "subtext": "<p><strong>With free tracked shipping on all orders,  24\/7 support and hassle free returns, you will LOVE shopping with us!<\/strong><\/p>",
-              "text_color": "#60c655"
-            }
-          },
-          "footer-linklist": {
-            "type": "link_list",
-            "settings": {
-              "heading": "",
-              "menu": "footer"
-            }
-          },
-          "footer-text-1": {
-            "type": "text",
-            "settings": {
-              "heading": "",
-              "subtext": "<p><strong>e-mail: info@titanpowerplus.com<\/strong><\/p>",
-              "text_color": "#60c655"
-            }
-          }
-        },
-        "block_order": [
-          "footer-image",
-          "footer-text-0",
-          "footer-linklist",
-          "footer-text-1"
-        ],
-        "settings": {
-          "color_scheme": "background-1",
-          "copyright_text": "",
-          "newsletter_enable": false,
-          "newsletter_heading": "Subscribe to our emails",
-          "show_social": true,
-          "enable_country_selector": false,
-          "enable_language_selector": false,
-          "payment_enable": true,
-          "margin_top": 44,
-          "padding_top": 60,
-          "padding_bottom": 52
-        }
-      },
       "sections": {
         "main-password-header": {
           "type": "main-password-header",
@@ -185,361 +538,8 @@
           "settings": {
             "color_scheme": "background-1"
           }
-        },
-        "footer": {
-          "type": "footer",
-          "blocks": {
-            "91964de9-e398-45ee-bc2b-5ce257d9f3a9": {
-              "type": "image",
-              "settings": {
-                "image": "shopify:\/\/shop_images\/titan_power_logo2.png",
-                "image_width": 300,
-                "alignment": "center"
-              }
-            },
-            "a9733e25-40c5-463b-90ac-9d54dbf3d049": {
-              "type": "text",
-              "settings": {
-                "heading": "",
-                "subtext": "<p><strong>With free tracked shipping on all orders,  24\/7 support and hassle free returns, you will LOVE shopping with us!<\/strong><\/p>"
-              }
-            },
-            "1dbd2317-f97b-4de5-824a-8d1ca9d85167": {
-              "type": "link_list",
-              "settings": {
-                "heading": "",
-                "menu": "footer"
-              }
-            },
-            "8145ba08-c4a5-4b67-8ec8-fe56fd513f03": {
-              "type": "text",
-              "settings": {
-                "heading": "",
-                "subtext": "<p><strong>e-mail: info@titanpowerplus.com<\/strong><\/p>"
-              }
-            }
-          },
-          "block_order": [
-            "91964de9-e398-45ee-bc2b-5ce257d9f3a9",
-            "a9733e25-40c5-463b-90ac-9d54dbf3d049",
-            "1dbd2317-f97b-4de5-824a-8d1ca9d85167",
-            "8145ba08-c4a5-4b67-8ec8-fe56fd513f03"
-          ],
-          "settings": {
-            "color_scheme": "",
-            "newsletter_enable": false,
-            "newsletter_heading": "Subscribe to our emails",
-            "enable_follow_on_shop": false,
-            "show_social": true,
-            "enable_country_selector": true,
-            "enable_language_selector": true,
-            "payment_enable": true,
-            "show_policy": false,
-            "margin_top": 0,
-            "padding_top": 60,
-            "padding_bottom": 52
-          }
-        }
-      },
-      "content_for_index": [
-  
-      ],
-      "blocks": {
-        "6610233760104865948": {
-          "type": "shopify:\/\/apps\/pushowl\/blocks\/pushowl-app-embed-3d2ff2b5\/fa20c3ba-38bf-43e0-ba5c-431f6ae07d95",
-          "disabled": false,
-          "settings": {
-          }
-        },
-        "3667842014806057753": {
-          "type": "shopify:\/\/apps\/one-click-upsell-zipify-ocu\/blocks\/app-embed\/bfe6e378-b73a-4871-b8d3-7d6ede22678e",
-          "disabled": false,
-          "settings": {
-          }
-        },
-        "855628211100114053": {
-          "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
-          "disabled": false,
-          "settings": {
-          }
-        },
-        "11532412952436166569": {
-          "type": "shopify:\/\/apps\/loox-product-reviews-photos\/blocks\/loox-inject\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": false,
-          "settings": {
-          }
-        },
-        "14327677521557774844": {
-          "type": "shopify:\/\/apps\/simprosys-google-shopping-feed\/blocks\/core_settings_block\/1f0b859e-9fa6-4007-97e8-4513aff5ff3b",
-          "disabled": true,
-          "settings": {
-          }
-        },
-        "12744183809741338556": {
-          "type": "shopify:\/\/apps\/simprosys-google-shopping-feed\/blocks\/gcr_block\/1f0b859e-9fa6-4007-97e8-4513aff5ff3b",
-          "disabled": true,
-          "settings": {
-          }
-        }
-      },
-      "color_schemes": {
-        "background-1": {
-          "settings": {
-            "background": "#ffffff",
-            "background_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(228, 234, 234, 1) 98%)",
-            "text": "#2e2a39",
-            "button": "#60c655",
-            "button_label": "#fdfbf7",
-            "secondary_button_label": "#60c655",
-            "shadow": "#2e2a39"
-          }
-        },
-        "background-2": {
-          "settings": {
-            "background": "#e4eaea",
-            "background_gradient": "radial-gradient(rgba(228, 234, 234, 1), rgba(255, 255, 255, 1) 25%, rgba(214, 225, 225, 1) 100%)",
-            "text": "#212121",
-            "button": "#60c655",
-            "button_label": "#ffffff",
-            "secondary_button_label": "#2e2a39",
-            "shadow": "#2e2a39"
-          }
-        },
-        "inverse": {
-          "settings": {
-            "background": "#2e2a39",
-            "background_gradient": "",
-            "text": "#fdfbf7",
-            "button": "#fdfbf7",
-            "button_label": "#2e2a39",
-            "secondary_button_label": "#fdfbf7",
-            "shadow": "#2e2a39"
-          }
-        },
-        "accent-1": {
-          "settings": {
-            "background": "#000000",
-            "background_gradient": "",
-            "text": "#fdfbf7",
-            "button": "#fdfbf7",
-            "button_label": "#60c655",
-            "secondary_button_label": "#fdfbf7",
-            "shadow": "#2e2a39"
-          }
-        },
-        "accent-2": {
-          "settings": {
-            "background": "#60c655",
-            "background_gradient": "linear-gradient(320deg, rgba(96, 198, 85, 1), rgba(0, 0, 0, 1) 100%)",
-            "text": "#000000",
-            "button": "#60c655",
-            "button_label": "#ffffff",
-            "secondary_button_label": "#fdfbf7",
-            "shadow": "#2e2a39"
-          }
-        },
-        "scheme-5061e01e-2a17-4232-a41e-6d666d2e8273": {
-          "settings": {
-            "background": "#60c655",
-            "background_gradient": "linear-gradient(180deg, rgba(228, 234, 234, 1), rgba(228, 234, 234, 1) 98%)",
-            "text": "#2e2a39",
-            "button": "#212121",
-            "button_label": "#fdfbf7",
-            "secondary_button_label": "#2e2a39",
-            "shadow": "#2e2a39"
-          }
-        }
-      }
-    },
-    "presets": {
-      "Default": {
-        "logo_width": 70,
-        "color_schemes": {
-          "background-1": {
-            "settings": {
-              "background": "#FDFBF7",
-              "background_gradient": "linear-gradient(180deg, rgba(240, 244, 236, 1), rgba(241, 235, 226, 1) 100%)",
-              "text": "#2E2A39",
-              "button": "#9B046F",
-              "button_label": "#FDFBF7",
-              "secondary_button_label": "#2E2A39",
-              "shadow": "#2E2A39"
-            }
-          },
-          "background-2": {
-            "settings": {
-              "background": "#EDFFA7",
-              "background_gradient": "radial-gradient(rgba(255, 229, 229, 1), rgba(255, 224, 218, 1) 25%, rgba(215, 255, 137, 1) 100%)",
-              "text": "#2E2A39",
-              "button": "#2E2A39",
-              "button_label": "#EDFFA7",
-              "secondary_button_label": "#2E2A39",
-              "shadow": "#2E2A39"
-            }
-          },
-          "inverse": {
-            "settings": {
-              "background": "#2E2A39",
-              "background_gradient": "",
-              "text": "#FDFBF7",
-              "button": "#FDFBF7",
-              "button_label": "#2E2A39",
-              "secondary_button_label": "#FDFBF7",
-              "shadow": "#2E2A39"
-            }
-          },
-          "accent-1": {
-            "settings": {
-              "background": "#9B046F",
-              "background_gradient": "",
-              "text": "#FDFBF7",
-              "button": "#FDFBF7",
-              "button_label": "#9B046F",
-              "secondary_button_label": "#FDFBF7",
-              "shadow": "#2E2A39"
-            }
-          },
-          "accent-2": {
-            "settings": {
-              "background": "#5E3653",
-              "background_gradient": "linear-gradient(320deg, rgba(134, 16, 106, 1), rgba(94, 54, 83, 1) 100%)",
-              "text": "#FDFBF7",
-              "button": "#FDFBF7",
-              "button_label": "#5E3653",
-              "secondary_button_label": "#FDFBF7",
-              "shadow": "#2E2A39"
-            }
-          }
-        },
-        "type_header_font": "harmonia_sans_n6",
-        "heading_scale": 130,
-        "type_body_font": "harmonia_sans_n4",
-        "body_scale": 100,
-        "page_width": 1200,
-        "spacing_sections": 36,
-        "spacing_grid_horizontal": 40,
-        "spacing_grid_vertical": 40,
-        "animations_reveal_on_scroll": true,
-        "animations_hover_elements": "none",
-        "buttons_border_thickness": 1,
-        "buttons_border_opacity": 55,
-        "buttons_radius": 10,
-        "buttons_shadow_opacity": 0,
-        "buttons_shadow_horizontal_offset": 0,
-        "buttons_shadow_vertical_offset": 4,
-        "buttons_shadow_blur": 5,
-        "variant_pills_border_thickness": 0,
-        "variant_pills_border_opacity": 10,
-        "variant_pills_radius": 10,
-        "variant_pills_shadow_opacity": 0,
-        "variant_pills_shadow_horizontal_offset": 0,
-        "variant_pills_shadow_vertical_offset": 4,
-        "variant_pills_shadow_blur": 5,
-        "inputs_border_thickness": 1,
-        "inputs_border_opacity": 55,
-        "inputs_radius": 10,
-        "inputs_shadow_opacity": 0,
-        "inputs_shadow_horizontal_offset": 0,
-        "inputs_shadow_vertical_offset": 4,
-        "inputs_shadow_blur": 5,
-        "card_style": "card",
-        "card_image_padding": 0,
-        "card_text_alignment": "center",
-        "card_color_scheme": "background-1",
-        "card_border_thickness": 0,
-        "card_border_opacity": 10,
-        "card_corner_radius": 12,
-        "card_shadow_opacity": 5,
-        "card_shadow_horizontal_offset": 10,
-        "card_shadow_vertical_offset": 10,
-        "card_shadow_blur": 35,
-        "collection_card_style": "card",
-        "collection_card_image_padding": 0,
-        "collection_card_text_alignment": "center",
-        "collection_card_color_scheme": "background-1",
-        "collection_card_border_thickness": 0,
-        "collection_card_border_opacity": 10,
-        "collection_card_corner_radius": 12,
-        "collection_card_shadow_opacity": 5,
-        "collection_card_shadow_horizontal_offset": 10,
-        "collection_card_shadow_vertical_offset": 10,
-        "collection_card_shadow_blur": 35,
-        "blog_card_style": "card",
-        "blog_card_image_padding": 0,
-        "blog_card_text_alignment": "center",
-        "blog_card_color_scheme": "background-1",
-        "blog_card_border_thickness": 0,
-        "blog_card_border_opacity": 10,
-        "blog_card_corner_radius": 12,
-        "blog_card_shadow_opacity": 5,
-        "blog_card_shadow_horizontal_offset": 10,
-        "blog_card_shadow_vertical_offset": 10,
-        "blog_card_shadow_blur": 35,
-        "text_boxes_border_thickness": 0,
-        "text_boxes_border_opacity": 10,
-        "text_boxes_radius": 24,
-        "text_boxes_shadow_opacity": 0,
-        "text_boxes_shadow_horizontal_offset": 10,
-        "text_boxes_shadow_vertical_offset": 12,
-        "text_boxes_shadow_blur": 20,
-        "media_border_thickness": 0,
-        "media_border_opacity": 10,
-        "media_radius": 12,
-        "media_shadow_opacity": 10,
-        "media_shadow_horizontal_offset": 10,
-        "media_shadow_vertical_offset": 12,
-        "media_shadow_blur": 20,
-        "popup_border_thickness": 1,
-        "popup_border_opacity": 10,
-        "popup_corner_radius": 22,
-        "popup_shadow_opacity": 10,
-        "popup_shadow_horizontal_offset": 10,
-        "popup_shadow_vertical_offset": 12,
-        "popup_shadow_blur": 20,
-        "drawer_border_thickness": 1,
-        "drawer_border_opacity": 10,
-        "drawer_shadow_opacity": 0,
-        "drawer_shadow_horizontal_offset": 0,
-        "drawer_shadow_vertical_offset": 4,
-        "drawer_shadow_blur": 5,
-        "badge_position": "bottom left",
-        "badge_corner_radius": 20,
-        "sale_badge_color_scheme": "accent-2",
-        "sold_out_badge_color_scheme": "inverse",
-        "brand_headline": "",
-        "brand_description": "<p><\/p>",
-        "brand_image_width": "100",
-        "social_twitter_link": "",
-        "social_facebook_link": "",
-        "social_pinterest_link": "",
-        "social_instagram_link": "",
-        "social_tiktok_link": "",
-        "social_tumblr_link": "",
-        "social_snapchat_link": "",
-        "social_youtube_link": "",
-        "social_vimeo_link": "",
-        "predictive_search_enabled": true,
-        "predictive_search_show_vendor": false,
-        "predictive_search_show_price": true,
-        "currency_code_enabled": true,
-        "cart_type": "notification",
-        "show_vendor": false,
-        "show_cart_note": true,
-        "cart_drawer_collection": "",
-        "sections": {
-          "main-password-header": {
-            "type": "main-password-header",
-            "settings": {
-              "color_scheme": "background-1"
-            }
-          },
-          "main-password-footer": {
-            "type": "main-password-footer",
-            "settings": {
-              "color_scheme": "background-1"
-            }
-          }
         }
       }
     }
   }
+}

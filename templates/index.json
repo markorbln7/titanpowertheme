@@ -1,5 +1,49 @@
 {
   "sections": {
+    "e44672f0-bbb4-4c1d-be4e-80894b17dccc": {
+      "type": "image-with-text-slider",
+      "blocks": {
+        "8e764b0d-a952-468b-9d7e-ecdea02d86eb": {
+          "type": "button",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Main_Product_Image_-_TITAN_SMART_CABLE.jpg",
+            "heading": "SHOP TITAN RANGE",
+            "heading_size": "h1",
+            "button_label": "Shop now",
+            "button_link": "shopify:\/\/products\/pd-cable-45-plug",
+            "button_style_secondary": false
+          }
+        },
+        "5dae27fb-0194-4c39-8886-6099650db44c": {
+          "type": "button",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Titan_Power_Logo_square_black_a0edef9d-0409-477c-9224-d94f64ce5acd.jpg",
+            "heading": "Image with text",
+            "heading_size": "h1",
+            "button_label": "Button label",
+            "button_link": "shopify:\/\/pages\/black-friday-bundles",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "8e764b0d-a952-468b-9d7e-ecdea02d86eb",
+        "5dae27fb-0194-4c39-8886-6099650db44c"
+      ],
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "large",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "overlap",
+        "color_scheme": "background-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -23,6 +67,7 @@
         "heading",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify:\/\/shop_images\/Main_Product_Image_-_TITAN_SMART_CABLE.jpg",
         "height": "large",
@@ -606,6 +651,7 @@
     }
   },
   "order": [
+    "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
     "image-with-text",
     "d04f181b-262a-41b4-9edc-a53b7131bc03",
     "featured-collection",

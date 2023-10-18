@@ -26,11 +26,11 @@
     }
     &__list {
         max-width: 1440px;
-        padding:0px 15px;
+        padding:0px 15px !important;
         margin: 0 auto;
         display: flex;
         gap:30px;
-        flex-wrap: wrap;
+        overflow: hidden;
     }
 }
 .product__list--single {

@@ -24,7 +24,9 @@
 .hidden {
   display: none;
 }
-
+.d-block {
+  display: block;
+}
 /* Visually hidden but read by screen readers */
 .sr-only {
   display: block;
@@ -32,6 +34,13 @@
   overflow: hidden;
   text-indent: -9999px;
   width: 0;
+}
+
+.mw-1000 {
+  max-width: 1000px;
+}
+.m-auto {
+  margin: 0 auto;
 }
 
 .icon,

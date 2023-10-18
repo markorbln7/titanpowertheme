@@ -1,5 +1,6 @@
 {{ 'section-home-product-block.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-product-block.js' | asset_url | script_tag }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 {% if section.settings.desktop_image %}
   <a href="{{section.settings.url}}" class="hero">
       <div class="hero_image desktop hd">
@@ -10,29 +11,75 @@
       </div>
   </a>
 {% endif %}
-<div class="products">
-    <div class="products__title">{{section.settings.title}}</div>
-    <div class="products__list">
+<div class="products relative">
+  <div class="products__title">{{section.settings.title}}</div>
+  <div class="products__list swiper swiperProduct">
+      <div class="swiper-wrapper">
         {% for block in section.blocks%}
-            {% assign product = block.settings.product %}
-            <div class="product__list--single"> 
-                <div class="product__list--single--image">
-                    <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
-                </div>
-                <div class="product__list--single--title color-white">
-                    {{product.title}}
-                </div>    
-                <div class="product__list--single--price color-white">
-                    <span>{{product.compare_at_price | money }}</span> {{product.price | money}}
-                </div>  
-                <div data-product="{{product.first_available_variant.id}}" class="js-atc product__list--single--atc">
-                    +ADD TO CART
-                </div>
-            </div>
+        {% assign product = block.settings.product %}
+          <div class="product__list--single swiper-slide"> 
+              <a href="{{product.url}}" class="product__list--single--image d-block">
+                  <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
+              </a>
+              <div class="product__list--single--title color-white">
+                  {{product.title}}
+              </div>    
+              <div class="product__list--single--price color-white">
+                  <span>{{product.compare_at_price | money }}</span> {{product.price | money}}
+              </div>  
+              <div data-product="{{product.first_available_variant.id}}" class="js-atc product__list--single--atc">
+                  +ADD TO CART
+              </div>
+          </div>
         {% endfor%}
-    </div>
+      </div>
+      <div class="swiper-button-next swiper-button-next-product"></div>
+      <div class="swiper-button-prev swiper-button-prev-product"></div>
+  </div>
 </div>
 
+<script>
+const swiperProduct = new Swiper('.swiperProduct', {
+    slidesPerView: 1,
+    spaceBetween:10,
+    loop: true,
+    navigation: {
+        nextEl: ".swiper-button-next-product",
+        prevEl: ".swiper-button-prev-product",
+    },
+    breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 30,
+        },
+    },
+});
+</script>
+<style>
+.swiper-button-next-product, .swiper-button-prev-product {
+    display:block !important;
+    top:40% !important;
+
+}
+.swiper-button-next-product {
+    right:15px !important;
+}
+.swiper-button-prev-product {
+    left:20px !important;
+}
+.swiper-button-prev-product:after, .swiper-button-next-product:after {
+  color:black !important;
+  opacity:.5 !important;
+}
+</style>
 
 
 {% schema %}

@@ -16,7 +16,7 @@
 {%- endstyle -%}
 
 {% assign scheme1 = settings.color_schemes | first %}
-<div class="swiper">
+<div class="swiper swiper-image">
 <div class="swiper-wrapper">
 {%- for block in section.blocks -%}
 <div class="swiper-slide">
@@ -87,7 +87,7 @@
  <div class="swiper-pagination swiper-pagination-image"></div>
 </div>
 <script>
-const swiper = new Swiper('.swiper', {
+const swiperImage = new Swiper('.swiper-image', {
     slidesPerView: 1,
     pagination: {
           el: ".swiper-pagination-image",

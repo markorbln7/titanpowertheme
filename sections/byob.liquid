@@ -610,7 +610,7 @@ optionNames.forEach((optionName) => {
         document.querySelector('body').classList.toggle('no-scroll');
     })
 }) 
-stickyElem = document.querySelector(".sticky-div");
+{% comment %} stickyElem = document.querySelector(".sticky-div");
 currStickyPos = stickyElem.getBoundingClientRect().top + window.pageYOffset;
 let panel = document.querySelector('.header-wrapper')
 var lastScrollTop = 0;
@@ -619,7 +619,7 @@ var lastScrollTop = 0;
         if (st > lastScrollTop){
             if(window.pageYOffset > currStickyPos) {
                 stickyElem.style.position = "fixed";
-                stickyElem.style.top = panel.scrollHeight + 'px';
+                stickyElem.style.top = 0 + 'px';
                 stickyElem.classList.add('sticky');
             } else {
                 stickyElem.style.position = "relative";
@@ -629,7 +629,7 @@ var lastScrollTop = 0;
         } else {
             if(window.pageYOffset > currStickyPos) {
                 stickyElem.style.position = "fixed";
-                stickyElem.style.top = panel.scrollHeight + 'px';
+                stickyElem.style.top = 0 + 'px';
                 stickyElem.classList.add('sticky');
             } else {
                 stickyElem.style.position = "relative";
@@ -638,7 +638,7 @@ var lastScrollTop = 0;
             }
         }
         lastScrollTop = st;
-    });
+    }); {% endcomment %}
 console.log($('.hero_image'), 'hero_image')
 $('.hero_image').on('click', function (e) {
   e.preventDefault()
@@ -647,6 +647,19 @@ $('.hero_image').on('click', function (e) {
   $('html, body').animate({
     scrollTop: $section.offset().top + 'px'
   }, 1000)
+})
+
+const distance = $('.sticky-div').offset().top
+$(window).scroll(function () {
+  const top_of_element = $('#shopify-section-footer').offset().top
+  const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+  const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+  const top_of_screen = $(window).scrollTop()
+  if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+    $('.sticky-div').addClass('lightsticky')
+  } else {
+    $('.sticky-div').removeClass('lightsticky')
+  }
 })
 
 

@@ -75,11 +75,15 @@
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 0 10px #B5B5B5;
+    /* &.selected {
+            border: 1.75px solid #35FF2E;
+            background: #000000;
+            box-shadow: 0 0 10px #35FF2E;
+        } */
 }
 .bundle-wrapper__product.selected {
     border: 1.75px solid #35FF2E;
-    background: #000000;
-    box-shadow: 0 0 10px #35FF2E;
+    background: #D6E1E1;
 }
 .bundle-wrapper__product--image img {
                 width:100%;
@@ -87,7 +91,7 @@
 .bundle-wrapper__product--title {
             font-family: 'Work Sans';
             font-weight: 600;
-            color: #EDEDED;
+            color: black;
             font-style: normal;
             line-height: 1.2;
             font-size: 16px;
@@ -100,6 +104,9 @@
         flex-direction: column;
         gap:15px;
 }
+.bundle-wrapper__footer .c-quantity__amount {
+            color:black;
+        }
 @media only screen and (max-width: 768px) {
     .bundle-wrapper__footer {
         flex-direction: column;
@@ -123,9 +130,9 @@
             color: #000000;
             font-style: normal;
             font-weight: 700;
-            background-color: #35FF2E;
+            background-color: #60c655;
             border-width: 1px;
-            border-color: #22FF05;
+            border-color: #60c655;
             width: 160px;
             max-width: 100%;
             margin: 0 auto;
@@ -141,6 +148,9 @@
         font-size:12px;
         padding-left: 16px;
     }
+}
+.js-price {
+    color:#60c655 !important;
 }
 @media only screen and (max-width: 768px) {
     .js-price {
@@ -334,6 +344,35 @@
             border-radius: 10px;
             border: none;
         }
+.sticky-div.lightsticky .bundle-wrapper__buttonAdd {
+            display: block;
+}
+@media only screen and (max-width: 768px) {
+    .sticky-div.lightsticky .js-info-bar {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+}
+.sticky-div.lightsticky {
+    background-color: #fff;
+    background-image: linear-gradient(to right, #D6E1E1, #fff);
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    z-index: 99999;
+}
+@media only screen and (max-width: 768px) {
+    .sticky-div.lightsticky {
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
+}
+.sticky-div.lightsticky .progress {
+            margin: 0;
+}
 .sticky-div.sticky .bundle-wrapper__buttonAdd {
             display: block;
 }

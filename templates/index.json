@@ -181,7 +181,7 @@
         "9b9a26d6-f21d-47cb-b9e1-b05c970b938d"
       ],
       "custom_css": [
-        ".products {padding-bottom: 30px; padding-top: 40px; margin-bottom: 0px; margin-top: 0px; background-color: #e3eaea;}",
+        ".products {padding-bottom: 52px; padding-top: 52px; margin-bottom: 0px; margin-top: 0px; background-color: #e3eaea;}",
         ".products__title {color: #4a4a4a;}",
         ".product__list--single--title {color: #4a4a4a;}",
         ".hero_image img {background-color: #e3eaea; width: 70%;}",
@@ -226,8 +226,8 @@
     "16454291024c32671a": {
       "type": "featured-text",
       "settings": {
-        "padding_top": 172,
-        "padding_bottom": 176,
+        "padding_top": 52,
+        "padding_bottom": 52,
         "bg": "#fafafa",
         "heading": "Check out our Latest Tech",
         "heading_color": "#141414",
@@ -312,8 +312,8 @@
         "description": "",
         "full_width": false,
         "color_scheme": "background-2",
-        "padding_top": 32,
-        "padding_bottom": 32
+        "padding_top": 52,
+        "padding_bottom": 52
       }
     },
     "8c644631-6b04-48be-8b2a-6dd2e8e49bd9": {
@@ -466,8 +466,8 @@
         "content_alignment": "center",
         "color_scheme": "background-2",
         "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
+        "padding_top": 52,
+        "padding_bottom": 12
       }
     },
     "1645600357fac2e864": {
@@ -665,6 +665,9 @@
     },
     "b7926c37-dae0-4e14-8312-ab71a4ad7cec": {
       "type": "image-banner",
+      "custom_css": [
+        ".color-background-1 {--color-background: 255, 255, 255; --gradient-background: black;}"
+      ],
       "settings": {
         "image": "shopify:\/\/shop_images\/Group_49_d1ee7ee8-0361-4202-ab4c-d4b317a3892d.jpg",
         "image_overlay_opacity": 0,

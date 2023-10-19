@@ -64,6 +64,14 @@
               >
                 {{ block.settings.heading }}
               </h2>
+              {% if block.settings.caption %}
+              <p
+                class="image-with-text__text image-with-text__text--caption {{ block.settings.text_style }} {{ block.settings.text_style }}--{{ block.settings.text_size }} {{ block.settings.text_style }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.caption | escape }}
+              </p>
+              {% endif %}
               {%- if block.settings.button_label != blank -%}
                 <a
                   {% if block.settings.button_link == blank %}
@@ -84,14 +92,15 @@
  </div>
 {%- endfor -%}
  </div>
- <div class="swiper-pagination swiper-pagination-image"></div>
+ <div class="swiper-button-next swiper-button-next-image"></div>
+  <div class="swiper-button-prev swiper-button-prev-image"></div>
 </div>
 <script>
 const swiperImage = new Swiper('.swiper-image', {
     slidesPerView: 1,
-    pagination: {
-          el: ".swiper-pagination-image",
-          clickable: true
+    navigation: {
+        nextEl: ".swiper-button-next-image",
+        prevEl: ".swiper-button-prev-image",
     },
 });
 </script>
@@ -123,6 +132,23 @@ const swiperImage = new Swiper('.swiper-image', {
     top: 0;
     bottom: 0;
     left: 0;
+}
+</style>
+<style>
+.swiper-button-next-image, .swiper-button-prev-image {
+    display:block !important;
+    top:40% !important;
+
+}
+.swiper-button-next-image {
+    right:15px !important;
+}
+.swiper-button-prev-image {
+    left:20px !important;
+}
+.swiper-button-prev-image:after, .swiper-button-next-image:after {
+  color:black !important;
+  opacity:.5 !important;
 }
 </style>
 
@@ -346,6 +372,12 @@ const swiperImage = new Swiper('.swiper-image', {
           "id": "heading",
           "default": "Image with text",
           "label": "t:sections.image-with-text.blocks.heading.settings.heading.label"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "default": "Add a tagline",
+          "label": "t:sections.image-with-text.blocks.caption.settings.text.label"
         },
         {
           "type": "select",

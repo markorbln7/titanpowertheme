@@ -305,7 +305,9 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.1"},f
     {{ 'section-product-template.css' | asset_url | stylesheet_tag }}
     {{ 'section-product-template.js' | asset_url | script_tag }}
     {{ 'override.css' | asset_url | stylesheet_tag }}
-  </head>
+  
+{% render 'gsf-conversion-pixels' %}
+</head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
   {% render 'elevar-body-end' %}

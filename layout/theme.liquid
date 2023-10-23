@@ -371,9 +371,7 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.1"},f
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   
-    {% render 'oneclickupsellapp-theme', oneclickupsellapp: oneclickupsellapp %}
-    {% assign oneclickupsellapp = true %}
-    {%- render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: oneclickupsellapp -%}
+            {%- render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: oneclickupsellapp -%}
     <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
     {% render 'rebuy-smartcart-extensions' %} 
 <script async data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=HXhrVm"></script>
@@ -429,5 +427,8 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.1"},f
 
     <script src="{{ 'runtime.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'commons.js' | asset_url }}" defer="defer"></script>
-    </body>
+    
+{% render 'oneclickupsellapp-theme', oneclickupsellapp: oneclickupsellapp %}
+{% assign oneclickupsellapp = true %}
+</body>
 </html>

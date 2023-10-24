@@ -98,6 +98,11 @@
 <script>
 const swiperImage = new Swiper('.swiper-image', {
     slidesPerView: 1,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
     navigation: {
         nextEl: ".swiper-button-next-image",
         prevEl: ".swiper-button-prev-image",

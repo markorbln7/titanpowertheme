@@ -2,36 +2,36 @@
 {{ 'section-home-product-block.js' | asset_url | script_tag }}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 {% if section.settings.desktop_image %}
-  <a href="{{section.settings.url}}" class="hero">
+  <a href="{{ section.settings.url }}" class="hero">
       <div class="hero_image desktop hd">
-      <img src="{{section.settings.desktop_image | img_url: 'master'}}">
+      <img src="{{ section.settings.desktop_image | image_url }}">
       </div>
       <div class="hero_image mobile md">
-      <img src="{{section.settings.mobile_image | img_url: 'master' }}">
+      <img src="{{ section.settings.mobile_image | image_url }}">
       </div>
   </a>
 {% endif %}
 <div class="products relative">
-  <div class="products__title">{{section.settings.title}}</div>
+  <div class="products__title">{{ section.settings.title }}</div>
   <div class="products__list swiper swiperProduct">
       <div class="swiper-wrapper">
-        {% for block in section.blocks%}
+        {% for block in section.blocks %}
         {% assign product = block.settings.product %}
           <div class="product__list--single swiper-slide"> 
-              <a href="{{product.url}}" class="product__list--single--image d-block">
-                  <img class="w-100" src="{{block.settings.image | img_url: 'master'}}">
+              <a href="{{ product.url }}" class="product__list--single--image d-block">
+                  <img class="w-100" src="{{ block.settings.image | image_url }}">
               </a>
               <div class="product__list--single--title color-white">
-                  {{product.title}}
+                  {{ product.title }}
               </div>    
               <div class="product__list--single--price color-white">
-                  <span>{{product.compare_at_price | money }}</span> {{product.price | money}}
+                  <span>{{ product.compare_at_price | money }}</span> {{ product.price | money }}
               </div>  
-              <div data-product="{{product.first_available_variant.id}}" class="js-atc product__list--single--atc">
+              <div data-product="{{ product.first_available_variant.id }}" class="js-atc product__list--single--atc">
                   +ADD TO CART
               </div>
           </div>
-        {% endfor%}
+        {% endfor %}
       </div>
       <div class="swiper-button-next swiper-button-next-product"></div>
       <div class="swiper-button-prev swiper-button-prev-product"></div>
@@ -66,14 +66,14 @@ const swiperProduct = new Swiper('.swiperProduct', {
 <style>
 .swiper-button-next-product, .swiper-button-prev-product {
     display:block !important;
-    top:40% !important;
+    top:35% !important;
 
 }
 .swiper-button-next-product {
-    right:15px !important;
+    right:-5px !important;
 }
 .swiper-button-prev-product {
-    left:20px !important;
+    left:0px !important;
 }
 .swiper-button-prev-product:after, .swiper-button-next-product:after {
   color:black !important;

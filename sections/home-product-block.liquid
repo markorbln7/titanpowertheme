@@ -1,6 +1,5 @@
 {{ 'section-home-product-block.css' | asset_url | stylesheet_tag }}
 {{ 'section-home-product-block.js' | asset_url | script_tag }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 {% if section.settings.desktop_image %}
   <a href="{{ section.settings.url }}" class="hero">
       <div class="hero_image desktop hd">
@@ -19,7 +18,7 @@
         {% assign product = block.settings.product %}
           <div class="product__list--single swiper-slide"> 
               <a href="{{ product.url }}" class="product__list--single--image d-block">
-                  <img class="w-100" src="{{ block.settings.image | image_url }}">
+                  <img class="w-100" src="{{ block.settings.image | img_url: '600x' }}">
               </a>
               <div class="product__list--single--title color-white">
                   {{ product.title }}

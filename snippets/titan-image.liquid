@@ -1,8 +1,8 @@
 <picture class="titan-image">
   <source media="(max-width:768px)" srcset="{% if mobile_image == blank %} {{ image | img_url: '800x' }} {% else %} {{ mobile_image | img_url: 'master' }} {% endif %}">
   <source media="(max-width:1000px)" srcset="{{ image | img_url: '1000x' }}">
-  <source media="(min-width:1001px)" srcset="{{ image | img_url: 'master' }}">
-  <img alt="Description image" data-src="{{ image | img_url: 'master' }}" loading="lazy" width="100%" height="auto">
+  <source media="(min-width:1001px)" srcset="{{ image | img_url: '1000x' }}">
+  <img class="w-100" alt="Description image" data-src="{{ image | img_url: '1000x' }}" loading="lazy" width="100" height="auto">
 </picture>
 
 <style>

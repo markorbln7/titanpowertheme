@@ -168,11 +168,45 @@
 }
 
 .image-with-text--overlap .image-with-text__content {
-  width: 90%;
+  width: unset;
   margin: -3rem auto 0;
 }
 
+.image-video {
+  max-width: 90%;
+  margin:0 auto;
+}
+.video-heading {
+  font-size: 30px;
+  max-width: 97%;
+}
+.video-content {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+.video-button {
+  margin-top: 0 !important;
+  font-size: 20px;
+  width: 200px;
+}
+.video-image-with-text {
+  padding-bottom: 75px !important;
+}
+
 @media screen and (min-width: 750px) {
+  .video-button {
+    margin-top: 3rem !important;
+  }
+  .video-content {
+    padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
+  }
+  .image-video {
+    max-width: 100%;
+    margin:0 auto;
+  }
+  .video-heading {
+    font-size: 39px;
+  }
   .image-with-text__grid--reverse .image-with-text__content {
     margin-left: auto;
   }

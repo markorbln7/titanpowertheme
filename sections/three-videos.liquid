@@ -1,0 +1,77 @@
+{{ 'section-three-videos.css' | asset_url | stylesheet_tag }}
+{{ 'section-three-videos.js' | asset_url | script_tag }}
+
+<section class="three-videos">
+    <div class="three-videos__title">
+         {{section.settings.title}}
+    </div>
+    <div class="three-videos__subtitle">
+        {{section.settings.subtitle}}
+   </div>
+   <div class="three-videos__videos">
+        {% for block in section.blocks%}
+             <div class="three-videos__videos--single">
+                <div class="three-videos__videos--single__video">
+                    <video  autoplay muted playsinline loop aria-label="Easy Pull System">
+                    <source src="{{block.settings.video_url}}" type="video/mp4"><p>Your browser does not support the video tag.</p></video>
+                </div>
+                <div class="three-videos__videos--single__title">
+                    {{block.settings.video_title}}
+                </div>
+                <div class="three-videos__videos--single__subtitle">
+                    {{block.settings.video_subtitle}}
+                </div>
+             </div>
+        {% endfor %}
+   </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Three Videos",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Everyone Needs It!"
+    },
+    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Title",
+        "default": "And here's why!"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video Url"
+        },
+        {
+            "type": "text",
+            "id": "video_title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "video_subtitle",
+            "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Videos"
+    }
+  ]
+}
+{% endschema %}

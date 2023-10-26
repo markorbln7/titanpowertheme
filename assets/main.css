@@ -556,6 +556,22 @@ input[type=number]
 .zp.zp.ba-70957884 {
   z-index: 2;
 }
+.desktop {
+  display: block;
+}
+@media only screen and (max-width: 768px) {
+  .desktop {
+      display: none;
+  }
+}
+.mobile {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  .mobile {
+      display: block;
+  }
+}
 .mha, .mxa {
   margin-left: auto;
   margin-right: auto;

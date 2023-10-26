@@ -1,0 +1,77 @@
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/three-videos/three-videos.css ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+.three-videos {
+    padding: 45px 10px;
+    background-color: rgb(247, 247, 247);
+}
+    .three-videos__title {
+        font-size: 45px;
+        font-weight: 700;
+        color: #4a4a4a;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 10px;
+        padding:0px 15px;
+    }
+    .three-videos__title span {
+            color:#60c655;
+        }
+    .three-videos__subtitle {
+        font-size: 25px;
+        color: #4a4a4a;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 30px;
+        padding:0px 15px;
+    }
+    .three-videos__subtitle span {
+            color:#60c655;
+        }
+    .three-videos__videos {
+        max-width: 1440px;
+        padding: 0 30px!important;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+        overflow: hidden;
+    }
+    .three-videos__videos--single {
+            width:calc(33% - 31px);
+        }
+    @media only screen and (max-width: 1024px) {
+    .three-videos__videos--single {
+        width:100%;
+    }
+}
+    .three-videos__videos--single__video video {
+                    width: 100%;
+                    margin: 0 auto;
+                    display: block;
+                    border-radius: 20px;
+                }
+    .three-videos__videos--single__title {
+                font-size: 22px;
+                color: #4a4a4a;
+                font-weight: 700;
+                line-height: 1.2;
+                text-align: center;
+                max-width: 70%;
+}
+    @media only screen and (max-width: 1024px) {
+    .three-videos__videos--single__title {
+        max-width: 100%;
+    }
+}
+    .three-videos__videos--single__title {
+    margin: 15px auto 8px;
+}
+    .three-videos__videos--single__subtitle {
+                font-size: 18px;
+                color: #4a4a4a;
+                font-weight: 400;
+                line-height: 1.4;
+                text-align: center;
+}
+

@@ -1,0 +1,30 @@
+.mobile-video {
+    padding-top: 100%;
+    margin-top: 51px;
+    margin-bottom: 51px;
+    &__poster {
+        position: absolute;
+        top:0;
+        z-index: 99999;
+        width: 100%;
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        &--hide {
+            visibility:hidden;
+            opacity:0;
+            left:-10000px;
+        }
+    }
+    &__video {
+        margin-bottom: 51px;
+        position: absolute;
+        top:0;
+        video {
+            width: 100%;
+        }
+    }
+}

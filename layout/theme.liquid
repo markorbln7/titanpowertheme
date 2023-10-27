@@ -18,8 +18,6 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
 
 
     <meta name="p:domain_verify" content="2217bdc58f9c6567e8e601313f901189"/>
-  {% render 'elevar-head' %}
-  {% render 'elevar-head-listener' %}
   {% render 'vwo' %}
 
     {%- if settings.favicon != blank -%}
@@ -314,7 +312,6 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-  {% render 'elevar-body-end' %}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

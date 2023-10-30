@@ -152,7 +152,7 @@
                     ADD TITAN PD PLUG <br>
                     {% comment %} <div class="plug-ports">1x<span>PD</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/type-c_pd.png?v=1681382319"></div>
                     <div class="plug-ports">3x<span>USB-A</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/USB_A.png?v=1681382319"></div> {% endcomment %}
-                    {{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
+                    {{plug.price | money_with_currency }} <span class="crossed titan-red">{{plug.compare_at_price | money_with_currency }}</span></div>
                     <div class="product-template-new__wrapper--content__add--image">
                         {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
                         <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/new_45W_plug_upsell_cable_page.png?v=1693482318" alt="{{ featured_image_plug.alt }}">
@@ -162,7 +162,7 @@
               
               <div class="text-center price-div">
                 <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money_with_currency }}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
@@ -274,197 +274,197 @@ window.selectLogic = {
 }
 window.jointPrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointComparePrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointSavePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
      {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
 }
 window.length = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '3x4ft(1.2m)' : '{{ variant.price | money }}',
+        '3x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '3x6ft(1.8m)' : '{{ variant.price | money }}',
+        '3x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '3x10ft(3.0m)' : '{{ variant.price | money }}',
+        '3x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.price | monmoney_with_currencyey }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-1x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-1x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-1x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-4x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-4x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-4x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-3x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-3x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-3x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-3x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-3x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-3x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }
 window.compareLength = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '3x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '3x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '3x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '3x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '3x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '3x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-1x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-1x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-3x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-3x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-3x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }
@@ -490,62 +490,62 @@ window.products = {
 }
 window.prices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
      {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
      {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
 }
 window.comparePrices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
 }
 window.savePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
 }
 window.images = {

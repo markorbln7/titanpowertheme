@@ -92,7 +92,7 @@
               </div>
               <div class="relative text-center price-div new-price-div">
                 <div style="color: white;font-size: 12px;">Your Price: <span style="color: #22FF05;font-size: 12px;">(Includes 5-Cables)</span></div>
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}} </div>
               </div>
               <div class="product-template-new__wrapper--content__imageSelection">

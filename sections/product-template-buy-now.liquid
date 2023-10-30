@@ -183,17 +183,17 @@
               </div>
               <div style="background-color: #60C655;font-weight: 800;color: #000000;font-size:32px;line-height:1.2;width: fit-content;margin: 20px auto 0px;" class="">CHOOSE YOUR DISCOUNT:</div>
               <div class="text-center price-div" style="visibility:hidden;">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc" style="margin-top: -55px;">
                   <button class="js-atc-now f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">BUY NOW (-5%) - <span class="js-price-button-now titan-green">{{product.price | money}}</span></div>
+                    <div id="addToCartText-{{ section.id }}">BUY NOW (-5%) - <span class="js-price-button-now titan-green">{{ product.price | money_with_currency }}</span></div>
                   </button>
               </div>
               <div class="product-template__wrapper--content__form--atc reverse">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-                    <div id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price-button titan-green">{{product.price | money}}</span> </div>
+                    <div id="addToCartText-{{ section.id }}">ADD TO CART - <span class="js-price-button titan-green">{{ product.price | money_with_currency }}</span> </div>
                   </button>
                   <div class="amazon-notice"><span>Only Here:</span> Not Available on Amazon or eBay</div>
               </div>

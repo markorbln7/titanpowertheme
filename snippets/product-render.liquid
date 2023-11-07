@@ -4,13 +4,13 @@
         <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
     </div>
     <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
-    {% if tick1 != blank %}
+    
     <div class="product-template__wrapper--content__features font-sans">
         <div class="js-scroll product-template__wrapper--content__features--name">{{tick1}}</div>
         <div class="js-scroll product-template__wrapper--content__features--name">{{tick2}}</div> 
         <div class="js-scroll product-template__wrapper--content__features--name">{{tick3}}</div>
     </div>
-    {% endif %}
+    
 
     {% assign productVariants = product.variants %}
 
@@ -63,7 +63,7 @@
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">
-                    <div class="price type--m hhhhh">
+                    <div class="new-price price type--m hhhhh">
                         {% if product.variants.size > 1 %}
                             <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
                             <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
@@ -80,7 +80,7 @@
                         <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
                     </div>
                     {% unless hidecart == true%}
-                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="+" data-variant-id="{{sofav.id}}">
                     {% endunless %}
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
         </div>
         {% unless hidecart == true%}
-            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="+" data-variant-id="{{sofav.id}}">
         {% endunless %}
     </div>
     {% endif %}

@@ -79,8 +79,8 @@
       {% render 'product-render' hidecart:true product_var:product.handle tick1: one tick2:two tick3:three %}    {% endfor %}
 </div> {% endcomment %}
 <div class="intro">
-  <div class="intro__title">ADD MORE TO SAVE MORE</div>
-  <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
+  <div class="intro__title">THE MORE YOU BUNDLE, THE MORE YOU SAVE!</div>
+  <div class="intro__subtitle">GRAB 50% OFF RRP TODAY AND LOCK IN UP TO 80% OFF WHEN BUNDLING ANY PRODUCTS BELOW!</div>
 </div>
 <div class="sticky-div w-100">
   <div class="js-info-bar">ADD 4 AND SAVE 55%</div>
@@ -95,38 +95,64 @@
 </div>
 <div class="bundle-wrapper">
     {% for product in collections['build-your-own-bundle'].products %}
-    {% comment %} {% if forloop.index < 3%}
+    {% if forloop.index < 3%}
         {% assign one = ''%}
         {% assign two = ''%}
         {% assign three = ''%}
       {% endif %}
+      {% if forloop.index == 1%}
+        {% assign one = 'Fast Charging'%}
+        {% assign two = 'Unique 90° Design'%}
+        {% assign three = 'Lifetime Warranty'%}
+      {% endif %}
+      {% if forloop.index == 2%}
+        {% assign one = 'Charge 4 Devices'%}
+        {% assign two = 'Charge 3x Faster'%}
+        {% assign three = 'US, EU, UK Adapters'%}
+      {% endif %}
       {% if forloop.index == 3%}
-        {% assign one = '3 Devices At Once'%}
-        {% assign two = 'Super Compact'%}
-        {% assign three = 'Wireless Charge Buds'%}
+        {% assign one = "Everyone's Charged"%}
+        {% assign two = 'Three Charge Ports'%}
+        {% assign three = 'No More Fighting'%}
       {% endif %}
       {% if forloop.index == 4%}
-        {% assign one = 'Unbeatable Comfort'%}
-        {% assign two = 'Supreme Audio'%}
-        {% assign three = 'Wireless Charging'%}
+        {% assign one = 'Changeable Length'%}
+        {% assign two = 'Charge Any Device'%}
+        {% assign three = 'Retractable Cable'%}
       {% endif %}
       {% if forloop.index == 5 %}
-        {% assign one = 'Wireless Charge'%}
-        {% assign two = 'Magnetic holder'%}
-        {% assign three = '10,000mAh capacity'%}
+        {% assign one = 'Rapid 15W Charge'%}
+        {% assign two = 'No More Messy Wires'%}
+        {% assign three = 'Charges with case'%}
       {% endif %}
       {% if forloop.index == 6%}
+        {% assign one = 'Charges With Case'%}
+        {% assign two = 'Wireless Charging'%}
+        {% assign three = 'In Car or at Home'%}
+      {% endif %}
+      {% if forloop.index == 7%}
         {% assign one = 'No more messy wires'%}
         {% assign two = '15W Wireless Charge'%}
         {% assign three = 'Charge 3 Devices'%}
       {% endif %}
-      {% if forloop.index > 6%}
-        {% assign one = ''%}
-        {% assign two = ''%}
-        {% assign three = ''%}
-      {% endif %} {% endcomment %}
+      {% if forloop.index == 8%}
+        {% assign one = 'In-car Phone Audio'%}
+        {% assign two = 'Handsfree calls'%}
+        {% assign three = 'Rapid PD Charging'%}
+      {% endif %}
+      {% if forloop.index == 9%}
+        {% assign one = 'Unbeatable Comfort'%}
+        {% assign two = 'Supreme Audio'%}
+        {% assign three = 'Wireless Charging'%}
+      {% endif %}
+      {% if forloop.index == 10%}
+        {% assign one = '3 Devices At Once'%}
+        {% assign two = 'Super Compact'%}
+        {% assign three = 'LED Indicator'%}
+      {% endif %}
+
       
-      {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  %}
+      {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  tick1: one tick2:two tick3:three %}
     {% endfor %}
     
 </div>
@@ -468,9 +494,9 @@ variantClicks.forEach(variantClick => {
         console.log('click')
         const _this = e.target
         _this.closest(".bundle-wrapper__product").classList.toggle('selected');
-        if(_this.value === 'added') {
+        if(_this.value === '-') {
             _this.classList.remove('selected')
-            _this.value = '+ add to kit'
+            _this.value = '+'
             selectedItems = document.querySelectorAll('.js-variant-selector.selected')
             let numberOfSelected = 0
             selectedItems.forEach((selectedItem) => {
@@ -536,7 +562,7 @@ variantClicks.forEach(variantClick => {
             return
         }
         _this.classList.add('selected')
-        _this.value = 'added'
+        _this.value = '-'
         selectedItems = document.querySelectorAll('.js-variant-selector.selected')
           let numberOfSelected = 0
           selectedItems.forEach((selectedItem) => {

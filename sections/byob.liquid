@@ -467,9 +467,9 @@ let addItemsCheckout = (selector) => {
     body: JSON.stringify(formData)
   })
     .then(response => {
-      if (response.status === 200) {
+      {% comment %} if (response.status === 200) {
         window.location.href = '/checkout'
-      }
+      } {% endcomment %}
       return response.json()
     })
     .catch((error) => {

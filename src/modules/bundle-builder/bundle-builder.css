@@ -19,18 +19,15 @@
                 width:calc(50% - 10px);
             }
         }
-        /* &:nth-child(2) {
+        &:nth-child(2) {
             width:calc(31.33% - 10px);
             @media only screen and (max-width: 768px) {
                 width:calc(50% - 10px);
             }
-        } */
+        }
     }
 }
 .bundle-wrapper {
-    .product-template__wrapper--content__features, .product-template__wrapper--content__features--name:before {
-        color: #0d0d0d;
-    }
     .product-template__wrapper--content__features--name {
         font-size: 14px;
         line-height: 1.2;
@@ -43,32 +40,30 @@
         max-width: 300px;
         margin: 20px auto 20px;
     }
-    max-width: 1000px;
+    max-width: 798px;
     margin: 0 auto;
     padding: 0px 20px;
     display:flex;
     gap:20px;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap:wrap;
     &__product {
         &:nth-child(1) {
-            width:calc(100% - 10px);
-            margin: 0px 30%;
-            @media only screen and (max-width: 768px) {
-                margin: 0px;
-            }
+            width:calc(50% - 10px);
+        }
+        &:nth-child(2) {
+            width:calc(50% - 10px);
         }
         width:calc(31.33% - 10px);
         @media only screen and (max-width: 768px) {
-            width:calc(100% - 10px);
+            width:calc(50% - 10px);
         }
         display: flex;
         flex-direction: column;
+        border: 1.75px solid #5e5e5e;
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 0 10px #B5B5B5;
-        position: relative;
-        padding-bottom: 70px;
         /* &.selected {
             border: 1.75px solid #35FF2E;
             background: #000000;
@@ -86,15 +81,12 @@
         &--title {
             font-family: 'Work Sans';
             font-weight: 600;
-            color: #0d0d0d;
+            color: black;
             font-style: normal;
             line-height: 1.2;
             font-size: 16px;
             margin-bottom: 10px;
             min-height: 40px;
-            font-size: 14px;
-            height: 40px;
-            line-height: 20px;
         }
     }
     &__footer {
@@ -137,15 +129,6 @@
             padding-right: 24px;
             padding-left: 24px;
             width: auto;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            padding: 0;
-            font-size: 25px;
-            font-weight: 400;
-            position: absolute;
-            right:10px;
-            bottom:10px;
             @media only screen and (max-width: 768px) {
                 text-align: center;
                 font-size:12px;
@@ -159,18 +142,6 @@
     @media only screen and (max-width: 768px) {
         font-size: 16px;
     }
-}
-.js-price.price {
-    position: absolute;
-    left: 10px;
-    bottom: 20px;
-}
-.new-price.price {
-    position: absolute;
-    left: 10px;
-    bottom: 20px;
-    display: flex;
-    gap: 5px;
 }
 .js-info-bar, .info-bar {
     font-family: "Work Sans", sans-serif;
@@ -281,7 +252,7 @@
     color: #969696;
     font-style: normal;
     line-height: 1.2;
-    font-size: 34px;
+    font-size: 45px;
     color: #60c655;
     font-weight: 700;
 }
@@ -299,18 +270,18 @@
 }
 .product-popup__holder {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     background-color: #000000;
     gap:20px;
     flex-wrap:wrap;
-    max-width: 1000px;
+    max-width: 798px;
     margin: 0 auto;
     padding: 0 20px;
     .bundle-wrapper__product {
         width:calc(31.33% - 10px);
         @media only screen and (max-width: 768px) {
-            width:calc(100% - 10px);
+            width:calc(50% - 10px);
         }
         display: flex;
         flex-direction: column;
@@ -423,7 +394,7 @@
 }
 .product-image__title {
     @media only screen and (max-width: 768px) {
-        padding-left: 0;
+        padding-left: 16px;
     }
 }
 .desktop {
@@ -450,7 +421,6 @@
     height: 100%;
     display: block;
     background-color: #000000;
-    display: none;
     padding-bottom: 200px;
     &.hidden {
         display: none;
@@ -599,7 +569,7 @@
         background:transparent;
         border:none;
         cursor:pointer;
-        color: #0d0d0d;
+        color: #60c655;
         font-size: 22px;
     }
 }

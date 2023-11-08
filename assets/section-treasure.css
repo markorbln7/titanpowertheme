@@ -1,25 +1,28 @@
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/treasure/treasure.css ***!
   \**************************************************************************************************************************************************************************************************************************/
-.treasure-top {
-    padding: 50px 10px;
-    margin: 0 auto;
-    max-width: 1200px;
-    text-align: center;
+.treasure-top.second {
+        padding-top: 50px;
 }
-    .treasure-top__title {
+.treasure-top {
+        padding: 0px 10px 50px;
+        margin: 0 auto;
+        max-width: 1200px;
+        text-align: center;
+}
+.treasure-top__title {
         font-size: 48px;
         font-weight: 700;
         line-height: 1.2;
         text-transform: uppercase;
-    }
-    .treasure-top__subtitle {
+}
+.treasure-top__subtitle {
         font-size: 24px;
         line-height: 1.2;
         color:#60c655;
         font-weight: 700;
-    }
-    .treasure-top__counter {
+}
+.treasure-top__counter {
         color:#60c655;
         font-weight: 700;
         font-size: 60px;
@@ -29,62 +32,106 @@
         gap:10px;
         line-height: 1.0;
         margin: 20px 0;
-    }
-    .treasure-top__counter span {
+}
+@media only screen and (max-width: 768px) {
+        .treasure-top__counter {
+                font-size: 40px;
+        }
+}
+.treasure-top__counter span {
             font-size: 20px;
             text-transform: uppercase;
+}
+@media only screen and (max-width: 768px) {
+        .treasure-top__counter span {
+                font-size: 16px;
         }
-    .treasure-top__counter .number-block {
+}
+.treasure-top__counter .number-block {
             display: flex;
             flex-direction: column;
-        }
-    .treasure-zig-wrapper {
-    background: #D6E1E1;
 }
-    .treasure-zig-container {
+.treasure-zig-wrapper {
+    background: #D6E1E1;
+    padding-bottom: 50px;
+}
+.treasure-zig-container {
     max-width: 1200px;
     margin:0 auto;
 }
-    .overimage {
+.overimage {
     z-index: 99999999;
     position:relative;
+    display: block;
 }
-    .treasure-zig {
+.treasure-zig {
     padding: 0px 10px;
 }
-    .treasure-zig__single.reverse {
-    flex-direction: row-reverse;
+.treasure-zig__single {
+        gap:0px;
+    }
+@media only screen and (max-width: 768px) {
+        .treasure-zig__single {
+                flex-direction: column;
+                gap:20px;
+        }
 }
-    .treasure-zig__single {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.treasure-zig__single.reverse {
+        flex-direction: row-reverse;
 }
-    .treasure-zig__single--image {
-            width:50%;
-            padding: 40px;
-            padding-top: 0;
-            cursor: pointer;
+@media only screen and (max-width: 768px) {
+        .treasure-zig__single.reverse {
+                flex-direction: column;
+                gap:20px;
+        }
 }
-    .treasure-zig__single--image img {
+.treasure-zig__single {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+}
+.treasure-zig__single--image {
+            width:44%;
+            padding: 0px;
+}
+@media only screen and (max-width: 768px) {
+        .treasure-zig__single--image {
+                width:100%;
+                padding: 0px;
+        }
+}
+.treasure-zig__single--image {
+        padding-top: 0;
+        cursor: pointer;
+}
+.treasure-zig__single--image img {
                 max-width: 100%;
-            }
-    .treasure-zig__single--content {
-            width: 50%;
-            text-align: center;
+                width:100%;
 }
-    .treasure-zig__single--content__title {
+.treasure-zig__single--content {
+            width: 50%;
+}
+@media only screen and (max-width: 768px) {
+        .treasure-zig__single--content {
+                width:100%;
+                padding: 20px 0 20px;
+        }
+}
+.treasure-zig__single--content {
+        text-align: center;
+}
+.treasure-zig__single--content__title {
                 font-size: 32px;
                 font-weight: 700;
                 line-height: 1.2;
-            }
-    .treasure-zig__single--content__text {
+}
+.treasure-zig__single--content__text {
                 margin-top: 10px;
                 font-weight: 300;
                 font-size: 16px;
                 line-height: 1.4;
-            }
-    .treasure-zig__single--content__url {
+}
+.treasure-zig__single--content__url {
                 margin: 0 auto;
                 margin-top: 20px;
                 background-color: #60c655;
@@ -100,42 +147,69 @@
                 text-transform: uppercase;
                 visibility: hidden;
                 opacity: 0;
-                transition: all 0.3s ease-in-out
-            }
-    .treasure-zig__single--content__url.reveal {
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
 }
-    .treasure-zig__single--content__upper {
+.treasure-zig__single--content__url.reveal {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+}
+.treasure-zig__single--content__upper {
                 color:#60c655;
                 font-size: 24px;
                 font-weight: 700;
                 text-transform: uppercase;
                 visibility: hidden;
                 opacity: 0;
-                transition: all 0.3s ease-in-out
-            }
-    .treasure-zig__single--content__upper.reveal {
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
 }
-    .video {
+.treasure-zig__single--content__upper.reveal {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+}
+.video {
     display: none;
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s ease-in-out
 }
-    .video.reveal {
-    display: block;
-    visibility: visible;
-    opacity: 1;
-    transition: all 0.3s ease-in-out;
+.video.reveal {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
 }
-    img.first.hide {
-    display: none;
+img.first.hide {
+        display: none;
 }
-    video::-webkit-media-controls {
+video::-webkit-media-controls {
     display: none;
   }
+.product-zig__bigtitle {
+    font-size: 32px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    max-width: 600px;
+    margin: 30px auto 50px;
+    font-style: italic;
+    letter-spacing: .07em;
+    color: #4a4a4a !important;
+}
+.desktop {
+    display: block;
+}
+@media only screen and (max-width: 768px) {
+    .desktop {
+        display: none;
+    }
+}
+.mobile {
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+    .mobile {
+        display: block;
+    }
+}

@@ -1,6 +1,6 @@
 import './treasure.css'
 // Set the date we're counting down to
-var countDownDate = new Date('Nov 10, 2023 14:00:00').getTime()
+var countDownDate = new Date('Nov 10, 2023 21:00:00').getTime()
 
 // Update the count down every 1 second
 var x = setInterval(function () {
@@ -45,13 +45,15 @@ imageClickHandlers.forEach((imageClickHandler) => {
     const urlReveal = this.parentNode.querySelector('.js-url-reveal')
     const upperReveal = this.parentNode.querySelector('.js-upper-reveal')
     const video = this.parentNode.querySelector('.video')
-    const image = this.parentNode.querySelector('.js-image')
-    image.classList.add('hide')
+    const imageDesktop = this.parentNode.querySelector('.js-image.desktop')
+    const imageMobile = this.parentNode.querySelector('.js-image.mobile')
+    imageDesktop.classList.add('hide')
+    imageMobile.classList.add('hide')
     video.classList.add('reveal')
     video.play()
     setTimeout(() => {
       urlReveal.classList.add('reveal')
       upperReveal.classList.add('reveal')
-    }, '3000')
+    }, '2000')
   })
 })

@@ -2,14 +2,56 @@
     "sections": {
       "treasure": {
         "type": "treasure",
-        "disabled": false,
         "settings": {
-
+        }
+      },
+      "e89f9268-4200-42e5-836e-037df34c1c04": {
+        "type": "three-videos",
+        "blocks": {
+          "1d60b176-842e-4dd8-a7c9-45688ba22ce0": {
+            "type": "product",
+            "settings": {
+              "video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/41fa453011154868a6d3d0361c610ee2.mp4",
+              "video_title": "",
+              "video_subtitle": ""
+            }
+          },
+          "b267004b-9b81-468a-9b4c-a6bb44fddf68": {
+            "type": "product",
+            "settings": {
+              "video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/12a98d4aa2d74fd8a9b30a4207dc993d.mp4",
+              "video_title": "",
+              "video_subtitle": ""
+            }
+          },
+          "3cc047e3-2bb3-472a-8674-fdc8df73e216": {
+            "type": "product",
+            "settings": {
+              "video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/4c4e51e5823b44b7bfd3d76d2842ddd2.mp4",
+              "video_title": "",
+              "video_subtitle": ""
+            }
+          }
+        },
+        "block_order": [
+          "1d60b176-842e-4dd8-a7c9-45688ba22ce0",
+          "b267004b-9b81-468a-9b4c-a6bb44fddf68",
+          "3cc047e3-2bb3-472a-8674-fdc8df73e216"
+        ],
+        "settings": {
+          "title": "DON'T JUST TAKE OUR WORD FOR IT",
+          "subtitle": "Loved and trusted by thousands..."
+        }
+      },
+      "01915d86-943f-47f5-b7f4-2aa6686ea567": {
+        "type": "product-reviews",
+        "settings": {
         }
       }
     },
     "order": [
-      "treasure"
+      "treasure",
+      "e89f9268-4200-42e5-836e-037df34c1c04",
+      "01915d86-943f-47f5-b7f4-2aa6686ea567"
     ]
   }
-  

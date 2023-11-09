@@ -50,7 +50,6 @@ imageClickHandlers.forEach((imageClickHandler) => {
     imageDesktop.classList.add('hide')
     imageMobile.classList.add('hide')
     video.classList.add('reveal')
-    video.play()
     setTimeout(() => {
       urlReveal.classList.add('reveal')
       upperReveal.classList.add('reveal')

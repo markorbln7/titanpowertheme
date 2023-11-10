@@ -37,6 +37,36 @@
                     {% endif %}
                   {% endfor %}
               </div>
+              <div class="bf-info">
+                  <div class="bf-info-text color-black">BLACK FRIDAY SALE</div>
+                  <div class="bf-info-title">80% OFF + 2 FREE CABLES</div>
+              </div>
+              <style>
+                 .bf-info-text {
+                  font-size:32px;
+                  line-height:1.2;
+                  font-weight:700;
+                  margin-top:10px;
+                  @media only screen and (max-width: 768px) {
+                    font-size:20px;
+                }
+                }
+                .bf-info-title {
+                  font-size:32px;
+                  line-height:1.2;
+                  color:#60C655;
+                  background:black;
+                  font-weight:700;
+                  max-width: fit-content;
+                  padding: 5px 10px;
+                  border-radius: 30px;
+                  margin-bottom:10px;
+                  margin-left: -10px;
+                  @media only screen and (max-width: 768px) {
+                    font-size:20px;
+                }
+                }
+              </style>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}
@@ -306,7 +336,7 @@ window.length = {
         '7x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '7x10ft(3.0m)' : '{{ variant.price | monmoney_with_currencyey }}',
+        '7x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }

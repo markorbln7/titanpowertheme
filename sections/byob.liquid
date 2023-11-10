@@ -94,43 +94,72 @@
 </div>
 </div>
 <div class="bundle-wrapper">
-    {% for product in collections['build-your-own-bundle'].products %}
-    {% comment %} {% if forloop.index < 3%}
-        {% assign one = ''%}
-        {% assign two = ''%}
-        {% assign three = ''%}
-      {% endif %}
-      {% if forloop.index == 3%}
-        {% assign one = '3 Devices At Once'%}
-        {% assign two = 'Super Compact'%}
-        {% assign three = 'Wireless Charge Buds'%}
-      {% endif %}
-      {% if forloop.index == 4%}
-        {% assign one = 'Unbeatable Comfort'%}
-        {% assign two = 'Supreme Audio'%}
-        {% assign three = 'Wireless Charging'%}
-      {% endif %}
-      {% if forloop.index == 5 %}
-        {% assign one = 'Wireless Charge'%}
-        {% assign two = 'Magnetic holder'%}
-        {% assign three = '10,000mAh capacity'%}
-      {% endif %}
-      {% if forloop.index == 6%}
-        {% assign one = 'No more messy wires'%}
-        {% assign two = '15W Wireless Charge'%}
-        {% assign three = 'Charge 3 Devices'%}
-      {% endif %}
-      {% if forloop.index > 6%}
-        {% assign one = ''%}
-        {% assign two = ''%}
-        {% assign three = ''%}
-      {% endif %} {% endcomment %}
-      
-      {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  %}
-    {% endfor %}
-    
-</div>
+  {% for product in collections['build-your-own-bundle'].products %}
+    {% if forloop.index == 1%}
+      {% assign one = 'Fast Charging'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 2%}
+      {% assign one = 'Charge 4 Devices'%}
+      {% assign two = 'Charge 3x Faster'%}
+      {% assign three = 'US, EU, UK Adapters'%}
+    {% endif %}
+    {% if forloop.index == 3%}
+      {% assign one = "Everyone's Charged"%}
+      {% assign two = 'Three Charge Ports'%}
+      {% assign three = 'No More Fighting'%}
+    {% endif %}
+    {% if forloop.index == 4%}
+      {% assign one = 'Changeable Length'%}
+      {% assign two = 'Charge Any Device'%}
+      {% assign three = 'Retractable Cable'%}
+    {% endif %}
+    {% if forloop.index == 5 %}
+      {% assign one = 'Rapid 15W Charge'%}
+      {% assign two = 'No More Messy Wires'%}
+      {% assign three = 'Charges with case'%}
+    {% endif %}
+    {% if forloop.index == 6%}
+      {% assign one = 'Charges With Case'%}
+      {% assign two = 'Wireless Charging'%}
+      {% assign three = 'In Car or at Home'%}
+    {% endif %}
+    {% if forloop.index == 7%}
+      {% assign one = 'No more messy wires'%}
+      {% assign two = '15W Wireless Charge'%}
+      {% assign three = 'Charge 3 Devices'%}
+    {% endif %}
+    {% if forloop.index == 8%}
+      {% assign one = 'Wireless Charge & Magnetic'%}
+      {% assign two = 'Huge 10,000mAh Capacity'%}
+      {% assign three = 'Fold-out kickstand'%}
+    {% endif %}
+    {% if forloop.index == 9%}
+      {% assign one = 'In-car Phone Audio'%}
+      {% assign two = 'Handsfree calls'%}
+      {% assign three = 'Rapid PD Charging'%}
+    {% endif %}
+    {% if forloop.index == 10%}
+      {% assign one = 'Unbeatable Comfort'%}
+      {% assign two = 'Supreme Audio'%}
+      {% assign three = 'Wireless Charging'%}
+    {% endif %}
+    {% if forloop.index == 11%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Super Comact'%}
+      {% assign three = 'LED indicator'%}
+    {% endif %}
 
+    
+    {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  tick1: one tick2:two tick3:three %}
+  {% endfor %}
+  
+</div>
+<div style="margin-top:20px" class="bundle-wrapper">
+  <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23_-_desktop.jpg?v=1699610319">
+  <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23_-_mobile.jpg?v=1699610319">
+</div>
 <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
     <button class="js-add-to-cart f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
@@ -699,6 +728,9 @@ $(window).scroll(function () {
 
 </script>
 <style>
+.c-quantity {
+  max-width:100%;
+}
 .product-rev {
       background-color: #dfdfdf;
 }
@@ -744,7 +776,7 @@ input.js-variant-selector.text-uppercase.cursor-pointer {
   background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
   box-shadow: 0px -3px 6px #3131319e;
 }
-.js-info-bar, .info-bar {
+.js-info-bar, .info-bar, .product-template__wrapper--content__features--name {
   color: #333333;
 }
 .js-info-bar span {

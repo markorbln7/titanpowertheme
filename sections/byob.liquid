@@ -53,10 +53,10 @@
     </div>
 </div>
 <div class="hero_image desktop hd">
-  <img src="https://cdn05.zipify.com/C9BAgZynFCMpSpz-cuCB-_Jt99A=/fit-in/3840x0/263e94ab951f4224a507871b17a15932/charge-kit-banner.jpeg">
+  <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23.jpg?v=1699608930">
 </div>
 <div class="hero_image mobile md">
-  <img src="https://cdn05.zipify.com/wRYNX7Jz8YGRqoIoHkmjRwQO1Uw=/0x7:1080x1795/fit-in/3840x0/474c11e21dd14eb8b60261395fdc356a/bybuild-a-charging-kit-desktop-mobile.jpeg">
+  <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23-_mobile.jpg?v=1699608930">
 </div>
 {% comment %} <div id="info-bar" class="info-bar">ADD ANY 3 AND CHOOSE 1 FREE GIFT BELOW</div> {% endcomment %}
 {% comment %} <div class="bundle-wrapper offer-intro-wrapper">
@@ -83,7 +83,7 @@
   <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
 </div>
 <div class="sticky-div w-100">
-  <div class="js-info-bar">ADD 4 AND SAVE 55%</div>
+  <div class="js-info-bar">ADD 5 AND SAVE 55%</div>
   <div class="progress">
     <div class="bar"></div>
   </div>
@@ -167,59 +167,67 @@ increases.forEach((increas) => {
                numberOfSelected = numberOfSelected + parseInt(selectedNumber)
             })
             //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
+            let leftToGift = 14 - numberOfSelected;
             console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+            if(leftToGift === 14) {
+              bar.style.setProperty("--progress", "15%");
+              infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+      }
+      if(leftToGift === 13) {
+              bar.style.setProperty("--progress", "30%");
+              infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+      }
+        if(leftToGift === 12) {
+                bar.style.setProperty("--progress", "55%");
+                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
         }
         if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
+                bar.style.setProperty("--progress", "75%");
+                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
         }
         if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
         }
+        if(leftToGift === 9) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+        }
         if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
+            bar.style.setProperty("--progress", "75%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
         }
         if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
         }
+        if(leftToGift === 6) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+        }
+        if(leftToGift === 5) {
+            bar.style.setProperty("--progress", "60%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+        }
         if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "70%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "80%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "90%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "95%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
         }
         if(leftToGift <= 0) {
             bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
+            infoBar.innerHTML = `YOU SAVED 80%!!`
         }
     
   })
@@ -246,59 +254,67 @@ decreases.forEach((decrease) => {
                numberOfSelected = numberOfSelected + parseInt(selectedNumber)
             })
             //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
+            let leftToGift = 14 - numberOfSelected;
             console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+            if(leftToGift === 14) {
+              bar.style.setProperty("--progress", "15%");
+              infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+      }
+      if(leftToGift === 13) {
+              bar.style.setProperty("--progress", "30%");
+              infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+      }
+        if(leftToGift === 12) {
+                bar.style.setProperty("--progress", "55%");
+                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
         }
         if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
+                bar.style.setProperty("--progress", "75%");
+                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
         }
         if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
         }
+        if(leftToGift === 9) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+        }
         if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
+            bar.style.setProperty("--progress", "75%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
         }
         if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
         }
+        if(leftToGift === 6) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+        }
+        if(leftToGift === 5) {
+            bar.style.setProperty("--progress", "60%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+        }
         if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "70%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "80%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "90%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "95%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
         }
         if(leftToGift <= 0) {
             bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
+            infoBar.innerHTML = `YOU SAVED 80%!!`
         }
   })
 })
@@ -478,59 +494,67 @@ variantClicks.forEach(variantClick => {
                numberOfSelected = numberOfSelected + parseInt(selectedNumber)
             })
             //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
+            let leftToGift = 14 - numberOfSelected;
             console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+            if(leftToGift === 14) {
+              bar.style.setProperty("--progress", "15%");
+              infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+      }
+      if(leftToGift === 13) {
+              bar.style.setProperty("--progress", "30%");
+              infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+      }
+        if(leftToGift === 12) {
+                bar.style.setProperty("--progress", "55%");
+                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
         }
         if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
+                bar.style.setProperty("--progress", "75%");
+                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
         }
         if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
         }
+        if(leftToGift === 9) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+        }
         if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
+            bar.style.setProperty("--progress", "75%");
+            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
         }
         if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
+            bar.style.setProperty("--progress", "90%");
             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
         }
+        if(leftToGift === 6) {
+            bar.style.setProperty("--progress", "50%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+        }
+        if(leftToGift === 5) {
+            bar.style.setProperty("--progress", "60%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+        }
         if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "70%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "80%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "90%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
         }
         if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
+            bar.style.setProperty("--progress", "95%");
+            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
         }
         if(leftToGift <= 0) {
             bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
+            infoBar.innerHTML = `YOU SAVED 80%!!`
         }
             
             return
@@ -543,59 +567,68 @@ variantClicks.forEach(variantClick => {
               selectedNumber = selectedItem.getAttribute('data-quantity')
               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
           })
-        let leftToGift = 12 - numberOfSelected;
-        if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
-        }
+          let leftToGift = 14 - numberOfSelected;
+          console.log(leftToGift,'leftToGift')
+          if(leftToGift === 14) {
+            bar.style.setProperty("--progress", "15%");
+            infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+    }
+    if(leftToGift === 13) {
+            bar.style.setProperty("--progress", "30%");
+            infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+    }
+      if(leftToGift === 12) {
+              bar.style.setProperty("--progress", "55%");
+              infoBar.innerHTML = `ADD 3 AND SAVE 55%`
+      }
+      if(leftToGift === 11) {
+              bar.style.setProperty("--progress", "75%");
+              infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
+      }
+      if(leftToGift === 10) {
+          bar.style.setProperty("--progress", "90%");
+          infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
+      }
+      if(leftToGift === 9) {
+          bar.style.setProperty("--progress", "50%");
+          infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+      }
+      if(leftToGift === 8) {
+          bar.style.setProperty("--progress", "75%");
+          infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
+      }
+      if(leftToGift === 7) {
+          bar.style.setProperty("--progress", "90%");
+          infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
+      }
+      if(leftToGift === 6) {
+          bar.style.setProperty("--progress", "50%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift === 5) {
+          bar.style.setProperty("--progress", "60%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift === 4) {
+          bar.style.setProperty("--progress", "70%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift === 3) {
+          bar.style.setProperty("--progress", "80%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift === 2) {
+          bar.style.setProperty("--progress", "90%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift === 1) {
+          bar.style.setProperty("--progress", "95%");
+          infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
+      }
+      if(leftToGift <= 0) {
+          bar.style.setProperty("--progress", "100%");
+          infoBar.innerHTML = `YOU SAVED 80%!!`
+      }
 
         
         console.log(leftToGift, numberOfSelected, 'numberOfSelected')
@@ -671,5 +704,64 @@ $(window).scroll(function () {
 }
 .product-rev .product-zig__bigtitle {
   color:black;
+}
+.hero_image {
+  background: #000;
+}
+.option-name {
+  cursor: pointer;
+  background-color: #d6e1e1;
+  color: #333333;
+  border-radius: 10px;
+  border: 0.75px solid #d5d5d5;
+  padding: 8px 24px 8px 8px;
+  margin: auto auto 10px;
+  box-shadow: 2px 2px 8px 2px #bdbdbd38;
+}
+.c-quantity {
+  border: 2px solid #c8c8c8;
+  width: 130px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 8px 2px #bdbdbd38;
+}
+.bundle-wrapper__product {
+  border: 1.75px solid #ececec;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 10px #b5b5b5;
+  background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+}
+input.js-variant-selector.text-uppercase.cursor-pointer {
+  color: #fff;
+  border-radius: 25px;
+}
+.bundle-wrapper__product--image img {
+  width: 100%;
+  border-radius: 30px;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
+  box-shadow: 0px -3px 6px #3131319e;
+}
+.js-info-bar, .info-bar {
+  color: #333333;
+}
+.js-info-bar span {
+  color: #60c655 !important;
+}
+.progress {
+  height: 25px;
+  margin: 0 auto 20px;
+  border: 1px solid #fff;
+  padding: 7px;
+  box-shadow: 0 0 5px #aaa;
+  border-radius: 7px;
+  background: #fff;
+}
+.product-template__wrapper--content__form--atc button {
+   background: #141414 !important;
+   color: #60c655 !important;
+   cursor: pointer;
 }
 </style>

@@ -1,27 +1,58 @@
-<div class="f">
-    <div id="container">
-        <img class="slicica image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_b_v1.jpg?v=1699352579">
-        <img class="slicica-dva image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_a_v1.jpg?v=1699352579">
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
+<div class="game">
+    <div class="intro">
+        <div class="intro__title">REVEAL SPECIAL OFFERS</div>
+        <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
     </div>
-    <div id="container">
-        <img class="slicica image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_b_v1.jpg?v=1699352579">
-        <img class="slicica-dva image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_a_v1.jpg?v=1699352579">
+    <div class="f fw">
+        <div id="container" class="js-container">
+            <img class="slicica image js-load-image" src="{{ "cardopen.jpg" | asset_img_url:"478x" }}">
+            <img class="slicica-dva image js-load-image-dva" src="{{ "cardclose.jpg" | asset_img_url:"478x" }}">
+        </div>
+        <div id="container2" class="js-container">
+            <img class="slicica image js-load-image" src="{{ "cardopen2.jpg" | asset_img_url:"478x" }}">
+            <img class="slicica-dva image js-load-image-dva" src="{{ "cardclose2.jpg" | asset_img_url:"478x" }}">
+        </div>
+        <div id="container3" class="js-container">
+            <img class="slicica image js-load-image" src="{{ "cardopen.jpg" | asset_img_url:"478x" }}">
+            <img class="slicica-dva image js-load-image-dva" src="{{ "cardclose.jpg" | asset_img_url:"478x" }}">
+        </div>
+        <div id="container4" class="js-container">
+            <img class="slicica image js-load-image" src="{{ "cardopen2.jpg" | asset_img_url:"478x" }}">
+            <img class="slicica-dva image js-load-image-dva" src="{{ "cardclose2.jpg" | asset_img_url:"478x" }}">
+        </div>
     </div>
-    <div id="container">
-        <img class="slicica image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_b_v1.jpg?v=1699352579">
-        <img class="slicica-dva image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_a_v1.jpg?v=1699352579">
-    </div>
-    <div id="container">
-        <img class="slicica image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_b_v1.jpg?v=1699352579">
-        <img class="slicica-dva image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Slot_Machine_Card_a_v1.jpg?v=1699352579">
+    <div class="product-template__wrapper--content__form--atc">
+        <button class="reveal f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
+        <div class="atc-text js-atc-text scroll-reveal">
+                REVEAL
+        </div>
+        </button>
     </div>
 </div>
 
-<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/delaunay.js"></script>
+{{ 'del.js' | asset_url | script_tag }}
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
 
 <style>
-
+.product-template__wrapper--content__form--atc {
+    margin-top: 30px;
+    margin-bottom:30px;
+}
+.game {
+    background: #e4eaea;
+}
+.game .intro {
+    margin-bottom:30px;
+}
 canvas {
     position: absolute;
     backface-visibility: hidden;
@@ -34,6 +65,7 @@ canvas {
     position: absolute;
     cursor: pointer;
     width:100%;
+    height:auto;
     top:0;
     left:0;
 }
@@ -42,6 +74,7 @@ canvas {
     position: absolute;
     cursor: pointer;
     width:100%;
+    height:auto;
     visibility: hidden;
     opacity: 0;
 }
@@ -50,8 +83,8 @@ canvas {
     opacity: 1;
 }
 
-#container {
-    width: 100%;
+#container, #container2, #container3, #container4  {
+    width: 25%;
     padding-top:25%;
     height: 100%;
     left: 0;
@@ -61,65 +94,146 @@ canvas {
     margin: auto;
     position:relative;
 }
+@media only screen and (max-width: 600px) {
+    #container, #container2, #container3, #container4  {
+        width: 50%;
+        padding-top:50%;
+    }
+  }
 </style>
 
 <script>
     // triangulation using https://github.com/ironwallaby/delaunay
 
+function loadImage(c, w, h) {
+    let i1 = c.querySelector('.js-load-image');
+    let i2 = c.querySelector('.js-load-image-dva');
+    let container = c.querySelector('.js-container');
+    let containerWidht
+    if($('#MainContent').width() < 768 ) {
+        console.log('manje')
+        containerWidht = Math.round($('#MainContent').width() / 2 )
+    } else {
+        console.log('vece')
+        containerWidht = Math.round($('#MainContent').width() / 4 )
+    }
+    let width = '_' + containerWidht + 'x';
+    let src = i1.getAttribute('src');
+    let src2 = i2.getAttribute('src');
+    let replacedSrc = src.replace(/_.*x/, width);
+    let replacedSrc2 = src2.replace(/_.*x/, width);
+    i1.setAttribute('src', replacedSrc);
+    i2.setAttribute('src', replacedSrc2);
+    console.log(replacedSrc, 'replacedSrc')
+}
+let c1 = document.querySelector('#container');
+let c2 = document.querySelector('#container2');
+let c3 = document.querySelector('#container3');
+let c4 = document.querySelector('#container4');
+loadImage(c1)
+loadImage(c2)
+loadImage(c3)
+loadImage(c4)
+
+let reveal = document.querySelector('.reveal');
+window.addEventListener("resize", function (e) {
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    loadImage(c1)
+    loadImage(c2)
+    loadImage(c3)
+    loadImage(c4)
+});
+
 const TWO_PI = Math.PI * 2;
 
-var images = [],
-    imageIndex = 0;
 
-var img = document.querySelector('.image'); 
-var image,
-    imageWidth = img.width,
-    imageHeight = img.height;
+
 
 var vertices = [],
     indices = [],
     fragments = [];
 
-var container = document.getElementById('container');
-
-var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
-
 window.onload = function() {
-    placeImage(false);
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    placeImage(c1);
+    placeImage(c2);
+    placeImage(c3);
+    placeImage(c4);
 };
 
 function imagesLoaded() {
-    placeImage();
-    triangulate();
-    shatter();
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    placeImage(c1);
+    triangulate(c1);
+    shatter(c1);
+    placeImage(c2);
+    triangulate(c2);
+    shatter(c2);
+    placeImage(c3);
+    triangulate(c3);
+    shatter(c3);
+    placeImage(c4);
+    triangulate(c4);
+    shatter(c4);
 }
 
-function placeImage(transitionIn) {
-    image = document.querySelector('.slicica');
-
-    if (++imageIndex === images.length) imageIndex = 0;
-
-    image.addEventListener('click', imageClickHandler);
-    container.appendChild(image);
-
-    if (transitionIn !== false) {
-        TweenMax.fromTo(image, 0.75, {y:-1000}, {y:0, ease:Back.easeOut});
-    }
+function placeImage(c) {
+    {% comment %} image.addEventListener('click', imageClickHandler); {% endcomment %}
+    {% comment %} reveal.addEventListener('click', imageClickHandler); {% endcomment %}
+    let image = c.querySelector('.slicica')
+    reveal.addEventListener("click", function (e) {
+        let container = document.querySelector('#container');
+        imageClickHandler(container)
+    });
+    c.appendChild(image);
 }
 
-function imageClickHandler(event) {
-    var box = image.getBoundingClientRect(),
-        top = box.top,
-        left = box.left;
+function imageClickHandler(container) {
+    let image = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    setTimeout(() => {
+        var box = image.getBoundingClientRect(),
+            top = box.top,
+            left = box.left;
 
+        clickPosition[0] = image.offsetLeft + image.offsetWidth / 2;
+        clickPosition[1] = image.offsetTop + image.offsetHeight / 2;
+
+        triangulate(c1);
+        triangulate(c2);
+        triangulate(c3);
+        triangulate(c4);
+        shatter(c1);
+        shatter(c2);
+        shatter(c3);
+        shatter(c4);
+    }, 500);
+}
+
+function triangulate(container) {
+    let image = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
     clickPosition[0] = image.offsetLeft + image.offsetWidth / 2;
-    clickPosition[1] = image.offsetTop + image.offsetHeight / 2;
-
-    triangulate();
-    shatter();
-}
-
-function triangulate() {
+    clickPosition[1] = image.offsetTop + image.offsetHeight / 2; 
     var rings = [
             {r:50, c:12},
             {r:150, c:12},
@@ -153,11 +267,20 @@ function triangulate() {
     indices = Delaunay.triangulate(vertices);
 }
 
-function shatter() {
+function shatter(elem) {
+    var container = elem;
+    let image2 = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    clickPosition[0] = image2.offsetLeft + image2.offsetWidth / 2;
+    clickPosition[1] = image2.offsetTop + image2.offsetHeight / 2; 
+    console.log(container, 'container')
     var p0, p1, p2,
         fragment;
 
-    imageDva = document.querySelector('.slicica-dva');
+    imageDva = container.querySelector('.slicica-dva');
     imageDva.classList.add('active');
 
     var tl0 = new TimelineMax({onComplete:shatterCompleteHandler});
@@ -167,7 +290,6 @@ function shatter() {
         p0 = vertices[indices[i + 0]];
         p1 = vertices[indices[i + 1]];
         p2 = vertices[indices[i + 2]];
-
         fragment = new Fragment(p0, p1, p2);
 
         var dx = fragment.centroid[0] - clickPosition[0],
@@ -190,28 +312,26 @@ function shatter() {
         tl1.to(fragment.canvas, 0.4,{alpha:0}, 0.6);
 
         tl0.insert(tl1, delay);
-
+        
 
         fragments.push(fragment);
         container.appendChild(fragment.canvas);
     }
 
-
+    let image = elem.querySelector('.slicica')
     container.removeChild(image);
     image.removeEventListener('click', imageClickHandler);
 }
 
 function shatterCompleteHandler() {
-    
+    var container = document.getElementById('container');
     // add pooling?
-    fragments.forEach(function(f) {
+    {% comment %} fragments.forEach(function(f) {
         container.removeChild(f.canvas);
-    });
+    }); {% endcomment %}
     fragments.length = 0;
     vertices.length = 0;
     indices.length = 0;
-
-    {% comment %} placeImage(); {% endcomment %}
 }
 
 //////////////
@@ -275,6 +395,7 @@ Fragment.prototype = {
         this.ctx = this.canvas.getContext('2d');
     },
     clip:function() {
+        let image = document.querySelector('.slicica');
         this.ctx.translate(-this.box.x, -this.box.y);
         this.ctx.beginPath();
         this.ctx.moveTo(this.v0[0], this.v0[1]);

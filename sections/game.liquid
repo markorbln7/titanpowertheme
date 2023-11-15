@@ -9,8 +9,9 @@
 {{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 <div class="game">
     <div class="intro">
-        <div class="intro__title">REVEAL SPECIAL OFFERS</div>
-        <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
+        <div class="intro__title">Reveal Your Exclusive Black Friday Surprise!</div>
+        <div class="intro__subtitle">With each click, you have a chance for early access to some of our most exclusive Black Friday offers. Are you one of the fortunate few to score our top-tier discounts?</div>
+        <div class="intro__downtitle">Your Lucky click awaits!</div>
     </div>
     <div class="f fw background-black">
         <div id="container" class="js-container">
@@ -43,6 +44,21 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
 
 <style>
+.intro__title {
+    padding:0 10px;
+}
+.intro__downtitle {
+    padding:0 10px;
+    text-align: center;
+    margin: 10px 0 10px;
+    font-family: Work Sans;
+    color: #969696;
+    font-style: normal;
+    line-height: 1.2;
+    font-size: 30px;
+    color: #60c655;
+    font-weight: 700;
+}
 .background-black {
     background: #000;
 }
@@ -100,7 +116,7 @@ canvas {
 @media only screen and (max-width: 600px) {
     #container, #container2, #container3, #container4  {
         width: 50%;
-        padding-top: 33.3333%;
+        padding-top: 66.6666%;
     }
   }
   .special.active {
@@ -478,3 +494,17 @@ Fragment.prototype = {
     }
 };
 </script>
+
+
+{% schema %}
+{
+  "name": "Reveal Offers",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Reveal Offers",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

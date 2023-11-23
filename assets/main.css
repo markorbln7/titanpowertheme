@@ -572,6 +572,12 @@ input[type=number]
       display: block;
   }
 }
+body.no-scroll {
+  overflow: hidden;
+}
+html.no-scroll {
+  overflow: hidden;
+}
 .mha, .mxa {
   margin-left: auto;
   margin-right: auto;

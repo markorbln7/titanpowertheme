@@ -1,0 +1,49 @@
+<div class="product-popup__wrapper hidden">
+    <div class="close">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" fill="none" viewBox="0 0 18 17">
+        <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+      </svg>
+    </div>
+    <div class="info-bar">YOU UNLOCKED 1 FREE GIFT! CHOOSE IT BELOW</div>
+    <div class="product-popup__holder">
+      {% for product in collections['frree-gift'].products %}
+        {% if forloop.index == 1%}
+          {% assign one = 'Rapid 15W Charge'%}
+          {% assign two = 'No More Messy Wires'%}
+          {% assign three = 'Charges with case'%}
+        {% endif %}
+        {% if forloop.index == 2%}
+          {% assign one = 'Charges With Case'%}
+          {% assign two = 'Wireless Charging'%}
+          {% assign three = 'In Car or at Home'%}
+        {% endif %}
+        {% if forloop.index == 3 %}
+          {% assign one = 'Charge Any Device'%}
+          {% assign two = 'Retractable Cable'%}
+          {% assign three = 'Changeable Length'%}
+        {% endif %}
+        {% render 'product-render' checkout:'checkout' cart_title:'+ PICK A GIFT' hidecart:false product_var:product.handle %}
+      {% endfor %}
+    </div>
+    {% comment %} <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
+      <button class="js-add-to-cart-popup f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
+      </button>
+    </div> {% endcomment %}
+  </div>
+  <div class="product-popup__animation hidden">
+    <div class="container">
+          <div class="ring">
+              <h1>Preparing gifts...</h1>
+          </div>
+    </div>
+  </div>
+  <div class="product-addtocart hidden">
+      <div class="container">
+        <div id="battery">
+          <div id="charge" class="active"></div>
+          <div id="charge-level">ADDING..</div>
+        </div>
+        <div id="charging-time"></div>
+      </div>
+  </div>

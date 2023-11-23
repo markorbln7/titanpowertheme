@@ -4,8 +4,15 @@
 {{ 'section-product-image.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle-builder.js' | asset_url | script_tag }}
 <div class="intro">
-  <div class="intro__title">ADD PRODUCTS IN OFFER</div>
-  <div class="intro__subtitle">FULLY CUSTOMISE THE PRODUCTS YOU WANT</div>
+  <img class="number-icon-three" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3-icon.png?v=1700734602">
+  <div class="bundle-title gray-version">
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+    <div class="text">CUSTOMISE YOUR <br>OFFER</div>
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+      Combine our bundles and best sellers to custom build your offer and reach our very best prices.
+  </div>
 </div>
 <div class="sticky-div w-100">
   <div class="js-info-bar">ADD 5 AND SAVE 55%</div>
@@ -13,7 +20,7 @@
     <div class="bar"></div>
   </div>
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
-    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white">
+    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
   </button>
 </div>
@@ -89,14 +96,15 @@
   {% endfor %}
   
 </div>
-{% render 'bundle-gifts' %}
+
 <div style="background:#141414;padding-bottom:30px;">
   <div class="bundle-wrapper">
-    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23_-_desktop.jpg?v=1699610319">
-    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Gift_bundle_builder_byob_banner_bfcm23_-_mobile.jpg?v=1699610319">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Pop_up_banner_that_goes_above_button_-_DESKTOP.jpg?v=1700742498">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Discount_Banner_mega_sale_page_summary.jpg?v=1700741715">
   </div>
+  {% render 'bundle-gifts-bottom' %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
-      <button class="js-add-to-cart f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white">
+      <button class="js-add-to-cart f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
         <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
       </button>
   </div>
@@ -106,6 +114,10 @@
 {{ 'startbundle.js' | asset_url | script_tag }}
 
 <style>
+  .slide-content__image img {
+    border:none;
+    box-shadow:none;
+  }
 .bg-titan-greenish {
   background: #60c655;
 }
@@ -215,6 +227,34 @@ input.js-variant-selector.text-uppercase.cursor-pointer {
   .intro__title {
     color: #333333 !important;
     font-size:40px;
+  }
+  .bundle-wrapper__product {
+    border: 1.75px solid #ececec;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0 0 10px #b5b5b5;
+    background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+    overflow:hidden;
+  }
+  .c-quantity__button {
+    background: #60c655;
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    padding:0;
+  }
+  .bundle-wrapper__footer .c-quantity__amount {
+    font-size: 35px;
+  }
+  .option-name {
+    font-size:11px;
+    padding: 7px;
+  }
+  .bundle-wrapper {
+    gap:10px;
+    padding: 0 10px;
   }
 }
 .intro__subtitle {

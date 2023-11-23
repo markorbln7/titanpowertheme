@@ -20,9 +20,21 @@
             </div>
         </div>
         <div class="bundle-tab__tabs--content active tab1">
-            <div class="bundle-tab__tabs--content__single">
-                <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+            <div class="bundle-tab__tabs--content__single js-wrapper-product" >
+                
+                {% if product.images[2].src %}
+                    <div class="product-overlay">
+                        <div class="close">
+                            {% render 'icon-close' %}
+                        </div>
+                        <div class="product-overlay-image">
+                            <img src="{{product.images[2].src | img_url: 'master'}}">
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="bundle-tab__tabs--content__single--image product-overlay-trigger">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PLUG_POPULAR_COMBO.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Cable & Plugs
@@ -31,7 +43,13 @@
                     <ul>
                         <li><span>3x</span> Titan Cables</li>
                         <li><span>1x</span> 45w Plug</li>
+                        
                     </ul>
+                </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="37383457628338,17431305298098" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="37867505868978,17431305298098" class="js-phone-select">Usb-C</div>
                 </div>
                 <div class="bundle-tab__tabs--content__single--button">
                     <button class="js-start-bundles" data-ids="37383457628338,17431305298098">ADD ALL TO OFFER</button>
@@ -39,10 +57,10 @@
             </div>
             <div class="bundle-tab__tabs--content__single">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Buds_folding_POPULAR_COMBO.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
-                    Buds and Wireless Dock
+                    Buds and Folding Dock
                 </div>
                 <div class="bundle-tab__tabs--content__single--list">
                     <ul>
@@ -56,9 +74,9 @@
             </div>
         </div>
         <div class="bundle-tab__tabs--content bundle-tab__tabs--content__three tab2">
-            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single">
+            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single js-wrapper-product">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Social_Butterfly_bundle.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Social Butterfly Bundle
@@ -70,13 +88,18 @@
                         <li><span>1x</span> Titan Buds</li>
                     </ul>
                 </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="47383457628338,17383356342450,17689660072114" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="47867505868978,17383356342450,17689660072114" class="js-phone-select">Usb-C</div>
+                </div>
                 <div class="bundle-tab__tabs--content__single--button">
                     <button class="js-start-bundles" data-ids="47383457628338,17383356342450,17689660072114">ADD ALL TO OFFER</button>
                 </div>
             </div>
-            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single">
+            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single js-wrapper-product">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/nomad_bundle_1.jpg?v=1700778176">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Nomad Bundle
@@ -89,13 +112,18 @@
                         <li><span>1x</span> Titan Buds</li>
                     </ul>
                 </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="27383457628338,17863405838514,17671864852658,17689660072114" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="27867505868978,17863405838514,17671864852658,17689660072114" class="js-phone-select">Usb-C</div>
+                </div>
                 <div class="bundle-tab__tabs--content__single--button">
                     <button class="js-start-bundles" data-ids="27383457628338,17863405838514,17671864852658,17689660072114">ADD ALL TO OFFER</button>
                 </div>
             </div>
-            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single">
+            <div class="bundle-tab__tabs--content__single bundle-tab__tabs--content__three__single js-wrapper-product">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gamers_bundle.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Gamers Bundle
@@ -108,15 +136,20 @@
                         <li><span>1x</span> Titan3 in 1 mothership Dock</li>
                     </ul>
                 </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="37383457628338,17431305298098,17383363682482,17530094919858" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="37867505868978,17431305298098,17383363682482,17530094919858" class="js-phone-select">Usb-C</div>
+                </div>
                 <div class="bundle-tab__tabs--content__single--button">
                     <button class="js-start-bundles" data-ids="37383457628338,17431305298098,17383363682482,17530094919858">ADD ALL TO OFFER</button>
                 </div>
             </div>
         </div>
         <div class="bundle-tab__tabs--content bundle-tab__tabs--content__three tab3">
-            <div class="bundle-tab__tabs--content__single">
+            <div class="bundle-tab__tabs--content__single js-wrapper-product">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/OFFER___Family_GIFT_BUNDLE.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Family Gift Bundle
@@ -132,13 +165,18 @@
                         <li><span>1x</span> Titan 3-in-1 Mothership Dock™</li>
                     </ul>
                 </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="67383457628338,27431305298098,27689660072114,17383352705202,17671864852658,17863405838514,17530094919858" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="67867505868978,27431305298098,27689660072114,17383352705202,17671864852658,17863405838514,17530094919858" class="js-phone-select">Usb-C</div>
+                </div>
                 <div class="bundle-tab__tabs--content__single--button">
                     <button class="js-start-bundles" data-ids="67383457628338,27431305298098,27689660072114,17383352705202,17671864852658,17863405838514,17530094919858">ADD ALL TO OFFER</button>
                 </div>
             </div>
-            <div class="bundle-tab__tabs--content__single">
+            <div class="bundle-tab__tabs--content__single js-wrapper-product">
                 <div class="bundle-tab__tabs--content__single--image">
-                    <img src="https://titanpowerplus.com/cdn/shop/files/buybox_lightning_45wplug.jpg?v=1692625501">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/OFFER___Stocking_Filler_BUNDLE.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">
                     Stocking Filler Bundle
@@ -153,8 +191,13 @@
                         <li><span>1x</span> 3 in 1 cable</li>
                     </ul>
                 </div>
+                <div class="phone-selector-title">Choose your phone type:</div>
+                <div class="phone-selector">
+                    <div data-select-ids="27383457628338,17689660072114,17431305298098,17863405838514,17671864852658,17383363682482" class="js-phone-select active">Iphone</div>
+                    <div data-select-ids="27867505868978,17689660072114,17431305298098,17863405838514,17671864852658,173833636824828" class="js-phone-select">Usb-C</div>
+                </div>
                 <div class="bundle-tab__tabs--content__single--button">
-                    <button class="js-start-bundles" data-ids="7383457628338,17689660072114,17431305298098,17863405838514,17671864852658,17383363682482">ADD ALL TO OFFER</button>
+                    <button class="js-start-bundles" data-ids="27383457628338,17689660072114,17431305298098,17863405838514,17671864852658,17383363682482">ADD ALL TO OFFER</button>
                 </div>
             </div>
         </div>

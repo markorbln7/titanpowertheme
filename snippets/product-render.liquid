@@ -1,5 +1,5 @@
 {% assign product = all_products[product_var] %}
-<div class="bundle-wrapper__product" data-product-id="{{product.id}}">
+<div class="bundle-wrapper__product js-wrapper-product" data-product-id="{{product.id}}">
     {% if product.images[2].src %}
         <div class="product-overlay">
             <div class="close">
@@ -131,10 +131,12 @@
 <script>
 overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
 overlayCloses = document.querySelectorAll('.close')
+selfCloses = document.querySelectorAll('.product-overlay')
+console.log(selfCloses, 'self closes')
 overlayTriggers.forEach((overlayTrigger) => {
     overlayTrigger.addEventListener('click', (e) => {
         let _this = e.target
-        let parent = _this.closest('.bundle-wrapper__product')
+        let parent = _this.closest('.js-wrapper-product')
         parent.querySelector('.product-overlay').classList.add('show')
         document.querySelector('body').classList.add('no-scroll')
         document.querySelector('html').classList.add('no-scroll')
@@ -143,8 +145,18 @@ overlayTriggers.forEach((overlayTrigger) => {
 overlayCloses.forEach((overlayClose) => {
     overlayClose.addEventListener('click', (e) => {
         let _this = e.target
-        let parent = _this.closest('.bundle-wrapper__product')
+        let parent = _this.closest('.js-wrapper-product')
         parent.querySelector('.product-overlay').classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+selfCloses.forEach((selfClose) => {
+    selfClose.addEventListener('click', (e) => {
+        console.log('self close')
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        _this.classList.remove('show')
         document.querySelector('body').classList.remove('no-scroll')
         document.querySelector('html').classList.remove('no-scroll')
     })

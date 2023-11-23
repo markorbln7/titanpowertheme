@@ -686,3 +686,32 @@ bundleTabs.forEach((bundleTab) => {
         document.querySelector(activeSelector).classList.add('active')
     })
 })
+
+
+scrollToStart = document.querySelector('.scroll-to-start')
+
+scrollToStart.addEventListener('click', (e) => {
+  const $sectionscroll = $('.number-icon')
+
+  $('html, body').animate({
+    scrollTop: $sectionscroll.offset().top + 'px'
+  }, 1000)
+})
+
+
+let selectPhones = document.querySelectorAll('.js-phone-select')
+
+selectPhones.forEach((selectPhone) => {
+  selectPhone.addEventListener('click', (e) => {
+      let _this = e.target
+      let ids = _this.getAttribute('data-select-ids')
+      let parent = _this.closest('.js-wrapper-product')
+      let bundleId = parent.querySelector('.js-start-bundles')
+      bundleId.setAttribute('data-ids', ids)
+      let allPhones = parent.querySelectorAll('.js-phone-select')
+      allPhones.forEach((allPhone) => {
+        allPhone.classList.remove('active')
+      })
+      _this.classList.add('active')
+  })
+})

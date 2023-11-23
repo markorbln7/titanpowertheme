@@ -21,17 +21,7 @@
         </div>
         <div class="bundle-tab__tabs--content active tab1">
             <div class="bundle-tab__tabs--content__single js-wrapper-product" >
-                
-                {% if product.images[2].src %}
-                    <div class="product-overlay">
-                        <div class="close">
-                            {% render 'icon-close' %}
-                        </div>
-                        <div class="product-overlay-image">
-                            <img src="{{product.images[2].src | img_url: 'master'}}">
-                        </div>
-                    </div>
-                {% endif %}
+             
                 
                 <div class="bundle-tab__tabs--content__single--image product-overlay-trigger">
                     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PLUG_POPULAR_COMBO.jpg?v=1700777816">
@@ -175,7 +165,15 @@
                 </div>
             </div>
             <div class="bundle-tab__tabs--content__single js-wrapper-product">
-                <div class="bundle-tab__tabs--content__single--image">
+                <div class="product-overlay">
+                    <div class="close">
+                        {% render 'icon-close' %}
+                    </div>
+                    <div class="product-overlay-image">
+                        <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_Info_cards_New_version_stacked_3.jpg?v=1700778762">
+                    </div>
+                </div>
+                <div class="bundle-tab__tabs--content__single--image product-overlay-trigger">
                     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/OFFER___Stocking_Filler_BUNDLE.jpg?v=1700777816">
                 </div>
                 <div class="bundle-tab__tabs--content__single--title">

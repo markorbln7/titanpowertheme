@@ -1146,6 +1146,8 @@
 }
 .product-overlay-image {
     img {
+        max-width: 60%;
+        margin-left: 20%;
         @media only screen and (max-width: 768px) {
             max-width: 70%;
             margin-left: 15%;

@@ -14,6 +14,7 @@
               <img src="{{block.settings.image | img_url: 'master'}}">
             </div>
             <div class="slide-content__text">
+              {% if block.settings.title %}<div class="slide-content__text--product color-black uppercase">{{block.settings.title}}</div>{% endif %}
               <div class="slide-content__text--title color-black">{{block.settings.text}}</div>
               {% if block.settings.name %}<div class="slide-content__text--signature color-black">{{block.settings.name}}</div>{% endif %}
               <div class="product-image__title--teststars product-template__wrapper--content__review--stars color-titan-yellow font-sans">★ ★ ★ ★ ★ </div>
@@ -47,6 +48,11 @@
         "type": "slider",
         "name": "Testimonial",
         "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
           {
             "type": "text",
             "id": "text",

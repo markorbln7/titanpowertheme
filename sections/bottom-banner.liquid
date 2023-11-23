@@ -1,0 +1,90 @@
+<div class="bottom-banner relative">
+    <div class="bottom-banner-image desktop">
+        <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Ecologi_Desktop.jpg?v=1700745464">
+    </div>  
+    <div class="bottom-banner-image mobile">
+        <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Ecologi_Mobile_2.jpg?v=1700745464">
+    </div>    
+    <div class="bottom-banner-content">
+        <div class="bottom-banner-title">
+            <div class="bottom-banner-title-up">JOIN OUR</div>
+            <div class="bottom-banner-title-title">GREEN FRIDAY MOVEMENT</div>
+            <div class="bottom-banner-title-text">It's our mission to become a household name for sustainable everyday electronics.
+                We design our porducts for extreme durability so we can help tackle the fight wagainst electronic waste<br>
+                We've also teamed up with Sprout to bring you Green Friday to plant trees for every product we sell.
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    {% comment %} .bottom-banner {
+        height:700px;
+    } {% endcomment %}
+    .bottom-banner-content {
+        text-align:center;
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 80%;
+    }
+    .bottom-banner-title-up {
+        font-size:40px;
+        font-weight:700;
+        color:white;
+        line-height:1.2;
+    }
+    .bottom-banner-title-title {
+        font-size:50px;
+        font-weight:700;
+        color:#60c655;
+        line-height:1.2;
+    }
+    .bottom-banner-title-text {
+        font-size:20px;
+        font-weight:400;
+        color:white;
+        line-height:1.2;
+    }
+    .bottom-banner-image img {
+        display:block;
+    }
+    .bottom-banner-image img {
+        width:100%;
+        object-fit:cover;
+    }
+    {% comment %} .bottom-banner-image {
+        height:700px;
+    } {% endcomment %}
+    @media only screen and (max-width: 768px) {
+        .bottom-banner-content {
+            text-align:center;
+            background:black;
+            position: relative;
+            bottom:unset;
+            left: unset;
+            transform: none;
+            width: 100%;
+            padding:20px;
+        }
+        .bottom-banner-title-up {
+            font-size:20px;
+            font-weight:700;
+            color:white;
+            line-height:1.2;
+        }
+        .bottom-banner-title-title {
+            font-size:20px;
+            font-weight:700;
+            color:#60c655;
+            line-height:1.2;
+        }
+        .bottom-banner-title-text {
+            font-size:14px;
+            font-weight:400;
+            color:white;
+            line-height:1.2;
+        }
+       
+    }
+</style>

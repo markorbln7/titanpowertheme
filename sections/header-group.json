@@ -2,6 +2,30 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
+    "6383e9fb-48b9-4118-86d9-6db5a7a5a2e0": {
+      "type": "announcement-bar",
+      "blocks": {
+        "sections--16211273482418__6383e9fb-48b9-4118-86d9-6db5a7a5a2e0-announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "EPIC BLACK FRIDAY SALE - SHOP NOW>",
+            "link": "https:\/\/titanpowerplus.com\/pages\/custom-offer"
+          }
+        }
+      },
+      "block_order": [
+        "sections--16211273482418__6383e9fb-48b9-4118-86d9-6db5a7a5a2e0-announcement-1"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "show_line_separator": true,
+        "show_social": false,
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
+    },
     "header": {
       "type": "header",
       "custom_css": [
@@ -30,6 +54,7 @@
     }
   },
   "order": [
+    "6383e9fb-48b9-4118-86d9-6db5a7a5a2e0",
     "header"
   ]
 }

@@ -33,29 +33,29 @@
       {% assign three = 'Lifetime Warranty'%}
     {% endif %}
     {% if forloop.index == 2%}
+      {% assign one = 'Fast Charging'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 3%}
       {% assign one = 'Charge 4 Devices'%}
       {% assign two = 'Charge 3x Faster'%}
       {% assign three = 'US, EU, UK Adapters'%}
     {% endif %}
-    {% if forloop.index == 3%}
-      {% assign one = "Everyone's Charged"%}
-      {% assign two = 'Three Charge Ports'%}
-      {% assign three = 'No More Fighting'%}
-    {% endif %}
     {% if forloop.index == 4%}
-      {% assign one = 'Changeable Length'%}
-      {% assign two = 'Charge Any Device'%}
-      {% assign three = 'Retractable Cable'%}
-    {% endif %}
-    {% if forloop.index == 5 %}
       {% assign one = 'Rapid 15W Charge'%}
       {% assign two = 'No More Messy Wires'%}
       {% assign three = 'Charges with case'%}
     {% endif %}
+    {% if forloop.index == 5%}
+      {% assign one = 'Wireless Charge & Magnetic'%}
+      {% assign two = 'Huge 10,000mAh Capacity'%}
+      {% assign three = 'Fold-out kickstand'%}
+    {% endif %}
     {% if forloop.index == 6%}
-      {% assign one = 'Charges With Case'%}
-      {% assign two = 'Wireless Charging'%}
-      {% assign three = 'In Car or at Home'%}
+      {% assign one = 'In-car Phone Audio'%}
+      {% assign two = 'Handsfree calls'%}
+      {% assign three = 'Rapid PD Charging'%}
     {% endif %}
     {% if forloop.index == 7%}
       {% assign one = 'No more messy wires'%}
@@ -82,13 +82,214 @@
       {% assign two = 'Super Comact'%}
       {% assign three = 'LED indicator'%}
     {% endif %}
+    {% if forloop.index == 12%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Super Comact'%}
+      {% assign three = 'LED indicator'%}
+    {% endif %}
+    {% if forloop.index == 13%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Super Comact'%}
+      {% assign three = 'LED indicator'%}
+    {% endif %}
 
     {% if forloop.index == 1%}
       <div class="upper-part-holder">
         <div class="upper-part-holder__title">Premium best sellers</div>
           <div class="upper-part-holder__flex">
     {% endif %}
-            {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  tick1: one tick2:two tick3:three %}
+    
+
+
+{% comment %} RENDERER START {% endcomment %}
+<div class="bundle-wrapper__product js-wrapper-product" data-product-id="{{product.id}}">
+    {% if product.images[2].src %}
+        <div class="product-overlay">
+            <div class="close">
+                {% render 'icon-close' %}
+            </div>
+            <div class="product-overlay-image">
+                <img src="{{product.images[2].src | img_url: 'master'}}">
+            </div>
+        </div>
+    {% endif %}
+    <div class="bundle-wrapper__product--image product-overlay-trigger relative">
+        <div class="info-icon">i</div>
+        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
+    </div>
+    <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
+    <div class="product-template__wrapper--content__features font-sans">
+        <div class="js-scroll product-template__wrapper--content__features--name">{{one}}</div>
+        <div class="js-scroll product-template__wrapper--content__features--name">{{two}}</div> 
+        <div class="js-scroll product-template__wrapper--content__features--name">{{three}}</div>
+    </div>
+
+    {% assign productVariants = product.variants %}
+
+
+    <div class="hidden">{{realOptions | json }}</div>
+    <select hidden name="id" id="ProductSelect">
+        {% for variant in productVariants %}
+            <option value="{{ variant.id }}">{{ variant.title }} ({{ variant.id }})</option>
+        {% endfor %}
+    </select>
+    {% assign sofav = product.selected_or_first_available_variant %}
+    {% if product.options_with_values[0].name == 'Length' %}
+    <section class="product-description-wrapper bg-black atc-wrapper">
+        <div class="product-description">
+            <div class="materials description-expand">
+                {% for product_option in product.options_with_values %}
+                    <div class="materials__single">
+                            {% for value in product_option.values %}
+                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    viewBox="0 0 330 330" xml:space="preserve">
+                               <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+                                   c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+                                   s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/>
+                               </svg></span></div>
+                                {% break %}
+                            {% endfor %}
+                            <div class="variants-holder">
+                                {% for value in product_option.values %}
+                                    <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="{% if forloop.index == 1 %}active{% endif%} swatch-holder d-flex flex-column">
+                                        <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po swatch {{value | handleize}}"></div>
+                                        <div data-product-name="{{product.handle}}" data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po color-white mb-4 h4 materials__single--option__name small">
+                                            {{ value }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+                {% endfor %}
+                <div class="variants-hidden hidden">
+                    {% for variant in productVariants %}
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                </div>
+                <div class="bundle-wrapper__footer">
+                    <div class="price type--m hhhhh">
+                        {% if product.variants.size > 1 %}
+                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                            {% assign prId = product.first_available_variant.id %}
+                        {% else %}
+                            <span class="js-price ">{{product.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                            {% assign prId = product.variants[0].id %}
+                        {% endif %}
+                    </div>
+                    <div class="c-quantity f aic p dm-sans-normal color-white">
+                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+                        <div class="c-quantity__amount op">0</div>
+                        <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+                    </div>
+                    {% unless hidecart == true%}
+                        <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                    {% endunless %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <div><div><div>
+    <div class="bundle-wrapper__footer">
+        <div class="js-price price type--m">
+            {% if product.variants.size > 1 %}
+                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                {% assign prId = product.first_available_variant.id %}
+            {% else %}
+                <span class="js-price ">{{product.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                {% assign prId = product.variants[0].id %}
+            {% endif %}
+        </div>
+        <div class="c-quantity f aic p dm-sans-normal color-white">
+            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+            <div class="c-quantity__amount op">0</div>
+            <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+        </div>
+        {% unless hidecart == true %}
+            <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+        {% endunless %}
+    </div>
+</div></div></div>
+    {% endif %}
+</div>
+
+<script>
+overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
+overlayCloses = document.querySelectorAll('.close')
+selfCloses = document.querySelectorAll('.product-overlay')
+console.log(selfCloses, 'self closes')
+overlayTriggers.forEach((overlayTrigger) => {
+    overlayTrigger.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.add('show')
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+    })
+})
+overlayCloses.forEach((overlayClose) => {
+    overlayClose.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+selfCloses.forEach((selfClose) => {
+    selfClose.addEventListener('click', (e) => {
+        console.log('self close')
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        _this.classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+</script>
+
+<style>
+.product-overlay-trigger {
+    cursor: pointer;
+}
+.product-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity:0;
+    transition: all .3s ease-in-out;
+}
+.product-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity:1;
+    transition: all .3s ease-in-out;
+}
+.close svg path fill {
+    color:white;
+}
+</style>
+
+{% comment %} RENDERER END {% endcomment %}
+
+
+
+
+
+            
     {% if forloop.index == 4%}
           </div>
         </div>

@@ -309,7 +309,7 @@ selfCloses.forEach((selfClose) => {
     <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Discount_Banner_mega_sale_page_summary.jpg?v=1700741715">
   </div>
   {% render 'bundle-gifts-bottom' %}
-  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
+  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
       <button class="js-add-to-cart f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
         <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
       </button>
@@ -374,6 +374,7 @@ input.js-variant-selector.text-uppercase.cursor-pointer {
   z-index: 99999;
   background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
   box-shadow: 0px -3px 6px #3131319e;
+  padding:25px 0;
 }
 .js-info-bar, .info-bar, .product-template__wrapper--content__features--name {
   color: #333333;
@@ -430,6 +431,10 @@ input.js-variant-selector.text-uppercase.cursor-pointer {
   font-size:55px;
 }
 @media only screen and (max-width: 768px) {
+  .sticky-div.lightsticky {
+    padding:10px;
+    padding-bottom:10px;
+  }
   .intro__title {
     color: #333333 !important;
     font-size:40px;

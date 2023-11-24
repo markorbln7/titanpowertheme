@@ -13,6 +13,11 @@
                 We design our porducts for extreme durability so we can help tackle the fight wagainst electronic waste<br>
                 We've also teamed up with Sprout to bring you Green Friday to plant trees for every product we sell.
             </div>
+            <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start2">
+                <button style="margin-top:0;font-size: 20px!important;" class="f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+                  <div>BACK TO PRODUCTS 👆</div>
+                </button>
+              </div>
         </div>
     </div>
 </div>
@@ -88,3 +93,17 @@
        
     }
 </style>
+
+<script>
+scrollToStart2 = document.querySelector('.scroll-to-start2');
+
+console.log(scrollToStart2, 'scrollToStart2')
+
+scrollToStart2.addEventListener('click', (e) => {
+  const $sectionscroll = $('.number-icon-three')
+
+  $('html, body').animate({
+    scrollTop: $sectionscroll.offset().top + 'px'
+  }, 2000)
+})
+</script>

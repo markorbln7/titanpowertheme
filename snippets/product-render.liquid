@@ -10,7 +10,8 @@
             </div>
         </div>
     {% endif %}
-    <div class="bundle-wrapper__product--image product-overlay-trigger">
+    <div class="bundle-wrapper__product--image product-overlay-trigger relative">
+        <div class="info-icon">i</div>
         <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
     </div>
     <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>

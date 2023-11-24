@@ -1055,6 +1055,11 @@
         font-size:19px;
     }
 }
+@media only screen and (max-width: 349px) {
+    .bundle-gifts__single--text .red-text {
+        font-size:16px;
+    }
+}
 .bundle-gifts__single--text h3 {
                 font-size: 16px;
                 -webkit-margin-before: 0em;
@@ -1088,6 +1093,11 @@
 @media only screen and (max-width: 768px) {
     .bundle-gifts__single--text p {
         font-size: 25px;
+    }
+}
+@media only screen and (max-width: 349px) {
+    .bundle-gifts__single--text p {
+        font-size: 21px;
     }
 }
 .bundle-bottom-gifts__title {
@@ -1255,6 +1265,12 @@
     color:#60C655;
     border: 0px solid #60C655;
     box-shadow: 0px 0px 8px 2px #35FF2E;
+}
+@media only screen and (max-width: 374px) {
+    .js-phone-select {
+        padding: 5px;
+        font-size: 12px;
+    }
 }
 .info-icon {
     position: absolute;

@@ -999,6 +999,9 @@
                 @media only screen and (max-width: 768px) {
                     font-size:19px;
                 }
+                @media only screen and (max-width: 349px) {
+                    font-size:16px;
+                }
             }
             h3 {
                 font-size: 16px;
@@ -1027,6 +1030,9 @@
                 line-height: 1.2;
                 @media only screen and (max-width: 768px) {
                     font-size: 25px;
+                }
+                @media only screen and (max-width: 349px) {
+                    font-size: 21px;
                 }
             }
         }
@@ -1188,6 +1194,10 @@
         color:#60C655;
         border: 0px solid #60C655;
         box-shadow: 0px 0px 8px 2px #35FF2E;
+    }
+    @media only screen and (max-width: 374px) {
+        padding: 5px;
+        font-size: 12px;
     }
 }
 

@@ -1092,7 +1092,8 @@
 .bundle-bottom-gifts__title {
         color:white;
         margin-bottom: 10px;
-        font-size: 30px;
+        font-size: 20px;
+        line-height: 1.4;
         font-weight: 700;
         text-align: center;
         text-transform: uppercase;
@@ -1243,13 +1244,16 @@
 }
 .js-phone-select {
     cursor: pointer;
-    border: 1px solid white;
-    padding: 5px 10px;
+    border: 0px solid white;
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px 2px #bdbdbd8c;
     margin-top: 5px
 }
 .js-phone-select.active, .js-phone-select:hover {
     color:#60C655;
-    border: 1px solid #60C655;
+    border: 0px solid #60C655;
+    box-shadow: 0px 0px 8px 2px #35FF2E;
 }
 .info-icon {
     position: absolute;
@@ -1265,4 +1269,13 @@
     right: 20px;
     top: 20px;
     font-weight: 700;
+}
+@media only screen and (max-width: 768px) {
+    .info-icon {
+        right: 10px;
+        top: 10px;
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+    }
 }

@@ -532,7 +532,7 @@ $('.hero_image').on('click', function (e) {
   }, 1000)
 })
 
-const distance = $('.sticky-div').offset().top
+const distance = $('.number-icon-three').offset().top
 $(window).scroll(function () {
   const top_of_element = $('#shopify-section-footer').offset().top
   const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()

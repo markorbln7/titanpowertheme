@@ -170,13 +170,16 @@
         transition: all 0.3s ease-in-out;
 }
 .video {
-    display: none;
+    /* display: none; */
+    position: absolute;
+    left:-4000px;
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s ease-in-out
 }
 .video.reveal {
-        display: block;
+        position: relative;
+        left:unset;
         visibility: visible;
         opacity: 1;
         transition: all 0.3s ease-in-out;

@@ -41,18 +41,22 @@ var x = setInterval(function () {
 const imageClickHandlers = document.querySelectorAll('.js-image-click')
 
 imageClickHandlers.forEach((imageClickHandler) => {
-  imageClickHandler.addEventListener('click', function () {
+  imageClickHandler.addEventListener('click', function (e) {
+    const _this = e.target
     const urlReveal = this.parentNode.querySelector('.js-url-reveal')
     const upperReveal = this.parentNode.querySelector('.js-upper-reveal')
     const video = this.parentNode.querySelector('.video')
     const imageDesktop = this.parentNode.querySelector('.js-image.desktop')
     const imageMobile = this.parentNode.querySelector('.js-image.mobile')
-    imageDesktop.classList.add('hide')
-    imageMobile.classList.add('hide')
-    video.classList.add('reveal')
+    _this.parentNode.classList.add('active')
     setTimeout(() => {
-      urlReveal.classList.add('reveal')
-      upperReveal.classList.add('reveal')
-    }, '2000')
+      imageDesktop.classList.add('hide')
+      imageMobile.classList.add('hide')
+      video.classList.add('reveal')
+      setTimeout(() => {
+        urlReveal.classList.add('reveal')
+        upperReveal.classList.add('reveal')
+      }, '2000')
+    }, '1500')
   })
 })

@@ -33,6 +33,36 @@
                     {% endif %}
                   {% endfor %}
               </div>
+              {% comment %} <div class="bf-info">
+                <div class="bf-info-text color-black">BLACK FRIDAY SALE</div>
+                <div class="bf-info-title">80% OFF + 2 FREE CABLES</div>
+              </div> {% endcomment %}
+            <style>
+               .bf-info-text {
+                font-size:32px;
+                line-height:1.2;
+                font-weight:700;
+                margin-top:10px;
+                @media only screen and (max-width: 768px) {
+                  font-size:20px;
+              }
+              }
+              .bf-info-title {
+                font-size:32px;
+                line-height:1.2;
+                color:#60C655;
+                background:black;
+                font-weight:700;
+                max-width: fit-content;
+                padding: 5px 10px;
+                border-radius: 30px;
+                margin-bottom:10px;
+                margin-left: -10px;
+                @media only screen and (max-width: 768px) {
+                  font-size:20px;
+              }
+              }
+            </style>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}

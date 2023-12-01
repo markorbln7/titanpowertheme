@@ -17,7 +17,7 @@
         <div>GET STARTED</div>
       </button>
     </div>
-    {% comment %} <div id="demo" class="treasure-top__counter"></div> {% endcomment %}
+    <div id="demo" class="treasure-top__counter"></div>
 </div>
 
 <div class="bundle-top-titles">
@@ -76,7 +76,7 @@
 {% render 'bundle-tabs-gold' %}
 
 <script>
-  var countDownDate = new Date('Nov 27, 2023 21:00:00').getTime()
+  var countDownDate = new Date('Dec 4, 2023 21:00:00').getTime()
 
 // Update the count down every 1 second
 var x = setInterval(function () {
@@ -103,12 +103,12 @@ var x = setInterval(function () {
   }
 
   // Display the result in the element with id="demo"
-  {% comment %} document.getElementById('demo').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>' {% endcomment %}
+  document.getElementById('demo').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>'
 
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x)
-    {% comment %} document.getElementById('demo').innerHTML = 'EXPIRED' {% endcomment %}
+    document.getElementById('demo').innerHTML = 'EXPIRED'
   }
 }, 1000)
 </script>

@@ -680,6 +680,7 @@
                 max-width: 100%;
                 overflow: scroll;
                 padding-left: 310px;
+                padding-top: 20px;
                 padding-bottom: 15px;
             }
             &__single {
@@ -1221,5 +1222,30 @@
         width: 30px;
         height: 30px;
         font-size: 20px;
+    }
+}
+
+.number-icon-four {
+    max-width: 90px;
+    margin: -42px auto 0;
+    text-align: center;
+    display: block;
+}
+.number-icon-five {
+    max-width: 90px;
+    margin: -70px auto 0;
+    text-align: center;
+    display: block;
+}
+
+.white-line.shine {
+    @media only screen and (max-width: 768px) {
+        width: 88%;
+        height: 5px;
+        display: block!important;
+        position: absolute;
+        top: 49%!important;
+        left: -25%;
+        background-color: transparent !important;
     }
 }

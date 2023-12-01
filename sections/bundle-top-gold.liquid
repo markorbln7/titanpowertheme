@@ -1,0 +1,112 @@
+{{ 'section-treasure.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder.js' | asset_url | script_tag }}
+{% render 'bundle-popups' %}
+<div class="hero_image desktop hd">
+  <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Black_Friday_23_-_BYBFO_Mega_Sale_Page_Banner_Desktop_-_website_-_gold_week_black_friday_new_banner2.jpg?v=1701431894">
+</div>
+<div class="hero_image mobile md">
+  <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Black_Friday_23_-_BYBFO_Mega_Sale_Page_Banner_Mobile_1.jpg?v=1700738389">
+</div>
+<div class="bundle-top-titles counter-titles">
+    <div style="margin-top:0" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start">
+      <button style="margin-top:0" class="f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+        <div>GET STARTED</div>
+      </button>
+    </div>
+    {% comment %} <div id="demo" class="treasure-top__counter"></div> {% endcomment %}
+</div>
+
+<div class="bundle-top-titles">
+    <div class="bundle-four-icons">
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+          30-day Price Match Guarantee
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_6e1fe2de-c5ac-4573-8d5b-875a3034f3ff.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+          Free Shipping on All Orders
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_5e29c1ed-32fe-495a-9607-a9d5a7f738a2.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+            Extended Holiday Returns
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+            Plant a Tree With Every Order
+        </div>
+      </div>
+    </div>
+</div>
+<div class="bundle-top-titles">
+  <div class="bundle-title">
+      <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+      <div class="text"><img class="number-icon" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1-icon.png?v=1700734601"><br><span>craft your</span><br> black friday</div>
+      <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+      The more you bundle the more you save and the more gifts you get!    
+  </div>
+  <img class="bundle-subtitle-image" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy2.jpg?v=1701434471">
+
+</div>
+
+
+{% render 'bundle-gifts-gold' %}
+{% render 'bundle-tabs-gold' %}
+
+<script>
+  var countDownDate = new Date('Nov 27, 2023 21:00:00').getTime()
+
+// Update the count down every 1 second
+var x = setInterval(function () {
+  // Get today's date and time
+  var now = new Date().getTime()
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24))
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000)
+  if (days < 10) {
+    days = '0' + days
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes
+  }
+  if (seconds < 10) {
+    seconds = '0' + seconds
+  }
+  if (hours < 10) {
+    hours = '0' + hours
+  }
+
+  // Display the result in the element with id="demo"
+  {% comment %} document.getElementById('demo').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>' {% endcomment %}
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x)
+    {% comment %} document.getElementById('demo').innerHTML = 'EXPIRED' {% endcomment %}
+  }
+}, 1000)
+</script>

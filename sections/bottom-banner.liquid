@@ -13,8 +13,8 @@
                 We design our porducts for extreme durability so we can help tackle the fight against electronic waste.<br><br>
                 We've also teamed up with Sprout to bring you Green Friday! to planting trees for every product we sell.
             </div>
-            <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start2">
-                <button style="margin-top:0;font-size: 20px!important;" class="f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+            <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start3">
+                <button style="margin-top:0;font-size: 20px!important;" class="btpnew f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
                   <div>BACK TO PRODUCTS 👆</div>
                 </button>
               </div>
@@ -22,6 +22,15 @@
     </div>
 </div>
 <style>
+    .btpnew {
+        margin-top: 0 !important;
+        font-size: 20px!important;
+        color: #fff !important;
+        background: #000 !important;
+        border: 0px !important;
+        box-shadow: 0px 0px 15px 4px rgba(96,198,85,.8) !important;
+        height: 50px !important;
+    }
     {% comment %} .bottom-banner {
         height:700px;
     } {% endcomment %}
@@ -97,14 +106,22 @@
 
 <script>
 scrollToStart2 = document.querySelector('.scroll-to-start2');
+scrollToStart3 = document.querySelector('.scroll-to-start3');
 
 console.log(scrollToStart2, 'scrollToStart2')
 
 scrollToStart2.addEventListener('click', (e) => {
-  const $sectionscroll = $('.number-icon-three')
+  const $sectionscroll = $('.number-icon-four')
 
   $('html, body').animate({
     scrollTop: $sectionscroll.offset().top + 'px'
   }, 2000)
 })
+scrollToStart3.addEventListener('click', (e) => {
+    const $sectionscroll = $('.number-icon-four')
+  
+    $('html, body').animate({
+      scrollTop: $sectionscroll.offset().top + 'px'
+    }, 2000)
+  })
 </script>

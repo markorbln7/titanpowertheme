@@ -1,0 +1,63 @@
+<div class="bundle-gifts-wrapper bundle-bottom-gifts gold">
+    <div class="bundle-gifts relative">
+        <div class="white-line"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/new_line_design.png?v=1701417429"></div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_free_gift_banner_-_mobile_V2-cable_-_small_3a8e8eba-8d38-4b4b-8712-3637cded9e7f.png?v=1701416899">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['pd'].price | money_without_trailing_zeros }}</span> </p>
+            </div>
+        </div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_free_gift_banner_-_mobile_V2-small-3in1_cable.png?v=1701416899">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['sc'].price | money_without_trailing_zeros }}</span> </p>
+            </div>
+        </div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_free_gift_banner_-_mobile_V2-small-travel_kit.png?v=1701416899">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['td'].price | money_without_trailing_zeros }}</span>  </p>
+            </div>
+        </div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_x_free_gift_banner_-_mobile_V2-small-3in1_dock.png?v=1701416899">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['tb'].price | money_without_trailing_zeros }}</span> </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .white-line {
+        width: 75%;
+        height: 5px;
+        display: block!important;
+        position: absolute;
+        top: 33%!important;
+        left: 10%;
+        background-color: transparent !important;
+    }
+    .bundle-bottom-gifts.gold .white-line {
+        width: 75%;
+        height: 5px;
+        display: block!important;
+        position: absolute;
+        top: 33%!important;
+        left: 10%;
+        background-color: transparent !important;
+    }
+    .bundle-gifts-wrapper.bundle-bottom-gifts {
+        background-color: #141414;
+        padding: 0;
+        margin-top: -50px;
+    }
+</style>

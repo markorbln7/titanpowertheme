@@ -557,19 +557,19 @@ input[type=number]
   z-index: 2;
 }
 .desktop {
-  display: block;
+  display: block !important;
 }
 @media only screen and (max-width: 768px) {
   .desktop {
-      display: none;
+      display: none !important;
   }
 }
 .mobile {
-  display: none;
+  display: none !important;
 }
 @media only screen and (max-width: 768px) {
   .mobile {
-      display: block;
+      display: block !important;
   }
 }
 body.no-scroll {

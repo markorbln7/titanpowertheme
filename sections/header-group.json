@@ -2,30 +2,6 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "85bda58e-9180-4dfc-aec4-77a4a7dd2beb": {
-      "type": "announcement-bar",
-      "blocks": {
-        "sections--16211273482418__85bda58e-9180-4dfc-aec4-77a4a7dd2beb-announcement-1": {
-          "type": "announcement",
-          "settings": {
-            "text": "BLACK FRIDAY EXTENDED",
-            "link": "https:\/\/titanpowerplus.com\/pages\/custom-offer"
-          }
-        }
-      },
-      "block_order": [
-        "sections--16211273482418__85bda58e-9180-4dfc-aec4-77a4a7dd2beb-announcement-1"
-      ],
-      "settings": {
-        "color_scheme": "",
-        "show_line_separator": true,
-        "show_social": false,
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      }
-    },
     "header": {
       "type": "header",
       "custom_css": [
@@ -51,10 +27,34 @@
         "padding_top": 8,
         "padding_bottom": 8
       }
+    },
+    "85bda58e-9180-4dfc-aec4-77a4a7dd2beb": {
+      "type": "announcement-bar",
+      "blocks": {
+        "sections--16211273482418__85bda58e-9180-4dfc-aec4-77a4a7dd2beb-announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "BLACK FRIDAY EXTENDED",
+            "link": "https:\/\/titanpowerplus.com\/pages\/custom-offer"
+          }
+        }
+      },
+      "block_order": [
+        "sections--16211273482418__85bda58e-9180-4dfc-aec4-77a4a7dd2beb-announcement-1"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "show_line_separator": true,
+        "show_social": false,
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
     }
   },
   "order": [
-    "85bda58e-9180-4dfc-aec4-77a4a7dd2beb",
-    "header"
+    "header",
+    "85bda58e-9180-4dfc-aec4-77a4a7dd2beb"
   ]
 }

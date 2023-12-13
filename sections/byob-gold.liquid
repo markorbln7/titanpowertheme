@@ -15,10 +15,31 @@
   </div>
 </div>
 <div class="sticky-div w-100">
-  <div class="js-info-bar">ADD 5 AND SAVE 55%</div>
-  <div class="progress">
-    <div class="bar"></div>
+  <div class="percent-tracker">
+      {% for i in (1..14) %}
+        <div class="relative">
+          <div class="percent-tracker__ball--green"></div>
+          <div data-{{forloop.index}} class="percent-tracker__ball">
+            {% if forloop.index == 5 %}
+                <span>55%</span>
+            {% endif %}
+            {% if forloop.index == 8 %}
+              <span>70%</span>
+            {% endif %}
+            {% if forloop.index == 14 %}
+              <span>80%</span>
+            {% endif %}
+          </div>
+          {% unless forloop.index == 14 %}
+          <div data-line-{{forloop.index}} class="percent-tracker__line"></div>
+          {% endunless %}
+        </div>
+      {% endfor %}
   </div>
+  <div class="js-info-bar">Add 5 items and get 55% off!</div>
+  {% comment %} <div class="progress">
+    <div class="bar"></div>
+  </div> {% endcomment %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
     <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
@@ -226,7 +247,6 @@
 overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
 overlayCloses = document.querySelectorAll('.close')
 selfCloses = document.querySelectorAll('.product-overlay')
-console.log(selfCloses, 'self closes')
 overlayTriggers.forEach((overlayTrigger) => {
     overlayTrigger.addEventListener('click', (e) => {
         let _this = e.target
@@ -332,6 +352,7 @@ selfCloses.forEach((selfClose) => {
 
 
 {{ 'startbundlegold.js' | asset_url | script_tag }}
+{{ 'goldatc.js' | asset_url | script_tag }}
 
 <style>
   .no-margin {

@@ -1320,3 +1320,85 @@
         background-color: transparent !important;
     }
 }
+/* PERCENT TRACKER */
+#preview-bar-iframe {
+    display: none !important;
+}
+.percent-tracker {
+    position: absolute;
+    top: -20px;
+    display: flex;
+    gap: 40px;
+}
+.percent-tracker__ball {
+        border: 2px solid #60C655;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: black;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        color:#60c655;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 999999;
+        position: relative;
+        overflow: hidden;
+        /* &::after {
+            visibility: hidden;
+            border: 2px solid #60C655;
+            opacity: 0;
+            content: "";
+            width:100%;
+            height: 100%;
+            background: #60C655;
+            transition: all 1s ease-in;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+        }*/
+    }
+.percent-tracker__ball--green {
+            display:block !important;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #60C655;
+            background: #60C655;
+            position: absolute;
+            top:0;
+            left: 0;
+            z-index: 999999;
+            border-radius: 50%;
+        }
+.percent-tracker__ball.active {
+    background: transparent;
+    transition: all 1s ease-in;
+    color: black;
+}
+.percent-tracker__line {
+        display: block !important;
+        height: 10px;
+        width: 50px;
+        background: black;
+        position: absolute;
+        top: 40%;
+        left: 35px;
+        border: 2px solid #60C655;
+        border-left: none;
+        border-right: none
+    }
+.percent-tracker__line::after {
+    content: "";
+    width:0%;
+    height: 100%;
+    background: #60C655;
+    transition: all 1s ease-in;
+    display: block;
+}
+.percent-tracker__line.active::after {
+    width:100%;
+    transition: all 1s ease-in;
+}

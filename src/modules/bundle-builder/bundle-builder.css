@@ -1259,6 +1259,10 @@
     top: -20px;
     display: flex;
     gap: 40px;
+    @media only screen and (max-width: 600px) {
+        gap: 10px;
+        top:-5px;
+    }
     &__ball {
         border: 2px solid #60C655;
         width: 40px;
@@ -1274,6 +1278,11 @@
         z-index: 999999;
         position: relative;
         overflow: hidden;
+        @media only screen and (max-width: 600px) {
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+        }
         &--green {
             display:block !important;
             width: 40px;
@@ -1285,6 +1294,10 @@
             left: 0;
             z-index: 999999;
             border-radius: 50%;
+            @media only screen and (max-width: 600px) {
+                width: 25px;
+                height: 25px;
+            }
         }
         /* &::after {
             visibility: hidden;
@@ -1318,6 +1331,19 @@
         border: 2px solid #60C655;
         border-left: none;
         border-right: none;
+        @media only screen and (max-width: 600px) {
+            display: block!important;
+            height: 7px;
+            width: 50px;
+            background: black;
+            position: absolute;
+            top: 35%;
+            left: 8px;
+            border: 1px solid #60C655;
+            border-left: none;
+            border-right: none;
+        }
+
         &::after {
             content: "";
             width:0%;
@@ -1348,11 +1374,21 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    @media only screen and (max-width: 600px) {
+        width: 100px;
+        height: 100px;
+    }
     .circle-chart {
         position: absolute;
         top:0;
         left: 0;
         transform: rotate(270deg);
+        width: 140px;
+        height: 140px;
+        @media only screen and (max-width: 600px) {
+            width: 100px;
+            height: 100px;
+        }
     }
 }
 .left-to-gift {
@@ -1371,10 +1407,16 @@
 .gift-tracker {
     position: absolute;
     top: -70px;
-    left: 0px;
+    left: 10px;
     background: #60C655;
     border-radius: 50%;
     color:black;
+    @media only screen and (max-width: 1100px) {
+        position: relative;
+        top: unset;
+        left: unset;
+        margin-right: 20px;
+    }
     .hide {
         display: none;
     }
@@ -1382,6 +1424,7 @@
 .gift-wrapper {
     position: relative;
     margin-top: -30px;
+    padding: 0 10px;
     padding-top: 40px;
     width: 100%;
     max-width: 1140px;

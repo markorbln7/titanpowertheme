@@ -52,16 +52,20 @@ increases.forEach((increas) => {
                                     }
                                 }
                                 console.log(giftCount, itemCount, 'itemCount')
-                                let dataSelectorVariable = `[data-${itemCount}]`
-                                let dataLineVariable = `[data-line-${itemCount-1}]`
-                                let globeClass = document.querySelector(dataSelectorVariable)
-                                let lineClass = document.querySelector(dataLineVariable)
-                                if (lineClass) {
-                                    lineClass.classList.add('active')
+                                for (let i = 0; i < itemCount; i++) {
+                                    console.log(i, 'iiiiiiiii')
+                                    let dataSelectorVariable = `[data-${i+1}]`
+                                    let dataLineVariable = `[data-line-${i}]`
+                                    let globeClass = document.querySelector(dataSelectorVariable)
+                                    let lineClass = document.querySelector(dataLineVariable)
+                                    if (lineClass) {
+                                        lineClass.classList.add('active')
+                                    }
+                                    setTimeout(() => {
+                                        globeClass.classList.add('active')
+                                    }, "1000");
                                 }
-                                setTimeout(() => {
-                                    globeClass.classList.add('active')
-                                }, "1000");
+                                
                                 
                                 
                                 if(itemCount < 2) {
@@ -292,5 +296,103 @@ startBundles.forEach((startBundle) => {
                 }
             })
         }
+        setTimeout(() => {
+            let getCart = () => {
+                fetch(window.Shopify.routes.root + 'cart.js')
+                    .then(
+                            response => response.json(),
+                        )
+                        .then(
+                            data => { 
+                                let bar = document.querySelector(".js-info-bar");
+                                let currency = data.currency;
+                                if(currency == 'USD') {
+                                    currency = '$'
+                                }
+                                let itemCount = 0;
+                                let giftCount = 0;
+                                for (let i = 0; i < data.items.length; i++) {
+                                    if(data.items[i].properties._source != "Rebuy") {
+                                        itemCount += data.items[i].quantity
+                                        giftCount += (data.items[i].final_price * data.items[i].quantity)
+                                    }
+                                }
+                                console.log(giftCount, itemCount, 'itemCount')
+                                for (let i = 0; i < itemCount; i++) {
+                                    console.log(i, 'iiiiiiiii')
+                                    let dataSelectorVariable = `[data-${i+1}]`
+                                    let dataLineVariable = `[data-line-${i}]`
+                                    let globeClass = document.querySelector(dataSelectorVariable)
+                                    let lineClass = document.querySelector(dataLineVariable)
+                                    if (lineClass) {
+                                        lineClass.classList.add('active')
+                                    }
+                                    setTimeout(() => {
+                                        globeClass.classList.add('active')
+                                    }, "1000");
+                                }
+                                
+                                
+                                if(itemCount < 2) {
+                                    ToGoal = 3
+                                    percent = '50%'
+                                }
+                                if(itemCount > 2 && itemCount < 5) {
+                                    ToGoal = 6
+                                    percent = '60%'
+                                }
+                                if(itemCount > 5 && itemCount < 10) {
+                                    ToGoal = 10
+                                    percent = '70%'
+                                }
+                                let leftItems = ToGoal - itemCount;
+                                if(leftItems > 0) {
+                                    bar.innerHTML = `You have ${itemCount} items, add ${leftItems} more for ${percent} off!`
+                                } else {
+                                    bar.innerHTML = `You unlocked full discount!!`
+                                }
+
+                                let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
+                                let secondGift = document.querySelector('.js-second-gift').getAttribute('data-gift')
+                                let thirdGift = document.querySelector('.js-third-gift').getAttribute('data-gift')
+                                let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
+                                let giftChange = document.querySelector('.js-left-to-gift')
+                                let jsImageChange = document.querySelector('.js-image-change')
+                                let circle = document.querySelector('.circle-chart__circle')
+
+                                if(giftCount < firstGift) {
+                                    let giftLeft = firstGift - giftCount
+                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                    jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
+                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
+                                } else if(giftCount > firstGift && giftCount < secondGift) {
+                                    let giftLeft = secondGift - giftCount
+                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                    jsImageChange.src = document.querySelector('.js-second-gift').getAttribute('data-image')
+                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
+                                } else if(giftCount > secondGift && giftCount < thirdGift) {
+                                    let giftLeft = thirdGift - giftCount
+                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                    jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
+                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
+                                } else if (giftCount > thirdGift && giftCount < fourthGift) {
+                                    let giftLeft = fourthGift - giftCount
+                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                    jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
+                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
+                                } else {
+                                    document.querySelector('.gift-tracker').classList.add('hide')
+                                }
+                            
+                                
+                                return data 
+                            });
+            }
+            getCart();
+        }, "1000");
     })
 })

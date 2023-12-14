@@ -1340,7 +1340,7 @@
         justify-content: center;
         align-items: center;
         color:#60c655;
-        font-size: 12px;
+        font-size: 18px;
         font-weight: bold;
         z-index: 999999;
         position: relative;
@@ -1401,4 +1401,58 @@
 .percent-tracker__line.active::after {
     width:100%;
     transition: all 1s ease-in;
+}
+.circle-chart .circle-chart__circle {
+        stroke:#35ff2ec2;
+    }
+.gift-tracker__inner {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.gift-tracker__inner .circle-chart {
+        position: absolute;
+        top:0;
+        left: 0;
+        transform: rotate(270deg);
+    }
+.left-to-gift {
+    line-height: 1.1;
+    font-size: 12px;
+    font-weight: 700;
+}
+.left-to-gift__image {
+        max-width: 50px;
+        margin: 0 auto;
+    }
+.left-to-gift .js-left-to-gift {
+        font-size: 18px;
+    }
+.gift-tracker {
+    position: absolute;
+    top: -70px;
+    left: 0px;
+    background: #60C655;
+    border-radius: 50%;
+    color:black;
+}
+.gift-tracker .hide {
+        display: none;
+    }
+.gift-wrapper {
+    position: relative;
+    margin-top: -30px;
+    padding-top: 40px;
+    width: 100%;
+    max-width: 1140px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.js-info-bar {
+    margin-right: 20px;
 }

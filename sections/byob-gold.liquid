@@ -1,0 +1,806 @@
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder.js' | asset_url | script_tag }}
+<div class="intro">
+  <img class="number-icon-four" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_1.png?v=1701431893">
+  <div class="bundle-title gray-version">
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+    <div class="text">HANDPICK YOUR FAVOURITES</div>
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+    Combine our bundles and best sellers to custom-build your offer and reach savings of up to 80%
+  </div>
+</div>
+<div class="sticky-div w-100">
+  <div class="bundle-builder f gift-wrapper">
+    <div class="percent-tracker">
+        {% for i in (1..10) %}
+          <div class="relative">
+            <div class="percent-tracker__ball--green"></div>
+            <div data-{{forloop.index}} class="percent-tracker__ball">
+              {% if forloop.index == 3 %}
+                  <span>50</span>
+              {% endif %}
+              {% if forloop.index == 6 %}
+                <span>60</span>
+              {% endif %}
+              {% if forloop.index == 10 %}
+                <span>70</span>
+              {% endif %}
+            </div>
+            {% unless forloop.index == 10 %}
+            <div data-line-{{forloop.index}} class="percent-tracker__line"></div>
+            {% endunless %}
+          </div>
+        {% endfor %}
+    </div>
+    <div class="gift-tracker">
+        <div class="gift-tracker__inner">
+            <div class="left-to-gift">
+              <div class="left-to-gift__image"><img class="js-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_cable_icon_19047dde-e641-4e84-8e65-3685cf41db36.png?v=1702556590"></div>
+              <div class="left-to-gift__text">NEXT GIFT</div>
+              <div class="js-left-to-gift">{{all_products['pd'].price | money_without_trailing_zeros }}</div>
+              <div class="left-to-gift__text">MORE</div>
+            </div>
+            <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+              <circle class="circle-chart__background" stroke="#000" stroke-width="10" fill="none" cx="90" cy="90" r="85" />
+              <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="10" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
+            </svg>
+        </div>
+    </div>
+    <div class="js-info-bar">Add 3 items and get 55% off!</div>
+    <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
+      <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
+        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
+    </button>
+  </div>
+</div>
+</div>
+<div class="bundle-wrapper">
+  {% for product in collections['build-your-own-bundle'].products %}
+    {% if forloop.index == 1%}
+      {% assign one = 'Fast Charges iPhones'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 2%}
+      {% assign one = 'Fast Charges all devices'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 3%}
+      {% assign one = 'Charge 4 Devices'%}
+      {% assign two = 'Charge 50% in 20mins'%}
+      {% assign three = 'US, EU, UK, AU Adapters'%}
+    {% endif %}
+    {% if forloop.index == 4%}
+      {% assign one = 'Unbeatable Comfort'%}
+      {% assign two = 'Supreme Audio'%}
+      {% assign three = 'Wireless Charging'%}
+    {% endif %}
+    {% if forloop.index == 5%}
+      {% assign one = '50% in 20mins!'%}
+      {% assign two = 'Protects Battery Life'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 6%}
+      {% assign one = '3 folded Positions'%}
+      {% assign two = 'Rapid 15W Charge'%}
+      {% assign three = 'Charge Buds, Watch & Phone'%}
+    {% endif %}
+    {% if forloop.index == 7%}
+      {% assign one = 'Charge 50% in 20mins!'%}
+      {% assign two = 'Link phone to music'%}
+      {% assign three = 'Hands free calls'%}
+    {% endif %}
+    {% if forloop.index == 8%}
+      {% assign one = 'Length extends up to 6ft'%}
+      {% assign two = '3 cables built into one'%}
+      {% assign three = 'Fast & sleek design'%}
+    {% endif %}
+    {% if forloop.index == 9%}
+      {% assign one = '15W Rapid charge'%}
+      {% assign two = 'Charge upright or on side'%}
+      {% assign three = 'Sleek professional design'%}
+    {% endif %}
+    {% if forloop.index == 10%}
+      {% assign one = 'Sensor auto-opens & closes'%}
+      {% assign two = 'Hold & charge phone in car'%}
+      {% assign three = 'Suction cup/ air vent options '%}
+    {% endif %}
+    {% if forloop.index == 11%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Alarm clock built-in'%}
+      {% assign three = 'Phone, Watch & Buds'%}
+    {% endif %}
+    {% if forloop.index == 12%}
+      {% assign one = '10,000mAh Capacity'%}
+      {% assign two = 'Fold-out kickstand'%}
+      {% assign three = 'Magnet attach & Wireless'%}
+    {% endif %}
+    {% if forloop.index == 13%}
+      {% assign one = '3 cables in one case'%}
+      {% assign two = 'Tiny Credit Card Size'%}
+      {% assign three = 'Mirror & Phone Stand'%}
+    {% endif %}
+    {% if forloop.index == 14%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Sleek & modern'%}
+      {% assign three = 'Fast Charge'%}
+    {% endif %}
+
+    {% if forloop.index == 1%}
+      <div class="upper-part-holder">
+        <div class="upper-part-holder__title">Premium best sellers</div>
+          <div class="upper-part-holder__flex">
+    {% endif %}
+    
+
+
+{% comment %} RENDERER START {% endcomment %}
+<div class="bundle-wrapper__product js-wrapper-product" data-product-id="{{product.id}}">
+    {% if product.images[2].src %}
+        <div class="product-overlay">
+            <div class="close">
+                {% render 'icon-close' %}
+            </div>
+            <div class="product-overlay-image">
+                <img src="{{product.images[2].src | img_url: 'master'}}">
+            </div>
+        </div>
+    {% endif %}
+    <div class="bundle-wrapper__product--image product-overlay-trigger relative">
+        <div class="info-icon">i</div>
+        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
+    </div>
+    <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
+    <div class="product-template__wrapper--content__features font-sans">
+        <div class="js-scroll product-template__wrapper--content__features--name">{{one}}</div>
+        <div class="js-scroll product-template__wrapper--content__features--name">{{two}}</div> 
+        <div class="js-scroll product-template__wrapper--content__features--name">{{three}}</div>
+    </div>
+
+    {% assign productVariants = product.variants %}
+
+
+    <div class="hidden">{{realOptions | json }}</div>
+    <select hidden name="id" id="ProductSelect">
+        {% for variant in productVariants %}
+            <option value="{{ variant.id }}">{{ variant.title }} ({{ variant.id }})</option>
+        {% endfor %}
+    </select>
+    {% assign sofav = product.selected_or_first_available_variant %}
+    {% if product.options_with_values[0].name == 'Length' %}
+    <section class="product-description-wrapper bg-black atc-wrapper">
+        <div class="product-description">
+            <div class="materials description-expand">
+                {% for product_option in product.options_with_values %}
+                    <div class="materials__single">
+                            {% for value in product_option.values %}
+                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    viewBox="0 0 330 330" xml:space="preserve">
+                               <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+                                   c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+                                   s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/>
+                               </svg></span></div>
+                                {% break %}
+                            {% endfor %}
+                            <div class="variants-holder">
+                                {% for value in product_option.values %}
+                                    <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="{% if forloop.index == 1 %}active{% endif%} swatch-holder d-flex flex-column">
+                                        <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po swatch {{value | handleize}}"></div>
+                                        <div data-product-name="{{product.handle}}" data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po color-white mb-4 h4 materials__single--option__name small">
+                                            {{ value }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+                {% endfor %}
+                <div class="variants-hidden hidden">
+                    {% for variant in productVariants %}
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                </div>
+                <div class="bundle-wrapper__footer">
+                    <div class="price type--m hhhhh">
+                        {% if product.variants.size > 1 %}
+                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                            {% assign prId = product.first_available_variant.id %}
+                        {% else %}
+                            <span class="js-price ">{{product.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                            {% assign prId = product.variants[0].id %}
+                        {% endif %}
+                    </div>
+                    <div class="c-quantity f aic p dm-sans-normal color-white">
+                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+                        <div class="c-quantity__amount op">0</div>
+                        <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+                    </div>
+                    {% unless hidecart == true%}
+                        <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                    {% endunless %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <div><div><div>
+    <div class="bundle-wrapper__footer">
+        <div class="js-price price type--m">
+            {% if product.variants.size > 1 %}
+                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                {% assign prId = product.first_available_variant.id %}
+            {% else %}
+                <span class="js-price ">{{product.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                {% assign prId = product.variants[0].id %}
+            {% endif %}
+        </div>
+        <div class="c-quantity f aic p dm-sans-normal color-white">
+            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+            <div class="c-quantity__amount op">0</div>
+            <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+        </div>
+        {% unless hidecart == true %}
+            <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+        {% endunless %}
+    </div>
+</div></div></div>
+    {% endif %}
+</div>
+
+<script>
+overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
+overlayCloses = document.querySelectorAll('.close')
+selfCloses = document.querySelectorAll('.product-overlay')
+overlayTriggers.forEach((overlayTrigger) => {
+    overlayTrigger.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.add('show')
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+    })
+})
+overlayCloses.forEach((overlayClose) => {
+    overlayClose.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+selfCloses.forEach((selfClose) => {
+    selfClose.addEventListener('click', (e) => {
+        console.log('self close')
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        _this.classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+</script>
+
+<style>
+.product-overlay-trigger {
+    cursor: pointer;
+}
+.product-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity:0;
+    transition: all .3s ease-in-out;
+}
+.product-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity:1;
+    transition: all .3s ease-in-out;
+}
+.close svg path fill {
+    color:white;
+}
+</style>
+
+{% comment %} RENDERER END {% endcomment %}
+
+
+
+
+
+            
+    {% if forloop.index == 4%}
+          </div>
+        </div>
+    {% endif %}
+  {% endfor %}
+  
+</div>
+
+<div style="background:#141414;padding-bottom:30px;padding-top:30px;">
+  <img class="number-icon-five" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/5_12dba56d-a333-4b74-93c8-8f8dcc22f6fd.png?v=1701431894">
+  <div class="bundle-title">
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+    <div class="text">HAPPY WITH<br>YOUR SELECTION</div>
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+    Take a second look at your discounts and check for free gift eligibility. Thank you for being part of our fresh shopping experience.
+  </div>
+  <div class="bundle-wrapper">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_desktop.jpg?v=1701418154">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile.jpg?v=1701433641">
+  </div>
+  {% render 'bundle-gifts-bottom-gold' %}
+  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
+      <button class="js-add-to-cart f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
+      </button>
+      <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start2">
+        <button style="margin-top:0;font-size: 20px!important;" class="btpnew f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+          <div>BACK TO PRODUCTS 👆</div>
+        </button>
+      </div>
+  </div>
+</div>
+
+
+{{ 'startbundlegold.js' | asset_url | script_tag }}
+{{ 'goldatc.js' | asset_url | script_tag }}
+
+<style>
+  .no-margin {
+    margin-bottom:0 !important;
+    margin-top:20px !important;
+    color:black !important;
+  }
+  .slide-content__image img {
+    border:none;
+    box-shadow:none;
+  }
+.bg-titan-greenish {
+  background: #60c655;
+}
+.c-quantity {
+  max-width:100%;
+}
+.product-rev {
+      background-color: #dfdfdf;
+}
+.product-rev .product-zig__bigtitle {
+  color:black;
+}
+.hero_image {
+  background: #000;
+}
+.option-name {
+  cursor: pointer;
+  background-color: #d6e1e1;
+  color: #333333;
+  border-radius: 10px;
+  border: 0.75px solid #d5d5d5;
+  padding: 8px 24px 8px 8px;
+  margin: auto auto 10px;
+  box-shadow: 2px 2px 8px 2px #bdbdbd38;
+}
+.c-quantity {
+  border: none;
+}
+.bundle-wrapper__product {
+  border: 1.75px solid #ececec;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 10px #b5b5b5;
+  background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+  overflow:visible;
+}
+input.js-variant-selector.text-uppercase.cursor-pointer {
+  color: #fff;
+  border-radius: 25px;
+  position:absolute;
+  left:-100000px;
+}
+.bundle-wrapper__product--image img {
+  width: 100%;
+  border-radius: 30px;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
+  box-shadow: 0px -3px 6px #3131319e;
+  padding:25px 0;
+}
+.js-info-bar, .info-bar, .product-template__wrapper--content__features--name {
+  color: #333333;
+}
+.js-info-bar span {
+  color: #60c655 !important;
+}
+.progress {
+  height: 25px;
+  margin: 0 auto 20px;
+  border: 1px solid #fff;
+  padding: 7px;
+  box-shadow: 0 0 5px #aaa;
+  border-radius: 7px;
+  background: #fff;
+}
+.product-template__wrapper--content__form--atc button {
+   margin-top:20px;
+}
+.c-quantity__button {
+  background: #60c655;
+  font-size: 45px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  padding:0;
+}
+.c-quantity__button.gray {
+  background: #333333;
+  opacity: .5;
+}
+.c-quantity__amount {
+  font-weight: 700;
+}
+.c-quantity__amount.op {
+  opacity:.7;
+}
+.c-quantity {
+  width:200px;  
+}
+.bundle-wrapper__footer .c-quantity__amount {
+  font-size:44px;
+}
+.price {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.intro__title {
+  color: #333333 !important;
+  font-size:55px;
+}
+@media only screen and (max-width: 768px) {
+  .sticky-div.lightsticky {
+    padding:10px;
+    padding-bottom:10px;
+  }
+  .intro__title {
+    color: #333333 !important;
+    font-size:40px;
+  }
+  .bundle-wrapper__product {
+    border: 1.75px solid #ececec;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0 0 10px #b5b5b5;
+    background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+    overflow:visible;
+  }
+  .c-quantity__button {
+    background: #60c655;
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    padding:0;
+  }
+  .bundle-wrapper__footer .c-quantity__amount {
+    font-size: 35px;
+  }
+  .option-name {
+    font-size:11px;
+    padding: 7px;
+  }
+  .bundle-wrapper {
+    gap:10px;
+    padding: 0 10px;
+  }
+}
+.intro__subtitle {
+  color: #60c655 !important;
+  font-size:22px;
+  font-weight:700;
+}
+
+
+
+.option-name {
+  background-color: #ffffff;
+  border: 0px solid #ffffff;
+
+}
+
+
+
+.active>div {
+  color: #60c655;
+}
+
+.po.color-white.mb-4.h4.materials__single--option__name.small {
+  font-family: 'Work Sans';
+FOnt-size:13px;
+}
+
+.c-quantity__button.gray {
+  background: #6d6d6d;
+}
+
+.bundle-wrapper__footer .c-quantity__amount {
+  color: #2b2b2b;
+}
+
+
+.bundle-tab__tabs--content__single--title {
+  line-height: 17px;
+}
+
+
+.bundle-tab__tabs--content__single--list {
+ 
+}
+
+.bundle-tab__tabs--content__single--list ul span {
+  font-weight: 800;
+}
+
+.bundle-tab__tabs--content__single--list ul {
+  line-height: 1.3;
+  text-align: center;
+  font-size: 16px;
+  color: #ebebeb;
+}
+@media only screen and (max-width: 768px) {
+  .bundle-tab__tabs--content__single--list ul {
+    line-height: 1.3;
+    text-align: left;
+    font-size: 16px;
+    color: #ebebeb;
+  }
+}
+
+.c-quantity__button {
+  background: linear-gradient(66deg,rgba(96,198,85,.8) 12.82%,#5aef55c9 56.41%,#35ff2e);
+  box-shadow: 1px 2px 7px #b3b3b3d6;
+}
+
+.c-quantity__button.gray {
+  background: linear-gradient(66deg,rgb(151 151 151 / 80%) 12.82%,#656565c9 56.41%,#434343);
+}
+
+
+button.js-start-bundles {
+  font-weight: 800;
+  background: linear-gradient(66deg,rgba(96,198,85,.8) 12.82%,#5aef55c9 56.41%,#35ff2ed1);
+  box-shadow: 1px 2px 7px #6f6f6fd6;
+  border: 0px solid #60c655;
+  font-family: 'Work Sans';
+  letter-spacing: 1px;
+}
+
+.bundle-tab__tabs--navigation__single.js-bundle-tab {
+  border: 0px solid #60C655;
+  box-shadow: 0 0 8px 2px #35ff2e;
+  font-family: 'Work Sans';
+  border-radius: 20px;
+
+}
+
+
+.upper-part-holder {
+  background: linear-gradient(66deg,rgb(0 0 0) 12.82%,#000000d1 80%,#ffc13b99);
+  border: 0px solid #ffc13b;
+  padding: 20px 40px;
+  border-radius: 25px;
+  box-shadow: 0 0 8px 2px #ffc13b;
+}
+
+
+.upper-part-holder__title {
+  color: #f2c054;
+  font-family: 'Work Sans';
+}
+
+button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  border-radius: 20px;
+  background: linear-gradient(66deg,rgb(96 198 85) 12.82%,#5aef55 70%,#35ff2ed1);
+  box-shadow: 1px 2px 7px #939393d6;
+  font-family: 'Work Sans';
+  letter-spacing: 1px;
+}
+
+
+button.js-add-to-cart.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height:80px;
+  letter-spacing:normal;
+}
+
+#shopify-section-template--16211274367154__bundle-top button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height: 65px;
+  letter-spacing: normal;
+  border:0px;
+}
+
+button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height: 65px;
+  letter-spacing: normal;
+  border: 0px;
+}
+.product-template__wrapper--content__form--atc button {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  color: #000;
+  letter-spacing: normal;
+}
+
+.bundle-four-icons {
+  max-width: 1040px;
+ 
+}
+
+.bundle-wrapper__product--title {
+  text-align: center;
+  font-weight:800;
+}
+
+
+
+.bundle-wrapper__product--image img {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+@media only screen and (max-width: 768px) {
+  #shopify-section-template--16211274367154__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f .upper-part-holder {
+    padding: 9px;
+    border-radius: 25px;
+  }
+  .upper-part-holder {
+    background: linear-gradient(66deg,rgb(0 0 0) 12.82%,#000000d1 80%,#ffc13b99);
+    border: 0px solid #ffc13b;
+    padding: 10px 10px;
+    border-radius: 25px;
+    box-shadow: 0 0 8px 2px #ffc13b;
+  }
+  .bundle-wrapper__product {
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-wrapper__product {
+    padding: 5px;
+  }
+}
+
+
+.bundle-wrapper__product--image img {
+  border-radius: 25px;
+  border-radius: 25px
+}
+
+@media only screen and (max-width: 768px) {
+  .upper-part-holder__flex {
+    gap: 10px;
+  }  
+}
+.upper-part-holder__title {
+  font-weight: 300;
+  padding-left: 10px;
+}
+
+
+.bundle-wrapper__product {
+  padding: 15px;
+}
+
+#shopify-section-template--16211274367154__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f .upper-part-holder {
+  padding: 24px;
+}
+
+button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  color: #fff;
+  background: #000;
+  border: 0px;
+  box-shadow: 0px 0px 15px 4px rgba(96,198,85,.8);
+  height: 50px;
+}
+
+
+.bottom-banner.relative {
+  background: #000;
+}
+
+.bottom-banner-content {
+  position: relative;
+  margin-top: -100px;
+}
+
+@media only screen and (max-width: 768px) {
+  .bottom-banner-content {
+    padding-bottom: 80px;
+  }
+}
+
+.bundle-subtitle-image {
+  margin-bottom: -30px;
+  margin-top: 30px;
+}
+
+.bundle-gifts-wrapper {
+  padding-bottom: 90px;
+}
+
+.bundle-gifts-topsubtitle {
+  padding-bottom: 25px;
+}
+
+.bundle-gifts-toptitle {
+  font-size: 60px;
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts-toptitle {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts__single--text p {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts__single {
+    gap: 0px; 
+ }
+}
+.js-info-bar {
+  color:white !important;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  box-shadow: 0px -3px 6px #3131319e;
+  padding: 25px 0;
+  background: #141414;
+}
+</style>

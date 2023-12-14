@@ -121,7 +121,7 @@
         {% assign three = ''%}
       {% endif %}
       
-      {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle tick1: one tick2:two tick3:three  %}
+      {% render 'product-render' cart_title:'+' product_var:product.handle tick1: one tick2:two tick3:three  %}
     {% endfor %}
     {% comment %} {% render 'product-render' product_var:'3-x-titan-pd-cable™-black-friday'%}
     {% render 'product-render' product_var:'3-x-titan-smart-cable™'%}
@@ -323,7 +323,7 @@ variantClicks.forEach(variantClick => {
         _this.closest(".bundle-wrapper__product").classList.toggle('selected');
         if(_this.value === 'added') {
             _this.classList.remove('selected')
-            _this.value = '+ add to kit'
+            _this.value = '+'
             let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
             let leftToGift = 3 - numberOfSelected;
             console.log(leftToGift,'leftToGift')

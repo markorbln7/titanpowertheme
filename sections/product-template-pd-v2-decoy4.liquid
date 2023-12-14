@@ -160,7 +160,7 @@
               </div>
               
               <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
+                <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
                 <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc">

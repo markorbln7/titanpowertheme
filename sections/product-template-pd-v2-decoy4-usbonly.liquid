@@ -16,7 +16,7 @@
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905" alt="{{ featured_image.alt }}">
+            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_4_pack.jpg?v=1701098833" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -38,6 +38,36 @@
                     {% endif %}
                   {% endfor %}
               </div>
+              <div class="bf-info">
+                <div class="bf-info-text color-black">BLACK FRIDAY SALE</div>
+                <div class="bf-info-title">70% OFF + FREE CABLE</div>
+              </div>
+            <style>
+              .bf-info-text {
+               font-size:32px;
+               line-height:1.2;
+               font-weight:700;
+               margin-top:10px;
+               @media only screen and (max-width: 768px) {
+                 font-size:20px;
+             }
+             }
+             .bf-info-title {
+               font-size:32px;
+               line-height:1.2;
+               color:#60C655;
+               background:black;
+               font-weight:700;
+               max-width: fit-content;
+               padding: 5px 10px;
+               border-radius: 30px;
+               margin-bottom:10px;
+               margin-left: -10px;
+               @media only screen and (max-width: 768px) {
+                 font-size:20px;
+             }
+             }
+           </style>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}
@@ -117,7 +147,7 @@
               <div class="product-template-new__wrapper--content__selection">
                   <div class="product-template-new__wrapper--content__selection--wrapper f fw light-wrapper">
                       <div data-discount="{{section.settings.d2}}" data-slide=".two" data-count="4x" data-id="{{product4.id}}" data-product="4-x-titan-smart-cable™-black-friday" class="active master-product js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
-                         <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_pack.jpg?v=1693387225"></div>
+                         <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_premium_page_pack_icons_4_packl_70.jpg?v=1701101375"></div>
                          <div class="decoy-content">
                          <div class="crossed titan-red bold js-price-original-two"></div>
                           <div class="decoy-content__price js-price-discount-two"></div>
@@ -125,7 +155,7 @@
                          </div>
                       </div>
                       <div data-discount="{{section.settings.d1}}" data-slide=".three" data-count="3x" data-id="{{product.id}}" data-product="3-x-titan-smart-cable™" class="js-product-selector product-template-new__wrapper--content__selection--wrapper__single f v2 bg-none">
-                          <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_pack.jpg?v=1693387225"></div>
+                          <div class="decoy-title"><img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_premium_page_pack_icons_3_packl_70.jpg?v=1701101375"></div>
                           <div class="decoy-content">
                           <div class="crossed titan-red bold js-price-original-three"></div>
                             <div class="decoy-content__price js-price-discount-three"></div>
@@ -152,7 +182,7 @@
                     ADD TITAN PD PLUG <br>
                     {% comment %} <div class="plug-ports">1x<span>PD</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/type-c_pd.png?v=1681382319"></div>
                     <div class="plug-ports">3x<span>USB-A</span><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/USB_A.png?v=1681382319"></div> {% endcomment %}
-                    {{plug.price | money }} <span class="crossed titan-red">{{plug.compare_at_price | money }}</span></div>
+                    {{plug.price | money_with_currency }} <span class="crossed titan-red">{{plug.compare_at_price | money_with_currency }}</span></div>
                     <div class="product-template-new__wrapper--content__add--image">
                         {% assign featured_image_plug = plug.selected_or_first_available_variant.featured_image | default: plug.featured_image %}
                         <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/new_45W_plug_upsell_cable_page.png?v=1693482318" alt="{{ featured_image_plug.alt }}">
@@ -161,8 +191,8 @@
               </div>
               
               <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+                <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money_with_currency }}</div>
               </div>
               <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
@@ -274,197 +304,197 @@ window.selectLogic = {
 }
 window.jointPrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointComparePrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointSavePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
      {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
 }
 window.length = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '3x4ft(1.2m)' : '{{ variant.price | money }}',
+        '3x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '3x6ft(1.8m)' : '{{ variant.price | money }}',
+        '3x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '3x10ft(3.0m)' : '{{ variant.price | money }}',
+        '3x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.price | monmoney_with_currencyey }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-1x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-1x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-1x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-4x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-4x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-4x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-3x4ft(1.2m)' : '{{ variant.price | money }}',
+        'pd-3x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-3x6ft(1.8m)' : '{{ variant.price | money }}',
+        'pd-3x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-3x10ft(3.0m)' : '{{ variant.price | money }}',
+        'pd-3x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }
 window.compareLength = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '3x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '3x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '3x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '3x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '3x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '3x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-1x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-1x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-1x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd2.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-4x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in pd3.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-3x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        'pd-3x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        'pd-3x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        'pd-3x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }
@@ -490,62 +520,62 @@ window.products = {
 }
 window.prices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
      {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
      {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
 }
 window.comparePrices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
 }
 window.savePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd1.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd2.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in pd3.variants %}
-      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      'pd-{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
 }
 window.images = {
@@ -590,45 +620,45 @@ window.images = {
    "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8pd.jpg?v=1693398809"
 }
 window.mainImages = {
-   "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-   "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-   "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-   "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-   "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-   "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-   "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-   "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-   "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-   "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-   "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-   "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-   "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-   "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-   "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-   "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-   "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-   "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-   "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-   "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-   "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-   "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-   "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-   "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-   "pd-3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec3.jpg?v=1693481897",
-   "pd-3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec3.jpg?v=1693481897",
-   "pd-3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone3.jpg?v=1693481898",
-   "pd-3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone3.jpg?v=1693481898",
-   "pd-iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone1.jpg?v=1693481902",
-   "pd-iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone1.jpg?v=1693481902",
-   "pd-Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec1.jpg?v=1693481900",
-   "pd-Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec1.jpg?v=1693481900",
-   "pd-4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone4.jpg?v=1693481905",
-   "pd-4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone4.jpg?v=1693481905",
-   "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec4.jpg?v=1693481905",
-   "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec4.jpg?v=1693481905"
+  "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_3_pack.jpg?v=1701098833",
+  "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_3_pack.jpg?v=1701098833",
+  "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_3_pack.jpg?v=1701098833",
+  "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_3_pack.jpg?v=1701098832",
+  "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_3_pack.jpg?v=1701098832",
+  "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_3_pack.jpg?v=1701098832",
+  "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_3_pack.jpg?v=1701098832",
+  "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_3_pack.jpg?v=1701098832",
+  "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_3_pack.jpg?v=1701098832",
+  "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_4_pack.jpg?v=1701098833",
+  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_4_pack.jpg?v=1701098833",
+  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_iphone_4_pack.jpg?v=1701098833",
+  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_4_pack.jpg?v=1701098833",
+  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_4_pack.jpg?v=1701098833",
+  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_USB-C_4_pack.jpg?v=1701098833",
+  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_4_pack.jpg?v=1701098832",
+  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_4_pack.jpg?v=1701098832",
+  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/CABLE_PRODUCT_IMAGE_4_pack_decoy-New_simple_black_design_70_OFF_micro_4_pack.jpg?v=1701098832",
+  "pd-3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec3.jpg?v=1693481897",
+  "pd-3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec3.jpg?v=1693481897",
+  "pd-3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone3.jpg?v=1693481898",
+  "pd-3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone3.jpg?v=1693481898",
+  "pd-iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone1.jpg?v=1693481902",
+  "pd-iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone1.jpg?v=1693481902",
+  "pd-Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec1.jpg?v=1693481900",
+  "pd-Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec1.jpg?v=1693481900",
+  "pd-4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone4.jpg?v=1693481905",
+  "pd-4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeciphone4.jpg?v=1693481905",
+  "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec4.jpg?v=1693481905",
+  "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typectypec4.jpg?v=1693481905"
 }
 </script>
 <script>

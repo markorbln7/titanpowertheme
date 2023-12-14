@@ -1,0 +1,513 @@
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-image.css' | asset_url | stylesheet_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
+<div class="game">
+    <div class="intro">
+        <div class="intro__title">Reveal Your Exclusive Black Friday Surprise!</div>
+        <div class="intro__subtitle">With each click, you have a chance for early access to some of our most exclusive Black Friday offers. Are you one of the fortunate few to score our top-tier discounts?</div>
+        <div class="intro__downtitle">Your Lucky click awaits!</div>
+    </div>
+    <div class="f fw background-black">
+        <div id="container4" class="js-container">
+            <img class="slicica image js-load-image imagereveal" src="{{ "uncnew.jpg" | asset_img_url:"478x" }}">
+            <a href="https://titanpowerplus.com/products/copy-of-titan-30w-nano-pd-car-charger%E2%84%A2"><img class="slicica-dva image js-load-image-dva" src="{{ "cm3.jpg" | asset_img_url:"478x" }}"></a>
+        </div>
+        <div id="container" class="js-container">
+            <img class="slicica image js-load-image imagereveal" src="{{ "uncnew.jpg" | asset_img_url:"478x" }}">
+            <a href="https://titanpowerplus.com/pages/wirelesstravelbundle"><img class="slicica-dva image js-load-image-dva" src="{{ "cm1.jpg" | asset_img_url:"478x" }}"></a>
+        </div>
+        <div id="container3" class="js-container special imagereveal">
+            <img class="slicica image js-load-image" src="{{ "uncnew.jpg" | asset_img_url:"478x" }}">
+            <a href="https://titanpowerplus.com/pages/gold-friday"><img class="slicica-dva image js-load-image-dva" src="{{ "cm4.jpg" | asset_img_url:"478x" }}"></a>
+        </div>
+        <div id="container2" class="js-container">
+            <img class="slicica image js-load-image imagereveal" src="{{ "uncnew.jpg" | asset_img_url:"478x" }}">
+            <a href="https://titanpowerplus.com/products/titan-3-in-1-multi-cable"><img class="slicica-dva image js-load-image-dva" src="{{ "cm2.jpg" | asset_img_url:"478x" }}"></a>
+        </div>
+       
+        
+    </div>
+    {% comment %} <div class="product-template__wrapper--content__form--atc">
+        <button class="reveal f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
+        <div class="atc-text js-atc-text scroll-reveal">
+                REVEAL
+        </div>
+        </button>
+    </div> {% endcomment %}
+</div>
+
+{{ 'del.js' | asset_url | script_tag }}
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
+
+<style>
+.intro__title {
+    padding:0 10px;
+}
+.intro__downtitle {
+    padding:0 10px;
+    text-align: center;
+    margin: 10px 0 10px;
+    font-family: Work Sans;
+    color: #969696;
+    font-style: normal;
+    line-height: 1.2;
+    font-size: 30px;
+    color: #60c655;
+    font-weight: 700;
+}
+.background-black {
+    background: #000;
+    padding:10px 0;
+}
+.product-template__wrapper--content__form--atc {
+    margin-top: 30px;
+    margin-bottom:30px;
+}
+.game {
+    background: #e4eaea;
+}
+.game .intro {
+    margin-bottom:30px;
+}
+canvas {
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+}
+
+.slicica {
+    position: absolute;
+    cursor: pointer;
+    width:100%;
+    height:auto;
+    top:0;
+    left:0;
+}
+.slicica-dva {
+    top:0;
+    position: absolute;
+    cursor: pointer;
+    width:100%;
+    height:auto;
+    visibility: hidden;
+    opacity: 0;
+}
+.slicica-dva.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+#container, #container2, #container3, #container4  {
+    width: 25%;
+    padding-top: 33.3333%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position:relative;
+}
+@media only screen and (max-width: 600px) {
+    #container, #container2, #container3, #container4  {
+        width: 50%;
+        padding-top: 66.6666%;
+    }
+  }
+  .special.active {
+    animation: shake 0.3s;
+    animation-iteration-count: 5;
+  }
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+</style>
+
+<script>
+    // triangulation using https://github.com/ironwallaby/delaunay
+
+function loadImage(c, w, h) {
+    let i1 = c.querySelector('.js-load-image');
+    let i2 = c.querySelector('.js-load-image-dva');
+    let container = c.querySelector('.js-container');
+    let containerWidht
+    if($('#MainContent').width() < 768 ) {
+        console.log('manje')
+        containerWidht = Math.round($('#MainContent').width() / 2 )
+    } else {
+        console.log('vece')
+        containerWidht = Math.round($('#MainContent').width() / 4 )
+    }
+    let width = '_' + containerWidht + 'x';
+    let src = i1.getAttribute('src');
+    let src2 = i2.getAttribute('src');
+    let replacedSrc = src.replace(/_.*x/, width);
+    let replacedSrc2 = src2.replace(/_.*x/, width);
+    i1.setAttribute('src', replacedSrc);
+    i2.setAttribute('src', replacedSrc2);
+    console.log(replacedSrc, 'replacedSrc')
+}
+let c1 = document.querySelector('#container');
+let c2 = document.querySelector('#container2');
+let c3 = document.querySelector('#container3');
+let c4 = document.querySelector('#container4');
+loadImage(c1)
+loadImage(c2)
+loadImage(c3)
+loadImage(c4)
+
+let reveal = document.querySelector('.reveal');
+window.addEventListener("resize", function (e) {
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    loadImage(c1)
+    loadImage(c2)
+    loadImage(c3)
+    loadImage(c4)
+});
+
+const TWO_PI = Math.PI * 2;
+
+
+
+
+var vertices = [],
+    indices = [],
+    fragments = [];
+
+window.onload = function() {
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    placeImage(c1);
+    placeImage(c2);
+    placeImage(c3);
+    placeImage(c4);
+};
+
+function imagesLoaded() {
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    placeImage(c1);
+    triangulate(c1);
+    shatter(c1);
+    placeImage(c2);
+    triangulate(c2);
+    shatter(c2);
+    placeImage(c3);
+    triangulate(c3);
+    shatter(c3);
+    placeImage(c4);
+    triangulate(c4);
+    shatter(c4);
+}
+
+function placeImage(c) {
+    {% comment %} image.addEventListener('click', imageClickHandler); {% endcomment %}
+    {% comment %} reveal.addEventListener('click', imageClickHandler); {% endcomment %}
+    let image = c.querySelector('.slicica')
+    reveal.addEventListener("click", function (e) {
+        let container = document.querySelector('#container');
+        imageClickHandler(container)
+    });
+    c.appendChild(image);
+}
+
+function imageClickHandler(container) {
+    let image = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    setTimeout(() => {
+        var box = image.getBoundingClientRect(),
+            top = box.top,
+            left = box.left;
+
+        clickPosition[0] = image.offsetLeft + image.offsetWidth / 2;
+        clickPosition[1] = image.offsetTop + image.offsetHeight / 2;
+
+        triangulate(c1);
+            shatter(c1);
+        setTimeout(() => {
+            triangulate(c2);
+            shatter(c2);
+        }, "2700");
+        setTimeout(() => {
+            let shake = document.querySelector('.special');
+            shake.classList.add('active');
+        }, "5400");
+        setTimeout(() => {
+            triangulate(c3);
+            shatter(c3);
+        }, "5900");
+        setTimeout(() => {
+            triangulate(c4);
+            shatter(c4);
+        }, "8600");
+    }, 500);
+}
+
+
+function imageClickHandlerClick(container) {
+    let image = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    let c1 = document.querySelector('#container');
+    let c2 = document.querySelector('#container2');
+    let c3 = document.querySelector('#container3');
+    let c4 = document.querySelector('#container4');
+    setTimeout(() => {
+        var box = image.getBoundingClientRect(),
+            top = box.top,
+            left = box.left;
+
+        clickPosition[0] = image.offsetLeft + image.offsetWidth / 2;
+        clickPosition[1] = image.offsetTop + image.offsetHeight / 2;
+
+        triangulate(container);
+        shatter(container);
+    }, 500);
+}
+
+let imageReveal = document.querySelectorAll('.imagereveal');
+
+imageReveal.forEach(event => {
+    event.addEventListener("click", function (e) {
+        let _this = e.target;
+        let container = _this.parentNode;
+        if (container.classList.contains('special')) {
+            container.classList.add('active');
+            setTimeout(() => {
+                imageClickHandlerClick(container);
+            }, 1500);
+        } else {
+            imageClickHandlerClick(container);
+        }
+    });
+})
+
+function triangulate(container) {
+    let image = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    clickPosition[0] = image.offsetLeft + image.offsetWidth / 2;
+    clickPosition[1] = image.offsetTop + image.offsetHeight / 2; 
+    var rings = [
+            {r:50, c:12},
+            {r:150, c:12},
+            {r:300, c:12},
+            {r:1200, c:12} // very large in case of corner clicks
+        ],
+        x,
+        y,
+        centerX = clickPosition[0],
+        centerY = clickPosition[1];
+
+    vertices.push([centerX, centerY]);
+
+    rings.forEach(function(ring) {
+        var radius = ring.r,
+            count = ring.c,
+            variance = radius * 0.25;
+
+        for (var i = 0; i < count; i++) {
+            x = Math.cos((i / count) * TWO_PI) * radius + centerX + randomRange(-variance, variance);
+            y = Math.sin((i / count) * TWO_PI) * radius + centerY + randomRange(-variance, variance);
+            vertices.push([x, y]);
+        }
+    });
+
+    vertices.forEach(function(v) {
+        v[0] = clamp(v[0], 0, imageWidth);
+        v[1] = clamp(v[1], 0, imageHeight);
+    });
+
+    indices = Delaunay.triangulate(vertices);
+}
+
+function shatter(elem) {
+    var container = elem;
+    let image2 = container.querySelector('.slicica')
+    let img = container.querySelector('.image'); 
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
+    clickPosition[0] = image2.offsetLeft + image2.offsetWidth / 2;
+    clickPosition[1] = image2.offsetTop + image2.offsetHeight / 2; 
+    console.log(container, 'container')
+    var p0, p1, p2,
+        fragment;
+
+    imageDva = container.querySelector('.slicica-dva');
+    imageDva.classList.add('active');
+
+    var tl0 = new TimelineMax({onComplete:shatterCompleteHandler});
+
+
+    for (var i = 0; i < indices.length; i += 3) {
+        p0 = vertices[indices[i + 0]];
+        p1 = vertices[indices[i + 1]];
+        p2 = vertices[indices[i + 2]];
+        fragment = new Fragment(p0, p1, p2);
+
+        var dx = fragment.centroid[0] - clickPosition[0],
+            dy = fragment.centroid[1] - clickPosition[1],
+            d = Math.sqrt(dx * dx + dy * dy),
+            rx = 30 * sign(dy),
+            ry = 90 * -sign(dx),
+            delay = d * 0.009 * randomRange(0.9, 1.1);
+        fragment.canvas.style.zIndex = Math.floor(d).toString();
+
+        var tl1 = new TimelineMax();
+
+
+        tl1.to(fragment.canvas, 1, {
+            z:-500,
+            rotationX:rx,
+            rotationY:ry,
+            ease:Cubic.easeIn
+        });
+        tl1.to(fragment.canvas, 0.4,{alpha:0}, 0.6);
+
+        tl0.insert(tl1, delay);
+        
+
+        fragments.push(fragment);
+        container.appendChild(fragment.canvas);
+    }
+
+    let image = elem.querySelector('.slicica')
+    container.removeChild(image);
+    image.removeEventListener('click', imageClickHandler);
+}
+
+function shatterCompleteHandler() {
+    var container = document.getElementById('container');
+    // add pooling?
+    {% comment %} fragments.forEach(function(f) {
+        container.removeChild(f.canvas);
+    }); {% endcomment %}
+    fragments.length = 0;
+    vertices.length = 0;
+    indices.length = 0;
+}
+
+//////////////
+// MATH UTILS
+//////////////
+
+function randomRange(min, max) {
+    return min + (max - min) * Math.random();
+}
+
+function clamp(x, min, max) {
+    return x < min ? min : (x > max ? max : x);
+}
+
+function sign(x) {
+    return x < 0 ? -1 : 1;
+}
+
+//////////////
+// FRAGMENT
+//////////////
+
+Fragment = function(v0, v1, v2) {
+    this.v0 = v0;
+    this.v1 = v1;
+    this.v2 = v2;
+
+    this.computeBoundingBox();
+    this.computeCentroid();
+    this.createCanvas();
+    this.clip();
+};
+Fragment.prototype = {
+    computeBoundingBox:function() {
+        var xMin = Math.min(this.v0[0], this.v1[0], this.v2[0]),
+            xMax = Math.max(this.v0[0], this.v1[0], this.v2[0]),
+            yMin = Math.min(this.v0[1], this.v1[1], this.v2[1]),
+            yMax = Math.max(this.v0[1], this.v1[1], this.v2[1]);
+
+        this.box ={
+            x:xMin,
+            y:yMin,
+            w:xMax - xMin,
+            h:yMax - yMin
+        };
+    },
+    computeCentroid:function() {
+        var x = (this.v0[0] + this.v1[0] + this.v2[0]) / 3,
+            y = (this.v0[1] + this.v1[1] + this.v2[1]) / 3;
+
+        this.centroid = [x, y];
+    },
+    createCanvas:function() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = this.box.w;
+        this.canvas.height = this.box.h;
+        this.canvas.style.width = this.box.w + 'px';
+        this.canvas.style.height = this.box.h + 'px';
+        this.canvas.style.left = this.box.x + 'px';
+        this.canvas.style.top = this.box.y + 'px';
+        this.ctx = this.canvas.getContext('2d');
+    },
+    clip:function() {
+        let image = document.querySelector('.slicica');
+        this.ctx.translate(-this.box.x, -this.box.y);
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.v0[0], this.v0[1]);
+        this.ctx.lineTo(this.v1[0], this.v1[1]);
+        this.ctx.lineTo(this.v2[0], this.v2[1]);
+        this.ctx.closePath();
+        this.ctx.clip();
+        this.ctx.drawImage(image, 0, 0);
+    }
+};
+</script>
+
+
+{% schema %}
+{
+  "name": "Reveal Offers",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Reveal Offers",
+      "category": "Home Page"
+    }
+  ]
+}
+{% endschema %}

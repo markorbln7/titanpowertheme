@@ -24,7 +24,7 @@
                   {{ product.title }}
               </div>    
               <div class="product__list--single--price color-white">
-                  <span class="crossed">{{ product.compare_at_price | money }}</span> {{ product.price | money }}
+                  <span class="crossed">{{ product.compare_at_price | money_with_currency }}</span> {{ product.price | money_with_currency }}
               </div>  
               <div data-product="{{ product.first_available_variant.id }}" class="js-atc product__list--single--atc">
                   +ADD TO CART

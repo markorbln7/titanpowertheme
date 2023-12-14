@@ -11,7 +11,7 @@
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970" alt="{{ featured_image.alt }}">
+            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_iphone_cable.jpg?v=1701099490" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -33,6 +33,36 @@
                     {% endif %}
                   {% endfor %}
               </div>
+              <div class="bf-info">
+                <div class="bf-info-text color-black">BLACK FRIDAY SALE</div>
+                <div class="bf-info-title">80% OFF + FREE CAR PD PLUG</div>
+              </div>
+            <style>
+               .bf-info-text {
+                font-size:32px;
+                line-height:1.2;
+                font-weight:700;
+                margin-top:10px;
+                @media only screen and (max-width: 768px) {
+                  font-size:20px;
+              }
+              }
+              .bf-info-title {
+                font-size:32px;
+                line-height:1.2;
+                color:#60C655;
+                background:black;
+                font-weight:700;
+                max-width: fit-content;
+                padding: 5px 10px;
+                border-radius: 30px;
+                margin-bottom:10px;
+                margin-left: -10px;
+                @media only screen and (max-width: 768px) {
+                  font-size:20px;
+              }
+              }
+            </style>
               {% comment %} <div class="product-template-new__wrapper--content__offerDiscount font-sans js-discount text-center">
                   {{section.settings.d1}}
               </div> {% endcomment %}
@@ -46,9 +76,9 @@
                   </div>
                 </div>
               </div> {% endcomment %}
-              {% comment %} <div class="product-template-new__wrapper--content__imageSelection">
-                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374">
-              </div> {% endcomment %}
+              <div class="product-template-new__wrapper--content__imageSelection">
+                <img class="js-image-change d-block w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.2.jpg?v=1693398807">
+              </div>
               
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
@@ -56,7 +86,7 @@
                           <div class="zindex transform">IPhone</div>
                       </div>
                       <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
-                          <div class="zindex transform">Type-C</div>
+                          <div class="zindex transform">USB-C</div>
                       </div>
                       <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Micro Usb</div>
@@ -119,8 +149,8 @@
                   </div>
               </div>
               <div class="text-center price-div">
-                <span class="js-price titan-green">{{product.price | money}}</span> <span class="js-crossed-price titan-red">{{product.compare_at_price | money}}</span>
-                <div class="js-saving">{{product.compare_at_price | minus:product.price | money}}</div>
+                <span class="js-price titan-green">{{ product.price | money_with_currency }}</span> <span class="js-crossed-price titan-red">{{ product.compare_at_price | money_with_currency }}</span>
+                <div class="js-saving">{{product.compare_at_price | minus:product.price | money_with_currency }}</div>
               </div>
                <div class="product-template__wrapper--content__form--atc">
                   <button class="js-atc f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white relative">
@@ -231,104 +261,104 @@ window.selectLogic = {
 }
 window.jointPrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | plus: plug.price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointComparePrice = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money  }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency  }}',
     {% endfor %}
 }
 window.jointSavePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
     {% endfor %}
 }
 window.length = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '8x4ft(1.2m)' : '{{ variant.price | money }}',
+        '8x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '8x6ft(1.8m)' : '{{ variant.price | money }}',
+        '8x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '8x10ft(3.0m)' : '{{ variant.price | money }}',
+        '8x10ft(3.0m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.price | monmoney_with_currencyey }}',
       {% endif %}
   {% endfor %}
 }
 window.compareLength = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
-        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '4x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '4x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '4x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product4.variants %}
       {% if variant.title contains '1.2'%}
-        '8x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '8x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '8x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '8x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '8x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '8x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
   {% for variant in product2.variants %}
       {% if variant.title contains '1.2'%}
-        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money }}',
+        '1x4ft(1.2m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
-        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money }}',
+        '1x6ft(1.8m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
       {% if variant.title contains '3.0'%}
-        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money }}',
+        '1x10ft(3.0m)' : '{{ variant.compare_at_price | money_with_currency }}',
       {% endif %}
   {% endfor %}
 }
@@ -345,73 +375,67 @@ window.products = {
 }
 window.prices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.price | money_with_currency}}',
     {% endfor %}
 }
 window.comparePrices = {
    {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money}}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | money_with_currency}}',
     {% endfor %}
 }
 window.savePrices = {
     {% for variant in product.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product2.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
     {% for variant in product4.variants %}
-      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money }}',
+      '{{ variant.title | remove:" " }}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
     {% endfor %}
 }
 window.images = {
-   "4xiPhone/1.5ft(0.5m)":"42511761440946",
-   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374",
-   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_2.jpg?v=1680176374",
-   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_2.jpg?v=1680176374",
-   "4xType-C/1.5ft(0.5m)":"42511761572018",
-   "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_2.jpg?v=1680176374",
-   "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_2.jpg?v=1680176374",
-   "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_3.0m_2.jpg?v=1680176374",
-   "4xMicro-USB/1.5ft(0.5m)":"42511761703090",
-   "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.2m_2.jpg?v=1680176374",
-   "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.8m_2.jpg?v=1680176374",
-   "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_3.0m_2.jpg?v=1680176374",
-   "15xiPhone/1.5ft(0.5m)":"42511715991730",
-   "15xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374",
-   "15xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_2.jpg?v=1680176374",
-   "15xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_2.jpg?v=1680176374",
-   "15xType-C/1.5ft(0.5m)":"42511716122802",
-   "15xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_2.jpg?v=1680176374",
-   "15xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_2.jpg?v=1680176374",
-   "15xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_3.0m_2.jpg?v=1680176374",
-   "15xMicro-USB/1.5ft(0.5m)":"42511716286642",
-   "15xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.2m_2.jpg?v=1680176374",
-   "15xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.8m_2.jpg?v=1680176374",
-   "15xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_3.0m_2.jpg?v=1680176374",
-   "8xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.2m_2.jpg?v=1680176374",
-   "8xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_1.8m_2.jpg?v=1680176374",
-   "8xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_iphone_3.0m_2.jpg?v=1680176374",
-   "8xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.2m_2.jpg?v=1680176374",
-   "8xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_1.8m_2.jpg?v=1680176374",
-   "8xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_type-c_3.0m_2.jpg?v=1680176374",
-   "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.2m_2.jpg?v=1680176374",
-   "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_1.8m_2.jpg?v=1680176374",
-   "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_smart_cable_titan_power_plus_micro-usb_3.0m_2.jpg?v=1680176374"
+  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.2.jpg?v=1693398807",
+  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.8.jpg?v=1693398810",
+  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.0.jpg?v=1693398807",
+  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.2.jpg?v=1693398805",
+  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8.jpg?v=1693398808",
+  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc3.0.jpg?v=1693398809",
+  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.2.jpg?v=1693398808",
+  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.8.jpg?v=1693398807",
+  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb3.0.jpg?v=1693398809",
+  "15xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.2.jpg?v=1693398807",
+  "15xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.8.jpg?v=1693398810",
+  "15xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.0.jpg?v=1693398807",
+  "15xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.2.jpg?v=1693398805",
+  "15xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8.jpg?v=1693398808",
+  "15xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc3.0.jpg?v=1693398809",
+  "15xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.2.jpg?v=1693398808",
+  "15xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.8.jpg?v=1693398807",
+  "15xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb3.0.jpg?v=1693398809",
+  "8xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.2.jpg?v=1693398807",
+  "8xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.8.jpg?v=1693398810",
+  "8xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.0.jpg?v=1693398807",
+  "8xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.2.jpg?v=1693398805",
+  "8xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8.jpg?v=1693398808",
+  "8xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc3.0.jpg?v=1693398809",
+  "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.2.jpg?v=1693398808",
+  "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.8.jpg?v=1693398807",
+  "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb3.0.jpg?v=1693398809",
 }
-window.mainImages = {
+{% comment %} window.mainImages = {
    "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
    "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
    "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
@@ -439,6 +463,35 @@ window.mainImages = {
    "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
    "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
    "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224"
+} {% endcomment %}
+window.mainImages = {
+  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_iphone_cable.jpg?v=1701099490",
+  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_iphone_cable.jpg?v=1701099490",
+  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_iphone_cable.jpg?v=1701099490",
+  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_USB-C_cable.jpg?v=1701099489",
+  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_USB-C_cable.jpg?v=1701099489",
+  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_USB-C_cable.jpg?v=1701099489",
+  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_MICRO_cable.jpg?v=1701099490",
+  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_MICRO_cable.jpg?v=1701099490",
+  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_MICRO_cable.jpg?v=1701099490",
+  "15xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_iphone_cable.jpg?v=1701099489",
+  "15xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_iphone_cable.jpg?v=1701099489",
+  "15xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_iphone_cable.jpg?v=1701099489",
+  "15xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_USB-C_cable.jpg?v=1701099489",
+  "15xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_USB-C_cable.jpg?v=1701099489",
+  "15xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_USB-C_cable.jpg?v=1701099489",
+  "15xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_MICRO_cable.jpg?v=1701099489",
+  "15xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_MICRO_cable.jpg?v=1701099489",
+  "15xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_15_pack_70_MICRO_cable.jpg?v=1701099489",
+  "8xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_iphone_cable.jpg?v=1701099490",
+  "8xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_iphone_cable.jpg?v=1701099490",
+  "8xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_iphone_cable.jpg?v=1701099490",
+  "8xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_USB-C_cable.jpg?v=1701099489",
+  "8xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_USB-C_cable.jpg?v=1701099489",
+  "8xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_USB-C_cable.jpg?v=1701099489",
+  "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_MICRO_cable.jpg?v=1701099490",
+  "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_MICRO_cable.jpg?v=1701099490",
+  "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_8_pack_70_MICRO_cable.jpg?v=1701099490"
 }
 </script>
 {{ 'overridepacklight.js' | asset_url | script_tag }}

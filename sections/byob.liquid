@@ -3,673 +3,530 @@
 {{ 'section-product-zig.css' | asset_url | stylesheet_tag }}
 {{ 'section-product-image.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle-builder.js' | asset_url | script_tag }}
-<div class="product-popup__wrapper hidden">
-  <div class="close">
-    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" fill="none" viewBox="0 0 18 17">
-      <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
-    </svg>
-  </div>
-  <div class="info-bar">YOU UNLOCKED 1 FREE GIFT! CHOOSE IT BELOW</div>
-  <div class="product-popup__holder">
-    {% for product in collections['frree-gift'].products %}
-      {% if forloop.index == 1%}
-        {% assign one = 'Rapid 15W Charge'%}
-        {% assign two = 'No More Messy Wires'%}
-        {% assign three = 'Charges with case'%}
-      {% endif %}
-      {% if forloop.index == 2%}
-        {% assign one = 'Charges With Case'%}
-        {% assign two = 'Wireless Charging'%}
-        {% assign three = 'In Car or at Home'%}
-      {% endif %}
-      {% if forloop.index == 3 %}
-        {% assign one = 'Charge Any Device'%}
-        {% assign two = 'Retractable Cable'%}
-        {% assign three = 'Changeable Length'%}
-      {% endif %}
-      {% render 'product-render' checkout:'checkout' cart_title:'+ PICK A GIFT' hidecart:false product_var:product.handle %}
-    {% endfor %}
-  </div>
-  {% comment %} <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
-    <button class="js-add-to-cart-popup f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-      <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
-    </button>
-  </div> {% endcomment %}
-</div>
-<div class="product-popup__animation hidden">
-  <div class="container">
-        <div class="ring">
-            <h1>Preparing gifts...</h1>
-        </div>
-  </div>
-</div>
-<div class="product-addtocart hidden">
-    <div class="container">
-      <div id="battery">
-        <div id="charge" class="active"></div>
-        <div id="charge-level">ADDING..</div>
-      </div>
-      <div id="charging-time"></div>
-    </div>
-</div>
-<div class="hero_image desktop hd">
-  <img src="https://cdn05.zipify.com/C9BAgZynFCMpSpz-cuCB-_Jt99A=/fit-in/3840x0/263e94ab951f4224a507871b17a15932/charge-kit-banner.jpeg">
-</div>
-<div class="hero_image mobile md">
-  <img src="https://cdn05.zipify.com/wRYNX7Jz8YGRqoIoHkmjRwQO1Uw=/0x7:1080x1795/fit-in/3840x0/474c11e21dd14eb8b60261395fdc356a/bybuild-a-charging-kit-desktop-mobile.jpeg">
-</div>
-{% comment %} <div id="info-bar" class="info-bar">ADD ANY 3 AND CHOOSE 1 FREE GIFT BELOW</div> {% endcomment %}
-{% comment %} <div class="bundle-wrapper offer-intro-wrapper">
-    {% for product in collections['frree-gift'].products %}
-    {% if forloop.index == 1%}
-        {% assign one = 'Rapid 15W Charge'%}
-        {% assign two = 'No More Messy Wires'%}
-        {% assign three = 'Charges with case'%}
-      {% endif %}
-      {% if forloop.index == 2%}
-        {% assign one = 'Charges With Case'%}
-        {% assign two = 'Wireless Charging'%}
-        {% assign three = 'In Car or at Home'%}
-      {% endif %}
-      {% if forloop.index == 3 %}
-        {% assign one = 'Charge Any Device'%}
-        {% assign two = 'Retractable Cable'%}
-        {% assign three = 'Changeable Lengt'%}
-      {% endif %}
-      {% render 'product-render' hidecart:true product_var:product.handle tick1: one tick2:two tick3:three %}    {% endfor %}
-</div> {% endcomment %}
 <div class="intro">
-  <div class="intro__title">ADD MORE TO SAVE MORE</div>
-  <div class="intro__subtitle">We're offering a flat discount on each product at 50% OFF RRP! Plus, lock in up to 75% in savings when you bundle together any combination of the products bellow!</div>
+  <img class="number-icon-three" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3-icon.png?v=1700734602">
+  <div class="bundle-title gray-version">
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+    <div class="text">CUSTOMISE YOUR <br>OFFER</div>
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+      Combine our bundles and best sellers to custom build your offer and reach our very best prices.
+  </div>
 </div>
 <div class="sticky-div w-100">
-  <div class="js-info-bar">ADD 4 AND SAVE 55%</div>
+  <div class="js-info-bar">ADD 5 AND SAVE 55%</div>
   <div class="progress">
     <div class="bar"></div>
   </div>
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
-    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
+    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
       <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
   </button>
 </div>
 </div>
 <div class="bundle-wrapper">
-    {% for product in collections['build-your-own-bundle'].products %}
-    {% comment %} {% if forloop.index < 3%}
-        {% assign one = ''%}
-        {% assign two = ''%}
-        {% assign three = ''%}
-      {% endif %}
-      {% if forloop.index == 3%}
-        {% assign one = '3 Devices At Once'%}
-        {% assign two = 'Super Compact'%}
-        {% assign three = 'Wireless Charge Buds'%}
-      {% endif %}
-      {% if forloop.index == 4%}
-        {% assign one = 'Unbeatable Comfort'%}
-        {% assign two = 'Supreme Audio'%}
-        {% assign three = 'Wireless Charging'%}
-      {% endif %}
-      {% if forloop.index == 5 %}
-        {% assign one = 'Wireless Charge'%}
-        {% assign two = 'Magnetic holder'%}
-        {% assign three = '10,000mAh capacity'%}
-      {% endif %}
-      {% if forloop.index == 6%}
-        {% assign one = 'No more messy wires'%}
-        {% assign two = '15W Wireless Charge'%}
-        {% assign three = 'Charge 3 Devices'%}
-      {% endif %}
-      {% if forloop.index > 6%}
-        {% assign one = ''%}
-        {% assign two = ''%}
-        {% assign three = ''%}
-      {% endif %} {% endcomment %}
-      
-      {% render 'product-render' cart_title:'+ ADD TO KIT' product_var:product.handle  %}
-    {% endfor %}
+  {% for product in collections['build-your-own-bundle'].products %}
+    {% if forloop.index == 1%}
+      {% assign one = 'Fast Charges iPhones'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 2%}
+      {% assign one = 'Fast Charges all devices'%}
+      {% assign two = 'Unique 90° Design'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 3%}
+      {% assign one = 'Charge 4 Devices'%}
+      {% assign two = 'Charge 50% in 20mins'%}
+      {% assign three = 'US, EU, UK, AU Adapters'%}
+    {% endif %}
+    {% if forloop.index == 4%}
+      {% assign one = 'Unbeatable Comfort'%}
+      {% assign two = 'Supreme Audio'%}
+      {% assign three = 'Wireless Charging'%}
+    {% endif %}
+    {% if forloop.index == 5%}
+      {% assign one = '50% in 20mins!'%}
+      {% assign two = 'Protects Battery Life'%}
+      {% assign three = 'Lifetime Warranty'%}
+    {% endif %}
+    {% if forloop.index == 6%}
+      {% assign one = '3 folded Positions'%}
+      {% assign two = 'Rapid 15W Charge'%}
+      {% assign three = 'Charge Buds, Watch & Phone'%}
+    {% endif %}
+    {% if forloop.index == 7%}
+      {% assign one = 'Charge 50% in 20mins!'%}
+      {% assign two = 'Link phone to music'%}
+      {% assign three = 'Hands free calls'%}
+    {% endif %}
+    {% if forloop.index == 8%}
+      {% assign one = 'Length extends up to 6ft'%}
+      {% assign two = '3 cables built into one'%}
+      {% assign three = 'Fast & sleek design'%}
+    {% endif %}
+    {% if forloop.index == 9%}
+      {% assign one = '15W Rapid charge'%}
+      {% assign two = 'Charge upright or on side'%}
+      {% assign three = 'Sleek professional design'%}
+    {% endif %}
+    {% if forloop.index == 10%}
+      {% assign one = 'Sensor auto-opens & closes'%}
+      {% assign two = 'Hold & charge phone in car'%}
+      {% assign three = 'Suction cup/ air vent options '%}
+    {% endif %}
+    {% if forloop.index == 11%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Alarm clock built-in'%}
+      {% assign three = 'Phone, Watch & Buds'%}
+    {% endif %}
+    {% if forloop.index == 12%}
+      {% assign one = '10,000mAh Capacity'%}
+      {% assign two = 'Fold-out kickstand'%}
+      {% assign three = 'Magnet attach & Wireless'%}
+    {% endif %}
+    {% if forloop.index == 13%}
+      {% assign one = '3 cables in one case'%}
+      {% assign two = 'Tiny Credit Card Size'%}
+      {% assign three = 'Mirror & Phone Stand'%}
+    {% endif %}
+    {% if forloop.index == 14%}
+      {% assign one = '3 Devices At Once'%}
+      {% assign two = 'Sleek & modern'%}
+      {% assign three = 'Fast Charge'%}
+    {% endif %}
+
+    {% if forloop.index == 1%}
+      <div class="upper-part-holder">
+        <div class="upper-part-holder__title">Premium best sellers</div>
+          <div class="upper-part-holder__flex">
+    {% endif %}
     
-</div>
 
-<div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd">
-    <button class="js-add-to-cart f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white">
-      <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
-    </button>
-</div>
 
+{% comment %} RENDERER START {% endcomment %}
+<div class="bundle-wrapper__product js-wrapper-product" data-product-id="{{product.id}}">
+    {% if product.images[2].src %}
+        <div class="product-overlay">
+            <div class="close">
+                {% render 'icon-close' %}
+            </div>
+            <div class="product-overlay-image">
+                <img src="{{product.images[2].src | img_url: 'master'}}">
+            </div>
+        </div>
+    {% endif %}
+    <div class="bundle-wrapper__product--image product-overlay-trigger relative">
+        <div class="info-icon">i</div>
+        <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
+    </div>
+    <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
+    <div class="product-template__wrapper--content__features font-sans">
+        <div class="js-scroll product-template__wrapper--content__features--name">{{one}}</div>
+        <div class="js-scroll product-template__wrapper--content__features--name">{{two}}</div> 
+        <div class="js-scroll product-template__wrapper--content__features--name">{{three}}</div>
+    </div>
+
+    {% assign productVariants = product.variants %}
+
+
+    <div class="hidden">{{realOptions | json }}</div>
+    <select hidden name="id" id="ProductSelect">
+        {% for variant in productVariants %}
+            <option value="{{ variant.id }}">{{ variant.title }} ({{ variant.id }})</option>
+        {% endfor %}
+    </select>
+    {% assign sofav = product.selected_or_first_available_variant %}
+    {% if product.options_with_values[0].name == 'Length' %}
+    <section class="product-description-wrapper bg-black atc-wrapper">
+        <div class="product-description">
+            <div class="materials description-expand">
+                {% for product_option in product.options_with_values %}
+                    <div class="materials__single">
+                            {% for value in product_option.values %}
+                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    viewBox="0 0 330 330" xml:space="preserve">
+                               <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+                                   c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+                                   s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/>
+                               </svg></span></div>
+                                {% break %}
+                            {% endfor %}
+                            <div class="variants-holder">
+                                {% for value in product_option.values %}
+                                    <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="{% if forloop.index == 1 %}active{% endif%} swatch-holder d-flex flex-column">
+                                        <div data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po swatch {{value | handleize}}"></div>
+                                        <div data-product-name="{{product.handle}}" data-position="{{product_option.position | minus:1 }}" data-name="{{optionName}}" data-value="{{ value }}" class="po color-white mb-4 h4 materials__single--option__name small">
+                                            {{ value }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+                {% endfor %}
+                <div class="variants-hidden hidden">
+                    {% for variant in productVariants %}
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                </div>
+                <div class="bundle-wrapper__footer">
+                    <div class="price type--m hhhhh">
+                        {% if product.variants.size > 1 %}
+                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                            {% assign prId = product.first_available_variant.id %}
+                        {% else %}
+                            <span class="js-price ">{{product.price | money }}</span><br>
+                            <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                            {% assign prId = product.variants[0].id %}
+                        {% endif %}
+                    </div>
+                    <div class="c-quantity f aic p dm-sans-normal color-white">
+                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+                        <div class="c-quantity__amount op">0</div>
+                        <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+                    </div>
+                    {% unless hidecart == true%}
+                        <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                    {% endunless %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <div><div><div>
+    <div class="bundle-wrapper__footer">
+        <div class="js-price price type--m">
+            {% if product.variants.size > 1 %}
+                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                {% assign prId = product.first_available_variant.id %}
+            {% else %}
+                <span class="js-price ">{{product.price | money }}</span>
+                <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                {% assign prId = product.variants[0].id %}
+            {% endif %}
+        </div>
+        <div class="c-quantity f aic p dm-sans-normal color-white">
+            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+            <div class="c-quantity__amount op">0</div>
+            <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+        </div>
+        {% unless hidecart == true %}
+            <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+        {% endunless %}
+    </div>
+</div></div></div>
+    {% endif %}
+</div>
 
 <script>
-const pos = document.querySelectorAll('.po')
-const titleArray = []
-let optionNames = document.querySelectorAll('.js-option-name')
-const popUpControler = document.querySelector('.product-popup__wrapper')
-const popUpLoadControler = document.querySelector('.product-addtocart')
-const popUpAnimationControler = document.querySelector('.product-popup__animation')
-const close = document.querySelector('.close')
-const increases = document.querySelectorAll('.increase')
-const decreases = document.querySelectorAll('.decrease')
-increases.forEach((increas) => {
-  increas.addEventListener('click', (e) => {
-    const _this = e.target
-    const parentSelector = _this.parentNode.parentNode
-    console.log(parentSelector, 'parentSelector')
-    const inputSelector = parentSelector.querySelector('.js-variant-selector')
-    const inputValue = parentSelector.querySelector('.c-quantity__amount')
-    const value = inputSelector.getAttribute('data-quantity')
-    const newValue = parseInt(value) + 1
-    inputSelector.setAttribute('data-quantity', newValue)
-    inputValue.innerHTML = newValue
-    const bar = document.querySelector(".bar");
-    selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-            let numberOfSelected = 0
-            selectedItems.forEach((selectedItem) => {
-               selectedNumber = selectedItem.getAttribute('data-quantity')
-               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-            })
-            //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
-            console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
-        }
-    
-  })
-})
-decreases.forEach((decrease) => {
-  decrease.addEventListener('click', (e) => {
-    const _this = e.target
-    const parentSelector = _this.parentNode.parentNode
-    console.log(parentSelector, 'parentSelector')
-    const inputSelector = parentSelector.querySelector('.js-variant-selector')
-    const inputValue = parentSelector.querySelector('.c-quantity__amount')
-    const value = inputSelector.getAttribute('data-quantity')
-    const newValue = parseInt(value) - 1
-    if(newValue < 1) {
-      return
-    }
-    inputSelector.setAttribute('data-quantity', newValue)
-    inputValue.innerHTML = newValue
-    const bar = document.querySelector(".bar");
-    selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-            let numberOfSelected = 0
-            selectedItems.forEach((selectedItem) => {
-               selectedNumber = selectedItem.getAttribute('data-quantity')
-               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-            })
-            //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
-            console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
-        }
-  })
-})
-close.addEventListener('click', (e) => {
-  popUpControler.classList.toggle('hidden')
-  body.classList.toggle('overflow-hidden')
-})
-
-pos.forEach((po) => {
-  const name = po.getAttribute('data-value')
-  const position = po.getAttribute('data-position')
-  titleArray[position] = name
-  po.addEventListener('click', (e) => {
-    let variantName = ''
-    const _this = e.target
-    const divSelector = _this.parentNode.parentNode.parentNode.parentNode
-    const parentSelector = divSelector.parentNode
-    const siblings = _this.parentNode.parentNode.children
-    console.log(siblings, 'RODJACI')
-    for (let i = 0; i < siblings.length; i++) {
-      siblings[i].classList.remove('active')
-    }
-    _this.parentNode.classList.add('active')
-    const position = _this.getAttribute('data-position')
-    const name = _this.getAttribute('data-value')
-    const nameSelector = _this.parentNode.parentNode.parentNode
-    const variantSelector = _this.parentNode.parentNode
-    let setOptionName = nameSelector.querySelector('.js-option-name')
-    variantSelector.classList.remove('open')
-    document.querySelector('body').classList.remove('no-scroll');
-    setOptionName.innerHTML = name
-    console.log(nameSelector, name, 'NAME')
-    const active = parentSelector.querySelectorAll('.active')
-    console.log(active, 'ACTIVE')
-    if (active.length > 1) {
-      console.log('VISE OD 1')
-      for (let i = 0; i < active.length; i++) {
-        const name = active[i].getAttribute('data-value')
-        const position = active[i].getAttribute('data-position')
-        titleArray[position] = name
-      }
-    } else {
-      console.log('SAMO 1')
-      titleArray[position] = name
-    }
-    console.log(titleArray, 'titleArray')
-
-    console.log(titleArray, 'titleArray')
-    for (let i = 0; i < titleArray.length; i++) {
-      variantName += `${titleArray[i]} / `
-    }
-    const variantSelectorName = variantName.slice(0, -3)
-    const selectedVariant = divSelector.querySelector(`[data-title="${variantSelectorName}"]`)
-    console.log(variantSelectorName, selectedVariant)
-    const selectedVariantId = selectedVariant.getAttribute('data-variant')
-    const selectedVariantImage = selectedVariant.getAttribute('data-variant-image')
-    const imageSelector = divSelector.parentNode.parentNode.parentNode.querySelector('.bundle-wrapper__product--image img')
-    const selectedVariantPrice = selectedVariant.getAttribute('data-price')
-    const selectedVariantComparePrice = selectedVariant.getAttribute('data-compare-price')
-    const buttonSelector = divSelector.querySelector('.js-variant-selector')
-    const priceSelector = divSelector.querySelector('.js-price')
-    const comparePriceSelector = divSelector.querySelector('.js-red-price')
-    buttonSelector.setAttribute('data-variant-id', selectedVariantId)
-    console.log(selectedVariantImage, 'selectedVariantImage')
-    if(!selectedVariantImage.includes('no-image')){
-      imageSelector.setAttribute('src', selectedVariantImage)
-    }
-    priceSelector.innerHTML = selectedVariantPrice
-    comparePriceSelector.innerHTML = selectedVariantComparePrice
-    console.log('selectedVariantId', selectedVariantId)
-    console.log(titleArray, 'titleArray')
-  })
-})
-const addToCart = document.querySelector('.js-add-to-cart')
-const addToCartSticky = document.querySelector('.js-add-to-cart-sticky')
-{% comment %} const addToCartCheckout = document.querySelector('.js-add-to-cart-popup') {% endcomment %}
-let addItems = (selector) => {
-  const variantsPickers = document.querySelectorAll('.js-variant-selector.selected')
-  const productIds = []
-  let addItems = []
-  if(selector) {
-    productIds.push('43165644488882')
-  }
-  variantsPickers.forEach((variantsPicker) => {
-    productIds.push(variantsPicker.getAttribute('data-variant-id'))
-  })
-  console.log(productIds, 'productIds')
-  productIds.forEach((productId) => {
-    const item = {
-      id: productId,
-      quantity: 1
-    }
-    addItems.push(item)
-  })
-  console.log(addItems, 'addItems')
-  const formData = {
-    items: addItems
-  }
-  fetch(window.Shopify.routes.root + 'cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-    .then(response => {
-      return response.json()
+overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
+overlayCloses = document.querySelectorAll('.close')
+selfCloses = document.querySelectorAll('.product-overlay')
+console.log(selfCloses, 'self closes')
+overlayTriggers.forEach((overlayTrigger) => {
+    overlayTrigger.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.add('show')
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
     })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
-}
-let addItemsCheckout = (selector) => {
-  const variantsPickers = document.querySelectorAll('.js-variant-selector.selected')
-  const productIds = []
-  let addItems = []
-  if(selector) {
-    productIds.push('43165644488882')
-  }
-  variantsPickers.forEach((variantsPicker) => {
-    productIds.push(variantsPicker.getAttribute('data-quantity') + variantsPicker.getAttribute('data-variant-id'))
-  })
-  console.log(productIds, 'productIds')
-  productIds.forEach((productId) => {
-    const item = {
-      id: productId.substring(1),
-      quantity: productId.slice(0, 1)
-    }
-    addItems.push(item)
-  })
-  console.log(addItems, 'addItems')
-  const formData = {
-    items: addItems
-  }
-  fetch(window.Shopify.routes.root + 'cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-    .then(response => {
-      if (response.status === 200) {
-        window.location.href = '/checkout'
-      }
-      return response.json()
-    })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
-}
-addToCart.addEventListener('click', (e) => {
-  let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  popUpLoadControler.classList.remove('hidden')
-  addItemsCheckout()
 })
-addToCartSticky.addEventListener('click', (e) => {
-  let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  popUpLoadControler.classList.remove('hidden')
-  addItemsCheckout()
-})
-const infoBar = document.querySelector('.js-info-bar')
-const variantClicks = document.querySelectorAll('.js-variant-selector')
-variantClicks.forEach(variantClick => {
-    variantClick.addEventListener('click', (e) => {
-        const bar = document.querySelector(".bar");
-        console.log('click')
-        const _this = e.target
-        _this.closest(".bundle-wrapper__product").classList.toggle('selected');
-        if(_this.value === 'added') {
-            _this.classList.remove('selected')
-            _this.value = '+ add to kit'
-            selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-            let numberOfSelected = 0
-            selectedItems.forEach((selectedItem) => {
-               selectedNumber = selectedItem.getAttribute('data-quantity')
-               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-            })
-            //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 12 - numberOfSelected;
-            console.log(leftToGift,'leftToGift')
-            if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
-        }
-            
-            return
-        }
-        _this.classList.add('selected')
-        _this.value = 'added'
-        selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-          let numberOfSelected = 0
-          selectedItems.forEach((selectedItem) => {
-              selectedNumber = selectedItem.getAttribute('data-quantity')
-              numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-          })
-        let leftToGift = 12 - numberOfSelected;
-        if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "0%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "25%");
-                infoBar.innerHTML = `ADD 3 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 65%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 65%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "20%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "40%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 75%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 75%!!`
-        }
-
-        
-        console.log(leftToGift, numberOfSelected, 'numberOfSelected')
+overlayCloses.forEach((overlayClose) => {
+    overlayClose.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
     })
-});
-
-console.log(optionNames, 'optionNames')
-optionNames.forEach((optionName) => {
-    optionName.addEventListener('click', (e) => {
-        const _this = e.target
-        _this.nextSibling.nextSibling.classList.toggle('open');
-        document.querySelector('body').classList.toggle('no-scroll');
+})
+selfCloses.forEach((selfClose) => {
+    selfClose.addEventListener('click', (e) => {
+        console.log('self close')
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        _this.classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
     })
-}) 
-{% comment %} stickyElem = document.querySelector(".sticky-div");
-currStickyPos = stickyElem.getBoundingClientRect().top + window.pageYOffset;
-let panel = document.querySelector('.header-wrapper')
-var lastScrollTop = 0;
-    $(window).scroll(function(event){
-      var st = $(this).scrollTop();
-        if (st > lastScrollTop){
-            if(window.pageYOffset > currStickyPos) {
-                stickyElem.style.position = "fixed";
-                stickyElem.style.top = 0 + 'px';
-                stickyElem.classList.add('sticky');
-            } else {
-                stickyElem.style.position = "relative";
-                stickyElem.style.top = "0px";
-                stickyElem.classList.remove('sticky');
-            }
-        } else {
-            if(window.pageYOffset > currStickyPos) {
-                stickyElem.style.position = "fixed";
-                stickyElem.style.top = 0 + 'px';
-                stickyElem.classList.add('sticky');
-            } else {
-                stickyElem.style.position = "relative";
-                stickyElem.style.top = "0px";
-                stickyElem.classList.remove('sticky');
-            }
-        }
-        lastScrollTop = st;
-    }); {% endcomment %}
-console.log($('.hero_image'), 'hero_image')
-$('.hero_image').on('click', function (e) {
-  e.preventDefault()
-  const $section = $('.js-info-bar')
-
-  $('html, body').animate({
-    scrollTop: $section.offset().top + 'px'
-  }, 1000)
 })
-
-const distance = $('.sticky-div').offset().top
-$(window).scroll(function () {
-  const top_of_element = $('#shopify-section-footer').offset().top
-  const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
-  const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
-  const top_of_screen = $(window).scrollTop()
-  if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
-    $('.sticky-div').addClass('lightsticky')
-  } else {
-    $('.sticky-div').removeClass('lightsticky')
-  }
-})
-
-
-
 </script>
+
 <style>
+.product-overlay-trigger {
+    cursor: pointer;
+}
+.product-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity:0;
+    transition: all .3s ease-in-out;
+}
+.product-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity:1;
+    transition: all .3s ease-in-out;
+}
+.close svg path fill {
+    color:white;
+}
+</style>
+
+{% comment %} RENDERER END {% endcomment %}
+
+
+
+
+
+            
+    {% if forloop.index == 4%}
+          </div>
+        </div>
+    {% endif %}
+  {% endfor %}
+  
+</div>
+
+<div style="background:#141414;padding-bottom:30px;">
+  <div class="bundle-wrapper">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Pop_up_banner_that_goes_above_button_-_DESKTOP.jpg?v=1700742498">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Discount_Banner_mega_sale_page_summary.jpg?v=1700741715">
+  </div>
+  {% render 'bundle-gifts-bottom' %}
+  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
+      <button class="js-add-to-cart f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH KIT</div>
+      </button>
+  </div>
+</div>
+
+
+{{ 'startbundle.js' | asset_url | script_tag }}
+
+<style>
+  .slide-content__image img {
+    border:none;
+    box-shadow:none;
+  }
+.bg-titan-greenish {
+  background: #60c655;
+}
+.c-quantity {
+  max-width:100%;
+}
 .product-rev {
       background-color: #dfdfdf;
 }
 .product-rev .product-zig__bigtitle {
   color:black;
+}
+.hero_image {
+  background: #000;
+}
+.option-name {
+  cursor: pointer;
+  background-color: #d6e1e1;
+  color: #333333;
+  border-radius: 10px;
+  border: 0.75px solid #d5d5d5;
+  padding: 8px 24px 8px 8px;
+  margin: auto auto 10px;
+  box-shadow: 2px 2px 8px 2px #bdbdbd38;
+}
+.c-quantity {
+  border: none;
+}
+.bundle-wrapper__product {
+  border: 1.75px solid #ececec;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 10px #b5b5b5;
+  background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+  overflow:visible;
+}
+input.js-variant-selector.text-uppercase.cursor-pointer {
+  color: #fff;
+  border-radius: 25px;
+  position:absolute;
+  left:-100000px;
+}
+.bundle-wrapper__product--image img {
+  width: 100%;
+  border-radius: 30px;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
+  box-shadow: 0px -3px 6px #3131319e;
+  padding:25px 0;
+}
+.js-info-bar, .info-bar, .product-template__wrapper--content__features--name {
+  color: #333333;
+}
+.js-info-bar span {
+  color: #60c655 !important;
+}
+.progress {
+  height: 25px;
+  margin: 0 auto 20px;
+  border: 1px solid #fff;
+  padding: 7px;
+  box-shadow: 0 0 5px #aaa;
+  border-radius: 7px;
+  background: #fff;
+}
+.product-template__wrapper--content__form--atc button {
+   margin-top:20px;
+}
+.c-quantity__button {
+  background: #60c655;
+  font-size: 45px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  padding:0;
+}
+.c-quantity__button.gray {
+  background: #333333;
+  opacity: .5;
+}
+.c-quantity__amount {
+  font-weight: 700;
+}
+.c-quantity__amount.op {
+  opacity:.7;
+}
+.c-quantity {
+  width:200px;  
+}
+.bundle-wrapper__footer .c-quantity__amount {
+  font-size:44px;
+}
+.price {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.intro__title {
+  color: #333333 !important;
+  font-size:55px;
+}
+@media only screen and (max-width: 768px) {
+  .sticky-div.lightsticky {
+    padding:10px;
+    padding-bottom:10px;
+  }
+  .intro__title {
+    color: #333333 !important;
+    font-size:40px;
+  }
+  .bundle-wrapper__product {
+    border: 1.75px solid #ececec;
+    border-radius: 30px;
+    padding: 7px;
+    box-shadow: 0 0 10px #b5b5b5;
+    background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+    overflow:visible;
+  }
+  .c-quantity__button {
+    background: #60c655;
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    padding:0;
+  }
+  .bundle-wrapper__footer .c-quantity__amount {
+    font-size: 35px;
+  }
+  .option-name {
+    font-size:11px;
+    padding: 7px;
+  }
+  .bundle-wrapper {
+    gap:10px;
+    padding: 0 10px;
+  }
+}
+.intro__subtitle {
+  color: #60c655 !important;
+  font-size:22px;
+  font-weight:700;
+}
+
+
+
+.option-name {
+  background-color: #ffffff;
+  border: 0px solid #ffffff;
+
+}
+
+
+
+.active>div {
+  color: #60c655;
+}
+
+.po.color-white.mb-4.h4.materials__single--option__name.small {
+  font-family: 'Work Sans';
+FOnt-size:13px;
+}
+
+.c-quantity__button.gray {
+  background: #6d6d6d;
+}
+
+.bundle-wrapper__footer .c-quantity__amount {
+  color: #2b2b2b;
+}
+
+
+.bundle-tab__tabs--content__single--title {
+  line-height: 17px;
+}
+
+
+.bundle-tab__tabs--content__single--list {
+ 
+}
+
+.bundle-tab__tabs--content__single--list ul span {
+  font-weight: 800;
+}
+
+.bundle-tab__tabs--content__single--list ul {
+  line-height: 1.3;
+  text-align: center;
+  font-size: 16px;
+  color: #ebebeb;
+}
+@media only screen and (max-width: 768px) {
+  .bundle-tab__tabs--content__single--list ul {
+    line-height: 1.3;
+    text-align: left;
+    font-size: 16px;
+    color: #ebebeb;
+  }
 }
 </style>

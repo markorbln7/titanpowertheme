@@ -1,6 +1,17 @@
 {% assign product = all_products[product_var] %}
-<div class="bundle-wrapper__product">
-    <div class="bundle-wrapper__product--image">
+<div class="bundle-wrapper__product js-wrapper-product" data-product-id="{{product.id}}">
+    {% if product.images[2].src %}
+        <div class="product-overlay">
+            <div class="close">
+                {% render 'icon-close' %}
+            </div>
+            <div class="product-overlay-image">
+                <img src="{{product.images[2].src | img_url: 'master'}}">
+            </div>
+        </div>
+    {% endif %}
+    <div class="bundle-wrapper__product--image product-overlay-trigger relative">
+        <div class="info-icon">i</div>
         <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" />
     </div>
     <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
@@ -35,14 +46,19 @@
         {% endfor %}
     </select>
     {% assign sofav = product.selected_or_first_available_variant %}
-    {% if product.options_with_values.size > 1%}
+    {% if product.options_with_values[0].name == 'Length' %}
     <section class="product-description-wrapper bg-black atc-wrapper">
         <div class="product-description">
             <div class="materials description-expand">
                 {% for product_option in product.options_with_values %}
                     <div class="materials__single">
                             {% for value in product_option.values %}
-                                <div class="js-option-name option-name">{{ value }}</div>
+                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                    viewBox="0 0 330 330" xml:space="preserve">
+                               <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+                                   c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+                                   s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/>
+                               </svg></span></div>
                                 {% break %}
                             {% endfor %}
                             <div class="variants-holder">
@@ -75,18 +91,19 @@
                         {% endif %}
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
-                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white">-</button>
-                        <div class="c-quantity__amount">1</div>
+                        <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+                        <div class="c-quantity__amount op">0</div>
                         <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
                     </div>
                     {% unless hidecart == true%}
-                        <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+                        <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
                     {% endunless %}
                 </div>
             </div>
         </div>
     </section>
     {% else %}
+    <div><div><div>
     <div class="bundle-wrapper__footer">
         <div class="js-price price type--m">
             {% if product.variants.size > 1 %}
@@ -100,13 +117,80 @@
             {% endif %}
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
-            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white">-</button>
-            <div class="c-quantity__amount">1</div>
+            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+            <div class="c-quantity__amount op">0</div>
             <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
         </div>
-        {% unless hidecart == true%}
-            <input data-product-name="{{product.handle}}" type="submit" data-quantity="1" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+        {% unless hidecart == true %}
+            <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
         {% endunless %}
     </div>
+</div></div></div>
     {% endif %}
 </div>
+
+<script>
+overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
+overlayCloses = document.querySelectorAll('.close')
+selfCloses = document.querySelectorAll('.product-overlay')
+console.log(selfCloses, 'self closes')
+overlayTriggers.forEach((overlayTrigger) => {
+    overlayTrigger.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.add('show')
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+    })
+})
+overlayCloses.forEach((overlayClose) => {
+    overlayClose.addEventListener('click', (e) => {
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        parent.querySelector('.product-overlay').classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+selfCloses.forEach((selfClose) => {
+    selfClose.addEventListener('click', (e) => {
+        console.log('self close')
+        let _this = e.target
+        let parent = _this.closest('.js-wrapper-product')
+        _this.classList.remove('show')
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+    })
+})
+</script>
+
+<style>
+.product-overlay-trigger {
+    cursor: pointer;
+}
+.product-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity:0;
+    transition: all .3s ease-in-out;
+}
+.product-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity:1;
+    transition: all .3s ease-in-out;
+}
+.close svg path fill {
+    color:white;
+}
+</style>

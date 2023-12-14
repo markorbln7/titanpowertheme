@@ -60,4 +60,15 @@
         padding: 0;
         margin-top: -50px;
     }
+    .rebuy-modal-visible {
+        overflow: scroll !important;
+    }
+    #rebuy-cart {
+        display: none;
+    }
 </style>
+<script>
+    $(".header__icon").click(function(){
+        $("#rebuy-cart").css("display", "block")
+      });
+</script>

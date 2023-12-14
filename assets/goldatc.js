@@ -96,21 +96,25 @@ increases.forEach((increas) => {
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
                                 } else if(giftCount > firstGift && giftCount < secondGift) {
                                     let giftLeft = secondGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-second-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
                                 } else if(giftCount > secondGift && giftCount < thirdGift) {
                                     let giftLeft = thirdGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
                                 } else if (giftCount > thirdGift && giftCount < fourthGift) {
                                     let giftLeft = fourthGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                    document.querySelector('.gift-tracker').classList.remove('hide')
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                 }
@@ -208,21 +212,25 @@ decreases.forEach((decrease) => {
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540)
+                                document.querySelector('.gift-tracker').classList.remove('hide')
                             } else if(giftCount > firstGift && giftCount < secondGift) {
                                 let giftLeft = secondGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-second-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
+                                document.querySelector('.gift-tracker').classList.remove('hide')
                             } else if(giftCount > secondGift && giftCount < thirdGift) {
                                 let giftLeft = thirdGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
+                                document.querySelector('.gift-tracker').classList.remove('hide')
                             } else if (giftCount > thirdGift && giftCount < fourthGift) {
                                 let giftLeft = fourthGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                document.querySelector('.gift-tracker').classList.remove('hide')
                             } else {
                                 document.querySelector('.gift-tracker').classList.add('hide')
                             }
@@ -246,3 +254,43 @@ decreases.forEach((decrease) => {
       selectedItems = document.querySelectorAll('.js-variant-selector.selected')
     })
   })
+
+
+const startBundles = document.querySelectorAll('.js-start-bundles')
+const bundleProductsSelectors = document.querySelectorAll('.bundle-wrapper__product')
+
+startBundles.forEach((startBundle) => {
+    startBundle.addEventListener('click', (e) => {  
+        console.log('click')
+        const _this = e.target
+        const arrayString = _this.getAttribute('data-ids')
+        const array = arrayString.split(',')
+        console.log(array, 'array')
+        const newArray = []
+        let updateObject = {};
+        for (let i = 0; i < array.length; i++) {
+            let id = array[i].slice(1)
+            let q = parseInt(array[i].slice(0, 1))
+            let idSelector = document.querySelector("[data-product-id='" + id + "']")
+            let productIdSelector = idSelector.querySelector('.js-variant-selector').getAttribute('data-variant-id')
+            console.log(productIdSelector, idSelector, 'idSelector')
+            let nameKey = productIdSelector;
+            updateObject[nameKey] = q;
+            console.log(updateObject, 'updateObject')
+            jQuery.post('/cart/update.js', {updates:{...updateObject}}); 
+            bundleProductsSelectors.forEach((bundleProductsSelector) => {
+                let productIdSelector = bundleProductsSelector.getAttribute('data-product-id')
+                if( id == productIdSelector ) {
+                bundleProductsSelector.classList.add('selected')
+                bundleProductsSelector.querySelector('.js-variant-selector').classList.add('selected')
+                bundleProductsSelector.querySelector('.decrease').classList.remove('gray')
+                bundleProductsSelector.querySelector('.c-quantity__amount').classList.remove('op')
+                let oldQuantity = bundleProductsSelector.querySelector('.js-variant-selector').getAttribute('data-quantity')
+                let newQuantity = parseInt(oldQuantity) + q
+                bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
+                bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity             
+                }
+            })
+        }
+    })
+})

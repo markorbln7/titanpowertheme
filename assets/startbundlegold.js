@@ -349,7 +349,8 @@ let addItemsCheckout = (selector) => {
 }
 addToCart.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  addItemsCheckout()
+  window.location.href = '/checkout'
+  // addItemsCheckout()
 })
 addToCartSticky.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length

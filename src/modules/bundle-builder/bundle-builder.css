@@ -1375,8 +1375,8 @@
     justify-content: center;
     text-align: center;
     @media only screen and (max-width: 600px) {
-        width: 100px;
-        height: 100px;
+        width: 140px;
+        height: 140px;
     }
     .circle-chart {
         position: absolute;
@@ -1386,8 +1386,8 @@
         width: 140px;
         height: 140px;
         @media only screen and (max-width: 600px) {
-            width: 100px;
-            height: 100px;
+            width: 140px;
+            height: 140px;
         }
     }
 }
@@ -1431,6 +1431,7 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    gap:10px;
 }
 .js-info-bar {
     margin-right: 20px;

@@ -1442,7 +1442,7 @@
 }
 .percent-tracker__ball.active {
     background: transparent;
-    transition: all 1s ease-in;
+    transition: background 1s ease-in;
     color: black;
 }
 .percent-tracker__line {
@@ -1476,15 +1476,15 @@
     width:0%;
     height: 100%;
     background: #60C655;
-    transition: all 1s ease-in;
+    transition: width 1s ease-in;
     display: block;
 }
 .percent-tracker__line.active::after {
     width:100%;
-    transition: all 1s ease-in;
+    transition: width 1s ease-in;
 }
 .circle-chart .circle-chart__circle {
-        stroke:#35ff2ec2;
+        stroke:#BCFDB9;
     }
 .gift-tracker__inner {
     position: relative;
@@ -1573,7 +1573,7 @@
     position: absolute;
     top: -70px;
     left: 10px;
-    background: #60C655;
+    background: linear-gradient(324deg, #35ff2e 50%, #000000 100%, #053510 100%);
     border-radius: 50%;
     color:black;
 }

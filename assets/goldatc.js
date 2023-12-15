@@ -335,7 +335,7 @@ startBundles.forEach((startBundle) => {
                                     }, "1000");
                                 }
                                 
-                                
+                                let ToGoal
                                 if(itemCount < 2) {
                                     ToGoal = 3
                                     percent = '55%'

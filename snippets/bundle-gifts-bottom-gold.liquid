@@ -60,15 +60,15 @@
         padding: 0;
         margin-top: -50px;
     }
-    .rebuy-modal-visible {
+    {% comment %} .rebuy-modal-visible {
         overflow: scroll !important;
     }
     #rebuy-cart {
         display: none;
-    }
+    } {% endcomment %}
 </style>
-<script>
+{% comment %} <script>
     $(".header__icon").click(function(){
         $("#rebuy-cart").css("display", "block")
       });
-</script>
+</script> {% endcomment %}

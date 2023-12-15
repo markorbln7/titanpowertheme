@@ -1522,3 +1522,26 @@
         font-weight: bold;
     }
 }
+
+.fire {
+    position: absolute;
+    top: -44px;
+    width: 220px;
+    height: 220px;
+    z-index: -1;
+    @media only screen and (max-width: 950px) {
+        width: 22vw;
+        height: 22vw;
+        top: -4.4vw;
+    }
+    @media only screen and (max-width: 600px) {
+        top: -30px;
+        width: 155px;
+        height: 155px;
+    }
+    @media only screen and (max-width: 500px) {
+        top: -28px;
+        width: 135px;
+        height: 135px;
+    }
+}

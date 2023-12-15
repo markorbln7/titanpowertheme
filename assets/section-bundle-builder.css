@@ -1617,3 +1617,30 @@
 .js-info-bar {
     margin-right: 20px;
 }
+.bundle-prices-show {
+    text-align: center;
+    margin: 0 auto;
+    background-color: #d6e1e1;
+    box-shadow: inset 0px 2px 10px #b5b5b5ab;
+    width: 100%;
+    border-radius: 30px;
+    padding: 10px;
+}
+.bundle-prices-show__title {
+        color: #000;
+        opacity: .7;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+@media only screen and (max-width: 768px) {
+    .bundle-prices-show__title {
+        font-size: 14px;
+    }
+}
+.bundle-prices-show__number {
+        color: #000;
+        opacity: .7;
+        margin-right: 10px;
+        font-weight: bold;
+}

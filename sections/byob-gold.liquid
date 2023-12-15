@@ -215,6 +215,11 @@
                             <span class="js-price ">{{product.price | money }}</span><br>
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
+                            <div class="bundle-prices">
+                              <div class="js-price "><span>3</span>{{product.first_available_variant.price | times: 0.55 | money }}</div>
+                              <div class="js-price "><span>6</span>{{product.first_available_variant.price | times: 0.6 | money }}</div>
+                              <div class="js-price "><span>10</span>{{product.first_available_variant.price | times: 0.7 | money }}</div>
+                            </div>
                         {% endif %}
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
@@ -242,6 +247,12 @@
                 <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                 {% assign prId = product.variants[0].id %}
             {% endif %}
+        </div>
+        <div class="bundle-prices-show">
+          <div class="bundle-prices-show__title">Bundle Prices</div>
+          <div class="js-price "><span class="bundle-prices-show__number">3</span>{{product.first_available_variant.price | times: 0.55 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">6</span>{{product.first_available_variant.price | times: 0.6 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10</span>{{product.first_available_variant.price | times: 0.7 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>

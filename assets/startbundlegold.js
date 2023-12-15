@@ -258,9 +258,15 @@ pos.forEach((po) => {
     const selectedVariantImage = selectedVariant.getAttribute('data-variant-image')
     const imageSelector = divSelector.parentNode.parentNode.parentNode.querySelector('.bundle-wrapper__product--image img')
     const selectedVariantPrice = selectedVariant.getAttribute('data-price')
+    const selectedVariantPriceWM3 = selectedVariant.getAttribute('data-price-wm3')
+    const selectedVariantPriceWM6 = selectedVariant.getAttribute('data-price-wm6')
+    const selectedVariantPriceWM10 = selectedVariant.getAttribute('data-price-wm10')
     const selectedVariantComparePrice = selectedVariant.getAttribute('data-compare-price')
     const buttonSelector = divSelector.querySelector('.js-variant-selector')
     const priceSelector = divSelector.querySelector('.js-price')
+    const priceSelector3 = divSelector.querySelector('.js-price3')
+    const priceSelector6 = divSelector.querySelector('.js-price6')
+    const priceSelector10 = divSelector.querySelector('.js-price10')
     const comparePriceSelector = divSelector.querySelector('.js-red-price')
     buttonSelector.setAttribute('data-variant-id', selectedVariantId)
     console.log(selectedVariantImage, 'selectedVariantImage')
@@ -268,6 +274,9 @@ pos.forEach((po) => {
       imageSelector.setAttribute('src', selectedVariantImage)
     }
     priceSelector.innerHTML = selectedVariantPrice
+    priceSelector3.innerHTML = selectedVariantPriceWM3
+    priceSelector6.innerHTML = selectedVariantPriceWM6
+    priceSelector10.innerHTML = selectedVariantPriceWM10
     comparePriceSelector.innerHTML = selectedVariantComparePrice
     console.log('selectedVariantId', selectedVariantId)
     console.log(titleArray, 'titleArray')

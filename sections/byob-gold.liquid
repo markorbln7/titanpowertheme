@@ -202,7 +202,7 @@
                 {% endfor %}
                 <div class="variants-hidden hidden">
                     {% for variant in productVariants %}
-                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price-wm3="{{variant.price | times:0.55 | money }}" data-price-wm6="{{variant.price | times:0.6 | money }}" data-price-wm10="{{variant.price | times:0.7 | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">
@@ -221,6 +221,12 @@
                               <div class="js-price "><span>10</span>{{product.first_available_variant.price | times: 0.7 | money }}</div>
                             </div>
                         {% endif %}
+                    </div>
+                    <div class="bundle-prices-show">
+                      <div class="bundle-prices-show__title">Bundle Prices</div>
+                      <div class="js-price"><span class="bundle-prices-show__number">3</span><span class="js-price3">{{product.first_available_variant.price | times: 0.55 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">6</span><span class="js-price6">{{product.first_available_variant.price | times: 0.6 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10</span><span class="js-price10">{{product.first_available_variant.price | times: 0.7 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>

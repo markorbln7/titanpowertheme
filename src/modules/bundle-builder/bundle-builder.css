@@ -350,6 +350,7 @@
             @media only screen and (max-width: 768px) {
                 font-size: 14px;
                 margin-bottom: 0;
+                width:100%;
             }
         }
         background-color: #fff;
@@ -1259,9 +1260,22 @@
     top: -20px;
     display: flex;
     gap: 40px;
+    left:unset;
+    @media only screen and (max-width: 1100px) {
+        left: 20vw;
+    }
+    @media only screen and (max-width: 950px) {
+        gap: 3vw;
+        top:-1vw;
+    }
     @media only screen and (max-width: 600px) {
         gap: 10px;
-        top:-5px;
+        top: -8px;
+        left: unset;
+        right: 10px;
+    }
+    @media only screen and (max-width: 500px) {
+        gap: 10px;
     }
     &__ball {
         border: 2px solid #60C655;
@@ -1278,10 +1292,20 @@
         z-index: 999999;
         position: relative;
         overflow: hidden;
+        @media only screen and (max-width: 950px) {
+            width: 4vw;
+            height: 4vw;
+            font-size: 14px;
+        }
         @media only screen and (max-width: 600px) {
-            width: 25px;
-            height: 25px;
+            border: 1px solid #60C655;
+            width: 24px;
+            height: 24px;
             font-size: 12px;
+        }
+        @media only screen and (max-width: 400px) {
+            width: 22px;
+            height: 22px;
         }
         &--green {
             display:block !important;
@@ -1294,9 +1318,17 @@
             left: 0;
             z-index: 999999;
             border-radius: 50%;
+            @media only screen and (max-width: 950px) {
+                width: 4vw;
+                height: 4vw;
+            }
             @media only screen and (max-width: 600px) {
-                width: 25px;
-                height: 25px;
+                width: 24px;
+                height: 24px;
+            }
+            @media only screen and (max-width: 400px) {
+                width: 22px;
+                height: 22px;
             }
         }
         /* &::after {
@@ -1331,17 +1363,15 @@
         border: 2px solid #60C655;
         border-left: none;
         border-right: none;
-        @media only screen and (max-width: 600px) {
-            display: block!important;
-            height: 7px;
-            width: 50px;
-            background: black;
-            position: absolute;
-            top: 35%;
-            left: 8px;
+        @media only screen and (max-width: 950px) {
+            width: 5vw;
+            height: 6px;
             border: 1px solid #60C655;
-            border-left: none;
-            border-right: none;
+            left:3.5vw;
+        }
+        @media only screen and (max-width: 600px) {
+            width:30px;
+            left:20px;
         }
 
         &::after {
@@ -1374,9 +1404,17 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    @media only screen and (max-width: 950px) {
+        width: 14vw;
+        height: 14vw;
+    }
     @media only screen and (max-width: 600px) {
-        width: 140px;
-        height: 140px;
+        width: 100px;
+        height:100px;
+    }
+    @media only screen and (max-width: 500px) {
+        width: 84px;
+        height: 84px;
     }
     .circle-chart {
         position: absolute;
@@ -1385,9 +1423,18 @@
         transform: rotate(270deg);
         width: 140px;
         height: 140px;
+        text-align: center;
+        @media only screen and (max-width: 950px) {
+            width: 14vw;
+            height: 14vw;
+        }
         @media only screen and (max-width: 600px) {
-            width: 140px;
-            height: 140px;
+            width: 100px;
+            height: 100px;
+        }
+        @media only screen and (max-width: 500px) {
+            width: 84px;
+            height: 84px;
         }
     }
 }
@@ -1395,12 +1442,21 @@
     line-height: 1.1;
     font-size: 12px;
     font-weight: 700;
+    @media only screen and (max-width: 950px) {
+        font-size: 10px;
+    }
     &__image {
         max-width: 50px;
+        @media only screen and (max-width: 950px) {
+            max-width: 35px;
+        }
         margin: 0 auto;
     }
     .js-left-to-gift {
         font-size: 18px;
+        @media only screen and (max-width: 1100px) {
+            font-size: 15px;
+        }
     }
 }
 
@@ -1412,10 +1468,10 @@
     border-radius: 50%;
     color:black;
     @media only screen and (max-width: 1100px) {
-        position: relative;
-        top: unset;
-        left: unset;
-        margin-right: 20px;
+        top: -25px;
+    }
+    @media only screen and (max-width: 400px) {
+        top: 15px;
     }
     .hide {
         display: none;
@@ -1432,6 +1488,14 @@
     align-items: center;
     justify-content: center;
     gap:10px;
+    padding-left:0;
+    flex-wrap: nowrap;
+    @media only screen and (max-width: 1100px) {
+        padding-left: 12vw;
+    }
+    @media only screen and (max-width: 400px) {
+        flex-wrap: wrap;
+    }
 }
 .js-info-bar {
     margin-right: 20px;

@@ -82,7 +82,7 @@ increases.forEach((increas) => {
                                 }
                                 let leftItems = ToGoal - itemCount;
                                 if(leftItems > 0) {
-                                    bar.innerHTML = `You have ${itemCount} items, add ${leftItems} more for ${percent} off!`
+                                    bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
                                     bar.innerHTML = `You unlocked full discount!!`
                                 }
@@ -195,7 +195,7 @@ decreases.forEach((decrease) => {
                             }
                             let leftItems = ToGoal - itemCount;
                             if(leftItems > 0) {
-                                bar.innerHTML = `You have ${itemCount} items, add ${leftItems} more for ${percent} off!`
+                                bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                             } else {
                                 bar.innerHTML = `You unlocked full discount!!`
                             }
@@ -347,7 +347,7 @@ startBundles.forEach((startBundle) => {
                                 }
                                 let leftItems = ToGoal - itemCount;
                                 if(leftItems > 0) {
-                                    bar.innerHTML = `You have ${itemCount} items, add ${leftItems} more for ${percent} off!`
+                                    bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
                                     bar.innerHTML = `You unlocked full discount!!`
                                 }

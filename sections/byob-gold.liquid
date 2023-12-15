@@ -11,7 +11,7 @@
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
   </div>
   <div class="bundle-subtitle">
-    Combine our bundles and best sellers to custom-build your offer and reach savings of up to 80%
+    Combine our bundles and best sellers to custom-build your offer and reach savings of up to 70%
   </div>
 </div>
 <div class="sticky-div w-100">
@@ -52,12 +52,14 @@
             </svg>
         </div>
     </div>
-    <div class="js-info-bar">You have 0 items, <br>Add 3 more for 50% off!</div>
-    <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky w-100">
-      <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
-        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
-    </button>
-  </div>
+    <div class="message-wrap">
+      <div class="js-info-bar">You have 0 items, <br>Add 3 more for 50% off!</div>
+      <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky w-100">
+        <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
+          <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
+        </button>
+      </div>
+    </div>
 </div>
 </div>
 <div class="bundle-wrapper">
@@ -203,7 +205,7 @@
                 {% endfor %}
                 <div class="variants-hidden hidden">
                     {% for variant in productVariants %}
-                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price-wm3="{{variant.price | times:0.55 | money }}" data-price-wm6="{{variant.price | times:0.6 | money }}" data-price-wm10="{{variant.price | times:0.7 | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price-wm3="{{variant.price | times:0.45 | money }}" data-price-wm6="{{variant.price | times:0.4 | money }}" data-price-wm10="{{variant.price | times:0.3 | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">
@@ -217,17 +219,17 @@
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
                             <div class="bundle-prices">
-                              <div class="js-price "><span>3</span>{{product.first_available_variant.price | times: 0.55 | money }}</div>
-                              <div class="js-price "><span>6</span>{{product.first_available_variant.price | times: 0.6 | money }}</div>
-                              <div class="js-price "><span>10</span>{{product.first_available_variant.price | times: 0.7 | money }}</div>
+                              <div class="js-price "><span>3</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
+                              <div class="js-price "><span>6</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
+                              <div class="js-price "><span>10</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
                             </div>
                         {% endif %}
                     </div>
                     <div class="bundle-prices-show">
                       <div class="bundle-prices-show__title">Bundle Prices</div>
-                      <div class="js-price"><span class="bundle-prices-show__number">3</span><span class="js-price3">{{product.first_available_variant.price | times: 0.55 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">6</span><span class="js-price6">{{product.first_available_variant.price | times: 0.6 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">10</span><span class="js-price10">{{product.first_available_variant.price | times: 0.7 | money }}</span></div>
+                      <div class="js-price"><span class="bundle-prices-show__number">3</span><span class="js-price3">{{product.first_available_variant.price | times: 0.45 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">6</span><span class="js-price6">{{product.first_available_variant.price | times: 0.4 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10</span><span class="js-price10">{{product.first_available_variant.price | times: 0.3 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -257,9 +259,9 @@
         </div>
         <div class="bundle-prices-show">
           <div class="bundle-prices-show__title">Bundle Prices</div>
-          <div class="js-price "><span class="bundle-prices-show__number">3</span>{{product.first_available_variant.price | times: 0.55 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">6</span>{{product.first_available_variant.price | times: 0.6 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10</span>{{product.first_available_variant.price | times: 0.7 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">3</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">6</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -821,4 +823,70 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
   padding: 25px 0;
   background: #141414;
 }
+
+@media only screen and (max-width: 768px) {
+  .bundle-prices-show__title {
+      font-size: 12px;
+  }
+  
+  .bundle-prices-show__title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: normal;
+  }
+  
+  
+  
+  .bundle-wrapper__product {
+      padding: 7px;
+  }
+  
+  
+  .bundle-wrapper__product--title {
+      font-size: 14px;
+  }
+  .bundle-wrapper .product-template__wrapper--content__features--name {
+      padding-left: 16px;
+  }
+  .custom-offer
+  .bundle-wrapper {
+      gap: 7px;
+      padding: 0 5px
+  ;
+  }
+  
+  
+  .custom-offer
+  .option-name {
+      font-size: 11px;
+      padding: 7px;
+  }
+  
+  
+  .info-icon {
+      right: 8px;
+      top: 8px;
+      width: 22px;
+      height: 22px;
+      font-size: 18px;
+  }
+  
+  button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started.no-margin {
+      box-shadow: 1px 2px 7px #343434d6;
+  }
+  
+  .percent-tracker__line {
+      box-shadow: 0px 1px 7px #35ff2e;
+      border: 0px solid #60C655;
+  }
+  
+  .js-info-bar {
+      line-height: normal;
+  }
+  
+  .bundle-prices-show {
+      width: 70%;
+  }
+  }
 </style>

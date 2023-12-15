@@ -70,7 +70,7 @@ increases.forEach((increas) => {
                                 
                                 if(itemCount < 2) {
                                     ToGoal = 3
-                                    percent = '50%'
+                                    percent = '55%'
                                 }
                                 if(itemCount > 2 && itemCount < 5) {
                                     ToGoal = 6
@@ -183,7 +183,7 @@ decreases.forEach((decrease) => {
                             }
                             if(itemCount < 2) {
                                 ToGoal = 3
-                                percent = '50%'
+                                percent = '55%'
                             }
                             if(itemCount > 2 && itemCount < 5) {
                                 ToGoal = 6
@@ -309,6 +309,9 @@ startBundles.forEach((startBundle) => {
                                 if(currency == 'USD') {
                                     currency = '$'
                                 }
+                                if(currency == 'EUR') {
+                                    currency = '€'
+                                }
                                 let itemCount = 0;
                                 let giftCount = 0;
                                 for (let i = 0; i < data.items.length; i++) {
@@ -335,7 +338,7 @@ startBundles.forEach((startBundle) => {
                                 
                                 if(itemCount < 2) {
                                     ToGoal = 3
-                                    percent = '50%'
+                                    percent = '55%'
                                 }
                                 if(itemCount > 2 && itemCount < 5) {
                                     ToGoal = 6

@@ -211,11 +211,11 @@
                 <div class="bundle-wrapper__footer">
                     <div class="price type--m hhhhh">
                         {% if product.variants.size > 1 %}
-                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
+                            {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span><br> {% endcomment %}
                             <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
                             {% assign prId = product.first_available_variant.id %}
                         {% else %}
-                            <span class="js-price ">{{product.price | money }}</span><br>
+                            {% comment %} <span class="js-price ">{{product.price | money }}</span><br> {% endcomment %}
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
                             <div class="bundle-prices">
@@ -226,10 +226,11 @@
                         {% endif %}
                     </div>
                     <div class="bundle-prices-show">
-                      <div class="bundle-prices-show__title">Bundle Prices</div>
-                      <div class="js-price"><span class="bundle-prices-show__number">3</span><span class="js-price3">{{product.first_available_variant.price | times: 0.45 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">6</span><span class="js-price6">{{product.first_available_variant.price | times: 0.4 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">10</span><span class="js-price10">{{product.first_available_variant.price | times: 0.3 | money }}</span></div>
+                      <div class="bundle-prices-show__title">BUNDLE PRICES</div>
+                      <div><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div>
+                      <div class="js-price"><span class="bundle-prices-show__number">3+</span><span class="js-price3">{{product.first_available_variant.price | times: 0.45 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">6+</span><span class="js-price6">{{product.first_available_variant.price | times: 0.4 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.price | times: 0.3 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -248,20 +249,21 @@
     <div class="bundle-wrapper__footer">
         <div class="js-price price type--m">
             {% if product.variants.size > 1 %}
-                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span> {% endcomment %}
                 <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
                 {% assign prId = product.first_available_variant.id %}
             {% else %}
-                <span class="js-price ">{{product.price | money }}</span>
+                {% comment %} <span class="js-price ">{{product.price | money }}</span> {% endcomment %}
                 <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                 {% assign prId = product.variants[0].id %}
             {% endif %}
         </div>
         <div class="bundle-prices-show">
-          <div class="bundle-prices-show__title">Bundle Prices</div>
-          <div class="js-price "><span class="bundle-prices-show__number">3</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">6</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
+          <div class="bundle-prices-show__title">BUNDLE PRICES</div>
+          <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.price | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">3+</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">6+</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -367,8 +369,8 @@ selfCloses.forEach((selfClose) => {
     Take a second look at your discounts and check for free gift eligibility. Thank you for being part of our fresh shopping experience.
   </div>
   <div class="bundle-wrapper">
-    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner.jpg?v=1702633293">
-    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile_2.jpg?v=1702633293">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner55.jpg?v=1702811427">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile_55.jpg?v=1702811427">
   </div>
   {% render 'bundle-gifts-bottom-gold' %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">

@@ -84,7 +84,7 @@ increases.forEach((increas) => {
                                 if(leftItems > 0) {
                                     bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
-                                    bar.innerHTML = `You unlocked full discount!!`
+                                    bar.innerHTML = `You unlocked full 70% OFF discount!!`
                                 }
 
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
@@ -197,7 +197,7 @@ decreases.forEach((decrease) => {
                             if(leftItems > 0) {
                                 bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                             } else {
-                                bar.innerHTML = `You unlocked full discount!!`
+                                bar.innerHTML = `You unlocked full 70% OFF discount!!`
                             }
 
                             let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
@@ -352,7 +352,7 @@ startBundles.forEach((startBundle) => {
                                 if(leftItems > 0) {
                                     bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
-                                    bar.innerHTML = `You unlocked full discount!!`
+                                    bar.innerHTML = `You unlocked full 70% OFF discount!!`
                                 }
 
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')

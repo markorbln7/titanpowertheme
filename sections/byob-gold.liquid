@@ -7,22 +7,59 @@
   <img class="number-icon-four" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_1.png?v=1701431893">
   <div class="bundle-title gray-version">
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
-    <div class="text">HANDPICK YOUR FAVOURITES</div>
+    <div class="text text-uppercase">Customise Your Bundle</div>
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
   </div>
   <div class="bundle-subtitle">
-    Combine our bundles and best sellers to custom-build your offer and reach savings of up to 70%
+    Custom-build your selected products and reach savings up to 70%
   </div>
 </div>
 <div class="sticky-div w-100">
-  <div class="js-info-bar">ADD 5 AND SAVE 55%</div>
-  <div class="progress">
-    <div class="bar"></div>
-  </div>
-  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky">
-    <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
-      <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
-  </button>
+  <div class="bundle-builder f gift-wrapper">
+    <div class="percent-tracker">
+        {% for i in (1..10) %}
+          <div class="relative">
+            <div class="percent-tracker__ball--green"></div>
+            <div data-{{forloop.index}} class="percent-tracker__ball">
+              {% if forloop.index == 3 %}
+                  <span>55</span>
+              {% endif %}
+              {% if forloop.index == 6 %}
+                <span>60</span>
+              {% endif %}
+              {% if forloop.index == 10 %}
+                <span>70</span>
+              {% endif %}
+            </div>
+            {% unless forloop.index == 10 %}
+            <div data-line-{{forloop.index}} class="percent-tracker__line"></div>
+            {% endunless %}
+          </div>
+        {% endfor %}
+    </div>
+    <div class="gift-tracker">
+        <div class="gift-tracker__inner">
+            <div class="left-to-gift">
+              <div class="left-to-gift__image"><img class="js-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_cable_icon_19047dde-e641-4e84-8e65-3685cf41db36.png?v=1702556590"></div>
+              {% comment %} <div class="left-to-gift__text">NEXT GIFT</div> {% endcomment %}
+              <div class="js-left-to-gift">{{all_products['pd'].price | money_without_trailing_zeros }}</div>
+              <div class="left-to-gift__text">MORE</div>
+            </div>
+            <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571">
+            <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+              <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85" />
+              <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
+            </svg>
+        </div>
+    </div>
+    <div class="message-wrap">
+      <div class="js-info-bar">You have 0 items, <br>Add 3 more for 55% off!</div>
+      <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky w-100">
+        <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
+          <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH</div>
+        </button>
+      </div>
+    </div>
 </div>
 </div>
 <div class="bundle-wrapper">
@@ -168,20 +205,32 @@
                 {% endfor %}
                 <div class="variants-hidden hidden">
                     {% for variant in productVariants %}
-                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        <div data-variant-image="{{variant.image | img_url: 'master' }}" data-variant-selector="{{product.title}} / {{variant.title}}" data-compare-price="{{variant.compare_at_price | money }}" data-price-wm3="{{variant.compare_at_price | times:0.45 | money }}" data-price-wm6="{{variant.compare_at_price | times:0.4 | money }}" data-price-wm10="{{variant.compare_at_price | times:0.3 | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                     {% endfor %}
                 </div>
                 <div class="bundle-wrapper__footer">
                     <div class="price type--m hhhhh">
                         {% if product.variants.size > 1 %}
-                            <span class="js-price ">{{product.first_available_variant.price | money }}</span><br>
+                            {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span><br> {% endcomment %}
                             <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
                             {% assign prId = product.first_available_variant.id %}
                         {% else %}
-                            <span class="js-price ">{{product.price | money }}</span><br>
+                            {% comment %} <span class="js-price ">{{product.price | money }}</span><br> {% endcomment %}
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
+                            <div class="bundle-prices">
+                              <div class="js-price "><span>3</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
+                              <div class="js-price "><span>6</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
+                              <div class="js-price "><span>10</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
+                            </div>
                         {% endif %}
+                    </div>
+                    <div class="bundle-prices-show">
+                      <div class="bundle-prices-show__title">BUNDLE PRICES</div>
+                      <div class="hidden"><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div>
+                      <div class="js-price"><span class="bundle-prices-show__number">3+</span><span class="js-price3">{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">6+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -200,14 +249,21 @@
     <div class="bundle-wrapper__footer">
         <div class="js-price price type--m">
             {% if product.variants.size > 1 %}
-                <span class="js-price ">{{product.first_available_variant.price | money }}</span>
+                {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span> {% endcomment %}
                 <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
                 {% assign prId = product.first_available_variant.id %}
             {% else %}
-                <span class="js-price ">{{product.price | money }}</span>
+                {% comment %} <span class="js-price ">{{product.price | money }}</span> {% endcomment %}
                 <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                 {% assign prId = product.variants[0].id %}
             {% endif %}
+        </div>
+        <div class="bundle-prices-show">
+          <div class="bundle-prices-show__title">BUNDLE PRICES</div>
+          {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
+          <div class="js-price "><span class="bundle-prices-show__number">3+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">6+</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -226,7 +282,6 @@
 overlayTriggers = document.querySelectorAll('.product-overlay-trigger')
 overlayCloses = document.querySelectorAll('.close')
 selfCloses = document.querySelectorAll('.product-overlay')
-console.log(selfCloses, 'self closes')
 overlayTriggers.forEach((overlayTrigger) => {
     overlayTrigger.addEventListener('click', (e) => {
         let _this = e.target
@@ -307,15 +362,15 @@ selfCloses.forEach((selfClose) => {
   <img class="number-icon-five" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/5_12dba56d-a333-4b74-93c8-8f8dcc22f6fd.png?v=1701431894">
   <div class="bundle-title">
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
-    <div class="text">HAPPY WITH<br>YOUR SELECTION</div>
+    <div class="text">HAPPY WITH<br>YOUR CHOICE?</div>
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
   </div>
   <div class="bundle-subtitle">
-    Take a second look at your discounts and check for free gift eligibility. Thank you for being part of our fresh shopping experience.
+    Take a second look at your unlocked discounts and see what free gifts you claimed.
   </div>
   <div class="bundle-wrapper">
-    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner.jpg?v=1702633293">
-    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile_2.jpg?v=1702633293">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner55.jpg?v=1702811427">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile_55.jpg?v=1702811427">
   </div>
   {% render 'bundle-gifts-bottom-gold' %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
@@ -332,6 +387,7 @@ selfCloses.forEach((selfClose) => {
 
 
 {{ 'startbundlegold.js' | asset_url | script_tag }}
+{{ 'goldatc.js' | asset_url | script_tag }}
 
 <style>
   .no-margin {
@@ -760,5 +816,75 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
     gap: 0px; 
  }
 }
+.js-info-bar {
+  color:white !important;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  box-shadow: 0px -3px 6px #3131319e;
+  padding: 25px 0;
+  background: #141414;
+}
 
+@media only screen and (max-width: 768px) {
+  .bundle-prices-show__title {
+      font-size: 12px;
+  }
+  
+  .bundle-prices-show__title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: normal;
+  }
+  
+  
+  
+  .bundle-wrapper__product {
+      padding: 7px;
+  }
+  
+  
+  .bundle-wrapper__product--title {
+      font-size: 14px;
+  }
+  .bundle-wrapper .product-template__wrapper--content__features--name {
+      padding-left: 16px;
+  }
+  .custom-offer
+  .bundle-wrapper {
+      gap: 7px;
+      padding: 0 5px
+  ;
+  }
+  
+  
+  .custom-offer
+  .option-name {
+      font-size: 11px;
+      padding: 7px;
+  }
+  
+  
+  .info-icon {
+      right: 8px;
+      top: 8px;
+      width: 22px;
+      height: 22px;
+      font-size: 18px;
+  }
+  
+  button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started.no-margin {
+      box-shadow: 1px 2px 7px #343434d6;
+  }
+  
+  .percent-tracker__line {
+      box-shadow: 0px 1px 7px #35ff2e;
+      border: 0px solid #60C655;
+  }
+  
+  .js-info-bar {
+      line-height: normal;
+  }
+  }
 </style>

@@ -219,18 +219,18 @@
                             <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
                             {% assign prId = product.variants[0].id %}
                             <div class="bundle-prices">
-                              <div class="js-price "><span>3</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
-                              <div class="js-price "><span>6</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
-                              <div class="js-price "><span>10</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
+                              <div class="js-price "><span>3</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
+                              <div class="js-price "><span>6</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
+                              <div class="js-price "><span>10</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
                             </div>
                         {% endif %}
                     </div>
                     <div class="bundle-prices-show">
                       <div class="bundle-prices-show__title">BUNDLE PRICES</div>
-                      <div><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div>
-                      <div class="js-price"><span class="bundle-prices-show__number">3+</span><span class="js-price3">{{product.first_available_variant.price | times: 0.45 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">6+</span><span class="js-price6">{{product.first_available_variant.price | times: 0.4 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.price | times: 0.3 | money }}</span></div>
+                      {% comment %} <div><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div> {% endcomment %}
+                      <div class="js-price"><span class="bundle-prices-show__number">3+</span><span class="js-price3">{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">6+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -260,10 +260,10 @@
         </div>
         <div class="bundle-prices-show">
           <div class="bundle-prices-show__title">BUNDLE PRICES</div>
-          <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.price | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">3+</span>{{product.first_available_variant.price | times: 0.45 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">6+</span>{{product.first_available_variant.price | times: 0.4 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.price | times: 0.3 | money }}</div>
+          {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
+          <div class="js-price "><span class="bundle-prices-show__number">3+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">6+</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -885,10 +885,6 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
   
   .js-info-bar {
       line-height: normal;
-  }
-  
-  .bundle-prices-show {
-      width: 70%;
   }
   }
 </style>

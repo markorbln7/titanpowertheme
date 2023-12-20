@@ -405,6 +405,9 @@
         max-width: 160px;
         margin:0 auto;
     }
+    @media only screen and (max-width: 600px) {
+        font-size: 15px !important;
+    }
 }
 .product-image__title {
     @media only screen and (max-width: 768px) {

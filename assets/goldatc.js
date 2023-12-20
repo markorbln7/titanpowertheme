@@ -52,6 +52,8 @@ increases.forEach((increas) => {
                                     }
                                 }
                                 console.log(giftCount, itemCount, 'itemCount')
+                                document.querySelector('.js-cart-total').innerHTML = `${currency}${giftCount/100}`
+                                document.querySelector('.js-cart-total-two').innerHTML = `${currency}${giftCount/100}`
                                 for (let i = 0; i < itemCount; i++) {
                                     console.log(i, 'iiiiiiiii')
                                     let dataSelectorVariable = `[data-${i+1}]`
@@ -178,6 +180,8 @@ decreases.forEach((decrease) => {
                                     }
                                 }
                             console.log(giftCount, itemCount, 'itemCount')
+                            document.querySelector('.js-cart-total').innerHTML = `${currency}${giftCount/100}`
+                            document.querySelector('.js-cart-total-two').innerHTML = `${currency}${giftCount/100}`
                             let dataSelectorVariable = `[data-${itemCount+1}]`
                             let dataLineVariable = `[data-line-${itemCount}]`
                             let globeClass = document.querySelector(dataSelectorVariable)

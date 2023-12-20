@@ -1394,6 +1394,8 @@
 .circle-chart {
     .circle-chart__circle {
         stroke:#BCFDB9;
+        transition: stroke-dasharray 500ms;
+        
     }
 }
 .gift-tracker__inner {

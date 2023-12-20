@@ -5,7 +5,7 @@ const popUpControler = document.querySelector('.product-popup__wrapper')
 const popUpLoadControler = document.querySelector('.product-addtocart')
 const popUpAnimationControler = document.querySelector('.product-popup__animation')
 const close = document.querySelector('.close')
-const increases = document.querySelectorAll('.increase')
+// const increases = document.querySelectorAll('.increase')
 const decreases = document.querySelectorAll('.decrease')
 let calculatePrice = function () {
     let price = 0
@@ -20,189 +20,189 @@ let calculatePrice = function () {
     document.querySelector('.saved-price').innerHTML = price
     console.log(price, 'price')
 }
-increases.forEach((increas) => {
-  increas.addEventListener('click', (e) => {
-    const _this = e.target
-    const parentSelector = _this.parentNode.parentNode
-    const mainWrapper = _this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-    console.log(mainWrapper, parentSelector, 'parentSelector')
-    const inputSelector = parentSelector.querySelector('.js-variant-selector')
-    const inputValue = parentSelector.querySelector('.c-quantity__amount')
-    const value = inputSelector.getAttribute('data-quantity')
-    const newValue = parseInt(value) + 1
-    inputSelector.setAttribute('data-quantity', newValue)
-    inputValue.innerHTML = newValue
-    if(newValue > 0) {
-      mainWrapper.classList.add('selected')
-      inputSelector.classList.add('selected')
-      mainWrapper.querySelector('.decrease').classList.remove('gray')
-      mainWrapper.querySelector('.c-quantity__amount').classList.remove('op')
-    }
-    const bar = document.querySelector(".bar");
-    selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-            let numberOfSelected = 0
-            selectedItems.forEach((selectedItem) => {
-               selectedNumber = selectedItem.getAttribute('data-quantity')
-               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-            })
-            //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 14 - numberOfSelected;
-            console.log(leftToGift,'leftToGift')
-            if(leftToGift === 14) {
-              bar.style.setProperty("--progress", "15%");
-              infoBar.innerHTML = `ADD 5 AND SAVE 55%`
-      }
-      if(leftToGift === 13) {
-              bar.style.setProperty("--progress", "30%");
-              infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-      }
-        if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "55%");
-                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "75%");
-                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "70%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "95%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 80%!!`
-        }
-  })
-})
-decreases.forEach((decrease) => {
-  decrease.addEventListener('click', (e) => {
-    const _this = e.target
-    const parentSelector = _this.parentNode.parentNode
-    const mainWrapper = _this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-    console.log(parentSelector, 'parentSelector')
-    const inputSelector = parentSelector.querySelector('.js-variant-selector')
-    const inputValue = parentSelector.querySelector('.c-quantity__amount')
-    const value = inputSelector.getAttribute('data-quantity')
-    let newValue = parseInt(value) - 1
-    if(newValue == 0) {
-      mainWrapper.classList.remove('selected')
-      inputSelector.classList.remove('selected')
-      mainWrapper.querySelector('.decrease').classList.add('gray')
-      mainWrapper.querySelector('.c-quantity__amount').classList.add('op')
-    }
-    if(newValue < 0) {
-      return
-    }
-    inputSelector.setAttribute('data-quantity', newValue)
-    inputValue.innerHTML = newValue
-    const bar = document.querySelector(".bar");
-    selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-            let numberOfSelected = 0
-            selectedItems.forEach((selectedItem) => {
-               selectedNumber = selectedItem.getAttribute('data-quantity')
-               numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-            })
-            //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-            let leftToGift = 14 - numberOfSelected;
-            console.log(leftToGift,'leftToGift')
-            if(leftToGift === 14) {
-              bar.style.setProperty("--progress", "15%");
-              infoBar.innerHTML = `ADD 5 AND SAVE 55%`
-      }
-      if(leftToGift === 13) {
-              bar.style.setProperty("--progress", "30%");
-              infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-      }
-        if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "55%");
-                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "75%");
-                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "70%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "95%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 80%!!`
-        }
-  })
-})
+// increases.forEach((increas) => {
+//   increas.addEventListener('click', (e) => {
+//     const _this = e.target
+//     const parentSelector = _this.parentNode.parentNode
+//     const mainWrapper = _this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+//     console.log(mainWrapper, parentSelector, 'parentSelector')
+//     const inputSelector = parentSelector.querySelector('.js-variant-selector')
+//     const inputValue = parentSelector.querySelector('.c-quantity__amount')
+//     const value = inputSelector.getAttribute('data-quantity')
+//     const newValue = parseInt(value) + 1
+//     inputSelector.setAttribute('data-quantity', newValue)
+//     inputValue.innerHTML = newValue
+//     if(newValue > 0) {
+//       mainWrapper.classList.add('selected')
+//       inputSelector.classList.add('selected')
+//       mainWrapper.querySelector('.decrease').classList.remove('gray')
+//       mainWrapper.querySelector('.c-quantity__amount').classList.remove('op')
+//     }
+//     const bar = document.querySelector(".bar");
+//     selectedItems = document.querySelectorAll('.js-variant-selector.selected')
+//             let numberOfSelected = 0
+//             selectedItems.forEach((selectedItem) => {
+//                selectedNumber = selectedItem.getAttribute('data-quantity')
+//                numberOfSelected = numberOfSelected + parseInt(selectedNumber)
+//             })
+//             //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
+//             let leftToGift = 14 - numberOfSelected;
+//             console.log(leftToGift,'leftToGift')
+//             if(leftToGift === 14) {
+//               bar.style.setProperty("--progress", "15%");
+//               infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+//       }
+//       if(leftToGift === 13) {
+//               bar.style.setProperty("--progress", "30%");
+//               infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+//       }
+//         if(leftToGift === 12) {
+//                 bar.style.setProperty("--progress", "55%");
+//                 infoBar.innerHTML = `ADD 3 AND SAVE 55%`
+//         }
+//         if(leftToGift === 11) {
+//                 bar.style.setProperty("--progress", "75%");
+//                 infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 10) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 9) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 8) {
+//             bar.style.setProperty("--progress", "75%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 7) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 6) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 5) {
+//             bar.style.setProperty("--progress", "60%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 4) {
+//             bar.style.setProperty("--progress", "70%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 3) {
+//             bar.style.setProperty("--progress", "80%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 2) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 1) {
+//             bar.style.setProperty("--progress", "95%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift <= 0) {
+//             bar.style.setProperty("--progress", "100%");
+//             infoBar.innerHTML = `YOU SAVED 80%!!`
+//         }
+//   })
+// })
+// decreases.forEach((decrease) => {
+//   decrease.addEventListener('click', (e) => {
+//     const _this = e.target
+//     const parentSelector = _this.parentNode.parentNode
+//     const mainWrapper = _this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+//     console.log(parentSelector, 'parentSelector')
+//     const inputSelector = parentSelector.querySelector('.js-variant-selector')
+//     const inputValue = parentSelector.querySelector('.c-quantity__amount')
+//     const value = inputSelector.getAttribute('data-quantity')
+//     let newValue = parseInt(value) - 1
+//     if(newValue == 0) {
+//       mainWrapper.classList.remove('selected')
+//       inputSelector.classList.remove('selected')
+//       mainWrapper.querySelector('.decrease').classList.add('gray')
+//       mainWrapper.querySelector('.c-quantity__amount').classList.add('op')
+//     }
+//     if(newValue < 0) {
+//       return
+//     }
+//     inputSelector.setAttribute('data-quantity', newValue)
+//     inputValue.innerHTML = newValue
+//     const bar = document.querySelector(".bar");
+//     selectedItems = document.querySelectorAll('.js-variant-selector.selected')
+//             let numberOfSelected = 0
+//             selectedItems.forEach((selectedItem) => {
+//                selectedNumber = selectedItem.getAttribute('data-quantity')
+//                numberOfSelected = numberOfSelected + parseInt(selectedNumber)
+//             })
+//             //let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
+//             let leftToGift = 14 - numberOfSelected;
+//             console.log(leftToGift,'leftToGift')
+//             if(leftToGift === 14) {
+//               bar.style.setProperty("--progress", "15%");
+//               infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+//       }
+//       if(leftToGift === 13) {
+//               bar.style.setProperty("--progress", "30%");
+//               infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+//       }
+//         if(leftToGift === 12) {
+//                 bar.style.setProperty("--progress", "55%");
+//                 infoBar.innerHTML = `ADD 3 AND SAVE 55%`
+//         }
+//         if(leftToGift === 11) {
+//                 bar.style.setProperty("--progress", "75%");
+//                 infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 10) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 9) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 8) {
+//             bar.style.setProperty("--progress", "75%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 7) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 6) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 5) {
+//             bar.style.setProperty("--progress", "60%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 4) {
+//             bar.style.setProperty("--progress", "70%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 3) {
+//             bar.style.setProperty("--progress", "80%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 2) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 1) {
+//             bar.style.setProperty("--progress", "95%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift <= 0) {
+//             bar.style.setProperty("--progress", "100%");
+//             infoBar.innerHTML = `YOU SAVED 80%!!`
+//         }
+//   })
+// })
 close.addEventListener('click', (e) => {
   popUpControler.classList.toggle('hidden')
   body.classList.toggle('overflow-hidden')
@@ -258,9 +258,15 @@ pos.forEach((po) => {
     const selectedVariantImage = selectedVariant.getAttribute('data-variant-image')
     const imageSelector = divSelector.parentNode.parentNode.parentNode.querySelector('.bundle-wrapper__product--image img')
     const selectedVariantPrice = selectedVariant.getAttribute('data-price')
+    const selectedVariantPriceWM3 = selectedVariant.getAttribute('data-price-wm3')
+    const selectedVariantPriceWM6 = selectedVariant.getAttribute('data-price-wm6')
+    const selectedVariantPriceWM10 = selectedVariant.getAttribute('data-price-wm10')
     const selectedVariantComparePrice = selectedVariant.getAttribute('data-compare-price')
     const buttonSelector = divSelector.querySelector('.js-variant-selector')
     const priceSelector = divSelector.querySelector('.js-price')
+    const priceSelector3 = divSelector.querySelector('.js-price3')
+    const priceSelector6 = divSelector.querySelector('.js-price6')
+    const priceSelector10 = divSelector.querySelector('.js-price10')
     const comparePriceSelector = divSelector.querySelector('.js-red-price')
     buttonSelector.setAttribute('data-variant-id', selectedVariantId)
     console.log(selectedVariantImage, 'selectedVariantImage')
@@ -268,6 +274,9 @@ pos.forEach((po) => {
       imageSelector.setAttribute('src', selectedVariantImage)
     }
     priceSelector.innerHTML = selectedVariantPrice
+    priceSelector3.innerHTML = selectedVariantPriceWM3
+    priceSelector6.innerHTML = selectedVariantPriceWM6
+    priceSelector10.innerHTML = selectedVariantPriceWM10
     comparePriceSelector.innerHTML = selectedVariantComparePrice
     console.log('selectedVariantId', selectedVariantId)
     console.log(titleArray, 'titleArray')
@@ -349,11 +358,12 @@ let addItemsCheckout = (selector) => {
 }
 addToCart.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  addItemsCheckout()
+  window.location.href = '/checkout'
+  // addItemsCheckout()
 })
 addToCartSticky.addEventListener('click', (e) => {
   let numberOfSelected = document.querySelectorAll('.js-variant-selector.selected').length
-  addItemsCheckout()
+  window.location.href = '/checkout'
 })
 const infoBar = document.querySelector('.js-info-bar')
 const variantClicks = document.querySelectorAll('.js-variant-selector')
@@ -546,124 +556,112 @@ $(window).scroll(function () {
 })
 
 
-const startBundles = document.querySelectorAll('.js-start-bundles')
-const bundleProductsSelectors = document.querySelectorAll('.bundle-wrapper__product')
+// const startBundles = document.querySelectorAll('.js-start-bundles')
+// const bundleProductsSelectors = document.querySelectorAll('.bundle-wrapper__product')
 
-startBundles.forEach((startBundle) => {
-    startBundle.addEventListener('click', (e) => {  
-        console.log('click')
-        const _this = e.target
-        const arrayString = _this.getAttribute('data-ids')
-        const array = arrayString.split(',')
-        const newArray = []
-        for (let i = 0; i < array.length; i++) {
-          let id = array[i].slice(1)
-          let q = parseInt(array[i].slice(0, 1))
-          bundleProductsSelectors.forEach((bundleProductsSelector) => {
-            let productIdSelector = bundleProductsSelector.getAttribute('data-product-id')
-            if( id == productIdSelector ) {
-              bundleProductsSelector.classList.add('selected')
-              bundleProductsSelector.querySelector('.js-variant-selector').classList.add('selected')
-              bundleProductsSelector.querySelector('.decrease').classList.remove('gray')
-              bundleProductsSelector.querySelector('.c-quantity__amount').classList.remove('op')
-              let oldQuantity = bundleProductsSelector.querySelector('.js-variant-selector').getAttribute('data-quantity')
-              let newQuantity = parseInt(oldQuantity) + q
-              bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
-              bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity
+// startBundles.forEach((startBundle) => {
+//     startBundle.addEventListener('click', (e) => {  
+//         console.log('click')
+//         const _this = e.target
+//         const arrayString = _this.getAttribute('data-ids')
+//         const array = arrayString.split(',')
+//         const newArray = []
+//         for (let i = 0; i < array.length; i++) {
+//           let id = array[i].slice(1)
+//           let q = parseInt(array[i].slice(0, 1))
+//           bundleProductsSelectors.forEach((bundleProductsSelector) => {
+//             let productIdSelector = bundleProductsSelector.getAttribute('data-product-id')
+//             if( id == productIdSelector ) {
+//               bundleProductsSelector.classList.add('selected')
+//               bundleProductsSelector.querySelector('.js-variant-selector').classList.add('selected')
+//               bundleProductsSelector.querySelector('.decrease').classList.remove('gray')
+//               bundleProductsSelector.querySelector('.c-quantity__amount').classList.remove('op')
+//               let oldQuantity = bundleProductsSelector.querySelector('.js-variant-selector').getAttribute('data-quantity')
+//               let newQuantity = parseInt(oldQuantity) + q
+//               bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
+//               bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity
               
-            }
-          })
-        }
-        console.log(array, newArray, 'array')
-        const bar = document.querySelector(".bar");
-        // bundleProductsSelectors.forEach((bundleProductsSelector) => {
-        //     let productIdSelector = bundleProductsSelector.getAttribute('data-product-id')
-        //     if(array.includes(productIdSelector)) {
-        //         bundleProductsSelector.classList.add('selected')
-        //         bundleProductsSelector.querySelector('.js-variant-selector').classList.add('selected')
-        //         let oldQuantity = bundleProductsSelector.querySelector('.js-variant-selector').getAttribute('data-quantity')
-        //         let newQuantity = parseInt(oldQuantity) + 1
-        //         bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
-        //         bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity
-                
-        //     }
-        // })
-        selectedItems = document.querySelectorAll('.js-variant-selector.selected')
-        let numberOfSelected = 0
-        selectedItems.forEach((selectedItem) => {
-            selectedNumber = selectedItem.getAttribute('data-quantity')
-            numberOfSelected = numberOfSelected + parseInt(selectedNumber)
-        })
-        console.log(selectedItems,'selectedItems')
-        let leftToGift = 14 - numberOfSelected;
-        console.log(leftToGift,'leftToGift')
-        if(leftToGift === 14) {
-            bar.style.setProperty("--progress", "15%");
-            infoBar.innerHTML = `ADD 5 AND SAVE 55%`
-        }
-        if(leftToGift === 13) {
-                bar.style.setProperty("--progress", "30%");
-                infoBar.innerHTML = `ADD 4 AND SAVE 55%`
-        }
-        if(leftToGift === 12) {
-                bar.style.setProperty("--progress", "55%");
-                infoBar.innerHTML = `ADD 3 AND SAVE 55%`
-        }
-        if(leftToGift === 11) {
-                bar.style.setProperty("--progress", "75%");
-                infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 10) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
-        }
-        if(leftToGift === 9) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 8) {
-            bar.style.setProperty("--progress", "75%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 7) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
-        }
-        if(leftToGift === 6) {
-            bar.style.setProperty("--progress", "50%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 5) {
-            bar.style.setProperty("--progress", "60%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 4) {
-            bar.style.setProperty("--progress", "70%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 3) {
-            bar.style.setProperty("--progress", "80%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 2) {
-            bar.style.setProperty("--progress", "90%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift === 1) {
-            bar.style.setProperty("--progress", "95%");
-            infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
-        }
-        if(leftToGift <= 0) {
-            bar.style.setProperty("--progress", "100%");
-            infoBar.innerHTML = `YOU SAVED 80%!!`
-        }
-          const $section = $('.selected')
+//             }
+//           })
+//         }
+//         console.log(array, newArray, 'array')
+//         const bar = document.querySelector(".bar");
+//         selectedItems = document.querySelectorAll('.js-variant-selector.selected')
+//         let numberOfSelected = 0
+//         selectedItems.forEach((selectedItem) => {
+//             selectedNumber = selectedItem.getAttribute('data-quantity')
+//             numberOfSelected = numberOfSelected + parseInt(selectedNumber)
+//         })
+//         console.log(selectedItems,'selectedItems')
+//         let leftToGift = 14 - numberOfSelected;
+//         console.log(leftToGift,'leftToGift')
+//         if(leftToGift === 14) {
+//             bar.style.setProperty("--progress", "15%");
+//             infoBar.innerHTML = `ADD 5 AND SAVE 55%`
+//         }
+//         if(leftToGift === 13) {
+//                 bar.style.setProperty("--progress", "30%");
+//                 infoBar.innerHTML = `ADD 4 AND SAVE 55%`
+//         }
+//         if(leftToGift === 12) {
+//                 bar.style.setProperty("--progress", "55%");
+//                 infoBar.innerHTML = `ADD 3 AND SAVE 55%`
+//         }
+//         if(leftToGift === 11) {
+//                 bar.style.setProperty("--progress", "75%");
+//                 infoBar.innerHTML = `ADD 2 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 10) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `ADD 1 MORE AND SAVE 55%`
+//         }
+//         if(leftToGift === 9) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 3 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 8) {
+//             bar.style.setProperty("--progress", "75%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 2 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 7) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 55%! <span class="color-white">ADD 1 MORE AND SAVE 70%</span>`
+//         }
+//         if(leftToGift === 6) {
+//             bar.style.setProperty("--progress", "50%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 6 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 5) {
+//             bar.style.setProperty("--progress", "60%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 5 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 4) {
+//             bar.style.setProperty("--progress", "70%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 4 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 3) {
+//             bar.style.setProperty("--progress", "80%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 3 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 2) {
+//             bar.style.setProperty("--progress", "90%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 2 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift === 1) {
+//             bar.style.setProperty("--progress", "95%");
+//             infoBar.innerHTML = `YOU SAVED 70%! <span class="color-white">ADD 1 MORE AND SAVE 80%</span>`
+//         }
+//         if(leftToGift <= 0) {
+//             bar.style.setProperty("--progress", "100%");
+//             infoBar.innerHTML = `YOU SAVED 80%!!`
+//         }
+//           const $section = $('.selected')
 
-          $('html, body').animate({
-            scrollTop: $section.offset().top + 'px'
-          }, 1000)
-    })
-})
+//           $('html, body').animate({
+//             scrollTop: $section.offset().top + 'px'
+//           }, 1000)
+//     })
+// })
     
 
 const bundleTabs = document.querySelectorAll('.js-bundle-tab')

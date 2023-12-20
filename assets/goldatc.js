@@ -101,26 +101,31 @@ increases.forEach((increas) => {
                                     jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
+                                    document.querySelector('.unlocked').classList.add('hide')
                                 } else if(giftCount > firstGift && giftCount < secondGift) {
                                     let giftLeft = secondGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-second-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
+                                    document.querySelector('.unlocked').classList.add('hide')
                                 } else if(giftCount > secondGift && giftCount < thirdGift) {
                                     let giftLeft = thirdGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
+                                    document.querySelector('.unlocked').classList.add('hide')
                                 } else if (giftCount > thirdGift && giftCount < fourthGift) {
                                     let giftLeft = fourthGift - giftCount
                                     giftChange.innerHTML = `${currency}${giftLeft/100}`
                                     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
+                                    document.querySelector('.unlocked').classList.add('hide')
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
+                                    document.querySelector('.unlocked').classList.remove('hide')
                                 }
                             
                                 
@@ -217,26 +222,31 @@ decreases.forEach((decrease) => {
                                 jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540)
                                 document.querySelector('.gift-tracker').classList.remove('hide')
+                                document.querySelector('.unlocked').classList.add('hide')
                             } else if(giftCount > firstGift && giftCount < secondGift) {
                                 let giftLeft = secondGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-second-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
                                 document.querySelector('.gift-tracker').classList.remove('hide')
+                                document.querySelector('.unlocked').classList.add('hide')
                             } else if(giftCount > secondGift && giftCount < thirdGift) {
                                 let giftLeft = thirdGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                 document.querySelector('.gift-tracker').classList.remove('hide')
+                                document.querySelector('.unlocked').classList.add('hide')
                             } else if (giftCount > thirdGift && giftCount < fourthGift) {
                                 let giftLeft = fourthGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
                                 jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
                                 document.querySelector('.gift-tracker').classList.remove('hide')
+                                document.querySelector('.unlocked').classList.add('hide')
                             } else {
                                 document.querySelector('.gift-tracker').classList.add('hide')
+                                document.querySelector('.unlocked').classList.remove('hide')
                             }
                             return data 
                         });

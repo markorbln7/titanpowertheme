@@ -4,7 +4,8 @@
 {{ 'section-product-image.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle-builder.js' | asset_url | script_tag }}
 <div class="intro">
-  <img class="number-icon-four" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_1.png?v=1701431893">
+  {% comment %} <img class="number-icon-four" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_1.png?v=1701431893"> {% endcomment %}
+  <img class="number-icon-four" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3-icon.png?v=1700734602">
   <div class="bundle-title gray-version">
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
     <div class="text text-uppercase">Customise Your Bundle</div>
@@ -21,11 +22,11 @@
           <div class="relative">
             <div class="percent-tracker__ball--green"></div>
             <div data-{{forloop.index}} class="percent-tracker__ball">
-              {% if forloop.index == 3 %}
+              {% if forloop.index == 5 %}
                   <span>55</span>
               {% endif %}
-              {% if forloop.index == 6 %}
-                <span>60</span>
+              {% if forloop.index == 7 %}
+                <span>65</span>
               {% endif %}
               {% if forloop.index == 10 %}
                 <span>70</span>
@@ -65,7 +66,7 @@
       </div>
   </div>
     <div class="message-wrap">
-      <div class="js-info-bar">You have 0 items, <br>Add 3 more for 55% off!</div>
+      <div class="js-info-bar">You have 0 items, <br>Add 5 more for 55% off!</div>
       <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd button-sticky w-100">
         <button class="js-add-to-cart-sticky f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started no-margin">
           <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH - <span class="js-cart-total">{{ cart.total_price | money }}</span></div>
@@ -371,7 +372,7 @@ selfCloses.forEach((selfClose) => {
 </div>
 
 <div style="background:#141414;padding-bottom:30px;padding-top:30px;">
-  <img class="number-icon-five" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/5_12dba56d-a333-4b74-93c8-8f8dcc22f6fd.png?v=1701431894">
+  <img class="number-icon-five" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_1.png?v=1701431893">
   <div class="bundle-title">
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
     <div class="text">HAPPY WITH<br>YOUR CHOICE?</div>
@@ -381,8 +382,8 @@ selfCloses.forEach((selfClose) => {
     Take a second look at your unlocked discounts and see what free gifts you claimed.
   </div>
   <div class="bundle-wrapper">
-    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner55.jpg?v=1702811427">
-    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_black_friday_banner_desktop_banner_buy_bottom_banner_-_mobile_55.jpg?v=1702811427">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_banner_bottom_desktop_-_custom_offer_page.jpg?v=1705317505">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_banner_bottom_mobile_-_custom_offer_page.jpg?v=1705317505">
   </div>
   {% render 'bundle-gifts-bottom-gold' %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
@@ -802,7 +803,6 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
 }
 
 .bundle-subtitle-image {
-  margin-bottom: -30px;
   margin-top: 30px;
 }
 

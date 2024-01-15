@@ -70,15 +70,15 @@ increases.forEach((increas) => {
                                 
                                 
                                 
-                                if(itemCount < 2) {
-                                    ToGoal = 3
+                                if(itemCount < 4) {
+                                    ToGoal = 5
                                     percent = '55%'
                                 }
-                                if(itemCount > 2 && itemCount < 5) {
-                                    ToGoal = 6
-                                    percent = '60%'
+                                if(itemCount > 4 && itemCount < 6) {
+                                    ToGoal = 7
+                                    percent = '65%'
                                 }
-                                if(itemCount > 5 && itemCount < 10) {
+                                if(itemCount > 6 && itemCount < 10) {
                                     ToGoal = 10
                                     percent = '70%'
                                 }
@@ -92,7 +92,7 @@ increases.forEach((increas) => {
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
                                 let secondGift = document.querySelector('.js-second-gift').getAttribute('data-gift')
                                 let thirdGift = document.querySelector('.js-third-gift').getAttribute('data-gift')
-                                let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
+                                // let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
                                 let giftChange = document.querySelector('.js-left-to-gift')
                                 let jsImageChange = document.querySelector('.js-image-change')
                                 let circle = document.querySelector('.circle-chart__circle')
@@ -118,13 +118,14 @@ increases.forEach((increas) => {
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
                                     document.querySelector('.unlocked').classList.add('hide')
-                                } else if (giftCount > thirdGift && giftCount < fourthGift) {
-                                    let giftLeft = fourthGift - giftCount
-                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
-                                    jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
-                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
-                                    document.querySelector('.gift-tracker').classList.remove('hide')
-                                    document.querySelector('.unlocked').classList.add('hide')
+                                // } else if (giftCount > thirdGift && giftCount < fourthGift) {
+                                //     let giftLeft = fourthGift - giftCount
+                                //     giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
+                                //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                //     document.querySelector('.gift-tracker').classList.remove('hide')
+                                //     document.querySelector('.unlocked').classList.add('hide')
+                                // 
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                     document.querySelector('.unlocked').classList.remove('hide')
@@ -190,15 +191,15 @@ decreases.forEach((decrease) => {
                             if(lineClass) {
                                 lineClass.classList.remove('active')
                             }
-                            if(itemCount < 2) {
-                                ToGoal = 3
+                            if(itemCount < 4) {
+                                ToGoal = 5
                                 percent = '55%'
                             }
-                            if(itemCount > 2 && itemCount < 5) {
-                                ToGoal = 6
-                                percent = '60%'
+                            if(itemCount > 4 && itemCount < 6) {
+                                ToGoal = 7
+                                percent = '65%'
                             }
-                            if(itemCount > 5 && itemCount < 10) {
+                            if(itemCount > 6 && itemCount < 10) {
                                 ToGoal = 10
                                 percent = '70%'
                             }
@@ -212,7 +213,7 @@ decreases.forEach((decrease) => {
                             let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
                             let secondGift = document.querySelector('.js-second-gift').getAttribute('data-gift')
                             let thirdGift = document.querySelector('.js-third-gift').getAttribute('data-gift')
-                            let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
+                            // let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
                             let giftChange = document.querySelector('.js-left-to-gift')
                             let jsImageChange = document.querySelector('.js-image-change')
                             let circle = document.querySelector('.circle-chart__circle')
@@ -241,13 +242,14 @@ decreases.forEach((decrease) => {
                                 circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                 document.querySelector('.gift-tracker').classList.remove('hide')
                                 document.querySelector('.unlocked').classList.add('hide')
-                            } else if (giftCount > thirdGift && giftCount < fourthGift) {
-                                let giftLeft = fourthGift - giftCount
-                                giftChange.innerHTML = `${currency}${giftLeft/100}`
-                                jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
-                                circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
-                                document.querySelector('.gift-tracker').classList.remove('hide')
-                                document.querySelector('.unlocked').classList.add('hide')
+                            // } else if (giftCount > thirdGift && giftCount < fourthGift) {
+                            //     let giftLeft = fourthGift - giftCount
+                            //     giftChange.innerHTML = `${currency}${giftLeft/100}`
+                            //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
+                            //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                            //     document.querySelector('.gift-tracker').classList.remove('hide')
+                            //     document.querySelector('.unlocked').classList.add('hide')
+                            // 
                             } else {
                                 document.querySelector('.gift-tracker').classList.add('hide')
                                 document.querySelector('.unlocked').classList.remove('hide')
@@ -350,15 +352,15 @@ startBundles.forEach((startBundle) => {
                                 }
                                 
                                 let ToGoal
-                                if(itemCount < 2) {
-                                    ToGoal = 3
+                                if(itemCount < 4) {
+                                    ToGoal = 5
                                     percent = '55%'
                                 }
-                                if(itemCount > 2 && itemCount < 5) {
-                                    ToGoal = 6
-                                    percent = '60%'
+                                if(itemCount > 4 && itemCount < 6) {
+                                    ToGoal = 7
+                                    percent = '65%'
                                 }
-                                if(itemCount > 5 && itemCount < 10) {
+                                if(itemCount > 6 && itemCount < 10) {
                                     ToGoal = 10
                                     percent = '70%'
                                 }
@@ -372,7 +374,7 @@ startBundles.forEach((startBundle) => {
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
                                 let secondGift = document.querySelector('.js-second-gift').getAttribute('data-gift')
                                 let thirdGift = document.querySelector('.js-third-gift').getAttribute('data-gift')
-                                let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
+                                // let fourthGift = document.querySelector('.js-fourth-gift').getAttribute('data-gift')
                                 let giftChange = document.querySelector('.js-left-to-gift')
                                 let jsImageChange = document.querySelector('.js-image-change')
                                 let circle = document.querySelector('.circle-chart__circle')
@@ -395,12 +397,13 @@ startBundles.forEach((startBundle) => {
                                     jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
-                                } else if (giftCount > thirdGift && giftCount < fourthGift) {
-                                    let giftLeft = fourthGift - giftCount
-                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
-                                    jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
-                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
-                                    document.querySelector('.gift-tracker').classList.remove('hide')
+                                // } else if (giftCount > thirdGift && giftCount < fourthGift) {
+                                //     let giftLeft = fourthGift - giftCount
+                                //     giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
+                                //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                //     document.querySelector('.gift-tracker').classList.remove('hide')
+                                // 
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                 }

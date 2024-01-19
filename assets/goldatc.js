@@ -54,6 +54,7 @@ increases.forEach((increas) => {
                                 console.log(giftCount, itemCount, 'itemCount')
                                 document.querySelector('.js-cart-total').innerHTML = `${currency}${giftCount/100}`
                                 document.querySelector('.js-cart-total-two').innerHTML = `${currency}${giftCount/100}`
+                                document.querySelector('.js-cart-total-three').innerHTML = `${currency}${giftCount/100}`
                                 for (let i = 0; i < itemCount; i++) {
                                     console.log(i, 'iiiiiiiii')
                                     let dataSelectorVariable = `[data-${i+1}]`

@@ -1,127 +1,583 @@
-<div class="bottom-banner relative">
-    <div class="bottom-banner-image desktop">
-        <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/sprout_Desktop.jpg?v=1700828698">
-    </div>  
-    <div class="bottom-banner-image mobile">
-        <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Sprout_Mobile_2_1.jpg?v=1700828698">
-    </div>    
-    <div class="bottom-banner-content">
-        <div class="bottom-banner-title">
-            <div class="bottom-banner-title-up">JOIN OUR</div>
-            <div class="bottom-banner-title-title">GREEN FRIDAY MOVEMENT</div>
-            <div class="bottom-banner-title-text">It's our mission to become a household name for sustainable everyday electronics.
-                We design our porducts for extreme durability so we can help tackle the fight against electronic waste.<br><br>
-                We've also teamed up with Sprout to bring you Green Friday! to planting trees for every product we sell.
-            </div>
-            <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start3">
-                <button style="margin-top:0;font-size: 20px!important;" class="btpnew f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
-                  <div>BACK TO PRODUCTS 👆</div>
-                </button>
-              </div>
+
+<div style="background:#000;padding-bottom:30px;padding-top:30px;">
+  <div class="bundle-title">
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+    <div class="text">FINISHED</div>
+    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
+  </div>
+  <div class="bundle-subtitle">
+    Act Fast: Lock in Your Limited-Time Savings and FREE gifts by checking out below
+  </div>
+  <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
+      <button class="js-add-to-cart js-add-to-cart-bottom f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+        <div id="addToCartText-template--16118178119858__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f">FINISH - <span class="js-cart-total-three">{{ cart.total_price | money }}</span> </div>
+      </button>
+      <div style="margin-top:30px" class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd scroll-to-start3">
+        <button style="margin-top:0;font-size: 20px!important;" class="btpnew f aic jcc w100 bg-titan-greenish font-sans btn--add-to-cart color-white get-bundle-started">
+          <div>BACK TO PRODUCTS 👆</div>
+        </button>
+      </div>
+  </div>
+  <div class="bundle-top-titles">
+    <div class="bundle-four-icons">
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1.png?v=1700676356">
         </div>
+        <div class="bundle-four-icons__single--title">
+          30-day Money Back Guarantee
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/2_6e1fe2de-c5ac-4573-8d5b-875a3034f3ff.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+          Free Shipping on All Orders
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_5e29c1ed-32fe-495a-9607-a9d5a7f738a2.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+            Easy & Fast Returns
+        </div>
+      </div>
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4.png?v=1700676356">
+        </div>
+        <div class="bundle-four-icons__single--title">
+            Plant a Tree With Every Order
+        </div>
+      </div>
     </div>
 </div>
-<style>
-    .btpnew {
-        margin-top: 0 !important;
-        font-size: 20px!important;
-        color: #fff !important;
-        background: #000 !important;
-        border: 0px !important;
-        box-shadow: 0px 0px 15px 4px rgba(96,198,85,.8) !important;
-        height: 50px !important;
-    }
-    {% comment %} .bottom-banner {
-        height:700px;
-    } {% endcomment %}
-    .bottom-banner-content {
-        text-align:center;
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translate(-50%, 0%);
-        width: 80%;
-    }
-    .bottom-banner-title-up {
-        font-size:40px;
-        font-weight:700;
-        color:white;
-        line-height:1.2;
-    }
-    .bottom-banner-title-title {
-        font-size:50px;
-        font-weight:700;
-        color:#60c655;
-    }
-    .bottom-banner-title-text {
-        font-size:20px;
-        font-weight:400;
-        color:white;
-        line-height:1.2;
-    }
-    .bottom-banner-image img {
-        display:block;
-    }
-    .bottom-banner-image img {
-        width:100%;
-        object-fit:cover;
-    }
-    {% comment %} .bottom-banner-image {
-        height:700px;
-    } {% endcomment %}
-    @media only screen and (max-width: 768px) {
-        .bottom-banner-content {
-            text-align:center;
-            background:black;
-            position: relative;
-            bottom:unset;
-            left: unset;
-            transform: none;
-            width: 100%;
-            padding:20px;
-        }
-        .bottom-banner-title-up {
-            font-size:20px;
-            font-weight:700;
-            color:white;
-            line-height:1.2;
-        }
-        .bottom-banner-title-title {
-            font-size: 30px;
-            line-height: 1;
-            padding-bottom: 20px;
-            font-weight:700;
-            color:#60c655;
-            line-height:1.2;
-        }
-        .bottom-banner-title-text {
-            font-size:14px;
-            font-weight:400;
-            color:white;
-            line-height:1.2;
-        }
-       
-    }
-</style>
+</div>
+
+
+{% comment %} {{ 'startbundlegold.js' | asset_url | script_tag }}
+{{ 'goldatc.js' | asset_url | script_tag }} {% endcomment %}
 
 <script>
-scrollToStart2 = document.querySelector('.scroll-to-start2');
-scrollToStart3 = document.querySelector('.scroll-to-start3');
+    const addToCartBottom = document.querySelector('.js-add-to-cart-bottom')
+    scrollToStart3 = document.querySelector('.scroll-to-start3')
+    addToCartBottom.addEventListener('click', (e) => {
+        window.location.href = '/checkout'
+    })
 
-console.log(scrollToStart2, 'scrollToStart2')
-
-scrollToStart2.addEventListener('click', (e) => {
-  const $sectionscroll = $('.number-icon-four')
+    scrollToStart3.addEventListener('click', (e) => {
+  const $sectionscroll = $('.number-icon')
 
   $('html, body').animate({
     scrollTop: $sectionscroll.offset().top + 'px'
-  }, 2000)
+  }, 1000)
 })
-scrollToStart3.addEventListener('click', (e) => {
-    const $sectionscroll = $('.number-icon-four')
-  
-    $('html, body').animate({
-      scrollTop: $sectionscroll.offset().top + 'px'
-    }, 2000)
-  })
 </script>
+
+<style>
+  .no-margin {
+    margin-bottom:0 !important;
+    margin-top:20px !important;
+    color:black !important;
+  }
+  .slide-content__image img {
+    border:none;
+    box-shadow:none;
+  }
+.bg-titan-greenish {
+  background: #60c655;
+}
+.c-quantity {
+  max-width:100%;
+}
+.product-rev {
+      background-color: #dfdfdf;
+}
+.product-rev .product-zig__bigtitle {
+  color:black;
+}
+.hero_image {
+  background: #000;
+}
+.option-name {
+  cursor: pointer;
+  background-color: #d6e1e1;
+  color: #333333;
+  border-radius: 10px;
+  border: 0.75px solid #d5d5d5;
+  padding: 8px 24px 8px 8px;
+  margin: auto auto 10px;
+  box-shadow: 2px 2px 8px 2px #bdbdbd38;
+}
+.c-quantity {
+  border: none;
+}
+.bundle-wrapper__product {
+  border: 1.75px solid #ececec;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 10px #b5b5b5;
+  background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+  overflow:visible;
+}
+input.js-variant-selector.text-uppercase.cursor-pointer {
+  color: #fff;
+  border-radius: 25px;
+  position:absolute;
+  left:-100000px;
+}
+.bundle-wrapper__product--image img {
+  width: 100%;
+  border-radius: 30px;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  background: linear-gradient(360deg, #fff 0%, #d6e1e1 98%);
+  box-shadow: 0px -3px 6px #3131319e;
+  padding:25px 0;
+}
+.js-info-bar, .info-bar, .product-template__wrapper--content__features--name {
+  color: #333333;
+}
+.js-info-bar span {
+  color: #60c655 !important;
+}
+.progress {
+  height: 25px;
+  margin: 0 auto 20px;
+  border: 1px solid #fff;
+  padding: 7px;
+  box-shadow: 0 0 5px #aaa;
+  border-radius: 7px;
+  background: #fff;
+}
+.product-template__wrapper--content__form--atc button {
+   margin-top:20px;
+}
+.c-quantity__button {
+  background: #60c655;
+  font-size: 45px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  padding:0;
+}
+.c-quantity__button.gray {
+  background: #333333;
+  opacity: .5;
+}
+.c-quantity__amount {
+  font-weight: 700;
+}
+.c-quantity__amount.op {
+  opacity:.7;
+}
+.c-quantity {
+  width:200px;  
+}
+.bundle-wrapper__footer .c-quantity__amount {
+  font-size:44px;
+}
+.price {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.intro__title {
+  color: #333333 !important;
+  font-size:55px;
+}
+@media only screen and (max-width: 768px) {
+  .sticky-div.lightsticky {
+    padding:10px;
+    padding-bottom:10px;
+  }
+  .intro__title {
+    color: #333333 !important;
+    font-size:40px;
+  }
+  .bundle-wrapper__product {
+    border: 1.75px solid #ececec;
+    border-radius: 30px;
+    padding: 10px;
+    box-shadow: 0 0 10px #b5b5b5;
+    background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );
+    overflow:visible;
+  }
+  .c-quantity__button {
+    background: #60c655;
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    padding:0;
+  }
+  .bundle-wrapper__footer .c-quantity__amount {
+    font-size: 35px;
+  }
+  .option-name {
+    font-size:11px;
+    padding: 7px;
+  }
+  .bundle-wrapper {
+    gap:10px;
+    padding: 0 10px;
+  }
+}
+.intro__subtitle {
+  color: #60c655 !important;
+  font-size:22px;
+  font-weight:700;
+}
+
+
+
+.option-name {
+  background-color: #ffffff;
+  border: 0px solid #ffffff;
+
+}
+
+
+
+.active>div {
+  color: #60c655;
+}
+
+.po.color-white.mb-4.h4.materials__single--option__name.small {
+  font-family: 'Work Sans';
+FOnt-size:13px;
+}
+
+.c-quantity__button.gray {
+  background: #6d6d6d;
+}
+
+.bundle-wrapper__footer .c-quantity__amount {
+  color: #2b2b2b;
+}
+
+
+.bundle-tab__tabs--content__single--title {
+  line-height: 17px;
+}
+
+
+.bundle-tab__tabs--content__single--list {
+ 
+}
+
+.bundle-tab__tabs--content__single--list ul span {
+  font-weight: 800;
+}
+
+.bundle-tab__tabs--content__single--list ul {
+  line-height: 1.3;
+  text-align: center;
+  font-size: 16px;
+  color: #ebebeb;
+}
+@media only screen and (max-width: 768px) {
+  .bundle-tab__tabs--content__single--list ul {
+    line-height: 1.3;
+    text-align: left;
+    font-size: 16px;
+    color: #ebebeb;
+  }
+}
+
+.c-quantity__button {
+  background: linear-gradient(66deg,rgba(96,198,85,.8) 12.82%,#5aef55c9 56.41%,#35ff2e);
+  box-shadow: 1px 2px 7px #b3b3b3d6;
+}
+
+.c-quantity__button.gray {
+  background: linear-gradient(66deg,rgb(151 151 151 / 80%) 12.82%,#656565c9 56.41%,#434343);
+}
+
+
+button.js-start-bundles {
+  font-weight: 800;
+  background: linear-gradient(66deg,rgba(96,198,85,.8) 12.82%,#5aef55c9 56.41%,#35ff2ed1);
+  box-shadow: 1px 2px 7px #6f6f6fd6;
+  border: 0px solid #60c655;
+  font-family: 'Work Sans';
+  letter-spacing: 1px;
+}
+
+.bundle-tab__tabs--navigation__single.js-bundle-tab {
+  border: 0px solid #60C655;
+  box-shadow: 0 0 8px 2px #35ff2e;
+  font-family: 'Work Sans';
+  border-radius: 20px;
+
+}
+
+
+.upper-part-holder {
+  background: linear-gradient(66deg,rgb(0 0 0) 12.82%,#000000d1 80%,#ffc13b99);
+  border: 0px solid #ffc13b;
+  padding: 20px 40px;
+  border-radius: 25px;
+  box-shadow: 0 0 8px 2px #ffc13b;
+}
+
+
+.upper-part-holder__title {
+  color: #f2c054;
+  font-family: 'Work Sans';
+}
+
+button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  border-radius: 20px;
+  background: linear-gradient(66deg,rgb(96 198 85) 12.82%,#5aef55 70%,#35ff2ed1);
+  box-shadow: 1px 2px 7px #939393d6;
+  font-family: 'Work Sans';
+  letter-spacing: 1px;
+}
+
+
+button.js-add-to-cart.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height:80px;
+  letter-spacing:normal;
+}
+
+#shopify-section-template--16211274367154__bundle-top button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height: 65px;
+  letter-spacing: normal;
+  border:0px;
+}
+
+button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  font-family: 'Work Sans';
+  margin-top: 50px;
+  margin-bottom: 40px;
+  color: #000;
+  height: 65px;
+  letter-spacing: normal;
+  border: 0px;
+}
+.product-template__wrapper--content__form--atc button {
+  background: linear-gradient(66deg,rgb(96 198 85 / 88%) 12.82%,#5aef55 50%,#35ff2ed1);
+  color: #000;
+  letter-spacing: normal;
+}
+
+.bundle-four-icons {
+  max-width: 1040px;
+ 
+}
+
+.bundle-wrapper__product--title {
+  text-align: center;
+  font-weight:800;
+}
+
+
+
+.bundle-wrapper__product--image img {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+@media only screen and (max-width: 768px) {
+  #shopify-section-template--16211274367154__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f .upper-part-holder {
+    padding: 9px;
+    border-radius: 25px;
+  }
+  .upper-part-holder {
+    background: linear-gradient(66deg,rgb(0 0 0) 12.82%,#000000d1 80%,#ffc13b99);
+    border: 0px solid #ffc13b;
+    padding: 10px 10px;
+    border-radius: 25px;
+    box-shadow: 0 0 8px 2px #ffc13b;
+  }
+  .bundle-wrapper__product {
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-wrapper__product {
+    padding: 5px;
+  }
+}
+
+
+.bundle-wrapper__product--image img {
+  border-radius: 25px;
+  border-radius: 25px
+}
+
+@media only screen and (max-width: 768px) {
+  .upper-part-holder__flex {
+    gap: 10px;
+  }  
+}
+.upper-part-holder__title {
+  font-weight: 300;
+  padding-left: 10px;
+}
+
+
+.bundle-wrapper__product {
+  padding: 15px;
+}
+
+#shopify-section-template--16211274367154__f9948fed-4ec6-468e-9bbf-3a4a75a5dd7f .upper-part-holder {
+  padding: 24px;
+}
+
+button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+  color: #fff;
+  background: #000;
+  border: 0px;
+  box-shadow: 0px 0px 15px 4px rgba(96,198,85,.8);
+  height: 50px;
+}
+
+
+.bottom-banner.relative {
+  background: #000;
+}
+
+.bottom-banner-content {
+  position: relative;
+  margin-top: -100px;
+}
+
+@media only screen and (max-width: 768px) {
+  button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started {
+    color: #fff;
+    background: #000;
+    border: 0px;
+    box-shadow: 0px 0px 15px 4px rgba(96,198,85,.8);
+    height: 40px;
+  }
+  .bottom-banner-content {
+    padding-bottom: 80px;
+  }
+}
+
+.bundle-subtitle-image {
+  margin-top: 30px;
+}
+
+.bundle-gifts-wrapper {
+  padding-bottom: 90px;
+}
+
+.bundle-gifts-topsubtitle {
+  padding-bottom: 25px;
+}
+
+.bundle-gifts-toptitle {
+  font-size: 60px;
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts-toptitle {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts__single--text p {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-gifts__single {
+    gap: 0px; 
+ }
+}
+.js-info-bar {
+  color:white !important;
+}
+.sticky-div.lightsticky {
+  z-index: 99999;
+  box-shadow: 0px -3px 6px #3131319e;
+  padding: 25px 0;
+  background: #141414;
+}
+
+@media only screen and (max-width: 768px) {
+  .bundle-prices-show__title {
+      font-size: 12px;
+  }
+  
+  .bundle-prices-show__title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: normal;
+  }
+  
+  
+  
+  .bundle-wrapper__product {
+      padding: 7px;
+  }
+  
+  
+  .bundle-wrapper__product--title {
+      font-size: 14px;
+  }
+  .bundle-wrapper .product-template__wrapper--content__features--name {
+      padding-left: 16px;
+  }
+  .custom-offer
+  .bundle-wrapper {
+      gap: 7px;
+      padding: 0 5px
+  ;
+  }
+  
+  
+  .custom-offer
+  .option-name {
+      font-size: 11px;
+      padding: 7px;
+  }
+  
+  
+  .info-icon {
+      right: 8px;
+      top: 8px;
+      width: 22px;
+      height: 22px;
+      font-size: 18px;
+  }
+  
+  button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started.no-margin {
+      box-shadow: 1px 2px 7px #343434d6;
+  }
+  
+  .percent-tracker__line {
+      box-shadow: 0px 1px 7px #35ff2e;
+      border: 0px solid #60C655;
+  }
+  
+  .js-info-bar {
+      line-height: normal;
+  }
+  }
+</style>

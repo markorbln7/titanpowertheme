@@ -687,8 +687,16 @@ bundleTabs.forEach((bundleTab) => {
 
 
 scrollToStart = document.querySelector('.scroll-to-start')
+scrollToStart2 = document.querySelector('.scroll-to-start2')
 
 scrollToStart.addEventListener('click', (e) => {
+  const $sectionscroll = $('.number-icon')
+
+  $('html, body').animate({
+    scrollTop: $sectionscroll.offset().top + 'px'
+  }, 1000)
+})
+scrollToStart2.addEventListener('click', (e) => {
   const $sectionscroll = $('.number-icon')
 
   $('html, body').animate({

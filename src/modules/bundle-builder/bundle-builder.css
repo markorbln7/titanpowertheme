@@ -629,6 +629,10 @@
 
 
 .bundle-tab {
+    &__tabs {
+        padding-bottom: 40px;
+    }
+    padding-top: 20px;
     &.hidden {
         position:absolute;
         left:-200000px;

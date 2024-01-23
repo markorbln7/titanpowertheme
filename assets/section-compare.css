@@ -1,0 +1,202 @@
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/compare/compare.css ***!
+  \************************************************************************************************************************************************************************************************************************/
+.table-custom {
+    padding-bottom: 80px;
+    padding-top: 20px;
+}
+    .table-custom .page-width {
+        max-width: 950px;
+        padding: 0 20px;
+    }
+    .table-custom .grid-table {
+        display: flex;
+        justify-content: space-between;
+    }
+    .table-custom ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .table-custom ul .height-first-child {
+            min-height: 220px;
+            display: block;
+        }
+    .table-custom ul li {
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 23px;
+            text-transform: capitalize;
+            border-bottom: 1px solid #d7d7d7;
+            padding: 20px 0;
+        }
+    .headingmain-tab {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 60px 0;
+}
+    .columns-table {
+    width: 20%;
+    margin-right: 40px
+}
+    .columns-table.grid-two {
+    background: #fff;
+    box-shadow: 0 8.67361px 26.0208px #fff;
+    border-radius: 14px;
+    padding: 20px;
+    margin-right: 70px;
+    width:40%;
+}
+    .columns-table ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+}
+    .columns-table ul li {
+            border-bottom: 1px solid #d7d7d7;
+            padding: 20px 0;
+            text-transform: capitalize;
+        }
+    .columns-table ul li .heading-tabel {
+                font-weight: 700!important;
+                font-size: 20px !important;
+                line-height: 23px!important;
+                color: #171717!important;
+                text-align: center
+            }
+    .columns-table ul li .heading-tabel.otherhead {
+    color: #fff!important;
+    font-weight: 400!important;
+    font-size: 20px!important;
+}
+    .columns-table ul li.icon-table {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+    .columns-table ul li.icon-table img {
+                    max-width: 20px;
+}
+    .columns-table ul li.icon-table p {
+                    font-weight: 600;
+                    font-size: 13px;
+                    line-height: 23px;
+                    color: #171717;
+                    -webkit-margin-before: 0em;
+                            margin-block-start: 0em;
+                    -webkit-margin-after: 0em;
+                            margin-block-end: 0em;
+}
+    .columns-table ul li.icon-table svg {
+    max-width: 20px !important;
+    fill:#60c655cc;
+    height: 20px;
+}
+    .grid-threee {
+    background: #fff3!important;
+    border-radius: 13px!important;
+    box-shadow: none!important;
+}
+    .star-tabel img {
+    max-width: 120px!important;
+    margin: auto!important;
+    display: block;
+}
+    .main-detail-tabel>img {
+    height: 200px;
+    -o-object-fit: contain;
+       object-fit: contain;
+    margin: auto;
+}
+    .columns-table.grid-two img {
+    max-width: 170px;
+    display: block;
+}
+    li.heading-tabel {
+    font-weight: 700!important;
+    font-size: 20px !important;
+    line-height: 23px!important;
+    color: #171717!important;
+    text-align: center;
+}
+    li.heading-tabel.otherhead {
+    color: #fff!important;
+    font-weight: 400!important;
+    font-size: 20px!important;
+}
+    @media only screen and (max-width: 749px) {
+    .headingmain-tab {
+        font-size: 32px;
+        line-height: 40px;
+        padding: 0 0 40px;
+        margin-bottom: 0;
+    }
+    .table-custom .grid {
+        padding-bottom: 40px;
+    }
+    .columns-table {
+        margin-right: 20px;
+    }
+    .table-custom ul .height-first-child {
+        min-height: 106px;
+        display: block;
+    }
+    .columns-table ul li {
+        font-size: 9px;
+        padding: 10px 0;
+        height: 40px;
+    }
+    .columns-table.grid-two {
+        margin-right: 0;
+        padding: 10px;
+    }
+    .columns-table.grid-two {
+        box-shadow: 0 4.2608px 12.7824px #fff;
+    }
+    .columns-table.grid-two img {
+        max-width: 80px!important;
+    }
+    .columns-table ul li.icon-table img {
+        max-width: 20px !important;
+    }
+    .columns-table ul li.icon-table svg {
+        max-width: 20px !important;
+    }
+    .columns-table ul li.icon-table svg {
+        fill:#60c655cc
+    }
+    .main-detail-tabel>img {
+        height: 96px;
+        -o-object-fit: contain;
+           object-fit: contain;
+        margin: auto;
+    }
+    .columns-table ul li {
+        padding: 10px 0;
+        height: 40px;
+    }
+    .columns-table ul li {
+        font-size: 9px;
+        padding: 10px 0;
+        height: 40px;
+        line-height: 12px;
+        display: flex;
+        align-items: center;
+    }
+    .columns-table.grid-two {
+        width: 40%!important;
+        margin-right: 20px!important;
+    }
+    li.heading-tabel, li.heading-tabel.otherhead {
+        font-size: 11px !important;
+    }
+    .columns-table ul li.icon-table  p {
+        font-size: 9px;
+        line-height: 11px;
+    }
+}

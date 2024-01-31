@@ -82,15 +82,25 @@
               
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
-                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">IPhone</div>
                       </div>
-                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">USB-C</div>
                       </div>
-                      <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <style>
+                        .w-50 {
+                          flex: 0 0 50%;
+                          flex-direction: column;
+                          color: #60c655;
+                          font-weight: 700;
+                          font-size: 20px;
+                          max-width: 50%;
+                        }
+                      </style>
+                      {% comment %} <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Micro Usb</div>
-                      </div>
+                      </div> {% endcomment %}
                   </div>
               </div>
               <div class="product-template-new__wrapper--content__selection">

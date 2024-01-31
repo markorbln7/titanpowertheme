@@ -1,0 +1,115 @@
+{{ 'section-text-with-icons.css' | asset_url | stylesheet_tag }}
+
+{% liquid 
+    assign section_title = section.settings.section_title
+    assign section_subtitle = section.settings.section_subtitle
+
+    assign text_with_icons_repeater = section.blocks | where: 'type', 'text_with_icons_repeater'
+%}
+
+<section class="section-text-with-icons">
+  <div class="content-wrapper">
+    <div class="section-text-with-icons__heading">
+      {% if section_title != blank %}
+        <h2 class="text-with-icons__title">{{ section_title }}</h2>
+      {% endif %}
+
+      {% if section_subtitle != blank %}
+        <h3 class="section-text-with-icons__subtitle">{{section_subtitle}}</h2>
+      {% endif %}
+    </div>
+
+    {% if text_with_icons_repeater.size > 0 %}
+        <div class="section-text-with-icons__repeater"> 
+            {% for block in text_with_icons_repeater %}
+                {% liquid 
+                    assign repeater_icon = block.settings.repeater_icon
+                    assign repeater_title = block.settings.repeater_title
+                    assign repeater_subtitle = block.settings.repeater_subtitle
+                    assign repeater_text = block.settings.repeater_text
+                    assign repeater_animation_value = block.settings.repeater_animation_value
+                %}
+                <div class="section-text-with-icons__box">
+                    {% if repeater_icon  %}
+                        <figure class="section-text-with-icons__box-image">
+                            {% render 'titan-image' image: repeater_icon %}
+                        </figure>
+                    {% endif %}
+
+                   <div class="section-text-with-icons__text-wrapper">
+                        {% if repeater_title != blank %}
+                            <h3 class="section-text-with-icons__box-title">
+                                <span class="number" data-value="{{repeater_animation_value}}"></span>
+                                {{repeater_title}}
+                            </h3>
+                        {% endif %}
+                        {% if repeater_subtitle != blank %}
+                            <h4 class="section-text-with-icons__box-subtitle">{{repeater_subtitle}}</h4>
+                        {% endif %}
+                        {% if repeater_text != blank %}
+                            <p class="section-text-with-icons__box-text">{{repeater_text}}</p>
+                        {% endif %}
+                   </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+  </div>
+</section>
+
+<script src="{{ 'section-text-with-icons.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+  {
+    "name": "Text with icons",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title"
+      },
+      {
+        "type": "text",
+        "id": "section_subtitle",
+        "label": "Section subtitle"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_with_icons_repeater",
+        "name": "Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "repeater_icon",
+            "label": "Repeater icon"
+          }, {
+            "type": "text",
+            "id": "repeater_title",
+            "label": "Repeater title"
+          },
+          {
+            "type": "text",
+            "id": "repeater_subtitle",
+            "label": "Repeater subtitle"
+          },
+          {
+            "type": "textarea",
+            "id": "repeater_text",
+            "label": "Repeater text"
+          },
+          {
+            "type": "text",
+            "id": "repeater_animation_value",
+            "label": "Count animation value"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text with icons"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,312 @@
+{{ 'section-zigzag.css' | asset_url | stylesheet_tag }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+{% liquid
+  assign zigzag_repeater = section.blocks | where: 'type', 'zigzag_repeater'
+%}
+
+{%- if zigzag_repeater.size > 0 -%}
+  <section class="section-zigzag">
+    <div class="zigzag__container">
+      {%- for block in section.blocks -%}
+        {% liquid
+          assign zigzag_reverse = block.settings.zigzag_reverse
+          assign zigzag_image = block.settings.zigzag_image
+          assign zigzag_first_title = block.settings.zigzag_first_title
+          assign zigzag_first_copy = block.settings.zigzag_first_copy
+          assign zigzag_second_title = block.settings.zigzag_second_title
+          assign zigzag_second_copy = block.settings.zigzag_second_copy
+          assign zigzag_mob_copy = block.settings.zigzag_mob_copy
+          assign zigzag_first_progress = block.settings.zigzag_first_progress
+          assign zigzag_first_progress_image = block.settings.zigzag_first_progress_image
+          assign zigzag_first_progress_text = block.settings.zigzag_first_progress_text
+          assign zigzag_first_progress_info = block.settings.zigzag_first_progress_info
+          assign zigzag_second_progress = block.settings.zigzag_second_progress
+          assign zigzag_second_progress_image = block.settings.zigzag_second_progress_image
+          assign zigzag_second_progress_text = block.settings.zigzag_second_progress_text
+          assign zigzag_second_progress_info = block.settings.zigzag_second_progress_info
+          assign count_animation_end = block.settings.count_animation_end
+        %}
+
+        <div class="desktop-view zigzag__wrapper zigzag__wrapper--{{ forloop.index }}{% if zigzag_reverse == true %} zigzag__wrapper--reverse{% endif %}">
+          {% if zigzag_image != blank %}
+            <div class="zigzag__image-wrapper">
+              <figure class="zigzag__image">
+                {% render 'titan-image', image: zigzag_image %}
+              </figure>
+            </div>
+          {% endif %}
+          <div class="zigzag__content">
+            <div class="zigzag__heading">
+              {% if zigzag_first_title != blank %}
+                <h3 class="zigzag__title">
+                  <span
+                    class="zigzag__number"
+                    id="zigzag-number--{{ forloop.index }}"
+                    data-start="0"
+                    data-end="{{ count_animation_end }}"
+                    data-duration="2000"
+                    >1</span
+                  >
+                  {{ zigzag_first_title }}
+                </h3>
+              {% endif %}
+              {% if zigzag_first_copy != blank %}
+                <div class="zigzag__copy">
+                  {{ zigzag_first_copy }}
+                </div>
+              {% endif %}
+
+              {% if zigzag_second_title != blank %}
+                <h3 class="zigzag__title">
+                  <span class="zigzag__number">0</span>
+                  {{ zigzag_second_title }}
+                </h3>
+              {% endif %}
+              {% if zigzag_second_copy != blank %}
+                <div class="zigzag__copy">
+                  {{ zigzag_second_copy }}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if zigzag_first_progress > 0 %}
+              <div class="zigzag__progress-box first-bar">
+                <div class="zigzag__progressbar">
+                  <div class="bar" data-width="{{ zigzag_first_progress }}"></div>
+                </div>
+                <div class="zigzag__progressbar-content">
+                  {% if zigzag_first_progress_image %}
+                    {% render 'titan-image', image: zigzag_first_progress_image %}
+
+                  {% elsif zigzag_first_progress_text != blank %}
+                    <span class="zigzag__progressbar-text">{{ zigzag_first_progress_text }}</span>
+                  {% endif %}
+
+                  {% if zigzag_first_progress_info != blank %}
+                    <p class="zigzag__progressbar-info">{{ zigzag_first_progress_info }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if zigzag_second_progress > 0 %}
+              <div class="zigzag__progress-box second-bar">
+                <div class="zigzag__progressbar">
+                  <div class="bar" data-width="{{ zigzag_second_progress }}"></div>
+                </div>
+                <div class="zigzag__progressbar-content">
+                  {% if zigzag_second_progress_image %}
+                    {% render 'titan-image', image: zigzag_second_progress_image %}
+
+                  {% elsif zigzag_second_progress_text != blank %}
+                    <span class="zigzag__progressbar-text">{{ zigzag_second_progress_text }}</span>
+                  {% endif %}
+
+                  {% if zigzag_second_progress_info != blank %}
+                    <p class="zigzag__progressbar-info">{{ zigzag_second_progress_info }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="zigzag__mobile-view">
+          <div class="zigzag__wrapper zigzag__wrapper--{{ forloop.index }}{% if zigzag_reverse == true %} zigzag__wrapper--reverse{% endif %}">
+            {% if zigzag_image != blank %}
+              <div class="zigzag__image-wrapper">
+                <figure class="zigzag__image">
+                  {% render 'titan-image', image: zigzag_image %}
+                </figure>
+              </div>
+            {% endif %}
+
+            <div class="zigzag__heading" data-aos="fade-in" data-aos-duration="900">
+              {% if zigzag_first_title != blank %}
+                <h3 class="zigzag__title">
+                  <span
+                    class="zigzag__number"
+                    id="zigzag-mob-number--{{ forloop.index }}"
+                    data-start="0"
+                    data-end="{{ count_animation_end }}"
+                    data-duration="2000"
+                    >0</span
+                  >
+                  {{ zigzag_first_title }}
+                </h3>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="zigzag__content-mob">
+            {% if zigzag_mob_copy != blank %}
+              <p class="zigzag__mob-copy">
+                {{ zigzag_mob_copy }}
+              </p>
+            {% endif %}
+
+            {% if zigzag_first_progress > 0 %}
+              <div class="zigzag__progress-box first-bar">
+                <div class="zigzag__progressbar">
+                  <div class="bar" data-width="{{ zigzag_first_progress }}"></div>
+                </div>
+                <div class="zigzag__progressbar-content">
+                  {% if zigzag_first_progress_image %}
+                    {% render 'titan-image', image: zigzag_first_progress_image %}
+
+                  {% elsif zigzag_first_progress_text != blank %}
+                    <span class="zigzag__progressbar-text">{{ zigzag_first_progress_text }}</span>
+                  {% endif %}
+
+                  {% if zigzag_first_progress_info != blank %}
+                    <p class="zigzag__progressbar-info">{{ zigzag_first_progress_info }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if zigzag_second_progress > 0 %}
+              <div class="zigzag__progress-box second-bar">
+                <div class="zigzag__progressbar">
+                  <div class="bar" data-width="{{ zigzag_second_progress }}"></div>
+                </div>
+                <div class="zigzag__progressbar-content">
+                  {% if zigzag_second_progress_image %}
+                    {% render 'titan-image', image: zigzag_second_progress_image %}
+
+                  {% elsif zigzag_second_progress_text != blank %}
+                    <span class="zigzag__progressbar-text">{{ zigzag_second_progress_text }}</span>
+                  {% endif %}
+
+                  {% if zigzag_second_progress_info != blank %}
+                    <p class="zigzag__progressbar-info">{{ zigzag_second_progress_info }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <script src="{{ 'section-zigzag.js' | asset_url }}" defer="defer"></script>
+  <script>
+    AOS.init();
+    document.addEventListener('shopify:section:load', () => {
+      AOS.init();
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Zigzag section",
+  "blocks": [
+    {
+      "type": "zigzag_repeater",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "zigzag_reverse",
+          "label": "Reverse layout",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "zigzag_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_first_title",
+          "label": "First title"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_second_title",
+          "label": "Second title"
+        },
+        {
+          "type": "textarea",
+          "id": "zigzag_first_copy",
+          "label": "First copy"
+        },
+        {
+          "type": "textarea",
+          "id": "zigzag_mob_copy",
+          "label": "Copy on mob"
+        },
+        {
+          "type": "textarea",
+          "id": "zigzag_second_copy",
+          "label": "Second copy"
+        },
+        {
+          "type": "range",
+          "id": "zigzag_first_progress",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Progress bar width",
+          "default": 0
+        },
+        {
+          "type": "image_picker",
+          "id": "zigzag_first_progress_image",
+          "label": "First progress bar image"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_first_progress_text",
+          "label": "First progress bar text"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_first_progress_info",
+          "label": "First progress bar info"
+        },
+        {
+          "type": "range",
+          "id": "zigzag_second_progress",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Progress bar width",
+          "default": 0
+        },
+        {
+          "type": "image_picker",
+          "id": "zigzag_second_progress_image",
+          "label": "Second progress bar image"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_second_progress_text",
+          "label": "Second progress bar text"
+        },
+        {
+          "type": "text",
+          "id": "zigzag_second_progress_info",
+          "label": "Second progress bar info"
+        },
+        {
+          "type": "text",
+          "id": "count_animation_end",
+          "label": "Count animation end value"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zigzag section"
+    }
+  ]
+}
+{% endschema %}

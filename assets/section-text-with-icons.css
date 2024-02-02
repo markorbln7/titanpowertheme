@@ -6,21 +6,7 @@
     background-color: #141414;
 }
 
-.section-text-with-icons.animation-on .section-text-with-icons__heading {
-    opacity: 1;
-    visibility: visible;
-    transform: translateZ(0);
-}
-
-.section-text-with-icons.animation-on .section-text-with-icons__repeater {
-    opacity: 1;
-    visibility: visible;
-    transform: translateZ(0);
-}
-
-.section-text-with-icons h2,
-.section-text-with-icons h3,
-.section-text-with-icons h4 {
+.section-text-with-icons h2, .section-text-with-icons h3, .section-text-with-icons h4 {
     margin: 0;
 }
 
@@ -37,9 +23,6 @@
     gap: 30px;
     color: #fff;
     align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1.2s ease;
 }
 
 .text-with-icons__title {
@@ -79,14 +62,13 @@
 .section-text-with-icons__repeater {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 24px;
+    -moz-column-gap: 24px;
+         column-gap: 24px;
     row-gap: 40px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1.2s ease-in 0.1s;
 }
 
 .section-text-with-icons__box {
+    max-width: -moz-fit-content;
     max-width: fit-content;
     margin-inline: auto;
     display: grid;
@@ -107,7 +89,8 @@
 }
 
 .section-text-with-icons__box-image img {
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
 }
 
 .section-text-with-icons__box-title {
@@ -155,8 +138,7 @@
         gap: 50px;
     }
 
-    .section-text-with-icons__title,
-    .section-text-with-icons__subtitle {
+    .section-text-with-icons__title, .section-text-with-icons__subtitle {
         font-weight: 600;
         font-size: 34px;
         line-height: 40.8px;
@@ -166,7 +148,8 @@
     .section-text-with-icons__repeater {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        column-gap: 40px;
+        -moz-column-gap: 40px;
+             column-gap: 40px;
         padding-right: 120px;
     }
 
@@ -218,8 +201,9 @@
     .section-text-with-icons__box-text {
         font-weight: 400;
         font-size: 14px;
-        max-width: 65% !important;
+        max-width: 65%!important;
     }
+    
 }
 
 @media (max-width: 1200px) and (min-width: 1000px) {

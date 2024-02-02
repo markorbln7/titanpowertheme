@@ -1,6 +1,6 @@
-import './section-text-with-icons.css'
+import './section-zigzag.css'
 
-const numbersWrapper = document.querySelectorAll('.section-text-with-icons__repeater');
+const numbersWrapper = document.querySelectorAll('.zigzag__heading');
 
 const options = {
     root: null,
@@ -22,7 +22,7 @@ numbersWrapper.forEach(section => {
 });
 
 function animateCounters(section) {
-    const counters = section.querySelectorAll('.number');
+    const counters = section.querySelectorAll('.zigzag__number');
     
     counters.forEach(counter => {
         const id = counter.getAttribute('id');
@@ -47,3 +47,26 @@ function startCounter(id, start, end, duration) {
             }
         }, step);
 }
+
+const progressBars = document.querySelectorAll('.zigzag__progressbar');
+
+const progressBarsOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5
+};
+
+const progressbarObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const progressBar = entry.target.querySelector('.bar');
+            const width = parseFloat(progressBar.getAttribute('data-width'));
+            progressBar.style.width = `${width}%`;
+            observer.unobserve(entry.target);
+        }
+    });
+}, progressBarsOptions);
+
+progressBars.forEach(progressBar => {
+    progressbarObserver.observe(progressBar);
+});

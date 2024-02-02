@@ -1,0 +1,329 @@
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/zigzag/section-zigzag.css ***!
+  \******************************************************************************************************************************************************************************************************************************/
+.section-zigzag {
+    background: #000;
+    padding-block: 40px;
+    overflow: hidden;
+}
+
+.section-zigzag h3 {
+    margin: 0;
+}
+
+.zigzag__container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.zigzag__wrapper {
+    display: flex;
+    align-items: center;
+    padding-right: 120px;
+    padding-bottom: 50px;
+}
+
+.zigzag__image-wrapper {
+    width: 60%;
+}
+
+.zigzag__wrapper--reverse {
+    flex-direction: row-reverse;
+    padding-right: 120px;
+    padding-left: 80px;
+}
+
+.zigzag__content {
+    width: 45%;
+    padding-top: 70px;
+}
+
+.zigzag__image {
+    position: relative;
+    margin: 0;
+}
+
+.zigzag__wrapper--1 .zigzag__image, .zigzag__wrapper--3 .zigzag__image {
+    left: -50px;
+}
+
+.zigzag__wrapper--1 .zigzag__image img {
+    max-width: 590px;
+    margin: auto;
+    position: relative;
+    left: 80px;
+}
+
+.zigzag__wrapper--2 .zigzag__image {
+    left: 110px;
+}
+
+.zigzag__wrapper--2 .zigzag__image img {
+    position: relative;
+    left: 0;
+    top: 0;
+    max-width: 500px;
+    margin: auto;
+}
+
+.zigzag__wrapper--3 .zigzag__image img {
+    max-width: 570px;
+    position: relative;
+    left: 40px;
+    top: 80px;
+}
+
+.zigzag__wrapper--4 .zigzag__image {
+    top: 100px;
+    z-index: 2;
+    left: 50px;
+}
+
+.zigzag__wrapper--4 .zigzag__image img {
+    max-width: 350px !important;
+    position: relative;
+    left: 130px;
+}
+
+.zigzag__title {
+    font-size: 36px;
+    color: #fff;
+    font-family: Montserrat;
+    font-weight: 700;
+    position: relative;
+}
+
+.zigzag__title span {
+    font-weight: 700;
+    font-size: 72.8926px;
+    line-height: 89px;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff 37.5%, #8aafc3 66.67%, #6595b0 76.04%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    font-family: Montserrat;
+    padding-right: 10px;
+    -webkit-text-fill-color: transparent;
+}
+
+.zigzag__copy {
+    font-weight: 500;
+    font-size: 14.5785px;
+    line-height: 24px;
+    color: #fff;
+    font-family: Montserrat;
+    padding-bottom: 40px;
+    max-width: 90%;
+}
+
+.zigzag__progress-box.first-bar {
+    padding-bottom: 20px;
+}
+
+.zigzag__progress-box.second-bar {
+    margin-top: 30px;
+}
+
+.zigzag__progressbar {
+    background: #282d41;
+    border-radius: 100px;
+}
+
+.bar {
+    width: 1%;
+    border-radius: 18.2232px;
+    height: 14px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #004c77 1.88%, #d0f2ff 101.88%);
+    display: block !important;
+    transition: width 0.8s ease-in;
+}
+
+.zigzag__progressbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.zigzag__progressbar-content img {
+    max-width: 143px;
+    height: 16px;
+}
+
+.zigzag__progressbar-info, .zigzag__progressbar-text {
+    font-weight: 600;
+    font-size: 12.7562px;
+    line-height: 16px;
+    text-align: right;
+    color: #fff;
+    font-family: Montserrat;
+    padding: 0;
+}
+
+@media(max-width: 767px) {
+    .desktop-view {
+        display: none;
+    }
+
+    .zigzag__mobile-view {
+        padding-bottom: 100px;
+    }
+
+    .zigzag__wrapper {
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+
+    .zigzag__wrapper--reverse {
+        padding-left: 0;
+    }
+
+    .zigzag__wrapper--1 .zigzag__image-wrapper, .zigzag__wrapper--2 .zigzag__image-wrapper {
+        width: 40%;
+    }
+
+    .zigzag__heading {
+        width: 60%;
+        position: relative;
+        top: 20px;
+        left: 20px;
+    }
+
+    .zigzag__mob-copy {
+        background: linear-gradient(90.01deg, #fff -59.51% 50%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        mix-blend-mode: normal;
+        font-size: 14px !important;
+        margin-bottom: 20px;
+        font-weight: 500 !important;
+        text-transform: inherit !important;
+        line-height: 17px !important;
+        margin-top: 0;
+    }
+
+    .zigzag__progress-box.first-bar {
+        padding: 0;
+    }
+
+    .zigzag__progressbar-info, .zigzag-progressbar-text {
+        background: linear-gradient(90.01deg, #fff -59.51% 50%);
+        -webkit-background-clip: text;
+                background-clip: text;
+        mix-blend-mode: normal;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: inherit;
+    }
+
+    .zigzag__wrapper--1 .zigzag__image img {
+        margin: auto;
+        top: -30px;
+        left: -30px;
+        position: relative;
+        max-width: 300px;
+        width: 300px;
+    }
+
+    .zigzag__wrapper--2 .zigzag__image {
+        left: 0;
+    }
+
+    .zigzag__wrapper--2 .zigzag__image img {
+        max-width: 250px;
+        width: 250px;
+        position: relative;
+        top: -80px;
+        left: -70px;
+    }
+
+    .zigzag__wrapper--3 .zigzag__image {
+        left: -14px;
+    }
+
+    .zigzag__wrapper--3 .zigzag__image img {
+        left: -14px;
+        max-width: 260px;
+        width: 260px;
+        left: 0;
+        top: -40px;
+    }
+
+    .zigzag__wrapper--4 .zigzag__image {
+        top: -40px;
+        z-index: 2;
+        left: 0;
+    }
+
+    .zigzag__wrapper--4 .zigzag__image img {
+        left: 0;
+    }
+
+    .zigzag__wrapper--1 .zigzag__heading {
+        width: 60% !important;
+        position: relative;
+        left: 15px;
+    }
+
+    .zigzag__wrapper--2 .zigzag__heading {
+        position: relative;
+        width: 100%;
+        left: 0;
+    }
+
+    .zigzag__wrapper--1 .zigzag__title {
+        font-size: 23px;
+        line-height: 23px;
+    }
+
+    .zigzag__wrapper--2 .zigzag__title {
+        width: 100%;
+        position: relative;
+        left: unset;
+        top: -60px;
+        font-size: 23px;
+        line-height: 23px;
+    }
+
+    .zigzag__wrapper--3 .zigzag__title {
+        width: 100%;
+        position: relative;
+        left: 0;
+        top: -60px;
+        font-size: 23px;
+        line-height: 23px;
+    }
+
+    .zigzag__wrapper--4 .zigzag__title {
+        width: 100%;
+        position: relative;
+        left: 0;
+        top: -60px;
+        font-size: 23px;
+        line-height: 23px;
+    }
+
+    .zigzag__title span {
+        font-weight: 700;
+        font-size: 44px;
+        line-height: 34px;
+    }
+}
+
+@media(min-width: 768px) {
+    .zigzag__mobile-view {
+        display: none;
+    }
+}
+
+@media(min-width: 768px) and (max-width: 991px) {
+    .zigzag__wrapper--4 .zigzag__image img {
+        max-width: 360px !important;
+        position: relative;
+        width: 360px;
+        left: 0;
+    }
+}

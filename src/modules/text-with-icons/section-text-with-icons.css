@@ -3,18 +3,6 @@
     background-color: #141414;
 }
 
-.section-text-with-icons.animation-on .section-text-with-icons__heading {
-    opacity: 1;
-    visibility: visible;
-    transform: translateZ(0);
-}
-
-.section-text-with-icons.animation-on .section-text-with-icons__repeater {
-    opacity: 1;
-    visibility: visible;
-    transform: translateZ(0);
-}
-
 .section-text-with-icons h2,
 .section-text-with-icons h3,
 .section-text-with-icons h4 {
@@ -34,9 +22,6 @@
     gap: 30px;
     color: #fff;
     align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1.2s ease;
 }
 
 .text-with-icons__title {
@@ -78,9 +63,6 @@
     grid-template-columns: repeat(2, 1fr);
     column-gap: 24px;
     row-gap: 40px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1.2s ease-in 0.1s;
 }
 
 .section-text-with-icons__box {
@@ -217,6 +199,7 @@
         font-size: 14px;
         max-width: 65%!important;
     }
+    
 }
 
 @media (max-width: 1200px) and (min-width: 1000px) {

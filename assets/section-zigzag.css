@@ -44,8 +44,12 @@
     margin: 0;
 }
 
-.zigzag__wrapper--1 .zigzag__image, .zigzag__wrapper--3 .zigzag__image {
+.zigzag__wrapper--1 .zigzag__image {
     left: -50px;
+}
+
+.zigzag__wrapper--3 .zigzag__image {
+    left: 50px;
 }
 
 .zigzag__wrapper--1 .zigzag__image img {

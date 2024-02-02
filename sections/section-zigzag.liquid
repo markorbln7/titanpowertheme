@@ -60,7 +60,14 @@
 
               {% if zigzag_second_title != blank %}
                 <h3 class="zigzag__title">
-                  <span class="zigzag__number">0</span>
+                  <span
+                    class="zigzag__number"
+                    id="zigzag-number--{{ forloop.index }}"
+                    data-start="0"
+                    data-end="{{ count_animation_end }}"
+                    data-duration="2000"
+                    >1</span
+                  >
                   {{ zigzag_second_title }}
                 </h3>
               {% endif %}

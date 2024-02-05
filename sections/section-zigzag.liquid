@@ -27,6 +27,7 @@
           assign zigzag_second_progress_text = block.settings.zigzag_second_progress_text
           assign zigzag_second_progress_info = block.settings.zigzag_second_progress_info
           assign count_animation_end = block.settings.count_animation_end
+          assign count_animation_end_second = block.settings.count_animation_end_second
         %}
 
         <div class="desktop-view zigzag__wrapper zigzag__wrapper--{{ forloop.index }}{% if zigzag_reverse == true %} zigzag__wrapper--reverse{% endif %}">
@@ -64,7 +65,7 @@
                     class="zigzag__number"
                     id="zigzag-number--{{ forloop.index }}"
                     data-start="0"
-                    data-end="{{ count_animation_end }}"
+                    data-end="{{ count_animation_end_second }}"
                     data-duration="2000"
                     >1</span
                   >
@@ -306,6 +307,12 @@
           "type": "text",
           "id": "count_animation_end",
           "label": "Count animation end value"
+        },
+        {
+          "type": "text",
+          "id": "count_animation_end_second",
+          "label": "Count animation end value",
+          "info": "This is for second title if it's not empty"
         }
       ]
     }

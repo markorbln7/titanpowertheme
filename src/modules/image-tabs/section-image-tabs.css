@@ -1,0 +1,216 @@
+.section-image-tabs {
+    padding-block: 40px;
+}
+
+.section-image-tabs .content-wrapper {
+    padding: 0 16px;
+    margin: 0 auto;
+    max-width: 1072px;
+}
+
+.image-tabs__wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0 16px;
+}
+
+.image-tabs__panel {
+    display: none;
+}
+
+.image-tabs__panel.active {
+    display: inline-block;
+}
+
+.image-tabs__content-title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -.03em;
+    color: #000;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+.image-tabs__content-text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #000;
+}
+
+.image-tabs__actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 8px;
+}
+
+.image-tabs__button {
+    border: none;
+    box-shadow: none;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    letter-spacing: .16em;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 16px 8px;
+    border-radius: 16px;
+    color: #000;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 18px;
+    width: 25%;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+}
+
+.image-tabs__button.active {
+    color: #fff;
+    background-color: #000;
+}
+
+.image-tabs__button img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0;
+}
+
+.image-tabs__button-label {
+    margin-top: 12px;
+}
+
+.image-tabs__images {
+    width: 100%;
+    margin-bottom: 32px;
+    position: relative;
+    height: 320px;
+    transition: transform 1s cubic-bezier(.73,-.5,.44,1.59);
+}
+
+.image-tabs__images figure {
+    margin: 0;
+    border-radius: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .15s ease-out;
+    z-index: 3;
+}
+
+.image-tabs__images figure.active {
+    visibility: visible;
+    pointer-events: unset;
+    opacity: 1;
+}
+
+.image-tabs__images img {
+    height: 320px;
+    border-radius: 64px;
+}
+
+.image-frames,
+.image-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-frame {
+    border: 1px solid green;
+    transition: transform 1s cubic-bezier(.73,-.5,.44,1.59);
+    border-radius: 64px;
+    z-index: 2;
+}
+
+.is-open {
+    transform: scale(1.1);
+}
+
+.is-open .image-frames .image-frame:nth-of-type(1) {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.is-open .image-frames .image-frame:nth-of-type(2) {
+    transform: rotate(4deg);
+}
+
+.is-open .image-frames .image-frame:nth-of-type(3) {
+    transform: rotate(2deg);
+}
+
+@media(min-width: 768px) {
+    .image-tabs__wrapper {
+        flex-direction: row;
+        min-height: 480px;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .image-tabs__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: calc(100% - 560px);
+        flex: 1 0 auto;
+        padding-left: 60px;
+    }
+
+    .image-tabs__content-title {
+        margin-bottom: 24px;
+        font-size: 42px;
+        line-height: 120%;
+    }
+
+    .image-tabs__content-text {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .image-tabs__button {
+        letter-spacing: .32em;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .image-tabs__images {
+        width: 480px;
+        height: 480px;
+        margin-bottom: 32px;
+    }
+
+    .image-tabs__images img {
+        height: 480px;
+    }
+}
+
+@media(min-width: 768px) and (max-width: 1023px) {
+    .image-tabs__wrapper {
+        flex-direction: column;
+    }
+
+    .image-tabs__content {
+        padding-left: 0;
+        max-width: 100%;
+    }
+
+    .image-tabs__images {
+        margin-inline: auto;
+    }
+}

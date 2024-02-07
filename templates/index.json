@@ -1,5 +1,52 @@
 {
   "sections": {
+    "image_banner_wyjeqd": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_CWiaf3": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_maA3Ve": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_qR7LTN": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_CWiaf3",
+        "text_maA3Ve",
+        "buttons_qR7LTN"
+      ],
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
     "section_text_with_icons_3b7KcJ": {
       "type": "section-text-with-icons",
       "blocks": {
@@ -152,6 +199,63 @@
         "images_repeater_cTgnX6",
         "images_repeater_eEHbxA",
         "images_repeater_VpgqCB"
+      ],
+      "settings": {
+      }
+    },
+    "section_image_tabs_pLnyBX": {
+      "type": "section-image-tabs",
+      "blocks": {
+        "images_repeater_wrV3mD": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "images_repeater_pbzTnM": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "images_repeater_cdKcU9": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "images_repeater_bHc8T8": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "content_repeater_UYPBVH": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "A",
+            "content_text": "A"
+          }
+        },
+        "content_repeater_EmRMzA": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "B",
+            "content_text": "B"
+          }
+        },
+        "content_repeater_A4r8Jf": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "C",
+            "content_text": "C"
+          }
+        }
+      },
+      "block_order": [
+        "images_repeater_wrV3mD",
+        "images_repeater_pbzTnM",
+        "images_repeater_cdKcU9",
+        "images_repeater_bHc8T8",
+        "content_repeater_UYPBVH",
+        "content_repeater_EmRMzA",
+        "content_repeater_A4r8Jf"
       ],
       "settings": {
       }
@@ -415,8 +519,10 @@
     }
   },
   "order": [
+    "image_banner_wyjeqd",
     "section_text_with_icons_3b7KcJ",
     "section_image_tabs_zKw6gN",
+    "section_image_tabs_pLnyBX",
     "section_zigzag_zn78GD",
     "b7926c37-dae0-4e14-8312-ab71a4ad7cec",
     "section_air_tabs_4tKUCL",

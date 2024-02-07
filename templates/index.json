@@ -23,7 +23,7 @@
             "button_label_1": "Button label",
             "button_link_1": "",
             "button_style_secondary_1": false,
-            "button_label_2": "Button label",
+            "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
           }
@@ -209,6 +209,7 @@
         "images_repeater_wrV3mD": {
           "type": "images_repeater",
           "settings": {
+            "tab_image": "shopify:\/\/shop_images\/universebundleevergreen.jpg"
           }
         },
         "images_repeater_pbzTnM": {
@@ -556,8 +557,31 @@
         "accordion_repeater_fVimwe",
         "accordion_repeater_yWziCd"
       ],
+      "disabled": true,
       "settings": {
         "faq_section_title": "Frequent Questions"
+      }
+    },
+    "17073193388d6dd3f5": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_agg_section_iGXQp7": {
+          "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-agg-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "hide_thumbnails": false,
+            "product_handle": "1-x-titan-smart-cable™-black-friday",
+            "aggregated": true,
+            "data-limit": 20,
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_agg_section_iGXQp7"
+      ],
+      "settings": {
+        "include_margins": true
       }
     }
   },
@@ -571,6 +595,7 @@
     "section_air_tabs_4tKUCL",
     "section_multi_columns_iU6pxd",
     "product_template_pack_874_TDmcTN",
-    "section_faq_bgPWp8"
+    "section_faq_bgPWp8",
+    "17073193388d6dd3f5"
   ]
 }

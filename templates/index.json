@@ -358,19 +358,51 @@
       "settings": {
       }
     },
-    "b7926c37-dae0-4e14-8312-ab71a4ad7cec": {
+    "image_banner_9yEPXj": {
       "type": "image-banner",
-      "custom_css": [
-        ".color-background-1 {--color-background: 255, 255, 255; --gradient-background: black;}"
+      "blocks": {
+        "heading_HPK34h": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_Pi6Vj4": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        },
+        "buttons_pBVrUc": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_HPK34h",
+        "text_Pi6Vj4",
+        "buttons_pBVrUc"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/3in1solo2.psd.jpg",
-        "image_overlay_opacity": 100,
+        "image": "shopify:\/\/shop_images\/universebundleevergreen_9d4b52f9-de0a-42a0-98fa-5c9dcd5da6f6.jpg",
+        "image_overlay_opacity": 0,
         "image_height": "adapt",
         "desktop_content_position": "middle-center",
-        "show_text_box": false,
+        "show_text_box": true,
         "desktop_content_alignment": "center",
-        "color_scheme": "inverse",
+        "color_scheme": "",
         "image_behavior": "none",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
@@ -471,8 +503,19 @@
         "multi_columns_repeater_BRdrrM",
         "multi_columns_repeater_Y4FDNF"
       ],
+      "disabled": true,
       "settings": {
         "multi_columns_section_title": "BUY WITH PEACE OF MIND"
+      }
+    },
+    "product_template_pack_874_TDmcTN": {
+      "type": "product-template-pack-874",
+      "settings": {
+        "punchline": "Finally! A charger that doesn't break.",
+        "d1": "60% OFF + FREE CABLE TODAY!",
+        "d2": "60% OFF",
+        "d3": "50% OFF",
+        "idea": "This cable takes an incredible 1,500 lbs of force to break! Whilst allowing charging up to 2.4x faster!"
       }
     },
     "section_faq_bgPWp8": {
@@ -524,9 +567,10 @@
     "section_image_tabs_zKw6gN",
     "section_image_tabs_pLnyBX",
     "section_zigzag_zn78GD",
-    "b7926c37-dae0-4e14-8312-ab71a4ad7cec",
+    "image_banner_9yEPXj",
     "section_air_tabs_4tKUCL",
     "section_multi_columns_iU6pxd",
+    "product_template_pack_874_TDmcTN",
     "section_faq_bgPWp8"
   ]
 }

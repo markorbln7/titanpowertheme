@@ -1,0 +1,36 @@
+{% comment %}
+  The purpose of this file is to render only one script and one CSS file for each section,
+  in case the same section is called on the page multiple times,
+  in order to avoid duplication of script and link files that are being called.
+  Variables:
+  - `name` - (string) - the name of the file. Both the CSS and JS files in the asset folder must have the same name.
+  - `js` - (boolean) - if true, the script tag will be rendered immediately before `</body>`.
+  - `css` - (boolean) - if true, the link tag will be rendered in the `<head>`.
+{% endcomment %}
+{% if css or js %}
+  <script>
+    {% if css %}
+      {% assign style_name = name | append: '.css' %}
+      var existingLink = document.querySelector("link[href*='{{ style_name }}']");
+      if (!existingLink) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = "{{ style_name | asset_url }}";
+        var head = document.head || document.getElementsByTagName('head')[0];
+        head.appendChild(link);
+      }
+    {% endif %}
+    {% if js %}
+      {% assign script_name = name | append: '.js' %}
+      var existingScript = document.querySelector("script[src*='{{ script_name }}']");
+      if (!existingScript) {
+        var script = document.createElement('script');
+        script.src = "{{ script_name | asset_url }}";
+        script.setAttribute('defer', 'defer');
+        var body = document.querySelector('body');
+        body.appendChild(script);
+      }
+    {% endif %}
+  </script>
+{% endif %}

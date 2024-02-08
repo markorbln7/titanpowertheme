@@ -1,0 +1,234 @@
+{{ 'section-pdp-hero.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  comment
+    Section Variables
+  endcomment
+  assign logoImage = section.settings.logo_image
+  assign productSubtitle = section.settings.product_subtitle
+  assign atcLabel = section.settings.atc_label
+  assign discountContent = section.settings.discount_content
+  assign extraAttachment = section.settings.extra_attachment
+  assign extraAttachmentImage = section.settings.extra_attachment_image
+
+  assign iconsRepeater = section.blocks | where: 'type', 'icons'
+  assign propsRepeater = section.blocks | where: 'type', 'props'
+%}
+
+<section class="section-pdp-hero">
+  <div class="content-wrapper">
+    <div class="pdp-hero__container">
+      {% comment %} Gallery {% endcomment %}
+      <div class="pdp-hero__gallery">
+        {% if logoImage %}
+          <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
+        {% endif %}
+        {%- comment -%} MAIN IMAGE {%- endcomment -%}
+        <div class="pdp-hero__gallery-main swiper-main swiper">
+          <div class="swiper-wrapper">
+            {% for image in product.images limit: 4 %}
+              <div class="swiper-slide">
+                <figure class="pdp-hero__gallery-main-image">
+                  {% render 'titan-image', image: image %}
+                </figure>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {%- comment -%} THUMBS {%- endcomment -%}
+        {% if product.images.size > 1 %}
+          <div class="pdp-hero__gallery-thumbs swiper-thumbs swiper">
+            <div class="swiper-wrapper">
+              {% for image in product.images %}
+                <div class="swiper-slide">
+                  <figure class="pdp-hero__gallery-thumb">
+                    {% render 'titan-image', image: image %}
+                  </figure>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if iconsRepeater.size > 0 %}
+          <div class="pdp-hero__icons">
+            {% for block in iconsRepeater %}
+              {% assign iconImage = block.settings.pdp_hero_icon %}
+              {% assign iconText = block.settings.pdp_hero_icon_text %}
+
+              <div class="pdp-hero__icon-container">
+                {% render 'titan-image', image: iconImage %}
+                {% if iconText != blank %}
+                  <span class="pdp-hero__icon-text">{{ iconText }}</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} Product info {% endcomment %}
+      <div class="pdp-hero__product-info">
+        <div class="pdp-hero__heading">
+          <h2 class="pdp-hero__product-title">{{ product.title }}</h2>
+
+          {% if productSubtitle != blank %}
+            <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
+          {% endif %}
+        </div>
+
+        <div class="pdp-hero__pricing-wrapper">
+          <div class="pdp-hero__pricing product__list--single--price color-white">
+            <span class="pdp-hero__pricing-price">{{ product.price | money_with_currency }}</span>
+            <span class="crossed">{{ product.compare_at_price | money_with_currency }}</span>
+
+            {% if discountContent != blank %}
+              <div class="pdp-hero__discount">{{ discountContent }}</div>
+            {% endif %}
+          </div>
+
+          <div class="pdp-hero__price-diff">
+            {% assign difference = product.compare_at_price | minus: product.price %}
+            {{ difference | money_with_currency }} SAVED
+          </div>
+        </div>
+
+        <div class="pdp-hero__extra-add">
+          <input type="checkbox" id="pdp-hero__checkbox">
+          <div class="pdp-hero__extra-checkbox">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/>
+            </svg>
+          </div>
+          <p class="pdp-hero__extra-text">{{ extraAttachment }}</p>
+
+          {% if extraAttachmentImage %}
+            {% render 'titan-image', image: extraAttachmentImage %}
+          {% endif %}
+        </div>
+
+        {% if product.description != blank %}
+          <div class="pdp-hero__product-description">
+            <div class="pdp-hero__product-description-wrapper">
+              {{ product.description }}
+            </div>
+            <p class="pdp-hero__description-collapse">Learn More</p>
+          </div>
+        {% endif %}
+
+        {% comment %} ADD TO CART BUTTON {% endcomment %}
+        <div class="pdp-hero__atc-wrapper">
+          <div
+            data-product="{{ product.first_available_variant.id }}"
+            data-quantity="1"
+            class="js-atc product__list--single--atc pdp-hero__atc"
+          >
+            ADD TO CART
+          </div>
+          {% if atcLabel != blank %}
+            <p class="pdp-hero__atc-label">
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M44,24c0,11.045 -8.955,20 -20,20c-11.045,0 -20,-8.955 -20,-20c0,-11.045 8.955,-20 20,-20c11.045,0 20,8.955 20,20z" fill="#ffffff"></path><path d="M34.586,14.586l-13.57,13.586l-5.602,-5.586l-2.828,2.828l8.434,8.414l16.395,-16.414z" fill="#60c655"></path></g></g>
+              </svg>
+              {{ atcLabel }}
+            </p>
+          {% endif %}
+        </div>
+
+        {% if propsRepeater.size > 0 %}
+          <div class="pdp-hero__props">
+            {% for block in propsRepeater %}
+              {% assign propText = block.settings.prop_text %}
+              {% assign propIcon = block.settings.prop_icon %}
+
+              <div class="pdp-hero__prop">
+                <span class="pdp-hero__prop-text">{{ propText }}</span>
+                <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{{ 'section-pdp-hero.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PDP Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo upload"
+    },
+    {
+      "type": "text",
+      "id": "product_subtitle",
+      "label": "Product subtitle"
+    },
+    {
+      "type": "text",
+      "id": "discount_content",
+      "label": "Discount content",
+      "default": "36% OFF"
+    },
+    {
+      "type": "textarea",
+      "id": "extra_attachment",
+      "label": "Extra attachment text"
+    },
+    {
+      "type": "image_picker",
+      "id": "extra_attachment_image",
+      "label": "Extra attachment image"
+    },
+    {
+      "type": "text",
+      "id": "atc_label",
+      "label": "ATC button label",
+      "default": "96% OF the reviews for this item are positive"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "props",
+      "name": "Prop",
+      "settings": [
+        {
+          "type": "text",
+          "id": "prop_text",
+          "label": "Prop text"
+        },
+        {
+          "type": "textarea",
+          "id": "prop_icon",
+          "label": "Prop icon"
+        }
+      ]
+    },
+    {
+      "type": "icons",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pdp_hero_icon",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_text",
+          "label": "Gallery icon label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Hero"
+    }
+  ]
+}
+{% endschema %}

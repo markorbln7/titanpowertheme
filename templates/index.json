@@ -1,51 +1,39 @@
 {
   "sections": {
-    "image_banner_wyjeqd": {
-      "type": "image-banner",
+    "slideshow_NnVUdC": {
+      "type": "slideshow",
       "blocks": {
-        "heading_CWiaf3": {
-          "type": "heading",
+        "slide_GbNkyE": {
+          "type": "slide",
           "settings": {
+            "image": "shopify:\/\/shop_images\/Screenshot_2024-02-08_at_10.35.19.png",
             "heading": "Titan Massage Gun",
-            "heading_size": "h1"
-          }
-        },
-        "text_maA3Ve": {
-          "type": "text",
-          "settings": {
-            "text": "The new leader in the market",
-            "text_style": "body"
-          }
-        },
-        "buttons_qR7LTN": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "heading_size": "h1",
+            "subheading": "The new leader in the market",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
           }
         }
       },
       "block_order": [
-        "heading_CWiaf3",
-        "text_maA3Ve",
-        "buttons_qR7LTN"
+        "slide_GbNkyE"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/Screenshot_2024-02-08_at_10.35.19.png",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "",
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
         "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
     "section_text_with_icons_3b7KcJ": {
@@ -622,7 +610,7 @@
     }
   },
   "order": [
-    "image_banner_wyjeqd",
+    "slideshow_NnVUdC",
     "section_text_with_icons_3b7KcJ",
     "section_image_tabs_zKw6gN",
     "section_image_tabs_pLnyBX",

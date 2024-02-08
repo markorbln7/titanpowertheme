@@ -59,7 +59,7 @@ const progressBarsOptions = {
 const progressbarObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const progressBar = entry.target.querySelector('.bar');
+            const progressBar = entry.target.querySelector('.zigzag__progressbar-bar');
             const width = parseFloat(progressBar.getAttribute('data-width'));
             progressBar.style.width = `${width}%`;
             observer.unobserve(entry.target);

@@ -1,6 +1,7 @@
 {{ 'section-image-tabs.css' | asset_url | stylesheet_tag }}
 
 {% liquid
+  assign reverse_layout = section.settings.reverse_layout
   assign content_repeater = section.blocks | where: 'type', 'content_repeater'
   assign images_repeater = section.blocks | where: 'type', 'images_repeater'
   assign tabs_repeater = section.blocks | where: 'type', 'tabs_repeater'
@@ -8,7 +9,7 @@
 
 <section class="section-image-tabs">
   <div class="content-wrapper">
-    <div class="image-tabs__wrapper">
+    <div class="image-tabs__wrapper{% if reverse_layout %} image-tabs__wrapper--reversed{% endif %}">
       <div class="image-tabs__content">
         <div class="image-tabs__panels">
           {% for block in content_repeater %}
@@ -71,12 +72,19 @@
     </div>
   </div>
 </section>
-
 <script src="{{ 'section-image-tabs.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
   "name": "Images with tabs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Image left",
+      "default": false
+    }
+  ],
   "blocks": [
     {
       "type": "content_repeater",

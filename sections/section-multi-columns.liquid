@@ -1,0 +1,116 @@
+{{ 'section-multi-columns.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign multi_columns_section_title = section.settings.multi_columns_section_title
+  assign multi_columns_repeater = section.blocks | where: 'type', 'multi_columns_repeater'
+%}
+
+<section class="section-multi-columns">
+  {% if multi_columns_section_title != blank %}
+    <div class="multi-columns__heading">
+      <h2 class="multi-columns__title">{{ multi_columns_section_title }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="content-wrapper">
+    {% if multi_columns_repeater.size > 0 %}
+      <div class="multi-columns__content">
+        {% for block in multi_columns_repeater %}
+          {% liquid
+            assign multi_columns_number = block.settings.multi_columns_number
+            assign multi_columns_block_title = block.settings.multi_columns_block_title
+            assign multi_columns_block_subtitle = block.settings.multi_columns_block_subtitle
+            assign multi_columns_block_icon = block.settings.multi_columns_block_icon
+            assign multi_columns_block_copy = block.settings.multi_columns_block_copy
+          %}
+
+          <article class="multi-columns__block">
+            <div class="multi-columns__block-header">
+              <div class="multi-columns__block-header-content">
+                {% if multi_columns_number != blank %}
+                  <div class="multi-columns__block-number">
+                    {{ multi_columns_number }}
+
+                    {% if multi_columns_block_title != blank %}
+                      <h3 class="multi-columns__block-title">
+                        {{ multi_columns_block_title }}
+                      </h3>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if multi_columns_block_subtitle != blank %}
+                  <h4 class="multi-columns__block-subtitle">
+                    {{ multi_columns_block_subtitle }}
+                  </h4>
+                {% endif %}
+              </div>
+
+              {% if multi_columns_block_icon %}
+                <figure class="multi-columns__block-icon">
+                  {% render 'titan-image', image: multi_columns_block_icon %}
+                </figure>
+              {% endif %}
+            </div>
+            {% if multi_columns_block_copy != blank %}
+              <p class="multi-columns__block-copy">{{ multi_columns_block_copy }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script src="{{ 'multi-columns.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Multi columns",
+  "settings": [
+    {
+      "type": "text",
+      "id": "multi_columns_section_title",
+      "label": "Section Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "multi_columns_repeater",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "multi_columns_number",
+          "label": "Repeater number"
+        },
+        {
+          "type": "text",
+          "id": "multi_columns_block_title",
+          "label": "Repeater title"
+        },
+        {
+          "type": "text",
+          "id": "multi_columns_block_subtitle",
+          "label": "Repeater subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "multi_columns_block_copy",
+          "label": "Repeater text"
+        },
+        {
+          "type": "image_picker",
+          "id": "multi_columns_block_icon",
+          "label": "Repeater icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi columns"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+{{ 'section-air-tabs.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_title = section.settings.section_title
+  assign section_subtitle = section.settings.section_subtitle
+  assign section_background = section.settings.section_background
+  assign tabs = section.blocks | where: 'type', 'air_tabs'
+%}
+
+<section
+  class="section-air-tabs"
+  {% if section_background != blank %}
+    style="background:{{ section_background }}"
+  {% endif %}
+>
+  <div class="content-wrapper">
+    <div class="formob-only air-tabs__heading">
+      {% if section_title != blank %}
+        <h2 class="air-tabs__tab-title">{{ section_title }}</h2>
+      {% endif %}
+      {% if section_subtitle != blank %}
+        <h3 class="air-tabs__tab-subtitle">{{ section_subtitle }}</h3>
+      {% endif %}
+    </div>
+
+    <div class="air-tabs__wrapper">
+      {% if tabs %}
+        <nav class="air-tabs__nav">
+          {% for block in tabs %}
+            {% liquid
+              assign tab_index = forloop.index
+              assign tab_image = block.settings.tab_image
+            %}
+            <div
+              class="air-tabs__nav-item{% if tab_index == 1 %} active{% endif %}"
+              data-tab="{{ tab_index }}"
+            >
+              <div class="air-tabs__nav-number">
+                {{ tab_index }}
+              </div>
+
+              <figure class="air-tabs__nav-image">
+                {% render 'titan-image', image: tab_image %}
+              </figure>
+            </div>
+          {% endfor %}
+        </nav>
+        <div class="air-tabs__tab-wrapper">
+          <div class="fordesk-only air-tabs__heading">
+            {% if section_title != blank %}
+              <h2 class="air-tabs__tab-title">{{ section_title }}</h2>
+            {% endif %}
+            {% if section_subtitle != blank %}
+              <h3 class="air-tabs__tab-subtitle">{{ section_subtitle }}</h3>
+            {% endif %}
+          </div>
+
+          {% for block in tabs %}
+            {% liquid
+              assign tab_attachment_title = block.settings.tab_attachment_title
+              assign tab_impact_level_text = block.settings.tab_impact_level_text
+              assign tab_content = block.settings.tab_content
+              assign tab_footer_text = block.settings.tab_footer_text
+              assign tab_index = forloop.index
+            %}
+            <div
+              class="air-tabs__tab-content {% if tab_index == 1 %} active{% endif %} "
+              data-panel="{{ tab_index }}"
+            >
+              <div class="air-tabs__tab-body">
+                {% if tab_attachment_title != blank %}
+                  <h4 class="air-tabs__tab-attachment-title">{{ tab_attachment_title }}</h4>
+                {% endif %}
+
+                {% if tab_impact_level_text != blank %}
+                  <h5 class="air-tabs__tab-impact-text">{{ tab_impact_level_text }}</h5>
+                {% endif %}
+
+                {% if tab_content != blank %}
+                  <p class="air-tabs__tab-text">{{ tab_content }}</p>
+                {% endif %}
+
+                {% if tab_footer_text != blank %}
+                  <h6 class="air-tabs__tab-footer-text">{{ tab_footer_text }}</h6>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'section-air-tabs.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Air tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section subtitle"
+    },
+    {
+      "type": "text",
+      "id": "section_background",
+      "label": "Section background color",
+      "default": "linear-gradient(180deg, #60c655, transparent);",
+      "info": "Add semi colon at the end for proper implementation"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "air_tabs",
+      "name": "Tabs",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_attachment_title",
+          "label": "Item attachment title"
+        },
+        {
+          "type": "text",
+          "id": "tab_impact_level_text",
+          "label": "Impact level text"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_content",
+          "label": "Tab copy text"
+        },
+        {
+          "type": "text",
+          "id": "tab_footer_text",
+          "label": "Tab footer text"
+        },
+        {
+          "type": "image_picker",
+          "id": "tab_image",
+          "label": "Tab Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Air tabs"
+    }
+  ]
+}
+{% endschema %}

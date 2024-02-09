@@ -1,113 +1,677 @@
 {
   "sections": {
-    "zp-product-header-content": {
-      "type": "product-header-content-zipifypages",
-      "settings": {
-      }
-    },
-    "main": {
-      "type": "main-product",
+    "slideshow_NnVUdC": {
+      "type": "slideshow",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "slide_GbNkyE": {
+          "type": "slide",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {
-          }
-        },
-        "price": {
-          "type": "price",
-          "settings": {
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
+            "image": "shopify:\/\/shop_images\/massage_gun_profile.jpg",
+            "heading": "Titan Massage Gun",
+            "heading_size": "h1",
+            "subheading": "The new leader in the market",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "share"
+        "slide_GbNkyE"
+      ],
+      "custom_css": [
+        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "media_size": "medium",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "media_position": "left",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
-        "hide_variants": false,
-        "enable_video_looping": false,
-        "padding_top": 24,
-        "padding_bottom": 24
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "section_text_with_icons_3b7KcJ": {
+      "type": "section-text-with-icons",
+      "blocks": {
+        "text_with_icons_repeater_mjN7E3": {
+          "type": "text_with_icons_repeater",
+          "settings": {
+            "repeater_icon": "shopify:\/\/shop_images\/titan_cable_icon_19047dde-e641-4e84-8e65-3685cf41db36.png",
+            "repeater_title": "<span> times smaller<\/span>",
+            "repeater_subtitle": "Small Size",
+            "repeater_text": "1\/3 of the size of regular massage gun, with a better force and battery life.",
+            "repeater_animation_value": "3"
+          }
+        },
+        "text_with_icons_repeater_FCLttF": {
+          "type": "text_with_icons_repeater",
+          "settings": {
+            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-_buds.png",
+            "repeater_title": "<span>hrs<\/span>",
+            "repeater_subtitle": "Battery Life",
+            "repeater_text": "With up to 4 hours of running battery time the Massage Gun will last you over 20 massages",
+            "repeater_animation_value": "4"
+          }
+        },
+        "text_with_icons_repeater_jEwfjt": {
+          "type": "text_with_icons_repeater",
+          "settings": {
+            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-small-3in1_cable.png",
+            "repeater_title": "<span>lbs<\/span>",
+            "repeater_subtitle": "Weight",
+            "repeater_text": "Weighing just 450g without compromising on any power or strength.",
+            "repeater_animation_value": "1,5"
+          }
+        },
+        "text_with_icons_repeater_LnhFji": {
+          "type": "text_with_icons_repeater",
+          "settings": {
+            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-small-3in1_dock.png",
+            "repeater_title": "<span>db<\/span>",
+            "repeater_subtitle": "Whisper Quiet",
+            "repeater_text": "Sound Insulation Technology provides a 40% Quieter Experience vs other brands.",
+            "repeater_animation_value": "45"
+          }
+        }
+      },
+      "block_order": [
+        "text_with_icons_repeater_mjN7E3",
+        "text_with_icons_repeater_FCLttF",
+        "text_with_icons_repeater_jEwfjt",
+        "text_with_icons_repeater_LnhFji"
+      ],
       "settings": {
-        "heading": "You may also like",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 68
+        "section_title": "PROFESSIONAL FEATURES",
+        "section_subtitle": "DESIGNED FOR EVERYONE"
       }
     },
-    "zp-product-footer-content": {
-      "type": "product-footer-content-zipifypages",
+    "section_image_tabs_zKw6gN": {
+      "type": "section-image-tabs",
+      "blocks": {
+        "content_repeater_GBED7M": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Light & Easy to Use",
+            "content_text": "Easily graspable with one hand and featuring accessible buttons for seamless speed adjustment while in use."
+          }
+        },
+        "content_repeater_zPD8Ab": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Just Press & Go",
+            "content_text": "The Titan Massage Gun offers effortless operation, boasting various interchangeable heads and adjustable speeds to cater to your relief needs. Simply press the start button and you're good to go."
+          }
+        },
+        "content_repeater_i6txBQ": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Compact Design",
+            "content_text": "Measuring at only one-third the size of conventional massage guns, it's conveniently portable and fits effortlessly into any bag, making it ideal for travel and on-the-go usage."
+          }
+        },
+        "content_repeater_9x3KpM": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Whisper-Quiet Mode",
+            "content_text": "Whether you're in a bustling environment or require silence, rest assured that the Titan Massage Gun operates so quietly that its sound is barely noticeable."
+          }
+        },
+        "tabs_repeater_HWLN8A": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-feather-100.png",
+            "tab_text": "LIGHT"
+          }
+        },
+        "tabs_repeater_cQJyGK": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-circle-90.png",
+            "tab_text": "SIMPLE"
+          }
+        },
+        "tabs_repeater_4RTBWt": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-plane-100.png",
+            "tab_text": "COMPACT"
+          }
+        },
+        "tabs_repeater_ddggtQ": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-sound-off-100.png",
+            "tab_text": "QUIET"
+          }
+        },
+        "images_repeater_AhzzRf": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify:\/\/shop_images\/universebundleevergreen_9d4b52f9-de0a-42a0-98fa-5c9dcd5da6f6.jpg"
+          }
+        },
+        "images_repeater_cTgnX6": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify:\/\/shop_images\/titantravelkit.jpg"
+          }
+        },
+        "images_repeater_eEHbxA": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify:\/\/shop_images\/ProductImagesIndividual-Newtitanbudsmainimage_36045d71-5378-4fba-9762-eb81b305b88b.jpg"
+          }
+        },
+        "images_repeater_VpgqCB": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify:\/\/shop_images\/new45Wplug_156434de-303a-464f-a1b1-9dd46056340c.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "content_repeater_GBED7M",
+        "content_repeater_zPD8Ab",
+        "content_repeater_i6txBQ",
+        "content_repeater_9x3KpM",
+        "tabs_repeater_HWLN8A",
+        "tabs_repeater_cQJyGK",
+        "tabs_repeater_4RTBWt",
+        "tabs_repeater_ddggtQ",
+        "images_repeater_AhzzRf",
+        "images_repeater_cTgnX6",
+        "images_repeater_eEHbxA",
+        "images_repeater_VpgqCB"
+      ],
       "settings": {
+        "reverse_layout": false,
+        "section_title": ""
+      }
+    },
+    "section_image_tabs_pLnyBX": {
+      "type": "section-image-tabs",
+      "blocks": {
+        "images_repeater_wrV3mD": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify:\/\/shop_images\/DSC00856.png"
+          }
+        },
+        "images_repeater_pbzTnM": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "images_repeater_cdKcU9": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "images_repeater_bHc8T8": {
+          "type": "images_repeater",
+          "settings": {
+          }
+        },
+        "content_repeater_UYPBVH": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Effective Pain Relief",
+            "content_text": "With its powerful percussive therapy, the Titan Massage Gun provides effective relief from muscle soreness, stiffness, and tension, helping to alleviate discomfort and promote faster recovery after intense workouts or physical activities."
+          }
+        },
+        "content_repeater_EmRMzA": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Injury Prevention",
+            "content_text": "Regular use of the Titan Massage Gun aids in preventing injuries by enhancing blood circulation, loosening tight muscles, and improving flexibility and range of motion. It helps reduce the risk of strains, sprains, and other common injuries associated with physical exertion or repetitive movements."
+          }
+        },
+        "content_repeater_A4r8Jf": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Posture Improvement",
+            "content_text": "By targeting muscle imbalances and areas of tension, the Titan Massage Gun contributes to better posture and alignment. It helps release tight muscles that may contribute to poor posture, promoting a more balanced and ergonomic body position for improved overall musculoskeletal health."
+          }
+        },
+        "content_repeater_YWwjd3": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Alternative to Physiotherapy",
+            "content_text": "The Titan Massage Gun serves as a convenient alternative to traditional physiotherapy sessions for addressing common musculoskeletal issues. It offers targeted relief and rehabilitation, allowing individuals to manage their muscle pain and discomfort from the comfort of their own home or on the go."
+          }
+        },
+        "tabs_repeater_kTzrzB": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-pain-point-100.png",
+            "tab_text": "Relief"
+          }
+        },
+        "tabs_repeater_JNBgLx": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-bandage-100.png",
+            "tab_text": "Injury"
+          }
+        },
+        "tabs_repeater_ErVzPf": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-posture-100.png",
+            "tab_text": "Posture"
+          }
+        },
+        "tabs_repeater_cgRyNi": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify:\/\/shop_images\/icons8-physiotherapy-100.png",
+            "tab_text": "Physio"
+          }
+        }
+      },
+      "block_order": [
+        "images_repeater_wrV3mD",
+        "images_repeater_pbzTnM",
+        "images_repeater_cdKcU9",
+        "images_repeater_bHc8T8",
+        "content_repeater_UYPBVH",
+        "content_repeater_EmRMzA",
+        "content_repeater_A4r8Jf",
+        "content_repeater_YWwjd3",
+        "tabs_repeater_kTzrzB",
+        "tabs_repeater_JNBgLx",
+        "tabs_repeater_ErVzPf",
+        "tabs_repeater_cgRyNi"
+      ],
+      "settings": {
+        "reverse_layout": false,
+        "section_title": ""
+      }
+    },
+    "section_zigzag_zn78GD": {
+      "type": "section-zigzag",
+      "blocks": {
+        "zigzag_repeater_JWceJP": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify:\/\/shop_images\/Finished_Massage_Gun_from_front_jpeg.jpg",
+            "zigzag_first_title": "Times Smaller",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "Being 3 times smaller but much more powerful than other competitors, the Titan Massage Gun is perfect for travelling and using it on-the go.",
+            "zigzag_mob_copy": "Being 3 times smaller but much more powerful than other competitors, the Titan Massage Gun is perfect for travelling and using it on-the go.",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 33,
+            "zigzag_first_progress_image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white_5b629f47-f632-418b-80ac-f578fc278484.png",
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "Titan's Size (1\/3)",
+            "zigzag_second_progress": 100,
+            "zigzag_second_progress_text": "Average Massage Gun",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "3",
+            "count_animation_end_second": ""
+          }
+        },
+        "zigzag_repeater_hFwip6": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": true,
+            "zigzag_image": "shopify:\/\/shop_images\/Finished_Massage_Gun_from_back_jpeg.jpg",
+            "zigzag_first_title": "dB Whisper Quiet",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "Crafted with noise-insulating components, the Titan Massage Gun maintains whisper-quiet operation across all five speeds, ranging from 1800 to 3200 rpm.",
+            "zigzag_mob_copy": "Crafted with noise-insulating components, the Titan Massage Gun maintains whisper-quiet operation across all five speeds, ranging from 1800 to 3200 rpm.",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 41,
+            "zigzag_first_progress_image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white_5b629f47-f632-418b-80ac-f578fc278484.png",
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "42dBls",
+            "zigzag_second_progress": 78,
+            "zigzag_second_progress_text": "Average Massage Gun",
+            "zigzag_second_progress_info": "58 dBls",
+            "count_animation_end": "45",
+            "count_animation_end_second": ""
+          }
+        },
+        "zigzag_repeater_DQtffr": {
+          "type": "zigzag_repeater",
+          "disabled": true,
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify:\/\/shop_images\/red-twoo_1_fbc560f9-b506-4faa-a7d0-caaa4147825c.webp",
+            "zigzag_first_title": "Speeds",
+            "zigzag_second_title": "g weights",
+            "zigzag_first_copy": "Apply power to only the areas which need it with 4 carefully colibrated gears to customize your massage.",
+            "zigzag_mob_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 2 months per charge. That’s 4x longer battery life than the average massage gun.",
+            "zigzag_second_copy": "With streamlined design, the Pulso Air weights just 450g without compromising on any power or strength.",
+            "zigzag_first_progress": 0,
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 0,
+            "zigzag_second_progress_text": "",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "4",
+            "count_animation_end_second": "450"
+          }
+        },
+        "zigzag_repeater_aBAyxa": {
+          "type": "zigzag_repeater",
+          "disabled": true,
+          "settings": {
+            "zigzag_reverse": true,
+            "zigzag_image": "shopify:\/\/shop_images\/Logo_edit_-_Air_Purple_copy_7c9234a6-4036-4770-8946-a6665044097a.webp",
+            "zigzag_first_title": "Hr Battery Life",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 1 months per charge. That’s 4x longer battery life than the average massage gun.",
+            "zigzag_mob_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 1 months per charge. That’s 4x longer battery life than the average massage gun.",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 100,
+            "zigzag_first_progress_image": "shopify:\/\/shop_images\/image_8_2.png",
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "12 hours of use",
+            "zigzag_second_progress": 55,
+            "zigzag_second_progress_text": "Average Massage Gun",
+            "zigzag_second_progress_info": "3 hours of use",
+            "count_animation_end": "12",
+            "count_animation_end_second": ""
+          }
+        }
+      },
+      "block_order": [
+        "zigzag_repeater_JWceJP",
+        "zigzag_repeater_hFwip6",
+        "zigzag_repeater_DQtffr",
+        "zigzag_repeater_aBAyxa"
+      ],
+      "settings": {
+      }
+    },
+    "slideshow_4Brfdt": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_HkLJfQ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Massage_gun_desktop_banner_3_1.jpg",
+            "heading": "",
+            "heading_size": "h2",
+            "subheading": "Phisiotherapy at the tip of your fingers, without spending thousands",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_HkLJfQ"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "section_air_tabs_4tKUCL": {
+      "type": "section-air-tabs",
+      "blocks": {
+        "air_tabs_8eXT3p": {
+          "type": "air_tabs",
+          "settings": {
+            "tab_attachment_title": "FORK ATTACHMENT",
+            "tab_impact_level_text": "IMPACT LEVEL 4\/5",
+            "tab_content": "The Fork attachment smoothly glides along your trapezius muscles, starting from the upper neck area down to your shoulders. It can also be used to massage the Achilles tendon and calf muscles. Primarily designed for targeting trigger points and addressing lower back discomfort. While it can be applied on either side of the spine, avoid direct contact with bones.",
+            "tab_footer_text": "Upper Body, Neck, Back",
+            "tab_image": "shopify:\/\/shop_images\/AIR--1_80d19042-8c39-4f5f-a77a-b9b19918ef00.webp"
+          }
+        },
+        "air_tabs_nwq7Gg": {
+          "type": "air_tabs",
+          "settings": {
+            "tab_attachment_title": "ROUND ATTACHMENT",
+            "tab_impact_level_text": "IMPACT LEVEL 1\/5",
+            "tab_content": "Primarily suited for larger muscle groups such as the glutes, hamstrings, and quadriceps. For stress relief and addressing pressure points, consider using it on the soles of your feet and around the upper back and neck area.",
+            "tab_footer_text": "Feet, Palms, Glutes, Neck",
+            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_1_66df81eb-cded-48b8-9a3f-a0bd3b01b00a.webp"
+          }
+        },
+        "air_tabs_wPm4j9": {
+          "type": "air_tabs",
+          "settings": {
+            "tab_attachment_title": "FLAT ATTACHMENT",
+            "tab_impact_level_text": "IMPACT LEVEL 2\/5",
+            "tab_content": "Crafted for gliding across broad muscle surfaces, this attachment is optimal for targeting dense muscle groups like the pectorals, glutes, and quadriceps.",
+            "tab_footer_text": "Shoulders, Hamstrings, Quads, Pecs",
+            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_2.webp"
+          }
+        },
+        "air_tabs_nTpyMA": {
+          "type": "air_tabs",
+          "settings": {
+            "tab_attachment_title": "BULLET ATTACHMENT",
+            "tab_impact_level_text": "IMPACT LEVEL 5\/5",
+            "tab_content": "Perfect for pinpointing localized muscle knots and tackling tension at its source. Ideal for precise muscle treatment and smaller muscle groups such as the soles of the feet, neck, and calves. Excellent for trigger point therapy but avoid prolonged use on any muscle area exceeding 15 seconds.",
+            "tab_footer_text": "Feet, Palms, Glutes, Neck",
+            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_3.webp"
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_8eXT3p",
+        "air_tabs_nwq7Gg",
+        "air_tabs_wPm4j9",
+        "air_tabs_nTpyMA"
+      ],
+      "settings": {
+        "section_title": "4 PREMIUM ATTACHMENT HEADS",
+        "section_subtitle": "TARGET MUSCLES WITH PRECISION",
+        "section_background": "linear-gradient(180deg, #60c655, transparent);"
+      }
+    },
+    "compare-table": {
+      "type": "compare-table",
+      "settings": {
+      }
+    },
+    "section-pdp-hero": {
+      "type": "section-pdp-hero",
+      "blocks": {
+        "props_PzNYj7": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FLEXIBLE 30 DAYS RETURN",
+            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>"
+          }
+        },
+        "props_M3xd6a": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FLEXIBLE 30 DAYS RETURN",
+            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>"
+          }
+        },
+        "props_weKy7Y": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FLEXIBLE 30 DAYS RETURN",
+            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>"
+          }
+        },
+        "props_QfmABj": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FLEXIBLE 30 DAYS RETURN",
+            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>"
+          }
+        },
+        "icons_xDeQ7a": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon": "shopify:\/\/shop_images\/cable.png",
+            "pdp_hero_icon_text": "ICON LABEL"
+          }
+        },
+        "icons_U3KhpD": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon": "shopify:\/\/shop_images\/cable.png",
+            "pdp_hero_icon_text": "ICON LABEL"
+          }
+        },
+        "icons_4b7bRG": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon": "shopify:\/\/shop_images\/cable.png",
+            "pdp_hero_icon_text": "ICON LABEL"
+          }
+        },
+        "icons_3ejafD": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon": "shopify:\/\/shop_images\/cable.png",
+            "pdp_hero_icon_text": "ICON LABEL"
+          }
+        }
+      },
+      "block_order": [
+        "props_PzNYj7",
+        "props_M3xd6a",
+        "props_weKy7Y",
+        "props_QfmABj",
+        "icons_xDeQ7a",
+        "icons_U3KhpD",
+        "icons_4b7bRG",
+        "icons_3ejafD"
+      ],
+      "settings": {
+        "logo_image": "shopify:\/\/shop_images\/titan-power-plus-logo-p-gray.png",
+        "product_subtitle": "Powerful, Whisper Quiet & Pocket Sized",
+        "discount_content": "36% OFF",
+        "extra_attachment": "GET EXTRA ATTACHMENTS <span>EXTRA $20 OFF<\/span>",
+        "atc_label": "96% OF the reviews for this item are positive"
+      }
+    },
+    "section_faq_bgPWp8": {
+      "type": "section-faq",
+      "blocks": {
+        "accordion_repeater_NzfbUD": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "What are the specifications?",
+            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+          }
+        },
+        "accordion_repeater_f66pWa": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "What are the specifications?",
+            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+          }
+        },
+        "accordion_repeater_fVimwe": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "What are the specifications?",
+            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+          }
+        },
+        "accordion_repeater_yWziCd": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "What are the specifications?",
+            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge. <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_repeater_NzfbUD",
+        "accordion_repeater_f66pWa",
+        "accordion_repeater_fVimwe",
+        "accordion_repeater_yWziCd"
+      ],
+      "disabled": true,
+      "settings": {
+        "faq_section_title": "Frequent Questions"
+      }
+    },
+    "17073193388d6dd3f5": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "section_multi_columns_iU6pxd": {
+      "type": "section-multi-columns",
+      "blocks": {
+        "multi_columns_repeater_WXWDQg": {
+          "type": "multi_columns_repeater",
+          "settings": {
+            "multi_columns_number": "100",
+            "multi_columns_block_title": "%",
+            "multi_columns_block_subtitle": "Satisfaction Guarantee",
+            "multi_columns_block_copy": "Experience peace of mind with our 100% satisfaction guarantee. If you're not absolutely delighted with your Titan product, let us know, and we'll make it right. Your satisfaction is our top priority."
+          }
+        },
+        "multi_columns_repeater_BRdrrM": {
+          "type": "multi_columns_repeater",
+          "settings": {
+            "multi_columns_number": "30",
+            "multi_columns_block_title": "days",
+            "multi_columns_block_subtitle": "Risk Free Returns",
+            "multi_columns_block_copy": "Feeling hesitant about investing in a massage gun? Take advantage of our 30-day return policy. If you're not completely satisfied with your purchase for any reason, simply return it within 30 days for a full refund. No hassle, no questions asked."
+          }
+        },
+        "multi_columns_repeater_Y4FDNF": {
+          "type": "multi_columns_repeater",
+          "settings": {
+            "multi_columns_number": "1",
+            "multi_columns_block_title": "year",
+            "multi_columns_block_subtitle": "Warranty",
+            "multi_columns_block_copy": "Rest assured knowing your massage gun is backed by our 1-year warranty. In the rare event that your Titan product encounters any faults or breaks through no fault of yours, we'll provide a free replacement."
+          }
+        }
+      },
+      "block_order": [
+        "multi_columns_repeater_WXWDQg",
+        "multi_columns_repeater_BRdrrM",
+        "multi_columns_repeater_Y4FDNF"
+      ],
+      "settings": {
+        "multi_columns_section_title": "BUY WITH PEACE OF MIND"
       }
     }
   },
   "order": [
-    "zp-product-header-content",
-    "main",
-    "related-products",
-    "zp-product-footer-content"
+    "slideshow_NnVUdC",
+    "section_text_with_icons_3b7KcJ",
+    "section_image_tabs_zKw6gN",
+    "section_image_tabs_pLnyBX",
+    "section_zigzag_zn78GD",
+    "slideshow_4Brfdt",
+    "section_air_tabs_4tKUCL",
+    "compare-table",
+    "section-pdp-hero",
+    "section_faq_bgPWp8",
+    "17073193388d6dd3f5",
+    "section_multi_columns_iU6pxd"
   ]
 }

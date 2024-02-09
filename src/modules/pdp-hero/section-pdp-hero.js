@@ -1,8 +1,5 @@
 import './section-pdp-hero.css'
 
-const atcButton = document.querySelector('.section-pdp-hero .js-atc');
-const checkBox = document.getElementById('pdp-hero__checkbox');
-
 atcButton.addEventListener('click', () => {
     const quantity = checkBox.checked ? 2 : 1;
     let addItems = [];
@@ -68,7 +65,6 @@ if (descriptionWrapper) {
     const productDescription = document.querySelector('.section-pdp-hero .pdp-hero__product-description-wrapper');
     const productDescriptionCollapse = document.querySelector('.pdp-hero__description-collapse');
 
-<<<<<<< Updated upstream
     productDescriptionCollapse.addEventListener('click', () => {
         descriptionWrapper.classList.toggle('collapse-text');
 
@@ -86,13 +82,3 @@ checkBox.addEventListener('click', () => {
     const quantity = checkBox.checked ? 2 : 1;
     atcButton.dataset.quantity = quantity;
 });
-=======
-productDescriptionCollapse.addEventListener('click', () => {
-    descriptionWrapper.classList.toggle('collapse-text');
-
-    productDescription.style.maxHeight = productDescription.scrollHeight + 'px';
-    !descriptionWrapper.classList.contains('collapse-text')
-        ? productDescription.style.maxHeight = null
-        : productDescription.style.maxHeight = productDescription.scrollHeight + 'px';
-})
->>>>>>> Stashed changes

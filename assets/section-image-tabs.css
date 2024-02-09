@@ -5,6 +5,17 @@
     padding-block: 40px;
 }
 
+.image-tabs__title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 30px;
+    text-align: center;
+    color: #000;
+    font-weight: 700;
+    line-height: 46px;
+    text-transform: uppercase;
+}
+
 .section-image-tabs .content-wrapper {
     padding: 0 16px;
     margin: 0 auto;
@@ -169,6 +180,11 @@
 
     .image-tabs__wrapper--reversed {
         flex-direction: row-reverse;
+    }
+
+    .image-tabs__title {
+        font-size: 40px;
+        margin-bottom: 80px;
     }
 
     .image-tabs__content {

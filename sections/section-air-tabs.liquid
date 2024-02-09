@@ -3,10 +3,16 @@
 {% liquid
   assign section_title = section.settings.section_title
   assign section_subtitle = section.settings.section_subtitle
+  assign section_background = section.settings.section_background
   assign tabs = section.blocks | where: 'type', 'air_tabs'
 %}
 
-<section class="section-air-tabs">
+<section
+  class="section-air-tabs"
+  {% if section_background != blank %}
+    style="background:{{ section_background }}"
+  {% endif %}
+>
   <div class="content-wrapper">
     <div class="formob-only air-tabs__heading">
       {% if section_title != blank %}
@@ -101,6 +107,13 @@
       "type": "text",
       "id": "section_subtitle",
       "label": "Section subtitle"
+    },
+    {
+      "type": "text",
+      "id": "section_background",
+      "label": "Section background color",
+      "default": "linear-gradient(180deg, #60c655, transparent);",
+      "info": "Add semi colon at the end for proper implementation"
     }
   ],
   "blocks": [

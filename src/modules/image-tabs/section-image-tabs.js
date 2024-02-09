@@ -4,7 +4,8 @@ import './section-image-tabs.css'
 
 document.addEventListener('DOMContentLoaded', function () {
     var buttons = document.querySelectorAll('.image-tabs__button');
-    var imagesWrapper = document.querySelector('.image-tabs__images');
+    var imagesWrapper = document.querySelectorAll('.image-tabs__images');
+    console.log(imagesWrapper);
 
     buttons.forEach(function (button) {
         button.addEventListener('click', function (e) {
@@ -32,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    imagesWrapper.addEventListener('mouseenter', function () {
-        this.classList.add('is-open');
+    imagesWrapper.forEach(el => {
+        el.addEventListener('mouseenter', function () {
+            el.classList.add('is-open');
+            console.log(el);
+        });
+    
+        el.addEventListener('mouseleave', function () {
+            el.classList.remove('is-open');
+        });
     });
-
-    imagesWrapper.addEventListener('mouseleave', function () {
-        this.classList.remove('is-open');
-    });
-
 });

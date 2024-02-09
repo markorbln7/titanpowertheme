@@ -118,7 +118,7 @@
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper">
           <div
-            data-product="{{ product.first_available_variant.id }}"
+            data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
             class="js-atc product__list--single--atc pdp-hero__atc"
           >

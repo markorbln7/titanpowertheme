@@ -246,7 +246,9 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    z-index: 10;
+    padding-inline: 10px;
 }
 
 .pdp-hero__icon-container {
@@ -266,7 +268,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 
 .pdp-hero__icon-text {
     font-size: 10px;
-    color: #000;
+    color: #fff;
     text-align: center;
 }
 

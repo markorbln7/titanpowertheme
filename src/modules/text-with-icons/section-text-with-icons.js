@@ -23,27 +23,29 @@ numbersWrapper.forEach(section => {
 
 function animateCounters(section) {
     const counters = section.querySelectorAll('.number');
-    
+
     counters.forEach(counter => {
         const id = counter.getAttribute('id');
-        const start = parseInt(counter.getAttribute('data-start'));
-        const end = parseInt(counter.getAttribute('data-end'));
+        const start = parseFloat(counter.getAttribute('data-start')); 
+        const end = parseFloat(counter.getAttribute('data-end').replace(',', '.')); 
         const duration = parseInt(counter.getAttribute('data-duration'));
         startCounter(id, start, end, duration);
     });
 }
 
+
 function startCounter(id, start, end, duration) {
     let obj = document.getElementById(id),
         current = start,
         range = end - start,
-        increment = end > start ? 1 : -1,
-        step = Math.abs(Math.floor(duration / range)),
+        increment = range > 0 ? 1 : -1,
+        step = Math.abs(duration / range),
         timer = setInterval(() => {
             current += increment;
-            obj.textContent = current;
-            if (current == end) {
+            if ((range > 0 && current >= end) || (range < 0 && current <= end)) {
                 clearInterval(timer);
+                current = end; 
             }
+            obj.textContent = current % 1 === 0 ? current : current.toFixed(1); 
         }, step);
 }

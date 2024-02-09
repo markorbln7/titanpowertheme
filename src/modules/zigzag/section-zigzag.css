@@ -34,6 +34,7 @@
 .zigzag__content {
     width: 45%;
     padding-top: 70px;
+    position: relative;
 }
 
 .zigzag__image {
@@ -100,7 +101,7 @@
     font-size: 72.8926px;
     line-height: 89px;
     text-transform: uppercase;
-    background: linear-gradient(180deg, #fff 37.5%, #8aafc3 66.67%, #6595b0 76.04%);
+    background: linear-gradient(180deg,#fff 37.5%,#67b55e 66.67%,#60c655 76.04%);
     background-clip: text;
     font-family: Montserrat;
     padding-right: 10px;
@@ -135,7 +136,7 @@
     border-radius: 18.2232px;
     height: 14px;
     margin-bottom: 10px;
-    background: linear-gradient(90deg, #004c77 1.88%, #d0f2ff 101.88%);
+    background: linear-gradient(90deg,#60c655 1.88%,#daffde 101.88%);
     display: block !important;
     transition: width 0.8s ease-in;
 }

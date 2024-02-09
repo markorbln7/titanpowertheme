@@ -2,8 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/air-tabs/section-air-tabs.css ***!
   \**********************************************************************************************************************************************************************************************************************************/
 .section-air-tabs {
-    background: linear-gradient(180deg, #80a7be, transparent);
-    padding: 80px 0 50px;
+    background: linear-gradient(180deg, #60c655, transparent);
 }
 
 .section-air-tabs * {
@@ -86,7 +85,7 @@
     font-size: 15px;
     line-height: 15px;
     text-transform: uppercase;
-    color: #7ac8e8;
+    color: #60c655;
     padding-bottom: 20px;
     padding-top: 10px;
     margin: 0;
@@ -184,7 +183,16 @@
 .air-tabs__nav-item.active .air-tabs__nav-number {
     z-index: 2 !important;
     color: #fff;
-    background: #00b9ff;
+    background: #35ff2e;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(53, 255, 46);
 }
 
 .air-tabs__nav-item:nth-child(1) .air-tabs__nav-number {
@@ -241,7 +249,7 @@
 }
 
 .air-tabs__nav-item.active .air-tabs__nav-number::after {
-    border: 1.5px solid #00B9FF;
+    border: 1.5px solid #35ff2e;
 }
 
 @media(min-width: 1024px) {
@@ -431,4 +439,3 @@
         margin-right: 0;
     }
 }
-

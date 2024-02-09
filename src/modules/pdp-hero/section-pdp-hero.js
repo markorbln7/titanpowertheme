@@ -1,5 +1,13 @@
 import './section-pdp-hero.css'
 
+const atcButton = document.querySelector('.section-pdp-hero .js-atc');
+const checkBox = document.getElementById('pdp-hero__checkbox');
+
+checkBox.addEventListener('click', () => {
+    const quantity = checkBox.checked ? 2 : 1;
+    atcButton.dataset.quantity = quantity;
+});
+
 atcButton.addEventListener('click', () => {
     const quantity = checkBox.checked ? 2 : 1;
     let addItems = [];
@@ -74,11 +82,3 @@ if (descriptionWrapper) {
             : productDescription.style.maxHeight = productDescription.scrollHeight + 'px';
     })
 }
-
-const atcButton = document.querySelector('.section-pdp-hero .js-atc');
-const checkBox = document.getElementById('pdp-hero__checkbox');
-
-checkBox.addEventListener('click', () => {
-    const quantity = checkBox.checked ? 2 : 1;
-    atcButton.dataset.quantity = quantity;
-});

@@ -1,3 +1,5 @@
+
+
 import './section-image-tabs.css'
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -5,10 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var imagesWrapper = document.querySelector('.image-tabs__images');
 
     buttons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            var panels = document.querySelectorAll('.image-tabs__panel');
-            var images = document.querySelectorAll('.image-tabs__images figure');
-            var tabs = document.querySelectorAll('.image-tabs__button');
+        button.addEventListener('click', function (e) {
+            let doc = this.parentNode.parentNode.parentNode;
+            console.log(doc, 'test');
+            var panels = doc.querySelectorAll('.image-tabs__panel');
+            var images = doc.querySelectorAll('.image-tabs__images figure');
+            var tabs = doc.querySelectorAll('.image-tabs__button');
             panels.forEach(function (panel) {
                 panel.classList.remove('active');
             });
@@ -21,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var tabNumber = this.getAttribute('data-tab');
             this.classList.add('active');
-            var panel = document.querySelector('.image-tabs__panel[data-content="' + tabNumber + '"]');
-            var image = document.querySelector('.image-tabs__images figure[data-image="' + tabNumber + '"]');
+            var panel = doc.querySelector('.image-tabs__panel[data-content="' + tabNumber + '"]');
+            var image = doc.querySelector('.image-tabs__images figure[data-image="' + tabNumber + '"]');
             panel.classList.add('active');
             image.classList.add('active');
         });

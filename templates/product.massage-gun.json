@@ -522,7 +522,7 @@
         "air_tabs_nTpyMA"
       ],
       "custom_css": [
-        ".section-air-tabs {background: linear-gradient(180deg, #60c655, black)!important; }"
+        ".section-air-tabs {background: linear-gradient(180deg, #60c655, black) !important;}"
       ],
       "settings": {
         "section_title": "4 PREMIUM ATTACHMENT HEADS",
@@ -610,35 +610,91 @@
         "atc_label": "96% OF the reviews for this item are positive"
       }
     },
+    "1707579564616101b2": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_dEptDN": {
+          "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-dynamic-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_dEptDN"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "section_faq_bgPWp8": {
       "type": "section-faq",
       "blocks": {
         "accordion_repeater_NzfbUD": {
           "type": "accordion_repeater",
           "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+            "accordion_question": "Is the massage gun easy to use for someone with no experience?",
+            "accordion_answer": "<p>Absolutely, our Titan Power Massage Gun is designed with simplicity in mind, suitable for both beginners and professionals.<\/p>"
           }
         },
         "accordion_repeater_f66pWa": {
           "type": "accordion_repeater",
           "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+            "accordion_question": "Will this massage gun be too powerful for sensitive areas?",
+            "accordion_answer": "<p>With 6 adjustable speed settings and 5 interchangeable heads, you can customize the intensity for delicate areas, ensuring comfort and effectiveness.<br\/><\/p>"
           }
         },
         "accordion_repeater_fVimwe": {
           "type": "accordion_repeater",
           "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
+            "accordion_question": "How loud is the massage gun during operation?",
+            "accordion_answer": "<p>Our massage gun operates at a whisper-quiet 35dB, ensuring a peaceful and undisturbed recovery session.<\/p>"
           }
         },
         "accordion_repeater_yWziCd": {
           "type": "accordion_repeater",
           "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge. <\/p>"
+            "accordion_question": "What are the technical specifications?",
+            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 6 hours of massage. Use Titan for 10 minutes every day for 60 days without needing to charge. <\/p>"
+          }
+        },
+        "accordion_repeater_6CxQC3": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "Is the massage gun heavy or cumbersome to use for extended periods?",
+            "accordion_answer": "<p>At just 0.9lbs, our ultra-lightweight design ensures ease of use and portability, perfect for extended sessions without fatigue.<\/p>"
+          }
+        },
+        "accordion_repeater_Jwprdj": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "Are the materials and construction durable for long-term use?",
+            "accordion_answer": "<p>Built with premium materials and robust construction, our massage gun is designed to withstand rigorous use and stand the test of time.<\/p>"
+          }
+        },
+        "accordion_repeater_MPHtHw": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "How do I know which head attachment to use for each muscle group?",
+            "accordion_answer": "<p>Included with your purchase is a comprehensive guide detailing how to effectively use each head attachment for targeted relief.<\/p>"
+          }
+        },
+        "accordion_repeater_TUhUUr": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "Is it suitable for use before and after workouts, or should it only be used post-exercise?",
+            "accordion_answer": "<p>Versatile in design, our massage gun is perfect for both pre-workout warm-ups and post-exercise recovery to enhance flexibility and reduce soreness.<\/p>"
+          }
+        },
+        "accordion_repeater_yQkhf9": {
+          "type": "accordion_repeater",
+          "settings": {
+            "accordion_question": "What is your return policy if the massage gun doesn't meet my expectations?",
+            "accordion_answer": "<p>We stand by the quality of our products with a satisfaction guarantee. If it doesn't meet your expectations, we offer a hassle-free return policy within a specified period.<\/p>"
           }
         }
       },
@@ -646,36 +702,21 @@
         "accordion_repeater_NzfbUD",
         "accordion_repeater_f66pWa",
         "accordion_repeater_fVimwe",
-        "accordion_repeater_yWziCd"
+        "accordion_repeater_yWziCd",
+        "accordion_repeater_6CxQC3",
+        "accordion_repeater_Jwprdj",
+        "accordion_repeater_MPHtHw",
+        "accordion_repeater_TUhUUr",
+        "accordion_repeater_yQkhf9"
       ],
       "settings": {
-        "faq_section_title": "Frequent Questions"
+        "faq_section_title": "Any Questions?"
       }
     },
     "17073193388d6dd3f5": {
       "type": "apps",
       "settings": {
         "include_margins": true
-      }
-    },
-    "loox_gallery_testimonial_section_KWi7aq": {
-      "type": "loox-gallery-testimonial-section",
-      "settings": {
-        "maxWidth": 1100,
-        "maxNumberOfCharacters": 100,
-        "quoteMarkIcon": "style-2",
-        "reviewerNameColor": "#000000",
-        "textColor": "#000000",
-        "starsColor": "",
-        "quotesIconColor": "#eaeaea",
-        "arrows_iconColor": "#000000",
-        "arrows_hideOnMobile": true,
-        "pagination_active": true,
-        "pagination_selectedDotColor": "#000000",
-        "pagination_dotColor": "#000000",
-        "autoplay_active": false,
-        "autoplay_duration": 2,
-        "productIds": ""
       }
     },
     "section_multi_columns_iU6pxd": {
@@ -717,6 +758,27 @@
       "settings": {
         "multi_columns_section_title": "BUY WITH PEACE OF MIND"
       }
+    },
+    "17075757173c339a93": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_eeqnab": {
+          "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-dynamic-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_eeqnab"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -730,9 +792,10 @@
     "section_air_tabs_4tKUCL",
     "compare-table",
     "section-pdp-hero",
+    "1707579564616101b2",
     "section_faq_bgPWp8",
     "17073193388d6dd3f5",
-    "loox_gallery_testimonial_section_KWi7aq",
-    "section_multi_columns_iU6pxd"
+    "section_multi_columns_iU6pxd",
+    "17075757173c339a93"
   ]
 }

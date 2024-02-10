@@ -1,10 +1,10 @@
 {
   "sections": {
-    "slideshow_NnVUdC": {
-      "type": "slideshow",
+    "e44672f0-bbb4-4c1d-be4e-80894b17dccc": {
+      "type": "image-with-text-slider",
       "blocks": {
-        "slide_GbNkyE": {
-          "type": "slide",
+        "9232a857-fd83-470e-811e-c826327e21fe": {
+          "type": "button",
           "settings": {
             "image": "shopify:\/\/shop_images\/Home_page_Desktop_banner.jpg",
             "mobile_image": "shopify:\/\/shop_images\/Home_page_mobile_banner_421c6a1d-56cb-4cce-acfd-d7cc68eca625.jpg",
@@ -63,7 +63,9 @@
         "4171b881-4359-4472-ac75-fcf2de984657"
       ],
       "custom_css": [
-        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}"
+        ".image-with-text__content {box-shadow: 4px 4px 5px 4px #bdbdbd38 !important;}",
+        ".color-background-2 {--gradient-background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );}",
+        "a.button.button--primary.video-button {font-weight: 700; padding-top: 8px; padding-bottom: 8px; text-transform: uppercase;}"
       ],
       "settings": {
         "height": "large",
@@ -74,164 +76,149 @@
         "content_layout": "overlap",
         "color_scheme": "background-2",
         "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
+        "mobile_content_alignment": "center",
+        "padding_top": 52,
+        "padding_bottom": 44
       }
     },
-    "section_text_with_icons_3b7KcJ": {
-      "type": "section-text-with-icons",
+    "image-with-text": {
+      "type": "image-with-text",
       "blocks": {
-        "text_with_icons_repeater_mjN7E3": {
-          "type": "text_with_icons_repeater",
+        "heading": {
+          "type": "heading",
           "settings": {
-            "repeater_icon": "shopify:\/\/shop_images\/titan_cable_icon_19047dde-e641-4e84-8e65-3685cf41db36.png",
-            "repeater_title": "<span> times smaller<\/span>",
-            "repeater_subtitle": "Small Size",
-            "repeater_text": "1\/3 of the size of regular massage gun, with a better force and battery life.",
-            "repeater_animation_value": "3"
+            "heading": "SHOP TITAN RANGE",
+            "heading_size": "h1"
           }
         },
-        "text_with_icons_repeater_FCLttF": {
-          "type": "text_with_icons_repeater",
+        "button": {
+          "type": "button",
           "settings": {
-            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-_buds.png",
-            "repeater_title": "<span>hrs<\/span>",
-            "repeater_subtitle": "Battery Life",
-            "repeater_text": "With up to 4 hours of running battery time the Massage Gun will last you over 20 massages",
-            "repeater_animation_value": "4"
-          }
-        },
-        "text_with_icons_repeater_jEwfjt": {
-          "type": "text_with_icons_repeater",
-          "settings": {
-            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-small-3in1_cable.png",
-            "repeater_title": "<span>lbs<\/span>",
-            "repeater_subtitle": "Weight",
-            "repeater_text": "Weighing just 450g without compromising on any power or strength.",
-            "repeater_animation_value": "1,5"
-          }
-        },
-        "text_with_icons_repeater_LnhFji": {
-          "type": "text_with_icons_repeater",
-          "settings": {
-            "repeater_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-small-3in1_dock.png",
-            "repeater_title": "<span>db<\/span>",
-            "repeater_subtitle": "Whisper Quiet",
-            "repeater_text": "Sound Insulation Technology provides a 40% Quieter Experience vs other brands.",
-            "repeater_animation_value": "45"
+            "button_label": "Shop now",
+            "button_link": "shopify:\/\/collections\/all",
+            "button_style_secondary": false
           }
         }
       },
       "block_order": [
-        "text_with_icons_repeater_mjN7E3",
-        "text_with_icons_repeater_FCLttF",
-        "text_with_icons_repeater_jEwfjt",
-        "text_with_icons_repeater_LnhFji"
+        "heading",
+        "button"
       ],
+      "disabled": true,
       "settings": {
-        "section_title": "PROFESSIONAL FEATURES",
-        "section_subtitle": "DESIGNED FOR EVERYONE"
+        "image": "shopify:\/\/shop_images\/Main_Product_Image_-_TITAN_SMART_CABLE.jpg",
+        "height": "large",
+        "desktop_image_width": "large",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "overlap",
+        "color_scheme": "background-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "section_image_tabs_zKw6gN": {
-      "type": "section-image-tabs",
+    "459b0cab-7c8e-40c7-b786-6ba18d5c1404": {
+      "type": "home-product-block",
       "blocks": {
-        "content_repeater_GBED7M": {
-          "type": "content_repeater",
+        "0dcf3521-7cae-4c15-a2cf-45f8c0acc492": {
+          "type": "product",
           "settings": {
-            "content_title": "Light & Easy to Use",
-            "content_text": "Easily graspable with one hand and featuring accessible buttons for seamless speed adjustment while in use."
+            "product": "titan-cable",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-titan-cable-p.jpg"
           }
         },
-        "content_repeater_zPD8Ab": {
-          "type": "content_repeater",
+        "1ee62681-a752-44d1-abda-6167b68d9a13": {
+          "type": "product",
           "settings": {
-            "content_title": "Just Press & Go",
-            "content_text": "The Titan Massage Gun offers effortless operation, boasting various interchangeable heads and adjustable speeds to cater to your relief needs. Simply press the start button and you're good to go."
+            "product": "titan-3-in-1-multi-cable",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-3-in-1-cable.jpg"
           }
         },
-        "content_repeater_i6txBQ": {
-          "type": "content_repeater",
+        "d3db6d7b-143b-493f-8a95-0f4d32075daa": {
+          "type": "product",
           "settings": {
-            "content_title": "Compact Design",
-            "content_text": "Measuring at only one-third the size of conventional massage guns, it's conveniently portable and fits effortlessly into any bag, making it ideal for travel and on-the-go usage."
+            "product": "titan-45w-nano-pd-plug™-1",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-45w-pd-plug-p.jpg"
           }
         },
-        "content_repeater_9x3KpM": {
-          "type": "content_repeater",
+        "ace583d2-708b-49cd-b0f9-f22c270267e7": {
+          "type": "product",
           "settings": {
-            "content_title": "Whisper-Quiet Mode",
-            "content_text": "Whether you're in a bustling environment or require silence, rest assured that the Titan Massage Gun operates so quietly that its sound is barely noticeable."
+            "product": "titan-fast-car-charger",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-car-3-port-ch.jpg"
           }
         },
-        "tabs_repeater_HWLN8A": {
-          "type": "tabs_repeater",
+        "9939e6b3-bbee-44f8-a83a-225c3e84ea11": {
+          "type": "product",
           "settings": {
-            "tab_icon": "shopify:\/\/shop_images\/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png",
-            "tab_text": "LIGHT"
+            "product": "titan-bluetooth-car-charger",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-bt-car-charge.jpg"
           }
         },
-        "tabs_repeater_cQJyGK": {
-          "type": "tabs_repeater",
+        "0937d140-23f8-4453-85b2-9f2ac077f4e7": {
+          "type": "product",
           "settings": {
-            "tab_icon": "shopify:\/\/shop_images\/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png",
-            "tab_text": "SIMPLE"
+            "product": "2x-titan-portable-wireless-3-in-1-charger™",
+            "image": "shopify:\/\/shop_images\/122.jpg"
           }
         },
-        "tabs_repeater_4RTBWt": {
-          "type": "tabs_repeater",
+        "0c5d8b34-27b7-4d73-8f44-6844b0e003ba": {
+          "type": "product",
           "settings": {
-            "tab_icon": "shopify:\/\/shop_images\/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png",
-            "tab_text": "COMPACT"
+            "product": "titan-3-in-1-mothership-dock™",
+            "image": "shopify:\/\/shop_images\/322.jpg"
           }
         },
-        "tabs_repeater_ddggtQ": {
-          "type": "tabs_repeater",
+        "f869cb17-4e9f-4a5e-84d9-ad031e87788c": {
+          "type": "product",
           "settings": {
-            "tab_icon": "shopify:\/\/shop_images\/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png",
-            "tab_text": "QUIET"
+            "product": "titan-wireless-car-charging-holder",
+            "image": "shopify:\/\/shop_images\/332.jpg"
           }
         },
-        "images_repeater_AhzzRf": {
-          "type": "images_repeater",
+        "18597d95-0b8d-4855-8c94-95ba0f93049b": {
+          "type": "product",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/universebundleevergreen_9d4b52f9-de0a-42a0-98fa-5c9dcd5da6f6.jpg"
+            "product": "titan-15w-wireless-fast-charging-dock",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-turbo-dock-pr.jpg"
           }
         },
-        "images_repeater_cTgnX6": {
-          "type": "images_repeater",
+        "9b9a26d6-f21d-47cb-b9e1-b05c970b938d": {
+          "type": "product",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/titantravelkit.jpg"
-          }
-        },
-        "images_repeater_eEHbxA": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify:\/\/shop_images\/ProductImagesIndividual-Newtitanbudsmainimage_36045d71-5378-4fba-9762-eb81b305b88b.jpg"
-          }
-        },
-        "images_repeater_VpgqCB": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify:\/\/shop_images\/new45Wplug_156434de-303a-464f-a1b1-9dd46056340c.jpg"
+            "product": "titan-buds-2-0",
+            "image": "shopify:\/\/shop_images\/tpp_banner-ad_a_v1-titan-buds-20.jpg"
           }
         }
       },
       "block_order": [
-        "content_repeater_GBED7M",
-        "content_repeater_zPD8Ab",
-        "content_repeater_i6txBQ",
-        "content_repeater_9x3KpM",
-        "tabs_repeater_HWLN8A",
-        "tabs_repeater_cQJyGK",
-        "tabs_repeater_4RTBWt",
-        "tabs_repeater_ddggtQ",
-        "images_repeater_AhzzRf",
-        "images_repeater_cTgnX6",
-        "images_repeater_eEHbxA",
-        "images_repeater_VpgqCB"
+        "0dcf3521-7cae-4c15-a2cf-45f8c0acc492",
+        "1ee62681-a752-44d1-abda-6167b68d9a13",
+        "d3db6d7b-143b-493f-8a95-0f4d32075daa",
+        "ace583d2-708b-49cd-b0f9-f22c270267e7",
+        "9939e6b3-bbee-44f8-a83a-225c3e84ea11",
+        "0937d140-23f8-4453-85b2-9f2ac077f4e7",
+        "0c5d8b34-27b7-4d73-8f44-6844b0e003ba",
+        "f869cb17-4e9f-4a5e-84d9-ad031e87788c",
+        "18597d95-0b8d-4855-8c94-95ba0f93049b",
+        "9b9a26d6-f21d-47cb-b9e1-b05c970b938d"
+      ],
+      "custom_css": [
+        ".products {padding-bottom: 52px; padding-top: 52px; margin-bottom: 0px; margin-top: 0px; background-color: #e3eaea;}",
+        ".products__title {color: #4a4a4a;}",
+        ".product__list--single--title {color: #4a4a4a;}",
+        ".hero_image img {background-color: #e3eaea; width: 70%;}",
+        ".hero_image {background-color: #fafafa; padding-bottom: 20px; padding-top: 20px;}",
+        ".product__list--single--image img {box-shadow: 0px 3px 7px 0px #07070742;}",
+        ".product__list--single--price {color: #60c655;}",
+        ".product__list--single--atc {background-color: #60c655; color: #ffffff;}"
       ],
       "settings": {
+        "url": "",
+        "title": "SHOP <span>TITAN<\/span> RANGE"
       }
     },
     "featured-collection": {
@@ -297,416 +284,512 @@
     "5704cacf-0d56-410c-aa13-ca43f2007d58": {
       "type": "image-with-text",
       "blocks": {
-        "images_repeater_wrV3mD": {
-          "type": "images_repeater",
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-heading-1": {
+          "type": "heading",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/DSC00856.png"
+            "heading": "Check out our Latest Tech",
+            "heading_size": "h1"
           }
         },
-        "images_repeater_pbzTnM": {
-          "type": "images_repeater",
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-text-1": {
+          "type": "text",
           "settings": {
+            "text": "<p>In this fast moving world of technology, mobile devices allow us to stay engaged and connected on-the-go. We strive to offer the most innovative and popular mobile charging solutions on the market.<\/p>",
+            "text_style": "body"
           }
         },
-        "images_repeater_cdKcU9": {
-          "type": "images_repeater",
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-button-1": {
+          "type": "button",
           "settings": {
-          }
-        },
-        "images_repeater_bHc8T8": {
-          "type": "images_repeater",
-          "settings": {
-          }
-        },
-        "content_repeater_UYPBVH": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Effective Pain Relief",
-            "content_text": "With its powerful percussive therapy, the Titan Massage Gun provides effective relief from muscle soreness, stiffness, and tension, helping to alleviate discomfort and promote faster recovery after intense workouts or physical activities."
-          }
-        },
-        "content_repeater_EmRMzA": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Injury Prevention",
-            "content_text": "Regular use of the Titan Massage Gun aids in preventing injuries by enhancing blood circulation, loosening tight muscles, and improving flexibility and range of motion. It helps reduce the risk of strains, sprains, and other common injuries associated with physical exertion or repetitive movements."
-          }
-        },
-        "content_repeater_A4r8Jf": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Posture Improvement",
-            "content_text": "By targeting muscle imbalances and areas of tension, the Titan Massage Gun contributes to better posture and alignment. It helps release tight muscles that may contribute to poor posture, promoting a more balanced and ergonomic body position for improved overall musculoskeletal health."
-          }
-        },
-        "content_repeater_YWwjd3": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Alternative to Physiotherapy",
-            "content_text": "The Titan Massage Gun serves as a convenient alternative to traditional physiotherapy sessions for addressing common musculoskeletal issues. It offers targeted relief and rehabilitation, allowing individuals to manage their muscle pain and discomfort from the comfort of their own home or on the go."
-          }
-        },
-        "tabs_repeater_kTzrzB": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_text": "Pain Relief"
-          }
-        },
-        "tabs_repeater_JNBgLx": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_text": "Injury Prevention"
-          }
-        },
-        "tabs_repeater_ErVzPf": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_text": "Posture Improvement"
-          }
-        },
-        "tabs_repeater_cgRyNi": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_text": "Physiotherapy at Home"
+            "button_label": "SEE MORE PRODUCTS",
+            "button_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "button_style_secondary": false
           }
         }
       },
       "block_order": [
-        "images_repeater_wrV3mD",
-        "images_repeater_pbzTnM",
-        "images_repeater_cdKcU9",
-        "images_repeater_bHc8T8",
-        "content_repeater_UYPBVH",
-        "content_repeater_EmRMzA",
-        "content_repeater_A4r8Jf",
-        "content_repeater_YWwjd3",
-        "tabs_repeater_kTzrzB",
-        "tabs_repeater_JNBgLx",
-        "tabs_repeater_ErVzPf",
-        "tabs_repeater_cgRyNi"
-      ],
-      "settings": {
-      }
-    },
-    "section_zigzag_zn78GD": {
-      "type": "section-zigzag",
-      "blocks": {
-        "zigzag_repeater_JWceJP": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_image": "shopify:\/\/shop_images\/Finished_Massage_Gun_from_front_jpeg.jpg",
-            "zigzag_first_title": "Times Smaller",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "Being 3 times smaller but much more powerful than other competitors, the Titan Massage Gun is perfect for travelling and using it on-the go.",
-            "zigzag_mob_copy": "Being 3 times smaller but much more powerful than other competitors, the Titan Massage Gun is perfect for travelling and using it on-the go.",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 33,
-            "zigzag_first_progress_image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white_5b629f47-f632-418b-80ac-f578fc278484.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "Titan's Size (1\/3)",
-            "zigzag_second_progress": 100,
-            "zigzag_second_progress_text": "Average Massage Gun",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "3",
-            "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_hFwip6": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": true,
-            "zigzag_image": "shopify:\/\/shop_images\/Finished_Massage_Gun_from_back_jpeg.jpg",
-            "zigzag_first_title": "dB Whisper Quiet",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "Crafted with noise-insulating components, the Titan Massage Gun maintains whisper-quiet operation across all five speeds, ranging from 1800 to 3200 rpm.",
-            "zigzag_mob_copy": "Crafted with noise-insulating components, the Titan Massage Gun maintains whisper-quiet operation across all five speeds, ranging from 1800 to 3200 rpm.",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 41,
-            "zigzag_first_progress_image": "shopify:\/\/shop_images\/titan-power-plus-full-logo-green-white_5b629f47-f632-418b-80ac-f578fc278484.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "42dBls",
-            "zigzag_second_progress": 78,
-            "zigzag_second_progress_text": "Average Massage Gun",
-            "zigzag_second_progress_info": "58 dBls",
-            "count_animation_end": "45",
-            "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_DQtffr": {
-          "type": "zigzag_repeater",
-          "disabled": true,
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_image": "shopify:\/\/shop_images\/red-twoo_1_fbc560f9-b506-4faa-a7d0-caaa4147825c.webp",
-            "zigzag_first_title": "Speeds",
-            "zigzag_second_title": "g weights",
-            "zigzag_first_copy": "Apply power to only the areas which need it with 4 carefully colibrated gears to customize your massage.",
-            "zigzag_mob_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 2 months per charge. That’s 4x longer battery life than the average massage gun.",
-            "zigzag_second_copy": "With streamlined design, the Pulso Air weights just 450g without compromising on any power or strength.",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "4",
-            "count_animation_end_second": "450"
-          }
-        },
-        "zigzag_repeater_aBAyxa": {
-          "type": "zigzag_repeater",
-          "disabled": true,
-          "settings": {
-            "zigzag_reverse": true,
-            "zigzag_image": "shopify:\/\/shop_images\/Logo_edit_-_Air_Purple_copy_7c9234a6-4036-4770-8946-a6665044097a.webp",
-            "zigzag_first_title": "Hr Battery Life",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 1 months per charge. That’s 4x longer battery life than the average massage gun.",
-            "zigzag_mob_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 1 months per charge. That’s 4x longer battery life than the average massage gun.",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 100,
-            "zigzag_first_progress_image": "shopify:\/\/shop_images\/image_8_2.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "12 hours of use",
-            "zigzag_second_progress": 55,
-            "zigzag_second_progress_text": "Average Massage Gun",
-            "zigzag_second_progress_info": "3 hours of use",
-            "count_animation_end": "12",
-            "count_animation_end_second": ""
-          }
-        }
-      },
-      "block_order": [
-        "zigzag_repeater_JWceJP",
-        "zigzag_repeater_hFwip6",
-        "zigzag_repeater_DQtffr",
-        "zigzag_repeater_aBAyxa"
-      ],
-      "settings": {
-      }
-    },
-    "slideshow_4Brfdt": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_HkLJfQ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Massage_gun_desktop_banner_3_1.jpg",
-            "heading": "",
-            "heading_size": "h2",
-            "subheading": "Phisiotherapy at the tip of your fingers, without spending thousands",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": true,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_HkLJfQ"
-      ],
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
-      }
-    },
-    "section_air_tabs_4tKUCL": {
-      "type": "section-air-tabs",
-      "blocks": {
-        "air_tabs_8eXT3p": {
-          "type": "air_tabs",
-          "settings": {
-            "tab_attachment_title": "FORK ATTACHMENT",
-            "tab_impact_level_text": "IMPACT LEVEL 4\/5",
-            "tab_content": "The Fork attachment smoothly glides along your trapezius muscles, starting from the upper neck area down to your shoulders. It can also be used to massage the Achilles tendon and calf muscles. Primarily designed for targeting trigger points and addressing lower back discomfort. While it can be applied on either side of the spine, avoid direct contact with bones.",
-            "tab_footer_text": "Upper Body, Neck, Back",
-            "tab_image": "shopify:\/\/shop_images\/AIR--1_80d19042-8c39-4f5f-a77a-b9b19918ef00.webp"
-          }
-        },
-        "air_tabs_nwq7Gg": {
-          "type": "air_tabs",
-          "settings": {
-            "tab_attachment_title": "ROUND ATTACHMENT",
-            "tab_impact_level_text": "IMPACT LEVEL 1\/5",
-            "tab_content": "Primarily suited for larger muscle groups such as the glutes, hamstrings, and quadriceps. For stress relief and addressing pressure points, consider using it on the soles of your feet and around the upper back and neck area.",
-            "tab_footer_text": "Feet, Palms, Glutes, Neck",
-            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_1_66df81eb-cded-48b8-9a3f-a0bd3b01b00a.webp"
-          }
-        },
-        "air_tabs_wPm4j9": {
-          "type": "air_tabs",
-          "settings": {
-            "tab_attachment_title": "FLAT ATTACHMENT",
-            "tab_impact_level_text": "IMPACT LEVEL 2\/5",
-            "tab_content": "Crafted for gliding across broad muscle surfaces, this attachment is optimal for targeting dense muscle groups like the pectorals, glutes, and quadriceps.",
-            "tab_footer_text": "Shoulders, Hamstrings, Quads, Pecs",
-            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_2.webp"
-          }
-        },
-        "air_tabs_nTpyMA": {
-          "type": "air_tabs",
-          "settings": {
-            "tab_attachment_title": "BULLET ATTACHMENT",
-            "tab_impact_level_text": "IMPACT LEVEL 5\/5",
-            "tab_content": "Perfect for pinpointing localized muscle knots and tackling tension at its source. Ideal for precise muscle treatment and smaller muscle groups such as the soles of the feet, neck, and calves. Excellent for trigger point therapy but avoid prolonged use on any muscle area exceeding 15 seconds.",
-            "tab_footer_text": "Feet, Palms, Glutes, Neck",
-            "tab_image": "shopify:\/\/shop_images\/AIR--1_1_3.webp"
-          }
-        }
-      },
-      "block_order": [
-        "air_tabs_8eXT3p",
-        "air_tabs_nwq7Gg",
-        "air_tabs_wPm4j9",
-        "air_tabs_nTpyMA"
-      ],
-      "settings": {
-        "section_title": "4 PREMIUM ATTACHMENT HEADS",
-        "section_subtitle": "TARGET MUSCLES WITH PRECISION"
-      }
-    },
-    "product_template_pack_874_TDmcTN": {
-      "type": "product-template-pack-874",
-      "settings": {
-        "punchline": "Finally! A charger that doesn't break.",
-        "d1": "60% OFF + FREE CABLE TODAY!",
-        "d2": "60% OFF",
-        "d3": "50% OFF",
-        "idea": "This cable takes an incredible 1,500 lbs of force to break! Whilst allowing charging up to 2.4x faster!"
-      }
-    },
-    "section_faq_bgPWp8": {
-      "type": "section-faq",
-      "blocks": {
-        "accordion_repeater_NzfbUD": {
-          "type": "accordion_repeater",
-          "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
-          }
-        },
-        "accordion_repeater_f66pWa": {
-          "type": "accordion_repeater",
-          "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
-          }
-        },
-        "accordion_repeater_fVimwe": {
-          "type": "accordion_repeater",
-          "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge.<\/p>"
-          }
-        },
-        "accordion_repeater_yWziCd": {
-          "type": "accordion_repeater",
-          "settings": {
-            "accordion_question": "What are the specifications?",
-            "accordion_answer": "<p>Fast-charging lithium battery (Type C, 2000mAh), powering 3~7 hours of massage. Use Lola for 10 minutes every day for 60 days without needing to charge. <\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "accordion_repeater_NzfbUD",
-        "accordion_repeater_f66pWa",
-        "accordion_repeater_fVimwe",
-        "accordion_repeater_yWziCd"
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-heading-1",
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-text-1",
+        "template--16198735462578__5704cacf-0d56-410c-aa13-ca43f2007d58-button-1"
       ],
       "disabled": true,
       "settings": {
-        "faq_section_title": "Frequent Questions"
+        "image": "shopify:\/\/shop_images\/xas.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 0,
+        "padding_bottom": 36
       }
     },
-    "17073193388d6dd3f5": {
-      "type": "apps",
+    "e9614c66-8869-4fc5-838e-dbfa1925fede": {
+      "type": "video",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "video_url": "https:\/\/vimeo.com\/645302591",
+        "cover_image": "shopify:\/\/shop_images\/TPP_Homepage_Banner_video_thumbn.jpg",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "background-2",
+        "padding_top": 68,
+        "padding_bottom": 68
+      }
+    },
+    "8c644631-6b04-48be-8b2a-6dd2e8e49bd9": {
+      "type": "collection-list",
       "blocks": {
-        "loox_reviews_loox_agg_section_iGXQp7": {
-          "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-agg-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-1": {
+          "type": "featured_collection",
           "settings": {
-            "only_photos": false,
-            "hide_thumbnails": false,
-            "product_handle": "1-x-titan-smart-cable™-black-friday",
-            "aggregated": true,
-            "data-limit": 20,
-            "maxwidth": 1080
+            "collection": "wall-plugs"
+          }
+        },
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "smart-cables"
+          }
+        },
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "car-chargers"
+          }
+        },
+        "a6da66c2-419b-4425-ae7e-99d0974e947b": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "wall-plugs-1"
           }
         }
       },
       "block_order": [
-        "loox_reviews_loox_agg_section_iGXQp7"
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-1",
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-2",
+        "template--16198735462578__8c644631-6b04-48be-8b2a-6dd2e8e49bd9-featured_collection-3",
+        "a6da66c2-419b-4425-ae7e-99d0974e947b"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 2,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "1645428486c11c1899": {
+      "type": "coll-tile",
+      "blocks": {
+        "01d503e3-92fd-4a7b-bab9-0a45861797b8": {
+          "type": "Tiles",
+          "settings": {
+            "tile_html": "<div><p><\/p><\/div>",
+            "tile_title": "WIRELESS CHARGERS",
+            "includebrowse": true,
+            "tile_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "tile_collection": "",
+            "tile_image": "shopify:\/\/shop_images\/Image_1-min.png",
+            "tile_bg": "#000000",
+            "tile_bg_text": "WIRELESS CHARGERS",
+            "tile_bg_color": "#333333"
+          }
+        },
+        "64f1900d-287d-4fb3-8d21-54778d0b3a48": {
+          "type": "Tiles",
+          "settings": {
+            "tile_html": "<div><p> <\/p><\/div>",
+            "tile_title": "SMART CABLES",
+            "includebrowse": true,
+            "tile_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "tile_collection": "",
+            "tile_image": "shopify:\/\/shop_images\/Layer_1_4_1.png",
+            "tile_bg": "#000000",
+            "tile_bg_text": "SMART CABLES",
+            "tile_bg_color": "#333333"
+          }
+        },
+        "964ac7af-64cc-4616-862b-77f676922721": {
+          "type": "Tiles",
+          "settings": {
+            "tile_html": "<div><p> <\/p><\/div>",
+            "tile_title": "CAR CHARGERS",
+            "includebrowse": true,
+            "tile_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "tile_collection": "",
+            "tile_image": "shopify:\/\/shop_images\/Titan_PD_Nano_Car_Charger_1_1.png",
+            "tile_bg": "#000000",
+            "tile_bg_text": "CAR CHARGERS",
+            "tile_bg_color": "#333333"
+          }
+        },
+        "d74d5f2f-a3a1-4729-bd35-f1e7d768097c": {
+          "type": "Tiles",
+          "settings": {
+            "tile_html": "<div><p><\/p><\/div>",
+            "tile_title": "WALL PLUGS",
+            "includebrowse": true,
+            "tile_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "tile_collection": "",
+            "tile_image": "shopify:\/\/shop_images\/Image_4-min.png",
+            "tile_bg": "#000000",
+            "tile_bg_text": "WALL PLUGS",
+            "tile_bg_color": "#333333"
+          }
+        }
+      },
+      "block_order": [
+        "01d503e3-92fd-4a7b-bab9-0a45861797b8",
+        "64f1900d-287d-4fb3-8d21-54778d0b3a48",
+        "964ac7af-64cc-4616-862b-77f676922721",
+        "d74d5f2f-a3a1-4729-bd35-f1e7d768097c"
+      ],
+      "custom_css": [
+        "h2,.h2 {color: red !important;}"
+      ],
+      "settings": {
+        "bg": "#141414",
+        "border_color": "#fafafa",
+        "border_width": 2,
+        "glow": true
+      }
+    },
+    "ff4c44b2-c82d-4184-8867-a349eace7f61": {
+      "type": "rich-text",
+      "blocks": {
+        "template--16198735462578__ff4c44b2-c82d-4184-8867-a349eace7f61-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Signature Smart Intelligence",
+            "heading_size": "h1"
+          }
+        },
+        "template--16198735462578__ff4c44b2-c82d-4184-8867-a349eace7f61-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We got sick and tired of every phone cable wearing out and constantly breaking! Often holding us back by disabling our most essential tool. So we designed a cable that will outlive all the rest! <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16198735462578__ff4c44b2-c82d-4184-8867-a349eace7f61-heading-1",
+        "template--16198735462578__ff4c44b2-c82d-4184-8867-a349eace7f61-text-1"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-5061e01e-2a17-4232-a41e-6d666d2e8273",
+        "full_width": true,
+        "padding_top": 80,
+        "padding_bottom": 12
+      }
+    },
+    "1645600357fac2e864": {
+      "type": "text-image-text",
+      "blocks": {
+        "5d8f9511-f313-4642-956c-a620fd9dd995": {
+          "type": "Text",
+          "settings": {
+            "centerit": false,
+            "triple_header": "Our Vision",
+            "header_color": "#000000",
+            "triple_text": "When hearing the word ‘smartphone’ one immediately thinks about smart, convenient and thoughtful. This doesn’t always apply to the devices that charge them; always fumbling and messing around with broken cables or the wrong plugs. TITAN POWER+ deals with these issues in excellent fashion.",
+            "text_color": "#000000",
+            "url": "",
+            "url_text": "",
+            "button_bg": "rgba(0,0,0,0)",
+            "button_hover_bg": "",
+            "button_text_color": "#000000",
+            "button_hover_text_color": "rgba(0,0,0,0)",
+            "button_border_color": "rgba(0,0,0,0)",
+            "button_hover_border_color": "#000000",
+            "text_align": "right"
+          }
+        },
+        "a415a232-a870-423a-9294-c60eb9a62f88": {
+          "type": "Image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/aegf.png",
+            "mobile_image": "shopify:\/\/shop_images\/aegf.png"
+          }
+        },
+        "e1885cae-b380-4861-a48a-3f55e392c697": {
+          "type": "Text",
+          "settings": {
+            "centerit": false,
+            "triple_header": "The Titan Team",
+            "header_color": "#000000",
+            "triple_text": "Our technological experts are constantly breaking the boundaries of fast charging, whilst creating highly durable products that will last a lifetime.",
+            "text_color": "#000000",
+            "url": "https:\/\/titanpowerplus.com\/pages\/aboutus",
+            "url_text": "READ OUR STORY",
+            "button_bg": "#60c655",
+            "button_hover_bg": "#141414",
+            "button_text_color": "#ffffff",
+            "button_hover_text_color": "#fafafa",
+            "button_border_color": "#58cc4b",
+            "button_hover_border_color": "#141414",
+            "text_align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "5d8f9511-f313-4642-956c-a620fd9dd995",
+        "a415a232-a870-423a-9294-c60eb9a62f88",
+        "e1885cae-b380-4861-a48a-3f55e392c697"
+      ],
+      "settings": {
+        "bg": "#e4eaea",
+        "line_height": 1.7,
+        "spacing": 80
+      }
+    },
+    "2f350e21-1d76-44a9-b835-def0833eb8b6": {
+      "type": "image-with-text",
+      "blocks": {
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our Vision",
+            "heading_size": "h1"
+          }
+        },
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>When hearing the word ‘smartphone’ one immediately thinks about smart, convenient and thoughtful. This doesn’t always apply to the devices that charge them; always fumbling and messing around with broken cables or the wrong plugs. TITAN POWER+ deals with these issues in excellent fashion.<\/p>",
+            "text_style": "body"
+          }
+        },
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-button-1": {
+          "type": "button",
+          "settings": {
+            "button_label": "READ OUR STORY",
+            "button_link": "https:\/\/titanpowerplus.com\/pages\/aboutus",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-heading-1",
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-text-1",
+        "template--16198735462578__2f350e21-1d76-44a9-b835-def0833eb8b6-button-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify:\/\/shop_images\/aegf.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "164542900532d8ef2a": {
+      "type": "vertical-slider",
+      "blocks": {
+        "1692d4d2-d939-426f-a687-b86f3d493838": {
+          "type": "Product",
+          "settings": {
+            "text": "TITAN SMART CABLE",
+            "description": "<p style=\"font-size: 16px;color:white;\"> ⚡  Ultra-Fast Charging\n<br>\n⚡  Unique 90° Design\n<br>\n⚡  Lifetime Warranty <\/p>",
+            "button_text": "LEARN MORE",
+            "button_url": "https:\/\/titanpowerplus.com\/pages\/titancable",
+            "text_color": "#ffffff",
+            "product": "",
+            "image": "shopify:\/\/shop_images\/Layer_597_1.png",
+            "image_packaging": "shopify:\/\/shop_images\/layer_2_1--1.png"
+          }
+        },
+        "5178e28a-c73c-4c33-a742-70a69ffbcda2": {
+          "type": "Product",
+          "settings": {
+            "text": "TITAN MULTI CABLE",
+            "description": "<p style=\"font-size: 16px;color:white;\"> ⚡ Charge Any Device <br> ⚡ Retractable Cable <br> ⚡ Changeable Length <\/p><p><\/p>",
+            "button_text": "LEARN MORE",
+            "button_url": "https:\/\/titanpowerplus.com\/products\/titan-3-in-1-multi-cable",
+            "text_color": "#ffffff",
+            "product": "",
+            "image": "shopify:\/\/shop_images\/Layer_24_copy.png",
+            "image_packaging": "shopify:\/\/shop_images\/3_in_1_cable_no_bg_green_glow-min.png"
+          }
+        },
+        "ebf046a6-95a5-4118-b943-347ff3929164": {
+          "type": "Product",
+          "settings": {
+            "text": "TITAN CAR CHARGER",
+            "description": "<p style=\"font-size: 16px;color:white;\">⚡ Three Charge Ports <br> ⚡ No More Fighting <br> ⚡ Arrive Fully Charged <\/p>",
+            "button_text": "LEARN MORE",
+            "button_url": "https:\/\/titanpowerplus.com\/products\/titan-fast-car-charger",
+            "text_color": "#ffffff",
+            "product": "",
+            "image": "shopify:\/\/shop_images\/TTP_Homepage_TITAN_CAR_CHARGER_3.png",
+            "image_packaging": "shopify:\/\/shop_images\/image-7.png"
+          }
+        },
+        "346bed26-63bc-4d47-b985-0d199169776c": {
+          "type": "Product",
+          "settings": {
+            "text": "TITAN 15W TURBO DOCK",
+            "description": "<p style=\"font-size: 16px;color:white;\"> ⚡ No messy Wires <br> ⚡ Horizontal Or Vertical <br> ⚡ Sleek And Stylish <\/p>",
+            "button_text": "LEARN MORE",
+            "button_url": "https:\/\/titanpowerplus.com\/products\/titan-15w-wireless-fast-charging-dock",
+            "text_color": "#ffffff",
+            "product": "",
+            "image": "shopify:\/\/shop_images\/Image_1-min.png",
+            "image_packaging": "shopify:\/\/shop_images\/image-5.png"
+          }
+        },
+        "d0c47a61-8fc7-4db2-950e-9f57c375eb1b": {
+          "type": "Product",
+          "disabled": true,
+          "settings": {
+            "text": "Heading",
+            "description": "Description <br> Of <br> Product",
+            "button_text": "Button Text",
+            "button_url": "",
+            "text_color": "#ffffff",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "1692d4d2-d939-426f-a687-b86f3d493838",
+        "5178e28a-c73c-4c33-a742-70a69ffbcda2",
+        "ebf046a6-95a5-4118-b943-347ff3929164",
+        "346bed26-63bc-4d47-b985-0d199169776c",
+        "d0c47a61-8fc7-4db2-950e-9f57c375eb1b"
+      ],
+      "settings": {
+        "section_bg": "#000000",
+        "section_img": "shopify:\/\/shop_images\/Background_-_products.jpg",
+        "arrow_color": "#234020",
+        "pagination_color": "#60c655",
+        "button_bg_hover": "#000000",
+        "button_bg": "#58CC4B",
+        "button_border": "#58cc4b",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "b7926c37-dae0-4e14-8312-ab71a4ad7cec": {
+      "type": "image-banner",
+      "custom_css": [
+        ".color-background-1 {--color-background: 255, 255, 255; --gradient-background: black;}"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Group_49_d1ee7ee8-0361-4202-ab4c-d4b317a3892d.jpg",
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "inverse",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "164542867806a76580": {
+      "type": "rich-text",
+      "blocks": {
+        "1645428678cdd023f9-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Signature Smart Intelligence",
+            "heading_size": "h1"
+          }
+        },
+        "1645428678cdd023f9-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We got sick and tired of every phone cable wearing out and constantly breaking! Often holding us back by disabling our most essential tool. So we designed a cable that will outlive all the rest! <\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "1645428678cdd023f9-0",
+        "1645428678cdd023f9-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "inverse",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "170758373392fafeb2": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_trust_badge_TPyDEn": {
+          "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-trust-badge\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "layout": "horizontal",
+            "alignment": "left",
+            "scheme-type": "default",
+            "review-title": "reviews",
+            "rating-icon": true,
+            "average-rating": true,
+            "loox-branding": true,
+            "review-count": true,
+            "open-reviews": true,
+            "show-border": true,
+            "border-radius": 8,
+            "font-size": 20,
+            "background-color": "",
+            "secondary-background-color": "",
+            "text-color": "",
+            "rating-icon-color": "",
+            "border-color": ""
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_trust_badge_TPyDEn"
       ],
       "settings": {
         "include_margins": true
       }
-    },
-    "section_multi_columns_iU6pxd": {
-      "type": "section-multi-columns",
-      "blocks": {
-        "multi_columns_repeater_WXWDQg": {
-          "type": "multi_columns_repeater",
-          "settings": {
-            "multi_columns_number": "24",
-            "multi_columns_block_title": "HOUR",
-            "multi_columns_block_subtitle": "Free UK Delivery",
-            "multi_columns_block_copy": "We offer Royal Mail Tracked 24 Hour Deliveries on all orders. Delivery time is 1-2 days. Should you need your order sooner we also offer DPD Next Day as an optional upgrade at checkout.",
-            "multi_columns_block_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-_turbo_dock.png"
-          }
-        },
-        "multi_columns_repeater_BRdrrM": {
-          "type": "multi_columns_repeater",
-          "settings": {
-            "multi_columns_number": "30",
-            "multi_columns_block_title": "days",
-            "multi_columns_block_subtitle": "Risk Free Returns",
-            "multi_columns_block_copy": "Not sure about buying a massage gun? We offer a 30 day returns policy on all our products. If for any reason you are not satisfied with your product, you can return your product for a full refund. Simple, no fuss returns.",
-            "multi_columns_block_icon": "shopify:\/\/shop_images\/4_x_free_gift_banner_-_mobile_V2-_buds.png"
-          }
-        },
-        "multi_columns_repeater_Y4FDNF": {
-          "type": "multi_columns_repeater",
-          "settings": {
-            "multi_columns_number": "1",
-            "multi_columns_block_title": "year",
-            "multi_columns_block_subtitle": "Warranty",
-            "multi_columns_block_copy": "Buy with confidence that your massage gun will last. We offer a 1 year warranty on all products, should your Pulsio product develop a fault or break due to no fault of your own, we will replace your item free of charge.",
-            "multi_columns_block_icon": "shopify:\/\/shop_images\/ProductImagesIndividual-Newtitanbudsmainimage_43244737-1b80-498e-a3d5-39f0b203a434.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "multi_columns_repeater_WXWDQg",
-        "multi_columns_repeater_BRdrrM",
-        "multi_columns_repeater_Y4FDNF"
-      ],
-      "settings": {
-        "multi_columns_section_title": "BUY WITH PEACE OF MIND"
-      }
     }
   },
   "order": [
-    "slideshow_NnVUdC",
-    "section_text_with_icons_3b7KcJ",
-    "section_image_tabs_zKw6gN",
-    "section_image_tabs_pLnyBX",
-    "section_zigzag_zn78GD",
-    "slideshow_4Brfdt",
-    "section_air_tabs_4tKUCL",
-    "product_template_pack_874_TDmcTN",
-    "section_faq_bgPWp8",
-    "17073193388d6dd3f5",
-    "section_multi_columns_iU6pxd"
+    "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
+    "image-with-text",
+    "459b0cab-7c8e-40c7-b786-6ba18d5c1404",
+    "featured-collection",
+    "16454291024c32671a",
+    "5704cacf-0d56-410c-aa13-ca43f2007d58",
+    "e9614c66-8869-4fc5-838e-dbfa1925fede",
+    "8c644631-6b04-48be-8b2a-6dd2e8e49bd9",
+    "1645428486c11c1899",
+    "ff4c44b2-c82d-4184-8867-a349eace7f61",
+    "1645600357fac2e864",
+    "2f350e21-1d76-44a9-b835-def0833eb8b6",
+    "164542900532d8ef2a",
+    "b7926c37-dae0-4e14-8312-ab71a4ad7cec",
+    "164542867806a76580",
+    "170758373392fafeb2"
   ]
 }

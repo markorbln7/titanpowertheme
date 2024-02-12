@@ -15,7 +15,7 @@
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-8-pack-iphone.jpg?v=16996167632" alt="{{ featured_image.alt }}">
+            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-8d-Iphone-SALE.jpg?v=1707751755" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -86,15 +86,15 @@
               
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
-                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">IPhone</div>
                       </div>
-                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">Type-C</div>
                       </div>
-                      <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      {% comment %} <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Micro Usb</div>
-                      </div>
+                      </div> {% endcomment %}
                   </div>
               </div>
               <div class="product-template-new__wrapper--content__selection">
@@ -448,7 +448,7 @@ window.images = {
   "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb1.8.jpg?v=1693398807",
   "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb3.0.jpg?v=1693398809",
 }
-{% comment %} window.mainImages = {
+window.mainImages = {
    "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
    "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
    "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
@@ -476,8 +476,8 @@ window.images = {
    "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
    "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
    "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224"
-} {% endcomment %}
-window.mainImages = {
+}
+{% comment %} window.mainImages = {
   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-4-pack-iphone.jpg?v=1699616763",
   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-4-pack-iphone.jpg?v=1699616763",
   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-4-pack-iphone.jpg?v=1699616763",
@@ -505,6 +505,6 @@ window.mainImages = {
   "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-8-pack-micro-usb.jpg?v=1699616763",
   "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-8-pack-micro-usb.jpg?v=1699616763",
   "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-0cable-titan-power-plus-type-c-iphone-fast-charger-8-pack-micro-usb.jpg?v=1699616763"
-}
+} {% endcomment %}
 </script>
 {{ 'overridepacklight874.js' | asset_url | script_tag }}

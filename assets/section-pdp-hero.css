@@ -20,8 +20,6 @@
     border-radius: 30px;
     padding: 30px 20px;
     background-color: #fff;
-    height: -moz-fit-content;
-    height: fit-content;
 }
 
 .pdp-hero__heading {
@@ -426,7 +424,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 @media (max-width: 767px) {
 
     .pdp-hero__gallery-main-image, .pdp-hero__gallery-main-image img {
-        max-height: 253px;
+        max-height: auto;
     }
 
     .pdp-hero__atc-label {

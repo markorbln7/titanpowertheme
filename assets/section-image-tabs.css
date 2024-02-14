@@ -135,6 +135,8 @@
 .image-tabs__images img {
     height: 320px;
     border-radius: 64px;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 .image-frames, .image-frame {

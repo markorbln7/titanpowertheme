@@ -11,7 +11,7 @@
     <div class="product-template-new__wrapper f ais jcc">
         <div class="product-template-new__wrapper--image column-left">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970" alt="{{ featured_image.alt }}">
+            <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone41.jpg?v=1707753874" alt="{{ featured_image.alt }}">
         </div>
         <div class="product-template-new__wrapper--content column-right">
             <div class="product-template-new__wrapper--content__review js-section-scroll">
@@ -82,15 +82,25 @@
               
               <div class="product-template-new__wrapper--content__selection small-top">
                   <div class="product-template-new__wrapper--content__selection--wrapper f aic jcb small-top fw">
-                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="iPhone" class="relative pd-default-phone active js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">IPhone</div>
                       </div>
-                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <div data-type="Type-C" class="relative js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2 w-50">
                           <div class="zindex transform">USB-C</div>
                       </div>
-                      <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
+                      <style>
+                        .w-50 {
+                          flex: 0 0 50%;
+                          flex-direction: column;
+                          color: #60c655;
+                          font-weight: 700;
+                          font-size: 20px;
+                          max-width: 50%;
+                        }
+                      </style>
+                      {% comment %} <div data-type="Micro-USB" class="relative pd-disable js-type-selector product-template-new__wrapper--content__selection--wrapper__single v2">
                           <div class="zindex transform">Micro Usb</div>
-                      </div>
+                      </div> {% endcomment %}
                   </div>
               </div>
               <div class="product-template-new__wrapper--content__selection">
@@ -436,33 +446,33 @@ window.images = {
   "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/musb3.0.jpg?v=1693398809",
 }
 window.mainImages = {
-   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
-   "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
-   "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_iPhone_1080x_edited.jpg?v=1681712970",
-   "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_USB-C_1080x_edited.jpg?v=1681713224",
-   "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_USB-C_1080x_edited.jpg?v=1681713224",
-   "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_USB-C_1080x_edited.jpg?v=1681713224",
-   "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_micro_1080x_edited.jpg?v=1681713224",
-   "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_micro_1080x_edited.jpg?v=1681713224",
-   "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_4pack_60_25_micro_1080x_edited.jpg?v=1681713224",
-   "15xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_iPhone_1080x_edited.jpg?v=1681712970",
-   "15xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_iPhone_1080x_edited.jpg?v=1681712970",
-   "15xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_iPhone_1080x_edited.jpg?v=1681712970",
-   "15xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_USB-C_1080x_edited.jpg?v=1681713224",
-   "15xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_USB-C_1080x_edited.jpg?v=1681713224",
-   "15xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_USB-C_1080x_edited.jpg?v=1681713224",
-   "15xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_micro_1080x_edited.jpg?v=1681713224",
-   "15xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_micro_1080x_edited.jpg?v=1681713224",
-   "15xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_15pack_60_50_micro_1080x_edited.jpg?v=1681713224",
-   "8xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_iPhone_1080x_edited.jpg?v=1681712970",
-   "8xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_iPhone_1080x_edited.jpg?v=1681712970",
-   "8xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_iPhone_1080x_edited.jpg?v=1681712970",
-   "8xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_USB-C_1080x_edited.jpg?v=1681713224",
-   "8xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_USB-C_1080x_edited.jpg?v=1681713224",
-   "8xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_USB-C_1080x_edited.jpg?v=1681713224",
-   "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
-   "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224",
-   "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TitanCable_8pack_60_35_micro_1080x_edited.jpg?v=1681713224"
+  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone41.jpg?v=1707753874",
+  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone41.jpg?v=1707753874",
+  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone41.jpg?v=1707753874",
+  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb41.jpg?v=1707753874",
+  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb41.jpg?v=1707753874",
+  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb41.jpg?v=1707753874",
+  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro41.jpg?v=1707753874",
+  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro41.jpg?v=1707753874",
+  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro41.jpg?v=1707753874",
+  "15xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone15.jpg?v=1707753874",
+  "15xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone15.jpg?v=1707753874",
+  "15xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone15.jpg?v=1707753874",
+  "15xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb15.jpg?v=1707753874",
+  "15xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb15.jpg?v=1707753874",
+  "15xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb15.jpg?v=1707753874",
+  "15xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro15.jpg?v=17077538744",
+  "15xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro15.jpg?v=17077538744",
+  "15xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro15.jpg?v=17077538744",
+  "8xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone8.jpg?v=1707753874",
+  "8xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone8.jpg?v=1707753874",
+  "8xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone8.jpg?v=1707753874",
+  "8xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc8.jpg?v=1707753875",
+  "8xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc8.jpg?v=1707753875",
+  "8xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc8.jpg?v=1707753875",
+  "8xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro8.jpg?v=1707753874",
+  "8xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro8.jpg?v=1707753874",
+  "8xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro8.jpg?v=1707753874"
 } 
 // window.mainImages = {
 //   "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_nano_plug_4_pack_70_iphone_cable.jpg?v=1701099490",

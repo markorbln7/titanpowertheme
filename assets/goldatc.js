@@ -81,13 +81,13 @@ increases.forEach((increas) => {
                                 }
                                 if(itemCount > 6 && itemCount < 10) {
                                     ToGoal = 10
-                                    percent = '70%'
+                                    percent = '75%'
                                 }
                                 let leftItems = ToGoal - itemCount;
                                 if(leftItems > 0) {
                                     bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
-                                    bar.innerHTML = `You unlocked full 70% OFF discount!!`
+                                    bar.innerHTML = `You unlocked full 75% OFF discount!!`
                                 }
 
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
@@ -202,13 +202,13 @@ decreases.forEach((decrease) => {
                             }
                             if(itemCount > 6 && itemCount < 10) {
                                 ToGoal = 10
-                                percent = '70%'
+                                percent = '75%'
                             }
                             let leftItems = ToGoal - itemCount;
                             if(leftItems > 0) {
                                 bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                             } else {
-                                bar.innerHTML = `You unlocked full 70% OFF discount!!`
+                                bar.innerHTML = `You unlocked full 75% OFF discount!!`
                             }
 
                             let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
@@ -363,13 +363,13 @@ startBundles.forEach((startBundle) => {
                                 }
                                 if(itemCount > 6 && itemCount < 10) {
                                     ToGoal = 10
-                                    percent = '70%'
+                                    percent = '75%'
                                 }
                                 let leftItems = ToGoal - itemCount;
                                 if(leftItems > 0) {
                                     bar.innerHTML = `You have ${itemCount} items, </br> add ${leftItems} more for ${percent} off!`
                                 } else {
-                                    bar.innerHTML = `You unlocked full 70% OFF discount!!`
+                                    bar.innerHTML = `You unlocked full 75% OFF discount!!`
                                 }
 
                                 let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')

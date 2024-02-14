@@ -1,0 +1,73 @@
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign faq_section_title = section.settings.faq_section_title
+  assign accordion_repeater = section.blocks | where: 'type', 'accordion_repeater'
+%}
+
+<section class="section-faq">
+  <div class="content-wrapper">
+    {% if faq_section_title != blank %}
+      <h2 class="faq__title">{{ faq_section_title }}</h2>
+    {% endif %}
+
+    {% if accordion_repeater.size > 0 %}
+      <div class="faq__questions">
+        {% for block in accordion_repeater %}
+          {% liquid
+            assign accordion_question = block.settings.accordion_question
+            assign accordion_answer = block.settings.accordion_answer
+          %}
+          <article class="faq__accordion">
+            <div class="faq__accordion-header">
+              <h3 class="faq__accordion-title">{{ accordion_question }}</h3>
+              <svg viewBox="0 0 10 6">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                </path>
+              </svg>
+            </div>
+            <div class="faq__accordion-panel">{{ accordion_answer }}</div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script src="{{ 'section-faq.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "FAQ - new",
+  "settings": [
+    {
+      "type": "text",
+      "id": "faq_section_title",
+      "label": "Section Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion_repeater",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "accordion_question",
+          "label": "Accordion question"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_answer",
+          "label": "Accordion answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ - new"
+    }
+  ]
+}
+{% endschema %}

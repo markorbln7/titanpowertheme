@@ -1,0 +1,67 @@
+{{ 'section-media-banner.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign media_title = section.settings.media_title
+  assign media_url = section.settings.media_url
+  assign media_poster = section.settings.media_poster
+%}
+
+<section class="section-media-banner">
+  <div class="media-banner">
+    <div class="media-banner__wrapper">
+      <video
+        playsinline="true"
+        autoplay="autoplay"
+        muted="muted"
+        loop="loop"
+        class="media-banner__media"
+        preload="metadata"
+        poster="{{ media_poster }}"
+      >
+        <source
+          src=" {{ media_url }}"
+          type="video/mp4"
+        >
+        {% render 'titan-image', image: media_poster %}
+      </video>
+    </div>
+
+    <div class="media-banner__container">
+      <div class="media-banner__content">
+        {% if media_title != blank %}
+          <h2 class="media-banner__title">{{ media_title }}</h2>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'section-media-banner.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Media banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "media_title",
+      "label": "Section title"
+    },
+    {
+      "type": "url",
+      "id": "media_url",
+      "label": "Media url"
+    },
+    {
+      "type": "image_picker",
+      "id": "media_poster",
+      "label": "Media poster"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media banner"
+    }
+  ]
+}
+{% endschema %}

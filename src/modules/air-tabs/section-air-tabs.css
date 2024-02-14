@@ -1,0 +1,437 @@
+.section-air-tabs {
+    padding: 40px 0;
+}
+
+.section-air-tabs * {
+    font-family: Montserrat;
+}
+
+.air-tabs__tab-content {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s ease-in 0.15s;
+}
+
+.air-tabs__tab-content.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.air-tabs__tab-body {
+    display: none;
+}
+
+.air-tabs__tab-content.active .air-tabs__tab-body {
+    display: block;
+}
+
+.formob-only.air-tabs__heading {
+    text-align: center;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.fordesk-only.air-tabs__heading {
+    margin-bottom: 24px;
+}
+
+.air-tabs__tab-title,
+.air-tabs__tab-subtitle {
+    margin: 0;
+}
+
+.fordesk-only.air-tabs__heading h2 {
+    font-weight: 700;
+    font-size: 37.0222px;
+    line-height: 45px;
+    text-transform: uppercase;
+    margin: 0;
+    color: #222;
+}
+
+.fordesk-only.air-tabs__heading h3 {
+    font-weight: 600;
+    font-size: 16.66px;
+    line-height: 39px;
+    margin: 0;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.air-tabs__tab-wrapper {
+    background-color: #fff;
+    border-radius: 22px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 86%;
+    padding: 40px;
+    box-shadow: 15px 9px 40px #3536364d;
+}
+
+.air-tabs__tab-attachment-title {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 27px;
+    text-transform: uppercase;
+    color: #222;
+    margin: 0;
+}
+
+.air-tabs__tab-impact-text {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: #60c655;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.air-tabs__tab-text {
+    font-weight: 500;
+    font-size: 14.8089px;
+    line-height: 24px;
+    color: #6d6d6d;
+    margin: 0;
+}
+
+.air-tabs__tab-footer-text {
+    padding-top: 40px;
+    line-height: 20px;
+    padding-right: 70px;
+    text-transform: uppercase;
+    color: #60c655;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.air-tabs__nav-image {
+    margin: 0;
+}
+
+.air-tabs__nav-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    margin: 0;
+}
+
+.air-tabs__nav {
+    height: 300px;
+    margin-top: -50px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.air-tabs__nav-item {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.air-tabs__nav-item:nth-child(1) {
+    width: 130px;
+    left: 15%;
+    top: -50px;
+}
+
+.air-tabs__nav-item:nth-child(2) {
+    top: 24%;
+    left: 50%;
+    width: 150px;
+}
+
+.air-tabs__nav-item:nth-child(3) {
+    top: 55%;
+    left: 6%;
+    width: 150px;
+}
+
+.air-tabs__nav-item:nth-child(4) {
+    left: 40%;
+    top: 86%;
+    width: 190px;
+}
+
+.air-tabs__nav-number {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #222;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-family: Montserrat;
+    font-weight: 600;
+    color: #000;
+}
+
+.air-tabs__nav-item.active .air-tabs__nav-number {
+    z-index: 2 !important;
+    color: #fff;
+    background: #35ff2e;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(53, 255, 46);
+}
+
+.air-tabs__nav-item:nth-child(1) .air-tabs__nav-number {
+    top: 37%;
+    left: 13%;
+}
+
+.air-tabs__nav-item:nth-child(2) .air-tabs__nav-number {
+    top: 10%;
+    left: 86%;
+}
+
+.air-tabs__nav-item:nth-child(3) .air-tabs__nav-number {
+    top: -10%;
+    left: 33%;
+}
+
+
+.air-tabs__nav-item:nth-child(4) .air-tabs__nav-number {
+    left: 20%;
+    top: -16%;
+}
+
+.air-tabs__nav-number::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #024e78, transparent);
+    box-shadow: 0 8.43972px 25.3192px #2eaada66;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.air-tabs__nav-number::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    bottom: -7px;
+    left: -7px;
+    border: 1px #ffffff solid;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: border-color .2s ease;
+}
+
+.air-tabs__nav-item.active .air-tabs__nav-number::before {
+    background: #00b9ff;
+    z-index: -1;
+    color: #fff !important;
+}
+
+.air-tabs__nav-item.active .air-tabs__nav-number::after {
+    border: 1.5px solid #35ff2e;
+}
+
+@media(min-width: 1024px) {
+    .section-air-tabs {
+        padding: 80px 0;
+    }
+
+    .air-tabs__nav {
+        height: 600px;
+        margin-top: -15px;
+    }
+
+    .air-tabs__tab-wrapper {
+        padding: 40px 54px 54px;
+        max-width: 490px;
+        margin-left: 43px;
+    }
+
+    .air-tabs__attachment-title {
+        font-size: 22.2133px;
+        line-height: 27px;
+    }
+
+    .air-tabs__tab-impact-text {
+        font-size: 12.9578px;
+        line-height: 16px;
+    }
+
+    .air-tabs__tab-footer-text {
+        padding-right: 0;
+    }
+
+    .air-tabs__nav {
+        height: 600px;
+        margin-top: -15px;
+        max-width: 570px;
+    }
+
+    .air-tabs__nav-item:nth-child(1) {
+        width: 150px;
+        top: -50px;
+        left: 26%;
+    }
+
+    .air-tabs__nav-item:nth-child(2) {
+        width: 160px;
+        top: 22.2%;
+        left: 57.2%;
+    }
+
+    .air-tabs__nav-item:nth-child(3) {
+        width: 170px;
+        height: 186px;
+        top: 44%;
+        left: 9%;
+    }
+
+    .air-tabs__nav-item:nth-child(4) {
+        width: 210px;
+        top: 71.5%;
+        left: 46%8
+    }
+
+    .air-tabs__nav-number {
+        width: 50px;
+        height: 50px;
+    }
+
+    .air-tabs__nav-item:nth-child(1) .air-tabs__nav-number {
+        top: 9.3%;
+        left: 6%;
+    }
+
+    .air-tabs__nav-item:nth-child(2) .air-tabs__nav-number {
+        top: 20%;
+        left: 72%;
+    }
+
+    .air-tabs__nav-item:nth-child(3) .air-tabs__nav-number {
+        top: -24%;
+        left: 33%;
+    }
+
+
+    .air-tabs__nav-item:nth-child(4) .air-tabs__nav-number {
+        top: -27%;
+        left: 66%;
+    }
+}
+
+@media(min-width: 768px) {
+    .section-air-tabs .content-wrapper {
+        max-width: 1140px;
+        margin: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .air-tabs__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .air-tabs__tab-title {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 30px;
+        line-height: 42px;
+        color: #000;
+        text-transform: uppercase;
+    }
+
+    .air-tabs__tab-subtitle {
+        font-size: 18px;
+        line-height: 42px;
+        text-align: center;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding-bottom: 60px;
+        letter-spacing: -0.1px;
+    }
+
+    .air-tabs__tab-title::first-letter {
+        font-size: 200%;
+    }
+}
+
+@media (max-width: 375px) {
+    .air-tabs__tab-title {
+        font-size: 26px;
+        line-height: 32px;
+    }
+}
+
+@media(max-width: 767px) {
+    .fordesk-only {
+        display: none;
+    }
+}
+
+@media(min-width: 768px) {
+    .formob-only {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .air-tabs__tab-wrapper {
+        height: 610px;
+        max-width: 390px;
+        padding: 30px 25px;
+        margin-left: -20px;
+        margin-right: 20px;
+    }
+
+    .air-tabs__nav {
+        height: 490px;
+        margin-top: 0;
+    }
+
+    .air-tabs__nav-item:nth-child(1) .air-tabs__nav-number {
+        top: 9.3%;
+        left: 6%;
+    }
+
+    .air-tabs__nav-item:nth-child(2) .air-tabs__nav-number {
+        top: 20%;
+        left: 72%;
+    }
+
+    .air-tabs__nav-item:nth-child(4) .air-tabs__nav-number {
+        top: -27%;
+        left: 66%;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 992px) {
+    .air-tabs__wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

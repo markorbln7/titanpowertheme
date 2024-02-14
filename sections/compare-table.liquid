@@ -3,7 +3,8 @@
 {{ 'section-compare.css' | asset_url | stylesheet_tag }}
 <style>
     .table-custom {
-        background: linear-gradient(180deg,#101314 21.88%,#19699578 100%,#33516291) !important;
+        background: linear-gradient(180deg,black 21.88%,#60c655 100%,#60c655) !important;
+        {% comment %} background: linear-gradient(180deg,black 21.88%, #60c655 100%) !important; {% endcomment %}
     }
 </style>
 
@@ -18,56 +19,51 @@
                <li>Model</li>
                <li>Trustpilot Rating</li>
                <li>Price</li>
-               <li>Fast charging</li>
-               <li>Charging time</li>
+               <li>Weight</li>
+               <li>Battery</li>
                <li>Warranty</li>
-               <li>Shipping</li>
+               <li>Noise</li>
                <li>Return Policy</li>
-               <li>Material</li>
             </ul>
          </div>
          <div class="columns-table grid-two">
             <div class="main-detail-tabel">
-               <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/cable.png?v=1706010513" alt="">
+               <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/massage_gun_side3.jpg?v=1707483660" alt="">
                <ul>
-                  <li class="heading-tabel">Titan Cable</li>
+                  <li class="heading-tabel">{{ all_products['titan-massage-gun™'].title }}</li>
                   <li class="star-tabel">
                      <img src="//pulsio.eu/cdn/shop/files/Group_80.png?v=1685955883" alt="">
                   </li>
                   <li class="icon-table">
                      <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                     <p>$4.99</p>
+                     <p>{{ all_products['titan-massage-gun™'].price | money }}</p>
                   </li>
                   <li class="icon-table">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                    <p>Yes</p>
+                    <p>1.5lbs</p>
                   </li>
                   <li class="icon-table">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                    <p>50% in 20 minutes</p>
+                    <p>4 hours</p>
                   </li>
                   <li class="icon-table">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                    <p>Lifetime</p>
+                    <p>1 year</p>
                   </li>
                   <li class="icon-table">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                    <p>5-10 DAYS</p>
+                    <p>45db</p>
                   </li>
                   <li class="icon-table">
                     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
                     <p>30 Days Risk Free</p>
-                  </li>
-                  <li class="icon-table">
-                    <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 11 4 C 7.101563 4 4 7.101563 4 11 L 4 39 C 4 42.898438 7.101563 46 11 46 L 39 46 C 42.898438 46 46 42.898438 46 39 L 46 15 L 44 17.3125 L 44 39 C 44 41.800781 41.800781 44 39 44 L 11 44 C 8.199219 44 6 41.800781 6 39 L 6 11 C 6 8.199219 8.199219 6 11 6 L 37.40625 6 L 39 4 Z M 43.25 7.75 L 23.90625 30.5625 L 15.78125 22.96875 L 14.40625 24.4375 L 23.3125 32.71875 L 24.09375 33.4375 L 24.75 32.65625 L 44.75 9.03125 Z"/></svg>
-                    <p>Fiber</p>
                   </li>
                </ul>
             </div>
          </div>
          <div class="columns-table grid-two grid-threee">
             <div class="main-detail-tabel">
-               <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/competitor.png?v=1706010513" alt="">
+               <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/tableone.png?v=1678087376" alt="">
                <ul>
                   <li class="heading-tabel otherhead">Other Brands</li>
                   <li class="star-tabel">
@@ -75,15 +71,15 @@
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
-                     <p>$15+</p>
+                     <p>{{ all_products['mgc'].price | money }}+</p>
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
-                     <p>No</p>
+                     <p>3lbs</p>
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
-                     <p>20% in 20 minutes</p>
+                     <p>2 hours</p>
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
@@ -91,15 +87,11 @@
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
-                     <p>Varies</p>
+                     <p>58db</p>
                   </li>
                   <li class="icon-table">
                      <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
                      <p>None</p>
-                  </li>
-                  <li class="icon-table">
-                     <img src="https://cdn.shopify.com/s/files/1/0723/8366/0311/files/Close.png?v=1678087654" alt="">
-                     <p>Other</p>
                   </li>
                </ul>
             </div>

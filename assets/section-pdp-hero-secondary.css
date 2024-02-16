@@ -98,8 +98,7 @@
     gap: 5px;
     padding: 3px 16px;
     border-radius: 10px 10px 0 0;
-    background-image: linear-gradient(to top, #5e5d5d, #838383, #abaaab, #d4d4d4, #ffffff);
-    display: none;
+    display: flex;
 }
 
 .pdp-hero__upsell-message.active {
@@ -130,7 +129,7 @@
     transition: all 0.4s ease;
 }
 
-.pdp-hero__extra-add.active {
+.pdp-hero__extra-add.promo {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;

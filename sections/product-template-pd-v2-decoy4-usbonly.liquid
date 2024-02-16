@@ -398,7 +398,7 @@ window.length = {
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.price | monmoney_with_currencyey }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.price | monney_with_currencyey }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
         'pd-1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
@@ -430,6 +430,8 @@ window.length = {
       {% endif %}
   {% endfor %}
 }
+
+console.log(window.length, 'length')
 window.compareLength = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}

@@ -1,5 +1,51 @@
 {
   "sections": {
+    "section_pdp_hero_secondary_zCWbtf": {
+      "type": "section-pdp-hero-secondary",
+      "blocks": {
+        "product_repeater_6RVB7E": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "4x",
+            "product_obj": "2-x-titan-smart-cable™",
+            "product_title_custom": "",
+            "upsell_product_discount": ""
+          }
+        },
+        "product_repeater_mqp4Vr": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "3x",
+            "product_obj": "3-x-titan-smart-cable™",
+            "product_title_custom": "",
+            "upsell_product_discount": ""
+          }
+        },
+        "product_repeater_peVgz3": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "1-x-titan-smart-cable™",
+            "product_title_custom": "",
+            "upsell_product_discount": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_6RVB7E",
+        "product_repeater_mqp4Vr",
+        "product_repeater_peVgz3"
+      ],
+      "settings": {
+        "product_subtitle": "",
+        "discount_content": "36% OFF",
+        "atc_label": "96% OF the reviews for this item are positive",
+        "product_highlighted": "1-x-titan-smart-cable™-black-friday",
+        "product_highlighted_title": "",
+        "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+      }
+    },
     "slideshow_NnVUdC": {
       "type": "slideshow",
       "blocks": {
@@ -710,6 +756,7 @@
     }
   },
   "order": [
+    "section_pdp_hero_secondary_zCWbtf",
     "slideshow_NnVUdC",
     "section_text_with_icons_3b7KcJ",
     "slideshow_3EYWCG",

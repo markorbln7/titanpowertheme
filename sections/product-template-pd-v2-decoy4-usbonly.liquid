@@ -518,6 +518,7 @@ window.products = {
       'pd-{{ variant.title | remove:" " }}' : '{{ variant.id }}',
     {% endfor %}
 }
+console.log(window.products, 'products')
 window.prices = {
    {% for variant in product.variants %}
       '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
@@ -619,7 +620,7 @@ window.images = {
    "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.2pd.jpg?v=1693398805",
    "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8pd.jpg?v=1693398809"
 }
-  window.mainImages = {
+window.mainImages = {
    "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
    "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
    "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",

@@ -29,7 +29,7 @@
           <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
         {% endif %}
         <figure class="pdp-hero__gallery-main-image">
-          {% render 'titan-image', image: product.featured_image %}
+          <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905" alt="{{ featured_image.alt }}">
         </figure>
         {% if iconsRepeater.size > 0 %}
           <div class="pdp-hero__icons">
@@ -85,25 +85,25 @@
         {% comment %} PRODUCT OPTIONS {% endcomment %}
         <div class="pdp-hero__selection">
           <div class="pdp-hero__types">
-            <div class="pdp-hero__option active">
+            <div data-type="iPhone" class="pdp-hero__option active js-type-selector">
               <span>IPhone</span>
             </div>
 
-            <div class="pdp-hero__option">
+            <div data-type="Type-C" class="pdp-hero__option js-type-selector">
               <span>USB-C</span>
             </div>
           </div>
 
           <div class="pdp-hero__sizes">
-            <div class="pdp-hero__option active">
+            <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
               <span>3.0m</span>
             </div>
 
-            <div class="pdp-hero__option">
+            <div data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
               <span>1.8m</span>
             </div>
 
-            <div class="pdp-hero__option">
+            <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
               <span>1.2m</span>
             </div>
           </div>
@@ -153,11 +153,12 @@
                 endif
 
                 assign upsell_product_image = product_obj.featured_image
-                assign product_price = product_obj.price | money_with_currency
-                assign product_compare_at_price = product_obj.compare_at_price | money_with_currency
+                assign product_price = product_obj.price
+                assign product_compare_at_price = product_obj.compare_at_price
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
+                assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}
-              <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper">
+              <div data-count="{{ upsell_product_selector_number }}" class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector">
                 <input type="checkbox" id="pdp-hero__checkbox" class="js-upsell-checkbox">
                 <div class="pdp-hero__extra-checkbox">
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
@@ -176,8 +177,8 @@
                   </div>
 
                   <div class="pdp-hero__upsell-price">
-                    <span class="pdp-hero__pricing-price">{{ product_price | money_with_currency }}</span>
-                    <span class="crossed">{{ product_compare_at_price | money_with_currency }}</span>
+                    <span class="pdp-hero__pricing-price">{{ product_price | money }}</span>
+                    <span class="crossed">{{ product_compare_at_price | money }}</span>
                   </div>
                 </div>
                 {% render 'titan-image', image: upsell_product_image %}
@@ -189,8 +190,8 @@
           {% if product_highlighted %}
             {% liquid
               assign product_highlighted_image = product_highlighted.featured_image
-              assign product_highlighted_price = product_highlighted.price | money_with_currency
-              assign product_highlighted_compare_at_price = product_highlighted.compare_at_price | money_with_currency
+              assign product_highlighted_price = product_highlighted.price
+              assign product_highlighted_compare_at_price = product_highlighted.compare_at_price
 
               assign product_highlighted_title = section.settings.product_highlighted_title
               if product_highlighted_title == blank
@@ -214,8 +215,8 @@
                   <h4 class="pdp-hero__upsell-title">{{ product_highlighted_title }}</h4>
 
                   <div class="pdp-hero__upsell-price">
-                    <span class="pdp-hero__pricing-price">{{ product_highlighted_price | money_with_currency }}</span>
-                    <span class="crossed">{{ product_highlighted_compare_at_price | money_with_currency }}</span>
+                    <span class="pdp-hero__pricing-price">{{ product_highlighted_price | money }}</span>
+                    <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
                   </div>
                 </div>
                 {% render 'titan-image', image: product_highlighted_image %}
@@ -229,7 +230,7 @@
           <div
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
-            class="js-atc product__list--single--atc pdp-hero__atc"
+            class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc"
           >
             ADD TO CART
           </div>
@@ -259,6 +260,58 @@
 </section>
 
 <script src="{{ 'section-pdp-hero-secondary.js' | asset_url }}" defer="defer"></script>
+{{ 'pdpheronew.js' | asset_url | script_tag }}
+
+<script>
+window.selectLogic = {
+  productCount: '4x',
+  productHandle: '',
+  productId: '',
+  phoneType: 'iPhone',
+  cableLength: '10ft(3.0m)',
+  addon: ''
+}
+
+window.products = {
+{% for upsell_product in product_repeater %}
+   {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+   {% for variant in product_obj.variants %}
+    '{{ variant.title | remove:" "}}' : '{{ variant.id }}',
+  {% endfor %}
+{% endfor %}
+}
+
+console.log(window.products, 'window.products')
+window.mainImages = {
+  "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+  "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+  "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+  "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+  "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+  "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+  "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+  "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+  "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+  "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+  "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+  "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+}
+</script>
 
 {% schema %}
 {
@@ -314,6 +367,11 @@
       "type": "product_repeater",
       "name": "Product upsell",
       "settings": [
+        {
+          "type": "text",
+          "id": "product_selector_number",
+          "label": "Product selector number"
+        },
         {
           "type": "product",
           "id": "product_obj",

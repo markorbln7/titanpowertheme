@@ -528,6 +528,7 @@ window.products = {
       'pd-{{ variant.title | remove:" " }}' : '{{ variant.id }}',
     {% endfor %}
 }
+console.log(window.products, 'products')
 window.prices = {
    {% for variant in product.variants %}
       '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',

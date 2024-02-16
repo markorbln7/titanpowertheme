@@ -564,7 +564,11 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
 
 @media (max-width: 767px) {
 
-    
+    .pdp-hero__icon-container {
+        padding-inline: 0;
+        max-width: 160px;
+        flex: 1 0 50%;
+    }
 
     .pdp-hero__gallery-main-image img {
         -o-object-fit: cover;

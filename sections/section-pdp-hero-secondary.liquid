@@ -1,6 +1,6 @@
 {{ 'section-pdp-hero-secondary.css' | asset_url | stylesheet_tag }}
 
-{% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off']%}
+{% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
 
 {% liquid
   comment
@@ -39,7 +39,11 @@
           <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
         {% endif %}
         <figure class="pdp-hero__gallery-main-image">
-          <img class="js-main-image-change w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905" alt="{{ featured_image.alt }}">
+          <img
+            class="js-main-image-change w-100"
+            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905"
+            alt="{{ featured_image.alt }}"
+          >
         </figure>
         {% if iconsRepeater.size > 0 %}
           <div class="pdp-hero__icons">
@@ -87,7 +91,7 @@
           </div>
 
           <div class="pdp-hero__price-diff js-saving">
-            {% assign difference = mainProduct.compare_at_price_max| minus: mainProduct.price_max %}
+            {% assign difference = mainProduct.compare_at_price_max | minus: mainProduct.price_max %}
             {{ difference | money_with_currency }} SAVED
           </div>
         </div>
@@ -105,16 +109,14 @@
           </div>
 
           <div class="pdp-hero__sizes">
-            <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
-              <span>3.0m</span>
+            <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
+              <span>1.2m</span>
             </div>
-
             <div data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
               <span>1.8m</span>
             </div>
-
-            <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
-              <span>1.2m</span>
+            <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
+              <span>3.0m</span>
             </div>
           </div>
         </div>
@@ -181,8 +183,12 @@
                   </div>
 
                   <div class="pdp-hero__upsell-price">
-                    <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }}">{{ product_price | money }}</span>
-                    <span class="crossed js-price-discount-{{ forloop.index }}">{{ product_compare_at_price | money }}</span>
+                    <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }}">
+                      {{- product_price | money -}}
+                    </span>
+                    <span class="crossed js-price-discount-{{ forloop.index }}">
+                      {{- product_compare_at_price | money -}}
+                    </span>
                   </div>
                 </div>
                 {% render 'titan-image', image: upsell_product_image %}
@@ -205,7 +211,10 @@
                 assign product_highlighted_title = section.settings.product_highlighted_title
               endif
             %}
-            <div data-addon-id={{ product_highlighted.first_available_variant.id }} class="pdp-hero__upsell-highlighted js-addon">
+            <div
+              data-addon-id="{{ product_highlighted.first_available_variant.id }}"
+              class="pdp-hero__upsell-highlighted js-addon"
+            >
               <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
               <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper">
                 <input type="checkbox" id="pdp-hero__checkbox">
@@ -266,34 +275,117 @@
   .pdp-hero__upsell-highlighted {
     background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
     border-radius: 0 0 22px 22px;
-    box-shadow: -2px 2px 5px 4px #00000038!important;
+    box-shadow: -2px 2px 5px 4px #00000038 !important;
     border-radius: 22px;
-}
+  }
 </style>
 
 <script src="{{ 'section-pdp-hero-secondary.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script>
 
 <script>
-  window.selectLogic = {
-    productCount: '4x',
-    productHandle: '',
-    productId: '',
-    phoneType: 'iPhone',
-    cableLength: '10ft(3.0m)',
-    addon: ''
-  }
+    window.selectLogic = {
+      productCount: '4x',
+      productHandle: '',
+      productId: '',
+      phoneType: 'iPhone',
+      cableLength: '10ft(3.0m)',
+      addon: ''
+    }
 
-  window.products = {
+    window.products = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+          '{{ variant.title | remove:" "}}' : '{{ variant.id }}',
+        {% endfor %}
+      {% endfor %}
+    }
+
+    console.log(window.products, 'window.products')
+    window.mainImages = {
+      "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+      "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+      "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
+      "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+      "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+      "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
+      "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+      "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+      "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
+      "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+      "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+      "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
+      "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+      "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+      "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
+      "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+      "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+      "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
+      "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+      "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+      "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
+      "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+      "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+      "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
+      "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+      "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+      "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+    }
+  window.prices = {
     {% for upsell_product in product_repeater %}
       {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
       {% for variant in product_obj.variants %}
-        '{{ variant.title | remove:" "}}' : '{{ variant.id }}',
+       '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  window.comparePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+       '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  window.savePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
       {% endfor %}
     {% endfor %}
   }
 
+  window.jointPrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointComparePrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointSavePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+
+
+
   console.log(window.products, 'window.products')
+  console.log(window.prices, 'window.prices')
   window.mainImages = {
     "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
     "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
@@ -323,89 +415,6 @@
     "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
     "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
   }
-window.prices = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-     '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
-   {% endfor %}
-  {% endfor %}
-}
-window.comparePrices = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-     '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
-   {% endfor %}
-  {% endfor %}
-}
-window.savePrices = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
-    {% endfor %}
-  {% endfor %}
-}
-
-window.jointPrice = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
-    {% endfor %}
-  {% endfor %}
-}
-window.jointComparePrice = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
-    {% endfor %}
-  {% endfor %}
-}
-window.jointSavePrices = {
-  {% for upsell_product in product_repeater %}
-    {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-    {% for variant in product_obj.variants %}
-      '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
-    {% endfor %}
-  {% endfor %}
-}
-
-
-
-console.log(window.products, 'window.products')
-console.log(window.prices, 'window.prices')
-window.mainImages = {
-  "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-  "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-  "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-  "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-  "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-  "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-  "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-  "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-  "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-  "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-  "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-  "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-  "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-  "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-  "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-  "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-  "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-  "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-  "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-  "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-  "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-  "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-  "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-  "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-  "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-  "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-  "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-}
 </script>
 
 {% schema %}

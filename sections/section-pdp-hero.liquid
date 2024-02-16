@@ -11,6 +11,9 @@
   assign extraAttachment = section.settings.extra_attachment
   assign extraAttachmentImage = section.settings.extra_attachment_image
 
+  comment
+    Blocks
+  endcomment
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
 %}

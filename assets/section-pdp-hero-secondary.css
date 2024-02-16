@@ -1,6 +1,6 @@
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/pdp-hero/section-pdp-hero.css ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/pdp-hero-secondary/section-pdp-hero-secondary.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
 .section-pdp-hero {
     padding-block: 50px;
 }
@@ -20,6 +20,8 @@
     border-radius: 30px;
     padding: 30px 20px;
     background-color: #fff;
+    height: -moz-fit-content;
+    height: fit-content;
 }
 
 .pdp-hero__heading {
@@ -96,8 +98,7 @@
     gap: 5px;
     padding: 3px 16px;
     border-radius: 10px 10px 0 0;
-    background-image: linear-gradient(to top, #5e5d5d, #838383, #abaaab, #d4d4d4, #ffffff);
-    display: none;
+    display: flex;
 }
 
 .pdp-hero__upsell-message.active {
@@ -468,7 +469,12 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 @media (max-width: 767px) {
 
     .pdp-hero__gallery-main-image, .pdp-hero__gallery-main-image img {
-        max-height: auto;
+        height: 300px;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        -o-object-fit: cover;
+           object-fit: cover;
     }
 
     .pdp-hero__atc-label {

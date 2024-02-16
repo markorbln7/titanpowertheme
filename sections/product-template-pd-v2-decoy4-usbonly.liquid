@@ -408,7 +408,7 @@ window.length = {
   {% endfor %}
   {% for variant in pd1.variants %}
       {% if variant.title contains '1.2'%}
-        'pd-1x4ft(1.2m)' : '{{ variant.price | monmoney_with_currencyey }}',
+        'pd-1x4ft(1.2m)' : '{{ variant.price | monney_with_currencyey }}',
       {% endif %}
       {% if variant.title contains '1.8'%}
         'pd-1x6ft(1.8m)' : '{{ variant.price | money_with_currency }}',
@@ -440,6 +440,8 @@ window.length = {
       {% endif %}
   {% endfor %}
 }
+
+console.log(window.length, 'length')
 window.compareLength = {
   {% for variant in product.variants %}
       {% if variant.title contains '1.2'%}
@@ -630,7 +632,7 @@ window.images = {
    "pd-4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.2pd.jpg?v=1693398805",
    "pd-4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/tc1.8pd.jpg?v=1693398809"
 }
-  window.mainImages = {
+window.mainImages = {
    "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
    "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
    "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",

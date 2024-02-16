@@ -1,6 +1,3 @@
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/pdp-hero/section-pdp-hero.css ***!
-  \**********************************************************************************************************************************************************************************************************************************/
 .section-pdp-hero {
     padding-block: 50px;
 }
@@ -20,6 +17,7 @@
     border-radius: 30px;
     padding: 30px 20px;
     background-color: #fff;
+    height: fit-content;
 }
 
 .pdp-hero__heading {
@@ -96,9 +94,9 @@
     gap: 5px;
     padding: 3px 16px;
     border-radius: 10px 10px 0 0;
-    background-image: linear-gradient(to top, #5e5d5d, #838383, #abaaab, #d4d4d4, #ffffff);
-    display: none;
+    display: flex;
 }
+
 
 .pdp-hero__upsell-message.active {
     display: flex;
@@ -132,7 +130,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;
-    background: linear-gradient(180deg, #d8e2de 70%, #60c655 100%);
+    background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
 }
 
 .pdp-hero__extra-add.active:last-child {
@@ -140,11 +138,11 @@
     border-top-right-radius: 22px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    background: linear-gradient(0deg, #d8e2de 70%, #60c655 100%);
+    background: linear-gradient(0deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
 }
 
 .pdp-hero__upsell-highlighted {
-    background: linear-gradient(180deg, #d8e2de 70%, #60c655 100%);
+    background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
     border-radius: 0 0 22px 22px;
 }
 
@@ -161,7 +159,8 @@
     text-align: center;
 }
 
-.pdp-hero__types, .pdp-hero__sizes {
+.pdp-hero__types,
+.pdp-hero__sizes {
     margin: 10px 0 20px;
     display: flex;
     justify-content: space-between;
@@ -354,8 +353,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     width: 50px;
     height: 50px;
     margin-bottom: 10px;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
 }
 
 .pdp-hero__icon-title {
@@ -374,8 +372,8 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     margin: 0;
 }
 
-/* Gallery CSS */
 
+/* Gallery CSS */
 .pdp-hero__gallery {
     position: relative;
     display: flex;
@@ -460,15 +458,19 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 
     .pdp-hero__gallery-main-image img {
         height: 620px;
-        -o-object-fit: cover;
-           object-fit: cover;
+        object-fit: cover;
     }
 }
 
 @media (max-width: 767px) {
 
-    .pdp-hero__gallery-main-image, .pdp-hero__gallery-main-image img {
-        max-height: auto;
+    .pdp-hero__gallery-main-image,
+    .pdp-hero__gallery-main-image img {
+        height: 300px;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        object-fit: cover;
     }
 
     .pdp-hero__atc-label {
@@ -496,6 +498,8 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
         text-align: center;
     }
 }
+
+
 
 @media (min-width: 768px) and (max-width: 992px) {
     .pdp-hero__container {

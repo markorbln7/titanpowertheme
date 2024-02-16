@@ -78,8 +78,8 @@
 
         <div class="pdp-hero__pricing-wrapper">
           <div class="pdp-hero__pricing product__list--single--price color-white">
-            <span class="pdp-hero__pricing-price js-price">{{ product.price | money_with_currency }}</span>
-            <span class="crossed js-crossed-price">{{ product.compare_at_price | money_with_currency }}</span>
+            <span class="pdp-hero__pricing-price js-price">{{ mainProduct.price_max | money_with_currency }}</span>
+            <span class="crossed js-crossed-price">{{ mainProduct.compare_at_price_max | money_with_currency }}</span>
 
             {% if discountContent != blank %}
               <div class="pdp-hero__discount">{{ discountContent }}</div>
@@ -87,7 +87,7 @@
           </div>
 
           <div class="pdp-hero__price-diff js-saving">
-            {% assign difference = product.compare_at_price | minus: product.price %}
+            {% assign difference = mainProduct.compare_at_price_max| minus: mainProduct.price_max %}
             {{ difference | money_with_currency }} SAVED
           </div>
         </div>
@@ -144,7 +144,6 @@
 
                 assign product_price = product_obj.price | money
                 assign product_compare_at_price = product_obj.compare_at_price | money
-                assign upsell_product_image = product_obj.featured_image
                 assign product_price = product_obj.price_max
                 assign product_compare_at_price = product_obj.compare_at_price_max
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount

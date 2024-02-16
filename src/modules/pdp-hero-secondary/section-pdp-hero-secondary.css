@@ -1,0 +1,504 @@
+.section-pdp-hero {
+    padding-block: 50px;
+}
+
+.section-pdp-hero .content-wrapper {
+    padding-inline: 20px;
+}
+
+.pdp-hero__container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.pdp-hero__product-info {
+    flex: 1;
+    border-radius: 30px;
+    padding: 30px 20px;
+    background-color: #fff;
+    height: fit-content;
+}
+
+.pdp-hero__heading {
+    margin-bottom: 30px;
+}
+
+.pdp-hero__product-title {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 130%;
+    margin-bottom: 4px;
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.pdp-hero__product-subtitle {
+    color: gray;
+    font-size: 17px;
+    margin: 0;
+}
+
+.pdp-hero__pricing {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+.pdp-hero__pricing-price {
+    font-weight: 700;
+    color: #60c655;
+    font-size: 20px;
+}
+
+.pdp-hero__pricing .crossed {
+    color: #C14444;
+    font-size: 16px;
+}
+
+.pdp-hero__discount {
+    background-color: #60c655;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.pdp-hero__price-diff {
+    font-size: 16px;
+    color: #000;
+}
+
+.pdp-hero__pricing-wrapper {
+    margin-bottom: 32px;
+}
+
+.pdp-hero__upsell {
+    background: #d8e1e2;
+    margin-block: 25px;
+    border-radius: 22px 22px 22px 22px;
+}
+
+.pdp-hero__upsell-message {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: normal;
+    color: #000;
+    line-height: 12px;
+    display: flex;
+    gap: 5px;
+    padding: 3px 16px;
+    border-radius: 10px 10px 0 0;
+    background-image: linear-gradient(to top, #5e5d5d, #838383, #abaaab, #d4d4d4, #ffffff);
+}
+
+.pdp-hero__upsell .pdp-hero__pricing-price {
+    font-size: 20px;
+}
+
+.pdp-hero__upsell .pdp-hero__discount {
+    padding: 6px 4px;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.pdp-hero__upsell .crossed {
+    color: #c14444;
+}
+
+.pdp-hero__extra-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 14px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.pdp-hero__extra-add.active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
+}
+
+.pdp-hero__extra-add.active:last-child {
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: linear-gradient(0deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
+}
+
+.pdp-hero__upsell-highlighted {
+    background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
+    border-radius: 0 0 22px 22px;
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    border-radius: 22px 22px 0 0;
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-title {
+    font-size: 18px;
+    line-height: 16px;
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-price {
+    text-align: center;
+}
+
+.pdp-hero__types,
+.pdp-hero__sizes {
+    margin: 10px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 6px #bdbdbdd1;
+    border-radius: 25px;
+    position: relative;
+    background: #d8e1e2;
+    padding-inline: 5px;
+}
+
+.pdp-hero__option {
+    min-height: 5rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    grid-gap: 3px;
+    gap: 3px;
+    padding: 5px;
+    line-height: 1.57;
+    letter-spacing: .05em;
+    cursor: pointer;
+    justify-content: center;
+    transition: all 1s;
+    border-radius: 25px;
+    margin-bottom: 0;
+    background: #d8e1e2;
+    border: none !important;
+    flex: 1;
+    flex-direction: column;
+    color: #60c655;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.pdp-hero__option.active {
+    color: #fff;
+    background-color: #60c655;
+}
+
+.pdp-hero__option.active::after {
+    content: "";
+    width: 94%;
+    height: 88%;
+    position: absolute;
+    background-color: #60c655cc;
+    top: 6%;
+    left: 3%;
+    border-radius: 25px;
+}
+
+.pdp-hero__option:first-child {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    margin-left: -5px;
+}
+
+.pdp-hero__option:last-child {
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    margin-right: -5px;
+}
+
+.pdp-hero__option span {
+    position: relative;
+    z-index: 3;
+}
+
+.pdp-hero__extra-add img {
+    max-width: 100px;
+    max-height: 60px;
+}
+
+.pdp-hero__extra-checkbox {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background-color: #ffffff;
+    border: 3px solid #60c655;
+    border-radius: 3px;
+}
+
+.pdp-hero__upsell-title {
+    margin: 0;
+}
+
+input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 5;
+    left: 0;
+}
+
+input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
+    display: block;
+}
+
+.pdp-hero__extra-checkbox svg {
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pdp-hero__atc {
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #60c655;
+    color: #fff;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 7px 7px #0000001a;
+    transition: opacity 0.3s ease;
+}
+
+.pdp-hero__atc:hover {
+    opacity: 0.8;
+}
+
+.pdp-hero__atc-label {
+    font-size: 12px;
+    text-align: center;
+    color: #60c655;
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.pdp-hero__atc-wrapper {
+    margin-bottom: 40px;
+}
+
+.pdp-hero__prop {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    font-size: 18px;
+    border-bottom: 1px solid lightgrey;
+    color: #000;
+    font-weight: 500;
+    align-items: center;
+}
+
+.pdp-hero__prop-icon {
+    height: 20px;
+    width: 20px;
+    margin-right: 3px;
+}
+
+.pdp-hero__prop-icon svg {
+    height: 20px;
+    width: 20px;
+}
+
+.pdp-hero__icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    z-index: 10;
+    padding-inline: 10px;
+}
+
+.pdp-hero__icon-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 120px;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 10px 4px;
+    flex: 1;
+}
+
+.pdp-hero__icon-container img {
+    margin-inline: auto;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.pdp-hero__icon-title {
+    font-size: 12px;
+    line-height: 12px;
+    color: #000;
+    text-align: center;
+    margin: 0;
+}
+
+.pdp-hero__icon-text {
+    font-size: 10px;
+    line-height: 10px;
+    color: #d8e1e2;
+    text-align: center;
+    margin: 0;
+}
+
+
+/* Gallery CSS */
+.pdp-hero__gallery {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pdp-hero__gallery-logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 40px;
+    max-width: 200px;
+    z-index: 10;
+    margin: 0;
+    background-color: #000;
+    border-radius: 20px;
+    padding-inline: 10px;
+}
+
+.pdp-hero__gallery-main-image {
+    width: 100%;
+    margin-inline: auto;
+    flex-shrink: 0;
+    margin: 0;
+    background-color: #fff;
+    border-radius: 40px;
+}
+
+.pdp-hero__gallery-main-image img {
+    border-radius: 20px;
+}
+
+@media (min-width: 768px) {
+    .section-pdp-hero {
+        padding-block: 80px;
+    }
+
+    .pdp-hero__product-info {
+        padding: 30px 40px;
+    }
+
+    .pdp-hero__product-title {
+        font-size: 36px;
+    }
+
+    .pdp-hero__pricing-price {
+        font-size: 24px;
+    }
+
+    .pdp-hero__atc-button {
+        max-width: 100%;
+    }
+
+    .pdp-hero__icons {
+        gap: 12px;
+    }
+
+    .pdp-hero__icon {
+        max-width: 96px;
+    }
+
+    .pdp-hero__container {
+        flex-direction: row;
+        max-width: 1240px;
+        margin-inline: auto;
+    }
+
+    .pdp-hero__option {
+        font-size: 20px;
+    }
+
+    /* Gallery CSS */
+    .pdp-hero__gallery {
+        width: 670px;
+    }
+
+    .pdp-hero__gallery-main-image {
+        width: 100%;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        height: 620px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .pdp-hero__gallery-main-image,
+    .pdp-hero__gallery-main-image img {
+        max-height: 253px;
+    }
+
+    .pdp-hero__atc-label {
+        font-size: 10px;
+    }
+
+    .pdp-hero__pricing {
+        flex-wrap: wrap;
+    }
+
+    .pdp-hero__upsell-title {
+        font-size: 16px;
+    }
+
+    .pdp-hero__upsell .pdp-hero__pricing-price {
+        font-size: 15px;
+    }
+
+    .pdp-hero__upsell .crossed {
+        font-size: 13px;
+    }
+
+    .pdp-hero__upsell-highlighted .pdp-hero__upsell-title {
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .pdp-hero__container {
+        flex-direction: column;
+    }
+
+    .pdp-hero__gallery {
+        width: 100%;
+    }
+}

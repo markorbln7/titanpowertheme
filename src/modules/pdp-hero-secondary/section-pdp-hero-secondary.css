@@ -91,11 +91,15 @@
     letter-spacing: normal;
     color: #000;
     line-height: 12px;
-    display: flex;
     gap: 5px;
     padding: 3px 16px;
     border-radius: 10px 10px 0 0;
     background-image: linear-gradient(to top, #5e5d5d, #838383, #abaaab, #d4d4d4, #ffffff);
+    display: none;
+}
+
+.pdp-hero__upsell-message.active {
+    display: flex;
 }
 
 .pdp-hero__upsell .pdp-hero__pricing-price {
@@ -462,7 +466,11 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 
     .pdp-hero__gallery-main-image,
     .pdp-hero__gallery-main-image img {
-        max-height: 253px;
+        height: 300px;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        object-fit: cover;
     }
 
     .pdp-hero__atc-label {

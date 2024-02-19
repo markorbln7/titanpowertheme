@@ -1,4 +1,7 @@
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 {{ 'section-pdp-hero-secondary.css' | asset_url | stylesheet_tag }}
+
 
 {% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
 
@@ -30,7 +33,7 @@
   assign propsRepeater = section.blocks | where: 'type', 'props'
 %}
 
-<section class="section-pdp-hero section-pdp-hero-secondary">
+<section class="section-pdp-hero section-pdp-hero-secondary js-scroll">
   <div class="content-wrapper">
     <div class="pdp-hero__container">
       {% comment %} Gallery {% endcomment %}
@@ -41,7 +44,7 @@
         <figure class="pdp-hero__gallery-main-image">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905"
+            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036"
             alt="{{ featured_image.alt }}"
           >
         </figure>
@@ -136,11 +139,11 @@
                   assign product_title = upsell_product.settings.product_title_custom
                 endif
                 assign upsell_message = upsell_product.settings.upsell_message
+                
                 assign upsell_product_image = upsell_product.settings.upsell_product_image
 
-                assign upsell_product_image = product_obj.featured_image
-                assign product_price = product_obj.price | money
-                assign product_compare_at_price = product_obj.compare_at_price | money
+                assign product_price = product_obj.price_max
+                assign product_compare_at_price = product_obj.compare_at_price_max
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                 assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}
@@ -149,7 +152,7 @@
               </div>
               <div
                 data-count="{{ upsell_product_selector_number }}"
-                class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo {% endif %}"
+                class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
               >
                 <input
                   type="checkbox"
@@ -266,7 +269,7 @@
 </section>
 <style>
   .pdp-hero__upsell-highlighted {
-    background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%);
+    background: radial-gradient(#d8e1e2 50%,#a2e59b);
     border-radius: 0 0 22px 22px;
     box-shadow: -2px 2px 5px 4px #00000038 !important;
     border-radius: 22px;
@@ -297,34 +300,35 @@
 
     console.log(window.products, 'window.products')
     window.mainImages = {
-      "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-      "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-      "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-      "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-      "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-      "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-      "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-      "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-      "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-      "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-      "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-      "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-      "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-      "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-      "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-      "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-      "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-      "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-      "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-      "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-      "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-      "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-      "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-      "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-      "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-      "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-      "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
+      "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
     }
+    console.log(window.mainImages, 'window.mainImages')
   window.prices = {
     {% for upsell_product in product_repeater %}
       {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
@@ -379,35 +383,6 @@
 
   console.log(window.products, 'window.products')
   console.log(window.prices, 'window.prices')
-  window.mainImages = {
-    "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-    "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-    "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone3.jpg?v=1693481903",
-    "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-    "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-    "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec3.jpg?v=1693481896",
-    "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-    "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-    "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro3.jpg?v=1693481905",
-    "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-    "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-    "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaphone1.jpg?v=1693481902",
-    "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-    "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-    "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec1.jpg?v=1693481897",
-    "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-    "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-    "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro1.jpg?v=1693481905",
-    "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-    "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-    "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeaiphone4.jpg?v=1693481905",
-    "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-    "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-    "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeatypec4.jpg?v=1693481905",
-    "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-    "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-    "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/typeamicro4.jpg?v=1693481906",
-  }
 </script>
 
 {% schema %}

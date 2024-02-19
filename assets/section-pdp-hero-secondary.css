@@ -412,6 +412,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 
 .pdp-hero__gallery-main-image {
     width: 100%;
+    padding-top:100%;
     margin-inline: auto;
     flex-shrink: 0;
     margin: 0;
@@ -421,6 +422,9 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 
 .pdp-hero__gallery-main-image img {
     border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /*NEW ADDED CSS*/
@@ -565,10 +569,13 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
 
     .pdp-hero__gallery-main-image {
         width: 100%;
+        position: relative;
     }
 
     .pdp-hero__gallery-main-image img {
-        height: 620px;
+        position: absolute;
+        top: 0;
+        left: 0;
         -o-object-fit: cover;
            object-fit: cover;
     }
@@ -589,6 +596,9 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
     .pdp-hero__gallery-main-image img {
         -o-object-fit: cover;
            object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     .pdp-hero__atc-label {

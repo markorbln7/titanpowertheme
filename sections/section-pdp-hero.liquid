@@ -31,7 +31,7 @@
           <div class="swiper-wrapper">
             {% for image in product.images limit: 4 %}
               <div class="swiper-slide">
-                <figure class="pdp-hero__gallery-main-image">
+                <figure class="pdp-hero__gallery-main-image relative">
                   {% render 'titan-image', image: image %}
                 </figure>
               </div>

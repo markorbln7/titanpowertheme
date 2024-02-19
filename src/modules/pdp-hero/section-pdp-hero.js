@@ -80,5 +80,9 @@ if (descriptionWrapper) {
     !descriptionWrapper.classList.contains('collapse-text')
       ? productDescription.style.maxHeight = null
       : productDescription.style.maxHeight = productDescription.scrollHeight + 'px';
+
+    descriptionWrapper.classList.contains('collapse-text')
+      ? productDescriptionCollapse.textContent = 'Show Less'
+      : productDescriptionCollapse.textContent = 'Learn More';
   })
 }

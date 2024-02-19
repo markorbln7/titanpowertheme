@@ -2,7 +2,6 @@
 {{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 {{ 'section-pdp-hero-secondary.css' | asset_url | stylesheet_tag }}
 
-
 {% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
 
 {% liquid
@@ -49,22 +48,52 @@
           >
         </figure>
         {% if iconsRepeater.size > 0 %}
-          <div class="pdp-hero__icons">
-            {% for block in iconsRepeater %}
-              {% assign iconImage = block.settings.pdp_hero_icon %}
-              {% assign iconTitle = block.settings.pdp_hero_icon_title %}
-              {% assign iconText = block.settings.pdp_hero_icon_text %}
+          <div class="pdp-hero__icons swiper">
+            <div class="swiper-wrapper">
+              {% for block in iconsRepeater %}
+                {% assign iconImage = block.settings.pdp_hero_icon %}
+                {% assign iconTitle = block.settings.pdp_hero_icon_title %}
+                {% assign iconText = block.settings.pdp_hero_icon_text %}
 
-              <div class="pdp-hero__icon-container">
-                {% render 'titan-image', image: iconImage %}
-                {% if iconTitle != blank %}
-                  <span class="pdp-hero__icon-title">{{ iconTitle }}</span>
-                {% endif %}
-                {% if iconText != blank %}
-                  <span class="pdp-hero__icon-text">{{ iconText }}</span>
-                {% endif %}
-              </div>
-            {% endfor %}
+                <div class="swiper-slide">
+                  <div class="pdp-hero__icon-container">
+                    {% render 'titan-image', image: iconImage %}
+                    {% if iconTitle != blank %}
+                      <span class="pdp-hero__icon-title">{{ iconTitle }}</span>
+                    {% endif %}
+                    {% if iconText != blank %}
+                      <span class="pdp-hero__icon-text">{{ iconText }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-prev">
+              <svg
+                id="chevron-left"
+                viewBox="0 0 32 32"
+                width="9px"
+                height="12px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"/>
+              </svg>
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-next">
+              <svg
+                height="12px"
+                version="1.1"
+                viewBox="0 0 9 12"
+                width="9px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-260.000000, -90.000000)"><g id="chevron-right" transform="translate(260.500000, 90.000000)"><path d="M1,0 L-0.4,1.4 L4.2,6 L-0.4,10.6 L1,12 L7,6 L1,0 Z" id="Shape"/></g></g></g>
+              </svg>
+            </div>
           </div>
         {% endif %}
       </div>
@@ -139,7 +168,7 @@
                   assign product_title = upsell_product.settings.product_title_custom
                 endif
                 assign upsell_message = upsell_product.settings.upsell_message
-                
+
                 assign upsell_product_image = upsell_product.settings.upsell_product_image
 
                 assign product_price = product_obj.price_max
@@ -269,7 +298,7 @@
 </section>
 <style>
   .pdp-hero__upsell-highlighted {
-    background: radial-gradient(#d8e1e2 50%,#a2e59b);
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
     border-radius: 0 0 22px 22px;
     box-shadow: -2px 2px 5px 4px #00000038 !important;
     border-radius: 22px;

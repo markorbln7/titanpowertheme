@@ -128,6 +128,12 @@
     transition: all 0.4s ease;
 }
 
+.section-pdp-hero:not(.section-pdp-hero-secondary) .pdp-hero__extra-add {
+    background: #e4eaea;
+    border-radius: 30px;
+    margin-bottom: 26px;
+}
+
 .pdp-hero__extra-add.promo {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 22px;
@@ -161,6 +167,17 @@
 
 .pdp-hero__upsell-highlighted .pdp-hero__upsell-price {
     text-align: center;
+}
+
+.pdp-hero__extra-text {
+    text-align: center;
+    margin: 0;
+    font-weight: 700;
+}
+
+.pdp-hero__extra-text span {
+    display: block;
+    color: #60c655;
 }
 
 .pdp-hero__types, .pdp-hero__sizes {
@@ -246,6 +263,31 @@
     background-color: #ffffff;
     border: 3px solid #60c655;
     border-radius: 3px;
+}
+
+.pdp-hero__product-description-wrapper {
+    max-height: 77px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    line-height: 120%;
+}
+
+.pdp-hero__product-description-wrapper::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    background: linear-gradient(0deg, #FFF 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: 10;
+}
+
+.pdp-hero__description-collapse {
+    color: #60c655;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .pdp-hero__upsell-title {

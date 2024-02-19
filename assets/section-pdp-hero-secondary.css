@@ -98,7 +98,7 @@
     gap: 5px;
     padding: 3px 16px;
     border-radius: 10px 10px 0 0;
-    display: flex;
+    display: none;
 }
 
 .pdp-hero__upsell-message.active {
@@ -133,7 +133,18 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 22px;
     border-bottom-right-radius: 22px;
+    /* background: linear-gradient(180deg, rgba(216, 226, 222, 1) 70%, rgba(96, 198, 85, 1) 100%); */
+}
+
+.pdp-hero__extra-add.promo:not(.active) {
+    border-radius: 22px 22px 0 0;
+}
+
+.pdp-hero__extra-add.active {
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
     background: linear-gradient(180deg, #d8e2de 70%, #60c655 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pdp-hero__extra-add.active:last-child {
@@ -151,6 +162,7 @@
 
 .pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
     border-radius: 22px 22px 0 0;
+    display: flex !important;
 }
 
 .pdp-hero__upsell-highlighted .pdp-hero__upsell-title {

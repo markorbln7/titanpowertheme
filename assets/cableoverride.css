@@ -370,6 +370,37 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
+.pdp-hero__upsell-highlighted.added {
+  position: relative;
+  animation: neonGlow 3s infinite ease-in-out; /* Applying the same 3s glow pulse */
+  overflow: hidden;
+   margin-bottom: 3px;
+    margin-top: -3px;
+}
+
+/* Neon glow with a slow pulsing effect, identical to the previous configuration */
+@keyframes neonGlow {
+  0%, 100% {
+    box-shadow: none; /* Start and end with no glow */
+  }
+  50% {
+    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; /* Slightly larger glow at the peak of the pulse */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -372,7 +372,7 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 .pdp-hero__upsell-highlighted.added {
 
 }
-*/
+
 
 
 .pdp-hero__upsell-message.active {
@@ -389,3 +389,32 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   40% { background-position: -200% 0; } /* Speed up the animation to end at 40% */
   100% { background-position: -200% 0; } /* Pause from 40% to 100% */
 }
+*/
+
+
+
+.pdp-hero__upsell-message.active {
+  animation-name: electricPulse;
+  animation-duration: 8s; /* Longer duration with a pause */
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  background: linear-gradient(to right, #000 20%, #78f46bf7 50%, #000 80%);
+  background-size: 200% 100%;
+}
+
+@keyframes electricPulse {
+  0% { background-position: 200% 0; }
+  30% { background-position: -200% 0; }
+  100% { background-position: -200% 0; } /* Includes a pause */
+}
+
+
+
+
+
+
+
+
+
+
+

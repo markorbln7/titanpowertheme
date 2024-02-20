@@ -1,0 +1,374 @@
+.pdp-hero__upsell-highlighted {
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
+}
+
+.pdp-hero__upsell-message.active {
+    background: linear-gradient(180deg, #fff 40%, #d4d4d4 100%);
+}
+
+
+.pdp-hero__extra-add.promo {
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    background: linear-gradient(180deg, #fff 40%, #d4d4d4 100%);
+}
+
+
+.pdp-hero__extra-checkbox {
+    border: 1.5px solid #60c655;
+    border-radius: 8px;
+}
+
+.pdp-hero__upsell {
+    box-shadow: 0 2px 7px 5px #0000001a;
+}
+
+.pdp-hero__upsell-highlighted {
+    box-shadow: 0 1px 5px 3px #0000001a !important;
+
+}
+
+.pdp-hero__extra-add.promo {
+    box-shadow: 0 1px 5px 3px #0000001a;
+}
+
+.pdp-hero__upsell-title {
+    font-family: 'Work Sans';
+}
+
+.pdp-hero__discount {
+    background-color: #86e57c;
+    border-radius: 15px;
+}
+
+.pdp-hero__product-subtitle {
+    color: #bcbcbc;
+    font-weight: 500;
+    font-family: 'Work Sans';
+}
+
+span.product-template-new__wrapper--content__review--mark.font-sans.color-black {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.pdp-hero__pricing .crossed {
+    color: #f9797d;
+    font-size: 16px;
+}
+
+.pdp-hero__pricing-price {
+    font-size: 21px;
+}
+
+.pdp-hero__atc {
+    height: 65px;
+    font-weight: 800;
+    font-size: 21px;
+}
+
+.pdp-hero__pricing-wrapper {
+    margin-bottom: 25px;
+}
+
+.pdp-hero__heading {
+    margin-bottom: 21px;
+    font-family: 'Work Sans';
+}
+
+.pdp-hero__gallery-main-image {
+    background-color: #e4eaea;
+}
+
+.pdp-hero__gallery-main-image img {
+    box-shadow: 0 1px 5px 3px #00000012;
+}
+
+.pdp-hero__product-info {
+    box-shadow: 0 1px 5px 3px #00000008;
+}
+
+.pdp-hero__extra-add {
+    padding: 8px 14px;
+}
+
+.pdp-hero__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    cursor: pointer;
+}
+
+.pdp-hero__arrow-next {
+    right: 0;
+}
+
+.pdp-hero__arrow-prev {
+    left: 0;
+}
+
+@media (min-width: 768px) {
+    .section-pdp-hero {
+        padding-block: 80px;
+    }
+
+    .pdp-hero__product-info {
+        padding: 30px 40px;
+    }
+
+    .pdp-hero__product-title {
+        font-size: 36px;
+    }
+
+    .pdp-hero__pricing-price {
+        font-size: 24px;
+    }
+
+    .pdp-hero__atc-button {
+        max-width: 100%;
+    }
+
+    .pdp-hero__icons {
+        gap: 12px;
+    }
+
+    .pdp-hero__icon {
+        max-width: 96px;
+    }
+
+    .pdp-hero__container {
+        flex-direction: row;
+        max-width: 1240px;
+        margin-inline: auto;
+    }
+
+    .pdp-hero__option {
+        font-size: 20px;
+    }
+
+    /* Gallery CSS */
+    .pdp-hero__gallery {
+        width: 670px;
+    }
+
+    .pdp-hero__gallery-main-image {
+        width: 100%;
+        position: relative;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .pdp-hero__icons {
+        padding-inline: 0;
+    }
+
+    .pdp-hero__icon-container {
+        max-width: 120px;
+        flex: 1 0 50%;
+        padding-inline: 5px;
+    }
+
+    .pdp-hero__gallery-main-image img {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .pdp-hero__atc-label {
+        font-size: 10px;
+    }
+
+    .pdp-hero__pricing {
+        flex-wrap: wrap;
+    }
+
+    .pdp-hero__upsell-title {
+        font-size: 16px;
+    }
+
+    .pdp-hero__upsell .pdp-hero__pricing-price {
+        font-size: 15px;
+    }
+
+    .pdp-hero__upsell .crossed {
+        font-size: 13px;
+    }
+
+    .pdp-hero__upsell-highlighted .pdp-hero__upsell-title {
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .pdp-hero__container {
+        flex-direction: column;
+    }
+
+    .pdp-hero__gallery {
+        width: 100%;
+    }
+}
+
+@media(min-width: 1024px) {
+    .pdp-hero__icons--no-swiper .swiper-wrapper {
+        padding-inline: 10px;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .pdp-hero__icons--no-swiper .swiper-wrapper .swiper-slide {
+        display: flex;
+        margin-right: 0 !important;
+        width: 125px !important;
+    }
+
+    .pdp-hero__icons--no-swiper .swiper-wrapper .swiper-slide .pdp-hero__icon-container {
+        max-width: 125px;
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1024px) {
+    .pdp-hero__gallery {
+        width: 600px;
+    }
+
+    .pdp-hero__product-info {
+        padding: 30px 20px;
+    }
+
+    .pdp-hero__icons--no-swiper .swiper-wrapper .swiper-slide {
+        width: 120px !important;
+    }
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    background: linear-gradient(180deg, rgb(86 234 70 / 80%) 40%, #86e57c);
+}
+
+
+
+
+.pdp-hero__upsell .pdp-hero__discount {
+    font-size: 14px;
+}
+
+
+
+.pdp-hero__atc-label {
+    font-size: 15px;
+}
+
+
+
+
+.pdp-hero__upsell-message.active {
+    background: linear-gradient(180deg, rgb(86 234 70 / 80%) 40%, #86e57c);
+}
+
+
+.pdp-hero__upsell-message {
+    /* display: none; */
+}
+
+.pdp-hero__extra-add.promo:not(.active) {
+    border-radius: 5px;
+}
+
+
+.pdp-hero__extra-add.active {
+    box-shadow: 0 2px 9px 0px #00000042;
+    border-radius: 5px;
+    background: radial-gradient(#d8e1e2 50%, #a2e59b3b 79%, #35ff2e29 95%);
+}
+
+.pdp-hero__extra-add.promo {
+    background: radial-gradient(#d8e1e2 30%, #a2e59b9e 79%, #35ff2e3b 95%);
+}
+
+.pdp-hero__upsell-highlighted {
+    box-shadow: -2px 2px 5px 1px #0000002b !important;
+    border-radius: 22px;
+    background: radial-gradient(#d8e1e2 30%, #a2e59b9e 79%, #35ff2e3b 95%);
+    margin-top: 3px;
+}
+
+.pdp-hero__upsell-message.active {
+    background: linear-gradient(180deg, rgb(132 239 121 / 0%) 0%, #78f46bf7);
+    margin-bottom: 3px;
+    margin-top: -3px;
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    background: linear-gradient(180deg, #d6e1e1 0%, #78f46bf7);
+}
+
+.pdp-hero__discount {
+    background-color: rgba(96, 198, 85, .8);
+    border-radius: 12px;
+}
+
+.pdp-hero__option {
+    color: #5e5e5e;
+    font-weight: 500;
+}
+
+@media (max-width: 767px) {
+    .pdp-hero__atc-label {
+        font-size: 14px;
+    }
+
+    .pdp-hero__upsell .pdp-hero__discount {
+        padding: 7px 6px;
+    }
+
+    .pdp-hero__upsell-price {
+        text-align: -webkit-center;
+    }
+}
+
+.pdp-hero__icon-text {
+    font-size: 11px;
+    color: #9EA6A7;
+}
+
+.pdp-hero__icon-title {
+    font-size: 12px;
+}
+
+
+
+@media (max-width: 767px) {
+
+    .pdp-hero__icon-container {
+        max-width: 150px;
+        padding-inline: 5px;
+    }
+    .pdp-hero__icon-container img {
+        margin-bottom: 5px;
+    }
+    .section-pdp-hero-secondary .swiper-initialized {
+        padding-inline: 10px;
+    }
+    .pdp-hero__container {
+        gap: 15px;
+    }
+    .pdp-hero__gallery {
+        gap: 8px;
+    }
+}

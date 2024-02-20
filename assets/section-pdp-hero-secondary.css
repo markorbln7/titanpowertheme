@@ -693,3 +693,78 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
         width: 120px !important;
     }
 }
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    background: linear-gradient(180deg, rgb(86 234 70 / 80%) 40%, #86e57c);
+}
+
+.pdp-hero__upsell .pdp-hero__discount {
+    font-size: 14px;
+}
+
+.pdp-hero__atc-label {
+    font-size: 15px;
+}
+
+.pdp-hero__upsell-message.active {
+    background: linear-gradient(180deg, rgb(86 234 70 / 80%) 40%, #86e57c);
+}
+
+.pdp-hero__upsell-message {
+    /* display: none; */
+}
+
+.pdp-hero__extra-add.promo:not(.active) {
+    border-radius: 5px;
+}
+
+.pdp-hero__extra-add.active {
+    box-shadow: 0 2px 9px 0px #00000042;
+    border-radius: 5px;
+    background: radial-gradient(#d8e1e2 50%, #a2e59b3b 3b 79%, #35ff2e29 29 95%);
+}
+
+.pdp-hero__extra-add.promo {
+    background: radial-gradient(#d8e1e2 30%, #a2e59b9e 9e 79%, #35ff2e3b 3b 95%);
+}
+
+.pdp-hero__upsell-highlighted {
+    box-shadow: -2px 2px 5px 1px #0000002b 2b !important;
+    border-radius: 22px;
+    background: radial-gradient(#d8e1e2 30%, #a2e59b9e 9e 79%, #35ff2e3b 3b 95%);
+    margin-top: 3px;
+}
+
+.pdp-hero__upsell-message.active {
+    background: linear-gradient(180deg, rgb(132 239 121 / 0%) 0%, #78f46bf7);
+    margin-bottom: 3px;
+    margin-top: -3px;
+}
+
+.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
+    background: linear-gradient(180deg, #d6e1e1 0%, #78f46bf7 f7);
+}
+
+.pdp-hero__discount {
+    background-color: rgba(96, 198, 85, .8);
+    border-radius: 12px;
+}
+
+.pdp-hero__option {
+    color: #5e5e5e;
+    font-weight: 500;
+}
+
+@media (max-width: 767px) {
+    .pdp-hero__atc-label {
+        font-size: 14px;
+    }
+
+    .pdp-hero__upsell .pdp-hero__discount {
+        padding: 7px 6px;
+    }
+
+    .pdp-hero__upsell-price {
+        text-align: -webkit-center;
+    }
+}

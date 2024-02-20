@@ -238,9 +238,6 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
     }
 }
 
-.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
-    background: linear-gradient(180deg, rgb(86 234 70 / 80%) 40%, #86e57c);
-}
 
 
 
@@ -290,6 +287,9 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
     background: radial-gradient(#d8e1e2 30%, #a2e59b9e 79%, #35ff2e3b 95%);
      margin-bottom: 3px;
     margin-top: -3px;
+  border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
 }
 
 .pdp-hero__upsell-message.active {
@@ -300,6 +300,9 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
 
 .pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
     background: linear-gradient(180deg, #d6e1e1 0%, #78f46bf7);
+  border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    margin-top: 7px
 }
 
 .pdp-hero__discount {
@@ -361,4 +364,8 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     background: #D6E1E1;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.titan-image img {
+    border-radius: 10px;
 }

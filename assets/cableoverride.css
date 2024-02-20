@@ -367,15 +367,18 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     border-radius: 10px;
 }
 
-
 .pdp-hero__upsell-message.active {
-  animation-name: pulse;
-  animation-duration: 1s; /* Adjust time as needed */
+  animation-name: glow;
+  animation-duration: 1.5s;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: 1;
+  animation-iteration-count: infinite; /* Makes the glow pulse */
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.2);
+  }
 }

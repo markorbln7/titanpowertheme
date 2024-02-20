@@ -387,25 +387,46 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 .pdp-hero__upsell-highlighted.added {
   position: relative;
-  animation: backgroundPulse 2s forwards; /* Duration and behavior of the pulse */
-  background: radial-gradient(#d8e1e2 50%, #a2e59b3b 79%, #35ff2e29 95%); /* Original background */
+  animation: neonGlow 3s infinite ease-in-out; /* Continuous pulsing neon glow effect */
+  color: #000; /* Text color set to black */
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(132, 239, 121, 0%) 0%, #78f46bf7); /* Similar background gradient */
 }
 
-@keyframes backgroundPulse {
+.pdp-hero__upsell-highlighted.added::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%); /* Charge flow effect */
+  animation: chargeFlow 4s forwards; /* Smooth charge flow animation */
+}
+
+/* Reusing the same neonGlow and chargeFlow animations as defined earlier */
+@keyframes neonGlow {
   0%, 100% {
-    background: radial-gradient(#d8e1e2 50%, #a2e59b3b 79%, #35ff2e29 95%); /* Original background */
+    box-shadow: none;
   }
   50% {
-    background: radial-gradient(circle at center, #00ff00 0%, #00ff00 40%, #78f46bf7 100%); /* Vibrant neon green pulse */
+    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7;
   }
 }
 
-
-
-
-
-
-
+@keyframes chargeFlow {
+  0% {
+    left: -150%;
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
 
 
 

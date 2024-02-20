@@ -40,7 +40,7 @@
         {% if logoImage %}
           <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
         {% endif %}
-        <figure class="pdp-hero__gallery-main-image">
+        <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
             src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036"
@@ -264,7 +264,7 @@
         </div>
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
-        <div class="pdp-hero__atc-wrapper">
+        <div class="pdp-hero__atc-wrapper scroll-reveal">
           <div
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
@@ -296,6 +296,16 @@
     </div>
   </div>
 </section>
+<div class="atc-fixed">
+  <div class="atc-fixed__container">
+      <div class="buds-product__inner--content__subtitle">
+        {{ mainProduct.title }}
+      </div>
+      <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+              ORDER NOW ☝
+      </button>
+  </div>
+</div>
 <style>
   .pdp-hero__upsell-highlighted {
     background: radial-gradient(#d8e1e2 50%, #a2e59b);
@@ -309,6 +319,18 @@
 <script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script>
 
 <script>
+  const distance = $('.scroll-reveal').offset().top
+  $(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+      $('.atc-fixed').addClass('show')
+    } else {
+      $('.atc-fixed').removeClass('show')
+    }
+  })
     window.selectLogic = {
       productCount: '4x',
       productHandle: '',

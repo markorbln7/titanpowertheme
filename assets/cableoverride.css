@@ -386,46 +386,18 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 .pdp-hero__upsell-highlighted.added {
-  position: relative;
-  animation: neonGlow 3s infinite ease-in-out; /* Continuous pulsing neon glow effect */
-  color: #000; /* Text color set to black */
-  overflow: hidden;
-  background: linear-gradient(180deg, rgba(132, 239, 121, 0%) 0%, #78f46bf7); /* Similar background gradient */
+  animation-name: electricPulse;
+  animation-duration: 10s; /* Increased to accommodate the pause */
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  background: linear-gradient(to right, #000 20%, #78f46bf7 50%, #000 80%);
+  background-size: 200% 100%;
 }
 
-.pdp-hero__upsell-highlighted.added::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 300%;
-  height: 100%;
-  background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%); /* Charge flow effect */
-  animation: chargeFlow 1s forwards; /* Smooth charge flow animation */
-}
-
-/* Reusing the same neonGlow and chargeFlow animations as defined earlier */
-@keyframes neonGlow {
-  0%, 100% {
-    box-shadow: none;
-  }
-  50% {
-    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7;
-  }
-}
-
-@keyframes chargeFlow {
-  0% {
-    left: -150%;
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
+@keyframes electricPulse {
+  0% { background-position: 200% 0; }
+  40% { background-position: -200% 0; } /* Speed up the animation to end at 40% */
+  100% { background-position: -200% 0; } /* Pause from 40% to 100% */
 }
 
 

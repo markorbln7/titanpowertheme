@@ -367,14 +367,15 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     border-radius: 10px;
 }
 
+
 .pdp-hero__upsell-message.active {
-  animation-name: clickAnimation;
-  animation-duration: 250ms;
+  animation-name: pulse;
+  animation-duration: 1s; /* Adjust time as needed */
   animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite; /* Repeats the animation */
 }
 
-@keyframes clickAnimation {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }

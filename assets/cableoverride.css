@@ -382,17 +382,17 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   background: linear-gradient(180deg, rgba(132, 239, 121, 0%) 0%, #78f46bf7); /* Original background gradient */
 }
 
-/* Neon glow with a reduced size for a subtler effect */
+/* Adjusted neon glow to pulse from no glow to a small glow */
 @keyframes neonGlow {
   0%, 100% {
-    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; /* Reduced glow size for a more subtle effect */
+    box-shadow: none; /* Start and end with no glow */
   }
   50% {
-    box-shadow: 0 0 4px #afff7f, 0 0 8px #afff7f; /* Brighter neon green pulse with reduced size */
+    box-shadow: 0 0 2px #78f46bf7, 0 0 4px #78f46bf7; /* Subtle glow at the peak of the pulse */
   }
 }
 
-/* Adjusted charge flow to fade out and reveal the original background gradient */
+/* Charge flow with adjusted timing to include fade-out effect */
 .pdp-hero__upsell-message.active::before {
   content: '';
   position: absolute;

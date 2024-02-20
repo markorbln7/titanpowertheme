@@ -376,24 +376,10 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
-
-
-
 .pdp-hero__upsell-highlighted.added {
   position: relative; /* Ensure relative positioning for the absolute positioning of pseudo-elements */
-  animation: pulsingGlow 3s infinite ease-in-out; /* Continuous pulsing glow effect */
   color: #000; /* Text color set to black */
   overflow: hidden; /* Prevent content from spilling outside the element's bounds */
-}
-
-/* Ensure the glow effect does not impact layout */
-@keyframes pulsingGlow {
-  0%, 100% {
-    box-shadow: none; 
-  }
-  50% {
-    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; 
-  }
 }
 
 /* Use ::after instead of ::before to avoid layout shifts, and ensure it's contained within the element */
@@ -418,7 +404,6 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     transform: translateX(100%); /* Move the gradient across without affecting layout */
   }
 }
-
 
 
 

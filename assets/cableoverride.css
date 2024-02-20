@@ -387,25 +387,24 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
-
 .pdp-hero__upsell-message.active {
   position: relative;
-  animation: neonGlow 5s infinite ease-in-out; /* Adjusted neon glow effect */
+  animation: neonGlow 5s infinite ease-in-out; /* Continuous pulsing neon glow effect */
   color: #000; /* Text color set to black */
   overflow: hidden;
 }
 
-/* Adjusted neon glow for a smaller, pulsing effect */
+/* Further reduced neon glow for a subtler effect and more visible pulsing */
 @keyframes neonGlow {
   0%, 100% {
-    box-shadow: 0 0 5px #78f46bf7, 0 0 10px #78f46bf7, 0 0 15px #78f46bf7; /* Smaller glow */
+    box-shadow: 0 0 2px #78f46bf7, 0 0 4px #78f46bf7; /* Reduced glow size */
   }
   50% {
-    box-shadow: 0 0 8px #afff7f, 0 0 16px #afff7f, 0 0 24px #afff7f; /* Brighter neon green pulse */
+    box-shadow: 0 0 5px #afff7f, 0 0 10px #afff7f; /* More pronounced brighter neon green pulse */
   }
 }
 
-/* Charge flow with adjusted timing to include fade-out effect */
+/* Charge flow with hold in final state */
 .pdp-hero__upsell-message.active::before {
   content: '';
   position: absolute;
@@ -414,20 +413,19 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   width: 300%;
   height: 100%;
   background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%);
-  animation: chargeFlow 5s; /* Maintained smooth flow */
+  animation: chargeFlow 5s forwards; /* Adjusted to hold in final state */
 }
 
 @keyframes chargeFlow {
   0% {
     left: -150%;
-    opacity: 1;
   }
-  80% {
-    opacity: 1;
+  50% {
+    left: 0%; /* Adjusted for a smoother transition to full */
   }
   100% {
-    left: 100%;
-    opacity: 0; /* Fade out to reveal the text smoothly */
+    left: 0%; /* Holds in final state */
+    opacity: 1; /* No fade out to ensure text remains covered */
   }
 }
 

@@ -385,7 +385,6 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
-
 .pdp-hero__upsell-message.active {
   position: relative;
   animation: neonGlow 5s infinite ease-in-out; /* Continuous pulsing neon glow effect */
@@ -403,29 +402,23 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   }
 }
 
-/* Charge flow with neon green sweep ending */
+/* Adjusted charge flow to include a complete neon green sweep */
 .pdp-hero__upsell-message.active::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 200%; /* Adjusted for smoother sweep */
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%);
-  animation: chargeFlow 5s forwards; /* Sweep and hold */
+  background-color: #000; /* Starting with black */
+  animation: chargeFlow 5s forwards; /* Complete sweep and end */
 }
 
 @keyframes chargeFlow {
-  0% {
-    left: -100%;
+  0%, 100% {
+    background-color: #000; /* Start and end with black */
   }
   50% {
-    left: 0%; /* Sweep reaches full width */
-  }
-  100% {
-    left: 0%; /* Holds at full width, maintaining neon green on the right half */
+    background-color: #78f46bf7; /* Neon green at the midpoint */
   }
 }
-
-
-

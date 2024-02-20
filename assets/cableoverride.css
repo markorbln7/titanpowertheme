@@ -368,24 +368,25 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 }
 
 
+
 .pdp-hero__upsell-message.active {
   position: relative;
-  animation: neonGlow 15s infinite ease-in-out; /* Neon glow effect */
+  animation: pulsingGlow 3s infinite ease-in-out; /* Continuous pulsing glow effect */
   color: #000; /* Text color set to black */
   overflow: hidden;
 }
 
-/* Refined neon glow for a subtler effect */
-@keyframes neonGlow {
+/* Minimized neon glow effect */
+@keyframes pulsingGlow {
   0%, 100% {
-    box-shadow: 0 0 5px #78f46bf7, 0 0 10px #78f46bf7; /* Reduced glow spread */
+    box-shadow: 0 0 3px #fff, 0 0 6px #78f46bf7; /* Smallest white to green glow */
   }
   50% {
-    box-shadow: 0 0 7px #78f46bf7, 0 0 14px #78f46bf7; /* Slightly intensified at the midpoint */
+    box-shadow: 0 0 2px #78f46bf7, 0 0 4px #78f46bf7; /* Intensify to neon green */
   }
 }
 
-/* Charge flow animation with fade-out effect */
+/* Slowed down charge flow with extended 'battery full' state */
 .pdp-hero__upsell-message.active::before {
   content: '';
   position: absolute;
@@ -394,19 +395,18 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   width: 300%;
   height: 100%;
   background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%);
-  animation: chargeFlow 8s infinite linear; /* Smooth flow */
+  animation: chargeFlow 12s forwards; /* 50% slower with controlled finish */
 }
 
 @keyframes chargeFlow {
   0% {
     left: -150%;
-    opacity: 1;
   }
-  80% {
-    opacity: 1;
+  40% { /* Slower progression to full */
+    left: 0%;
   }
-  100% {
-    left: 100%;
-    opacity: 0; /* Fade out to reveal the text */
+  80%, 100% { /* Extended 'full' state before fading */
+    left: 0%;
+    opacity: 1;
   }
 }

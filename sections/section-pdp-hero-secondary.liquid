@@ -177,7 +177,7 @@
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                 assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}
-              <div class="pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
+              <div class="{%  if upsell_message == blank%}blank-item{% endif %} pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
                 {{ upsell_message }}
               </div>
               <div
@@ -319,18 +319,6 @@
 <script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script>
 
 <script>
-  const distance = $('.scroll-reveal').offset().top
-  $(window).scroll(function () {
-    const top_of_element = $('#shopify-section-footer').offset().top
-    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
-    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
-    const top_of_screen = $(window).scrollTop()
-    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
-      $('.atc-fixed').addClass('show')
-    } else {
-      $('.atc-fixed').removeClass('show')
-    }
-  })
     window.selectLogic = {
       productCount: '4x',
       productHandle: '',
@@ -434,6 +422,18 @@
 
   console.log(window.products, 'window.products')
   console.log(window.prices, 'window.prices')
+  const distance = $('.scroll-reveal').offset().top
+  $(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+      $('.atc-fixed').addClass('show')
+    } else {
+      $('.atc-fixed').removeClass('show')
+    }
+  })
 </script>
 
 {% schema %}

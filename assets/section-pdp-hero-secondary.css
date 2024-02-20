@@ -778,3 +778,32 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
         text-align: -webkit-center;
     }
 }
+
+.pdp-hero__icon-text {
+    font-size: 11px;
+    color: #9EA6A7;
+}
+
+.pdp-hero__icon-title {
+    font-size: 12px;
+}
+
+@media (max-width: 767px) {
+
+    .pdp-hero__icon-container {
+        max-width: 150px;
+        padding-inline: 5px;
+    }
+    .pdp-hero__icon-container img {
+        margin-bottom: 5px;
+    }
+    .section-pdp-hero-secondary .swiper-initialized {
+        padding-inline: 10px;
+    }
+    .pdp-hero__container {
+        gap: 15px;
+    }
+    .pdp-hero__gallery {
+        gap: 8px;
+    }
+}

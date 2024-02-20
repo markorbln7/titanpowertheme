@@ -268,8 +268,8 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
     box-shadow: 0 2px 9px 0px #00000028;
     border-radius: 5px;
     background: radial-gradient(#d8e1e2 50%, #a2e59b3b 79%, #35ff2e29 95%);
-   margin-bottom: 3px;
-    margin-top: -3px;
+   margin-bottom: 2px;
+    margin-top: -2px;
 }
 
 .pdp-hero__extra-add.promo {
@@ -279,8 +279,8 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
 .pdp-hero__upsell-highlighted {
    box-shadow: 0 2px 9px 0px #00000025!important;
   background: radial-gradient(#d8e1e2 30%, #a2e59b9e 79%, #35ff2e3b 95%);
-  margin-bottom: 3px;
-  margin-top: -3px;
+  margin-bottom: 2px;
+  margin-top: -2px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
@@ -288,8 +288,8 @@ span.product-template-new__wrapper--content__review--mark.font-sans.color-black 
 
 .pdp-hero__upsell-message.active {
     background: linear-gradient(180deg, rgb(132 239 121 / 0%) 0%, #78f46bf7);
-    margin-bottom: 3px;
-    margin-top: -3px;
+    margin-bottom: 2px;
+    margin-top: -2px;
   border-top-left-radius: 47px;
     border-top-right-radius: 47px;
 }
@@ -369,24 +369,6 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
-
-.pdp-hero__upsell-message.added {
-  position: relative;
-  animation: neonGlow 3s infinite ease-in-out; /* Applying the same 3s glow pulse */
-  overflow: hidden;
-   margin-bottom: 3px;
-    margin-top: -3px;
-}
-
-/* Neon glow with a slow pulsing effect, identical to the previous configuration */
-@keyframes neonGlow {
-  0%, 100% {
-    box-shadow: none; /* Start and end with no glow */
-  }
-  50% {
-    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; /* Slightly larger glow at the peak of the pulse */
-  }
-}
 
 
 

@@ -457,12 +457,13 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 .rich-text__heading.rte.inline-richtext.h1.scroll-trigger.animate--slide-in {
     FONT-SIZE: 40PX;
-  COLOR:#000;
+  COLOR:#393939;
 }
 
 .faq__title {
-    font-size: 40px;
+    font-size: 40px!Important;
     line-height: 64px;
+   COLOR:#393939;
 }
 
 @media (min-width: 768px)
@@ -479,6 +480,7 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     TEXT-ALIGN: CENTER;
     FONT-FAMILY: 'RALEWAY';
     FONT-SIZE: 40PX;
+   COLOR:#393939;
 }
 .section-image-tabs {
     padding-block: 80px!important;
@@ -486,4 +488,11 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 .rich-text__wrapper.rich-text__wrapper--center.page-width {
     padding-top: 40px;
+  
+}
+
+.image-tabs__title {
+    font-size: 40px;
+    color: #393939;
+
 }

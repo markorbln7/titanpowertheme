@@ -373,22 +373,21 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
-
 .pdp-hero__upsell-message.active {
   position: relative;
-  animation: neonGlow 5s infinite ease-in-out; /* Continuous pulsing neon glow effect */
+  animation: neonGlow 3s infinite ease-in-out; /* Adjusted for a 3s loop */
   color: #000; /* Text color set to black */
   overflow: hidden;
   background: linear-gradient(180deg, rgba(132, 239, 121, 0%) 0%, #78f46bf7); /* Original background gradient */
 }
 
-/* Adjusted neon glow to pulse from no glow to a small glow */
+/* Adjusted neon glow to pulse from no glow to a slightly larger glow */
 @keyframes neonGlow {
   0%, 100% {
     box-shadow: none; /* Start and end with no glow */
   }
   50% {
-    box-shadow: 0 0 2px #78f46bf7, 0 0 4px #78f46bf7; /* Subtle glow at the peak of the pulse */
+    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; /* Slightly larger glow at the peak of the pulse */
   }
 }
 
@@ -401,7 +400,7 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
   width: 300%;
   height: 100%;
   background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%);
-  animation: chargeFlow 3s forwards; /* Smooth flow ending with transparency */
+  animation: chargeFlow 2s forwards; /* Smooth flow ending with transparency */
 }
 
 @keyframes chargeFlow {

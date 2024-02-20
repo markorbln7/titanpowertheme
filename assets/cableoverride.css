@@ -367,44 +367,41 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     border-radius: 10px;
 }
 
-
-
 .pdp-hero__upsell-message.active {
   position: relative;
+  color: #000; /* Ensuring text is black */
   overflow: hidden;
-  color: #000; /* Text color set to black */
-  background-color: #000; /* Background color */
 }
 
-/* Charge fill effect using ::before pseudo-element */
 .pdp-hero__upsell-message.active::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  width: 0%; /* Start from 0 width */
+  left: -100%;
+  width: 200%; /* Covering full width for the sweep */
   height: 100%;
-  background-color: #78f46bf7; /* Neon green fill */
-  animation: chargeFill 12s forwards, pulsingGlow 3s infinite ease-in-out 12s; /* Fill effect followed by pulsing glow */
+  background: linear-gradient(to right, #000 49%, #78f46bf7 50%, #000 51%);
+  animation: electricPulse 0.5s ease-out forwards, batteryFill 5s 0.5s ease-in-out forwards;
 }
 
-/* Keyframes for charge fill effect */
-@keyframes chargeFill {
+/* Quick electric pulse effect */
+@keyframes electricPulse {
   0% {
-    width: 0%;
+    left: -100%;
   }
   100% {
-    width: 100%; /* Ends when full width is reached */
+    left: 100%;
   }
 }
 
-/* Keyframes for continuous pulsing glow after fill */
-@keyframes pulsingGlow {
-  0%, 100% {
-    box-shadow: 0 0 3px #78f46bf7, 0 0 6px #78f46bf7; /* Subtle glow */
+/* Battery fill effect revealing the text */
+@keyframes batteryFill {
+  from {
+    width: 0%;
+    background: #000; /* Starting from black */
   }
-  50% {
-    box-shadow: 0 0 5px #fff, 0 0 10px #fff; /* White glow */
+  to {
+    width: 100%;
+    background: #78f46bf7; /* Ending with neon green */
   }
 }
-

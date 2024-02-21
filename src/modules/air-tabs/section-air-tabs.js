@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import './section-air-tabs.css'
 
 const tabs = document.querySelectorAll('.air-tabs__nav-item');

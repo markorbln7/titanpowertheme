@@ -372,14 +372,22 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 }
 
 
+
 .pdp-hero__upsell-highlighted.added {
-    position: relative;
-    animation: borderHighlightAnimation 0.75s ease-in-out forwards;
+    animation: chargingPulse 1s infinite alternate ease-in-out;
 }
 
-@keyframes borderHighlightAnimation {
-    0% { box-shadow: 0 0 0 0 neonGreen; }
-    100% { box-shadow: 0 0 0 3px neonGreen; }
+@keyframes chargingPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+    }
+    100% {
+        transform: scale(1.05);
+        opacity: 0.8;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.9);
+    }
 }
 
 

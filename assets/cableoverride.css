@@ -379,15 +379,28 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 
 
 
+
 .pdp-hero__upsell-highlighted.added {
     position: relative;
-    animation: flashBackground 0.5s forwards; /* Animation duration and forwards to retain the final state */
+    animation: fastPulseAndFlash 0.75s ease-in-out forwards;
 }
 
-@keyframes flashBackground {
-    0%, 100% { background-color: lightgray; } /* Original background color */
-    50% { background-color: #ffffff; } /* Flash color */
+@keyframes fastPulseAndFlash {
+    0%, 100% {
+        transform: scale(1);
+        background-color: lightgray; /* Original background color */
+    }
+    25%, 75% {
+        transform: scale(1.05);
+        background-color: #ffffff; /* Flash color */
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: lightgray;
+    }
 }
+
+
 
 
 

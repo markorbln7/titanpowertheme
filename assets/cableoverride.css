@@ -377,20 +377,22 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
     overflow: hidden;
 }
 
-.pdp-hero__upsell-highlighted.added::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.5), transparent);
-    animation: electricSurge 0.5s;
+
+
+.pdp-hero__upsell-highlighted.added {
+    position: relative;
+    animation: magneticField 1s infinite alternate ease-in-out;
 }
 
-@keyframes electricSurge {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+@keyframes magneticField {
+    0% {
+        transform: scale(1) rotate(0deg);
+        box-shadow: 0 0 5px green, 0 0 10px neonGreen;
+    }
+    100% {
+        transform: scale(1.03) rotate(360deg);
+        box-shadow: 0 0 8px green, 0 0 15px neonGreen;
+    }
 }
 
 

@@ -372,35 +372,15 @@ section#shopify-section-template--16690055970994__1707582364114bbe97 {
 }
 
 
-
 .pdp-hero__upsell-highlighted.added {
-  position: relative; /* Ensure relative positioning for the absolute positioning of pseudo-elements */
-  color: #000; /* Text color set to black */
-  overflow: hidden; /* Prevent content from spilling outside the element's bounds */
+    animation: flashAnimation 0.5s ease-out;
 }
 
-/* Use ::after instead of ::before to avoid layout shifts, and ensure it's contained within the element */
-.pdp-hero__upsell-highlighted.added::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0; /* Use right and bottom to ensure the pseudo-element doesn't extend beyond the parent element */
-  bottom: 0;
-  background: linear-gradient(to right, #000 0%, #78f46bf7 50%, #000 100%);
-  animation: chargeFlow 2s forwards; /* Adjusted animation to maintain size and position */
-  pointer-events: none; /* Prevent the pseudo-element from capturing mouse events */
+@keyframes flashAnimation {
+    0%, 100% { background-color: lightgray; }
+    50% { background-color: #ffffff; }
 }
 
-@keyframes chargeFlow {
-  0%, 100% {
-    transform: translateX(0); /* Use transform for animation to prevent layout shifts */
-    opacity: 1; /* Maintain visibility throughout the animation */
-  }
-  50% {
-    transform: translateX(100%); /* Move the gradient across without affecting layout */
-  }
-}
 
 
 

@@ -86,3 +86,23 @@ if (descriptionWrapper) {
       : productDescriptionCollapse.textContent = 'Learn More';
   })
 }
+
+const props = section.querySelectorAll('.pdp-hero__prop');
+if (props.length > 0) {
+  props.forEach(prop => {
+    const propDescription = prop.querySelector('.pdp-hero__prop-description');
+    const propHeader = prop.querySelector('.pdp-hero__prop-header');
+
+    if (propDescription && propHeader) {
+      propHeader.addEventListener('click', () => {
+        const propParent = propHeader.closest('.pdp-hero__prop');
+        propParent.classList.toggle('show');
+
+        propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
+        !propParent.classList.contains('show')
+          ? propDescription.style.maxHeight = null
+          : propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
+      });
+    }
+  });
+}

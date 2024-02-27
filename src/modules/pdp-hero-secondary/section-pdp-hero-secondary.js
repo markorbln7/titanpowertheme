@@ -91,22 +91,24 @@ if (!!allShopSections.length) {
             }
         }
 
-        const props = section.querySelector('.pdp-hero__props');
-        if (props) {
-            const propDescription = section.querySelector('.pdp-hero__prop-description');
-            const propHeader = section.querySelector('.pdp-hero__prop-header');
+        const props = section.querySelectorAll('.pdp-hero__prop');
+        if (props.length > 0) {
+            props.forEach(prop => {
+                const propDescription = prop.querySelector('.pdp-hero__prop-description');
+                const propHeader = prop.querySelector('.pdp-hero__prop-header');
 
-            if (propDescription) {
-                propHeader.addEventListener('click', () => {
-                    const propParent = propHeader.closest('.pdp-hero__prop');
-                    propParent.classList.toggle('collapse-text');
+                if (propDescription && propHeader) {
+                    propHeader.addEventListener('click', () => {
+                        const propParent = propHeader.closest('.pdp-hero__prop');
+                        propParent.classList.toggle('show');
 
-                    propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
-                    !propParent.classList.contains('collapse-text')
-                        ? propParent.style.maxHeight = null
-                        : propParent.style.maxHeight = propParent.scrollHeight + 'px';
-                })
-            }
+                        propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
+                        !propParent.classList.contains('show')
+                            ? propDescription.style.maxHeight = null
+                            : propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
+                    });
+                }
+            });
         }
     });
 }

@@ -292,7 +292,9 @@
                   <div class="pdp-hero__prop-text">{{ propText }}</div>
                   <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
                 </div>
-                <div class="pdp-hero__prop-description">{{ propDescription }}</div>
+                {% if propDescription != blank %}
+                  <div class="pdp-hero__prop-description">{{ propDescription }}</div>
+                {% endif %}
               </div>
             {% endfor %}
           </div>

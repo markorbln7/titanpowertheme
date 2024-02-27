@@ -145,7 +145,12 @@
               {% assign propDescription = block.settings.prop_description %}
 
               <div class="pdp-hero__prop">
-                <div class="pdp-hero__prop-header">
+                <div
+                  class="pdp-hero__prop-header"
+                  {% if propDescription != blank %}
+                    style="cursor: pointer;"
+                  {% endif %}
+                >
                   <div class="pdp-hero__prop-text">{{ propText }}</div>
                   <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
                 </div>

@@ -87,7 +87,7 @@ if (descriptionWrapper) {
   })
 }
 
-const props = section.querySelectorAll('.pdp-hero__prop');
+const props = document.querySelectorAll('.section-pdp-hero .pdp-hero__prop');
 if (props.length > 0) {
   props.forEach(prop => {
     const propDescription = prop.querySelector('.pdp-hero__prop-description');

@@ -169,6 +169,47 @@
         "product_highlighted_message": "50% OFF - WHEN ADDED WITH CABLES"
       }
     },
+    "product_icons_RwJxdD": {
+      "type": "product-icons",
+      "blocks": {
+        "icons_y8EVbb": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/titan-smart-cable-iphone-charging-cable-titan-power-type-c-3_338bea2a-df6d-4b21-b2b6-07f54417b83c.webp",
+            "text": "Android & IOS Compatible"
+          }
+        },
+        "icons_KXakRP": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/35_d5fd5e5a-c549-4684-a2b7-388b6dc606ce.webp",
+            "text": "50% Charge in 20mins"
+          }
+        },
+        "icons_zcQbPN": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/135.webp",
+            "text": "Cable Auto Disconnects"
+          }
+        },
+        "icons_DekKY4": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/icons8-muscle-100_190ee069-ff86-49d6-91f5-b2b8d005c801.webp",
+            "text": "Strongest on the market"
+          }
+        }
+      },
+      "block_order": [
+        "icons_y8EVbb",
+        "icons_KXakRP",
+        "icons_zcQbPN",
+        "icons_DekKY4"
+      ],
+      "settings": {
+      }
+    },
     "testimonial_slider_XJAQhD": {
       "type": "testimonial-slider",
       "blocks": {
@@ -267,12 +308,15 @@
 
       ],
       "settings": {
-        "title": "22,131",
+        "title": "",
         "subtitle": "LOVED & TRUSTED BY THOUSANDS"
       }
     },
     "loox_carousel_reviews_KAfV3r": {
       "type": "loox-carousel-reviews",
+      "custom_css": [
+        ".body {padding: 50px 5px; margin: 0; background-color: #d6e1e1;}"
+      ],
       "settings": {
         "max_width": 1440,
         "arrows_color": "#000000",
@@ -282,47 +326,6 @@
         "only_photos": true,
         "use_widget_font": false,
         "product_handle": ""
-      }
-    },
-    "product_icons_RwJxdD": {
-      "type": "product-icons",
-      "blocks": {
-        "icons_y8EVbb": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/titan-smart-cable-iphone-charging-cable-titan-power-type-c-3_338bea2a-df6d-4b21-b2b6-07f54417b83c.webp",
-            "text": "Android & IOS Compatible"
-          }
-        },
-        "icons_KXakRP": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/35_d5fd5e5a-c549-4684-a2b7-388b6dc606ce.webp",
-            "text": "50% Charge in 20mins"
-          }
-        },
-        "icons_zcQbPN": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/135.webp",
-            "text": "Cable Auto Disconnects"
-          }
-        },
-        "icons_DekKY4": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/icons8-muscle-100_190ee069-ff86-49d6-91f5-b2b8d005c801.webp",
-            "text": "Strongest on the market"
-          }
-        }
-      },
-      "block_order": [
-        "icons_y8EVbb",
-        "icons_KXakRP",
-        "icons_zcQbPN",
-        "icons_DekKY4"
-      ],
-      "settings": {
       }
     },
     "compare-table-cable": {
@@ -1078,9 +1081,9 @@
   "order": [
     "section_text_with_icons_3b7KcJ",
     "section_pdp_hero_secondary_PkFqfF",
+    "product_icons_RwJxdD",
     "testimonial_slider_XJAQhD",
     "loox_carousel_reviews_KAfV3r",
-    "product_icons_RwJxdD",
     "compare-table-cable",
     "product_icons_Dc6GkK",
     "section_image_tabs_zKw6gN",

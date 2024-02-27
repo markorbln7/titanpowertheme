@@ -23,6 +23,7 @@
 
 .zigzag__image-wrapper {
     width: 60%;
+    animation: float 6s ease-in-out infinite;
 }
 
 .zigzag__wrapper--reverse {
@@ -101,7 +102,7 @@
     font-size: 72.8926px;
     line-height: 89px;
     text-transform: uppercase;
-    background: linear-gradient(180deg,#fff 37.5%,#67b55e 66.67%,#60c655 76.04%);
+    background: linear-gradient(180deg, #fff 37.5%, #67b55e 66.67%, #60c655 76.04%);
     background-clip: text;
     font-family: Montserrat;
     padding-right: 10px;
@@ -136,7 +137,7 @@
     border-radius: 18.2232px;
     height: 14px;
     margin-bottom: 10px;
-    background: linear-gradient(90deg,#60c655 1.88%,#daffde 101.88%);
+    background: linear-gradient(90deg, #60c655 1.88%, #daffde 101.88%);
     display: block !important;
     transition: width 0.8s ease-in;
 }
@@ -333,5 +334,19 @@
         position: relative;
         width: 360px;
         left: 0;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-15px);
+    }
+
+    100% {
+        transform: translatey(0px);
     }
 }

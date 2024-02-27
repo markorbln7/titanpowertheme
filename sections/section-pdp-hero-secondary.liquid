@@ -285,10 +285,14 @@
             {% for block in propsRepeater %}
               {% assign propText = block.settings.prop_text %}
               {% assign propIcon = block.settings.prop_icon %}
+              {% assign propDescription = block.settings.prop_description %}
 
               <div class="pdp-hero__prop">
-                <span class="pdp-hero__prop-text">{{ propText }}</span>
-                <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                <div class="pdp-hero__prop-header">
+                  <div class="pdp-hero__prop-text">{{ propText }}</div>
+                  <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                </div>
+                <div class="pdp-hero__prop-description">{{ propDescription }}</div>
               </div>
             {% endfor %}
           </div>
@@ -299,12 +303,12 @@
 </section>
 <div class="atc-fixed">
   <div class="atc-fixed__container">
-      <div class="buds-product__inner--content__subtitle">
-        {{ mainProduct.title }}
-      </div>
-      <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
-              ORDER NOW ☝
-      </button>
+    <div class="buds-product__inner--content__subtitle">
+      {{ mainProduct.title }}
+    </div>
+    <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+      ORDER NOW ☝
+    </button>
   </div>
 </div>
 <style>
@@ -540,6 +544,11 @@
           "type": "textarea",
           "id": "prop_icon",
           "label": "Prop icon"
+        },
+        {
+          "type": "richtext",
+          "id": "prop_description",
+          "label": "Prop description"
         }
       ]
     },

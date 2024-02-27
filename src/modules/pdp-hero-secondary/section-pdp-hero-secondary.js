@@ -90,6 +90,24 @@ if (!!allShopSections.length) {
                 sliderIcons.classList.add('pdp-hero__icons--no-swiper');
             }
         }
+
+        const props = section.querySelector('.pdp-hero__props');
+        if (props) {
+            const propDescription = section.querySelector('.pdp-hero__prop-description');
+            const propHeader = section.querySelector('.pdp-hero__prop-header');
+
+            if (propDescription) {
+                propHeader.addEventListener('click', () => {
+                    const propParent = propHeader.closest('.pdp-hero__prop');
+                    propParent.classList.toggle('collapse-text');
+
+                    propDescription.style.maxHeight = propDescription.scrollHeight + 'px';
+                    !propParent.classList.contains('collapse-text')
+                        ? propParent.style.maxHeight = null
+                        : propParent.style.maxHeight = propParent.scrollHeight + 'px';
+                })
+            }
+        }
     });
 }
 

@@ -26,6 +26,7 @@
 
 .zigzag__image-wrapper {
     width: 60%;
+    animation: float 6s ease-in-out infinite;
 }
 
 .zigzag__wrapper--reverse {
@@ -335,5 +336,19 @@
         position: relative;
         width: 360px;
         left: 0;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-15px);
+    }
+
+    100% {
+        transform: translatey(0px);
     }
 }

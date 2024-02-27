@@ -335,7 +335,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     margin-bottom: 40px;
 }
 
-.pdp-hero__prop {
+.pdp-hero__prop-header {
     display: flex;
     justify-content: space-between;
     padding-bottom: 3px;
@@ -344,12 +344,32 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     color: #000;
     font-weight: 500;
     align-items: center;
+    cursor: pointer;
+}
+
+.pdp-hero__prop-description {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.pdp-hero__prop.show .pdp-hero__prop-description {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pdp-hero__prop.show .pdp-hero__prop-icon {
+    transform: rotate(180deg);
 }
 
 .pdp-hero__prop-icon {
     height: 20px;
     width: 20px;
     margin-right: 3px;
+    transition: all 0.3s ease;
 }
 
 .pdp-hero__prop-icon svg {

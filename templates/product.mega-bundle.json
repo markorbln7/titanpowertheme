@@ -1,50 +1,41 @@
 {
   "sections": {
-    "image_banner_Dk7edb": {
-      "type": "image-banner",
+    "slideshow_fDHCmj": {
+      "type": "slideshow",
       "blocks": {
-        "heading_nAkekH": {
-          "type": "heading",
+        "slide_UicPFe": {
+          "type": "slide",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_FfNmJV": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_tdyWHk": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "heading": "Titan Mega Bundle",
+            "heading_size": "h1",
+            "subheading": "All your necessary products in one bundle",
+            "button_label": "Buy Now",
+            "link": "\/",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
           }
         }
       },
       "block_order": [
-        "heading_nAkekH",
-        "text_FfNmJV",
-        "buttons_tdyWHk"
+        "slide_UicPFe"
+      ],
+      "custom_css": [
+        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}"
       ],
       "settings": {
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "",
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
         "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
     "section_text_with_icons_3b7KcJ": {
@@ -1017,7 +1008,7 @@
     }
   },
   "order": [
-    "image_banner_Dk7edb",
+    "slideshow_fDHCmj",
     "section_text_with_icons_3b7KcJ",
     "testimonial_slider_XJAQhD",
     "compare-table-cable",

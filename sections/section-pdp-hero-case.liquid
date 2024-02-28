@@ -18,8 +18,9 @@
       transition: opacity .3s ease !important;
     }
     select {
+      box-shadow: 0 1px 5px 3px #00000012;
       -webkit-appearance: none;
-      background-color: transparent;
+      background-color: white;
       border-radius: 1.875rem;
       font-weight: 400;
       letter-spacing: .07em;
@@ -299,7 +300,7 @@
                 {% render 'titan-image', image: product_highlighted_image %}
               </div>
               {% if product_highlighted.options_with_values.size  > 1 %}  
-               <div class="f jcc aic gap-10 mx-20">
+               <div class="f jcc aic gap-10 mx-20 fw">
                 {% for option in product_highlighted.options_with_values %}       
                   <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
                     {% for values in option.values %}

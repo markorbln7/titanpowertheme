@@ -16,7 +16,7 @@ let updateCart = (itemId, q) => {
     let nameKey = itemId
     updateObject[nameKey] = q;
     console.log(updateObject, 'updateObject')
-    jQuery.post('/cart/update.js', {updates:{...updateObject}}); 
+    jQuery.post('/cart/update.js', {updates:{...updateObject}});
 }
 increases.forEach((increas) => {
     increas.addEventListener('click', (e) => {
@@ -37,7 +37,7 @@ increases.forEach((increas) => {
                             response => response.json(),
                         )
                         .then(
-                            data => { 
+                            data => {
                                 let bar = document.querySelector(".js-info-bar");
                                 let currency = data.currency;
                                 if(currency == 'USD') {
@@ -56,7 +56,7 @@ increases.forEach((increas) => {
                                 document.querySelector('.js-cart-total-two').innerHTML = `${currency}${giftCount/100}`
                                 document.querySelector('.js-cart-total-three').innerHTML = `${currency}${giftCount/100}`
                                 for (let i = 0; i < itemCount; i++) {
-                                    console.log(i, 'iiiiiiiii')
+                                    console.log(i, 'iiiiiiiiiaaa')
                                     let dataSelectorVariable = `[data-${i+1}]`
                                     let dataLineVariable = `[data-line-${i}]`
                                     let globeClass = document.querySelector(dataSelectorVariable)
@@ -68,9 +68,9 @@ increases.forEach((increas) => {
                                         globeClass.classList.add('active')
                                     }, "1000");
                                 }
-                                
-                                
-                                
+
+
+
                                 if(itemCount < 4) {
                                     ToGoal = 5
                                     percent = '55%'
@@ -97,6 +97,7 @@ increases.forEach((increas) => {
                                 let giftChange = document.querySelector('.js-left-to-gift')
                                 let jsImageChange = document.querySelector('.js-image-change')
                                 let circle = document.querySelector('.circle-chart__circle')
+                                console.log(giftCount,firstGift,secondGift,thirdGift, 'OVONIJEKAKOTEBANESTO')
 
                                 if(giftCount < firstGift) {
                                     let giftLeft = firstGift - giftCount
@@ -126,14 +127,14 @@ increases.forEach((increas) => {
                                 //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
                                 //     document.querySelector('.gift-tracker').classList.remove('hide')
                                 //     document.querySelector('.unlocked').classList.add('hide')
-                                // 
+                                //
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                     document.querySelector('.unlocked').classList.remove('hide')
                                 }
-                            
-                                
-                                return data 
+
+
+                                return data
                             });
             }
             getCart();
@@ -167,7 +168,7 @@ decreases.forEach((decrease) => {
             fetch(window.Shopify.routes.root + 'cart.js')
                 .then(response => response.json())
                     .then(
-                        data => { 
+                        data => {
                             let bar = document.querySelector(".js-info-bar");
                             let currency = data.currency;
                             if(currency == 'USD') {
@@ -210,7 +211,7 @@ decreases.forEach((decrease) => {
                             } else {
                                 bar.innerHTML = `You unlocked full 75% OFF discount!!`
                             }
-
+                            console.log(giftCount,firstGift,secondGift,thirdGift, 'OVONIJEKAKOTEBANESTOMINUS')
                             let firstGift = document.querySelector('.js-first-gift').getAttribute('data-gift')
                             let secondGift = document.querySelector('.js-second-gift').getAttribute('data-gift')
                             let thirdGift = document.querySelector('.js-third-gift').getAttribute('data-gift')
@@ -222,6 +223,7 @@ decreases.forEach((decrease) => {
                                 giftChange.innerHTML = `${currency}${firstGift/100}}`
                                 jsImageChange.src = document.querySelector('.js-first-gift').getAttribute('data-image')
                             }
+                            console.log(giftCount,firstGift,secondGift,thirdGift, 'OVONIJEKAKOTEBANESTO')
                             if(giftCount < firstGift) {
                                 let giftLeft = firstGift - giftCount
                                 giftChange.innerHTML = `${currency}${giftLeft/100}`
@@ -250,12 +252,12 @@ decreases.forEach((decrease) => {
                             //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
                             //     document.querySelector('.gift-tracker').classList.remove('hide')
                             //     document.querySelector('.unlocked').classList.add('hide')
-                            // 
+                            //
                             } else {
                                 document.querySelector('.gift-tracker').classList.add('hide')
                                 document.querySelector('.unlocked').classList.remove('hide')
                             }
-                            return data 
+                            return data
                         });
         }
         getCart();
@@ -281,7 +283,7 @@ const startBundles = document.querySelectorAll('.js-start-bundles')
 const bundleProductsSelectors = document.querySelectorAll('.bundle-wrapper__product')
 
 startBundles.forEach((startBundle) => {
-    startBundle.addEventListener('click', (e) => {  
+    startBundle.addEventListener('click', (e) => {
         console.log('click')
         const _this = e.target
         const arrayString = _this.getAttribute('data-ids')
@@ -298,7 +300,7 @@ startBundles.forEach((startBundle) => {
             let nameKey = productIdSelector;
             updateObject[nameKey] = q;
             console.log(updateObject, 'updateObject')
-            jQuery.post('/cart/update.js', {updates:{...updateObject}}); 
+            jQuery.post('/cart/update.js', {updates:{...updateObject}});
             bundleProductsSelectors.forEach((bundleProductsSelector) => {
                 let productIdSelector = bundleProductsSelector.getAttribute('data-product-id')
                 if( id == productIdSelector ) {
@@ -309,7 +311,7 @@ startBundles.forEach((startBundle) => {
                 let oldQuantity = bundleProductsSelector.querySelector('.js-variant-selector').getAttribute('data-quantity')
                 let newQuantity = parseInt(oldQuantity) + q
                 bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
-                bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity             
+                bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity
                 }
             })
         }
@@ -320,7 +322,7 @@ startBundles.forEach((startBundle) => {
                             response => response.json(),
                         )
                         .then(
-                            data => { 
+                            data => {
                                 let bar = document.querySelector(".js-info-bar");
                                 let currency = data.currency;
                                 if(currency == 'USD') {
@@ -351,7 +353,7 @@ startBundles.forEach((startBundle) => {
                                         globeClass.classList.add('active')
                                     }, "1000");
                                 }
-                                
+
                                 let ToGoal
                                 if(itemCount < 4) {
                                     ToGoal = 5
@@ -404,13 +406,13 @@ startBundles.forEach((startBundle) => {
                                 //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
                                 //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
                                 //     document.querySelector('.gift-tracker').classList.remove('hide')
-                                // 
+                                //
                                 } else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                 }
-                            
-                                
-                                return data 
+
+
+                                return data
                             });
             }
             getCart();

@@ -172,8 +172,9 @@
 
                 assign upsell_product_image = upsell_product.settings.upsell_product_image
 
-                assign product_price = product_obj.price_max
-                assign product_compare_at_price = product_obj.compare_at_price_max
+                assign upsell_product_image = product_obj.featured_image
+                assign product_price = product_obj.price | money_with_currency
+                assign product_compare_at_price = product_obj.compare_at_price | money_with_currency
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                 assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}

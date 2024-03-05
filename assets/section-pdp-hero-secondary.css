@@ -5,6 +5,24 @@
     padding-block: 50px;
 }
 
+.section-pdp-hero-secondary .swiper {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    min-height: 0;
+    min-width: 0;
+}
+
+.section-pdp-hero-secondary .swiper-initialized {
+    padding-inline: 10px;
+}
+
+.section-pdp-hero-secondary .swiper-slide {
+    display: flex;
+    justify-content: center;
+    height: auto;
+}
+
 .section-pdp-hero .content-wrapper {
     padding-inline: 20px;
 }
@@ -246,8 +264,8 @@
 }
 
 .pdp-hero__extra-add img {
-    max-width: 100px;
-    max-height: 60px;
+    max-width: 60px;
+    height: auto;
 }
 
 .pdp-hero__extra-checkbox {
@@ -319,7 +337,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     margin-bottom: 40px;
 }
 
-.pdp-hero__prop {
+.pdp-hero__prop-header {
     display: flex;
     justify-content: space-between;
     padding-bottom: 3px;
@@ -330,10 +348,30 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     align-items: center;
 }
 
+.pdp-hero__prop-description {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    line-height: 18px;
+    overflow: hidden;
+}
+
+.pdp-hero__prop.show .pdp-hero__prop-description {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pdp-hero__prop.show .pdp-hero__prop-icon {
+    transform: rotate(180deg);
+}
+
 .pdp-hero__prop-icon {
     height: 20px;
     width: 20px;
     margin-right: 3px;
+    transition: all 0.3s ease;
 }
 
 .pdp-hero__prop-icon svg {
@@ -342,12 +380,12 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 }
 
 .pdp-hero__icons {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
     z-index: 1;
-    padding-inline: 10px;
+    /* padding-inline: 10px; */
 }
 
 .pdp-hero__icon-container {
@@ -427,212 +465,8 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     left: 0;
 }
 
+.blank-item {
+    padding: 0;
+}
+
 /*NEW ADDED CSS*/
-
-.pdp-hero__upsell-highlighted {
-    background: radial-gradient(#d8e1e2 50%, #a2e59b);
-}
-
-.pdp-hero__upsell-message.active {
-    background: linear-gradient(180deg, #fff 40%, #d4d4d4 100%);
-}
-
-.pdp-hero__extra-add.promo {
-    background: radial-gradient(#d8e1e2 50%, #a2e59b);
-}
-
-.pdp-hero__upsell-highlighted .pdp-hero__upsell-message {
-    background: linear-gradient(180deg, #fff 40%, #d4d4d4 100%);
-}
-
-.pdp-hero__extra-checkbox {
-    border: 1.5px solid #60c655;
-    border-radius: 8px;
-}
-
-.pdp-hero__upsell {
-    box-shadow: 0 2px 7px 5px #0000001a;
-}
-
-.pdp-hero__upsell-highlighted {
-    box-shadow: 0 1px 5px 3px #0000001a!important;
-
-}
-
-.pdp-hero__extra-add.promo {
-    box-shadow: 0 1px 5px 3px #0000001a;
-}
-
-.pdp-hero__upsell-title {
-    font-family: 'Work Sans';
-}
-
-.pdp-hero__discount {
-    background-color: #86e57c;
-    border-radius: 15px;
-}
-
-.pdp-hero__product-subtitle {
-    color: #bcbcbc;
-    font-weight: 500;
-    font-family: 'Work Sans';
-}
-
-span.product-template-new__wrapper--content__review--mark.font-sans.color-black {
-    font-weight: 700;
-    font-size: 18px;
-}
-
-.pdp-hero__pricing .crossed {
-    color: #f9797d;
-    font-size: 16px;
-}
-
-.pdp-hero__pricing-price {
-    font-size: 21px;
-}
-
-.pdp-hero__atc {
-    height: 65px;
-    font-weight: 800;
-    font-size: 21px;
-}
-
-.pdp-hero__pricing-wrapper {
-    margin-bottom: 25px;
-}
-
-.pdp-hero__heading {
-    margin-bottom: 21px;
-    font-family: 'Work Sans';
-}
-
-.pdp-hero__gallery-main-image {
-    background-color: #e4eaea;
-}
-
-.pdp-hero__gallery-main-image img {
-    box-shadow: 0 1px 5px 3px #00000012;
-}
-
-.pdp-hero__product-info {
-    box-shadow: 0 1px 5px 3px #00000008;
-}
-
-.pdp-hero__extra-add {
-    padding: 8px 14px;
-}
-
-@media (min-width: 768px) {
-    .section-pdp-hero {
-        padding-block: 80px;
-    }
-
-    .pdp-hero__product-info {
-        padding: 30px 40px;
-    }
-
-    .pdp-hero__product-title {
-        font-size: 36px;
-    }
-
-    .pdp-hero__pricing-price {
-        font-size: 24px;
-    }
-
-    .pdp-hero__atc-button {
-        max-width: 100%;
-    }
-
-    .pdp-hero__icons {
-        gap: 12px;
-    }
-
-    .pdp-hero__icon {
-        max-width: 96px;
-    }
-
-    .pdp-hero__container {
-        flex-direction: row;
-        max-width: 1240px;
-        margin-inline: auto;
-    }
-
-    .pdp-hero__option {
-        font-size: 20px;
-    }
-
-    /* Gallery CSS */
-    .pdp-hero__gallery {
-        width: 670px;
-    }
-
-    .pdp-hero__gallery-main-image {
-        width: 100%;
-        position: relative;
-    }
-
-    .pdp-hero__gallery-main-image img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        -o-object-fit: cover;
-           object-fit: cover;
-    }
-}
-
-@media (max-width: 767px) {
-
-    .pdp-hero__icons {
-        padding-inline: 0;
-    }
-
-    .pdp-hero__icon-container {
-        max-width: 160px;
-        flex: 1 0 50%;
-        padding-inline: 5px;
-    }
-
-    .pdp-hero__gallery-main-image img {
-        -o-object-fit: cover;
-           object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .pdp-hero__atc-label {
-        font-size: 10px;
-    }
-
-    .pdp-hero__pricing {
-        flex-wrap: wrap;
-    }
-
-    .pdp-hero__upsell-title {
-        font-size: 16px;
-    }
-
-    .pdp-hero__upsell .pdp-hero__pricing-price {
-        font-size: 15px;
-    }
-
-    .pdp-hero__upsell .crossed {
-        font-size: 13px;
-    }
-
-    .pdp-hero__upsell-highlighted .pdp-hero__upsell-title {
-        font-size: 14px;
-        text-align: center;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 992px) {
-    .pdp-hero__container {
-        flex-direction: column;
-    }
-
-    .pdp-hero__gallery {
-        width: 100%;
-    }
-}

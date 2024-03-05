@@ -1,0 +1,107 @@
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+{{ 'section-compare.css' | asset_url | stylesheet_tag }}
+<style>
+    .table-custom {
+        background: linear-gradient(180deg,black 21.88%,#60c655 100%,#60c655) !important;
+        {% comment %} background: linear-gradient(180deg,black 21.88%, #60c655 100%) !important; {% endcomment %}
+    }
+</style>
+
+<section class="table-custom">
+   <div class="page-width">
+      <h2 class="headingmain-tab desktop">How Do We Compare?</h2>
+      <h2 class="headingmain-tab mobile">COMPARE US</h2>
+      <div class="grid-table">
+         <div class="columns-table">
+            <ul>
+               <div class="height-first-child"></div>
+               <li>Model</li>
+               <li>Trustpilot Rating</li>
+               <li>Price</li>
+               <li>Unbreakable design</li>
+               <li>Charge 50% In 20min</li>
+               <li>90° angle head</li>
+               <li>Lifetime Warranty</li>
+               <li>Auto disconnect</li>
+               <li>Tidy cable tie</li>
+            </ul>
+         </div>
+         <div class="columns-table grid-two">
+            <div class="main-detail-tabel">
+               <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/cable.png?v=1706010513" alt="">
+               <ul>
+                  <li class="heading-tabel">Titan Cable</li>
+                  <li class="star-tabel">
+                     <img src="//pulsio.eu/cdn/shop/files/Group_80.png?v=1685955883" alt="">
+                  </li>
+                  <li class="icon-table">
+                     <p>$</p>
+                  </li>
+                  <li class="icon-table">
+                    <p>{% render 'tick' %}</p>
+                  </li>
+                  <li class="icon-table">
+                    <p>{% render 'tick' %}</p>
+                  </li>
+                  <li class="icon-table">
+                    <p>{% render 'tick' %}</p>
+                  </li>
+                  <li class="icon-table">
+                    <p>{% render 'tick' %}</p>
+                  </li>
+                  <li class="icon-table">
+                    <p>{% render 'tick' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'tick' %}</p>
+                   </li>
+               </ul>
+            </div>
+         </div>
+         <div class="columns-table grid-two grid-threee">
+            <div class="main-detail-tabel">
+               <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/competitor.png?v=1706010513 alt="">
+               <ul>
+                  <li class="heading-tabel otherhead">Other Brands</li>
+                  <li class="star-tabel">
+                     <img src="//pulsio.eu/cdn/shop/files/Trustpilot_ratings_3star-RGB-600x113.png?v=1685956231" alt="">
+                  </li>
+                  <li class="icon-table">
+                     <p>$$$</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+                  <li class="icon-table">
+                     <p>{% render 'redx' %}</p>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<style>
+   .columns-table ul li.icon-table {
+      justify-content: center;
+   }
+   .columns-table ul li {
+      border-bottom: 1px solid #d7d7d7;
+      padding: 20px 0;
+      text-transform: capitalize;
+      max-height: 64px;
+  }
+</style>

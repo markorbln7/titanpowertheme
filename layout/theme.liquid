@@ -388,6 +388,14 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
           scrollTop: $section.offset().top + 'px'
         }, 1000)
       })
+      $('.js-stars-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('#shopify-block-loox_reviews_loox_dynamic_section_dEptDN')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
       $('.js-atc-scroll').on('click', function (e) {
         e.preventDefault()
         const $section = $('.js-scroll')
@@ -399,6 +407,14 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
       $('.aha--massage-gun .banner__buttons .button').on('click', function (e) {
         e.preventDefault()
         const $section = $('#section-pdp-hero')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+      $('.js-atc-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('.js-scroll')
 
         $('html, body').animate({
           scrollTop: $section.offset().top + 'px'

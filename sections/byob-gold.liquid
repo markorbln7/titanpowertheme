@@ -54,7 +54,7 @@
               <div class="js-left-to-gift">{{all_products['pd'].price | money_without_trailing_zeros }}</div>
               <div class="left-to-gift__text">MORE</div>
             </div>
-            <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571">
+            <!-- <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571"> -->
             <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
               <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85" />
               <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
@@ -66,7 +66,7 @@
           <div class="left-to-gift">
             <div class="left-to-gift__text">ALL GIFTS UNLOCKED</div>
           </div>
-          <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571">
+          <!-- <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571"> -->
           <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
             <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85" />
             <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="470" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
@@ -155,13 +155,18 @@
       {% assign two = 'Ultra-Light & Powerful'%}
       {% assign three = 'Extended Battery Life'%}
     {% endif %}
+    {% if forloop.index == 15%}
+      {% assign one = '23 Compartments'%}
+      {% assign two = 'Light & Compressible'%}
+      {% assign three = 'Safe & Tidy Tech'%}
+    {% endif %}
 
     {% if forloop.index == 1%}
       <div class="upper-part-holder">
         <div class="upper-part-holder__title">Premium best sellers</div>
           <div class="upper-part-holder__flex">
     {% endif %}
-    
+
 
 
 {% comment %} RENDERER START {% endcomment %}
@@ -183,7 +188,7 @@
     <div class="bundle-wrapper__product--title">{{product.title  | remove: "- Bundle Offer" }}</div>
     <div class="product-template__wrapper--content__features font-sans">
         <div class="js-scroll product-template__wrapper--content__features--name">{{one}}</div>
-        <div class="js-scroll product-template__wrapper--content__features--name">{{two}}</div> 
+        <div class="js-scroll product-template__wrapper--content__features--name">{{two}}</div>
         <div class="js-scroll product-template__wrapper--content__features--name">{{three}}</div>
     </div>
 
@@ -204,7 +209,7 @@
                 {% for product_option in product.options_with_values %}
                     <div class="materials__single">
                             {% for value in product_option.values %}
-                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                <div class="js-option-name option-name">{{ value }} <span><svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     viewBox="0 0 330 330" xml:space="preserve">
                                <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
                                    c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
@@ -250,8 +255,8 @@
                       <div class="bundle-prices-show__title">BUNDLE PRICES</div>
                       <div class="hidden"><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div>
                       <div class="js-price"><span class="bundle-prices-show__number">5+</span><span class="js-price3">{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">7+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">7+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -283,8 +288,8 @@
           <div class="bundle-prices-show__title">BUNDLE PRICES</div>
           {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
           <div class="js-price "><span class="bundle-prices-show__number">5+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -370,13 +375,13 @@ selfCloses.forEach((selfClose) => {
 
 
 
-            
+
     {% if forloop.index == 4%}
           </div>
         </div>
     {% endif %}
   {% endfor %}
-  
+
 </div>
 
 <div style="background:#000;padding-bottom:30px;padding-top:30px;">
@@ -387,11 +392,11 @@ selfCloses.forEach((selfClose) => {
     <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Title_Lines.png?v=1700730542">
   </div>
   <div class="bundle-subtitle">
-    If you are happy with your savings and gifts, checkout bellow..
+    If you are happy with your savings and gifts, checkout below..
   </div>
   <div class="bundle-wrapper">
-    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_banner_top_mobile_desktop_-_custom_offer_page.jpg?v=1707757988">
-    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/gifting_wholesale_banner_top_mobile_desktop_-_custom_offer_page.jpg?v=1707757988">
+    <img class="w-100 desktop" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-3-in-1-cable-kits-dektop-top.jpg?v=1709642580">
+    <img class="w-100 mobile" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-3-in-1-cable-kits-mobile-bottom.jpg?v=1709642698">
   </div>
   {% render 'bundle-gifts-bottom-gold' %}
   <div class="product-template__wrapper--content__form--atc bundle-wrapper__buttonAdd finish-bundle">
@@ -510,7 +515,7 @@ input.js-variant-selector.text-uppercase.cursor-pointer {
   opacity:.7;
 }
 .c-quantity {
-  width:200px;  
+  width:200px;
 }
 .bundle-wrapper__footer .c-quantity__amount {
   font-size:44px;
@@ -604,7 +609,7 @@ FOnt-size:13px;
 
 
 .bundle-tab__tabs--content__single--list {
- 
+
 }
 
 .bundle-tab__tabs--content__single--list ul span {
@@ -716,7 +721,7 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
 
 .bundle-four-icons {
   max-width: 1040px;
- 
+
 }
 
 .bundle-wrapper__product--title {
@@ -763,7 +768,7 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
 @media only screen and (max-width: 768px) {
   .upper-part-holder__flex {
     gap: 10px;
-  }  
+  }
 }
 .upper-part-holder__title {
   font-weight: 300;
@@ -840,7 +845,7 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
 
 @media only screen and (max-width: 768px) {
   .bundle-gifts__single {
-    gap: 0px; 
+    gap: 0px;
  }
 }
 .js-info-bar {
@@ -857,21 +862,21 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
   .bundle-prices-show__title {
       font-size: 12px;
   }
-  
+
   .bundle-prices-show__title {
       font-size: 15px;
       font-weight: 700;
       margin-bottom: 5px;
       line-height: normal;
   }
-  
-  
-  
+
+
+
   .bundle-wrapper__product {
       padding: 7px;
   }
-  
-  
+
+
   .bundle-wrapper__product--title {
       font-size: 14px;
   }
@@ -884,15 +889,15 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
       padding: 0 5px
   ;
   }
-  
-  
+
+
   .custom-offer
   .option-name {
       font-size: 11px;
       padding: 7px;
   }
-  
-  
+
+
   .info-icon {
       right: 8px;
       top: 8px;
@@ -900,16 +905,16 @@ button.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.g
       height: 22px;
       font-size: 18px;
   }
-  
+
   button.js-add-to-cart-sticky.f.aic.jcc.w100.bg-titan-greenish.font-sans.btn--add-to-cart.color-white.get-bundle-started.no-margin {
       box-shadow: 1px 2px 7px #343434d6;
   }
-  
+
   .percent-tracker__line {
       box-shadow: 0px 1px 7px #35ff2e;
       border: 0px solid #60C655;
   }
-  
+
   .js-info-bar {
       line-height: normal;
   }

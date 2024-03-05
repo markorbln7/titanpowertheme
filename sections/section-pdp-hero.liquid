@@ -142,10 +142,21 @@
             {% for block in propsRepeater %}
               {% assign propText = block.settings.prop_text %}
               {% assign propIcon = block.settings.prop_icon %}
+              {% assign propDescription = block.settings.prop_description %}
 
               <div class="pdp-hero__prop">
-                <span class="pdp-hero__prop-text">{{ propText }}</span>
-                <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                <div
+                  class="pdp-hero__prop-header"
+                  {% if propDescription != blank %}
+                    style="cursor: pointer;"
+                  {% endif %}
+                >
+                  <div class="pdp-hero__prop-text">{{ propText }}</div>
+                  <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                </div>
+                {% if propDescription != blank %}
+                  <div class="pdp-hero__prop-description">{{ propDescription }}</div>
+                {% endif %}
               </div>
             {% endfor %}
           </div>
@@ -202,6 +213,11 @@
           "type": "text",
           "id": "prop_text",
           "label": "Prop text"
+        },
+        {
+          "type": "richtext",
+          "id": "prop_description",
+          "label": "Prop description"
         },
         {
           "type": "textarea",

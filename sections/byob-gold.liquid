@@ -54,7 +54,7 @@
               <div class="js-left-to-gift">{{all_products['pd'].price | money_without_trailing_zeros }}</div>
               <div class="left-to-gift__text">MORE</div>
             </div>
-            <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571">
+            <!-- <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571"> -->
             <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
               <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85" />
               <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
@@ -66,7 +66,7 @@
           <div class="left-to-gift">
             <div class="left-to-gift__text">ALL GIFTS UNLOCKED</div>
           </div>
-          <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571">
+          <!-- <img class="fire" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/blank_free_gift_icon_dbb581a7-baf4-4f40-982a-be849baa2f99.png?v=1702645571"> -->
           <svg class="circle-chart" viewbox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
             <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85" />
             <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="470" stroke-linecap="round" fill="none" cx="90" cy="90" r="85" />
@@ -255,8 +255,8 @@
                       <div class="bundle-prices-show__title">BUNDLE PRICES</div>
                       <div class="hidden"><span class="bundle-prices-show__number">1+</span><span class="js-price">{{product.first_available_variant.price | money }}</span></div>
                       <div class="js-price"><span class="bundle-prices-show__number">5+</span><span class="js-price3">{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">7+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</span></div>
-                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">7+</span><span class="js-price6">{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</span></div>
+                      <div class="js-price "><span class="bundle-prices-show__number">10+</span><span class="js-price10">{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</span></div>
                     </div>
                     <div class="c-quantity f aic p dm-sans-normal color-white">
                         <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
@@ -288,8 +288,8 @@
           <div class="bundle-prices-show__title">BUNDLE PRICES</div>
           {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
           <div class="js-price "><span class="bundle-prices-show__number">5+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.4 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.3 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</div>
+          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</div>
         </div>
         <div class="c-quantity f aic p dm-sans-normal color-white">
             <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>

@@ -43,6 +43,9 @@ increases.forEach((increas) => {
                                 if(currency == 'USD') {
                                     currency = '$'
                                 }
+                                if(currency == 'EUR') {
+                                    currency = '€'
+                                }
                                 let itemCount = 0;
                                 let giftCount = 0;
                                 for (let i = 0; i < data.items.length; i++) {
@@ -173,6 +176,9 @@ decreases.forEach((decrease) => {
                             let currency = data.currency;
                             if(currency == 'USD') {
                                 currency = '$'
+                            }
+                            if(currency == 'EUR') {
+                                currency = '€'
                             }
                             let itemCount = 0;
                             let giftCount = 0;

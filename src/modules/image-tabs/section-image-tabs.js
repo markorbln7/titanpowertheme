@@ -1,10 +1,8 @@
-
 import './section-image-tabs.css'
 
 document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('.image-tabs__button')
   const imagesWrapper = document.querySelectorAll('.image-tabs__images')
-  console.log(imagesWrapper)
 
   buttons.forEach(function (button) {
     button.addEventListener('click', function (e) {

@@ -12,7 +12,7 @@
             "heading_size": "h1",
             "subheading": "Travel around ready and with confidence",
             "button_label": "Buy Now",
-            "link": "\/",
+            "link": "#pdp-hero__container",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": true,
@@ -458,7 +458,8 @@
         "images_repeater_TAnbx4"
       ],
       "custom_css": [
-        ".image-tabs__button {letter-spacing: 0.2em; box-shadow: 0 4px 4px #00000015;}"
+        ".image-tabs__button {letter-spacing: 0.2em; box-shadow: 0 4px 4px #00000015; width: 18% !important;}",
+        ".image-tabs__actions {flex-wrap: wrap;}"
       ],
       "settings": {
         "reverse_layout": false,
@@ -732,6 +733,80 @@
       "settings": {
       }
     },
+    "section_pdp_hero_tertiary_hRMWpc": {
+      "type": "section-pdp-hero-tertiary",
+      "blocks": {
+        "product_repeater_tTUP8Q": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "3-x-titan-smart-cable™-black-friday",
+            "upsell_product_image": "shopify:\/\/shop_images\/pd-cable_77536af6-5894-4aae-84ed-88722d3c219c.webp",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_JYtHfc": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "titan-45w-turbo-charge-plug™-50-off",
+            "upsell_product_image": "shopify:\/\/shop_images\/45w-plug_88146859-9d3d-42bd-a237-a5addcb520cb.webp",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_FbbPVx": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "copy-of-titan-travel-kit™",
+            "upsell_product_image": "shopify:\/\/shop_images\/titan-buds-20.webp",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_6LhKKU": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "titan-massage-gun",
+            "upsell_product_image": "shopify:\/\/shop_images\/titan-buds-20_7472c15e-03c3-4c89-89af-54e8594af0d7.webp",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_8YiCT8": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_obj": "titan-travel-case-5",
+            "upsell_product_image": "shopify:\/\/shop_images\/titan-buds-20_7472c15e-03c3-4c89_ce773cf5-c12b-4341-b036-265c4ab404b8.webp",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_tTUP8Q",
+        "product_repeater_JYtHfc",
+        "product_repeater_FbbPVx",
+        "product_repeater_6LhKKU",
+        "product_repeater_8YiCT8"
+      ],
+      "settings": {
+        "product_main": "",
+        "product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-massage-gun-recovery-phtsio-top-mobile-banner_189122dd-c7b3-4920-839b-3faa990bf23d.jpg",
+        "product_subtitle": "",
+        "discount_content": "60% OFF",
+        "atc_label": "96% OF the reviews for this item are positive"
+      }
+    },
     "slideshow_fwkE7q": {
       "type": "slideshow",
       "blocks": {
@@ -828,122 +903,6 @@
         "section_title": "4 PREMIUM ATTACHMENT HEADS",
         "section_subtitle": "TARGET MUSCLES WITH PRECISION",
         "section_background": "linear-gradient(180deg, #60c655, transparent);"
-      }
-    },
-    "section_pdp_hero_secondary_PkFqfF": {
-      "type": "section-pdp-hero-secondary",
-      "blocks": {
-        "product_repeater_nfgNda": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "4x",
-            "product_obj": "2-x-titan-smart-cable™",
-            "upsell_product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c_10e85c20-0a10-4ab6-8c76-e47dd708c637.png",
-            "product_title_custom": "4 x Cable",
-            "upsell_product_discount": "65% OFF",
-            "upsell_message": "BEST OFFER  - GET +1 FREE"
-          }
-        },
-        "product_repeater_Uqz9zt": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "3x",
-            "product_obj": "3-x-titan-smart-cable™",
-            "upsell_product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-3pack.png",
-            "product_title_custom": "3 x Cable",
-            "upsell_product_discount": "65% OFF",
-            "upsell_message": ""
-          }
-        },
-        "product_repeater_t6BQri": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "",
-            "product_obj": "1-x-titan-smart-cable™",
-            "upsell_product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-1pack.png",
-            "product_title_custom": "1  x Cable",
-            "upsell_product_discount": "50% OFF",
-            "upsell_message": ""
-          }
-        },
-        "props_TdEche": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FLEXIBILE 30 DAY RETURNS",
-            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>",
-            "prop_description": ""
-          }
-        },
-        "props_KUtiyk": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FREE TRACKED SHIPPING",
-            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>",
-            "prop_description": ""
-          }
-        },
-        "props_LdBL8X": {
-          "type": "props",
-          "settings": {
-            "prop_text": "1,000,000+ CUSTOMERS",
-            "prop_icon": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" x=\"0px\" y=\"0px\" width=\"100\" height=\"100\" viewbox=\"0,0,256,256\">\n<g fill=\"#28c02f\" fill-rule=\"nonzero\" stroke=\"none\" stroke-width=\"1\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" stroke-miterlimit=\"10\" stroke-dasharray=\"\" stroke-dashoffset=\"0\" font-family=\"none\" font-weight=\"none\" font-size=\"none\" text-anchor=\"none\" style=\"mix-blend-mode: normal\"><g transform=\"scale(2,2)\"><path d=\"M64,6c-32,0 -58,26 -58,58c0,32 26,58 58,58c32,0 58,-26 58,-58c0,-32 -26,-58 -58,-58zM64,12c28.7,0 52,23.3 52,52c0,28.7 -23.3,52 -52,52c-28.7,0 -52,-23.3 -52,-52c0,-28.7 23.3,-52 52,-52zM85.03711,48.94922c-0.7625,0.025 -1.53672,0.35117 -2.13672,0.95117l-20.90039,21.69922l-10.90039,-11.69922c-1.1,-1.2 -2.99922,-1.30117 -4.19922,-0.20117c-1.2,1.1 -1.30117,3.00117 -0.20117,4.20117l13.10156,14.09961c0.6,0.6 1.29922,1 2.19922,1c0.8,0 1.59922,-0.30039 2.19922,-0.90039l23,-24.09961c1.1,-1.2 1.10039,-3.09922 -0.09961,-4.19922c-0.55,-0.6 -1.3,-0.87656 -2.0625,-0.85156z\"><\/path><\/g><\/g>\n<\/svg>",
-            "prop_description": ""
-          }
-        },
-        "icons_rkRiG4": {
-          "type": "icons",
-          "settings": {
-            "pdp_hero_icon": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-fast.jpg",
-            "pdp_hero_icon_title": "FAST CHARGE",
-            "pdp_hero_icon_text": "No More Waiting"
-          }
-        },
-        "icons_RWnLrg": {
-          "type": "icons",
-          "settings": {
-            "pdp_hero_icon": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-arm.jpg",
-            "pdp_hero_icon_title": "ULTRA DURABLE",
-            "pdp_hero_icon_text": "No More Breaking"
-          }
-        },
-        "icons_ycnPTm": {
-          "type": "icons",
-          "settings": {
-            "pdp_hero_icon": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-disconnect.jpg",
-            "pdp_hero_icon_title": "AUTO DISCONNECT",
-            "pdp_hero_icon_text": "Protect Your Battery"
-          }
-        },
-        "icons_KF6jUW": {
-          "type": "icons",
-          "settings": {
-            "pdp_hero_icon": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-90.jpg",
-            "pdp_hero_icon_title": "90 ANGLE HEAD",
-            "pdp_hero_icon_text": "Comfort Holding"
-          }
-        }
-      },
-      "block_order": [
-        "product_repeater_nfgNda",
-        "product_repeater_Uqz9zt",
-        "product_repeater_t6BQri",
-        "props_TdEche",
-        "props_KUtiyk",
-        "props_LdBL8X",
-        "icons_rkRiG4",
-        "icons_RWnLrg",
-        "icons_ycnPTm",
-        "icons_KF6jUW"
-      ],
-      "settings": {
-        "product_main": "titan-cable",
-        "logo_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-        "product_subtitle": "\"Finally a charger that doesn't break!\"",
-        "discount_content": "65% OFF",
-        "atc_label": "NOT AVAILABLE ON AMAZON OR EBAY",
-        "product_highlighted": "titan-45w-turbo-charge-plug™-50-off",
-        "product_highlighted_title": "Add 4-Port Wall Plug",
-        "product_highlighted_message": "50% OFF - WHEN ADDED WITH CABLES"
       }
     },
     "section-pdp-hero": {
@@ -1237,9 +1196,9 @@
     "section_image_tabs_pLnyBX",
     "product_icons_BzCNBW",
     "section_zigzag_zn78GD",
+    "section_pdp_hero_tertiary_hRMWpc",
     "slideshow_fwkE7q",
     "section_air_tabs_4tKUCL",
-    "section_pdp_hero_secondary_PkFqfF",
     "section-pdp-hero",
     "rich_text_PxBEer",
     "1707579564616101b2",

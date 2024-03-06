@@ -1,0 +1,101 @@
+.multicolumn-with-popup .title {
+    text-align: center;
+    width: 100%;
+    padding-inline: 20px;
+}
+
+.multicolumn-with-popup .popup__overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+
+.multicolumn-with-popup .popup__overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: all .3s ease-in-out;
+}
+
+.multicolumn-with-popup .popup__close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.multicolumn-with-popup .info-icon {
+    position: absolute !important;
+    background: #60C655 !important;
+    width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 40px !important;
+    color: white !important;
+    border-radius: 50% !important;
+    right: 20px !important;
+    top: 20px !important;
+    font-weight: 700 !important;
+    z-index: 11;
+}
+
+@media only-screen and (max-width: 768px) {
+    .multicolumn-with-popup .info-icon {
+        right: 8px !important;
+        top: 8px !important;
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 18px !important;
+    }
+}
+
+.multicolumn-with-popup .swiper-multicolumns .swiper-slide .multicolumn-list__item {
+    width: 100% !important;
+}
+
+.multicolumn-card__image-wrapper {
+    cursor: pointer;
+}
+
+.popup__overlay {
+    cursor: pointer;
+}
+
+.popup__close {
+    pointer-events: none;
+}
+
+.swiper-pagination-multicolumns {
+    display: flex;
+    position: static;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.swiper-pagination-multicolumns .swiper-pagination-bullet {
+    width: 4rem;
+    opacity: 0.3;
+    border-radius: 0;
+    position: relative;
+    height: 3px;
+    background: #000;
+    border-radius: 10px;
+}
+
+.swiper-multicolumns .swiper-pagination-bullet-active {
+    opacity: 1;
+}

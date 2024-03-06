@@ -29,9 +29,11 @@
   assign product_repeater = section.blocks | where: 'type', 'product_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
+
+  assign currency = cart.currency.iso_code
 %}
 
-<section class="section-pdp-hero section-pdp-hero-tertiary js-scroll">
+<section data-currency="{{ currency }}" class="section-pdp-hero section-pdp-hero-tertiary js-scroll">
   <div class="content-wrapper">
     <div class="pdp-hero__container">
       {% comment %} Gallery {% endcomment %}
@@ -42,7 +44,7 @@
         <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036"
+            src="{{section.settings.product_image | img_url: 'master' }}"
             alt="{{ featured_image.alt }}"
           >
         </figure>
@@ -142,53 +144,79 @@
 
                 assign upsell_product_image = upsell_product.settings.upsell_product_image
 
-                assign product_price = product_obj.price_max
-                assign product_compare_at_price = product_obj.compare_at_price_max
+                assign product_price = product_obj.first_available_variant.price
+                assign product_compare_at_price = product_obj.first_available_variant.compare_at_price
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                 assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}
               <div class="{%  if upsell_message == blank%}blank-item{% endif %} pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
                 {{ upsell_message }}
               </div>
-              <div
-                data-count="{{ upsell_product_selector_number }}"
-                class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
-              >
-                <input
-                  type="checkbox"
-                  id="pdp-hero__checkbox"
-                  class="js-upsell-checkbox"
-                  checked
-                >
-                <div class="pdp-hero__extra-checkbox">
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
-                    <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
-                  </svg>
-                </div>
+              <div class="product-bundle-holder">
+                  <div
+                    data-product-price = {{ product_obj.first_available_variant.price }}
+                    data-product-compare-price = {{ product_obj.first_available_variant.compare_at_price}}
+                    data-product-id={{ product_obj.first_available_variant.id }}
+                    data-count="{{ upsell_product_selector_number }}"
+                    class="fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector active{% if forloop.index == 1 %} promos{% endif %}"
+                  >
+                    <input
+                      type="checkbox"
+                      id="pdp-hero__checkbox"
+                      class="js-upsell-checkbox"
+                      checked
+                    >
+                    <div class="pdp-hero__extra-checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
 
-                <div class="pdp-hero__upsell-content">
-                  <div class="pdp-hero__pricing product__list--single--price color-white">
-                    <h4 class="pdp-hero__upsell-title">
-                      {{ product_title }}
-                    </h4>
-                    {% if upsell_product_discount != blank %}
-                      <div class="pdp-hero__discount">{{ upsell_product_discount }}</div>
+                    <div class="pdp-hero__upsell-content">
+                      <div class="pdp-hero__pricing product__list--single--price color-white">
+                        <h4 class="pdp-hero__upsell-title">
+                          {{ product_title }}
+                        </h4>
+                        {% if upsell_product_discount != blank %}
+                          <div class="pdp-hero__discount">{{ upsell_product_discount }}</div>
+                        {% endif %}
+                      </div>
+
+                      <div class="pdp-hero__upsell-price">
+                        <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }} js-upsel-product-price" data-price="{{ product_price }}">
+                          {{- product_price | money -}}
+                        </span>
+                        <span class="crossed js-price-discount-{{ forloop.index }} js-price-discount" data-compare-price="{{ product_compare_at_price }}">
+                          {{- product_compare_at_price | money -}}
+                        </span>
+                      </div>
+                    </div>
+                    {% render 'titan-image', image: upsell_product_image %}
+                    {% if product_obj.options_with_values.size  > 1 %}
+                      <div class="f jcc aic gap-10 mx-20 fw w-100 z-99999">
+                      {% for option in product_obj.options_with_values %}
+                        <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                          {% for values in option.values %}
+                              <option {% if forloop.index ==1 %}selected="selected"{% endif %} value="{{values}}">{{values}}</option>
+                          {% endfor %}
+                        </select>
+                      {% endfor %}
+                    </div>
                     {% endif %}
                   </div>
 
-                  <div class="pdp-hero__upsell-price">
-                    <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }} js-upsel-product-price" data-price="{{ product_price }}">
-                      {{- product_price | money -}}
-                    </span>
-                    <span class="crossed js-price-discount-{{ forloop.index }} js-price-discount" data-compare-price="{{ product_compare_at_price }}">
-                      {{- product_compare_at_price | money -}}
-                    </span>
+
+
+                  <div style="position:absolute;left:-4000px;">
+                    {% for variant in product_obj.variants %}
+                      <div data-price-noformat="{{ variant.price }}" data-compareprice-noformat="{{ variant.compare_at_price }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
                   </div>
                 </div>
-                {% render 'titan-image', image: upsell_product_image %}
-              </div>
-            {% endfor %}
-          {% endif %}
+
+
+                {% endfor %}
+              {% endif %}
         </div>
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
@@ -250,6 +278,60 @@
     background: radial-gradient(#d8e1e2 50%, #a2e59b);
     border-radius: 0 0 22px 22px;
     border-radius: 22px;
+  }
+</style>
+<style>
+  .pdp-hero__atc {
+    height: 55px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    background-color: #60c655 !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 7px 7px #0000001a !important;
+    transition: opacity .3s ease !important;
+  }
+  select {
+    box-shadow: 0 1px 5px 3px #00000012;
+    -webkit-appearance: none;
+    background-color: white;
+    border-radius: 1.875rem;
+    font-weight: 400;
+    letter-spacing: .07em;
+    line-height: 1.42;
+    /* outline: 0.125rem solid transparent; */
+    /* outline-offset: 0.125rem; */
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    border: 2px solid #60c655;
+    padding: 5px;
+    width:150px;
+  }
+  select:focus-visible {
+    outline: none;
+    outline-offset: 0.3rem;
+    box-shadow: none;
+  }
+  .pdp-hero__upsell-message {
+    display:none;
+  }
+  input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    cursor: pointer;
+    z-index: 5;
+    left: 0;
+    top: 0;
+  }
+  .z-99999 {
+    z-index: 99999;
   }
 </style>
 
@@ -375,7 +457,7 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    {% comment %} document.addEventListener('DOMContentLoaded', function() {
         const pdpHero = document.querySelector('.section-pdp-hero-tertiary')
         const checkboxes = pdpHero.querySelectorAll('.js-upsell-checkbox')
 
@@ -419,7 +501,7 @@
         }
 
         updateTotalPrice();
-    })
+    }){% endcomment %}
 </script>
 
 {% schema %}

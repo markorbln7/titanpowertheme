@@ -442,7 +442,7 @@
 
   console.log(window.products, 'window.products')
   console.log(window.prices, 'window.prices')
-  const distance = $('.scroll-reveal').offset().top
+  const distance = $('.product-icons').offset().top
   $(window).scroll(function () {
     const top_of_element = $('#shopify-section-footer').offset().top
     const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()

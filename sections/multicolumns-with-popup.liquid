@@ -19,7 +19,14 @@
 {%- liquid
   assign columns_mobile_int = section.settings.columns_mobile | plus: 0
 -%}
-
+<div class="multi-column-overlay">
+  <div class="close">
+    {% render 'icon-close' %}
+  </div>
+  <div class="multi-columng-overlay-image">
+      <img class="popup-image" width="auto" height="auto" src="//titanpowerplus.com/cdn/shop/files/iphonecablecard_978b5345-357c-424f-9d06-614733ed9ed0.jpg?v=1701363873">
+  </div>
+</div>
 <div class="multicolumn-with-popup multicolumn color-{{ section.settings.color_scheme }} gradient{% unless section.settings.background_style == 'none' and settings.text_boxes_border_thickness > 0 or settings.text_boxes_shadow_opacity > 0 %} background-{{ section.settings.background_style }}{% endunless %}{% if section.settings.title == blank %} no-heading{% endif %}">
   <div
     class="page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -62,7 +69,7 @@
               -%}
                 {%- assign empty_column = ' multicolumn-list__item--empty' -%}
               {%- endif -%}
-    
+
              <div class="swiper-slide">
                 <article
                 id="Slide-{{ section.id }}-{{ forloop.index }}"
@@ -78,7 +85,8 @@
                     {% if section.settings.image_ratio == 'adapt' or section.settings.image_ratio == 'circle' %}
                         {% assign spaced_image = true %}
                     {% endif %}
-                    <div class="popup-trigger multicolumn-card__image-wrapper multicolumn-card__image-wrapper--{{ section.settings.image_width }}-width{% if section.settings.image_width != 'full' or spaced_image %} multicolumn-card-spacing{% endif %}">
+                    <div data-popup-image="{{ block.settings.popup_image | img_url:'master' }}" class="popup-trigger multicolumn-card__image-wrapper multicolumn-card__image-wrapper--{{ section.settings.image_width }}-width{% if section.settings.image_width != 'full' or spaced_image %} multicolumn-card-spacing{% endif %}">
+                      <div style="position:absolute;width:100%;height:100%;display:block;z-index: 99999;" data-popup-image="{{ block.settings.popup_image | img_url:'master' }}" class="overlay-trigger"></div>
                         <div
                         class="media media--transparent media--{{ section.settings.image_ratio }}"
                         {% if section.settings.image_ratio == 'adapt' %}
@@ -156,7 +164,7 @@
                         </div>
                     </div>
                 {% endif %}
-                
+
                 </article>
              </div>
             {%- endfor -%}

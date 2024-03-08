@@ -31,7 +31,6 @@ multiColumnsWithPopupSection.forEach((section, index) => {
 
     const multicolumnSwiper = new Swiper('.swiper-multicolumns-' + index, {
         slidesPerView: 1,
-        loop: true,
         spaceBetween: 8,
         watchOverflow: true,
 

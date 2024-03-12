@@ -2,7 +2,7 @@
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-{% liquid 
+{% liquid
     assign section_title = section.settings.section_title
     assign section_subtitle = section.settings.section_subtitle
     assign text_with_icons_repeater = section.blocks | where: 'type', 'text_with_icons_repeater'
@@ -15,21 +15,22 @@
         {% if section_title != blank %}
           <h2 class="text-with-icons__title">{{ section_title }}</h2>
         {% endif %}
-  
+
         {% if section_subtitle != blank %}
           <h3 class="section-text-with-icons__subtitle">{{section_subtitle}}</h2>
         {% endif %}
       </div>
-  
+
       {% if text_with_icons_repeater.size > 0 %}
-          <div class="section-text-with-icons__repeater"> 
+          <div class="section-text-with-icons__repeater">
               {% for block in text_with_icons_repeater %}
-                  {% liquid 
+                  {% liquid
                       assign repeater_icon = block.settings.repeater_icon
                       assign repeater_title = block.settings.repeater_title
                       assign repeater_subtitle = block.settings.repeater_subtitle
                       assign repeater_text = block.settings.repeater_text
                       assign repeater_animation_value = block.settings.repeater_animation_value
+                      assign duration = block.settings.duration
                   %}
                   <div class="section-text-with-icons__box" data-aos="fade-in" data-aos-duration="1200">
                       {% if repeater_icon  %}
@@ -37,11 +38,11 @@
                               {% render 'titan-image' image: repeater_icon %}
                           </figure>
                       {% endif %}
-  
+
                      <div class="section-text-with-icons__text-wrapper">
                           {% if repeater_title != blank %}
                               <h3 class="section-text-with-icons__box-title">
-                                  <span class="number" id="counter-{{ forloop.index }}" data-start="0" data-end="{{ repeater_animation_value }}" data-duration="2000">0</span>
+                                  <span class="number" id="counter-{{ forloop.index }}" data-start="0" data-end="{{ repeater_animation_value }}" data-duration="{{duration}}">0</span>
                                   {{ repeater_title }}
                               </h3>
                           {% endif %}
@@ -65,7 +66,7 @@
   AOS.init();
   document.addEventListener("shopify:section:load", () => {
     AOS.init();
-  }) 
+  })
 </script>
 
 {% schema %}
@@ -92,7 +93,8 @@
             "type": "image_picker",
             "id": "repeater_icon",
             "label": "Repeater icon"
-          }, {
+          },
+          {
             "type": "text",
             "id": "repeater_title",
             "label": "Repeater title"
@@ -111,6 +113,12 @@
             "type": "text",
             "id": "repeater_animation_value",
             "label": "Count animation value"
+          },
+          {
+            "type": "text",
+            "id": "duration",
+            "label": "Count animation duration",
+            "default": "2000"
           }
         ]
       }

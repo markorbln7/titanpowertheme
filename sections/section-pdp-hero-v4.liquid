@@ -231,7 +231,7 @@
                 {% liquid
                     assign highlighted_product_obj = all_products[highlighted_product.settings.highlighted_product_obj]
                     assign product_highlighted_message = highlighted_product.settings.product_highlighted_message
-                    assign product_highlighted_image = highlighted_product_obj.featured_image
+                    assign product_highlighted_image = highlighted_product.settings.highlighted_product_image
                     assign product_highlighted_price = highlighted_product_obj.price
                     assign product_highlighted_compare_at_price = highlighted_product_obj.compare_at_price
 

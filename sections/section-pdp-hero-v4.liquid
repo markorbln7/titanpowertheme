@@ -31,9 +31,11 @@
   assign highlighted_product_repeater = section.blocks | where: 'type', 'highlighted_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
+
+  assign currency = cart.currency.iso_code
 %}
 
-<section class="section-pdp-hero section-pdp-hero-secondary js-scroll section-pdp-hero-v4">
+<section data-currency="{{ currency }}" class="js-currency section-pdp-hero section-pdp-hero-secondary js-scroll section-pdp-hero-v4">
   <div class="content-wrapper">
     <div class="pdp-hero__container">
       {% comment %} Gallery {% endcomment %}
@@ -44,7 +46,7 @@
         <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036"
+            src="{{section.settings.product_image | img_url: '600x' }}"
             alt="{{ featured_image.alt }}"
           >
         </figure>
@@ -173,8 +175,8 @@
                 assign upsell_product_image = upsell_product.settings.upsell_product_image
 
                 assign upsell_product_image = product_obj.featured_image
-                assign product_price = product_obj.price | money_with_currency
-                assign product_compare_at_price = product_obj.compare_at_price | money_with_currency
+                assign product_price = product_obj.price_max
+                assign product_compare_at_price = product_obj.compare_at_price_max
                 assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                 assign upsell_product_selector_number = upsell_product.settings.product_selector_number
               %}
@@ -242,14 +244,16 @@
                     endif
                 %}
                 <div
-                data-addon-id="{{ product_highlighted.first_available_variant.id }}"
+                data-addon-price = "{{ highlighted_product_obj.first_available_variant.price }}"
+                data-addon-compare-price = "{{ highlighted_product_obj.first_available_variant.compare_at_price }}"
+                data-addon-id="{{ highlighted_product_obj.first_available_variant.id }}"
                 class="pdp-hero__upsell-highlighted js-addon"
-                >   
+                >
                     {% if product_highlighted_message != blank %}
                         <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
                     {% endif %}
                     <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper">
-                        <input type="checkbox" id="pdp-hero__checkbox" class="js-upsell-checkbox">
+                        <input type="checkbox" id="pdp-hero__checkbox">
                         <div class="pdp-hero__extra-checkbox">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
                             <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
@@ -334,11 +338,11 @@
 </style>
 
 <script src="{{ 'section-pdp-hero-v4.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'pdpherov4.js' | asset_url }}" defer="defer"></script>
 
 <script>
     window.selectLogic = {
-      productCount: '4x',
+      productCount: '5x',
       productHandle: '',
       productId: '',
       phoneType: 'iPhone',
@@ -384,32 +388,58 @@
       "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
       "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
       "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "5xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f.jpg?v=1710415668",
+      "5xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f.jpg?v=1710415668",
+      "5xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f.jpg?v=1710415668",
+      "5xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f_-_type-c.jpg?v=1710415669",
+      "5xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f_-_type-c.jpg?v=1710415669",
+      "5xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Lightning_bolt_cable_graveyard_b3g2f_-_type-c.jpg?v=1710415669",
     }
     console.log(window.mainImages, 'window.mainImages')
-  window.prices = {
-    {% for upsell_product in product_repeater %}
-      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-      {% for variant in product_obj.variants %}
-       '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
-     {% endfor %}
-    {% endfor %}
-  }
-  window.comparePrices = {
-    {% for upsell_product in product_repeater %}
-      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-      {% for variant in product_obj.variants %}
-       '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
-     {% endfor %}
-    {% endfor %}
-  }
-  window.savePrices = {
-    {% for upsell_product in product_repeater %}
-      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
-      {% for variant in product_obj.variants %}
-        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
+
+
+    window.pricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.price }}',
       {% endfor %}
-    {% endfor %}
-  }
+      {% endfor %}
+    }
+    window.comparePricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price }}',
+      {% endfor %}
+      {% endfor %}
+    }
+
+
+    window.prices = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
+      {% endfor %}
+      {% endfor %}
+    }
+    window.comparePrices = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
+      {% endfor %}
+      {% endfor %}
+    }
+    window.savePrices = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+          '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
+        {% endfor %}
+      {% endfor %}
+    }
 
   window.jointPrice = {
     {% for upsell_product in product_repeater %}

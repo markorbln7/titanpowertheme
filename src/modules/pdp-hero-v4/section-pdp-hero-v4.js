@@ -10,13 +10,30 @@ if (allShopSections.length) {
 
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', function () {
-          const upsellProducts = section.querySelectorAll('.pdp-hero__upsell-wrapper')
-          const upsellMessages = section.querySelectorAll('.pdp-hero__upsell-message')
+        const upsellProducts = section.querySelectorAll('.pdp-hero__upsell-wrapper')
+        const upsellMessages = section.querySelectorAll('.pdp-hero__upsell-message')
 
-          const upsellProduct = checkbox.closest('.pdp-hero__upsell-wrapper')
-          upsellProduct.classList.toggle('active')
+        checkboxes.forEach(cb => {
+          if (cb !== checkbox) {
+            cb.checked = false
+          }
+        })
+
+        upsellProducts.forEach(el => {
+          el.classList.remove('active')
+        })
+
+        upsellMessages.forEach(el => {
+          el.classList.remove('active')
+        })
+
+        const upsellProduct = checkbox.closest('.pdp-hero__upsell-wrapper')
+        const upsellMessage = checkbox.closest('.pdp-hero__upsell-wrapper').previousElementSibling
+
+        upsellProduct.classList.add('active')
+        upsellMessage.classList.add('active')
       })
-  })
+    })
 
     typesOptions.forEach(option => {
       option.addEventListener('click', function () {

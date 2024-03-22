@@ -616,8 +616,29 @@
     "section_zigzag_zn78GD": {
       "type": "section-zigzag",
       "blocks": {
+        "zigzag_repeater_DQtffr": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify:\/\/shop_images\/red-twoo_1_fbc560f9-b506-4faa-a7d0-caaa4147825c.webp",
+            "zigzag_first_title": "W Charging Speed",
+            "zigzag_second_title": "% in 20 minutes",
+            "zigzag_first_copy": "Batteries drained? No problem. The FastTech cable charges devices at blistering hyper-speeds up to 120W output. Powered by highly conductive wiring, it blows away standard cables.",
+            "zigzag_mob_copy": "Batteries drained? No problem. The FastTech cable charges devices at blistering hyper-speeds up to 120W output. Powered by highly conductive wiring, it blows away standard cables.",
+            "zigzag_second_copy": "Kiss those agonizing recharge waits goodbye. From 0 to 50% battery in just 20 minutes, the FastTech's turbo charge ability will blow your mind (and revive your gear) at ludicrous speeds",
+            "zigzag_first_progress": 0,
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 0,
+            "zigzag_second_progress_text": "",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "120",
+            "count_animation_end_second": "50"
+          }
+        },
         "zigzag_repeater_JWceJP": {
           "type": "zigzag_repeater",
+          "disabled": true,
           "settings": {
             "zigzag_reverse": false,
             "zigzag_image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-lightning-fast-4_34b98835-c138-4092-999f-239ac745277d.jpg",
@@ -635,48 +656,6 @@
             "zigzag_second_progress_info": "",
             "count_animation_end": "5",
             "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_hFwip6": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": true,
-            "zigzag_image": "shopify:\/\/shop_images\/titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-1-usb-c5.jpg",
-            "zigzag_first_title": "x Stronger",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "We've mastered the art of unbreakable cable design. Engineered with ultra-reinforced construction and premium materials, the FastTech laughs in the face of wear and tear. This hyper-durable cable is built to last virtually forever, providing at least 25X the lifespan of fragile standard cables.",
-            "zigzag_mob_copy": "We've mastered the art of unbreakable cable design. Engineered with ultra-reinforced construction and premium materials, the FastTech laughs in the face of wear and tear. This hyper-durable cable is built to last virtually forever, providing at least 25X the lifespan of fragile standard cables.",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 100,
-            "zigzag_first_progress_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 8,
-            "zigzag_second_progress_text": "Standard Cable",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "15",
-            "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_DQtffr": {
-          "type": "zigzag_repeater",
-          "disabled": true,
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_image": "shopify:\/\/shop_images\/red-twoo_1_fbc560f9-b506-4faa-a7d0-caaa4147825c.webp",
-            "zigzag_first_title": "Speeds",
-            "zigzag_second_title": "g weights",
-            "zigzag_first_copy": "Apply power to only the areas which need it with 4 carefully colibrated gears to customize your massage.",
-            "zigzag_mob_copy": "Extremely light-weight yet housing an impressive 2400Mha battery, one charge provides muscle relief wherever you go. With a recommended 10 minutes usage per day, the Pulsio AIR will comfortably last over 2 months per charge. That’s 4x longer battery life than the average massage gun.",
-            "zigzag_second_copy": "With streamlined design, the Pulso Air weights just 450g without compromising on any power or strength.",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "4",
-            "count_animation_end_second": "450"
           }
         },
         "zigzag_repeater_aBAyxa": {
@@ -700,13 +679,34 @@
             "count_animation_end": "12",
             "count_animation_end_second": ""
           }
+        },
+        "zigzag_repeater_hFwip6": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": true,
+            "zigzag_image": "shopify:\/\/shop_images\/titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-1-usb-c5.jpg",
+            "zigzag_first_title": "x Stronger",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "We've mastered the art of unbreakable cable design. Engineered with ultra-reinforced construction and premium materials, the FastTech laughs in the face of wear and tear. This hyper-durable cable is built to last virtually forever, providing at least 25X the lifespan of fragile standard cables.",
+            "zigzag_mob_copy": "We've mastered the art of unbreakable cable design. Engineered with ultra-reinforced construction and premium materials, the FastTech laughs in the face of wear and tear. This hyper-durable cable is built to last virtually forever, providing at least 25X the lifespan of fragile standard cables.",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 100,
+            "zigzag_first_progress_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 8,
+            "zigzag_second_progress_text": "Standard Cable",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "15",
+            "count_animation_end_second": ""
+          }
         }
       },
       "block_order": [
-        "zigzag_repeater_JWceJP",
-        "zigzag_repeater_hFwip6",
         "zigzag_repeater_DQtffr",
-        "zigzag_repeater_aBAyxa"
+        "zigzag_repeater_JWceJP",
+        "zigzag_repeater_aBAyxa",
+        "zigzag_repeater_hFwip6"
       ],
       "settings": {
       }

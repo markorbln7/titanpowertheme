@@ -16,6 +16,7 @@ const addUpsells = document.querySelectorAll('.js-addon')
 const priceDisplay = () => {
   let currency = document.querySelector(".js-currency").getAttribute("data-currency");
   const productSelection = window.selectLogic.productCount + window.selectLogic.phoneType + '/' + window.selectLogic.cableLength
+  console.log(productSelection, 'productSelection');
   let totalPrice = parseInt(window.pricesRaw[productSelection])
   let comparePrice = parseInt(window.comparePricesRaw[productSelection])
   addUpsells.forEach(addUpsell => {
@@ -26,6 +27,7 @@ const priceDisplay = () => {
       comparePrice += parseFloat(addonComparePrice)
     }
   })
+  console.log(totalPrice, comparePrice, 'totalPrice')
   let finalPrice = totalPrice / 100
   let finalComparePrice = comparePrice / 100
   let savefinalPrice = finalComparePrice - finalPrice

@@ -6,6 +6,7 @@ pdSelector.addEventListener('click', (e) => {
     nonpdSelector.classList.remove('active')
     let pdProducts = document.querySelectorAll('.pd-product')
     let nonPdProducts = document.querySelectorAll('.non-pd-product')
+    document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4packIponeUSBc.jpg?v=1711219882'
     pdProducts.forEach(pdProduct => {
         pdProduct.classList.remove('hide-product')
     })
@@ -20,6 +21,7 @@ nonpdSelector.addEventListener('click', (e) => {
     nonpdSelector.classList.add('active')
     let pdProducts = document.querySelectorAll('.pd-product')
     let nonPdProducts = document.querySelectorAll('.non-pd-product')
+    document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4packIphoneUSBa.jpg?v=1711219882'
     pdProducts.forEach(pdProduct => {
         pdProduct.classList.add('hide-product')
     })

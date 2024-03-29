@@ -3,6 +3,7 @@
         padding-top: 50px;
     }
     padding: 0px 10px 50px;
+    padding-top: 40px;
     margin: 0 auto;
     max-width: 1200px;
     text-align: center;
@@ -37,7 +38,7 @@
             @media only screen and (max-width: 768px) {
                 font-size: 12px;
             }
-            
+
         }
         .number-block {
             display: flex;
@@ -59,6 +60,7 @@
 .overimage {
     position:relative;
     display: block;
+    z-index: 999999;
 }
 .treasure-zig {
     padding: 0px 10px;
@@ -81,6 +83,7 @@
         &--image {
             width:44%;
             padding: 0px;
+            margin-top: -16%;
             @media only screen and (max-width: 768px) {
                 width:100%;
                 padding: 0px;
@@ -117,7 +120,7 @@
                 color: #fff;
                 border-radius: 25px;
                 padding: 10px 20px;
-                font-size: 22px;
+                font-size: 18px;
                 text-decoration: none;
                 display: block;
                 max-width: 300px;
@@ -131,6 +134,7 @@
                     visibility: visible;
                     opacity: 1;
                     transition: all 0.3s ease-in-out;
+                    z-index: 1;
                 }
             }
             &__upper {
@@ -168,7 +172,7 @@
 }
 img.first {
     &.hide {
-        display: none;
+        display: none !important;
     }
 }
 .treasure-zig video::-webkit-media-controls {

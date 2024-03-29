@@ -27,14 +27,14 @@ var x = setInterval(function () {
   }
 
   // Display the result in the element with id="demo"
-  document.getElementById('demo').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>'
-  document.getElementById('demo2').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>'
+  //document.getElementById('demo').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>'
+  //document.getElementById('demo2').innerHTML = '<div class="number-block">' + days + '<span>days</span>' + '</div>' + '<div class="number-block">' + hours + '<span>hours</span>' + '</div>' + '<div class="number-block">' + minutes + '<span>minutes</span>' + '</div>' + '<div class="number-block">' + seconds + '<span>seconds</span>' + '</div>'
 
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x)
-    document.getElementById('demo').innerHTML = 'EXPIRED'
-    document.getElementById('demo2').innerHTML = 'EXPIRED'
+    // document.getElementById('demo').innerHTML = 'EXPIRED'
+    // document.getElementById('demo2').innerHTML = 'EXPIRED'
   }
 }, 1000)
 
@@ -57,6 +57,6 @@ imageClickHandlers.forEach((imageClickHandler) => {
         urlReveal.classList.add('reveal')
         upperReveal.classList.add('reveal')
       }, '2000')
-    }, '1500')
+    }, '200')
   })
 })

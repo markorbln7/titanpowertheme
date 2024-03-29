@@ -6,6 +6,7 @@
 }
 .treasure-top {
         padding: 0px 10px 50px;
+        padding-top: 40px;
         margin: 0 auto;
         max-width: 1200px;
         text-align: center;
@@ -64,6 +65,7 @@
 .overimage {
     position:relative;
     display: block;
+    z-index: 999999;
 }
 .treasure-zig {
     padding: 0px 10px;
@@ -94,6 +96,7 @@
 .treasure-zig__single--image {
             width:44%;
             padding: 0px;
+            margin-top: -16%;
 }
 @media only screen and (max-width: 768px) {
         .treasure-zig__single--image {
@@ -139,7 +142,7 @@
                 color: #fff;
                 border-radius: 25px;
                 padding: 10px 20px;
-                font-size: 22px;
+                font-size: 18px;
                 text-decoration: none;
                 display: block;
                 max-width: 300px;
@@ -154,6 +157,7 @@
         visibility: visible;
         opacity: 1;
         transition: all 0.3s ease-in-out;
+        z-index: 1;
 }
 .treasure-zig__single--content__upper {
                 color:#60c655;
@@ -185,7 +189,7 @@
         transition: all 0.3s ease-in-out;
 }
 img.first.hide {
-        display: none;
+        display: none !important;
 }
 .treasure-zig video::-webkit-media-controls {
     display: none;

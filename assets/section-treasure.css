@@ -17,6 +17,11 @@
         line-height: 1.2;
         text-transform: uppercase;
 }
+@media only screen and (max-width: 768px) {
+        .treasure-top__title {
+                font-size: 34px;
+        }
+}
 .treasure-top__subtitle {
         font-size: 24px;
         line-height: 1.2;

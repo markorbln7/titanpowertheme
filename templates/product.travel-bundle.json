@@ -210,7 +210,8 @@
         "slider_YnppAx"
       ],
       "custom_css": [
-        ".slider-outer {background-color: #e4eaea;}"
+        ".slider-outer {background-color: #e4eaea;}",
+        ".slide-content__image img {box-shadow: 0 0 0px #00000000 !important; border: 0px solid #35ff2ec2 !important;}"
       ],
       "settings": {
         "title": "",
@@ -269,7 +270,7 @@
             "text": "<h6>ALL DAY COMFORT AND QUALITY<\/h6><ul><li>Unbeatable Comfort<\/li><li>Supreme Audio<\/li><li>Wireless Charging<\/li><\/ul>",
             "link_label": "",
             "link": "",
-            "popup_image": "shopify:\/\/shop_images\/45Wplugcard_d2a5eae6-59b5-4399-9227-7879be691eca.webp"
+            "popup_image": "shopify:\/\/shop_images\/titanbuds2card_7ad32651-5a5d-490.jpg"
           }
         },
         "column_Y4nG9U": {
@@ -280,7 +281,7 @@
             "text": "<h6>FOLDABLE 3-IN-1 CONVENIENCE<\/h6><ul><li>Charge 3 Devices At Once<\/li><li>Ultra Thin, Foldable Design<\/li><li>LED Light Indicator<\/li><\/ul>",
             "link_label": "",
             "link": "",
-            "popup_image": "shopify:\/\/shop_images\/travelkitcard_fc4718f9-47f5-4ea4-90eb-439dc17c604e.jpg"
+            "popup_image": "shopify:\/\/shop_images\/3in1foldablecard_7dc63223-9b95-4.jpg"
           }
         },
         "column_DabpKm": {
@@ -312,6 +313,9 @@
         "column_Y4nG9U",
         "column_DabpKm",
         "column_M49nLc"
+      ],
+      "custom_css": [
+        ".multicolumn.background-primary .multicolumn-card {background: #e1e1e1;}"
       ],
       "settings": {
         "title": "WHAT'S INCLUDED",
@@ -442,7 +446,7 @@
           "type": "content_repeater",
           "settings": {
             "content_title": "HyperSpeed Charging",
-            "content_text": "The Titan MagTech Cable blows away standard charging speeds thanks to highly conductive wiring and circuitry, alowing up to 120W charging, getting from 0-50% in less than 15 minutes."
+            "content_text": "The Titan MagTech Cable blows away standard charging speeds thanks to highly conductive wiring and circuitry, allowing up to 120W charging, getting from 0-50% in less than 20 minutes."
           }
         },
         "content_repeater_zPD8Ab": {
@@ -557,7 +561,7 @@
         "images_repeater_eEHbxA"
       ],
       "custom_css": [
-        ".image-tabs__button {letter-spacing: 0.2em; box-shadow: 0 4px 4px #00000015; width: 18% !important;}",
+        ".image-tabs__button {letter-spacing: 0em; box-shadow: 0 4px 4px #00000015; width: 18% !important;}",
         ".image-tabs__actions {flex-wrap: wrap;}"
       ],
       "settings": {
@@ -841,9 +845,9 @@
             "product_selector_number": "",
             "product_obj": "titan-magtech-cable™-travel",
             "upsell_product_image": "shopify:\/\/shop_images\/magtech_png.png",
-            "product_title_custom": "Titan 120W MagTech Cable",
+            "product_title_custom": "120W MagTech Cable",
             "upsell_product_discount": "",
-            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+            "upsell_message": "Pick Your Cable Type"
           }
         },
         "product_repeater_b3LmHF": {
@@ -874,7 +878,7 @@
             "product_selector_number": "",
             "product_obj": "1xfoldablecharger-travel",
             "upsell_product_image": "shopify:\/\/shop_images\/3in1_png.png",
-            "product_title_custom": "Folding Wireleess 3-in-1 Dock",
+            "product_title_custom": "Wireless 3-in-1 Dock",
             "upsell_product_discount": "",
             "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
           }
@@ -898,12 +902,15 @@
         "product_repeater_crPiAT",
         "product_repeater_4kAPY4"
       ],
+      "custom_css": [
+        "select.variant-selector-1.Cable.Type {border: 0px solid #60c655;}"
+      ],
       "settings": {
         "product_main": "titan-fitness-bundle",
         "product_image": "shopify:\/\/shop_images\/titan_FITNESS_bundle_copy_1.jpg",
         "logo_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-        "product_subtitle": "\"These fit perfectly in my fitness journey, amazing bundle\"",
-        "discount_content": "Up to 65% OFF",
+        "product_subtitle": "Buy any 3, save 50%, any 4, save 60%, or any 5, save 65%",
+        "discount_content": "65% OFF",
         "atc_label": "NOT AVAILABLE ON AMAZON OR EBAY"
       }
     },

@@ -192,7 +192,7 @@
                       </div>
                     </div>
                     {% render 'titan-image', image: upsell_product_image %}
-                    {% if product_obj.options_with_values.size  > 1 %}
+                    {% if product_obj.options_with_values[0].name  == "Cable Type" %}
                       <div class="f jcc aic gap-10 mx-20 fw w-100 z-99999">
                       {% for option in product_obj.options_with_values %}
                         <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
@@ -346,9 +346,16 @@
     position:absolute;
     left:-49999px;
   }
+  .js-price-compare-main-product {
+    position:relative;
+    left:unset;
+  }
+  .pdp-hero__upsell-content {
+    width:65%;
+  }
 </style>
 
-<script src="{{ 'section-pdp-hero-tertiary.js' | asset_url }}" defer="defer"></script>
+{% comment %} <script src="{{ 'section-pdp-hero-tertiary.js' | asset_url }}" defer="defer"></script> {% endcomment %}
 <script src="{{ 'bundle-discount.js' | asset_url }}" defer="defer"></script>
 {% comment %} <script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script> {% endcomment %}
 

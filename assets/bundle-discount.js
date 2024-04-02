@@ -73,6 +73,28 @@ if (!!allShopSections.length) {
       if(document.querySelector('.pdp-hero__product-info').classList.contains('percent-info')){
         let activeNumber = document.querySelectorAll('.js-product-selector.active').length
         if(activeNumber < 4){
+        let selectProducts = document.querySelectorAll('.js-product-selector')
+            selectProducts.forEach((productSelector) => {
+                if(productSelector.classList.contains('active')){
+                    const productPrice = parseFloat(
+                        productSelector.getAttribute("data-product-price")
+                    );
+                    let totalProductPrice = (productPrice * 0.5) / 100;
+                    productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                        "en-US",
+                        { style: "currency", currency: currency }
+                        );
+                } else {
+                    const productPrice = parseFloat(
+                        productSelector.getAttribute("data-product-price")
+                    );
+                    let totalProductPrice = productPrice / 100;
+                    productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                        "en-US",
+                        { style: "currency", currency: currency }
+                        );
+                }
+            });
           document.querySelector('.pdp-hero__discount').textContent = `50% OFF`
           totalMainProductPrice = totalMainProductPrice * 0.5
           mainProductPrice.textContent = totalMainProductPrice.toLocaleString(
@@ -81,6 +103,28 @@ if (!!allShopSections.length) {
           );
         }
         if(activeNumber == 4){
+        let selectProducts = document.querySelectorAll('.js-product-selector')
+        selectProducts.forEach((productSelector) => {
+            if(productSelector.classList.contains('active')){
+                const productPrice = parseFloat(
+                    productSelector.getAttribute("data-product-price")
+                );
+                let totalProductPrice = (productPrice * 0.4) / 100;
+                productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                    "en-US",
+                    { style: "currency", currency: currency }
+                    );
+            } else {
+                const productPrice = parseFloat(
+                    productSelector.getAttribute("data-product-price")
+                );
+                let totalProductPrice = productPrice / 100;
+                productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                    "en-US",
+                    { style: "currency", currency: currency }
+                    );
+            }
+        });
           document.querySelector('.pdp-hero__discount').textContent = `60% OFF`
           totalMainProductPrice = totalMainProductPrice * 0.4
           mainProductPrice.textContent = totalMainProductPrice.toLocaleString(
@@ -89,6 +133,28 @@ if (!!allShopSections.length) {
           );
         }
         if(activeNumber == 5){
+            let selectProducts = document.querySelectorAll('.js-product-selector')
+            selectProducts.forEach((productSelector) => {
+                if(productSelector.classList.contains('active')){
+                    const productPrice = parseFloat(
+                        productSelector.getAttribute("data-product-price")
+                    );
+                    let totalProductPrice = (productPrice * 0.35) / 100;
+                    productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                        "en-US",
+                        { style: "currency", currency: currency }
+                        );
+                } else {
+                    const productPrice = parseFloat(
+                        productSelector.getAttribute("data-product-price")
+                    );
+                    let totalProductPrice = productPrice / 100;
+                    productSelector.querySelector('.js-upsel-product-price').textContent = totalProductPrice.toLocaleString(
+                        "en-US",
+                        { style: "currency", currency: currency }
+                        );
+                }
+            });
           document.querySelector('.pdp-hero__discount').textContent = `65% OFF`
           totalMainProductPrice = totalMainProductPrice * 0.35
           mainProductPrice.textContent = totalMainProductPrice.toLocaleString(

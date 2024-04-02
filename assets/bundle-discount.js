@@ -289,15 +289,13 @@ if (!!allShopSections.length) {
           productComparePriceNoFormat
         );
       // window.selectLogic.addon = productId
-      this.parentNode.parentNode.parentNode.querySelector(
-        ".js-upsel-product-price"
-      ).innerHTML = productPrice;
-      this.parentNode.parentNode.parentNode.querySelector(
-        ".js-price-discount"
-      ).innerHTML = productComparePrice;
-      setTimeout(() => {
-        updateTotalPrice();
-      }, "1000");
+      // this.parentNode.parentNode.parentNode.querySelector(
+      //   ".js-upsel-product-price"
+      // ).innerHTML = productPrice;
+      // this.parentNode.parentNode.parentNode.querySelector(
+      //   ".js-price-discount"
+      // ).innerHTML = productComparePrice;
+
 
       // addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
       // addUpsell.setAttribute('data-addon-id', productId);

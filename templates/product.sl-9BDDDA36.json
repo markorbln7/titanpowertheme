@@ -68,56 +68,12 @@
       "settings": {
         "product_main": "titan-buds-2-0-single",
         "product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear-phones-pods-audio-bluetooth-bass-22.png",
-        "logo_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
         "product_subtitle": "\"No wires, no fuss and no more falling out my ears!\"",
         "discount_content": "35% OFF",
         "atc_label": "NOT AVAILABLE ON AMAZON OR EBAY",
         "product_highlighted": "2x-titan-portable-wireless-3-in-1-charger™",
         "product_highlighted_title": "3-in-1 Folding Wireless Dock",
         "product_highlighted_message": "60% OFF - WIRELESS CHARGE YOUR BUDS"
-      }
-    },
-    "slideshow_NnVUdC": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_GbNkyE": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear-phones-pods-audio-bluetooth-bass-11.jpg",
-            "mobile_image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear-phones-pods-audio-bluetooth-bass-11_621c0f25-ad57-4aa6-b1e8-e6f62531b986.jpg",
-            "heading": "Titan Buds 2.0",
-            "heading_size": "h1",
-            "subheading": "Your Life Deserves a Killer Soundtrack!",
-            "button_label": "Buy Now",
-            "button_custom_class": "js-atc-scroll",
-            "link": "#shopify-section-template--16797177807026__section_pdp_hero_case_CHa7if",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_GbNkyE"
-      ],
-      "custom_css": [
-        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {justify-content: flex-end; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}",
-        "h1,h2,h3,h4,h5,.h0,.h1,.h2,.h3,.h4,.h5 {color: black;}",
-        "body,.color-background-1,.color-background-2,.color-inverse,.color-accent-1,.color-accent-2,.color-scheme-5061e01e-2a17-4232-a41e-6d666d2e8273 {color: black;}"
-      ],
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
       }
     },
     "section_text_with_icons_3b7KcJ": {
@@ -480,6 +436,49 @@
         "section_title": ""
       }
     },
+    "slideshow_NnVUdC": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_GbNkyE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear-phones-pods-audio-bluetooth-bass-11.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear-phones-pods-audio-bluetooth-bass-11_621c0f25-ad57-4aa6-b1e8-e6f62531b986.jpg",
+            "heading": "Titan Buds 2.0",
+            "heading_size": "h1",
+            "subheading": "Your Life Deserves a Killer Soundtrack!",
+            "button_label": "Buy Now",
+            "button_custom_class": "js-atc-scroll",
+            "link": "#shopify-section-template--16797177807026__section_pdp_hero_case_CHa7if",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_GbNkyE"
+      ],
+      "custom_css": [
+        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {justify-content: flex-end; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}",
+        "h1,h2,h3,h4,h5,.h0,.h1,.h2,.h3,.h4,.h5 {color: black;}",
+        "body,.color-background-1,.color-background-2,.color-inverse,.color-accent-1,.color-accent-2,.color-scheme-5061e01e-2a17-4232-a41e-6d666d2e8273 {color: black;}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "image_banner_CVpdWa": {
       "type": "image-banner",
       "disabled": true,
@@ -820,7 +819,7 @@
           "type": "shopify:\/\/apps\/loox-reviews\/blocks\/loox-dynamic-section\/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
           "settings": {
             "only_photos": true,
-            "aggregated": false,
+            "aggregated": true,
             "limit": 15,
             "hide_thumbnails": false,
             "maxwidth": 1080,
@@ -958,7 +957,6 @@
   },
   "order": [
     "section_pdp_hero_case_CHa7if",
-    "slideshow_NnVUdC",
     "section_text_with_icons_3b7KcJ",
     "testimonial_slider_TKncXN",
     "slideshow_3EYWCG",
@@ -966,6 +964,7 @@
     "rich_text_DPWmLn",
     "section_image_tabs_zKw6gN",
     "section_image_tabs_pLnyBX",
+    "slideshow_NnVUdC",
     "image_banner_CVpdWa",
     "product_icons_Nyw4je",
     "section_zigzag_zn78GD",

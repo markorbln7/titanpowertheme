@@ -185,6 +185,13 @@
     "section_image_tabs_zKw6gN": {
       "type": "section-image-tabs",
       "blocks": {
+        "content_repeater_i6txBQ": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Dual-Purpose Stand",
+            "content_text": "More than just a charger, our versatile design transforms into a sturdy phone stand while still wirelessly charging your device. Perfect for hands-free viewing or video calls."
+          }
+        },
         "content_repeater_zPD8Ab": {
           "type": "content_repeater",
           "settings": {
@@ -199,11 +206,11 @@
             "content_text": "Never run out of power again with the ability to charge three devices simultaneously. Our 3-in-1 charger supports wireless charging for your phone, earbuds, and smartwatch - all in one ultra-compact package."
           }
         },
-        "content_repeater_i6txBQ": {
-          "type": "content_repeater",
+        "tabs_repeater_4RTBWt": {
+          "type": "tabs_repeater",
           "settings": {
-            "content_title": "Dual-Purpose Stand",
-            "content_text": "More than just a charger, our versatile design transforms into a sturdy phone stand while still wirelessly charging your device. Perfect for hands-free viewing or video calls."
+            "tab_icon": "shopify:\/\/shop_images\/icons8-mobile-phone-100.png",
+            "tab_text": "Smart-Stand"
           }
         },
         "tabs_repeater_cQJyGK": {
@@ -220,42 +227,35 @@
             "tab_text": "Multi-Charge"
           }
         },
-        "tabs_repeater_4RTBWt": {
-          "type": "tabs_repeater",
+        "images_repeater_eEHbxA": {
+          "type": "images_repeater",
           "settings": {
-            "tab_icon": "shopify:\/\/shop_images\/icons8-mobile-phone-100.png",
-            "tab_text": "Smart-Stand"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock-8.jpg"
           }
         },
         "images_repeater_cTgnX6": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/Screenshot_1.png"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock.jpg"
           }
         },
         "images_repeater_AhzzRf": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/Screenshot_2.png"
-          }
-        },
-        "images_repeater_eEHbxA": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify:\/\/shop_images\/Screenshot_3.png"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock-9.jpg"
           }
         }
       },
       "block_order": [
+        "content_repeater_i6txBQ",
         "content_repeater_zPD8Ab",
         "content_repeater_GBED7M",
-        "content_repeater_i6txBQ",
+        "tabs_repeater_4RTBWt",
         "tabs_repeater_cQJyGK",
         "tabs_repeater_HWLN8A",
-        "tabs_repeater_4RTBWt",
+        "images_repeater_eEHbxA",
         "images_repeater_cTgnX6",
-        "images_repeater_AhzzRf",
-        "images_repeater_eEHbxA"
+        "images_repeater_AhzzRf"
       ],
       "settings": {
         "reverse_layout": false,
@@ -268,19 +268,19 @@
         "images_repeater_wrV3mD": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/Screenshot_4.png"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock-5.jpg"
           }
         },
         "images_repeater_cdKcU9": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/titan-power-plus-titan-buds-ear_2b81ef88-c4b5-4ac9-b9aa-11e98abffccd.jpg"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock-7.jpg"
           }
         },
         "images_repeater_pbzTnM": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify:\/\/shop_images\/titan-power-plus-titan-massage-gun-recovery-best-10.jpg"
+            "tab_image": "shopify:\/\/shop_images\/3_in_1_folding_dock-3.jpg"
           }
         },
         "content_repeater_UYPBVH": {
@@ -446,7 +446,8 @@
         "slide_n4mW9R": {
           "type": "slide",
           "settings": {
-            "image": "shopify:\/\/shop_images\/titan-power-plus-titan-massage-gun.jpg",
+            "image": "shopify:\/\/shop_images\/3_in_1_folding_dock_-_desktop_banner.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/Desktop_3_in_1_folding_dock_banner_mobile.jpg",
             "heading": "",
             "heading_size": "h0",
             "subheading": "",

@@ -96,6 +96,34 @@
         "padding_bottom": 44
       }
     },
+    "section_product_zigzag_LFNapM": {
+      "type": "section-product-zigzag",
+      "blocks": {
+        "upsell_product_repeater_Dw4Y4z": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "1-x-titan-smart-cable™",
+            "product_upsell_title": ""
+          }
+        },
+        "upsell_product_repeater_BACPGj": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "4-x-titan-smart-cable™-black-friday",
+            "product_upsell_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_Dw4Y4z",
+        "upsell_product_repeater_BACPGj"
+      ],
+      "settings": {
+        "product": "1-x-titan-smart-cable™-black-friday",
+        "product_label": "Multi-Device Charging for Spring Ventures",
+        "reverse_layout": false
+      }
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -798,8 +826,7 @@
             "title": "Column",
             "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "link_label": "",
-            "link": "",
-            "popup_image": "shopify:\/\/shop_images\/casecard.jpg"
+            "link": ""
           }
         },
         "column_V3fDg4": {
@@ -852,6 +879,7 @@
   },
   "order": [
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
+    "section_product_zigzag_LFNapM",
     "image-with-text",
     "459b0cab-7c8e-40c7-b786-6ba18d5c1404",
     "featured-collection",

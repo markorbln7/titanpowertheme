@@ -241,12 +241,15 @@
     .product-zigzag__image {
         width: 100%;
         overflow: hidden;
-        padding-left: 2rem;
         height: 300px;
         display: flex;
         align-items: center;
         padding-top: 0;
         background: #fff;
+    }
+
+    .product-zigzag__image .titan-image {
+        width: 100%;
     }
 
     .product-zigzag__image-wrapper {

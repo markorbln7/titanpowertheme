@@ -1,0 +1,161 @@
+{{ 'section-product-zigzag.css' | asset_url | stylesheet_tag }}
+
+{% assign product = section.settings.product %}
+{% assign product_label = section.settings.product_label %}
+{% assign upsell_products = section.blocks | where: 'type', 'upsell_product_repeater' %}
+{% assign reverse_layout = section.settings.reverse_layout %}
+{% assign product_image = section.settings.product_image %}
+
+{% if product_image == blank %}
+    {% assign product_image = product.featured_image %}
+    {% else %}
+    {% assign product_image = section.settings.product_image %}
+{% endif %}
+
+<section class="product-zigzag-section">
+ <div class="wrapper">
+    <div class="product-zigzag__container{% if reverse_layout %} product-zigzag__container--reverse {% endif %}">
+        <div class="product-zigzag__image">
+        <a href="{{ product.url }}"></a>
+        <div class="product-zigzag__image-wrapper"> 
+            {% render 'titan-image', image: product.featured_image %}
+        </div>
+        <div class="shape"></div>
+        </div>
+
+        <div class="product-zigzag__content">
+            <h2 class="product-zigzag__title">{{ product.title }}</h2>
+            
+            <div class="product-zigzag__prices">
+                <span class="price">{{ product.price | money }}</span>
+                {%- if product.compare_at_price -%}
+                    <span class="price-compared">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+            </div>
+
+            {% if product_label %}
+                <h3 class="product-zigzag__label">{{ product_label }}</h3>
+            {% endif %}
+                
+            <div class="product-zigzag__upsell-products">
+                {% for block in upsell_products limit: 2 %}
+                    {% assign product_upsell = block.settings.product_upsell %}
+                    {% assign product_upsell_image = block.settings.product_upsell_image %}
+                    {% assign product_upsell_title = block.settings.product_upsell_title %}
+
+                    {% if product_upsell_image == blank %}
+                        {% assign product_upsell_image  =  product_upsell.featured_image%}
+
+                        {% else %}
+                        {% assign product_upsell_image = block.settings.product_upsell_image %}
+                    {% endif %}
+
+                    {% if product_upsell_title == blank %}
+                        {% assign product_upsell_title =  product_upsell.title%}
+
+                        {% else %}
+                        {% assign product_upsell_title = block.settings.product_upsell_title %}
+                    {% endif %}
+
+                    <div class="upsell-product">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
+
+                            <defs>
+                            </defs>
+                            <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+                                <circle cx="45" cy="45" r="44" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(39,196,39); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) "/>
+                                <path d="M 38.623 65.533 c -0.013 0 -0.025 0 -0.038 0 c -1.695 -0.011 -3.302 -0.754 -4.408 -2.039 L 20.999 48.19 c -2.114 -2.455 -1.838 -6.159 0.618 -8.274 c 2.454 -2.115 6.159 -1.838 8.274 0.618 l 8.791 10.209 L 60.16 26.448 c 2.146 -2.43 5.855 -2.655 8.281 -0.509 c 2.428 2.146 2.656 5.853 0.51 8.281 L 43.018 63.552 C 41.904 64.812 40.304 65.533 38.623 65.533 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                                <path d="M 45 90 C 20.187 90 0 69.813 0 45 C 0 20.187 20.187 0 45 0 c 24.813 0 45 20.187 45 45 C 90 69.813 69.813 90 45 90 z M 45 2 C 21.29 2 2 21.29 2 45 c 0 23.71 19.29 43 43 43 c 23.71 0 43 -19.29 43 -43 C 88 21.29 68.71 2 45 2 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                                <path d="M 38.623 66.533 h -0.038 c -1.992 -0.014 -3.872 -0.883 -5.166 -2.386 L 20.241 48.843 c -2.47 -2.869 -2.146 -7.213 0.723 -9.684 c 1.389 -1.197 3.159 -1.781 4.991 -1.645 c 1.829 0.137 3.496 0.978 4.693 2.368 l 8.043 9.34 l 20.72 -23.436 c 1.214 -1.375 2.891 -2.194 4.722 -2.307 c 1.83 -0.11 3.597 0.495 4.971 1.71 c 1.374 1.214 2.193 2.892 2.306 4.723 c 0.113 1.831 -0.494 3.596 -1.709 4.97 L 43.767 64.214 C 42.465 65.688 40.59 66.533 38.623 66.533 z M 25.436 39.495 c -1.164 0 -2.276 0.412 -3.167 1.18 c -2.034 1.751 -2.263 4.83 -0.513 6.864 l 13.179 15.305 c 0.917 1.064 2.25 1.681 3.657 1.69 l 0.031 1 v -1 c 1.394 0 2.723 -0.599 3.646 -1.644 l 25.934 -29.333 c 0.861 -0.974 1.291 -2.225 1.211 -3.522 c -0.08 -1.298 -0.66 -2.486 -1.635 -3.347 c -0.975 -0.862 -2.22 -1.294 -3.522 -1.212 c -1.298 0.08 -2.486 0.661 -3.346 1.635 L 38.671 52.265 l -9.539 -11.078 c -0.849 -0.985 -2.03 -1.581 -3.326 -1.678 C 25.683 39.5 25.559 39.495 25.436 39.495 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                            </g>
+                            </svg>
+                        <div class="upsell-product-content">
+                            {% render 'titan-image', image: product_upsell_image %}
+                            <div class="upsell-product-text">
+                                <p>{{ product_upsell_title }}</p>
+                                <div class="product-zigzag__upsell-prices">
+                                    <span class="price">{{ product_upsell.price | money }}</span>
+                                    {% if product_upsell.compare_at_price %}
+                                        <span class="price-compared">{{ product_upsell.compare_at_price | money }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="product-zigzag__buttons">
+                <button 
+                    data-product="{{ product.selected_or_first_available_variant.id }}"
+                    data-quantity="1"
+                    class="js-add-to-cart-pd product-zigzag__atc"
+                >
+                    Add to Cart
+                </button>
+
+                <a href="{{ product_upsell.url}}">Buy Now</a>
+            </div>
+        </div>
+    </div>
+ </div>
+</section>
+
+
+{% schema %}
+{
+    "name": "Product Zigzag Section",
+    "settings": [
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Choose product"
+        },
+        {
+            "type": "image_picker",
+            "id": "product_image",
+            "label": "Product image"
+        },
+        {
+            "type": "text",
+            "id": "product_label",
+            "label": "Product label",
+            "default": "Multi-Device Charging for Spring Ventures"
+        },
+        {
+            "type": "checkbox",
+            "id": "reverse_layout",
+            "label": "Reverse layout"
+        }
+    ],
+    "blocks": [
+      {
+        "type": "upsell_product_repeater",
+        "name": "Upsell Products",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product_upsell",
+            "label": "Choose upsell product"
+          },
+          {
+            "type": "text",
+            "id": "product_upsell_title",
+            "label": "Product title"
+          },
+          {
+            "type": "image_picker",
+            "id": "product_upsell_image",
+            "label": "Upsell product image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Zigzag Section"
+      }
+    ]
+  }
+  
+{% endschema %}

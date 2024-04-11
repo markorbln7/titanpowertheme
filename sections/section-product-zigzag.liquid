@@ -4,8 +4,10 @@
 {% assign product = section.settings.product %}
 {% assign product_label = section.settings.product_label %}
 {% assign upsell_products = section.blocks | where: 'type', 'upsell_product_repeater' %}
+{% assign icons_repeater = section.blocks | where: 'type', 'icons_repeater' %}
 {% assign reverse_layout = section.settings.reverse_layout %}
 {% assign product_image = section.settings.product_image %}
+{% assign discount_text = section.settings.discount %}
 
 {% if product_image == blank %}
     {% assign product_image = product.featured_image %}
@@ -16,12 +18,17 @@
 <section class="product-zigzag-section">
  <div class="wrapper">
     <div class="product-zigzag__container{% if reverse_layout %} product-zigzag__container--reverse {% endif %}">
+        {% if discount_text != blank %}
+            <div class="product-zigzag__discount-box">
+                {{ discount_text }}
+            </div>    
+        {% endif %}
+        
         <div class="product-zigzag__image">
-        <a href="{{ product.url }}"></a>
-        <div class="product-zigzag__image-wrapper">
-            {% render 'titan-image', image: product.featured_image %}
-        </div>
-        <div class="shape"></div>
+            <a href="{{ product.url }}"></a>
+            <div class="product-zigzag__image-wrapper">
+                {% render 'titan-image', image: product.featured_image %}
+            </div>
         </div>
 
         <div class="product-zigzag__content">
@@ -33,6 +40,18 @@
                     <span class="price-compared">{{ product.compare_at_price | money }}</span>
                 {% endif %}
             </div>
+
+            {% if icons_repeater.size > 0 %}
+                <div class="product-zigzag__icons">
+                    {% for block in  icons_repeater %}
+                        <div class="product-zigzag__icon">
+                            {% render 'titan-image' image: block.settings.icon %}
+                            <p class="product-zigzag__icon-text">{{ block.settings.text }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             {% if product.options_with_values[0].name  == "Cable Type" %}
                 <div class="f aic gap-10 fw w-100 z-99999 mb-[20px]">
                 {% for option in product.options_with_values %}
@@ -140,6 +159,12 @@
             "default": "Multi-Device Charging for Spring Ventures"
         },
         {
+            "type": "text",
+            "id": "discount_text",
+            "label": "Discount text",
+            "default": "70% OFF"
+        },
+        {
             "type": "checkbox",
             "id": "reverse_layout",
             "label": "Reverse layout"
@@ -164,6 +189,22 @@
             "type": "image_picker",
             "id": "product_upsell_image",
             "label": "Upsell product image"
+          }
+        ]
+      },
+      {
+        "type": "icons_repeater",
+        "name": "Icons",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Icon text"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
           }
         ]
       }

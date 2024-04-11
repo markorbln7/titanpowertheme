@@ -12,9 +12,8 @@
     display: flex;
     width: 100%;
     align-items: stretch;
-    overflow: hidden;
-    border-radius: .5rem;
-    background: #141414;
+    border-radius: 2.5rem;
+    background: linear-gradient(360deg, #fff 0%, #d6e1e1 60%);
     color: #fff;
 }
 
@@ -29,7 +28,7 @@
 .product-zigzag__image {
     width: 47.7%;
     flex: none;
-    padding: 14px 30px 0;
+    padding: 0;
     position: relative;
 }
 
@@ -42,7 +41,7 @@
 
 .product-zigzag__image-wrapper {
     position: relative;
-    height: 400px;
+    height: 100%;
     width: 100%;
     z-index: 20;
     display: flex;
@@ -51,22 +50,14 @@
     justify-content: center;
 }
 
-.product-zigzag__image .titan-image img {
-    height: 320px !important;
-    width: 100% !important;
-    max-width: none;
+.product-zigzag__image .titan-image {
+    width: 100%;
 }
 
-.product-zigzag__container .shape {
-    display: block !important;
-    position: absolute;
-    top: -50%;
-    left: -32px;
-    z-index: 10;
-    height: 200%;
-    width: 100%;
-    transform: translate(0, 0) rotate(6deg) skewX(0) skewY(0) scaleX(1) scaleY(1);
-    background-color: rgb(255 255 255 / 100%);
+.product-zigzag__image .titan-image img {
+    height: 470px !important;
+    width: 100% !important;
+    object-fit: cover;
 }
 
 
@@ -86,7 +77,53 @@
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 0;
+    color: #000;
+}
+
+.product-zigzag__icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-zigzag__icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 12px;
+
+    img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    p {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+    }
+}
+
+.product-zigzag__discount-box {
+    right: -20px;
+    top: -20px;
+    width: 85px;
+    height: 85px;
+    background-color: #60c655;
     color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-15deg);
+    font-style: italic;
+    z-index: 20;
 }
 
 .product-zigzag__prices {
@@ -98,7 +135,7 @@
     line-height: 40px;
     font-weight: 700;
     padding-right: 8px;
-    color: #fff;
+    color: #60c655;
 }
 
 .product-zigzag__prices .price-compared {
@@ -128,15 +165,18 @@
     position: relative;
     z-index: 1;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     cursor: pointer;
+
     svg {
-        display:none;
+        display: none;
     }
+
     &.active {
         background: rgb(96, 198, 85);
+
         svg {
-            display:block;
+            display: block;
         }
     }
 }
@@ -145,8 +185,8 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    top: -12px;
-    right: -12px;
+    top: -7px;
+    right: -3px;
 }
 
 .product-zigzag__upsell-products .upsell-product::after {
@@ -157,8 +197,8 @@
     bottom: 2px;
     left: 2px;
     z-index: -1;
-    background: #000;
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 30px;
 }
 
 .product-zigzag__upsell-products .upsell-product-content {
@@ -176,9 +216,9 @@
 .upsell-product-text p {
     margin-bottom: 8px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 20px;
-    color: #fff;
+    color: #000;
 }
 
 .product-zigzag__upsell-prices .price {
@@ -240,10 +280,6 @@
         flex-direction: column;
     }
 
-    .product-zigzag__container .shape {
-        display: none !important;
-    }
-
     .product-zigzag__image {
         width: 100%;
         overflow: hidden;
@@ -252,6 +288,7 @@
         align-items: center;
         padding-top: 0;
         background: #fff;
+        border-radius: 20px 20px 0 0;
     }
 
     .product-zigzag__image .titan-image {
@@ -291,7 +328,7 @@
         line-height: 27px;
     }
 
-    .product-zigzag-section .wrapper  {
+    .product-zigzag-section .wrapper {
         padding-inline: 20px;
     }
 }

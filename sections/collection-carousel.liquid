@@ -1,0 +1,105 @@
+{{ 'section-collection-carousel.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+    assign collection_carousel_headline = section.settings.collection_carousel_headline
+    assign collecion_carousel = section.blocks | where: 'type', 'collecion_carousel'
+%}
+
+<section class="b-collection-carousel">
+    <div class="b-collection-carousel__wrapper">
+        {% if collection_carousel_headline != blank %}
+            <h2 class="b-collection-carousel__headline c-title c-title-size--primary text-color-black text-align-center">{{ collection_carousel_headline }}</h2>
+        {% endif %}
+
+
+       <div class="b-collection-carousel__tabs-wrapper">
+            <div class="b-collection-carousel__shadow b-collection-carousel__shadow--left"></div>
+            <div class="b-collection-carousel__tabs display-flex align-items-center">
+                {% for block in collecion_carousel %}
+                    {% assign carousel_collection = block.settings.collection %}
+                    {% assign carousel_collection_title =  carousel_collection.title %}
+    
+                    <button class="b-collection-carousel__tab text-color-black{% if forloop.index == 1 %} active {% endif %}" data-tab="{{ forloop.index }}">{{ carousel_collection_title }}</button>
+                {% endfor %}
+            </div>
+            <div class="b-collection-carousel__shadow b-collection-carousel__shadow--right"></div>
+       </div>
+
+        <div class="b-collection-carousel__products-wrapper">
+            {% for block in collecion_carousel %}
+                {% assign collection = collections[block.settings.collection] %}
+                {% assign product_limit = block.settings.product_limit %}
+
+                <div class="b-collection-carousel__products swiper{% if forloop.index == 1 %} active {% endif %}" data-panel="{{ forloop.index }}">
+                    <div class="b-collection-carousel__navigation">
+                        <div class="swiper-button-prev swiper-collection-navigation-prev swiper-button-prev-image"> 
+                             
+                        </div>
+                        <div class="swiper-button-next swiper-collection-navigation-next swiper-button-next-image">
+                        </div>
+                    </div>
+                    <div class="swiper-wrapper">
+                        {% for product in  collection.products limit: product_limit %}
+                            {% assign product_image = product.featured_image %}
+                            {% assign product_title = product.title %}
+                            <div class="swiper-slide">
+                                <a href="{{ product.url }}">
+                                    <article class="b-collection-carousel__product">
+                                        {{ product_image | image_url: width: 416 | image_tag: height: 320 }}
+                                        <h3 class="b-collection-carousel__product-title text-color-black text-align-center">{{ product_title }}</h3>
+                                        <div class="b-collection-carousel__product-price text-align-center">{{ product.price | money }}</div>
+                                        <button>ADD TO CART</button>
+                                    </article>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<script src="{{ 'section-collection-carousel.js' | asset_url }}" defer="defer"></script>
+
+
+{% schema %}
+{
+  "name": "Collection carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "collection_carousel_headline",
+      "label": "Headline"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collecion_carousel",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select collection"
+        },
+        {
+          "type": "range",
+          "id": "product_limit",
+          "min": 1,
+          "max": 20,
+          "default": 6,
+          "step": 1,
+          "label": "Product limit"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection carousel"
+    }
+  ]
+}
+{% endschema %}

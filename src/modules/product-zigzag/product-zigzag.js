@@ -1,5 +1,21 @@
 import './product-zigzag.css'
 
+var variantSelectorSFirst = document.querySelectorAll(".zig-variant-selector-1");
+variantSelectorSFirst.forEach((variantSelectorFirst) => {
+  variantSelectorFirst.addEventListener("change", function (e) {
+    let _this = e;
+    let variantId = this.value;
+    let nameFirst = variantId;
+    let selectedName = nameFirst;
+    console.log(selectedName, "selectedName");
+    let productId = this.parentNode.parentNode
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-variant");
+    this.parentNode.parentNode.querySelector('.js-add-to-cart-zig').setAttribute("data-product", productId)
+    console.log(productId, "productId");
+  });
+});
+
 const upsellProducts = document.querySelectorAll('.upsell-product')
 upsellProducts.forEach((upsellProduct) => {
     upsellProduct.addEventListener('click', (e) => {

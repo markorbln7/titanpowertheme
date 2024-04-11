@@ -1,5 +1,57 @@
 {
   "sections": {
+    "video_iHcNGN": {
+      "type": "video",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "video": "shopify:\/\/files\/videos\/03-29-22 TP Anniversary Titans Birthday Card.mov",
+        "video_url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "accent-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "scroll_bar_dGYp4L": {
+      "type": "scroll-bar",
+      "blocks": {
+        "upsell_product_repeater_6JAtER": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "Get 2 free",
+            "icon_image": "shopify:\/\/shop_images\/Screenshot_2024-04-11_at_13.46.28.png",
+            "scroll_to": ".product-zigzag-section"
+          }
+        },
+        "upsell_product_repeater_N6FCQK": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "65% off",
+            "icon_image": "shopify:\/\/shop_images\/Screenshot_2024-04-11_at_13.46.36.png",
+            "scroll_to": ".pdp-hero__heading"
+          }
+        },
+        "upsell_product_repeater_jThQHA": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "Sale Products",
+            "icon_image": "shopify:\/\/shop_images\/Screenshot_2024-04-11_at_13.46.36.png",
+            "scroll_to": ".slider-outer"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_6JAtER",
+        "upsell_product_repeater_N6FCQK",
+        "upsell_product_repeater_jThQHA"
+      ],
+      "settings": {
+        "title": "Jump to offers:"
+      }
+    },
     "four_icons_tktfPb": {
       "type": "four-icons",
       "blocks": {
@@ -133,34 +185,6 @@
         "reverse_layout": false
       }
     },
-    "section_product_zigzag_nzFENn": {
-      "type": "section-product-zigzag",
-      "blocks": {
-        "upsell_product_repeater_jMFaWp": {
-          "type": "upsell_product_repeater",
-          "settings": {
-            "product_upsell": "titan-45w-turbo-charge-plug™-50-off",
-            "product_upsell_title": ""
-          }
-        },
-        "upsell_product_repeater_wp3KrV": {
-          "type": "upsell_product_repeater",
-          "settings": {
-            "product_upsell": "titan-3-in-1-mothership-dock™-bundle-offer",
-            "product_upsell_title": ""
-          }
-        }
-      },
-      "block_order": [
-        "upsell_product_repeater_jMFaWp",
-        "upsell_product_repeater_wp3KrV"
-      ],
-      "settings": {
-        "product": "2-x-titan-smart-cable™",
-        "product_label": "Multi-Device Charging for Spring Ventures",
-        "reverse_layout": false
-      }
-    },
     "section_pdp_hero_tertiary_bundle_ixjUji": {
       "type": "section-pdp-hero-tertiary-bundle",
       "blocks": {
@@ -232,7 +256,7 @@
       ],
       "settings": {
         "dark": true,
-        "section_heading": "<span class=\"color-titan-green\">BIRTHDAY<\/span> BUNDLE BUILDER",
+        "section_heading": "BIRTHDAY BUNDLE BUILDER",
         "heading_image_1": "shopify:\/\/shop_images\/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-desktop-custom-offer-free-3-in-1-cable-kits-1.webp",
         "section_subheading": "Buy any 3, save 50%, any 4, save 60%, or any 5, save 65%",
         "product_main": "titan-fitness-bundle",
@@ -477,11 +501,12 @@
     }
   },
   "order": [
+    "video_iHcNGN",
+    "scroll_bar_dGYp4L",
     "four_icons_tktfPb",
     "limited_offers_GFQdFj",
     "rich_text_iQtXqQ",
     "section_product_zigzag_PTrTQr",
-    "section_product_zigzag_nzFENn",
     "section_pdp_hero_tertiary_bundle_ixjUji",
     "section_text_with_icons_yknCDm",
     "compare-table-cable",

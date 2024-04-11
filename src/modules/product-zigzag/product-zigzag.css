@@ -129,7 +129,16 @@
     z-index: 1;
     border: none;
     border-radius: 8px;
-    background: rgb(96, 198, 85);
+    cursor: pointer;
+    svg {
+        display:none;
+    }
+    &.active {
+        background: rgb(96, 198, 85);
+        svg {
+            display:block;
+        }
+    }
 }
 
 .product-zigzag__upsell-products .upsell-product svg {

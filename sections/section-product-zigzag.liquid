@@ -1,4 +1,5 @@
 {{ 'section-product-zigzag.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-product-zigzag.js' | asset_url }}" defer="defer"></script>
 
 {% assign product = section.settings.product %}
 {% assign product_label = section.settings.product_label %}
@@ -17,7 +18,7 @@
     <div class="product-zigzag__container{% if reverse_layout %} product-zigzag__container--reverse {% endif %}">
         <div class="product-zigzag__image">
         <a href="{{ product.url }}"></a>
-        <div class="product-zigzag__image-wrapper"> 
+        <div class="product-zigzag__image-wrapper">
             {% render 'titan-image', image: product.featured_image %}
         </div>
         <div class="shape"></div>
@@ -25,7 +26,7 @@
 
         <div class="product-zigzag__content">
             <h2 class="product-zigzag__title">{{ product.title }}</h2>
-            
+
             <div class="product-zigzag__prices">
                 <span class="price">{{ product.price | money }}</span>
                 {%- if product.compare_at_price -%}
@@ -36,7 +37,7 @@
             {% if product_label %}
                 <h3 class="product-zigzag__label">{{ product_label }}</h3>
             {% endif %}
-                
+
             <div class="product-zigzag__upsell-products">
                 {% for block in upsell_products limit: 2 %}
                     {% assign product_upsell = block.settings.product_upsell %}
@@ -57,7 +58,7 @@
                         {% assign product_upsell_title = block.settings.product_upsell_title %}
                     {% endif %}
 
-                    <div class="upsell-product">
+                    <div data-product-id="{{ product_upsell.first_available_variant.id }}" class="js-upsell-selector upsell-product active">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -86,15 +87,15 @@
             </div>
 
             <div class="product-zigzag__buttons">
-                <button 
+                <button
                     data-product="{{ product.selected_or_first_available_variant.id }}"
                     data-quantity="1"
-                    class="js-add-to-cart-pd product-zigzag__atc"
+                    class="js-add-to-cart-zig product-zigzag__atc"
                 >
                     Add to Cart
                 </button>
 
-                <a href="{{ product_upsell.url}}">Buy Now</a>
+                {% comment %} <a href="{{ product_upsell.url}}">Buy Now</a> {% endcomment %}
             </div>
         </div>
     </div>
@@ -157,5 +158,5 @@
       }
     ]
   }
-  
+
 {% endschema %}

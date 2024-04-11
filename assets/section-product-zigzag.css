@@ -132,7 +132,19 @@
     z-index: 1;
     border: none;
     border-radius: 8px;
+    cursor: pointer;
+}
+
+.product-zigzag__upsell-products .upsell-product svg {
+        display:none;
+    }
+
+.product-zigzag__upsell-products .upsell-product.active {
     background: rgb(96, 198, 85);
+}
+
+.product-zigzag__upsell-products .upsell-product.active svg {
+            display:block;
 }
 
 .product-zigzag__upsell-products .upsell-product svg {

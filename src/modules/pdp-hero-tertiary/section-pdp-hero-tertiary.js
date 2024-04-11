@@ -72,6 +72,19 @@ if (!!allShopSections.length) {
         "en-US",
         { style: "currency", currency: currency }
       );
+      if(document.querySelector('.pdp-hero__product-info').classList.contains('percent-info')){
+        let activeNumber = document.querySelectorAll('.js-product-selector.active').length
+        if(activeNumber < 4){
+          document.querySelector('.pdp-hero__discount').textContent = `50% OFF`
+        }
+        if(activeNumber == 4){
+          document.querySelector('.pdp-hero__discount').textContent = `60% OFF`
+        }
+        if(activeNumber == 5){
+          document.querySelector('.pdp-hero__discount').textContent = `65% OFF`
+        }
+        console.log(activeNumber, 'activeNumber')
+      }
     }
     document.addEventListener("DOMContentLoaded", function () {
       console.log("DOMContentLoaded");

@@ -191,7 +191,7 @@
                   {% else %}
                     role="link" aria-disabled="true"
                   {% endif %}
-                  class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+                  class="{{block.settings.button_custom_class}} button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
                 >
                   {{- block.settings.button_label | escape -}}
                 </a>
@@ -462,6 +462,12 @@
           "default": "Button label",
           "label": "t:sections.slideshow.blocks.slide.settings.button_label.label",
           "info": "t:sections.slideshow.blocks.slide.settings.button_label.info"
+        },
+        {
+          "type": "text",
+          "id": "button_custom_class",
+          "label": "t:sections.slideshow.settings.show_text_below.label",
+          "default": "js-atc-scroll"
         },
         {
           "type": "url",

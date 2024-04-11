@@ -46,7 +46,7 @@
     assign stacked_sizes = '(min-width: 750px) 50vw, 100vw'
   endif
 -%}
-<div style="background-color:black;">
+<div {% if section.settings.gray == true %}style="background-color: #e4eaea;;{% else %}style="background-color:black;{% endif %}">
 <div
   id="Banner-{{ section.id }}"
   class="mw-1000 m-auto banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
@@ -176,6 +176,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "gray",
+      "label": "Gray Background"
     },
     {
       "type": "image_picker",

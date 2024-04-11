@@ -83,7 +83,7 @@
         <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Titan_Travel_case.jpg?v=1709221598"
+            src="{{ productImage | img_url: 'master' }}"
             alt="{{ featured_image.alt }}"
           >
         </figure>
@@ -299,14 +299,14 @@
                 </div>
                 {% render 'titan-image', image: product_highlighted_image %}
               </div>
-              {% if product_highlighted.options_with_values.size  > 1 %}  
+              {% if product_highlighted.options_with_values.size  > 1 %}
                <div class="f jcc aic gap-10 mx-20 fw">
-                {% for option in product_highlighted.options_with_values %}       
+                {% for option in product_highlighted.options_with_values %}
                   <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
                     {% for values in option.values %}
                         <option value="{{values}}">{{values}}</option>
                     {% endfor %}
-                  </select>          
+                  </select>
                 {% endfor %}
               </div>
               {% endif %}

@@ -172,21 +172,6 @@
 
         <div class="swiper-pagination swiper-pagination-multicolumns"></div>
       </div>
-
-    <div class="center">
-      {%- if section.settings.button_label != blank -%}
-        <a
-          class="button button--primary"
-          {% if section.settings.button_link == blank %}
-            role="link" aria-disabled="true"
-          {% else %}
-            href="{{ section.settings.button_link }}"
-          {% endif %}
-        >
-          {{ section.settings.button_label | escape }}
-        </a>
-      {%- endif -%}
-    </div>
   </div>
 </div>
 

@@ -1,0 +1,60 @@
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+<div class="bundle-top-titles">
+    <div class="max-w-[400px] mx-auto"><img width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}"></div>
+    <div class="text-[30px] color-white text-center bold">{{ section.settings.title }}</div>
+    <div class="bundle-four-icons">
+      {% for block in section.blocks %}
+      <div class="bundle-four-icons__single">
+        <div class="bundle-four-icons__single--image">
+            <img class="mx-auto mb-[5px]" width="100%" height="auto" src="{{block.settings.icon_image | img_url:'master'}}">
+        </div>
+        <div class="bundle-four-icons__single--title">
+            {{block.settings.icons_title}}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+{
+    "name": "Four Icons",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "<span class='color-titan-green'>12th</span>Apr - <span class='color-titan-green'>10th</span>May"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        }
+    ],
+    "blocks": [
+      {
+        "type": "upsell_product_repeater",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "text",
+            "id": "icons_title",
+            "label": "Icons title"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_image",
+            "label": "Icon image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Four Icons"
+      }
+    ]
+  }
+
+{% endschema %}

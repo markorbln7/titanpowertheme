@@ -1,5 +1,48 @@
 {
   "sections": {
+    "four_icons_tktfPb": {
+      "type": "four-icons",
+      "blocks": {
+        "upsell_product_repeater_mUHMNm": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "30-day Money Back Guarantee",
+            "icon_image": "shopify:\/\/shop_images\/1_1.png"
+          }
+        },
+        "upsell_product_repeater_DDzaYB": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "Free Shipping on All Orders",
+            "icon_image": "shopify:\/\/shop_images\/2_52cb35fe-d87f-47bd-83d4-a69b5e0b8496.png"
+          }
+        },
+        "upsell_product_repeater_bDXCDk": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "Easy & Fast Returns",
+            "icon_image": "shopify:\/\/shop_images\/3_8eec3bac-a913-4c83-9af2-facb20a62316.png"
+          }
+        },
+        "upsell_product_repeater_6RBH8c": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "icons_title": "Plant a Tree With Every Order",
+            "icon_image": "shopify:\/\/shop_images\/4_5.png"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_mUHMNm",
+        "upsell_product_repeater_DDzaYB",
+        "upsell_product_repeater_bDXCDk",
+        "upsell_product_repeater_6RBH8c"
+      ],
+      "settings": {
+        "title": "<span class=\"color-titan-green\">12th<\/span> Apr - <span class=\"color-titan-green\">10th<\/span> May",
+        "image": "shopify:\/\/shop_images\/Screenshot_2024-04-11_at_13.20.11.png"
+      }
+    },
     "limited_offers_GFQdFj": {
       "type": "limited-offers",
       "blocks": {
@@ -434,6 +477,7 @@
     }
   },
   "order": [
+    "four_icons_tktfPb",
     "limited_offers_GFQdFj",
     "rich_text_iQtXqQ",
     "section_product_zigzag_PTrTQr",

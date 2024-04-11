@@ -1,0 +1,68 @@
+<div class="scroll-bar bg-black">
+    <div class="text-[22px] color-white text-center bold">{{ section.settings.title }}</div>
+    <div class="scroll-bar-icons flex max-w-[450px] mx-auto gap-[20px]">
+      {% for block in section.blocks %}
+      <div class="scroll-bar-icons__single js-scroll-{{ forloop.index }} cursor-pointer">
+        <div class="scroll-bar-icons__single--image">
+            <img class="mx-auto mb-[5px]" width="100%" height="auto" src="{{block.settings.icon_image | img_url:'master'}}">
+        </div>
+        <div class="scroll-bar-icons__single--title color-white text-center text-[16px] bold">
+            {{block.settings.icons_title}}
+        </div>
+      </div>
+      <script>
+        $('.js-scroll-{{ forloop.index }}').on('click', function (e) {
+          e.preventDefault()
+          const $section = $('{{block.settings.scroll_to}}')
+
+          $('html, body').animate({
+            scrollTop: $section.offset().top + 'px'
+          }, 1000)
+        })
+    </script>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+{
+    "name": "Scroll Bar",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Jump to offers:"
+        }
+    ],
+    "blocks": [
+      {
+        "type": "upsell_product_repeater",
+        "name": "Icon",
+        "settings": [
+          {
+            "type": "text",
+            "id": "icons_title",
+            "label": "Icons title"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_image",
+            "label": "Icon image"
+          },
+          {
+            "type": "text",
+            "id": "scroll_to",
+            "label": "Scroll To"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Scroll Bar"
+      }
+    ]
+  }
+
+{% endschema %}

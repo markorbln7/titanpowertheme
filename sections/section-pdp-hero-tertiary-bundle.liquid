@@ -1,0 +1,694 @@
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
+{{ 'section-pdp-hero-tertiary.css' | asset_url | stylesheet_tag }}
+{{ 'cableoverride.css' | asset_url | stylesheet_tag }}
+
+{% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
+
+{% liquid
+  comment
+    Section Variables
+  endcomment
+  assign mainProduct = all_products[section.settings.product_main]
+  assign productImage = section.settings.product_image
+
+  if productImage == blank
+    assign productImage = mainProduct.featured_image
+  else
+    assign productImage = section.settings.product_image
+  endif
+
+  assign logoImage = section.settings.logo_image
+  assign productSubtitle = section.settings.product_subtitle
+  assign atcLabel = section.settings.atc_label
+  assign discountContent = section.settings.discount_content
+
+  comment
+    Blocks
+  endcomment
+  assign product_repeater = section.blocks | where: 'type', 'product_repeater'
+  assign iconsRepeater = section.blocks | where: 'type', 'icons'
+  assign propsRepeater = section.blocks | where: 'type', 'props'
+
+  assign currency = cart.currency.iso_code
+%}
+
+<section data-currency="{{ currency }}" class="{%  if section.settings.dark == true%}bg-black {% endif %}section-pdp-hero section-pdp-hero-tertiary js-scroll">
+  <div class="content-wrapper">
+    {% if section.settings.section_heading %}
+      <div class="pdp-hero__heading text-center">
+        <h1 class="pdp-hero__heading-title text-[50px] color-white bold">{{ section.settings.section_heading }}</h1>
+        <div class="pdp-hero__heading-subtitle text-[18px] color-white mb-[80px]">{{ section.settings.section_subheading }}</div>
+      </div>
+    {% endif %}
+    {%  if section.settings.dark == true%}
+      <div class="max-w-[800px] mx-auto px-[10px]">
+         <img width="100%" height="auto" src="{{ section.settings.heading_image_1 | img_url:'master' }}">
+      </div>
+      {% render 'bundle-gifts-sale' %}
+    {% endif %}
+    <div id="pdp-hero__container" class="pdp-hero__container">
+      {% comment %} Gallery {% endcomment %}
+      <div class="pdp-hero__gallery">
+        {% if logoImage %}
+          <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
+        {% endif %}
+        <figure class="pdp-hero__gallery-main-image relative">
+          <img
+            width="100%"
+            height="auto"
+            class="js-main-image-change w-100"
+            src="{{section.settings.product_image | img_url: 'master' }}"
+            alt="{{ featured_image.alt }}"
+          >
+        </figure>
+        {% if iconsRepeater.size > 0 %}
+          <div class="pdp-hero__icons swiper">
+            <div class="swiper-wrapper">
+              {% for block in iconsRepeater %}
+                {% assign iconImage = block.settings.pdp_hero_icon %}
+                {% assign iconTitle = block.settings.pdp_hero_icon_title %}
+                {% assign iconText = block.settings.pdp_hero_icon_text %}
+
+                <div class="swiper-slide">
+                  <div class="pdp-hero__icon-container">
+                    {% render 'titan-image', image: iconImage %}
+                    {% if iconTitle != blank %}
+                      <span class="pdp-hero__icon-title">{{ iconTitle }}</span>
+                    {% endif %}
+                    {% if iconText != blank %}
+                      <span class="pdp-hero__icon-text">{{ iconText }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-prev">
+              <svg
+                id="chevron-left"
+                viewBox="0 0 32 32"
+                width="9px"
+                height="12px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"/>
+              </svg>
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-next">
+              <svg
+                height="12px"
+                version="1.1"
+                viewBox="0 0 9 12"
+                width="9px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-260.000000, -90.000000)"><g id="chevron-right" transform="translate(260.500000, 90.000000)"><path d="M1,0 L-0.4,1.4 L4.2,6 L-0.4,10.6 L1,12 L7,6 L1,0 Z" id="Shape"/></g></g></g>
+              </svg>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} Product info {% endcomment %}
+      <div class="pdp-hero__product-info percent-info">
+        <div class="product-template-new__wrapper--content__review js-stars-scroll">
+          <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★★★★★ </span>
+          <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7</span>
+          <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,131)</span>
+        </div>
+        <div class="pdp-hero__heading">
+          <h2 class="pdp-hero__product-title">{{ mainProduct.title }}</h2>
+          {% if productSubtitle != blank %}
+            <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
+          {% endif %}
+        </div>
+
+        <div class="pdp-hero__pricing-wrapper">
+          <div class="pdp-hero__pricing product__list--single--price color-white">
+            <span class="pdp-hero__pricing-price js-price js-main-product-price" data-price="{{mainProduct.first_available_variant.price}}"></span>
+            <span class="pdp-hero__pricing-compare crossed js-crossed-price js-price-compare-main-product" data-compare-price="{{ mainProduct.first_available_variant.compare_at_price }}"></span>
+
+            {% if discountContent != blank %}
+              <div class="pdp-hero__discount">{{ discountContent }}</div>
+            {% endif %}
+          </div>
+
+          <div class="pdp-hero__price-diff js-saving"></div>
+        </div>
+
+        {% comment %} UPSELL PRODUCTS {% endcomment %}
+        <div class="pdp-hero__upsell">
+          {% if product_repeater.size > 0 %}
+            {% for upsell_product in product_repeater %}
+              {% liquid
+                assign product_obj = all_products[upsell_product.settings.product_obj]
+
+                assign product_title = upsell_product.settings.product_title_custom
+                if product_title == blank
+                  assign product_title = product_obj.title
+
+                else
+                  assign product_title = upsell_product.settings.product_title_custom
+                endif
+                assign upsell_message = upsell_product.settings.upsell_message
+
+                assign upsell_product_image = upsell_product.settings.upsell_product_image
+
+                assign product_price = product_obj.first_available_variant.price
+                assign product_compare_at_price = product_obj.first_available_variant.compare_at_price
+                assign upsell_product_discount = upsell_product.settings.upsell_product_discount
+                assign upsell_product_selector_number = upsell_product.settings.product_selector_number
+              %}
+              <div class="{%  if upsell_message == blank%}blank-item{% endif %} pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
+                {{ upsell_message }}
+              </div>
+              <div class="product-bundle-holder">
+                  <div
+                    data-product-price = {{ product_obj.first_available_variant.price }}
+                    data-product-compare-price = {{ product_obj.first_available_variant.compare_at_price}}
+                    data-product-id={{ product_obj.first_available_variant.id }}
+                    data-count="{{ upsell_product_selector_number }}"
+                    class="fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector active{% if forloop.index == 1 %} promos{% endif %}"
+                  >
+                    <input
+                      type="checkbox"
+                      id="pdp-hero__checkbox"
+                      class="js-upsell-checkbox"
+                      checked
+                    >
+                    <div class="pdp-hero__extra-checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+
+                    <div class="pdp-hero__upsell-content">
+                      <div class="pdp-hero__pricing product__list--single--price color-white">
+                        <h4 class="pdp-hero__upsell-title">
+                          {{ product_title }}
+                        </h4>
+                        {% if upsell_product_discount != blank %}
+                          <div class="pdp-hero__discount">{{ upsell_product_discount }}</div>
+                        {% endif %}
+                      </div>
+
+                      <div class="pdp-hero__upsell-price">
+                        <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }} js-upsel-product-price" data-price="{{ product_price }}">
+                          {{- product_price | money -}}
+                        </span>
+                        <span class="crossed js-price-discount-{{ forloop.index }} js-price-discount" data-compare-price="{{ product_compare_at_price }}">
+                          {{- product_compare_at_price | money -}}
+                        </span>
+                      </div>
+                    </div>
+                    {% render 'titan-image', image: upsell_product_image %}
+                    {% if product_obj.options_with_values[0].name  == "Cable Type" %}
+                      <div class="f jcc aic gap-10 mx-20 fw w-100 z-99999">
+                      {% for option in product_obj.options_with_values %}
+                        <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                          {% for values in option.values %}
+                              <option {% if forloop.index ==1 %}selected="selected"{% endif %} value="{{values}}">{{values}}</option>
+                          {% endfor %}
+                        </select>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                  </div>
+
+
+
+                  <div style="position:absolute;left:-4000px;">
+                    {% for variant in product_obj.variants %}
+                      <div data-price-noformat="{{ variant.price }}" data-compareprice-noformat="{{ variant.compare_at_price }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                  </div>
+                </div>
+
+
+                {% endfor %}
+              {% endif %}
+        </div>
+
+        {% comment %} ADD TO CART BUTTON {% endcomment %}
+        <div class="pdp-hero__atc-wrapper scroll-reveal">
+          <div
+            data-product="{{ product.selected_or_first_available_variant.id }}"
+            data-quantity="1"
+            class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc"
+          >
+            ADD TO CART
+          </div>
+          {% if atcLabel != blank %}
+            <p class="pdp-hero__atc-label">
+              {{ atcLabel }}
+            </p>
+          {% endif %}
+        </div>
+
+        {% if propsRepeater.size > 0 %}
+          <div class="pdp-hero__props">
+            {% for block in propsRepeater %}
+              {% assign propText = block.settings.prop_text %}
+              {% assign propIcon = block.settings.prop_icon %}
+              {% assign propDescription = block.settings.prop_description %}
+
+              <div class="pdp-hero__prop">
+                <div
+                  class="pdp-hero__prop-header"
+                  {% if propDescription != blank %}
+                    style="cursor: pointer;"
+                  {% endif %}
+                >
+                  <div class="pdp-hero__prop-text">{{ propText }}</div>
+                  <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                </div>
+                {% if propDescription != blank %}
+                  <div class="pdp-hero__prop-description">{{ propDescription }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<div class="atc-fixed">
+  <div class="atc-fixed__container">
+    <div class="buds-product__inner--content__subtitle">
+      {{ mainProduct.title }}
+    </div>
+    <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+      ORDER NOW 👉
+    </button>
+  </div>
+</div>
+<style>
+  .pdp-hero__upsell-highlighted {
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
+    border-radius: 0 0 22px 22px;
+    border-radius: 22px;
+  }
+</style>
+<style>
+  @keyframes bg-change {
+    0%   {background-color: #60c655cc;}
+    50%  {background-color: #f9797d;}
+    100% {background-color: #60c655cc;}
+  }
+  .bg-change {
+      animation-name: bg-change;
+      animation-duration: 2s;
+  }
+  .pdp-hero__atc {
+    height: 55px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    background-color: #60c655 !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 7px 7px #0000001a !important;
+    transition: opacity .3s ease !important;
+  }
+  select {
+    box-shadow: 0 1px 5px 3px #00000012;
+    -webkit-appearance: none;
+    background-color: white;
+    border-radius: 1.875rem;
+    font-weight: 400;
+    letter-spacing: .07em;
+    line-height: 1.42;
+    /* outline: 0.125rem solid transparent; */
+    /* outline-offset: 0.125rem; */
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    border: 2px solid #60c655;
+    padding: 5px;
+    width:150px;
+  }
+  select:focus-visible {
+    outline: none;
+    outline-offset: 0.3rem;
+    box-shadow: none;
+  }
+  .pdp-hero__upsell-message {
+    display:none;
+  }
+  input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    cursor: pointer;
+    z-index: 5;
+    left: 0;
+    top: 0;
+  }
+  .z-99999 {
+    z-index: 99999;
+  }
+  .crossed {
+    {% comment %} position:absolute;
+    left:-49999px; {% endcomment %}
+  }
+  .js-price-compare-main-product {
+    position:relative;
+    left:unset;
+  }
+  .pdp-hero__upsell-content {
+    width:65%;
+  }
+</style>
+
+{% comment %} <script src="{{ 'section-pdp-hero-tertiary.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+<script src="{{ 'bundle-discount.js' | asset_url }}" defer="defer"></script>
+{% comment %} <script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+
+<script>
+    window.selectLogic = {
+      productCount: '4x',
+      productHandle: '',
+      productId: '',
+      phoneType: 'iPhone',
+      cableLength: '10ft(3.0m)',
+      addon: ''
+    }
+
+    window.products = {
+      {% for upsell_product in product_repeater %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+          '{{ variant.title | remove:" "}}' : '{{ variant.id }}',
+        {% endfor %}
+      {% endfor %}
+    }
+
+    console.log(window.products, 'window.products')
+    window.mainImages = {
+      "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+    }
+    console.log(window.mainImages, 'window.mainImages')
+  window.prices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+       '{{ variant.title | remove:" "}}' : '{{ variant.price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  window.comparePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+       '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  window.savePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+
+  window.jointPrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointComparePrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointSavePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+
+
+
+  console.log(window.products, 'window.products')
+  console.log(window.prices, 'window.prices')
+  const distance = $('.product-icons').offset().top
+  $(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+      $('.atc-fixed').addClass('show')
+    } else {
+      $('.atc-fixed').removeClass('show')
+    }
+  })
+</script>
+
+<script>
+    {% comment %} document.addEventListener('DOMContentLoaded', function() {
+        const pdpHero = document.querySelector('.section-pdp-hero-tertiary')
+        const checkboxes = pdpHero.querySelectorAll('.js-upsell-checkbox')
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                updateTotalPrice()
+            })
+        })
+
+        function updateTotalPrice() {
+            var mainProductPrice = parseFloat(pdpHero.querySelector('.js-main-product-price').getAttribute('data-price'));
+            var mainProductComparePrice = parseFloat(pdpHero.querySelector('.js-price-compare-main-product').getAttribute('data-compare-price'));
+            var totalMainProductPrice = mainProductPrice;
+            var totalMainProductComparePrice = mainProductComparePrice;
+            var priceDif = pdpHero.querySelector('.pdp-hero__price-diff');
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    var price = parseFloat(checkbox.closest('.pdp-hero__upsell-wrapper').querySelector('.js-upsel-product-price').getAttribute('data-price'));
+                    var comparePrice = parseFloat(checkbox.closest('.pdp-hero__upsell-wrapper').querySelector('.js-price-discount').getAttribute('data-compare-price'));
+
+                    totalMainProductPrice += price;
+                    totalMainProductComparePrice += comparePrice;
+                }
+            });
+
+            var totalElement = pdpHero.querySelector('.pdp-hero__pricing-price');
+            if (totalElement) {
+                totalMainProductPrice /= 100;
+                totalElement.textContent = totalMainProductPrice.toLocaleString('en-US', { style: 'currency', currency: '{{shop.currency}}' });
+            }
+
+            var comparePriceElement = pdpHero.querySelector('.js-price-compare-main-product');
+            if (comparePriceElement) {
+                totalMainProductComparePrice /= 100;
+                comparePriceElement.textContent = totalMainProductComparePrice.toLocaleString('en-US', { style: 'currency', currency: '{{shop.currency}}' });
+            }
+
+            let priceDifCalc = totalMainProductComparePrice - totalMainProductPrice
+            priceDif.textContent = `${priceDifCalc.toLocaleString('en-US', { style: 'currency', currency: '{{shop.currency}}' })} SAVED`;
+        }
+
+        updateTotalPrice();
+    }){% endcomment %}
+</script>
+
+{% schema %}
+{
+  "name": "PDP Hero Tertiary BUNDLE",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "dark",
+      "label": "Dark version",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "<span>BIRTHDAY</span> BUNDLE BUILDER"
+    },
+    {
+      "type": "image_picker",
+      "id": "heading_image_1",
+      "label": "Heading image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "heading_image_2",
+      "label": "Heading image 2"
+    },
+    {
+      "type": "text",
+      "id": "section_subheading",
+      "label": "Section sunheading",
+      "default": "Buy any 3, save 50%, any 4, save 60%, or any 5, save 65%"
+    },
+    {
+      "type": "product",
+      "id": "product_main",
+      "label": "Select main product"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo upload"
+    },
+    {
+      "type": "text",
+      "id": "product_subtitle",
+      "label": "Product subtitle"
+    },
+    {
+      "type": "text",
+      "id": "discount_content",
+      "label": "Discount content",
+      "default": "36% OFF"
+    },
+    {
+      "type": "text",
+      "id": "atc_label",
+      "label": "ATC button label",
+      "default": "96% OF the reviews for this item are positive"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_repeater",
+      "name": "Product upsell",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_selector_number",
+          "label": "Product selector number"
+        },
+        {
+          "type": "product",
+          "id": "product_obj",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "upsell_product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "product_title_custom",
+          "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "upsell_product_discount",
+          "label": "Discount text"
+        },
+        {
+          "type": "textarea",
+          "id": "upsell_message",
+          "label": "Upsell message",
+          "default": "LIMITED STOCK OFFER  GET +1 FREE"
+        }
+      ]
+    },
+    {
+      "type": "props",
+      "name": "Prop",
+      "settings": [
+        {
+          "type": "text",
+          "id": "prop_text",
+          "label": "Prop text"
+        },
+        {
+          "type": "textarea",
+          "id": "prop_icon",
+          "label": "Prop icon"
+        },
+        {
+          "type": "richtext",
+          "id": "prop_description",
+          "label": "Prop description"
+        }
+      ]
+    },
+    {
+      "type": "icons",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pdp_hero_icon",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_title",
+          "label": "Gallery icon title"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_text",
+          "label": "Gallery icon text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Hero Tertiary BUNDLE"
+    }
+  ]
+}
+{% endschema %}

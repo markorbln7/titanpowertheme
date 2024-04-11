@@ -1,0 +1,33 @@
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/limited-offers/limited-offers.css ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+.timer {
+    max-width: 70%;
+    margin: 0 auto;
+    top:-20px;
+}
+    .timer .small-text {
+        font-size: 10px;
+    }
+    .border-timer {
+    border: 3px solid #60c655;
+    border-radius: 50px;
+    max-width: 70%;
+    margin: 0 auto;
+    color:#60c655;
+}
+    .border-red .border-timer {
+        border-color:red;
+        color:red;
+    }
+    .border-yellow .border-timer {
+        border-color:yellow;
+        color:yellow;
+    }
+    .border-green .border-timer {
+        border-color:green;
+        color:green;
+    }
+    .z-9999999 {
+    z-index: 9999999;
+}

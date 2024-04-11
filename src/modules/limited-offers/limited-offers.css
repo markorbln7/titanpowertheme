@@ -1,0 +1,37 @@
+.timer {
+    max-width: 70%;
+    margin: 0 auto;
+    top:-20px;
+    .small-text {
+        font-size: 10px;
+    }
+}
+
+.border-timer {
+    border: 3px solid #60c655;
+    border-radius: 50px;
+    max-width: 70%;
+    margin: 0 auto;
+    color:#60c655;
+}
+.border-red {
+    .border-timer {
+        border-color:red;
+        color:red;
+    }
+}
+.border-yellow  {
+    .border-timer {
+        border-color:yellow;
+        color:yellow;
+    }
+}
+.border-green  {
+    .border-timer {
+        border-color:green;
+        color:green;
+    }
+}
+.z-9999999 {
+    z-index: 9999999;
+}

@@ -1,0 +1,156 @@
+{{ 'section-limited-offers.css' | asset_url | stylesheet_tag }}
+{{ 'section-limited-offers.js' | asset_url | stylesheet_tag }}
+<section class="bg-black pb-[100px] pt-[40px]">
+    <div class="max-w-[1240px] mx-auto">
+        <div class="limited-offer__title text-center flex justify-center gap-[10px] font-bold mb-[20px]">
+            <div class="limited-offer__title--left color-titan-green text-[40px]">{{ section.settings.text_left }}</div>
+            <div class="limited-offer__title--right color-white text-[40px]">{{ section.settings.text_right }}</div>
+        </div>
+        <div class="text-center text-[18px] mb-[60px] color-white">{{ section.settings.subtext }}</div>
+        <div class="offers flex gap-[20px] flex-wrap">
+            {% for block in section.blocks %}
+                {% liquid
+                    assign image = block.settings.product_image
+                    assign product = all_products[block.settings.product]
+                    if block.settings.image == blank
+                        assign image = block.settings.product_image
+                    else
+                        assign image = product.featured_image
+                    endif
+
+                    if block.settings.product_title == blank
+                        assign product_title = product.title
+                    else
+                        assign product_title = block.settings.product_title
+                    endif
+
+                    if block.settings.product_subtitle == blank
+                        assign product_subtitle = product.title
+                    else
+                        assign product_subtitle = block.settings.product_subtitle
+                    endif
+                    assign countdown_to = block.settings.countdown_to
+
+
+                %}
+                <div class="timer-{{ forloop.index }} offers__single w-full mb-[20px] relative">
+                    <div class="text-[22px] flex timer justify-center border-timer absolute z-9999999 max-w-[300px] left-[44%] px-[30px] py-[5px]" id="timer">
+                        <div class="flex flex-col items-center leading-none" id="days"></div>:
+                        <div class="flex flex-col items-center leading-none" id="hours"></div>:
+                        <div class="flex flex-col items-center leading-none" id="minutes"></div>:
+                        <div class="flex flex-col items-center leading-none" id="seconds"></div>
+                    </div>
+                    <div class="js-image-scroll-{{ forloop.index }} offers__single--image relative cursor-pointer">
+                        <img class="h-full object-cover w-full" width="auto" height="auto" src="{{ image | img_url: 'master' }}" alt="{{ product.title }}">
+                    </div>
+                    <div class="offers__single--title color-white text-center text-[20px] bold uppercase mt-[20px]">
+                        {{ product_title }}
+                    </div>
+                    <div class="offers__single--subtitle color-titan-green text-center text-[18px] bold uppercase">
+                        {{ product_subtitle }}
+                    </div>
+                </div>
+                <script>
+                    setInterval(function() {
+                        makeTimer('.timer-{{ forloop.index }}',"{{block.settings.countdown_to}}");
+                    }, 1000);
+                    $('.js-image-scroll-{{ forloop.index }}').on('click', function (e) {
+                      e.preventDefault()
+                      const $section = $('{{block.settings.scroll_to}}')
+
+                      $('html, body').animate({
+                        scrollTop: $section.offset().top + 'px'
+                      }, 1000)
+                    })
+                </script>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+    function makeTimer(className, dateTo) {
+        console.log(className, 'class name')
+        var endTime = new Date(dateTo);
+        endTime = (Date.parse(endTime) / 1000);
+
+        var now = new Date();
+        now = (Date.parse(now) / 1000);
+
+        var timeLeft = endTime - now;
+
+        var days = Math.floor(timeLeft / 86400);
+        var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+        var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
+        var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+
+        if (hours < "10") { hours = "0" + hours;}
+        if (minutes < "10") { minutes = "0" + minutes;}
+        if (seconds < "10") { seconds = "0" + seconds;}
+        {% comment %} console.log(className + " #days", 'countdown class') {% endcomment %}
+
+        $(className + " #days").html(days + '<div class="small-text">Days</div>');
+        $(className + " #hours").html(hours + '<div class="small-text">Hours</div>');
+        $(className + " #minutes").html(minutes + '<div class="small-text">Min</div>');
+        $(className + " #seconds").html(seconds + '<div class="small-text">Sec</div>');
+    }
+</script>
+
+
+{% schema %}
+{
+  "name": "Limited Offers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text_left",
+      "label": "Text left",
+      "default": "LIMITED TIME"
+    },
+    {
+      "type": "text",
+      "id": "text_right",
+      "label": "Text right",
+      "default": "ANNIVERSARY OFFERS"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+    }
+  ],
+  "blocks": [
+    {
+      "type": "air_tabs",
+      "name": "Tabs",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+            "type": "image_picker",
+            "id": "product_image",
+            "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "scroll_to",
+          "label": "Scroll to Class"
+        },
+        {
+          "type": "text",
+          "id": "countdown_to",
+          "label": "Countdown to"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Limited Offers"
+    }
+  ]
+}
+{% endschema %}

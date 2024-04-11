@@ -309,6 +309,9 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
     {{ 'override.css' | asset_url | stylesheet_tag }}
   
 {% render 'gsf-conversion-pixels' %}
+{% if product.handle == 'anniversary-sale' %}
+<script src="https://cdn.tailwindcss.com" defer></script>
+{% endif %}
 </head>
 
   <body class="aha--{{ template.suffix }} gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

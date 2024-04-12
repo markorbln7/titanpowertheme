@@ -57,14 +57,16 @@
                                     <article class="b-collection-carousel__product">
                                         {{ product_image | image_url: width: 416 | image_tag: height: 320 }}
                                         <h3 class="b-collection-carousel__product-title text-color-black text-align-center">{{ product_title }}</h3>
-                                        {% if product.options_with_values.size  > 1 %}
-                                          <div class="flex justify-center items-center flex-wrap gap-[10px] my-[20px]">
+                                        {% if product.options_with_values.size  > 0 %}
+                                          <div class="flex justify-center items-center flex-wrap gap-[10px]">
                                            {% for option in product.options_with_values %}
-                                             <select  class="w-full carousel-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                                            {% unless option.name == 'Title' %}
+                                             <select  class="my-[20px] w-full carousel-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
                                                {% for values in option.values %}
                                                    <option value="{{values}}">{{values}}</option>
                                                {% endfor %}
                                              </select>
+                                             {% endunless %}
                                            {% endfor %}
                                            <div style="position:absolute;left:-4000px;">
                                             {% for variant in product.variants %}

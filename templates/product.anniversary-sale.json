@@ -174,6 +174,13 @@
     "section_product_zigzag_PTrTQr": {
       "type": "section-product-zigzag",
       "blocks": {
+        "icons_repeater_WPUB6G": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Ios & Android",
+            "icon": "shopify:\/\/shop_images\/icons8-magnet-therapy-100.png"
+          }
+        },
         "upsell_product_repeater_pQQjBd": {
           "type": "upsell_product_repeater",
           "settings": {
@@ -192,6 +199,7 @@
         }
       },
       "block_order": [
+        "icons_repeater_WPUB6G",
         "upsell_product_repeater_pQQjBd",
         "upsell_product_repeater_xV6gna"
       ],
@@ -571,6 +579,14 @@
             "name": "John D.",
             "image": "shopify:\/\/shop_images\/Z5.jpg"
           }
+        },
+        "slider_eMGnpW": {
+          "type": "slider",
+          "settings": {
+            "title": "",
+            "text": "",
+            "name": ""
+          }
         }
       },
       "block_order": [
@@ -579,7 +595,8 @@
         "slider_6JER9k",
         "slider_cYNm8G",
         "slider_NghWnn",
-        "slider_YnppAx"
+        "slider_YnppAx",
+        "slider_eMGnpW"
       ],
       "custom_css": [
         ".slider-outer {background-color: #e4eaea;}",

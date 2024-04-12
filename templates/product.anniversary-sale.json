@@ -368,19 +368,19 @@
     "collection_carousel_TpjEwt": {
       "type": "collection-carousel",
       "blocks": {
-        "collecion_carousel_NxndEC": {
-          "type": "collecion_carousel",
-          "settings": {
-            "text_override": "Bundles",
-            "collection": "mega-bundles",
-            "product_limit": 6
-          }
-        },
         "collecion_carousel_PH6BH6": {
           "type": "collecion_carousel",
           "settings": {
             "text_override": "Cables",
-            "collection": "titan-charging-cables",
+            "collection": "titan-cables-anniversary",
+            "product_limit": 6
+          }
+        },
+        "collecion_carousel_mg6DJD": {
+          "type": "collecion_carousel",
+          "settings": {
+            "text_override": "WIRELESS",
+            "collection": "titan-wireless-chargers-anniversary",
             "product_limit": 6
           }
         },
@@ -391,12 +391,21 @@
             "collection": "wall-car-chargers",
             "product_limit": 6
           }
+        },
+        "collecion_carousel_KcmP8t": {
+          "type": "collecion_carousel",
+          "settings": {
+            "text_override": "ACCESSORIES",
+            "collection": "titan-accessories-anniversary",
+            "product_limit": 6
+          }
         }
       },
       "block_order": [
-        "collecion_carousel_NxndEC",
         "collecion_carousel_PH6BH6",
-        "collecion_carousel_wEe3jM"
+        "collecion_carousel_mg6DJD",
+        "collecion_carousel_wEe3jM",
+        "collecion_carousel_KcmP8t"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/MULTIBUY_OFFER_general_-_desktop.jpg",

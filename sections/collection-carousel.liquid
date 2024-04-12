@@ -10,15 +10,25 @@
         {% if collection_carousel_headline != blank %}
             <h2 class="b-collection-carousel__headline c-title c-title-size--primary text-color-black text-align-center">{{ collection_carousel_headline }}</h2>
         {% endif %}
+        <div class="desktop mb-[20px]">
+            <img width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}">
+        </div>
+        <div class="mobile mb-[20px]">
+          <img width="100%" height="auto" src="{{ section.settings.mobile_image | img_url:'master'}}">
+      </div>
 
 
        <div class="b-collection-carousel__tabs-wrapper">
             <div class="b-collection-carousel__shadow b-collection-carousel__shadow--left"></div>
-            <div class="b-collection-carousel__tabs display-flex align-items-center">
+            <div class="b-collection-carousel__tabs display-flex align-items-center justify-center">
                 {% for block in collecion_carousel %}
                     {% assign carousel_collection = block.settings.collection %}
-                    {% assign carousel_collection_title =  carousel_collection.title %}
-    
+                    {% if block.settings.text_override != blank %}
+                      {% assign carousel_collection_title = block.settings.text_override %}
+                    {% else %}
+                      {% assign carousel_collection_title = carousel_collection.title %}
+                    {% endif %}
+
                     <button class="b-collection-carousel__tab text-color-black{% if forloop.index == 1 %} active {% endif %}" data-tab="{{ forloop.index }}">{{ carousel_collection_title }}</button>
                 {% endfor %}
             </div>
@@ -32,8 +42,8 @@
 
                 <div class="b-collection-carousel__products swiper{% if forloop.index == 1 %} active {% endif %}" data-panel="{{ forloop.index }}">
                     <div class="b-collection-carousel__navigation">
-                        <div class="swiper-button-prev swiper-collection-navigation-prev swiper-button-prev-image"> 
-                             
+                        <div class="swiper-button-prev swiper-collection-navigation-prev swiper-button-prev-image">
+
                         </div>
                         <div class="swiper-button-next swiper-collection-navigation-next swiper-button-next-image">
                         </div>
@@ -43,14 +53,22 @@
                             {% assign product_image = product.featured_image %}
                             {% assign product_title = product.title %}
                             <div class="swiper-slide">
-                                <a href="{{ product.url }}">
+                                <div>
                                     <article class="b-collection-carousel__product">
                                         {{ product_image | image_url: width: 416 | image_tag: height: 320 }}
                                         <h3 class="b-collection-carousel__product-title text-color-black text-align-center">{{ product_title }}</h3>
-                                        <div class="b-collection-carousel__product-price text-align-center">{{ product.price | money }}</div>
-                                        <button>ADD TO CART</button>
+                                        <div class="flex mt-[20px] justify-center">
+                                          <div class="color-titan-green">{{ product.price | money }}</div>
+                                          <div class="crossed titan-red">{{ product.compare_at_price | money }}</div>
+                                        </div>
+                                        <div class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
+                                          <div class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center">-</div>
+                                          <div class="col-quantity__amount op">1</div>
+                                          <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                                        </div>
+                                        <button data-qty="1" class="js-carousel-atc bold" data-product-id="{{ product.first_available_variant.id }}">ADD TO CART</button>
                                     </article>
-                                </a>
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -60,6 +78,33 @@
 
     </div>
 </section>
+<style>
+  .col-quantity__button {
+    font-size: 45px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    background: linear-gradient(66deg, rgba(96, 198, 85, .8) 12.82%, #5aef55c9 56.41%, #35ff2e);
+    box-shadow: 1px 2px 7px #b3b3b3d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .col-quantity__button.gray {
+    background: linear-gradient(66deg, rgb(151 151 151 / 80%) 12.82%, #656565c9 56.41%, #434343);
+    opacity: .5;
+  }
+  .col-quantity__amount {
+    color: #2b2b2b;
+    font-size: 44px;
+    opacity:.7;
+    font-weight:700;
+  }
+
+</style>
 
 <script src="{{ 'section-collection-carousel.js' | asset_url }}" defer="defer"></script>
 
@@ -68,6 +113,16 @@
 {
   "name": "Collection carousel",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
     {
       "type": "text",
       "id": "collection_carousel_headline",
@@ -79,6 +134,11 @@
       "type": "collecion_carousel",
       "name": "Collection",
       "settings": [
+        {
+          "type": "text",
+          "id": "text_override",
+          "label": "Custom title"
+        },
         {
           "type": "collection",
           "id": "collection",

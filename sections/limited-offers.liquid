@@ -3,8 +3,7 @@
 <section class="bg-black pb-[100px] pt-[40px]">
     <div class="max-w-[1240px] mx-auto">
         <div class="limited-offer__title text-center flex justify-center gap-[10px] font-bold mb-[20px]">
-            <div class="limited-offer__title--left color-titan-green text-[40px]">{{ section.settings.text_left }}</div>
-            <div class="limited-offer__title--right color-white text-[40px]">{{ section.settings.text_right }}</div>
+            <div class="limited-offer__title--right color-white md:text-[60px] text-[40px]">{{ section.settings.text_right }}</div>
         </div>
         <div class="text-center text-[18px] mb-[60px] color-white">{{ section.settings.subtext }}</div>
         <div class="offers flex gap-[20px] flex-wrap">
@@ -34,7 +33,7 @@
 
                 %}
                 <div class="timer-{{ forloop.index }} offers__single w-full mb-[20px] relative">
-                    <div class="text-[22px] flex timer justify-center border-timer absolute z-9999999 max-w-[300px] left-[44%] px-[30px] py-[5px]" id="timer">
+                    <div class="text-[22px] flex timer justify-center border-timer absolute z-9999999 max-w-[300px] left-[50%] top-[0px] px-[30px] py-[5px] translate-50-50" id="timer">
                         <div class="flex flex-col items-center leading-none" id="days"></div>:
                         <div class="flex flex-col items-center leading-none" id="hours"></div>:
                         <div class="flex flex-col items-center leading-none" id="minutes"></div>:
@@ -99,12 +98,6 @@
 {
   "name": "Limited Offers",
   "settings": [
-    {
-      "type": "text",
-      "id": "text_left",
-      "label": "Text left",
-      "default": "LIMITED TIME"
-    },
     {
       "type": "text",
       "id": "text_right",

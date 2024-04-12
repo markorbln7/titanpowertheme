@@ -34,10 +34,10 @@ const showPanel = (tab) => {
 };
 
 function initializeSwiper(panel) {
-    if (panel.classList.contains('swiper-initialized')) return; 
+    if (panel.classList.contains('swiper-initialized')) return;
     const panelSelector = '.' + panel.classList[0];
     const newSwiper = new Swiper(panelSelector, {
-        slidesPerView: 1.195,
+        slidesPerView: 1.2,
         spaceBetween: 16,
         loop: false,
         draggable: true,
@@ -98,3 +98,64 @@ if (window.innerWidth > 1023) {
     tabsBox.addEventListener('mousemove', dragging);
     document.addEventListener('mouseup', dragStop);
 }
+const coll_increases = document.querySelectorAll('.increase')
+
+coll_increases.forEach(increase => {
+    increase.addEventListener('click', (e) => {
+        const _this = e.currentTarget
+        const parentDiv = _this.closest('.b-collection-carousel__product')
+        const inputValue = parentDiv.querySelector('.col-quantity__amount')
+        const currentInput = parentDiv.querySelector('.js-carousel-atc').getAttribute('data-qty')
+        const currentInputNumber = parseInt(currentInput)
+        inputValue.textContent = currentInputNumber + 1
+        parentDiv.querySelector('.js-carousel-atc').setAttribute('data-qty', currentInputNumber + 1)
+    })
+})
+
+const coll_decreases = document.querySelectorAll('.decrease')
+
+coll_decreases.forEach(decrease => {
+    decrease.addEventListener('click', (e) => {
+        const _this = e.currentTarget
+        const parentDiv = _this.closest('.b-collection-carousel__product')
+        const inputValue = parentDiv.querySelector('.col-quantity__amount')
+        const currentInput = parentDiv.querySelector('.js-carousel-atc').getAttribute('data-qty')
+        if (currentInput == 1) return
+        const currentInputNumber = parseInt(currentInput)
+        inputValue.textContent = currentInputNumber - 1
+        parentDiv.querySelector('.js-carousel-atc').setAttribute('data-qty', currentInputNumber - 1)
+    })
+})
+
+
+const addToCartsCarousels = document.querySelectorAll(".js-carousel-atc");
+
+addToCartsCarousels.forEach((addToCartsCarousel) => {
+    addToCartsCarousel.addEventListener("click", (e) => {
+      const _this = e.currentTarget;
+      const productSelector = _this.getAttribute("data-product-id");
+      const qty = _this.getAttribute("data-qty");
+      const addItems = [{
+        id: productSelector,
+        quantity: qty,
+      }];
+      console.log(addItems, "addItems");
+      const formData = {
+        items: addItems,
+      };
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => {
+          console.log(response.status, "ok");
+          return response.json();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+});

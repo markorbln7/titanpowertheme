@@ -112,6 +112,7 @@
     }
 
 .product-zigzag__discount-box {
+    position: absolute;
     right: -20px;
     top: -20px;
     width: 85px;
@@ -127,7 +128,8 @@
     justify-content: center;
     transform: rotate(-15deg);
     font-style: italic;
-    z-index: 20;
+    z-index: 9999;
+    text-align: center;
 }
 
 .product-zigzag__prices {
@@ -135,7 +137,7 @@
 }
 
 .product-zigzag__prices .price {
-    font-size: 36px;
+    font-size: 22px;
     line-height: 40px;
     font-weight: 700;
     padding-right: 8px;
@@ -143,7 +145,7 @@
 }
 
 .product-zigzag__prices .price-compared {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     color: rgb(119 119 119);
     -webkit-text-decoration-line: line-through;
@@ -154,7 +156,8 @@
     margin-bottom: 16px;
     font-size: 14px;
     line-height: 15px;
-    color: #60c655;
+    color: #777;
+    font-weight: 300;
 }
 
 .product-zigzag__upsell-products {
@@ -301,11 +304,11 @@
     }
 
     .product-zigzag__image-wrapper {
-        height: 250px;
+        /* height: 250px; */
     }
 
     .product-zigzag__image .titan-image img {
-        height: 250px !important;
+        height: auto !important;
     }
 
     .product-zigzag__content {

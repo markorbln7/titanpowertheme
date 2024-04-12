@@ -2,7 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/collection-carousel/collection-carousel.css ***!
   \************************************************************************************************************************************************************************************************************************************************/
 .b-collection-carousel {
-    padding: 5.6rem 0;
+    padding: 10px 10px 80px;
 }
 
 .b-collection-carousel__wrapper {
@@ -46,7 +46,7 @@
     display: flex;
     align-items: center;
     padding: 1rem 3rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
     white-space: nowrap;
     background-color: #fff;
     transition: background-color 0.3s ease;
@@ -57,7 +57,7 @@
 }
 
 .b-collection-carousel__product-title {
-    font-size: 1.2rem;
+    font-size: 16px;
     line-height: 130%;
     letter-spacing: 2.4px;
     max-width: 32rem;
@@ -122,7 +122,6 @@
     -o-object-fit: cover;
        object-fit: cover;
     margin-bottom: 1.2rem;
-    height: 20rem;
     border-radius: 20px;
 }
 
@@ -146,7 +145,7 @@
     height: 100%;
 }
 
-.b-collection-carousel__product button {
+.b-collection-carousel__product .js-carousel-atc {
         border-radius: 20px;
         max-width: 14rem;
         text-align: center;
@@ -157,12 +156,11 @@
         font-size: 15px;
         border: none;
         margin-inline: auto;
-        margin-top: 20px;
     }
 
 @media (min-width: 768px) {
     .b-collection-carousel {
-        padding: 10rem 0 8rem;
+        padding: 0px 0 8rem;
     }
 
     .b-collection-carousel__product {
@@ -250,7 +248,7 @@
     display: flex;
     align-items: center;
     padding: 1rem 3rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
     white-space: nowrap;
     background-color: #fff;
     transition: background-color 0.3s ease;
@@ -261,7 +259,7 @@
 }
 
 .b-collection-carousel__product-title {
-    font-size: 1.2rem;
+    font-size: 16px;
     line-height: 130%;
     letter-spacing: 2.4px;
     max-width: 32rem;
@@ -278,3 +276,6 @@
     margin-bottom: auto;
 }
 
+@media (min-width: 768px) {
+
+}

@@ -3,6 +3,19 @@
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc": {
       "type": "image-with-text-slider",
       "blocks": {
+        "button_DMjDkV": {
+          "type": "button",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/hOME_PAGE_BANNER_5156073a-29bb-447f-8661-6a4e3d575e96.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/TPP_Home_page_Mobile_a_v3_mobile.jpg",
+            "heading": "ANNIVERSARY SALE",
+            "caption": "",
+            "heading_size": "h1",
+            "button_label": "SHOP 80% OFF",
+            "button_link": "https:\/\/titanpowerplus.com\/products\/anniversary-sale",
+            "button_style_secondary": false
+          }
+        },
         "9232a857-fd83-470e-811e-c826327e21fe": {
           "type": "button",
           "settings": {
@@ -26,20 +39,6 @@
             "heading_size": "h1",
             "button_label": "Shop Now",
             "button_link": "https:\/\/titanpowerplus.com\/pages\/titancable",
-            "button_style_secondary": false
-          }
-        },
-        "button_DMjDkV": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Valentines_day_sale_banner_home_page_desktop.jpg",
-            "mobile_image": "shopify:\/\/shop_images\/DESKTOP_HERO_BANNER_Valentines_day_-_mobile_home_page_banner_fda1a784-ff74-4def-96d8-5245c9bb59cc.jpg",
-            "heading": "VALENTINES SALE",
-            "caption": "",
-            "heading_size": "h1",
-            "button_label": "SHOP NOW",
-            "button_link": "https:\/\/titanpowerplus.com\/pages\/shop23",
             "button_style_secondary": false
           }
         },
@@ -71,9 +70,9 @@
         }
       },
       "block_order": [
+        "button_DMjDkV",
         "9232a857-fd83-470e-811e-c826327e21fe",
         "4171b881-4359-4472-ac75-fcf2de984657",
-        "button_DMjDkV",
         "08c477fa-05be-48c9-9085-02080e14dd19",
         "12ce37a3-4edf-4b17-af73-8f919443f127"
       ],
@@ -373,6 +372,7 @@
         "heading": "",
         "heading_size": "h1",
         "enable_video_looping": false,
+        "mobile_video_url": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/3b65b41842e140589613a6b80a5de00c.mp4",
         "video_url": "https:\/\/vimeo.com\/645302591",
         "cover_image": "shopify:\/\/shop_images\/TPP_Homepage_Banner_video_thumbn.jpg",
         "description": "",
@@ -736,6 +736,7 @@
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/Group_49_d1ee7ee8-0361-4202-ab4c-d4b317a3892d.jpg",
+        "gray": false,
         "image_overlay_opacity": 30,
         "image_height": "large",
         "desktop_content_position": "middle-center",

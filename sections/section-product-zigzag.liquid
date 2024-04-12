@@ -40,16 +40,6 @@
                 {% endif %}
             </div>
 
-            {% if icons_repeater.size > 0 %}
-                <div class="product-zigzag__icons">
-                    {% for block in  icons_repeater %}
-                        <div class="product-zigzag__icon">
-                            {% render 'titan-image' image: block.settings.icon %}
-                            <p class="product-zigzag__icon-text">{{ block.settings.text }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
 
             {% if product.options_with_values[0].name  == "Cable Type" %}
                 <div class="f aic gap-10 fw w-100 z-99999 mb-[20px]">
@@ -67,6 +57,16 @@
                   <div data-price-noformat="{{ variant.price }}" data-compareprice-noformat="{{ variant.compare_at_price }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                 {% endfor %}
               </div>
+              {% if icons_repeater.size > 0 %}
+                <div class="product-zigzag__icons">
+                    {% for block in  icons_repeater %}
+                        <div class="product-zigzag__icon">
+                            {% render 'titan-image' image: block.settings.icon %}
+                            <p class="product-zigzag__icon-text">{{ block.settings.text }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             {% if product_label %}
                 <h3 class="product-zigzag__label">{{ product_label }}</h3>

@@ -95,48 +95,6 @@
         "image": "shopify:\/\/shop_images\/Screenshot_2024-04-11_at_13.20.11.png"
       }
     },
-    "collection_carousel_TpjEwt": {
-      "type": "collection-carousel",
-      "blocks": {
-        "collecion_carousel_NxndEC": {
-          "type": "collecion_carousel",
-          "settings": {
-            "collection": "mega-bundles",
-            "product_limit": 6
-          }
-        },
-        "collecion_carousel_9XKWEY": {
-          "type": "collecion_carousel",
-          "settings": {
-            "collection": "all-titan-products",
-            "product_limit": 6
-          }
-        },
-        "collecion_carousel_PH6BH6": {
-          "type": "collecion_carousel",
-          "settings": {
-            "collection": "titan-charging-cables",
-            "product_limit": 6
-          }
-        },
-        "collecion_carousel_wEe3jM": {
-          "type": "collecion_carousel",
-          "settings": {
-            "collection": "titan-car-chargers",
-            "product_limit": 6
-          }
-        }
-      },
-      "block_order": [
-        "collecion_carousel_NxndEC",
-        "collecion_carousel_9XKWEY",
-        "collecion_carousel_PH6BH6",
-        "collecion_carousel_wEe3jM"
-      ],
-      "settings": {
-        "collection_carousel_headline": ""
-      }
-    },
     "limited_offers_GFQdFj": {
       "type": "limited-offers",
       "blocks": {
@@ -164,9 +122,8 @@
         "air_tabs_CQtFbP"
       ],
       "settings": {
-        "text_left": "LIMITED TIME",
-        "text_right": "ANNIVERSARY OFFERS",
-        "subtext": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        "text_right": "<span class=\"color-titan-green\">LIMITED TIME<\/span> OFFERS",
+        "subtext": "Our best prices on a best seller and most popular bundle of ours for 5 days only to celebrate 5 years of titan."
       }
     },
     "rich_text_iQtXqQ": {
@@ -225,7 +182,7 @@
         "product": "titan-magtech-cable™-travel",
         "product_label": "Multi-Device Charging for Spring Ventures",
         "discount_text": "70% OFF",
-        "reverse_layout": false
+        "reverse_layout": true
       }
     },
     "section_pdp_hero_tertiary_bundle_ixjUji": {
@@ -308,6 +265,75 @@
         "product_subtitle": "Buy any 3, save 50%, any 4, save 60%, or any 5, save 65%",
         "discount_content": "65% OFF",
         "atc_label": "NOT AVAILABLE ON AMAZON OR EBAY"
+      }
+    },
+    "rich_text_XzqVAB": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_HmqHge": {
+          "type": "heading",
+          "settings": {
+            "heading": "MULTIBUT BUNDLES",
+            "heading_size": "h0"
+          }
+        },
+        "text_7zN6j4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_HmqHge",
+        "text_7zN6j4"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "collection_carousel_TpjEwt": {
+      "type": "collection-carousel",
+      "blocks": {
+        "collecion_carousel_NxndEC": {
+          "type": "collecion_carousel",
+          "settings": {
+            "text_override": "Bundles",
+            "collection": "mega-bundles",
+            "product_limit": 6
+          }
+        },
+        "collecion_carousel_PH6BH6": {
+          "type": "collecion_carousel",
+          "settings": {
+            "text_override": "Cables",
+            "collection": "titan-charging-cables",
+            "product_limit": 6
+          }
+        },
+        "collecion_carousel_wEe3jM": {
+          "type": "collecion_carousel",
+          "settings": {
+            "text_override": "Chargers",
+            "collection": "titan-car-chargers",
+            "product_limit": 6
+          }
+        }
+      },
+      "block_order": [
+        "collecion_carousel_NxndEC",
+        "collecion_carousel_PH6BH6",
+        "collecion_carousel_wEe3jM"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/MULTIBUY_OFFER_general_-_desktop.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/MULTIBUY_OFFER_general_-_mobile.jpg",
+        "collection_carousel_headline": ""
       }
     },
     "section_text_with_icons_yknCDm": {
@@ -547,11 +573,12 @@
     "video_iHcNGN",
     "scroll_bar_dGYp4L",
     "four_icons_tktfPb",
-    "collection_carousel_TpjEwt",
     "limited_offers_GFQdFj",
     "rich_text_iQtXqQ",
     "section_product_zigzag_PTrTQr",
     "section_pdp_hero_tertiary_bundle_ixjUji",
+    "rich_text_XzqVAB",
+    "collection_carousel_TpjEwt",
     "section_text_with_icons_yknCDm",
     "compare-table-cable",
     "testimonial_slider_XJAQhD",

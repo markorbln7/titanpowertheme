@@ -1,18 +1,82 @@
 import './product-zigzag.css'
 
 var variantSelectorSFirst = document.querySelectorAll(".zig-variant-selector-1");
+var variantSelectorSSecond = document.querySelectorAll(".zig-variant-selector-2");
 variantSelectorSFirst.forEach((variantSelectorFirst) => {
   variantSelectorFirst.addEventListener("change", function (e) {
     let _this = e;
     let variantId = this.value;
     let nameFirst = variantId;
-    let selectedName = nameFirst;
+    let selectedName;
+    let nameSecond = "start"
+    if(this.closest('.product-zigzag-section').querySelector(".zig-variant-selector-2")) {
+      nameSecond = this.closest('.product-zigzag-section').querySelector(".zig-variant-selector-2")
+          .options[
+            this.closest('.product-zigzag-section').querySelector(".zig-variant-selector-2").selectedIndex
+      ].text;
+    }
+    if(nameSecond !== "start") {
+      selectedName = nameFirst + " / " + nameSecond;
+    } else {
+      selectedName = nameFirst;
+    }
     console.log(selectedName, "selectedName");
-    let productId = this.parentNode.parentNode
+    let productId = this.closest('.product-zigzag-section')
         .querySelector("[data-title='" + selectedName + "']")
         .getAttribute("data-variant");
-    this.parentNode.parentNode.querySelector('.js-add-to-cart-zig').setAttribute("data-product", productId)
+    this.closest('.product-zigzag-section').querySelector('.js-add-to-cart-zig').setAttribute("data-product", productId)
     console.log(productId, "productId");
+  });
+});
+
+variantSelectorSSecond.forEach((variantSelectorSecond) => {
+  variantSelectorSecond.addEventListener("change", function (e) {
+    let variantId = this.value;
+    let nameSecond = variantId;
+    let nameFirst = this.closest('.product-zigzag-section').querySelector(".zig-variant-selector-1")
+      .options[
+        this.closest('.product-zigzag-section').querySelector(".zig-variant-selector-1").selectedIndex
+    ].text;
+    let selectedName = nameFirst + " / " + nameSecond;
+    console.log(selectedName, "selectedName");
+    let productId = this.parentNode.parentNode.parentNode
+      .querySelector("[data-title='" + selectedName + "']")
+      .getAttribute("data-variant");
+    console.log(productId, "productId");
+    this.closest('.product-zigzag-section')
+      .querySelector(".js-add-to-cart-zig")
+      .setAttribute("data-product", productId);
+    let productPrice = this.closest('.product-zigzag-section')
+      .querySelector("[data-title='" + selectedName + "']")
+      .getAttribute("data-price");
+    console.log(productPrice, "productPrice")
+    let productPriceNoFormat = this.closest('.product-zigzag-section')
+      .querySelector("[data-title='" + selectedName + "']")
+      .getAttribute("data-price-noformat");
+    let productComparePrice = this.closest('.product-zigzag-section')
+      .querySelector("[data-title='" + selectedName + "']")
+      .getAttribute("data-compare-price");
+    let productComparePriceNoFormat = this.closest('.product-zigzag-section')
+      .querySelector("[data-title='" + selectedName + "']")
+      .getAttribute("data-price-noformat");
+  //   this.closest('.b-collection-carousel__product')
+  //     .querySelector(".js-product-selector")
+  //     .setAttribute("data-product-price", productPriceNoFormat);
+  //   this.closest('.b-collection-carousel__product')
+  //     .querySelector(".js-product-selector")
+  //     .setAttribute(
+  //       "data-product-compare-price",
+  //       productComparePriceNoFormat
+  //     );
+    // window.selectLogic.addon = productId
+    this.closest('.product-zigzag-section').querySelector(
+      ".zig-js-upsel-product-price"
+    ).innerHTML = productPrice;
+    this.closest('.product-zigzag-section').querySelector(
+      ".zig-js-price-discount"
+    ).innerHTML = productComparePrice;
+    // addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
+    // addUpsell.setAttribute('data-addon-id', productId);
   });
 });
 

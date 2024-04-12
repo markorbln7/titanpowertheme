@@ -34,9 +34,9 @@
             <h2 class="product-zigzag__title">{{ product.title }}</h2>
 
             <div class="product-zigzag__prices">
-                <span class="price">{{ product.price | money }}</span>
+                <span class="price zig-js-upsel-product-price">{{ product.price | money }}</span>
                 {%- if product.compare_at_price -%}
-                    <span class="price-compared">{{ product.compare_at_price | money }}</span>
+                    <span class="price-compared zig-js-price-discount">{{ product.compare_at_price | money }}</span>
                 {% endif %}
             </div>
 

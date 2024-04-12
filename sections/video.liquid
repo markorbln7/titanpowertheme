@@ -164,7 +164,7 @@
       </div>
       <div class="mobile-video__video">
         <video class="js-video" playsinline loop controls aria-label="Easy Pull System">
-          <source src="https://cdn.shopify.com/videos/c/o/v/3b65b41842e140589613a6b80a5de00c.mp4" type="video/mp4"><p>Your browser does not support the video tag.</p>
+          <source src="{{ section.settings.mobile_video_url }}" type="video/mp4"><p>Your browser does not support the video tag.</p>
         </video>
       </div>
   </div>
@@ -219,6 +219,12 @@
       "type": "video",
       "id": "video",
       "label": "t:sections.video.settings.video.label"
+    },
+    {
+      "type": "text",
+      "id": "mobile_video_url",
+      "label": "Mobile video url",
+      "default": "https://cdn.shopify.com/videos/c/o/v/3b65b41842e140589613a6b80a5de00c.mp4"
     },
     {
       "type": "image_picker",

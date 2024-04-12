@@ -159,3 +159,117 @@ addToCartsCarousels.forEach((addToCartsCarousel) => {
         });
     });
 });
+
+var variantSelectorSFirstCarousel = document.querySelectorAll(".carousel-variant-selector-1");
+var variantSelectorSSecondCarousel = document.querySelectorAll(".carousel-variant-selector-2");
+variantSelectorSFirstCarousel.forEach((variantSelectorFirst) => {
+    variantSelectorFirst.addEventListener("change", function (e) {
+      let _this = e;
+      console.log(_this, this, "variantSelectorFirst");
+      let variantId = this.value;
+      let nameFirst = variantId;
+      let selectedName
+      let nameSecond = "start"
+      if(this.closest('.b-collection-carousel__product').querySelector(".carousel-variant-selector-2")) {
+        nameSecond = this.closest('.b-collection-carousel__product').querySelector(".carousel-variant-selector-2")
+            .options[
+                this.closest('.b-collection-carousel__product').querySelector(".carousel-variant-selector-2").selectedIndex
+        ].text;
+      }
+      if(nameSecond !== "start") {
+        selectedName = nameFirst + " / " + nameSecond;
+      } else {
+        selectedName = nameFirst;
+      }
+      console.log(selectedName, "selectedName");
+      let productId = this.parentNode.parentNode.parentNode
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-variant");
+      console.log(productId, "productId");
+      this.closest('.b-collection-carousel__product')
+        .querySelector(".js-carousel-atc")
+        .setAttribute("data-product-id", productId);
+    //   let productPrice = this.closest('.b-collection-carousel__product')
+    //     .querySelector("[data-title='" + selectedName + "']")
+    //     .getAttribute("data-price");
+    //   let productPriceNoFormat = this.closest('.b-collection-carousel__product')
+    //     .querySelector("[data-title='" + selectedName + "']")
+    //     .getAttribute("data-price-noformat");
+    //   let productComparePrice = this.closest('.b-collection-carousel__product')
+    //     .querySelector("[data-title='" + selectedName + "']")
+    //     .getAttribute("data-compare-price");
+    //   let productComparePriceNoFormat = this.closest('.b-collection-carousel__product')
+    //     .querySelector("[data-title='" + selectedName + "']")
+    //     .getAttribute("data-price-noformat");
+    //     this.closest('.b-collection-carousel__product')
+    //     .querySelector(".js-product-selector")
+    //     .setAttribute("data-product-price", productPriceNoFormat);
+    //     this.closest('.b-collection-carousel__product')
+    //     .querySelector(".js-product-selector")
+    //     .setAttribute(
+    //       "data-product-compare-price",
+    //       productComparePriceNoFormat
+    //     );
+    //   // window.selectLogic.addon = productId
+    //   this.closest('.b-collection-carousel__product').querySelector(
+    //     ".js-upsel-product-price"
+    //   ).innerHTML = productPrice;
+    //   this.closest('.b-collection-carousel__product').querySelector(
+    //     ".js-price-discount"
+    //   ).innerHTML = productComparePrice;
+
+      // addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
+      // addUpsell.setAttribute('data-addon-id', productId);
+    });
+  });
+
+variantSelectorSSecondCarousel.forEach((variantSelectorSecond) => {
+    variantSelectorSecond.addEventListener("change", function (e) {
+      let variantId = this.value;
+      let nameSecond = variantId;
+      let nameFirst = this.closest('.b-collection-carousel__product').querySelector(".carousel-variant-selector-1")
+        .options[
+            this.closest('.b-collection-carousel__product').querySelector(".carousel-variant-selector-1").selectedIndex
+      ].text;
+      let selectedName = nameFirst + " / " + nameSecond;
+      console.log(selectedName, "selectedName");
+      let productId = this.parentNode.parentNode.parentNode
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-variant");
+      console.log(productId, "productId");
+      this.closest('.b-collection-carousel__product')
+        .querySelector(".js-carousel-atc")
+        .setAttribute("data-product-id", productId);
+      let productPrice = this.closest('.b-collection-carousel__product')
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-price");
+      console.log(productPrice, "productPrice")
+      let productPriceNoFormat = this.closest('.b-collection-carousel__product')
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-price-noformat");
+      let productComparePrice = this.closest('.b-collection-carousel__product')
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-compare-price");
+      let productComparePriceNoFormat = this.closest('.b-collection-carousel__product')
+        .querySelector("[data-title='" + selectedName + "']")
+        .getAttribute("data-price-noformat");
+    //   this.closest('.b-collection-carousel__product')
+    //     .querySelector(".js-product-selector")
+    //     .setAttribute("data-product-price", productPriceNoFormat);
+    //   this.closest('.b-collection-carousel__product')
+    //     .querySelector(".js-product-selector")
+    //     .setAttribute(
+    //       "data-product-compare-price",
+    //       productComparePriceNoFormat
+    //     );
+      // window.selectLogic.addon = productId
+      this.closest('.b-collection-carousel__product').querySelector(
+        ".car-js-upsel-product-price"
+      ).innerHTML = productPrice;
+      this.closest('.b-collection-carousel__product').querySelector(
+        ".car-js-price-discount"
+      ).innerHTML = productComparePrice;
+      // addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
+      // addUpsell.setAttribute('data-addon-id', productId);
+    });
+  });

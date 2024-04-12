@@ -1,5 +1,5 @@
-<div class="scroll-bar bg-black">
-    <div class="text-[22px] color-white text-center bold">{{ section.settings.title }}</div>
+<div class="scroll-bar bg-black py-[10px]">
+    <div class="text-[22px] color-white text-center bold title">{{ section.settings.title }}</div>
     <div class="scroll-bar-icons flex max-w-[450px] mx-auto gap-[20px] px-[20px] md:px-0">
       {% for block in section.blocks %}
       <div class="scroll-bar-icons__single js-scroll-{{ forloop.index }} cursor-pointer">
@@ -23,6 +23,32 @@
       {% endfor %}
     </div>
   </div>
+  <style>
+    .scroll-bar.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999999999;
+    }
+    .scroll-bar.fixed .title {
+      display:none;
+    }
+  </style>
+  <script>
+    const distancescrollbar = $('.scroll-bar').offset().top
+        $(window).scroll(function () {
+          const top_of_element = $('#shopify-section-footer').offset().top
+          const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+          const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+          const top_of_screen = $(window).scrollTop()
+          if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancescrollbar) {
+            $('.scroll-bar').addClass('fixed')
+          } else {
+            $('.scroll-bar').removeClass('fixed')
+          }
+        })
+  </script>
 
   {% schema %}
 {

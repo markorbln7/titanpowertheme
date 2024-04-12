@@ -10,6 +10,7 @@
             {% for block in section.blocks %}
                 {% liquid
                     assign image = block.settings.product_image
+                    assign mobile_image = block.settings.mobile_image
                     assign product = all_products[block.settings.product]
                     if block.settings.image == blank
                         assign image = block.settings.product_image
@@ -29,10 +30,15 @@
                         assign product_subtitle = block.settings.product_subtitle
                     endif
                     assign countdown_to = block.settings.countdown_to
+                    assign url = block.settings.url
 
 
                 %}
-                <div class="timer-{{ forloop.index }} offers__single w-full mb-[20px] relative">
+                {% if url != blank %}
+                    <a href="{{ url }}" class="offers__single w-full mb-[20px] relative">
+                {% else %}
+                  <div class="timer-{{ forloop.index }} offers__single w-full mb-[20px] relative">
+                {% endif %}
                     <div class="text-[22px] flex timer justify-center border-timer absolute z-9999999 max-w-[300px] left-[50%] top-[0px] px-[30px] py-[5px] translate-50-50" id="timer">
                         <div class="flex flex-col items-center leading-none" id="days"></div>:
                         <div class="flex flex-col items-center leading-none" id="hours"></div>:
@@ -40,7 +46,8 @@
                         <div class="flex flex-col items-center leading-none" id="seconds"></div>
                     </div>
                     <div class="js-image-scroll-{{ forloop.index }} offers__single--image relative cursor-pointer">
-                        <img class="h-full object-cover w-full" width="auto" height="auto" src="{{ image | img_url: 'master' }}" alt="{{ product.title }}">
+                        <img class="h-full object-cover w-full desktop" width="auto" height="auto" src="{{ image | img_url: 'master' }}" alt="{{ product.title }}">
+                        <img class="h-full object-cover w-full mobile" width="auto" height="auto" src="{{ mobile_image | img_url: 'master' }}" alt="{{ product.title }}">
                     </div>
                     <div class="offers__single--title color-white text-center text-[20px] bold uppercase mt-[20px]">
                         {{ product_title }}
@@ -48,10 +55,14 @@
                     <div class="offers__single--subtitle color-titan-green text-center text-[18px] bold uppercase">
                         {{ product_subtitle }}
                     </div>
-                </div>
+                  {% if url != blank %}
+                    </a>
+                  {% else %}
+                    </div>
+                  {% endif %}
                 <script>
                     setInterval(function() {
-                        makeTimer('.timer-{{ forloop.index }}',"{{block.settings.countdown_to}}");
+                        makeTimer('.timer-{{ forloop.index }}',"{{countdown_to}}");
                     }, 1000);
                     $('.js-image-scroll-{{ forloop.index }}').on('click', function (e) {
                       e.preventDefault()
@@ -122,9 +133,14 @@
           "label": "Product"
         },
         {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+      },
+        {
             "type": "image_picker",
-            "id": "product_image",
-            "label": "Product Image"
+            "id": "mobilet_image",
+            "label": "Mobile Image"
         },
         {
           "type": "text",
@@ -135,6 +151,11 @@
           "type": "text",
           "id": "countdown_to",
           "label": "Countdown to"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Url (if url is populated, scroll will not work)"
         }
       ]
     }

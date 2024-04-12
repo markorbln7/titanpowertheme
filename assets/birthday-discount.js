@@ -72,7 +72,7 @@ if (!!allShopSections.length) {
       );
       if(document.querySelector('.pdp-hero__product-info').classList.contains('percent-info')){
         let activeNumber = document.querySelectorAll('.js-product-selector.active').length
-        if(activeNumber <= 3){
+        if(activeNumber <= 4){
         let selectProducts = document.querySelectorAll('.js-product-selector')
             selectProducts.forEach((productSelector) => {
                     const productPrice = parseFloat(
@@ -92,7 +92,7 @@ if (!!allShopSections.length) {
             { style: "currency", currency: currency }
           );
         }
-        if(activeNumber > 3 && activeNumber <= 5){
+        if(activeNumber > 4 && activeNumber <= 6){
         let selectProducts = document.querySelectorAll('.js-product-selector')
         selectProducts.forEach((productSelector) => {
           selectProducts.forEach((productSelector) => {

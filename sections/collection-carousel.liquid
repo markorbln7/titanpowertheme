@@ -57,9 +57,25 @@
                                     <article class="b-collection-carousel__product">
                                         {{ product_image | image_url: width: 416 | image_tag: height: 320 }}
                                         <h3 class="b-collection-carousel__product-title text-color-black text-align-center">{{ product_title }}</h3>
+                                        {% if product.options_with_values.size  > 1 %}
+                                          <div class="flex justify-center items-center flex-wrap gap-[10px] my-[20px]">
+                                           {% for option in product.options_with_values %}
+                                             <select  class="w-full carousel-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                                               {% for values in option.values %}
+                                                   <option value="{{values}}">{{values}}</option>
+                                               {% endfor %}
+                                             </select>
+                                           {% endfor %}
+                                           <div style="position:absolute;left:-4000px;">
+                                            {% for variant in product.variants %}
+                                              <div data-price-noformat="{{ variant.price }}" data-compareprice-noformat="{{ variant.compare_at_price }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                                            {% endfor %}
+                                          </div>
+                                         </div>
+                                         {% endif %}
                                         <div class="flex mt-[20px] justify-center">
-                                          <div class="color-titan-green">{{ product.price | money }}</div>
-                                          <div class="crossed titan-red">{{ product.compare_at_price | money }}</div>
+                                          <div class="color-titan-green car-js-upsel-product-price">{{ product.price | money }}</div>
+                                          <div class="crossed titan-red car-js-price-discount">{{ product.compare_at_price | money }}</div>
                                         </div>
                                         <div class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
                                           <div class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center">-</div>

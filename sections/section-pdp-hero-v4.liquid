@@ -348,12 +348,11 @@
     {% endif %}
   {% endif %}
 {% endfor %}
-                  STARTERRR:::{{ starter }}
                 
 
 <script>
     window.selectLogic = {
-      productCount: '5x',
+      productCount: '{{ starter }}',
       productHandle: '',
       productId: '',
       phoneType: 'iPhone',

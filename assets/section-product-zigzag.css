@@ -283,6 +283,9 @@
 }
 
 @media(max-width:767px) {
+    .product-zigzag-section {
+        overflow-x: hidden;
+    }
     .product-zigzag__container {
         flex-direction: column;
     }

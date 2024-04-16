@@ -276,6 +276,8 @@
     margin-bottom: auto;
 }
 
-@media (min-width: 768px) {
-
+@media (max-width: 768px) {
+    .b-collection-carousel__tabs {
+        justify-content: flex-start !important;
+    }
 }

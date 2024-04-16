@@ -106,19 +106,19 @@
       {% assign three = 'Wireless Charging'%}
     {% endif %}
     {% if forloop.index == 5%}
-      {% assign one = '50% in 20mins!'%}
-      {% assign two = 'Protects Battery Life'%}
-      {% assign three = 'Lifetime Warranty'%}
+      {% assign one = 'Tidy Magnetic Winding'%}
+      {% assign two = 'Charge 50% in 20mins'%}
+      {% assign three = 'Unbreakable Design'%}
     {% endif %}
     {% if forloop.index == 6%}
-      {% assign one = '3 folded Positions'%}
-      {% assign two = 'Rapid 15W Charge'%}
-      {% assign three = 'Charge Buds, Watch & Phone'%}
+      {% assign one = 'Tidy Magnetic Winding'%}
+      {% assign two = 'Charge 50% in 20mins'%}
+      {% assign three = 'Unbreakable Design'%}
     {% endif %}
     {% if forloop.index == 7%}
       {% assign one = 'Charge 50% in 20mins!'%}
-      {% assign two = 'Link phone to music'%}
-      {% assign three = 'Hands free calls'%}
+      {% assign two = 'Unbreakable Design'%}
+      {% assign three = 'Lifetime Warranty'%}
     {% endif %}
     {% if forloop.index == 8%}
       {% assign one = 'Length extends up to 6ft'%}
@@ -126,44 +126,49 @@
       {% assign three = 'Fast & sleek design'%}
     {% endif %}
     {% if forloop.index == 9%}
-      {% assign one = '15W Rapid charge'%}
-      {% assign two = 'Charge upright or on side'%}
-      {% assign three = 'Sleek professional design'%}
-    {% endif %}
-    {% if forloop.index == 10%}
-      {% assign one = 'Sensor auto-opens & closes'%}
-      {% assign two = 'Hold & charge phone in car'%}
-      {% assign three = 'Suction cup/ air vent options '%}
-    {% endif %}
-    {% if forloop.index == 11%}
       {% assign one = '3 Devices At Once'%}
       {% assign two = 'Alarm clock built-in'%}
       {% assign three = 'Phone, Watch & Buds'%}
     {% endif %}
-    {% if forloop.index == 12%}
-      {% assign one = '10,000mAh Capacity'%}
-      {% assign two = 'Fold-out kickstand'%}
-      {% assign three = 'Magnet attach & Wireless'%}
+    {% if forloop.index == 10%}
+      {% assign one = '3 folded Positions'%}
+      {% assign two = 'Rapid 15W Charge'%}
+      {% assign three = 'Charge Buds, Watch & Phone'%}
     {% endif %}
-    {% if forloop.index == 13%}
+    {% if forloop.index == 11%}
+      {% assign one = '3 Ports'%}
+      {% assign two = ' Charges 2x Faster'%}
+      {% assign three = 'Arrive Fully Charged'%}
+    {% endif %}
+    {% if forloop.index == 12%}
       {% assign one = '3 cables in one case'%}
       {% assign two = 'Tiny Credit Card Size'%}
       {% assign three = 'Mirror & Phone Stand'%}
     {% endif %}
+    {% if forloop.index == 13%}
+      {% assign one = '10,000mAh Capacity'%}
+      {% assign two = 'Fold-out kickstand'%}
+      {% assign three = 'Magnet attach & Wireless'%}
+    {% endif %}
     {% if forloop.index == 14%}
+      {% assign one = 'Sensor auto-opens & closes'%}
+      {% assign two = 'Hold & charge phone in car'%}
+      {% assign three = 'Suction cup/ air vent options '%}
+    {% endif %}
+    {% if forloop.index == 15%}
+      {% assign one = 'Charge 50% in 20mins!'%}
+      {% assign two = 'Link phone to music'%}
+      {% assign three = 'Hands free calls'%}
+    {% endif %}
+    {% if forloop.index == 16%}
       {% assign one = 'Fast Recovery, Fast relief'%}
       {% assign two = 'Ultra-Light & Powerful'%}
       {% assign three = 'Extended Battery Life'%}
     {% endif %}
-    {% if forloop.index == 15%}
+    {% if forloop.index == 17%}
       {% assign one = '23 Compartments'%}
       {% assign two = 'Light & Compressible'%}
       {% assign three = 'Safe & Tidy Tech'%}
-    {% endif %}
-    {% if forloop.index == 16%}
-      {% assign one = 'Tidy Magnetic Winding'%}
-      {% assign two = 'Charge 50% in 20mins'%}
-      {% assign three = 'Unbreakable Design'%}
     {% endif %}
 
     {% if forloop.index == 1%}
@@ -182,7 +187,7 @@
                 {% render 'icon-close' %}
             </div>
             <div class="product-overlay-image">
-                <img src="{{product.images[2].src | img_url: 'master'}}">
+                <img src="{{product.images[2].src | img_url: '800x'}}">
             </div>
         </div>
     {% endif %}
@@ -207,7 +212,7 @@
         {% endfor %}
     </select>
     {% assign sofav = product.selected_or_first_available_variant %}
-    {% if product.options_with_values[0].name == 'Length' %}
+    {% if product.options_with_values[0].name == 'Length' or product.options_with_values[0].name == 'Cable Type'  %}
     <section class="product-description-wrapper bg-black atc-wrapper">
         <div class="product-description">
             <div class="materials description-expand">
@@ -277,35 +282,35 @@
     </section>
     {% else %}
     <div><div><div>
-    <div class="bundle-wrapper__footer">
-        <div class="js-price price type--m">
-            {% if product.variants.size > 1 %}
-                {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span> {% endcomment %}
-                <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
-                {% assign prId = product.first_available_variant.id %}
-            {% else %}
-                {% comment %} <span class="js-price ">{{product.price | money }}</span> {% endcomment %}
-                <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
-                {% assign prId = product.variants[0].id %}
-            {% endif %}
-        </div>
-        <div class="bundle-prices-show">
-          <div class="bundle-prices-show__title">BUNDLE PRICES</div>
-          {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
-          <div class="js-price "><span class="bundle-prices-show__number">5+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</div>
-          <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</div>
-        </div>
-        <div class="c-quantity f aic p dm-sans-normal color-white">
-            <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
-            <div class="c-quantity__amount op">0</div>
-            <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
-        </div>
-        {% unless hidecart == true %}
-            <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
-        {% endunless %}
-    </div>
-</div></div></div>
+      <div class="bundle-wrapper__footer">
+          <div class="js-price price type--m">
+              {% if product.variants.size > 1 %}
+                  {% comment %} <span class="js-price ">{{product.first_available_variant.price | money }}</span> {% endcomment %}
+                  <span class="js-red-price crossed titan-red">{{product.first_available_variant.compare_at_price | money }}</span>
+                  {% assign prId = product.first_available_variant.id %}
+              {% else %}
+                  {% comment %} <span class="js-price ">{{product.price | money }}</span> {% endcomment %}
+                  <span class="js-red-price crossed titan-red">{{product.compare_at_price | money }}</span>
+                  {% assign prId = product.variants[0].id %}
+              {% endif %}
+          </div>
+          <div class="bundle-prices-show">
+            <div class="bundle-prices-show__title">BUNDLE PRICES</div>
+            {% comment %} <div class="js-price "><span class="bundle-prices-show__number">1+</span>{{product.first_available_variant.compare_at_price | money }}</div> {% endcomment %}
+            <div class="js-price "><span class="bundle-prices-show__number">5+</span>{{product.first_available_variant.compare_at_price | times: 0.45 | money }}</div>
+            <div class="js-price "><span class="bundle-prices-show__number">7+</span>{{product.first_available_variant.compare_at_price | times: 0.35 | money }}</div>
+            <div class="js-price "><span class="bundle-prices-show__number">10+</span>{{product.first_available_variant.compare_at_price | times: 0.25 | money }}</div>
+          </div>
+          <div class="c-quantity f aic p dm-sans-normal color-white">
+              <button class="c-quantity__button decrease {{ class }} p dm-sans-normal color-white gray">-</button>
+              <div class="c-quantity__amount op">0</div>
+              <button class="c-quantity__button increase {{ class }} p dm-sans-normal color-white">+</button>
+          </div>
+          {% unless hidecart == true %}
+              <input data-original-price="{{product.first_available_variant.compare_at_price | money_without_currency }}" data-price={{product.first_available_variant.price | money_without_currency }} data-product-name="{{product.handle}}" type="submit" data-quantity="0" class="{{checkout}} js-variant-selector text-uppercase cursor-pointer" value="{{cart_title}}" data-variant-id="{{sofav.id}}">
+          {% endunless %}
+      </div>
+    </div></div></div>
     {% endif %}
 </div>
 

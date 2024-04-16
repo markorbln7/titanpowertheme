@@ -229,7 +229,7 @@ pos.forEach((po) => {
     const variantSelector = _this.parentNode.parentNode
     let setOptionName = nameSelector.querySelector('.js-option-name')
     variantSelector.classList.remove('open')
-    document.querySelector('body').classList.remove('no-scroll');
+    //document.querySelector('body').classList.remove('no-scroll');
     setOptionName.innerHTML = name
     console.log(nameSelector, name, 'NAME')
     const active = parentSelector.querySelectorAll('.active')
@@ -445,7 +445,7 @@ variantClicks.forEach(variantClick => {
             bar.style.setProperty("--progress", "100%");
             infoBar.innerHTML = `YOU SAVED 80%!!`
         }
-            
+
             return
         }
         _this.classList.add('selected')
@@ -519,7 +519,7 @@ variantClicks.forEach(variantClick => {
           infoBar.innerHTML = `YOU SAVED 80%!!`
       }
 
-        
+
         console.log(leftToGift, numberOfSelected, 'numberOfSelected')
     })
 });
@@ -529,9 +529,9 @@ optionNames.forEach((optionName) => {
     optionName.addEventListener('click', (e) => {
         const _this = e.target
         _this.nextSibling.nextSibling.classList.toggle('open');
-        document.querySelector('body').classList.toggle('no-scroll');
+        //document.querySelector('body').classList.toggle('no-scroll');
     })
-}) 
+})
 console.log($('.hero_image'), 'hero_image')
 $('.hero_image').on('click', function (e) {
   e.preventDefault()
@@ -560,7 +560,7 @@ $(window).scroll(function () {
 // const bundleProductsSelectors = document.querySelectorAll('.bundle-wrapper__product')
 
 // startBundles.forEach((startBundle) => {
-//     startBundle.addEventListener('click', (e) => {  
+//     startBundle.addEventListener('click', (e) => {
 //         console.log('click')
 //         const _this = e.target
 //         const arrayString = _this.getAttribute('data-ids')
@@ -580,7 +580,7 @@ $(window).scroll(function () {
 //               let newQuantity = parseInt(oldQuantity) + q
 //               bundleProductsSelector.querySelector('.js-variant-selector').setAttribute('data-quantity', newQuantity)
 //               bundleProductsSelector.querySelector('.c-quantity__amount').innerHTML = newQuantity
-              
+
 //             }
 //           })
 //         }
@@ -662,7 +662,7 @@ $(window).scroll(function () {
 //           }, 1000)
 //     })
 // })
-    
+
 
 const bundleTabs = document.querySelectorAll('.js-bundle-tab')
 const singleTabs = document.querySelectorAll('.bundle-tab__tabs--content')

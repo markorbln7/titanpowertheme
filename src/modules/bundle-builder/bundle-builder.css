@@ -172,30 +172,30 @@
     padding: 7px 7px;
     box-shadow: 0 0 10px #aaa;
   }
-  
+
   .progress .bar {
     width: var(--progress);
     height: 100%;
     background: linear-gradient(90deg, rgba(96,198,85,1) 0%, rgba(53,255,46,1) 100%);
     background-repeat: repeat;
     box-shadow: 0 0 10px 0px #35ff2e;
-    animation: 
+    animation:
       shine 2s ease-in;
     transition: width 1s ease-in;
     display: block;
   }
-  
+
   @property --progress {
     syntax: "<length>";
     initial-value: 0%;
     inherits: true;
   }
-  
+
   @keyframes shine {
     0% { background-position: 0 0; }
     100% { background-position: 0 50px; }
   }
-  
+
   @keyframes end {
     0%, 100% { box-shadow: 0 0 10px 0px #35ff2e; }
     50% { box-shadow: 0 0 15px 5px #35ff2e; }
@@ -323,7 +323,7 @@
     top: 20px;
     right: 40px;
     width: 20px;
-    cursor:pointer; 
+    cursor:pointer;
 }
 .price {
     text-align: center;
@@ -638,7 +638,7 @@
         left:-200000px;
         background: black;
         padding-top: 40px;
-        padding-bottom: 40px; 
+        padding-bottom: 40px;
     }
     background: black;
     &__title {
@@ -902,7 +902,7 @@
         display: block;
         width: 100%;
         max-width: 800px;
-        
+
 }
 .bundle-top-titles {
     background-color: black;
@@ -1182,8 +1182,8 @@
         max-width: 70%;
         margin-left: 15%;
         @media only screen and (max-width: 768px) {
-            max-width: 85%;
-            margin-left: 7%;
+            max-width: 95%;
+            margin-left: 2.5%;
         }
     }
 }
@@ -1409,7 +1409,7 @@
     .circle-chart__circle {
         stroke:#BCFDB9;
         transition: stroke-dasharray 500ms;
-        
+
     }
 }
 .gift-tracker__inner {
@@ -1647,9 +1647,9 @@
     opacity: 1;
     z-index: 0;
     transform: translateY(-65px);
-  
-  
-     
+
+
+
   }
   .box-body.activate .box-lid {
     -webkit-animation: box-lid 1s forwards ease-in-out;
@@ -1723,7 +1723,7 @@
     -webkit-transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
             transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
   }
-  
+
   @-webkit-keyframes box-lid {
     0%,
     42% {
@@ -1739,7 +1739,7 @@
               transform: translate3d(-119%, 225%, 0) rotate(-70deg);
     }
   }
-  
+
   @keyframes box-lid {
     0%,
     42% {

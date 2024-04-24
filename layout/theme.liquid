@@ -474,6 +474,19 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
         }
       })
 
+      const distancecube = $('.aha--new-buds-2-0 .product-icons').offset().top
+      $(window).scroll(function () {
+        const top_of_element = $('#shopify-section-footer').offset().top
+        const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+        const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+        const top_of_screen = $(window).scrollTop()
+        if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancecube) {
+          $('.atc-fixed').addClass('show')
+        } else {
+          $('.atc-fixed').removeClass('show')
+        }
+      })
+
 
       </script>
 

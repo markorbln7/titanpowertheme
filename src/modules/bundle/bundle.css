@@ -296,7 +296,7 @@
         border-radius: 5px;
         color: #fff;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 700;
         line-height: normal;
         overflow: hidden;
@@ -310,10 +310,6 @@
     .col-quantity__button {
         width: 30px;
         height: 30px;
-    }
-
-    .section-bundle__cta {
-        font-size: 24px;
     }
 
     .qty {
@@ -336,6 +332,10 @@
         &__products {
             grid-template-columns: repeat(2, 1fr);
             row-gap: 20px;
+        }
+
+        &__cta {
+            font-size: 16px;
         }
 
         .point-label {

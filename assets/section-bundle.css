@@ -298,7 +298,7 @@
         border-radius: 5px;
         color: #fff;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 700;
         line-height: normal;
         overflow: hidden;
@@ -312,10 +312,6 @@
     .section-bundle .col-quantity__button {
         width: 30px;
         height: 30px;
-    }
-
-    .section-bundle .section-bundle__cta {
-        font-size: 24px;
     }
 
     .section-bundle .qty {
@@ -338,6 +334,10 @@
         .section-bundle__products {
             grid-template-columns: repeat(2, 1fr);
             row-gap: 20px;
+        }
+
+        .section-bundle__cta {
+            font-size: 16px;
         }
 
         .section-bundle .point-label {

@@ -1,0 +1,194 @@
+{{ 'section-bundle.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+   assign section_title = section.settings.section_title
+   assign section_copy = section.settings.section_copy
+   assign bundle_tracker = section.blocks | where: 'type', 'bundle_tracker'
+   assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
+%}
+<section class="section-bundle">
+    <div class="section-bundle__container">
+        {% if section_title != blank %}
+            <header class="section-bundle__heading">
+                <h2 class="section-bundle__title">{{ section_title }}</h2>
+                {% if section_copy != blank %}
+                    <p class="section-bundle__copy">{{ section_copy }}</p>
+                {% endif %}
+            </header>
+        {% endif %}
+
+        {% comment %} BUNDLE PRICE TRACKER LINE {% endcomment %}
+        {% if bundle_tracker.size > 0 %}
+            <div class="section-bundle__tracker">
+                {% for block in bundle_tracker %}
+                    {% assign tracker_price = block.settings.tracker_price %}
+                    {% assign tracker_label = block.settings.tracker_label %}
+
+                    <div class="section-bundle__tracker-box">
+                        <div class="line line-left"></div>
+                        <div class="point">{{ tracker_price }}</div>
+                        <div class="line line-right"></div>
+                        {% if tracker_label != blank %}
+                            <span class="point-label">{{ tracker_label }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% comment %} BUNDLE CART ITEMS CAROUSEL {% endcomment %}
+        <div class="section-bundle__cart-carousel swiper">
+            <div class="swiper-wrapper">
+                {% for i in (1..12) %}
+                    <div class="swiper-slide">
+                        <div class="section-bundle__cart-carousel-item">
+                            <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next">
+            </div>
+
+            <div class="swiper-button-prev">
+            </div>
+            <div class="swiper-scrollbar"></div>
+        </div> 
+
+        {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
+        {% if bundle_collection.size > 0 %}
+            <div class="section-bundle__collections">
+              <div class="section-bundle__collection-tabs">
+                {% for block in bundle_collection %}
+                    {% assign collection = block.settings.collection %}
+                    {% if block.settings.collection_title_override != blank %}
+                        {% assign bundle_collection_title = block.settings.collection_title_override %}
+                    {% else %}
+                        {% assign bundle_collection_title = collection.title %}
+                    {% endif %}
+
+                    <button class="section-bundle__collection-tab{% if forloop.index == 1 %} active {% endif %}" data-tab="{{ forloop.index }}">
+                        {{ bundle_collection_title }}
+                    </button>
+                {% endfor %}
+              </div>
+
+              <div class="section-bundle__products-wrapper">
+                {% for block in bundle_collection %}
+                    {% assign collection = collections[block.settings.collection] %}
+                    {% if block.settings.collection_title_override != blank %}
+                        {% assign bundle_collection_title = block.settings.collection_title_override %}
+                    {% else %}
+                        {% assign bundle_collection_title = collection.title %}
+                    {% endif %}
+
+                    <div class="section-bundle__products-holder{% if forloop.index == 1 %} active{% endif %}"data-panel="{{ forloop.index }}">
+                        <h3 class="section-bundle__collection-title">{{ bundle_collection_title }}</h3>
+                        <div class="section-bundle__products">
+                            {% for product in collection.products %}
+                                {% assign product_image = product.featured_image %}
+                                {% assign product_title = product.title %}
+                                {% assign product_price = product.price | money %}
+                                {% assign product_price_compared = product.compare_at_price | money %}
+    
+                                <article class="section-bundle__product" data-product-id="{{ product.id}}">
+                                    <figure class="section-bundle__product-image">
+                                        {{ product_image | image_url: width: 360 | image_tag: height: 360 }}
+                                    </figure>
+    
+                                    <div class="section-bundle__product-details">
+                                        <h4 class="section-bundle__product-title">{{ product_title }}</h4>
+                                        <div class="section-bundle__product-prices">
+                                            <span class="section-bundle__product-price">{{ product_price }}</span>
+                                            {% if product_price_compared %}
+                                                <span class="section-bundle__product-price-compared">{{ product_price_compared }}</span>
+                                            {% endif %}
+                                        </div>
+        
+                                        {% comment %} Dummy text for now {% endcomment %}
+                                        <p class="section-bundle__product-description">
+                                            Moisturize your mane with the rugged scent of an old growth forest.
+                                        </p>
+        
+                                        <button class="section-bundle__cta">ADD TO BUNDLE</button>
+        
+                                        {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
+                                        <div
+                                            
+                                            class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
+                                            <div class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center">-</div>
+                                            <div class="col-quantity__amount op">1</div>
+                                            <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+              </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<script src="{{ 'section-bundle.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Section title",
+      "id": "section_title",
+      "default": "Build Your Own Bundle"
+    },
+    {
+      "type": "textarea",
+      "label": "Section copy",
+      "id": "section_copy",
+      "default": "Add your favorite Squatch goods and rack up the savings!"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle_collection",
+      "name": "Bundle collection",
+      "settings": [
+        {
+          "type": "collection",
+          "label": "Select collection",
+          "id": "collection"
+        },
+        {
+          "type": "text",
+          "label": "Collection title manual input",
+          "id": "collection_title_override"
+        }
+      ]
+    },
+    {
+      "type": "bundle_tracker",
+      "name": "Bundle tracker",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Tracker price",
+          "id": "tracker_price"
+        },
+        {
+          "type": "text",
+          "label": "Tracker label",
+          "id": "tracker_label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder"
+    }
+  ]
+}
+{% endschema %}

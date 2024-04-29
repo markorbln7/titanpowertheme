@@ -91,7 +91,7 @@
                                 {% assign product_price = product.price | money %}
                                 {% assign product_price_compared = product.compare_at_price | money %}
     
-                                <article class="section-bundle__product" data-product-id="{{ product.id}}">
+                                <article class="section-bundle__product">
                                     <figure class="section-bundle__product-image">
                                         {{ product_image | image_url: width: 360 | image_tag: height: 360 }}
                                     </figure>
@@ -110,7 +110,7 @@
                                             Moisturize your mane with the rugged scent of an old growth forest.
                                         </p>
         
-                                        <button class="section-bundle__cta">ADD TO BUNDLE</button>
+                                        <button class="section-bundle__cta js-bundle-atc" data-product="{{ product.selected_or_first_available_variant.id}}">ADD TO BUNDLE</button>
         
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
                                         <div

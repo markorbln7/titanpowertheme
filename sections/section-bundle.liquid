@@ -38,7 +38,7 @@
 
         {% comment %} BUNDLE CART ITEMS CAROUSEL {% endcomment %}
         <div class="section-bundle__cart-carousel swiper">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper js-holder">
                 {% for i in (1..12) %}
                     <div class="swiper-slide">
                         <div class="section-bundle__cart-carousel-item">
@@ -53,7 +53,7 @@
             <div class="swiper-button-prev">
             </div>
             <div class="swiper-scrollbar"></div>
-        </div> 
+        </div>
 
         {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
         {% if bundle_collection.size > 0 %}
@@ -90,12 +90,12 @@
                                 {% assign product_title = product.title %}
                                 {% assign product_price = product.price | money %}
                                 {% assign product_price_compared = product.compare_at_price | money %}
-    
+
                                 <article class="section-bundle__product">
                                     <figure class="section-bundle__product-image">
                                         {{ product_image | image_url: width: 360 | image_tag: height: 360 }}
                                     </figure>
-    
+
                                     <div class="section-bundle__product-details">
                                         <h4 class="section-bundle__product-title">{{ product_title }}</h4>
                                         <div class="section-bundle__product-prices">
@@ -104,17 +104,17 @@
                                                 <span class="section-bundle__product-price-compared">{{ product_price_compared }}</span>
                                             {% endif %}
                                         </div>
-        
+
                                         {% comment %} Dummy text for now {% endcomment %}
                                         <p class="section-bundle__product-description">
                                             Moisturize your mane with the rugged scent of an old growth forest.
                                         </p>
-        
+
                                         <button class="section-bundle__cta js-bundle-atc" data-product="{{ product.selected_or_first_available_variant.id}}">ADD TO BUNDLE</button>
-        
+
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
                                         <div
-                                            style="display: none"                                            
+                                            style="display: none"
                                             class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
                                             <div class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center">-</div>
                                             <div class="col-quantity__amount op">1</div>

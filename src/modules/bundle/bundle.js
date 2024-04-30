@@ -104,27 +104,49 @@ async function getCart() {
 async function refreshCart() {
     const cart = await getCart();
     const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
-
-    for (let i = 0; i < cart.items.length; i++) {
-        if (!bundleItems[i].querySelector('.bundle-item-added')) {
-            const newItem = document.createElement('div');
-            newItem.classList.add('bundle-item-added');
-            newItem.innerHTML = `
-                <figure class="cart-mini-item-image">
-                    <img src="${cart.items[i].featured_image.url}" alt="${cart.items[i].title}">
-                </figure>
-                <h5>${cart.items[i].title}</h5>`;
-
-            bundleItems[i].appendChild(newItem);
-            const parent = newItem.closest('.section-bundle__cart-carousel-item');
-            parent.classList.add('added');
-
-            console.log(bundleItems[i]);
-
-            console.log(i);
+    const bundleHolder = document.querySelector('.js-holder');
+    console.log(cart, 'cartitems')
+    bundleHolder.innerHTML = '';
+    for (let i = 0; i < 12; i++) {
+        if(cart.items[i]) {
+        bundleHolder.innerHTML += `
+        <div class="swiper-slide">
+            <div class="section-bundle__cart-carousel-item">
+                <img src="${cart.items[i].image}">
+            </div>
+        </div>
+        `} else {
+            bundleHolder.innerHTML += `
+            <div class="swiper-slide">
+                <div class="section-bundle__cart-carousel-item">
+                    <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                </div>
+            </div>
+            `
         }
+        console.log(i, 'iiiii')
     }
-
+    console.log(bundleHolder, 'bundleHolder')
+    var swiper = new Swiper('.section-bundle__cart-carousel', {
+        spaceBetween: 8,
+        slidesPerView: 4,
+        slidesPerGroup: 4,
+        breakpoints: {
+            768: {
+                slidesPerView: 6,
+                slidesPerGroup: 6,
+                draggable: false,
+            },
+        },
+        navigation: {
+            nextEl: '.section-bundle__cart-carousel .swiper-button-next',
+            prevEl: '.section-bundle__cart-carousel .swiper-button-prev'
+        },
+        scrollbar: {
+            el: '.section-bundle__cart-carousel .swiper-scrollbar',
+            draggable: true,
+        }
+    });
     console.log('Refreshed cart');
 }
 

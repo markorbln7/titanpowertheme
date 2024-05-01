@@ -142,7 +142,8 @@
         }
 
     .section-bundle__cart-carousel .swiper-button-next, .section-bundle__cart-carousel .swiper-button-prev {
-            top: 40%;
+            top: 50%;
+            transform: translateY(-50%);
             width: 30px;
             height: 30px;
             display: flex;
@@ -359,6 +360,26 @@
             font-size: 18px;
         }
 
+        .section-bundle__collection-tabs {
+            justify-content: flex-start;
+            margin-right: -20px;
+        }
+            .section-bundle__cart-carousel-item {
+                min-height: 80px;
+            }
+
+            .section-bundle__cart-carousel .swiper-slide {
+                padding: 8px;
+            }
+
+            .section-bundle__cart-carousel .swiper-button-prev {
+                left: 2px;
+            }
+
+            .section-bundle__cart-carousel .swiper-button-next {
+                right: 2px;
+            }
+
         .section-bundle__products {
             grid-template-columns: repeat(2, 1fr);
             row-gap: 20px;
@@ -372,12 +393,66 @@
             font-size: 11px;
             line-height: 11px;
         }
+
+        .section-bundle__product-details {
+            min-height: auto;
+            padding: 10px 0 0;
+        }
+
+        .section-bundle__product-title {
+            font-size: 18px;
+        }
+
+        .section-bundle__product-price {
+            font-size: 14px;
+        }
+
+            .section-bundle__product-price-compared {
+                font-size: 12px;
+            }
+
+        .section-bundle__product-description {
+            font-size: 14px;
+        }
+
+        .section-bundle .qty {
+            gap: 10px;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .section-bundle .col-quantity__button {
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+        }
+
+        .section-bundle .col-quantity__amount {
+            font-size: 24px;
+        }
+
+        .section-bundle .js-remove {
+            top: 0;
+            right: 0;
+            min-width: 20px;
+            height: 20px;
+            font-size: 12px;
+        }
+
+        .section-bundle .qty-holder {
+            min-width: 20px;
+            height: 20px;
+            font-size: 16px;
+            top: 0;
+            left: 0;
+        }
 }
 
     .qty-holder {
     min-width: 30px;
     height: 30px;
-    background: #60c655;;
+    background: #60c655;
+    ;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -411,7 +486,7 @@
     position: absolute;
     bottom: 0;
     right: 8px;
-    color:#60c655;
+    color: #60c655;
     font-size: 15px;
     font-weight: bold;
 }

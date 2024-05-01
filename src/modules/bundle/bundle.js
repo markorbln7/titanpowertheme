@@ -124,10 +124,10 @@ async function refreshCart() {
         if(cart.items[i]) {
             let free = ''
             if(cart.items[i].properties._attribution && cart.items[i].properties._attribution == "Rebuy Tiered Progress Bar") {
-                free = "Free item"
+                free = "Free!"
             }
         bundleHolder.innerHTML += `
-        <div class="swiper-slide p-[10px]">
+        <div class="swiper-slide p-[18px]">
             <div class="section-bundle__cart-carousel-item flex-col">
                 <div data-variant-id="${cart.items[i].variant_id}" class="js-remove">X</div>
                 <div class="qty-holder">${cart.items[i].quantity > 1 ? cart.items[i].quantity : ''}</div>

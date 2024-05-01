@@ -396,7 +396,7 @@
 .js-remove {
     min-width: 30px;
     height: 30px;
-    background: #60c655;;
+    background: #60c655;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -408,4 +408,12 @@
     right: 5px;
     z-index: 99999;
     cursor: pointer;
+}
+.free-item {
+    position: absolute;
+    bottom: 0;
+    right: 8px;
+    color:#60c655;
+    font-size: 15px;
+    font-weight: bold;
 }

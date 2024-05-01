@@ -37,22 +37,24 @@
         {% endif %}
 
         {% comment %} BUNDLE CART ITEMS CAROUSEL {% endcomment %}
-        <div class="section-bundle__cart-carousel swiper">
-            <div class="swiper-wrapper js-holder">
-                {% for i in (1..12) %}
-                    <div class="swiper-slide">
-                        <div class="section-bundle__cart-carousel-item">
-                            <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="swiper-button-next">
-            </div>
+        <div class="bundle-wrap">
+          <div class="section-bundle__cart-carousel swiper">
+              <div class="swiper-wrapper js-holder">
+                  {% for i in (1..12) %}
+                      <div class="swiper-slide">
+                          <div class="section-bundle__cart-carousel-item">
+                              <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
+              <div class="swiper-button-next">
+              </div>
 
-            <div class="swiper-button-prev">
-            </div>
-            <div class="swiper-scrollbar"></div>
+              <div class="swiper-button-prev">
+              </div>
+              <div class="swiper-scrollbar"></div>
+          </div>
         </div>
 
         {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
@@ -117,9 +119,9 @@
                                             {% comment %} style="display: none" {% endcomment %}
                                             data-item-id="{{ product.selected_or_first_available_variant.id}}"
                                             class="class-{{ product.id }} qty color-black flex items-center justify-center my-[20px] gap-[10px]">
-                                            <div data-quantity="0" class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center minus">-</div>
+                                            <div data-quantity="0" class="col-quantity__button  p dm-sans-normal color-white gray text-center minus">-</div>
                                             <div class="col-quantity__amount op js-qty-number">0</div>
-                                            <div data-quantity="1" class="col-quantity__button increase  p dm-sans-normal color-white text-center plus">+</div>
+                                            <div data-quantity="1" class="col-quantity__button  p dm-sans-normal color-white text-center plus">+</div>
                                         </div>
                                     </div>
                                 </article>

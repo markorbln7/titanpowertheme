@@ -129,7 +129,7 @@ async function refreshCart() {
         bundleHolder.innerHTML += `
         <div class="swiper-slide p-[18px]">
             <div class="section-bundle__cart-carousel-item flex-col">
-                <div data-variant-id="${cart.items[i].variant_id}" class="js-remove">X</div>
+                <div data-product-id="${cart.items[i].product_id}" data-variant-id="${cart.items[i].variant_id}" class="js-remove">X</div>
                 <div class="qty-holder">${cart.items[i].quantity > 1 ? cart.items[i].quantity : ''}</div>
                 <img class="" src="${cart.items[i].image}">
                 <div class="free-item">${free}</div>
@@ -153,6 +153,7 @@ async function refreshCart() {
         }
     }
     console.log(bundleHolder, 'bundleHolder')
+
     var swiper = new Swiper('.section-bundle__cart-carousel', {
         spaceBetween: 8,
         slidesPerView: 4,
@@ -173,11 +174,36 @@ async function refreshCart() {
             draggable: true,
         }
     });
+    let allQty = document.querySelectorAll('.js-qty-number');
+    let points = document.querySelectorAll('.point');
+    let allLines = document.querySelectorAll('.line');
+    let allNumber = 0;
+    for (let y = 0; y < allQty.length; y++) {
+        allNumber += parseFloat(allQty[y].innerHTML);
+        console.log(parseFloat(allQty[y].innerHTML), 'allNumber')
+    }
+    points.forEach((point, index) => {
+        point.style.backgroundColor = '#adadad'
+    })
+    allLines.forEach((allLine, index) => {
+        allLine.style.backgroundColor = 'white'
+    })
+    for (let z = 0; z < allNumber; z++) {
+        if(points[z]) {
+            points[z].style.backgroundColor = '#60c655';
+        }
+    }
+    let limiter = allNumber * 2 - 1;
+    // for (let k = 0; k < limiter; k++) {
+    //     allLines[k].style.backgroundColor = '#60c655';
+    // }
+
     setTimeout(() => {
         document.querySelectorAll('.js-remove').forEach((remove) => {
             remove.addEventListener('click', () => {
                 console.log('remove start')
                 let itemId = remove.getAttribute('data-variant-id');
+                let productId = remove.getAttribute('data-product-id');
                 fetch(window.Shopify.routes.root + 'cart/change.js', {
                     method: 'POST',
                     headers: {
@@ -191,7 +217,11 @@ async function refreshCart() {
                     .then(response => {
                         console.log(response.status)
                         if (response.status === 200) {
-                            console.log(response.status, 'ok')
+                            console.log(response.status, 'okkkk')
+                            let selector = document.querySelector('.class-' + productId)
+                            selector.querySelector('.js-qty-number').innerHTML = 0;
+                            selector.querySelector('.plus').setAttribute('data-quantity', 1);
+                            selector.querySelector('.minus').setAttribute('data-quantity', 0 );
                             refreshCart();
                         }
                         return response.json()

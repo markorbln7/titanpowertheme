@@ -142,7 +142,8 @@
 
         .swiper-button-next,
         .swiper-button-prev {
-            top: 40%;
+            top: 50%;
+            transform: translateY(-50%);
             width: 30px;
             height: 30px;
             display: flex;
@@ -363,6 +364,29 @@
             font-size: 18px;
         }
 
+        &__collection-tabs {
+            justify-content: flex-start;
+            margin-right: -20px;
+        }
+
+        &__cart-carousel {
+            &-item {
+                min-height: 80px;
+            }
+
+            .swiper-slide {
+                padding: 8px;
+            }
+
+            .swiper-button-prev {
+                left: 2px;
+            }
+
+            .swiper-button-next {
+                right: 2px;
+            }
+        }
+
         &__products {
             grid-template-columns: repeat(2, 1fr);
             row-gap: 20px;
@@ -376,12 +400,67 @@
             font-size: 11px;
             line-height: 11px;
         }
+
+        &__product-details {
+            min-height: auto;
+            padding: 10px 0 0;
+        }
+
+        &__product-title {
+            font-size: 18px;
+        }
+
+        &__product-price {
+            font-size: 14px;
+
+            &-compared {
+                font-size: 12px;
+            }
+        }
+
+        &__product-description {
+            font-size: 14px;
+        }
+
+        .qty {
+            gap: 10px;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .col-quantity__button {
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+        }
+
+        .col-quantity__amount {
+            font-size: 24px;
+        }
+
+        .js-remove {
+            top: 0;
+            right: 0;
+            min-width: 20px;
+            height: 20px;
+            font-size: 12px;
+        }
+
+        .qty-holder {
+            min-width: 20px;
+            height: 20px;
+            font-size: 16px;
+            top: 0;
+            left: 0;
+        }
     }
 }
+
 .qty-holder {
     min-width: 30px;
     height: 30px;
-    background: #60c655;;
+    background: #60c655;
+    ;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -393,6 +472,7 @@
     left: 5px;
     z-index: 99999;
 }
+
 .js-remove {
     min-width: 30px;
     height: 30px;
@@ -409,11 +489,12 @@
     z-index: 99999;
     cursor: pointer;
 }
+
 .free-item {
     position: absolute;
     bottom: 0;
     right: 8px;
-    color:#60c655;
+    color: #60c655;
     font-size: 15px;
     font-weight: bold;
 }

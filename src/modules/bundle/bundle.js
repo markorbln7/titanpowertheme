@@ -139,6 +139,9 @@ async function refreshCart() {
             </div>
             `
         }
+        if(document.querySelector('.class-' + cart.items[i].product_id)) {
+            document.querySelector('.class-' + cart.items[i].product_id).innerHTML = cart.items[i].quantity;
+        }
     }
     console.log(bundleHolder, 'bundleHolder')
     var swiper = new Swiper('.section-bundle__cart-carousel', {
@@ -205,7 +208,8 @@ const minuses = document.querySelectorAll('.minus')
 
 pluses.forEach((pluse) => {
     pluse.addEventListener('click', () => {
-        let itemId = pluse.getAttribute('data-item-id');
+        let itemId = pluse.parentNode.getAttribute('data-item-id');
+        console.log(itemId, 'itemId')
         let quantity = pluse.getAttribute('data-quantity');
         let number = pluse.parentNode.querySelector('.js-qty-number')
         const newValue = parseInt(quantity) + 1
@@ -220,7 +224,7 @@ pluses.forEach((pluse) => {
 
 minuses.forEach((minus) => {
     minus.addEventListener('click', () => {
-        let itemId = minus.getAttribute('data-item-id');
+        let itemId = minus.parentNode.getAttribute('data-item-id');
         let quantity = minus.getAttribute('data-quantity');
         let number = minus.parentNode.querySelector('.js-qty-number')
         const newValue = parseInt(quantity) - 1

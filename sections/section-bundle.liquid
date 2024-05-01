@@ -10,9 +10,9 @@
     <div class="section-bundle__container">
         {% if section_title != blank %}
             <header class="section-bundle__heading">
-                <h2 class="section-bundle__title">{{ section_title }}</h2>
+                <h2 class="section-bundle__title color-black">{{ section_title }}</h2>
                 {% if section_copy != blank %}
-                    <p class="section-bundle__copy">{{ section_copy }}</p>
+                    <p class="section-bundle__copy color-black">{{ section_copy }}</p>
                 {% endif %}
             </header>
         {% endif %}
@@ -83,7 +83,7 @@
                     {% endif %}
 
                     <div class="section-bundle__products-holder{% if forloop.index == 1 %} active{% endif %}"data-panel="{{ forloop.index }}">
-                        <h3 class="section-bundle__collection-title">{{ bundle_collection_title }}</h3>
+                        <h3 class="section-bundle__collection-title color-black">{{ bundle_collection_title }}</h3>
                         <div class="section-bundle__products">
                             {% for product in collection.products %}
                                 {% assign product_image = product.featured_image %}
@@ -114,11 +114,11 @@
 
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
                                         <div
-                                            style="display: none"
+                                            {% comment %} style="display: none" {% endcomment %}
                                             class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
-                                            <div class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center">-</div>
-                                            <div class="col-quantity__amount op">1</div>
-                                            <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                                            <div data-quantity="0" class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center minus">-</div>
+                                            <div class="col-quantity__amount op js-qty-number">1</div>
+                                            <div data-quantity="1" data-item-id="{{ product.selected_or_first_available_variant.id}}" class="col-quantity__button increase  p dm-sans-normal color-white text-center plus">+</div>
                                         </div>
                                     </div>
                                 </article>

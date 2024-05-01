@@ -1,5 +1,17 @@
 import './bundle.css'
 
+// $(document).ready(function() {
+//     console.log('ready')
+//       $.ajax({
+//         type: "POST",
+//         url: '/cart/clear.js',
+//         success: function(){
+//           console.log('I cleared the cart!');
+//         },
+//         dataType: 'json'
+//     });
+// });
+
 const tabs = document.querySelectorAll('.section-bundle__collection-tab');
 
 tabs.forEach(tab => {
@@ -100,18 +112,20 @@ async function getCart() {
     throw new Error(`Failed to get request, Shopify returned ${result.status} ${result.statusText}`);
 }
 
-
 async function refreshCart() {
     const cart = await getCart();
+    console.log(cart, 'cart')
+    console.log(cart.items, 'cart.items')
+    console.log(cart.items.reverse(), 'cart.items.reverse()')
     const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
     const bundleHolder = document.querySelector('.js-holder');
-    console.log(cart, 'cartitems')
     bundleHolder.innerHTML = '';
     for (let i = 0; i < 12; i++) {
         if(cart.items[i]) {
         bundleHolder.innerHTML += `
         <div class="swiper-slide">
             <div class="section-bundle__cart-carousel-item">
+                <div class="qty-holder">${cart.items[i].quantity > 1 ? cart.items[i].quantity : ''}</div>
                 <img src="${cart.items[i].image}">
             </div>
         </div>
@@ -124,7 +138,6 @@ async function refreshCart() {
             </div>
             `
         }
-        console.log(i, 'iiiii')
     }
     console.log(bundleHolder, 'bundleHolder')
     var swiper = new Swiper('.section-bundle__cart-carousel', {
@@ -149,6 +162,46 @@ async function refreshCart() {
     });
     console.log('Refreshed cart');
 }
+
+let updateCart = (itemId, q) => {
+    let updateObject = {};
+    let nameKey = itemId
+    updateObject[nameKey] = q;
+    console.log(updateObject, 'updateObject')
+    jQuery.post('/cart/update.js', {updates:{...updateObject}});
+}
+const pluses = document.querySelectorAll('.plus')
+const minuses = document.querySelectorAll('.minus')
+
+pluses.forEach((pluse) => {
+    pluse.addEventListener('click', () => {
+        let itemId = pluse.getAttribute('data-item-id');
+        let quantity = pluse.getAttribute('data-quantity');
+        let number = pluse.parentNode.querySelector('.js-qty-number')
+        const newValue = parseInt(quantity) + 1
+        number.innerHTML = quantity
+        updateCart(itemId, quantity);
+        pluse.setAttribute('data-quantity', newValue)
+        setTimeout(() => {
+            refreshCart();
+        }, 1000)
+    })
+})
+
+minuses.forEach((minus) => {
+    minus.addEventListener('click', () => {
+        let itemId = minus.getAttribute('data-item-id');
+        let quantity = minus.getAttribute('data-quantity');
+        let number = minus.parentNode.querySelector('.js-qty-number')
+        const newValue = parseInt(quantity) - 1
+        number.innerHTML = quantity
+        updateCart(itemId, quantity);
+        minus.setAttribute('data-quantity', newValue)
+        setTimeout(() => {
+            refreshCart();
+        }, 1000)
+    })
+})
 
 refreshCart();
 

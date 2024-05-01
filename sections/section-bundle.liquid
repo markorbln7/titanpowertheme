@@ -116,9 +116,9 @@
                                         <div
                                             {% comment %} style="display: none" {% endcomment %}
                                             data-item-id="{{ product.selected_or_first_available_variant.id}}"
-                                            class="qty color-black flex items-center justify-center my-[20px] gap-[10px]">
+                                            class="class-{{ product.id }} qty color-black flex items-center justify-center my-[20px] gap-[10px]">
                                             <div data-quantity="0" class="col-quantity__button decrease  p dm-sans-normal color-white gray text-center minus">-</div>
-                                            <div class="class-{{ product.id }} col-quantity__amount op js-qty-number">0</div>
+                                            <div class="col-quantity__amount op js-qty-number">0</div>
                                             <div data-quantity="1" class="col-quantity__button increase  p dm-sans-normal color-white text-center plus">+</div>
                                         </div>
                                     </div>

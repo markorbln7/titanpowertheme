@@ -122,12 +122,17 @@ async function refreshCart() {
     bundleHolder.innerHTML = '';
     for (let i = 0; i < 12; i++) {
         if(cart.items[i]) {
+            let free = ''
+            if(cart.items[i].properties._attribution && cart.items[i].properties._attribution == "Rebuy Tiered Progress Bar") {
+                free = "Free item"
+            }
         bundleHolder.innerHTML += `
         <div class="swiper-slide p-[10px]">
             <div class="section-bundle__cart-carousel-item flex-col">
                 <div data-variant-id="${cart.items[i].variant_id}" class="js-remove">X</div>
                 <div class="qty-holder">${cart.items[i].quantity > 1 ? cart.items[i].quantity : ''}</div>
                 <img class="" src="${cart.items[i].image}">
+                <div class="free-item">${free}</div>
             </div>
         </div>
         `} else {
@@ -139,8 +144,12 @@ async function refreshCart() {
             </div>
             `
         }
-        if(document.querySelector('.class-' + cart.items[i].product_id)) {
-            document.querySelector('.class-' + cart.items[i].product_id).innerHTML = cart.items[i].quantity;
+        if(cart.items[i] && document.querySelector('.class-' + cart.items[i].product_id)) {
+            console.log('found')
+            let selector = document.querySelector('.class-' + cart.items[i].product_id)
+            selector.querySelector('.js-qty-number').innerHTML = cart.items[i].quantity;
+            selector.querySelector('.plus').setAttribute('data-quantity', cart.items[i].quantity + 1);
+            selector.querySelector('.minus').setAttribute('data-quantity', cart.items[i].quantity -1 );
         }
     }
     console.log(bundleHolder, 'bundleHolder')

@@ -123,10 +123,11 @@ async function refreshCart() {
     for (let i = 0; i < 12; i++) {
         if(cart.items[i]) {
         bundleHolder.innerHTML += `
-        <div class="swiper-slide">
-            <div class="section-bundle__cart-carousel-item">
+        <div class="swiper-slide p-[10px]">
+            <div class="section-bundle__cart-carousel-item flex-col">
+                <div data-variant-id="${cart.items[i].variant_id}" class="js-remove">X</div>
                 <div class="qty-holder">${cart.items[i].quantity > 1 ? cart.items[i].quantity : ''}</div>
-                <img src="${cart.items[i].image}">
+                <img class="" src="${cart.items[i].image}">
             </div>
         </div>
         `} else {
@@ -160,6 +161,35 @@ async function refreshCart() {
             draggable: true,
         }
     });
+    setTimeout(() => {
+        document.querySelectorAll('.js-remove').forEach((remove) => {
+            remove.addEventListener('click', () => {
+                console.log('remove start')
+                let itemId = remove.getAttribute('data-variant-id');
+                fetch(window.Shopify.routes.root + 'cart/change.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: itemId,
+                        quantity: 0
+                    })
+                })
+                    .then(response => {
+                        console.log(response.status)
+                        if (response.status === 200) {
+                            console.log(response.status, 'ok')
+                            refreshCart();
+                        }
+                        return response.json()
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error)
+                    })
+            })
+        })
+    }, 2000)
     console.log('Refreshed cart');
 }
 

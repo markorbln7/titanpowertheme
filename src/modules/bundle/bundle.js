@@ -65,6 +65,14 @@ var swiper = new Swiper('.section-bundle__cart-carousel', {
     }
 });
 
+//TOGGLE BUNDLE
+const bundleCarousel = document.querySelector('.bundle-wrap');
+const bundleToggler = document.querySelector('.js-bundle-toggle');
+
+bundleToggler.addEventListener('click', () => {
+    bundleCarousel.classList.toggle('hide-bundle');
+})
+
 //ADD TO CART LOGIC
 const bundleAtcButtons = document.querySelectorAll('.js-bundle-atc');
 
@@ -114,10 +122,9 @@ async function getCart() {
 
 async function refreshCart() {
     const cart = await getCart();
-    console.log(cart, 'cart')
-    console.log(cart.items, 'cart.items')
-    console.log(cart.items.reverse(), 'cart.items.reverse()')
-    const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
+    // console.log(cart, 'cart')
+    // console.log(cart.items, 'cart.items')
+    // console.log(cart.items.reverse(), 'cart.items.reverse()')
     const bundleHolder = document.querySelector('.js-holder');
     bundleHolder.innerHTML = '';
     for (let i = 0; i < 12; i++) {
@@ -232,6 +239,25 @@ async function refreshCart() {
             })
         })
     }, 2000)
+    let totalPrice = 0;
+
+    cart.items.forEach(item => {
+        totalPrice += item.price * item.quantity;
+    });
+
+    console.log(cart.items);
+
+    const formattedPrice = priceFormatterHandler(totalPrice);
+
+    const totalPriceElement = document.querySelector('.section-bundle__sticky-price');
+    totalPriceElement.textContent = formattedPrice;
+
+    const checkoutButton = document.querySelector('.section-bundle__sticky-checkout a');
+    if (totalPrice === 0) {
+        checkoutButton.setAttribute('disabled', true);
+    } else {
+        checkoutButton.removeAttribute('disabled');
+    }
     console.log('Refreshed cart');
 }
 
@@ -278,9 +304,18 @@ minuses.forEach((minus) => {
 
 refreshCart();
 
+const formatCurrency = document.querySelector('.js-format-currency').value;
 
+const priceFormatterHandler = (price) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: formatCurrency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    });
 
-
+    return formatter.format(price / 100);
+};
 
 
 

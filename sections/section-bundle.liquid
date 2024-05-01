@@ -3,6 +3,7 @@
 {% liquid
    assign section_title = section.settings.section_title
    assign section_copy = section.settings.section_copy
+   assign free_shipping = section.settings.free_shipping
    assign bundle_tracker = section.blocks | where: 'type', 'bundle_tracker'
    assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
 %}
@@ -55,6 +56,10 @@
               </div>
               <div class="swiper-scrollbar"></div>
           </div>
+        </div>
+
+        <div class="bundle-toggler">
+            <button class="js-bundle-toggle">HIDE BUNDLE</button>
         </div>
 
         {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
@@ -112,8 +117,6 @@
                                             Sample text or ticks
                                         </p>
 
-                                        {% comment %} <button class="section-bundle__cta js-bundle-atc" data-product="{{ product.selected_or_first_available_variant.id}}">ADD TO BUNDLE</button> {% endcomment %}
-
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
                                         <div
                                             {% comment %} style="display: none" {% endcomment %}
@@ -133,6 +136,25 @@
             </div>
         {% endif %}
     </div>
+    {% comment %} STICKY SECTION {% endcomment %}
+    <aside class="section-bundle__sticky">
+        <div class="subtotal">
+            <h4>Subtotal: </h4>
+            <div class="section-bundle__sticky-price">
+                <span class="js-sticky-price">0</span>
+            </div>
+        </div>
+
+        <div class="section-bundle__sticky-checkout">
+            <a href="/checkout">Checkout</a>
+            {%- if free_shipping -%}
+                <div class="section-bundle__sticky-shipping">
+                    {{ free_shipping }}
+                </div>
+            {%- endif -%}
+        </div>
+        <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
+    </aside>
 </section>
 
 <script src="{{ 'section-bundle.js' | asset_url }}" defer="defer"></script>
@@ -152,6 +174,12 @@
       "label": "Section copy",
       "id": "section_copy",
       "default": "Add your favorite Squatch goods and rack up the savings!"
+    },
+    {
+      "type": "textarea",
+      "label": "Free shipping sticky text",
+      "id": "free_shipping",
+      "default": "Free Shipping on orders over €65."
     }
   ],
   "blocks": [

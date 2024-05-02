@@ -99,6 +99,11 @@ html.no-js .no-js-hidden {
   padding: 0 1.5rem;
 }
 
+body {
+  scroll-behavior: smooth;
+  scroll-padding-block: 30px;
+}
+
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   max-width: 100%;
 }

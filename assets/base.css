@@ -73,6 +73,11 @@
 
 /* base */
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-block: 30px;
+}
+
 .no-js:not(html) {
   display: none !important;
 }
@@ -97,11 +102,6 @@ html.no-js .no-js-hidden {
   max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 1.5rem;
-}
-
-body {
-  scroll-behavior: smooth;
-  scroll-padding-block: 30px;
 }
 
 body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {

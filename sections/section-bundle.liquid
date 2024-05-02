@@ -167,6 +167,33 @@
         <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
     </aside>
 </section>
+<style>
+  .col-quantity__button {
+    font-size: 45px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    background: linear-gradient(66deg, rgba(96, 198, 85, .8) 12.82%, #5aef55c9 56.41%, #35ff2e);
+    box-shadow: 1px 2px 7px #b3b3b3d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .col-quantity__button.gray {
+    background: linear-gradient(66deg, rgb(151 151 151 / 80%) 12.82%, #656565c9 56.41%, #434343);
+    opacity: .5;
+  }
+  .col-quantity__amount {
+    color: #2b2b2b;
+    font-size: 44px;
+    opacity:.7;
+    font-weight:700;
+  }
+
+</style>
 
 <script src="{{ 'section-bundle.js' | asset_url }}" defer="defer"></script>
 

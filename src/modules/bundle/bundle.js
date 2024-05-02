@@ -71,7 +71,12 @@ const bundleToggler = document.querySelector('.js-bundle-toggle');
 
 bundleToggler.addEventListener('click', () => {
     bundleCarousel.classList.toggle('hide-bundle');
-})
+    if (bundleCarousel.classList.contains('hide-bundle')) {
+        bundleToggler.textContent = 'SHOW BUNDLE';
+    } else {
+        bundleToggler.textContent = 'HIDE BUNDLE';
+    }
+});
 
 //ADD TO CART LOGIC
 const bundleAtcButtons = document.querySelectorAll('.js-bundle-atc');
@@ -370,20 +375,6 @@ closeBtn.addEventListener('click', (e) => {
 })
 
 refreshCart();
-
-const formatCurrency = document.querySelector('.js-format-currency').value;
-
-const priceFormatterHandler = (price) => {
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: formatCurrency,
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    });
-
-    return formatter.format(price / 100);
-};
-
 
 const distanceTracker = $('.bundle-wrap').offset().top
 $(window).scroll(function () {

@@ -1,3 +1,41 @@
+.bundle-image {
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.get-started {
+    background-color: #000;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        background-color: #60c655;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 8px 8px 7px;
+        position: relative;
+        text-align: center;
+        width: 100%;
+        min-height: 50px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
 .section-bundle {
     padding: 65px 80px;
 
@@ -36,6 +74,7 @@
         justify-content: center;
         padding: 25px 0 40px;
         width: 100%;
+
         &.tracker-fixed {
             position: fixed;
             width: 100%;
@@ -425,9 +464,7 @@
         &-checkout {
             display: flex;
             flex-direction: column;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 18px;
+            height: 50px;
             min-width: 320px;
         }
 
@@ -438,14 +475,19 @@
             border-radius: 5px;
             color: #fff;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
             line-height: normal;
+            text-transform: uppercase;
             overflow: hidden;
             padding: 8px 8px 7px;
             position: relative;
             text-align: center;
             width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             &[disabled] {
                 cursor: not-allowed;
@@ -511,9 +553,9 @@
 
         .point {
             font-size: 10px;
-            height: 22px;
-            padding-top: 5px;
-            width: 22px;
+            height: 28px;
+            padding-top: 8px;
+            width: 28px;
         }
 
         .point-label {
@@ -623,11 +665,13 @@
     font-size: 15px;
     font-weight: bold;
 }
+
 .gift-tracker-holder {
     background: linear-gradient(324deg, #35ff2e 50%, #000 100%, #053510);
     border-radius: 50%;
     color: #000;
 }
+
 .info-icon-trigger {
     position: absolute;
     background: #60c655;
@@ -643,6 +687,7 @@
     top: 20px;
     font-weight: 700;
 }
+
 .product-overlay {
     position: fixed;
     z-index: 99999999;
@@ -658,12 +703,14 @@
     opacity: 0;
     transition: all .3s ease-in-out;
 }
+
 .product-overlay.show {
     display: flex;
     visibility: visible;
     opacity: 1;
     transition: all .3s ease-in-out;
 }
+
 .close {
     position: absolute;
     top: 20px;
@@ -671,43 +718,54 @@
     width: 20px;
     cursor: pointer;
 }
+
 #rebuy-cart {
     display: none;
 }
+
 .rebuy-modal-visible {
     overflow: scroll !important;
 }
+
 @media only screen and (max-width: 1630px) {
     .section-bundle__tracker.tracker-fixed {
         width: 50%;
         left: 30%;
     }
 }
+
 @media only screen and (max-width: 950px) {
-    .circle-chart, .gift-tracker-holder {
+
+    .circle-chart,
+    .gift-tracker-holder {
         width: 17vw;
         height: 17vw;
     }
+
     .gift-tracker-holder {
         position: fixed;
         left: 10px;
         bottom: 10px;
     }
+
     .section-bundle__tracker.tracker-fixed {
-        bottom: 58px;
+        bottom: 72px;
         left: 5%;
         width: 90%;
     }
+
     .section-bundle__sticky-checkout {
         width: 70%;
         margin-left: 20%;
         min-width: unset;
         margin-top: 15px;
     }
+
     .section-bundle__sticky {
         padding: 10px;
         padding-top: 20px;
     }
+
     .section-bundle__sticky .subtotal {
         width: 100%;
         justify-content: center;

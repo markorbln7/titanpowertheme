@@ -15,6 +15,9 @@
   <img src="{{ section.settings.mobile_image | img_url: 'master' }}" alt="Bundle Image">
 </div>
 {% render 'new-bundle-gifts' %}
+<div class="get-started">
+    <a href="#bundle-collections">GET STARTED</a>
+</div>
 <div class="product-overlay">
   <div class="close">
       {% render 'icon-close' %}
@@ -80,7 +83,7 @@
 
         {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
         {% if bundle_collection.size > 0 %}
-            <div class="section-bundle__collections">
+            <div class="section-bundle__collections" id="bundle-collections">
               <div class="section-bundle__collection-tabs">
                 {% for block in bundle_collection %}
                     {% assign collection = block.settings.collection %}

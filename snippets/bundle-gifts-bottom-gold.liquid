@@ -5,24 +5,19 @@
             <div class="bundle-gifts__single--image">
                 <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-cable.png?v=1709642803">
             </div>
-            <div data-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan_cable_icon_19047dde-e641-4e84-8e65-3685cf41db36.png?v=1702556590" data-gift="{{all_products['pd'].price }}" class="bundle-gifts__single--text js-first-gift">
+            <div class="bundle-gifts__single--text">
+                {% comment %} <div class="red-text titan-red">164 Remaining</div> {% endcomment %}
                 <p>SPEND: <span>{{all_products['pd'].price | money_without_trailing_zeros }}</span> </p>
+                <h3>Smart cable</h3>
             </div>
         </div>
         <div class="bundle-gifts__single">
             <div class="bundle-gifts__single--image">
-                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-3-in-1-cable.png?v=1709642804">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_turbo_dock.png?v=1714648340">
             </div>
-            <div data-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_turbo_dock.png?v=1714648340" data-gift="{{all_products['3-in-1-price-holder-do-not-delete'].price }}" class="bundle-gifts__single--text js-second-gift">
+            <div class="bundle-gifts__single--text">
                 <p>SPEND: <span>{{all_products['turbo-dock-holder-do-not-delete'].price | money_without_trailing_zeros }}</span> </p>
-            </div>
-        </div>
-        <div class="bundle-gifts__single">
-            <div class="bundle-gifts__single--image">
-                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-case.png?v=1709642803">
-            </div>
-            <div data-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Free_case_gift_product_Icons.png?v=1709575837" data-gift="{{all_products['turbo-dock-price-holder-do-not-delete'].price }}" class="bundle-gifts__single--text js-third-gift">
-                <p>SPEND: <span>{{all_products['turbo-dock-price-holder-do-not-delete'].price | money_without_trailing_zeros }}</span>  </p>
+                <h3>Wireless Turbo Dock</h3>
             </div>
         </div>
         {% comment %} <div class="bundle-gifts__single">
@@ -38,38 +33,27 @@
 
 <style>
     .white-line {
-        width: 75%;
-        height: 5px;
-        display: block!important;
-        position: absolute;
-        top: 33%!important;
-        left: 10%;
-        background-color: transparent !important;
+        width: 44%  !important;
+        height: 5px  !important;
+        display: block !important;
+        position: absolute  !important;
+        top: 40%  !important;
+        left: 30%  !important;
+        background-color: #fff  !important;
     }
-    .bundle-bottom-gifts.gold .white-line {
-        width: 75%;
-        height: 5px;
-        display: block!important;
-        position: absolute;
-        top: 36%!important;
-        left: 10%;
-        background-color: transparent !important;
+    .bundle-gifts {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: center;
     }
-    @media screen and (max-width: 350px) {
-        .bundle-bottom-gifts.gold .white-line {
-            top: 26%!important;
+    @media only screen and (max-width: 950px) {
+        .white-line {
+            left: 0%  !important;
         }
-    }
-    .bundle-gifts-wrapper.bundle-bottom-gifts {
-        background-color: #000;
-        padding: 0;
-        margin-top: -50px;
-    }
-    .rebuy-modal-visible {
-        overflow: scroll !important;
-    }
-    #rebuy-cart {
-        display: none;
     }
 </style>
 <script>

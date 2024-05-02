@@ -1,3 +1,4 @@
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle.css' | asset_url | stylesheet_tag }}
 
 {% liquid
@@ -7,15 +8,22 @@
    assign bundle_tracker = section.blocks | where: 'type', 'bundle_tracker'
    assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
 %}
-<section class="section-bundle">
-  <div class="product-overlay">
-    <div class="close">
-        {% render 'icon-close' %}
-    </div>
-    <div class="product-overlay-image">
-        <img class="info-image" src="">
-    </div>
+<div class="bundle-image desktop bg-black">
+  <img src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
+</div>
+<div class="bundle-image mobile bg-black">
+  <img src="{{ section.settings.mobile_image | img_url: 'master' }}" alt="Bundle Image">
+</div>
+{% render 'new-bundle-gifts' %}
+<div class="product-overlay">
+  <div class="close">
+      {% render 'icon-close' %}
   </div>
+  <div class="product-overlay-image">
+      <img class="info-image" src="">
+  </div>
+</div>
+<section class="section-bundle">
     <div class="section-bundle__container">
         {% if section_title != blank %}
             <header class="section-bundle__heading">
@@ -201,6 +209,16 @@
 {
   "name": "Bundle Builder",
   "settings": [
+    {
+      "type": "image_picker",
+      "label": "Section Image",
+      "id": "image"
+    },
+    {
+      "type": "image_picker",
+      "label": "Section Image Mobile",
+      "id": "image_mobile"
+    },
     {
       "type": "text",
       "label": "Section title",

@@ -1,0 +1,43 @@
+<div class="bundle-gifts-wrapper">
+    <div class="bundle-gifts relative">
+        <div class="white-line shine"><img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/new_line_design.png?v=1701417429"></div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-3-in-1-cable.png?v=1709642804">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['3-in-1-price-holder-do-not-delete'].price | money_without_trailing_zeros }}</span> </p>
+                <h3>3 in 1 cable</h3>
+            </div>
+        </div>
+        <div class="bundle-gifts__single">
+            <div class="bundle-gifts__single--image">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-power-plus-bundle-builder-charging-cables-wireless-docks-usb-c-titan-cable-fast-iphone-pd-mobile-custom-offer-free-case.png?v=1709642803">
+            </div>
+            <div class="bundle-gifts__single--text">
+                <p>SPEND: <span>{{all_products['turbo-dock-price-holder-do-not-delete'].price | money_without_trailing_zeros }}</span>  </p>
+                <h3>Titan Travel Case</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.white-line {
+    width: 44%;
+    height: 5px;
+    display: block !important;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    background-color: #fff;
+}
+.bundle-gifts {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+}
+</style>

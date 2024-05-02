@@ -152,7 +152,7 @@
             <div class="section-bundle__sticky-price">
                 <span class="js-sticky-price">0</span>
             </div>
-            <div data-first="{{all_products['3-in-1-price-holder-do-not-delete'].price }}" data-second="{{all_products['turbo-dock-price-holder-do-not-delete'].price }}" style="width:140px" class="gift-tracker-holder relative w-max	h-[140px] w-[140px] items-center flex text-center mt-[-90px]">
+            <div data-second-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_in_1_cable_icon_105861a6-53fe-4485-a59e-4ea02989852a.png?v=1702556590" data-first-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_in_1_cable_icon_105861a6-53fe-4485-a59e-4ea02989852a.png?v=1702556590" data-first="{{all_products['3-in-1-price-holder-do-not-delete'].price }}" data-second="{{all_products['turbo-dock-price-holder-do-not-delete'].price }}" class="gift-tracker-holder relative h-[140px] w-[140px] items-center flex text-center mt-[-90px]">
               <div class="left-to-gift w-full"></div>
               <svg class="circle-chart absolute top-0 left-0 rotate-[270deg]" viewBox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
                 <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85"></circle>
@@ -163,11 +163,6 @@
 
         <div class="section-bundle__sticky-checkout">
             <a href="/checkout">Checkout</a>
-            {%- if free_shipping -%}
-                <div class="section-bundle__sticky-shipping">
-                    {{ free_shipping }}
-                </div>
-            {%- endif -%}
         </div>
         <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
     </aside>

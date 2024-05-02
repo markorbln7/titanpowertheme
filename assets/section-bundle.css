@@ -50,7 +50,7 @@
     max-width: 960px;
     left: auto;
     z-index: 999999;
-    bottom: 52px;
+    bottom: 30px;
     right: auto;
 }
 
@@ -679,4 +679,43 @@
 
     .rebuy-modal-visible {
     overflow: scroll !important;
+}
+
+    @media only screen and (max-width: 1630px) {
+    .section-bundle__tracker.tracker-fixed {
+        width: 50%;
+        left: 30%;
+    }
+}
+
+    @media only screen and (max-width: 950px) {
+    .circle-chart, .gift-tracker-holder {
+        width: 17vw;
+        height: 17vw;
+    }
+    .gift-tracker-holder {
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+    }
+    .section-bundle__tracker.tracker-fixed {
+        bottom: 58px;
+        left: 5%;
+        width: 90%;
+    }
+    .section-bundle__sticky-checkout {
+        width: 70%;
+        margin-left: 20%;
+        min-width: unset;
+        margin-top: 15px;
+    }
+    .section-bundle__sticky {
+        padding: 10px;
+        padding-top: 20px;
+    }
+    .section-bundle__sticky .subtotal {
+        width: 100%;
+        justify-content: center;
+        padding-top: 10px;
+    }
 }

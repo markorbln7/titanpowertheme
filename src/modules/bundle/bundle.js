@@ -125,6 +125,7 @@ async function refreshCart() {
     // console.log(cart, 'cart')
     // console.log(cart.items, 'cart.items')
     // console.log(cart.items.reverse(), 'cart.items.reverse()')
+    const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
     const bundleHolder = document.querySelector('.js-holder');
     bundleHolder.innerHTML = '';
     for (let i = 0; i < 12; i++) {
@@ -152,7 +153,6 @@ async function refreshCart() {
             `
         }
         if(cart.items[i] && document.querySelector('.class-' + cart.items[i].product_id)) {
-            console.log('found')
             let selector = document.querySelector('.class-' + cart.items[i].product_id)
             selector.querySelector('.js-qty-number').innerHTML = cart.items[i].quantity;
             selector.querySelector('.plus').setAttribute('data-quantity', cart.items[i].quantity + 1);
@@ -160,6 +160,53 @@ async function refreshCart() {
         }
     }
     console.log(bundleHolder, 'bundleHolder')
+    console.log(cart, cart.original_total_price / 100, 'cart orginal total price')
+    let itemCount = 0;
+    let giftCount = 0;
+    for (let d = 0; d < cart.items.length; d++) {
+        if(cart.items[d].properties._source != "Rebuy") {
+            itemCount += cart.items[d].quantity
+            giftCount += (cart.items[d].final_price * cart.items[d].quantity)
+        }
+    }
+    let currency = cart.currency;
+    if(currency == 'USD') {
+        currency = '$'
+    }
+    if(currency == 'EUR') {
+        currency = '€'
+    }
+
+    let firstGift = document.querySelector('.gift-tracker-holder').getAttribute('data-first');
+    let secondGift = document.querySelector('.gift-tracker-holder').getAttribute('data-second');
+
+    console.log(firstGift, secondGift, giftCount , 'saberise')
+
+    let circle = document.querySelector('.circle-chart__circle')
+
+
+    if(giftCount < firstGift) {
+        let currency = cart.currency;
+        if(currency == 'USD') {
+            currency = '$'
+        }
+        if(currency == 'EUR') {
+            currency = '€'
+        }
+        circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540);
+        document.querySelector('.left-to-gift').innerHTML =((firstGift - giftCount)/100) + currency +  '<br> MORE!';
+    }
+    if(giftCount > firstGift) {
+        let currency = cart.currency;
+        if(currency == 'USD') {
+            currency = '$'
+        }
+        if(currency == 'EUR') {
+            currency = '€'
+        }
+        circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540);
+        document.querySelector('.left-to-gift').innerHTML = ((secondGift - giftCount)/100) + currency + '<br> MORE!';
+    }
 
     var swiper = new Swiper('.section-bundle__cart-carousel', {
         spaceBetween: 8,
@@ -187,13 +234,12 @@ async function refreshCart() {
     let allNumber = 0;
     for (let y = 0; y < allQty.length; y++) {
         allNumber += parseFloat(allQty[y].innerHTML);
-        console.log(parseFloat(allQty[y].innerHTML), 'allNumber')
     }
     points.forEach((point, index) => {
         point.style.backgroundColor = '#adadad'
     })
     allLines.forEach((allLine, index) => {
-        allLine.style.backgroundColor = 'white'
+        allLine.style.backgroundColor = '#adadad'
     })
     for (let z = 0; z < allNumber; z++) {
         if(points[z]) {
@@ -201,14 +247,13 @@ async function refreshCart() {
         }
     }
     let limiter = allNumber * 2 - 1;
-    // for (let k = 0; k < limiter; k++) {
-    //     allLines[k].style.backgroundColor = '#60c655';
-    // }
+    for (let k = 0; k < limiter; k++) {
+        allLines[k].style.backgroundColor = '#60c655';
+    }
 
     setTimeout(() => {
         document.querySelectorAll('.js-remove').forEach((remove) => {
             remove.addEventListener('click', () => {
-                console.log('remove start')
                 let itemId = remove.getAttribute('data-variant-id');
                 let productId = remove.getAttribute('data-product-id');
                 fetch(window.Shopify.routes.root + 'cart/change.js', {
@@ -247,7 +292,7 @@ async function refreshCart() {
 
     console.log(cart.items);
 
-    const formattedPrice = priceFormatterHandler(totalPrice);
+    const formattedPrice = currency + (giftCount/100).toFixed(2);
 
     const totalPriceElement = document.querySelector('.section-bundle__sticky-price');
     totalPriceElement.textContent = formattedPrice;
@@ -302,6 +347,24 @@ minuses.forEach((minus) => {
     })
 })
 
+let infoTrigers = document.querySelectorAll('.info-icon-trigger');
+let closeBtn = document.querySelector('.close');
+infoTrigers.forEach((infoTriger) => {
+    infoTriger.addEventListener('click', (e) => {
+        console.log(e.target, 'this')
+        let infoImage = e.target.getAttribute('data-image');
+        document.querySelector('.info-image').src = infoImage;
+        document.querySelector('.product-overlay').classList.add('show');
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+    })
+})
+closeBtn.addEventListener('click', (e) => {
+    document.querySelector('.product-overlay').classList.remove('show');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+})
+
 refreshCart();
 
 const formatCurrency = document.querySelector('.js-format-currency').value;
@@ -318,7 +381,18 @@ const priceFormatterHandler = (price) => {
 };
 
 
-
+const distanceTracker = $('.bundle-wrap').offset().top
+$(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distanceTracker) {
+      $('.section-bundle__tracker').addClass('tracker-fixed')
+    } else {
+      $('.section-bundle__tracker').removeClass('tracker-fixed')
+    }
+})
 
 
 

@@ -40,8 +40,19 @@
         flex-flow: row nowrap;
         justify-content: center;
         padding: 25px 0 40px;
-        width: 100%;
+        width: 100%
     }
+
+    .section-bundle__tracker.tracker-fixed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    max-width: 960px;
+    left: auto;
+    z-index: 999999;
+    bottom: 52px;
+    right: auto;
+}
 
     .section-bundle__tracker-box {
             display: flex;
@@ -55,7 +66,7 @@
             max-width: 229px;
             position: relative;
             text-align: center;
-        }
+}
 
     .section-bundle__tracker-box .line {
                 flex: 1;
@@ -607,4 +618,65 @@
     color: #60c655;
     font-size: 15px;
     font-weight: bold;
+}
+
+    .gift-tracker-holder {
+    background: linear-gradient(324deg, #35ff2e 50%, #000 100%, #053510);
+    border-radius: 50%;
+    color: #000;
+}
+
+    .info-icon-trigger {
+    position: absolute;
+    background: #60c655;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 50%;
+    right: 20px;
+    top: 20px;
+    font-weight: 700;
+}
+
+    .product-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+    .product-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+    .close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    width: 20px;
+    cursor: pointer;
+}
+
+    #rebuy-cart {
+    display: none;
+}
+
+    .rebuy-modal-visible {
+    overflow: scroll !important;
 }

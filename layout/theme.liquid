@@ -313,7 +313,7 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
     {{ 'override.css' | asset_url | stylesheet_tag }}
 
 {% render 'gsf-conversion-pixels' %}
-{% if product.handle == 'anniversary-sale' %}
+{% if product.handle == 'anniversary-sale' or product.handle == 'new-bundle' %}
 <script src="https://cdn.tailwindcss.com" defer></script>
 {% endif %}
 </head>
@@ -487,7 +487,7 @@ window.TriplePixelData={TripleName:"titan-power-plus.myshopify.com",ver:"2.11",p
         }
       })
 
-      
+
 
 
       </script>

@@ -130,9 +130,11 @@
                                         </div>
 
                                         {% comment %} Dummy text for now {% endcomment %}
-                                        <p class="section-bundle__product-description">
-                                            Sample text or ticks
-                                        </p>
+                                        {% if product.metafields.custom.ticks %}
+                                          <p class="section-bundle__product-description">
+                                            {{product.metafields.custom.ticks}}
+                                          </p>
+                                        {% endif %}
 
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
                                         <div

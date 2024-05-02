@@ -116,22 +116,24 @@ increases.forEach((increas) => {
                                     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540)
                                     document.querySelector('.gift-tracker').classList.remove('hide')
                                     document.querySelector('.unlocked').classList.add('hide')
-                                } else if(giftCount > secondGift && giftCount < thirdGift) {
-                                    let giftLeft = thirdGift - giftCount
-                                    giftChange.innerHTML = `${currency}${giftLeft/100}`
-                                    jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
-                                    circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
-                                    document.querySelector('.gift-tracker').classList.remove('hide')
-                                    document.querySelector('.unlocked').classList.add('hide')
-                                // } else if (giftCount > thirdGift && giftCount < fourthGift) {
-                                //     let giftLeft = fourthGift - giftCount
+                                }
+                                // } else if(giftCount > secondGift && giftCount < thirdGift) {
+                                //     let giftLeft = thirdGift - giftCount
                                 //     giftChange.innerHTML = `${currency}${giftLeft/100}`
-                                //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
-                                //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                //     jsImageChange.src = document.querySelector('.js-third-gift').getAttribute('data-image')
+                                //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540)
                                 //     document.querySelector('.gift-tracker').classList.remove('hide')
                                 //     document.querySelector('.unlocked').classList.add('hide')
-                                //
-                                } else {
+                                // // } else if (giftCount > thirdGift && giftCount < fourthGift) {
+                                // //     let giftLeft = fourthGift - giftCount
+                                // //     giftChange.innerHTML = `${currency}${giftLeft/100}`
+                                // //     jsImageChange.src = document.querySelector('.js-fourth-gift').getAttribute('data-image')
+                                // //     circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/fourthGift)*540)
+                                // //     document.querySelector('.gift-tracker').classList.remove('hide')
+                                // //     document.querySelector('.unlocked').classList.add('hide')
+                                // //
+                                // }
+                                else {
                                     document.querySelector('.gift-tracker').classList.add('hide')
                                     document.querySelector('.unlocked').classList.remove('hide')
                                 }

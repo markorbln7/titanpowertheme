@@ -1252,10 +1252,20 @@
     line-height: 1.2;
     padding: 0 10px;
 }
-.product-overlay-image img {
-        max-width: 70%;
-        margin-left: 15%;
+.product-overlay-image {
+    height: 95%;
+}
+@media only screen and (max-width: 768px) {
+    .product-overlay-image {
+        height: 90%;
     }
+}
+.product-overlay-image img {
+        max-width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover;
+}
 @media only screen and (max-width: 768px) {
     .product-overlay-image img {
         max-width: 95%;

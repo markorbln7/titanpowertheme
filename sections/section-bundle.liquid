@@ -134,9 +134,7 @@
 
                                         {% comment %} Dummy text for now {% endcomment %}
                                         {% if product.metafields.custom.ticks %}
-                                          <p class="section-bundle__product-description">
-                                            {{product.metafields.custom.ticks}}
-                                          </p>
+                                          {{product.metafields.custom.ticks | metafield_tag }}
                                         {% endif %}
 
                                         {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
@@ -204,6 +202,18 @@
     font-size: 44px;
     opacity:.7;
     font-weight:700;
+  }
+  .section-bundle__product ul {
+    color:black;
+    margin-left: -10px;
+    font-size: 13px;
+    margin-top:10px;
+  }
+  .section-bundle__product ul li::before {
+    content: "✓";
+    font-weight: 600;
+    color: #60c655;
+    margin-right: 5px;
   }
 
 </style>

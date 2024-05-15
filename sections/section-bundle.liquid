@@ -26,6 +26,17 @@
       <img class="info-image" src="">
   </div>
 </div>
+<div class="product-play-overlay">
+  <div class="close-play">
+      {% render 'icon-close' %}
+  </div>
+  <div class="product-overlay-video">
+    <video class="info-video" width="100%" height="100%" controls>
+      <source src="" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
 <section class="section-bundle">
     <div class="section-bundle__container">
         {% if section_title != blank %}
@@ -118,6 +129,11 @@
                                 {% assign product_price_compared = product.compare_at_price | money %}
 
                                 <article class="section-bundle__product relative">
+                                  {% if  product.metafields.custom.video %}
+                                    <div data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="info-play-trigger">
+                                        <img data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="w-[53%] mx-auto" width="100%" height="100%" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/play-xxl.png?v=1715762268">
+                                    </div>
+                                  {% endif %}
                                   <div data-image="{{product.images[2].src | img_url: 'master'}}" class="info-icon-trigger">i</div>
                                     <figure class="section-bundle__product-image">
                                         {{ product_image | image_url: width: 360 | image_tag: height: 360 }}

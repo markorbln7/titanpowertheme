@@ -374,6 +374,29 @@ closeBtn.addEventListener('click', (e) => {
     document.querySelector('html').classList.remove('no-scroll')
 })
 
+let infoPlayTrigers = document.querySelectorAll('.info-play-trigger');
+let closePlayBtn = document.querySelector('.close-play');
+infoPlayTrigers.forEach((infoTriger) => {
+    infoTriger.addEventListener('click', (e) => {
+        console.log(e.currentTarget, 'this')
+        let infoVideo = e.target.getAttribute('data-video');
+        document.querySelector('.info-video').src = infoVideo;
+        document.querySelector('.product-play-overlay').classList.add('show');
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+        setTimeout(() => {
+            document.querySelector('.info-video').play();
+        }, 300)
+    })
+})
+closePlayBtn.addEventListener('click', (e) => {
+    document.querySelector('.product-play-overlay').classList.remove('show');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+    document.querySelector('.info-video').pause();
+})
+
+
 refreshCart();
 
 const distanceTracker = $('.bundle-wrap').offset().top

@@ -9,7 +9,7 @@
    assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
 %}
 <div class="bundle-image desktop bg-black">
-  <img src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
+  <img class="max-w-[1140px] mx-auto" src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
 </div>
 <div class="bundle-image mobile bg-black">
   <img src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="Bundle Image">
@@ -24,6 +24,17 @@
   </div>
   <div class="product-overlay-image">
       <img class="info-image" src="">
+  </div>
+</div>
+<div class="product-play-overlay">
+  <div class="close-play">
+      {% render 'icon-close' %}
+  </div>
+  <div class="product-overlay-video">
+    <video class="info-video lg:max-w-[75%] mx-auto rounded-[20px]" width="100%" height="100%" controls>
+      <source src="" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
   </div>
 </div>
 <section class="section-bundle">
@@ -118,6 +129,11 @@
                                 {% assign product_price_compared = product.compare_at_price | money %}
 
                                 <article class="section-bundle__product relative">
+                                  {% if  product.metafields.custom.video %}
+                                    <div data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="info-play-trigger">
+                                        <img data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="w-[53%] mx-auto" width="100%" height="100%" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/play-xxl.png?v=1715762268">
+                                    </div>
+                                  {% endif %}
                                   <div data-image="{{product.images[2].src | img_url: 'master'}}" class="info-icon-trigger">i</div>
                                     <figure class="section-bundle__product-image">
                                         {{ product_image | image_url: width: 360 | image_tag: height: 360 }}

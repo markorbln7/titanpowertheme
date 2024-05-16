@@ -9,7 +9,7 @@
    assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
 %}
 <div class="bundle-image desktop bg-black">
-  <img src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
+  <img class="max-w-[1140px] mx-auto" src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
 </div>
 <div class="bundle-image mobile bg-black">
   <img src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="Bundle Image">
@@ -31,7 +31,7 @@
       {% render 'icon-close' %}
   </div>
   <div class="product-overlay-video">
-    <video class="info-video" width="100%" height="100%" controls>
+    <video class="info-video lg:max-w-[75%] mx-auto rounded-[20px]" width="100%" height="100%" controls>
       <source src="" type="video/mp4">
     Your browser does not support the video tag.
     </video>

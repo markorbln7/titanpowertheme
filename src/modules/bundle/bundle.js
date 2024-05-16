@@ -396,6 +396,24 @@ closePlayBtn.addEventListener('click', (e) => {
     document.querySelector('.info-video').pause();
 })
 
+let overlayCls = document.querySelector('.product-play-overlay');
+overlayCls.addEventListener('click', (e) => {
+    console.log(e.target, 'klikkk')
+    if(e.target.classList.contains('product-play-overlay')) {
+        document.querySelector('.product-play-overlay').classList.remove('show');
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+        document.querySelector('.info-video').pause();
+    }
+})
+
+let overlayClsImage = document.querySelector('.product-overlay');
+overlayClsImage.addEventListener('click', (e) => {
+    console.log('klikkk')
+    document.querySelector('.product-overlay').classList.remove('show');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+})
 
 refreshCart();
 

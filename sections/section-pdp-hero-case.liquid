@@ -220,6 +220,7 @@
                 {{ upsell_message }}
               </div>
               <div
+                data-image="{{ product_obj.featured_image.src | img_url: 'master'}}"
                 data-count="{{ upsell_product_selector_number }}"
                 class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
               >

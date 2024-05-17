@@ -70,6 +70,9 @@ productSelectors.forEach(productSelector => {
     productSelector.addEventListener('click', async (e) => {
       const _this = productSelector
       const count = _this.getAttribute('data-count')
+      const imageSwitch = _this.getAttribute('data-image')
+      console.log(imageSwitch, 'imageSwitch')
+      mainImageChange.src = imageSwitch
       window.selectLogic.productCount = count
       const productSelection = window.selectLogic.productCount
       console.log(productSelection, 'productSelection');

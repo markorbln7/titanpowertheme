@@ -25,11 +25,21 @@ function animateCounters (section) {
   const counters = section.querySelectorAll('.zigzag__number')
 
   counters.forEach(counter => {
+    const _this = counter
     const id = counter.getAttribute('id')
-    const start = parseInt(counter.getAttribute('data-start'))
     const end = parseInt(counter.getAttribute('data-end'))
+    let start
+    if(end !== 0) {
+      start = parseInt(counter.getAttribute('data-start'))
+      console.log(start, _this, 'i svasta po nesto')
+      _this.textContent = start
+    } else {
+      start = 0
+    }
     const duration = parseInt(counter.getAttribute('data-duration'))
-    startCounter(id, start, end, duration)
+    if(end !== 0) {
+      startCounter(id, start, end, duration)
+    }
   })
 }
 

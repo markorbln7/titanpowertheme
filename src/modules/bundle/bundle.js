@@ -245,10 +245,14 @@ async function refreshCart() {
         allNumber += parseFloat(allQty[y].innerHTML);
     }
     points.forEach((point, index) => {
-        point.style.backgroundColor = '#adadad'
+        if(point) {
+            point.style.backgroundColor = '#adadad'
+        }
     })
     allLines.forEach((allLine, index) => {
-        allLine.style.backgroundColor = '#adadad'
+        if(allLine) {
+            allLine.style.backgroundColor = '#adadad'
+        }
     })
     for (let z = 0; z < allNumber; z++) {
         if(points[z]) {
@@ -257,7 +261,9 @@ async function refreshCart() {
     }
     let limiter = allNumber * 2 - 1;
     for (let k = 0; k < limiter; k++) {
-        allLines[k].style.backgroundColor = '#60c655';
+        if(allLines[k]) {
+            allLines[k].style.backgroundColor = '#60c655';
+        }
     }
 
     setTimeout(() => {

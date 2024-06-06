@@ -322,11 +322,28 @@ async function refreshCart() {
 }
 
 let updateCart = (itemId, q) => {
-    let updateObject = {};
     let nameKey = itemId
-    updateObject[nameKey] = q;
-    console.log(updateObject, 'updateObject')
-    jQuery.post('/cart/update.js', {updates:{...updateObject}});
+    let nameValue = q
+    let updates = {};
+    updates[nameKey] = nameValue;
+    console.log(updates, 'updateObject')
+    // jQuery.post('/cart/update.js', {updates:{...updateObject}});
+
+    fetch(window.Shopify.routes.root + 'cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ updates })
+      })
+      .then(response => {
+        console.log(response.status, 'status')
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
 }
 const pluses = document.querySelectorAll('.plus')
 const minuses = document.querySelectorAll('.minus')

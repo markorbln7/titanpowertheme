@@ -1,14 +1,14 @@
-$(document).ready(function() {
-    console.log('ready')
-      $.ajax({
-        type: "POST",
-        url: '/cart/clear.js',
-        success: function(){
-          console.log('I cleared the cart!');
-        },
-        dataType: 'json'
-    });
-});
+// $(document).ready(function() {
+//     console.log('ready')
+//       $.ajax({
+//         type: "POST",
+//         url: '/cart/clear.js',
+//         success: function(){
+//           console.log('I cleared the cart!');
+//         },
+//         dataType: 'json'
+//     });
+// });
 
   const increases = document.querySelectorAll('.increase')
 let updateCart = (itemId, q) => {

@@ -1,5 +1,17 @@
 {{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
 {{ 'section-bundle.css' | asset_url | stylesheet_tag }}
+<div class="bundle-overlay">
+  <svg height="200" width="200">
+    <circle class="circle" cx="100" cy="100" r="95" stroke="#60c655cc" stroke-width="10" fill-opacity="0" />
+  </svg>
+  <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#60c655cc" version="1.1" id="Capa_1" width="800px" height="70px" viewBox="0 0 560.317 560.316" xml:space="preserve">
+    <g>
+      <g>
+        <path d="M207.523,560.316c0,0,194.42-421.925,194.444-421.986l10.79-23.997c-41.824,12.02-135.271,34.902-135.57,35.833    C286.96,122.816,329.017,0,330.829,0c-39.976,0-79.952,0-119.927,0l-12.167,57.938l-51.176,209.995l135.191-36.806    L207.523,560.316z"/>
+      </g>
+    </g>
+    </svg></div>
+</div>
 
 {% liquid
    assign section_title = section.settings.section_title

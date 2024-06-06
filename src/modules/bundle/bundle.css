@@ -823,3 +823,59 @@
         padding-top: 10px;
     }
 }
+.bundle-overlay {
+    position: fixed;
+    z-index: 99999999;
+    width: 100%;
+    height: 100%;
+    background: #000c;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+.bundle-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: all .3s ease-in-out;
+}
+
+svg,
+.logo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.logo {
+	width: 140px;
+	height: 140px;
+	border-radius: 100px;
+	opacity: 1;
+	animation: fadeIn 0.75s linear forwards;
+	animation-delay: 1s;
+}
+
+.circle {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: stroke 2s ease-out infinite;
+}
+
+@keyframes stroke {
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+@keyframes fadeIn {
+	to {
+		opacity: 1;
+	}
+}

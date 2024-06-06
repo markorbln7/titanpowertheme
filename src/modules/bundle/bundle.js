@@ -322,6 +322,8 @@ async function refreshCart() {
 }
 
 let updateCart = (itemId, q) => {
+    let overlayBundle = document.querySelector('.bundle-overlay');
+    overlayBundle.classList.add('show');
     let nameKey = itemId
     let nameValue = q
     let updates = {};
@@ -338,6 +340,9 @@ let updateCart = (itemId, q) => {
       })
       .then(response => {
         console.log(response.status, 'status')
+        if(response.status === 200) {
+            overlayBundle.classList.remove('show');
+        }
         return response.json();
       })
       .catch((error) => {

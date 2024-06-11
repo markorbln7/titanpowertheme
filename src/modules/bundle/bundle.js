@@ -127,9 +127,12 @@ async function getCart() {
 
 async function refreshCart() {
     const cart = await getCart();
+<<<<<<< Updated upstream
     // console.log(cart, 'cart')
     // console.log(cart.items, 'cart.items')
     // console.log(cart.items.reverse(), 'cart.items.reverse()')
+=======
+>>>>>>> Stashed changes
     const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
     const bundleHolder = document.querySelector('.js-holder');
     bundleHolder.innerHTML = '';
@@ -174,6 +177,7 @@ async function refreshCart() {
             giftCount += (cart.items[d].final_price * cart.items[d].quantity)
         }
     }
+<<<<<<< Updated upstream
     let currency = cart.currency;
     if(currency == 'USD') {
         currency = '$'
@@ -181,6 +185,8 @@ async function refreshCart() {
     if(currency == 'EUR') {
         currency = '€'
     }
+=======
+>>>>>>> Stashed changes
 
     let firstGift = document.querySelector('.gift-tracker-holder').getAttribute('data-first');
     let secondGift = document.querySelector('.gift-tracker-holder').getAttribute('data-second');
@@ -199,7 +205,11 @@ async function refreshCart() {
             currency = '€'
         }
         circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540);
+<<<<<<< Updated upstream
         document.querySelector('.left-to-gift').innerHTML ='<img  class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_cable_wheel.png?v=1714648077">' + ((firstGift - giftCount)/100) + currency + '<br> MORE!';
+=======
+        document.querySelector('.left-to-gift').innerHTML =((firstGift - giftCount)/100) + currency +  '<br> MORE!';
+>>>>>>> Stashed changes
     }
     if(giftCount > firstGift) {
         let currency = cart.currency;
@@ -210,12 +220,17 @@ async function refreshCart() {
             currency = '€'
         }
         circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540);
+<<<<<<< Updated upstream
         document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_dock.png?v=1714648076">' +((secondGift - giftCount)/100) + currency +  '<br> MORE!';
      }
      if(secondGift - giftCount <= 0) {
         document.querySelector('.left-to-gift').innerHTML ='ALL GIFTS UNLOCKED!';
 
      }
+=======
+        document.querySelector('.left-to-gift').innerHTML = ((secondGift - giftCount)/100) + currency + '<br> MORE!';
+    }
+>>>>>>> Stashed changes
 
     var swiper = new Swiper('.section-bundle__cart-carousel', {
         spaceBetween: 8,
@@ -402,6 +417,7 @@ closeBtn.addEventListener('click', (e) => {
     document.querySelector('html').classList.remove('no-scroll')
 })
 
+<<<<<<< Updated upstream
 let infoPlayTrigers = document.querySelectorAll('.info-play-trigger');
 let closePlayBtn = document.querySelector('.close-play');
 infoPlayTrigers.forEach((infoTriger) => {
@@ -443,6 +459,8 @@ overlayClsImage.addEventListener('click', (e) => {
     document.querySelector('html').classList.remove('no-scroll')
 })
 
+=======
+>>>>>>> Stashed changes
 refreshCart();
 
 const distanceTracker = $('.bundle-wrap').offset().top

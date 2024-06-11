@@ -93,7 +93,7 @@
         font-weight:bold;
 }
     .product-template input:checked + label {
-        background: #1b1b1b;
+        /* background: #1b1b1b;; */
 }
     .product-template input:checked + label:after {
         content: 'PD';
@@ -851,7 +851,7 @@
 }
     .product-template__wrapper--content__form--atc button {
     border-radius: 25px;
-    padding: 20px 20px; 
+    padding: 20px 20px;
     font-size:22px;
 }
     @media only screen and (max-width: 768px) {
@@ -945,11 +945,11 @@
     0% {
       transform: rotate(270deg) scale(1);
     }
-  
+
     50% {
       transform: rotate(270deg) scale(1.2);
     }
-  
+
     100% {
       transform: rotate(270deg) scale(1);
     }
@@ -958,11 +958,11 @@
     0% {
       transform: rotate(90deg) scale(1);
     }
-  
+
     50% {
       transform: rotate(90deg) scale(1.2);
     }
-  
+
     100% {
       transform: rotate(90deg) scale(1);
     }
@@ -996,7 +996,7 @@
         font-weight:bold;
     }
     .label-holder.reverse-holder input:checked + label {
-        background: #1b1b1b;;
+        /* background: #1b1b1b;; */
     }
     .label-holder.reverse-holder input:checked + label:after {
         content: 'USB-A';

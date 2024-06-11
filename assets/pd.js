@@ -39,7 +39,7 @@ if (pdSwitch) {
       if (!status) {
         let pdProducts = document.querySelectorAll('.pd-product')
         let nonPdProducts = document.querySelectorAll('.non-pd-product')
-        document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4packIphoneUSBa.jpg?v=1711219882'
+        document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Magtech-cable-titan-power-plus-iphone-usb-c-magnetic-magnet-cable-usb-a-type-c-lightning_usb-c-to-usb-c-pd-4-pack-iphone-usb-a.jpg?v=1718094390'
         pdProducts.forEach(pdProduct => {
             pdProduct.classList.add('hide-product')
         })
@@ -49,7 +49,7 @@ if (pdSwitch) {
       } else {
         let pdProducts = document.querySelectorAll('.pd-product')
         let nonPdProducts = document.querySelectorAll('.non-pd-product')
-        document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4packIponeUSBc.jpg?v=1711219882'
+        document.querySelector('.js-main-image-change').src = 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Magtech-cable-titan-power-plus-iphone-usb-c-magnetic-magnet-cable-usb-a-type-c-lightning_usb-c-to-usb-c-pd-4-pack-usb-c-iphone.jpg?v=1718094275'
         pdProducts.forEach(pdProduct => {
             pdProduct.classList.remove('hide-product')
         })

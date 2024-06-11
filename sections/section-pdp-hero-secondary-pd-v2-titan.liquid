@@ -44,7 +44,7 @@
         <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Magtech-cable-titan-power-plus-iphone-usb-c-magnetic-magnet-cable-usb-a-type-c-lightning_usb-c-to-usb-c-pd-4-pack-iphone-usb-a.jpg?v=1718094390"
+            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-4-iphone.jpg?v=1718145334"
             alt="{{ featured_image.alt }}"
           >
         </figure>
@@ -176,15 +176,15 @@
           </div>
 
           <div class="pdp-hero__sizes">
-            <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
+            <button data-length="4ft(1.2m)" class="pdp-hero__option active js-length-selector">
               <span>1.2m</span>
-            </div>
-            <div data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
+            </button>
+            <button data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
               <span>1.8m</span>
-            </div>
-            <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
+            </button>
+            <button data-length="10ft(3.0m)" class="pdp-hero__option js-length-selector special">
               <span>3.0m</span>
-            </div>
+            </button>
           </div>
         </div>
 
@@ -380,11 +380,16 @@
     color: black;
     font-size: 19.5px;
 }
+button:disabled,
+button[disabled]{
+  opacity:0.5;
+  cursor: not-allowed;
+}
 </style>
 
 <script src="{{ 'section-pdp-hero-secondary.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'pdpheronew.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'pd.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'pdpheronewtitanpd.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'pdtitan.js' | asset_url }}" defer="defer"></script>
 
 <script>
     window.selectLogic = {
@@ -514,7 +519,7 @@
 
 {% schema %}
 {
-  "name": "PDP Hero Secondary PD TITAN",
+  "name": "PDP Hero PD TITAN",
   "settings": [
     {
       "type": "product",
@@ -653,7 +658,7 @@
   ],
   "presets": [
     {
-      "name": "PDP Hero Secondary PD TITAN"
+      "name": "PDP Hero PD TITAN"
     }
   ]
 }

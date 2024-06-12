@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-pdp-hero.css'
 
 const atcButton = document.querySelector('.section-pdp-hero .js-atc')

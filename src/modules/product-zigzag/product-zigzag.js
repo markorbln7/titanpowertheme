@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './product-zigzag.css'
 
 var variantSelectorSFirst = document.querySelectorAll(".zig-variant-selector-1");

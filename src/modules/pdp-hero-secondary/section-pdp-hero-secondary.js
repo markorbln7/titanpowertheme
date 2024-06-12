@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-pdp-hero-secondary.css'
 
 const allShopSections = document.querySelectorAll('.section-pdp-hero-secondary')

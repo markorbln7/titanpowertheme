@@ -1,3 +1,4 @@
+/* eslint-disable */
 import "./section-pdp-hero-tertiary.css";
 
 const allShopSections = document.querySelectorAll(".section-pdp-hero-tertiary");

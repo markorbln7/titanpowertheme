@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-multicolumns-with-popup.css'
 
 const multiColumnsWithPopupSection = document.querySelectorAll('.multicolumn-with-popup')

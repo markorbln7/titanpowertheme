@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './bundle.css'
 
 // $(document).ready(function() {

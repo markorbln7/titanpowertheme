@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import './collection-carousel.css'
 
 const tabs = document.querySelectorAll('.b-collection-carousel__tab');

@@ -1,2 +1,2 @@
-/* eslint-disable indent */
+/* eslint-disable */
 import './limited-offers.css'

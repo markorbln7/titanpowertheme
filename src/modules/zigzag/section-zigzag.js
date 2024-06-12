@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-zigzag.css'
 
 const numbersWrapper = document.querySelectorAll('.zigzag__heading')

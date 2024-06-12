@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './treasure.css'
 // Set the date we're counting down to
 const countDownDate = new Date('Nov 24, 2023 19:00:00').getTime()

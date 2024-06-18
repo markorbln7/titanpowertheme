@@ -1,0 +1,60 @@
+{{ 'section-home-categories.css' | asset_url | stylesheet_tag }}
+
+<section class="cat">
+    <div class="cat-title">{{ section.settings.title }}</div>
+    <div class="cat-list">
+        {% for block in section.blocks %}
+        <div class="cat-list__single">
+            <a href="{{ block.settings.url }}" class="cat-list__single--inner">
+                <div class="cat-list__single--inner__image">
+                    <img width="100%" height="auto" src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.title }}">
+                </div>
+                <div class="cat-list__single--title">{{ block.settings.title }}</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Categories Block",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Products Tile",
+      "default": "Shop Titan Power's Best by Category"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Categories Block"
+    }
+  ]
+}
+{% endschema %}

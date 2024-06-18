@@ -1,0 +1,74 @@
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/home-categories/home-categories.css ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+.cat-title {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.2;
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.cat-list {
+    margin-top: 32px;
+    display: flex;
+    gap: 44px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+@media only screen and (max-width: 768px) {
+    .cat-list {
+        gap: 14px;
+    }
+}
+.cat-list__single {
+    width: 100%;
+    max-width: 145px;
+}
+.cat-list__single--inner {
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    color:black;
+    margin-top: 4px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: all 0.3s ease-in-out;
+    flex-wrap: wrap
+}
+.cat-list__single--inner:hover {
+    color: #60c655;
+}
+.cat-list__single--inner:hover img {
+            transform: matrix(1.05, 0, 0, 1.05, 0, 0);
+}
+.cat-list__single--inner__image {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    aspect-ratio: 1;
+    transition: all .4s;
+}
+.cat-list__single--inner__image img {
+        width: 80%;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        transition: all 0.3s ease-in-out;
+    }
+.cat {
+    padding: 0 15px;
+}

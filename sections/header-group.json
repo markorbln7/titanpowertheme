@@ -13,20 +13,10 @@
   "sections": {
     "85bda58e-9180-4dfc-aec4-77a4a7dd2beb": {
       "type": "announcement-bar",
-      "blocks": {
-        "announcement_aUUnEJ": {
-          "type": "announcement",
-          "settings": {
-            "text": "🎂 ANNIVERSARY SALE IS LIVE",
-            "link": "https:\/\/titanpowerplus.com\/products\/anniversary-sale"
-          }
-        }
-      },
-      "block_order": [
-        "announcement_aUUnEJ"
-      ],
       "custom_css": [
-
+        ".section-bundle__title {font-size: 32px; font-weight: 600; line-height: 35px; font-family: \"work sans\"; margin-top: -30px; margin-bottom: -20px;}",
+        ".get-started {display: none;}",
+        ".bundle-gifts-wrapper {display: none;}"
       ],
       "settings": {
         "color_scheme": "background-1",

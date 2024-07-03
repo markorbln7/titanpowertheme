@@ -15,7 +15,7 @@
   <div class="offers-list">
     {% for block in section.blocks %}
       <div class="offers-list__single">
-        <a href="{{ block.settings.url }}" class="offers-list__single--image">
+        <a href="{{ block.settings.url }}" class="offers-list__single--image block">
           <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
         </a>
         {% if block.settings.text != blank %}

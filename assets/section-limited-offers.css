@@ -42,7 +42,14 @@
 }
 .offers-list__single--image {
     position: relative;
-    padding-top: 130%;
+    padding-top: 100%;
+}
+@media only screen and (max-width: 768px) {
+    .offers-list__single--image {
+        padding-top: 130%;
+    }
+}
+.offers-list__single--image {
     border-radius: 30px;
 }
 .offers-list__single--image img {
@@ -56,7 +63,7 @@
         -o-object-fit: cover;
            object-fit: cover;
         border-radius: 30px;
-    }
+}
 .offers-list {
     max-width: 1440px;
     padding: 0 30px !important;

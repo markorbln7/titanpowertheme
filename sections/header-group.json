@@ -13,7 +13,18 @@
   "sections": {
     "85bda58e-9180-4dfc-aec4-77a4a7dd2beb": {
       "type": "announcement-bar",
-      "disabled": true,
+      "blocks": {
+        "announcement_PH4LL4": {
+          "type": "announcement",
+          "settings": {
+            "text": "4th JULY SALE LIVE",
+            "link": "https:\/\/titanpowerplus.com\/products\/4th-july"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_PH4LL4"
+      ],
       "custom_css": [
 
       ],

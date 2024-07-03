@@ -1,8 +1,8 @@
 {{ 'section-limited-offers.css' | asset_url | stylesheet_tag }}
 {{ 'section-limited-offers.js' | asset_url | stylesheet_tag }}
 <div class="top-image mb-[20px]">
-  <img class="w-full hidden md:block" width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}">
-  <img class="w-full block md:hidden" width="100%" height="auto" src="{{ section.settings.image_mobile | img_url:'master' }}">
+  <img class="w-full desktop" width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}">
+  <img class="w-full mobile" width="100%" height="auto" src="{{ section.settings.image_mobile | img_url:'master' }}">
 </div>
 <section class="">
   <div class="offers-title">{{ section.settings.text_right }}</div>

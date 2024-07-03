@@ -51,6 +51,13 @@
         "border_color": "rgba(0,0,0,0)"
       }
     },
+    "limited_offers_LcDdA8": {
+      "type": "limited-offers",
+      "settings": {
+        "text_right": "LIMITED TIME OFFERS",
+        "countdown_to": ""
+      }
+    },
     "section_bundle_MkAH3X": {
       "type": "section-bundle",
       "blocks": {
@@ -179,7 +186,7 @@
         ".get-started {padding: 0 0 50px; display: none;}",
         ".section-bundle__product-prices {text-align: center;}",
         ".section-bundle__product-title {font-size: 16px; text-align: center;}",
-        ".bundle-image.desktop.bg-black {display: block !important;}"
+        ".bundle-image.desktop.bg-black {display: none !important;}"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/4th_July_desktop_banner.png",
@@ -451,6 +458,7 @@
   },
   "order": [
     "sl_image_hero_1_1_TkLHYy",
+    "limited_offers_LcDdA8",
     "section_bundle_MkAH3X",
     "testimonial_slider_XJAQhD",
     "rich_text_PxBEer",

@@ -9,6 +9,47 @@
 */
 {
   "sections": {
+    "sl_image_hero_1_1_TkLHYy": {
+      "type": "sl-image-hero-1-1",
+      "blocks": {
+        "headline_rfBzBH": {
+          "type": "headline",
+          "settings": {
+            "devices": "all",
+            "text": "",
+            "strike_text": "",
+            "text_size": 48,
+            "font_style": "title",
+            "top_padding": 150,
+            "bottom_padding": 150,
+            "mobile_text_size": 12,
+            "mobile_top_padding": 80,
+            "mobile_bottom_padding": 80,
+            "text_color": "transparent"
+          }
+        }
+      },
+      "block_order": [
+        "headline_rfBzBH"
+      ],
+      "settings": {
+        "devices": "all",
+        "image": "shopify:\/\/shop_images\/4th_July_desktop_banner.png",
+        "image_position": "background",
+        "image_overlay_opacity": 0,
+        "pattern_select": "0081e08d-9bbc-402f-9e88-9493bedfc495",
+        "section_height": "large",
+        "section_width": "large",
+        "content_position": "middle_center",
+        "section_border": "brand_style",
+        "mobile_image_position": "match_desktop",
+        "mobile_image_overlay_opacity": 50,
+        "mobile_section_height": "match",
+        "mobile_content_position": "match",
+        "background_color": "transparent",
+        "border_color": "transparent"
+      }
+    },
     "section_bundle_MkAH3X": {
       "type": "section-bundle",
       "blocks": {
@@ -128,22 +169,21 @@
         "bundle_tracker_gehMX8"
       ],
       "custom_css": [
-        ".bundle-toggler{display:none}",
-        ".section-bundle__collection-tabs{padding:0 0 10px}",
-        "img{border-radius:20px}",
-        ".bundle-gifts-wrapper{margin-top:-10px;display:none}",
-        "@media only screen and (max-width:950px){.circle-chart,.gift-tracker-holder{width:21vw;height:21vw}}",
-        ".free-item{line-height:.9}",
-        ".get-started{padding:0 0 50px;display:none}",
-        ".section-bundle__product-prices{text-align:center}",
-        ".section-bundle__product-title{font-size:16px;text-align:center}",
-        ".section-bundle__title{font:600 32px\/35px \"work sans\";margin:-30px 0 -20px}"
+        ".bundle-toggler {display: none;}",
+        ".section-bundle__collection-tabs {padding: 0 0 10px;}",
+        "img {border-radius: 20px;}",
+        ".bundle-gifts-wrapper {margin-top: -10px; display: none;}",
+        "@media only screen and (max-width: 950px) {.circle-chart, .gift-tracker-holder {width: 21vw; height: 21vw; }}",
+        ".free-item {line-height: 0.9;}",
+        ".get-started {padding: 0 0 50px; display: none;}",
+        ".section-bundle__product-prices {text-align: center;}",
+        ".section-bundle__product-title {font-size: 16px; text-align: center;}",
+        ".bundle-image.desktop.bg-black {display: none !important;}"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/new_titan_kit_simple_banner.jpg",
         "image_mobile": "shopify:\/\/shop_images\/New_Titan_Kit_desktop_banner_page_simple_MOBILE.jpg",
-        "section_title": "Add 5 Save 55%, Add 7 Save 65%, Add 10 Save 75%",
-        "section_copy": "",
+        "section_title": "Build your Own Freedom Kit",
+        "section_copy": "Add 5 Save 55%, Add 7 Save 65%, Add 10 Save 75%",
         "free_shipping": ""
       }
     },
@@ -408,6 +448,7 @@
     }
   },
   "order": [
+    "sl_image_hero_1_1_TkLHYy",
     "section_bundle_MkAH3X",
     "testimonial_slider_XJAQhD",
     "rich_text_PxBEer",

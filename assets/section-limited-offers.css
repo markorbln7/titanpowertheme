@@ -10,6 +10,11 @@
     padding: 0 15px;
     color: #4a4a4a;
 }
+@media only screen and (max-width: 768px) {
+    .offers-title {
+        font-size: 35px;
+    }
+}
 .offers-list__single--url {
     background-color: #60c655;
     color: #ffffff;

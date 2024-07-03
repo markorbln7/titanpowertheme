@@ -1,5 +1,9 @@
 {{ 'section-limited-offers.css' | asset_url | stylesheet_tag }}
 {{ 'section-limited-offers.js' | asset_url | stylesheet_tag }}
+<div class="top-image mb-[20px]">
+  <img class="w-full hidden md:block" width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}">
+  <img class="w-full block md:hidden" width="100%" height="auto" src="{{ section.settings.image_mobile | img_url:'master' }}">
+</div>
 <section class="">
   <div class="offers-title">{{ section.settings.text_right }}</div>
   <div class="timer" id="timer">
@@ -61,6 +65,16 @@
 {
   "name": "Limited Offers",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Top Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Top Image Mobile"
+    },
     {
       "type": "text",
       "id": "text_right",

@@ -1,0 +1,103 @@
+ <script>
+      $('.js-section-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('#product-rev')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+      $('.js-stars-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('#shopify-block-loox_reviews_loox_dynamic_section_dEptDN')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+      $('.js-atc-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('.js-scroll')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+      $('.aha--massage-gun .banner__buttons .button').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('#section-pdp-hero')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+      $('.js-atc-scroll').on('click', function (e) {
+        e.preventDefault()
+        const $section = $('.js-scroll')
+
+        $('html, body').animate({
+          scrollTop: $section.offset().top + 'px'
+        }, 1000)
+      })
+
+      const accordions = document.querySelectorAll('.accordion')
+      console.log(accordions, 'accordionsaccordions')
+      if(accordions) {
+        const openAccordion = (accordion) => {
+          const content = accordion.querySelector('.accordion__content')
+          accordion.classList.add('accordion__active')
+          content.style.maxHeight = content.scrollHeight + 'px'
+        }
+
+        const closeAccordion = (accordion) => {
+          const content = accordion.querySelector('.accordion__content')
+          accordion.classList.remove('accordion__active')
+          content.style.maxHeight = null
+        }
+
+        accordions.forEach((accordion) => {
+          const intro = accordion.querySelector('.accordion__intro')
+          const content = accordion.querySelector('.accordion__content')
+
+          intro.onclick = () => {
+            if (content.style.maxHeight) {
+              closeAccordion(accordion)
+            } else {
+              accordions.forEach((accordion) => closeAccordion(accordion))
+              openAccordion(accordion)
+            }
+          }
+        })
+      }
+
+       const distancecube = $('.aha--titan-cube .product-icons').offset().top
+      $(window).scroll(function () {
+        const top_of_element = $('#shopify-section-footer').offset().top
+        const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+        const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+        const top_of_screen = $(window).scrollTop()
+        if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancecube) {
+          $('.atc-fixed').addClass('show')
+        } else {
+          $('.atc-fixed').removeClass('show')
+        }
+      })
+
+      const distancebuds = $('.aha--new-buds-2-0 .section-text-with-icons').offset().top
+      $(window).scroll(function () {
+        const top_of_element = $('#shopify-section-footer').offset().top
+        const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+        const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+        const top_of_screen = $(window).scrollTop()
+        if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancebuds) {
+          $('.atc-fixed').addClass('show')
+        } else {
+          $('.atc-fixed').removeClass('show')
+        }
+      })
+    </script>
+
+    <script src="{{ 'runtime.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'commons.js' | asset_url }}" defer="defer"></script>
+    <script defer src="{{ 'footer.js' | asset_url }}" type="text/javascript"></script>
+    <script> var yourImg = document.querySelectorAll("img");  for (var i = 1; i < yourImg.length; i++) { yourImg[i].setAttribute("loading", "lazy");} </script>

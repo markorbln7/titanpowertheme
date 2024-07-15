@@ -1,0 +1,28 @@
+  <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+     <!-- Taboola Pixel Code -->
+<script type='text/javascript'>
+  window._tfa = window._tfa || [];
+  window._tfa.push({notify: 'event', name: 'page_view', id: 1354056});
+  !function (t, f, a, x) {
+         if (!document.getElementById(x)) {
+            t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
+         }
+  }(document.createElement('script'),
+  document.getElementsByTagName('script')[0],
+  '//cdn.taboola.com/libtrc/unip/1354056/tfa.js',
+  'tb_tfa_script');
+</script>
+<!-- End of Taboola Pixel Code -->
+
+    {% render 'jquery-3-6-3-min' %}
+    {% render 'swiper-bundle-min-js' %}
+
+    
+   {% comment %} <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    {% endcomment %}

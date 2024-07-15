@@ -1,5 +1,10 @@
 {
   "sections": {
+    "zp-product-header-content": {
+      "type": "product-header-content-zipifypages",
+      "settings": {
+      }
+    },
     "slideshow_NnVUdC": {
       "type": "slideshow",
       "blocks": {
@@ -794,9 +799,15 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "zp-product-footer-content": {
+      "type": "product-footer-content-zipifypages",
+      "settings": {
+      }
     }
   },
   "order": [
+    "zp-product-header-content",
     "slideshow_NnVUdC",
     "section_text_with_icons_3b7KcJ",
     "slideshow_3EYWCG",
@@ -811,6 +822,7 @@
     "section_faq_bgPWp8",
     "17073193388d6dd3f5",
     "section_multi_columns_iU6pxd",
-    "17075757173c339a93"
+    "17075757173c339a93",
+    "zp-product-footer-content"
   ]
 }

@@ -1,14 +1,10 @@
-/*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
 {
   "sections": {
+    "zp-product-header-content": {
+      "type": "product-header-content-zipifypages",
+      "settings": {
+      }
+    },
     "section_bundle_MkAH3X": {
       "type": "section-bundle",
       "blocks": {
@@ -405,14 +401,21 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "zp-product-footer-content": {
+      "type": "product-footer-content-zipifypages",
+      "settings": {
+      }
     }
   },
   "order": [
+    "zp-product-header-content",
     "section_bundle_MkAH3X",
     "testimonial_slider_XJAQhD",
     "rich_text_PxBEer",
     "1707579564616101b2",
     "17073193388d6dd3f5",
-    "17075757173c339a93"
+    "17075757173c339a93",
+    "zp-product-footer-content"
   ]
 }

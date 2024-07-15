@@ -42,6 +42,16 @@
           <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
         {% endif %}
         <figure class="pdp-hero__gallery-main-image relative">
+          {% if section.settings.pd_first %}
+
+            <img
+              width="100%"
+              height="auto"
+              class="js-main-image-change w-100"
+              src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-4-iphone-pd_65a29169-31a9-443e-b52e-54e757958f0c.jpg?v=1718145063"
+              alt="{{ featured_image.alt }}"
+            >
+          {% else %}
           <img
             width="100%"
             height="auto"
@@ -49,6 +59,7 @@
             src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-4-iphone.jpg?v=1718145334"
             alt="{{ featured_image.alt }}"
           >
+          {% endif %}
         </figure>
         {% if iconsRepeater.size > 0 %}
           <div class="pdp-hero__icons swiper">

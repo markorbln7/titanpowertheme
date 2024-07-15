@@ -43,6 +43,8 @@
         {% endif %}
         <figure class="pdp-hero__gallery-main-image relative">
           <img
+            width="100%"
+            height="auto"
             class="js-main-image-change w-100"
             src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/1titan-smart-cable-titan-power-plus-type-c-iphone-cord-charger-lead-fast-pd-strong-durable-4-iphone.jpg?v=1718145334"
             alt="{{ featured_image.alt }}"
@@ -129,13 +131,39 @@
           </div>
         </div>
         <div class="pdp-hero__product-subtitle text-center bold">WALL PORT:</div>
+        {% if section.settings.pd_first %}
         <div id="desktop-label" class="label-holder reverse-holder relative">
           <div class="label-holder__image">
              <div class="label-holder__speed">SPEED</div>
-            <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800">
+             <img width="100%"
+              height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800">
+
           </div>
           <div>
-            <div class="label-holder__title">WALL PORT</div>
+            <input hidden class="js-pd-switch" type="checkbox" id="switch" />
+            <label class="switch" for="switch" checked>
+                <div class="usba">USB-C</div>
+                <i class="arrow-left fa fa-angle-down fa-2x animated"></i>
+                <i class="arrow-right fa fa-angle-down fa-2x animated"></i>
+                <div class="pd">USB-A</div>
+            </label>
+
+          </div>
+          <div class="label-holder__image">
+          <div class="label-holder__speed">SPEED</div>
+
+              <img width="100%"
+                height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800">
+          </div>
+        </div>
+        {% else %}
+        <div id="desktop-label" class="label-holder reverse-holder relative">
+          <div class="label-holder__image">
+             <div class="label-holder__speed">SPEED</div>
+            <img width="100%"
+              height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800">
+          </div>
+          <div>
             <input hidden class="js-pd-switch" type="checkbox" id="switch" />
             <label class="switch" for="switch" checked>
                 <div class="usba">USB-A</div>
@@ -147,9 +175,11 @@
           </div>
           <div class="label-holder__image">
           <div class="label-holder__speed">SPEED</div>
-            <img class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800">
+            <img width="100%"
+              height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800">
           </div>
-      </div>
+        </div>
+        {% endif %}
 
 
         {% comment %} PRODUCT OPTIONS {% endcomment %}
@@ -182,13 +212,130 @@
             <button data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
               <span>1.8m</span>
             </button>
-            <button data-length="10ft(3.0m)" class="pdp-hero__option js-length-selector special">
+            {% if section.settings.pd_first %}
+            <button disabled data-length="10ft(3.0m)" class="pdp-hero__option js-length-selector special">
               <span>3.0m</span>
             </button>
+          {% else %}
+          <button data-length="10ft(3.0m)" class="pdp-hero__option js-length-selector special">
+            <span>3.0m</span>
+          </button>
+          {% endif %}
           </div>
         </div>
 
         {% comment %} UPSELL PRODUCTS {% endcomment %}
+        {% if section.settings.pd_first %}
+          <div class="pdp-hero__upsell">
+            {% if product_repeater.size > 0 %}
+              {% for upsell_product in product_repeater %}
+                {% liquid
+                  assign product_obj = all_products[upsell_product.settings.product_obj]
+
+                  assign product_title = upsell_product.settings.product_title_custom
+                  if product_title == blank
+                    assign product_title = product_obj.title
+
+                  else
+                    assign product_title = upsell_product.settings.product_title_custom
+                  endif
+                  assign upsell_message = upsell_product.settings.upsell_message
+
+                  assign upsell_product_image = upsell_product.settings.upsell_product_image
+
+                  assign product_price = product_obj.price_min
+                  assign product_compare_at_price = product_obj.compare_at_price_min
+                  assign upsell_product_discount = upsell_product.settings.upsell_product_discount
+                  assign upsell_product_selector_number = upsell_product.settings.product_selector_number
+                %}
+                <div class="{%  if upsell_message == blank%}blank-item{% endif %} pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
+                  {{ upsell_message }}
+                </div>
+                <div
+                  data-count="{{ upsell_product_selector_number }}"
+                  class="{% unless product_obj.tags contains 'pd' %}pd-product hide-product{% else %}non-pd-product{% endunless %} pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 4 %} promo active{% endif %} {% if forloop.index == 4 %} promo{% endif %}"
+                >
+                  <input
+                    type="checkbox"
+                    id="pdp-hero__checkbox"
+                    class="js-upsell-checkbox"
+                    {% if forloop.index == 4 %}
+                      checked
+                    {% endif %}
+                  >
+                  <div class="pdp-hero__extra-checkbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                      <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                    </svg>
+                  </div>
+
+                  <div class="pdp-hero__upsell-content">
+                    <div class="pdp-hero__pricing product__list--single--price color-white">
+                      <h4 class="pdp-hero__upsell-title">
+                        {{ product_title }}
+                      </h4>
+                      {% if upsell_product_discount != blank %}
+                        <div class="pdp-hero__discount">{{ upsell_product_discount }}</div>
+                      {% endif %}
+                    </div>
+
+                    <div class="pdp-hero__upsell-price">
+                      <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }}">
+                        {{- product_price | money -}}
+                      </span>
+                      <span class="crossed js-price-discount-{{ forloop.index }}">
+                        {{- product_compare_at_price | money -}}
+                      </span>
+                    </div>
+                  </div>
+                  {% render 'titan-image', image: upsell_product_image %}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% comment %} HIGHLIGHTED UPSELL PRODUCT {% endcomment %}
+            {% if product_highlighted %}
+              {% liquid
+                assign product_highlighted_image = product_highlighted.featured_image
+                assign product_highlighted_price = product_highlighted.price
+                assign product_highlighted_compare_at_price = product_highlighted.compare_at_price
+
+                assign product_highlighted_title = section.settings.product_highlighted_title
+                if product_highlighted_title == blank
+                  assign product_highlighted_title = product_highlighted.title
+
+                else
+                  assign product_highlighted_title = section.settings.product_highlighted_title
+                endif
+              %}
+              <div
+                data-addon-id="{{ product_highlighted.first_available_variant.id }}"
+                class="pdp-hero__upsell-highlighted js-addon"
+              >
+                <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
+                <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper">
+                  <input type="checkbox" id="pdp-hero__checkbox">
+                  <div class="pdp-hero__extra-checkbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                      <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                    </svg>
+                  </div>
+
+                  <div class="pdp-hero__upsell-content">
+                    <h4 class="pdp-hero__upsell-title">{{ product_highlighted_title }}</h4>
+
+                    <div class="pdp-hero__upsell-price">
+                      <span class="pdp-hero__pricing-price">{{ product_highlighted_price | money }}</span>
+                      <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
+                    </div>
+                  </div>
+                  {% render 'titan-image', image: product_highlighted_image %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+        {% else %}
         <div class="pdp-hero__upsell">
           {% if product_repeater.size > 0 %}
             {% for upsell_product in product_repeater %}
@@ -216,7 +363,7 @@
               </div>
               <div
                 data-count="{{ upsell_product_selector_number }}"
-                class="{% if product_obj.tags contains 'pd' %}pd-product hide-product{% else %}non-pd-product{% endif %} pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %} {% if forloop.index == 4 %} promo{% endif %}"
+                class="{% if product_obj.tags contains 'pd' %}pd-product hide-product{% else %}non-pd-product{% endif %} pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active 44{% endif %} {% if forloop.index == 4 %} promo{% endif %}"
               >
                 <input
                   type="checkbox"
@@ -298,6 +445,8 @@
           {% endif %}
         </div>
 
+        {% endif %}
+
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper scroll-reveal">
           <div
@@ -364,13 +513,23 @@
   .product-template-new label {
     color: #7d7d7d !important;
   }
-  .label-holder.reverse-holder label:after {
-    color:white !important;
-    content: "USB-A" !important;
-  }
-  .label-holder.reverse-holder input:checked+label:after {
-    content: "USB-C" !important;
-}
+  {% if section.settings.pd_first %}
+    .label-holder.reverse-holder label:after {
+      color:white !important;
+      content: "USB-C" !important;
+    }
+    .label-holder.reverse-holder input:checked+label:after {
+      content: "USB-A" !important;
+    }
+  {% else %}
+    .label-holder.reverse-holder label:after {
+      color:white !important;
+      content: "USB-A" !important;
+    }
+    .label-holder.reverse-holder input:checked+label:after {
+      content: "USB-C" !important;
+    }
+  {% endif %}
   .label-holder.reverse-holder .switch .pd {
     margin-right: 20px;
   }
@@ -389,17 +548,32 @@ button[disabled]{
 
 <script src="{{ 'section-pdp-hero-secondary.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'pdpheronewtitanpd.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'pdtitan.js' | asset_url }}" defer="defer"></script>
+{% if section.settings.pd_first %}
+  <script src="{{ 'pdtitanreverse.js' | asset_url }}" defer="defer"></script>
+{% else %}
+  <script src="{{ 'pdtitan.js' | asset_url }}" defer="defer"></script>
+{% endif %}
 
 <script>
-    window.selectLogic = {
-      productCount: '4x',
-      productHandle: '',
-      productId: '',
-      phoneType: 'iPhone',
-      cableLength: '4ft(1.2m)',
-      addon: ''
-    }
+    {% if section.settings.pd_first %}
+      window.selectLogic = {
+        productCount: 'pd4x',
+        productHandle: '',
+        productId: '',
+        phoneType: 'iPhone',
+        cableLength: '4ft(1.2m)',
+        addon: ''
+      }
+    {% else %}
+      window.selectLogic = {
+        productCount: '4x',
+        productHandle: '',
+        productId: '',
+        phoneType: 'iPhone',
+        cableLength: '4ft(1.2m)',
+        addon: ''
+      }
+    {% endif %}
 
     window.products = {
       {% for upsell_product in product_repeater %}
@@ -521,6 +695,11 @@ button[disabled]{
 {
   "name": "PDP Hero PD TITAN",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "pd_first",
+      "label": "PD Preselected"
+    },
     {
       "type": "product",
       "id": "product_main",

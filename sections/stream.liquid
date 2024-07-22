@@ -1,0 +1,94 @@
+{{ 'section-stream.css' | asset_url | stylesheet_tag }}
+<div class="video-icon stream-start">
+  {% render 'video-icon' %}
+  <i class="Header_linePart__1tpw_ Header_line_1__TNAKB"></i>
+  <i class="Header_linePart__1tpw_ Header_line_2___ZHFt"></i>
+  <i class="Header_linePart__1tpw_ Header_line_3__5T_j9"></i>
+  <i class="Header_linePart__1tpw_ Header_line_4"></i>
+</div>
+<div class="stream-overlay">
+    <div class="stream">
+        <div class="rise-shop">{% render 'shop' %}</div>
+        <div class="stream--video">
+            <div class="stream--video__inner">
+                <video id="video" controls playsinline tabindex="0" src="{{section.settings.video.sources[1].url}}" crossorigin="anonymous"></video>
+            </div>
+        </div>
+        <div class="tp-shop relative">
+            <div class="tp-shop__title">
+              <div class="pull-back">
+                <svg role="img" width="100%" height="100%" viewBox="0 0 36 36"><title>Back</title><path filter="" fill-rule="evenodd" clip-rule="evenodd" d="M15.722 18L23.3253 10.3968C23.8862 9.83584 23.8862 8.92631 23.3253 8.36532C22.7643 7.80433 21.8547 7.80433 21.2937 8.36532L12.6748 16.9843C12.1138 17.5453 12.1138 18.4548 12.6748 19.0158L21.2937 27.6348C21.8547 28.1958 22.7643 28.1958 23.3253 27.6348C23.8862 27.0738 23.8862 26.1643 23.3253 25.6033L15.722 18Z" fill="currentColor"></path></svg>
+              </div>
+              <div>SHOP</div>
+            </div>
+            <div class="tp-shop__list">
+                {% for block in section.blocks %}
+                    {% assign product = all_products[block.settings.product] %}
+                    <div class="tp-shop__wrapper">
+                      <div class="tp-shop__list--single js-info-activate">
+                          <div class="tp-shop__list--single__image">
+                              <img width="100%" height="auto" src="{{ product.images[0].src | img_url:'master' }}">
+                          </div>
+                          <div class="tp-shop__list--single__content">
+                              <div class="tp-shop__list--single__content--title">{{ product.title }}</div>
+                              <div class="tp-shop__list--single__content--price">{{ product.price | money }}</div>
+                              <div data-video-time="{{ block.settings.timestampe }}" class="js-skip-video">
+                                <div data-video-time="{{ block.settings.timestampe }}" class="overlay-h"></div>
+                                <span class="p-b"><svg role="img" width="100%" height="100%" viewBox="0 0 40 40"><path filter="" d="M14.9765 29.3996C14.1117 29.3996 13.5 28.7316 13.5 27.654V12.2456C13.5 11.1788 14.1117 10.5 14.9765 10.5C15.3703 10.5 15.7224 10.6277 16.1365 10.8604L28.7505 18.312C29.6575 18.8615 30.0372 19.271 30.0372 19.9498C30.0372 20.6286 29.6575 21.0489 28.7505 21.5876L16.2949 28.9471C15.8097 29.238 15.4195 29.3996 14.9765 29.3996Z" fill="currentColor"></path></svg></span>
+                                <span class="p-c">Highlight</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tp-shop__list--single__info js-info">
+                          <div class="tp-shop__list--single__info--content">
+                              <div class="tp-shop__list--single__info--image">
+                                  <img width="100%" height="auto" src="{{ product.images[0].src | img_url:'master' }}">
+                              </div>
+                              <div class="tp-shop__list--single__info--title">{{ product.title }}</div>
+                              <div class="tp-shop__list--single__info--price">{{ product.price | money }}</div>
+                              <div class="tp-shop__list--single__info--description">Some random description</div>
+                          </div>
+                          <a href="{{ product.url }}" class="tp-shop__list--single__info--url">Shop Now</a>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{{ 'stream-video.js' | asset_url | script_tag }}
+{% schema %}
+{
+  "name": "Stream",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_repeater",
+      "name": "Products",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Single product"
+        },
+        {
+            "type": "text",
+            "id": "timestampe",
+            "label": "Time Stamp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stream"
+    }
+  ]
+}
+{% endschema %}

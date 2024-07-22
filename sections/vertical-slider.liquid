@@ -6,7 +6,7 @@
 {% if section.settings.section_img != blank %}
   .vertical-slider-{{section.id}}{
     background: url('{{ section.settings.section_img | img_url: 'master' }}');
-    loading="lazy"  
+    loading="lazy"
     background-size: cover;
     box-shadow: 0 19px 32px 10px #000 inset;
     background-position: center;
@@ -19,14 +19,14 @@
 {% endif %}
 
 .productpack {
-  width: 400px; 
+  width: 400px;
   height: 50vh;
   object-fit: contain;
 }
 
- 
-	.vertical-slider-{{section.id}} 
-    .swiper-container-vertical 
+
+	.vertical-slider-{{section.id}}
+    .swiper-container-vertical
     .swiper-button-next,
     .vertical-slider-{{section.id}}
     .swiper-button-prev {
@@ -47,9 +47,9 @@
 </style>
 
 
-<div class="vertical-slider-{{section.id}}" style="max-width: 100%;"> 
-  <div class="swiper swiperino"  style="max-width: 100%;"> 
-    <div class="swiper-wrapper" style="max-width: 100%;"> 
+<div class="vertical-slider-{{section.id}}" style="max-width: 100%;">
+  <div class="swiper swiperino"  style="max-width: 100%;">
+    <div class="swiper-wrapper" style="max-width: 100%;">
       <!-- Slides -->
       {%for block in section.blocks%}
       <div class="swiper-slide">
@@ -60,8 +60,8 @@
                     %}
                 </div>
                 <div class="texts">
-                  <h1 style=" color:{{ block.settings.text_color }}; word-break:keep-all;">  
-                    {{block.settings.text}} 
+                  <h1 style=" color:{{ block.settings.text_color }}; word-break:keep-all;">
+                    {{block.settings.text}}
                   </h1>
                   <p style="color:{{ block.settings.text_color }};">
                       {{block.settings.description}}
@@ -69,26 +69,26 @@
                   <div class="scontents-btn titanbutton">
                     <a href="{{ block.settings.button_url}}" style="text-decoration: none;">{{ block.settings.button_text }}</a>
                   </div>
-                </div>  
+                </div>
                 <div class="productimage">
                     {% render 'titan-image'
                       image: block.settings.image
-                    %}   
-                  <div class="swiper-button-next"></div> 
+                    %}
+                  <div class="swiper-button-next"></div>
                 </div>
         </div>
       </div>
         {%endfor%}
     </div>
-  </div> 
-    
-</div> 
+  </div>
 
- 
+</div>
+
+
 
 <script>
      var swiper = new Swiper(".swiperino", {
-   
+
 
   // Optional parameters
   direction: 'vertical',
@@ -100,8 +100,8 @@
 
   slidesPerView:1,
         spaceBetween: 200,
-   
-  
+
+
   keyboard: {
     enabled: true,
     onlyInViewport: false,
@@ -112,11 +112,11 @@
 
   controller: {
     inverse: true,
-  },  
+  },
   grabCursor: true,
- 
 
-  
+
+
   // If we need pagination
 
 
@@ -124,10 +124,6 @@
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
-  },
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
   },
 });
 </script>
@@ -137,12 +133,12 @@
 <style>
 /* Mobile and tablet */
 @media only screen and (max-width: 1020px) {
-  
+
     .vertical-slider-{{section.id}}
     .swiper-backface-hidden .swiper-slide {
       /* height: auto !important; */
     }
-  
+
    .vertical-slider-{{section.id}}{
     background: url('{{ section.settings.section_img | img_url: 'master' }}');
     background-size: cover;
@@ -151,11 +147,11 @@
 	height: 75vh;
 	padding-top: 10%;
   	}
-  
+
 	.productpack {
 	display: none;
 	}
-  
+
 	.productimage .titan-image img,
 	.productpack .titan-image img {
 	max-height: 23.5vh;
@@ -163,30 +159,30 @@
 	margin: auto;
     object-fit: contain;
 	}
-  
+
     .vertical-slider-{{section.id}}
 	.featured-content {
     max-width: 98vw;
     margin: auto;
 	display: flex !important;
 	flex-direction: column-reverse !important;
-	place-content: space-evenly; 
+	place-content: space-evenly;
 	height: 60vh;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.productimage {
 	height: 21.5vh;
 	}
-  
+
 	.texts {
 	max-width: 90vw;
 	text-align: -webkit-left;
     margin-left: 15%;
     margin-right: 5%;
     }
-  
-  	.vertical-slider-{{section.id}} 
+
+  	.vertical-slider-{{section.id}}
 	.titan-image,
   	.vertical-slider-{{section.id}} .titan-image img {
 	height: 21.5vh;
@@ -197,20 +193,20 @@
 	text-align: center;
 	text-transform: uppercase;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.swiper {
 	width: 100vw;
 	height: 60vh;
 	}
-	
+
   	.vertical-slider-{{section.id}}
   	.swiper-button-prev {
     transform: rotateZ(90deg);
     left: 90.8vw;
     top: 80%;
   	}
-  
+
     .vertical-slider-{{section.id}}
     .swiper-button-next {
     transform: rotateZ(90deg);
@@ -219,7 +215,7 @@
     left: 4vw;
   	}
 }
-  
+
 /* Desktop */
 
 @media only screen and (min-width: 1021px) {
@@ -230,7 +226,7 @@
     height: 40vh;
     width: 40vw;
 	  }
-  
+
     .vertical-slider-{{section.id}}
     .swiper-button-prev,
     .vertical-slider-{{section.id}}
@@ -255,21 +251,21 @@
 	  place-items: center;
 	  justify-content: space-evenly;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.productimage .titan-image img {
 	max-height: 100%;
 	width: 400px;
 	object-fit: contain;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.productimage {
 	width: 400px;
 	height: 50vh;
 	object-fit: contain;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.titan-image {
 	height: 50vh;
@@ -277,25 +273,25 @@
 	max-width: 400px;
 	object-fit: contain;
 	}
-  
+
   	.vertical-slider-{{section.id}} .titan-image img {
     height: 100%;
 	width: 100%;
 	max-width: 100%;
 	object-fit: contain;
 	}
-  
+
 	.productpack .titan-image img {
 	padding: 2%;
 	height: 95%;
 	}
-  
+
   	.vertical-slider-{{section.id}}
   	.swiper-button-prev {
 	transform: rotateZ(87deg);
 	left: 98.3vw;
 	}
-  
+
   	.vertical-slider-{{section.id}}
   	.swiper-button-next {
 	transform: rotateZ(90deg);
@@ -313,21 +309,21 @@
 	backface-visibility: hidden;
 	/* height: 50vh !important; */
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.swiper-button-prev:after,
   	.vertical-slider-{{section.id}}
 	.swiper-button-next:after {
 	font-size: 20px;
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.swiper-button-prev,
   	.vertical-slider-{{section.id}}
 	.swiper-button-next {
 	color: {{	section.settings.arrow_color}};
 	}
-  
+
   	.vertical-slider-{{section.id}}
 	.swiper-pagination-bullet {
 	background: transparent;
@@ -337,7 +333,7 @@
 	.scontents-btn a {
 	color: {{section.settings.button_text_color}};
 	}
-  
+
 	.scontents-btn {
 	width: 200px;
 	text-align: center;
@@ -345,25 +341,25 @@
 	background-color: {{section.settings.button_bg}};
 	border: 1px solid {{section.settings.button_border}};
 	}
-  
+
 	.scontents-btn:hover {
 	background: {{section.settings.button_bg_hover}};
 	}
 
 
   /* tablet */
-@media only screen 
-and (min-width: 768px) 
-and (max-width: 1021px) { 
-   
+@media only screen
+and (min-width: 768px)
+and (max-width: 1021px) {
+
   	.vertical-slider-{{section.id}}
 	.swiper {
 	width: 100vw;
 	height: 70vh;
 	}
-  
+
     .vertical-slider-{{section.id}}
-    .productimage .titan-image img, 
+    .productimage .titan-image img,
     .vertical-slider-{{section.id}}
     .productpack .titan-image img {
     max-height: 30.5vh;
@@ -371,23 +367,23 @@ and (max-width: 1021px) {
     margin: auto;
     object-fit: contain;
   	}
-  
- 	.vertical-slider-{{section.id}} 
+
+ 	.vertical-slider-{{section.id}}
 	.titan-image,
-  	.vertical-slider-{{section.id}} 
+  	.vertical-slider-{{section.id}}
   	.titan-image img {
 	height: 28.5vh;
 	}
-  
+
   	.vertical-slider-{{section.id}}
   	.productimage {
     height: 30.5vh;
 	}
  }
 
-  
+
 </style>
- 
+
 
 
 {% schema %}

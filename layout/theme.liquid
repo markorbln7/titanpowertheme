@@ -3,15 +3,19 @@
   <head>
 
 
-    
+
   <!-- Start of Shoplift scripts -->
   {% render 'shoplift' %}
   <!-- End of Shoplift scripts -->
-    
+
     {% render 'meta' %}
+
     {% render 'vwo' %}
     {% render 'seo' %}
+
     {% render 'meta-tags' →%}
+
+
     {% render 'theme-head-scripts' %}
     {%- render 'header-scripts.zipifypages', renderctx: 'thm' -%}{{ content_for_header }}
 
@@ -21,10 +25,10 @@
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
     %}
     {% render 'head-stylesheets' %}
-   
+
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-   
+
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
@@ -41,7 +45,7 @@
 
     {% render 'head-scripts' %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-    
+
     <style>  body.no-scroll {  overflow: hidden;  }  </style>
 
     {{ 'main.css' | asset_url | stylesheet_tag }}
@@ -51,19 +55,20 @@
     {{ 'override.css' | asset_url | stylesheet_tag }}
 
     {% render 'additional-third-party-scripts' %}
-  
-    
+
+
 </head>
 
   <body class="aha--{{ template.suffix }} gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
-
     {% sections 'header-group' %}
+
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
+      {% section 'stream' %}
       {% section 'footer' %}
     </main>
     {{ 'globallight.css' | asset_url | stylesheet_tag }}
@@ -78,7 +83,7 @@
 
     {% comment %} Do not delete below snippet file {% endcomment %}
     {% render 'theme-head-script' %}
-   
+
 
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>

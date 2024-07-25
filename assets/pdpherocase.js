@@ -1,3 +1,4 @@
+console.log('window.selectLogicsssss');
 const typeSelectors = document.querySelectorAll('.js-type-selector')
 const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -173,3 +174,14 @@ variantSelectorSecond.addEventListener('change', function() {
   addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
   addUpsell.setAttribute('data-addon-id', productId);
 });
+
+let mainVariantSelector = document.querySelector('.main-variant-selector');
+console.log(mainVariantSelector, 'mainVariantSelector')
+if(mainVariantSelector) {
+  mainVariantSelector.addEventListener('change', function() {
+    let variantId = mainVariantSelector.value;
+    let productId = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-variant');
+    window.products['1-product'] = productId;
+    console.log(window.products, 'win')
+  });
+}

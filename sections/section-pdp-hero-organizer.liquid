@@ -345,7 +345,7 @@
                     {% endif %}
                    <div style="position:absolute;left:-4000px;">
                     {% for variant in product_obj.variants %}
-                      <div data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                      <div data-image="{{ variant.image | img_url:'master' }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                     {% endfor %}
                   </div>
                 </div>

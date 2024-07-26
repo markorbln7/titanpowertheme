@@ -181,6 +181,8 @@ if(mainVariantSelector) {
   mainVariantSelector.addEventListener('change', function() {
     let variantId = mainVariantSelector.value;
     let productId = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-variant');
+    let imageSwitch = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-image');
+    document.querySelector('.js-main-image-change').src = imageSwitch;
     window.products['1-product'] = productId;
     console.log(window.products, 'win')
   });

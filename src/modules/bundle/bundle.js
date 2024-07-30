@@ -460,3 +460,21 @@ $(window).scroll(function () {
 })
 
 
+
+let mainVariantSelectors = document.querySelectorAll('.main-variant-selector');
+if(mainVariantSelectors) {
+  mainVariantSelectors.forEach(mainVariantSelector => {
+    mainVariantSelector.addEventListener('change', function() {
+      let parentElement = mainVariantSelector.parentElement;
+      let parentDiv = parentElement.parentElement;
+      let variantId = mainVariantSelector.value;
+      let productId = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-variant');
+      let productPrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-price');
+      let comparePrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-compare-price');
+      parentDiv.querySelector('.js-id-selector').setAttribute('data-item-id', productId);
+      parentDiv.querySelector('.js-regular-price').innerHTML = productPrice;
+      parentDiv.querySelector('.js-compare-price').innerHTML = comparePrice
+      console.log(parentDiv,parentElement,productId, 'productId')
+    });
+  });
+}

@@ -384,8 +384,29 @@
     "section_zigzag_zn78GD": {
       "type": "section-zigzag",
       "blocks": {
+        "zigzag_repeater_DQtffr": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify:\/\/shop_images\/The_cube_web_graphic2_copy.jpg",
+            "zigzag_first_title": "W Fast Charging",
+            "zigzag_second_title": "Interchangeable Heads",
+            "zigzag_first_copy": "Harness the power of 65W fast charging to rapidly refuel your devices. Whether you're at home, in the office, or on the go, this cable ensures your devices are charged at maximum speed, keeping you ready for anything.",
+            "zigzag_mob_copy": "Harness the power of 65W fast charging to rapidly refuel your devices. Whether you're at home, in the office, or on the go, this cable ensures your devices are charged at maximum speed, keeping you ready for anything.",
+            "zigzag_second_copy": "No more searching for the right cable. Our 4-in-1 Cable is the ultimate solution with its interchangeable heads. Effortlessly switch between USB-C & Lightning plugs, and between USB-A & USB-C connectors, making it the only cable you'll ever need for all your devices.",
+            "zigzag_first_progress": 0,
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 0,
+            "zigzag_second_progress_text": "",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "65",
+            "count_animation_end_second": "4"
+          }
+        },
         "zigzag_repeater_JWceJP": {
           "type": "zigzag_repeater",
+          "disabled": true,
           "settings": {
             "zigzag_reverse": false,
             "zigzag_image": "shopify:\/\/shop_images\/The_cube_web_graphic_copy.jpg",
@@ -402,26 +423,6 @@
             "zigzag_second_progress_info": "15W",
             "count_animation_end": "65W",
             "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_DQtffr": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": true,
-            "zigzag_image": "shopify:\/\/shop_images\/The_cube_web_graphic2_copy.jpg",
-            "zigzag_first_title": "Devices At A Time",
-            "zigzag_second_title": "Standard Plugs",
-            "zigzag_first_copy": "Never leave a device uncharged again. With multiple USB ports and the high-wattage socket, the Titan Cube allows simultaneous charging for up to 5 devices at once - laptops, phones, cameras, you name it.",
-            "zigzag_mob_copy": "Never leave a device uncharged again. With multiple USB ports and the high-wattage socket, the Titan Cube allows simultaneous charging for up to 5 devices at once - laptops, phones, cameras, you name it",
-            "zigzag_second_copy": "Traveling the world? No problem. This ultra-versatile adapter seamlessly converts between 4 standard plug types, ensuring a secure connection and charging compatibility in over 200 countries.",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "5",
-            "count_animation_end_second": "4"
           }
         },
         "zigzag_repeater_aBAyxa": {
@@ -470,8 +471,8 @@
         }
       },
       "block_order": [
-        "zigzag_repeater_JWceJP",
         "zigzag_repeater_DQtffr",
+        "zigzag_repeater_JWceJP",
         "zigzag_repeater_aBAyxa",
         "zigzag_repeater_hFwip6"
       ],

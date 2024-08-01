@@ -842,7 +842,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-svg, .logo {
+.bundle-overlay svg, .bundle-overlay .logo {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -893,7 +893,19 @@ select {
     box-shadow: 0 2px 5px 3px #00000012;
     border: 0px solid #ffffff;
     font-size: 16px;
-    width: 130px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.variant-selectors {
+    margin-top: 10px;
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        text-align: center;
+        color: #000;
+    }
 }
 
 .select-option {

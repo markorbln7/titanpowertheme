@@ -461,20 +461,55 @@ $(window).scroll(function () {
 
 
 
-let mainVariantSelectors = document.querySelectorAll('.main-variant-selector');
-if(mainVariantSelectors) {
-  mainVariantSelectors.forEach(mainVariantSelector => {
-    mainVariantSelector.addEventListener('change', function() {
-      let parentElement = mainVariantSelector.parentElement;
-      let parentDiv = parentElement.parentElement;
-      let variantId = mainVariantSelector.value;
-      let productId = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-variant');
-      let productPrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-price');
-      let comparePrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-compare-price');
-      parentDiv.querySelector('.js-id-selector').setAttribute('data-item-id', productId);
-      parentDiv.querySelector('.js-regular-price').innerHTML = productPrice;
-      parentDiv.querySelector('.js-compare-price').innerHTML = comparePrice
-      console.log(parentDiv,parentElement,productId, 'productId')
+// let mainVariantSelectors = document.querySelectorAll('.main-variant-selector');
+// if(mainVariantSelectors) {
+//   mainVariantSelectors.forEach(mainVariantSelector => {
+//     mainVariantSelector.addEventListener('change', function() {
+//       let parentElement = mainVariantSelector.parentElement;
+//       let parentDiv = parentElement.parentElement;
+//       let variantId = mainVariantSelector.value;
+//       let productId = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-variant');
+//       let productPrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-price');
+//       let comparePrice = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-compare-price');
+//       parentDiv.querySelector('.js-id-selector').setAttribute('data-item-id', productId);
+//       parentDiv.querySelector('.js-regular-price').innerHTML = productPrice;
+//       parentDiv.querySelector('.js-compare-price').innerHTML = comparePrice
+//       console.log(parentDiv,parentElement,productId, 'productId')
+//     });
+//   });
+// }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.product').forEach(productElement => {
+      const productId = productElement.getAttribute('data-product-id');
+      const selectors = productElement.querySelectorAll('.variant-selectors select');
+      const addToCartButton = productElement.querySelector('.js-id-selector');
+
+      function getVariantId(selectedOptions) {
+        const productVariants = window.productVariants[productId];
+        const variant = productVariants.find(variant =>
+          variant.options.every((option, index) => option === selectedOptions[index])
+        );
+        return variant ? variant.id : '';
+      }
+
+      function updateAddToCartButton() {
+        let selectedOptions = [];
+        selectors.forEach(selector => {
+          selectedOptions.push(selector.value);
+        });
+
+        const variantId = getVariantId(selectedOptions);
+
+        if(variantId) {
+            addToCartButton.setAttribute('data-item-id', variantId);
+        }
+      }
+
+      selectors.forEach(selector => {
+        selector.addEventListener('change', updateAddToCartButton);
+      });
+
+      updateAddToCartButton();
     });
   });
-}

@@ -1,0 +1,374 @@
+{{ 'section-bundle-builder.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle.css' | asset_url | stylesheet_tag }}
+<div class="bundle-overlay">
+  <svg height="200" width="200">
+    <circle class="circle" cx="100" cy="100" r="95" stroke="#60c655cc" stroke-width="10" fill-opacity="0" />
+  </svg>
+  <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#60c655cc" version="1.1" id="Capa_1" width="800px" height="70px" viewBox="0 0 560.317 560.316" xml:space="preserve">
+    <g>
+      <g>
+        <path d="M207.523,560.316c0,0,194.42-421.925,194.444-421.986l10.79-23.997c-41.824,12.02-135.271,34.902-135.57,35.833    C286.96,122.816,329.017,0,330.829,0c-39.976,0-79.952,0-119.927,0l-12.167,57.938l-51.176,209.995l135.191-36.806    L207.523,560.316z"/>
+      </g>
+    </g>
+    </svg></div>
+</div>
+
+{% liquid
+   assign section_title = section.settings.section_title
+   assign section_copy = section.settings.section_copy
+   assign free_shipping = section.settings.free_shipping
+   assign bundle_tracker = section.blocks | where: 'type', 'bundle_tracker'
+   assign bundle_collection = section.blocks | where: 'type', 'bundle_collection'
+%}
+<div class="bundle-image desktop bg-black">
+  <img class="max-w-[1140px] mx-auto" src="{{ section.settings.image | img_url: 'master' }}" alt="Bundle Image">
+</div>
+<div class="bundle-image mobile bg-black">
+  <img src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="Bundle Image">
+</div>
+<div class="new-bundle">{% render 'new-bundle-gifts' %}</div>
+<div class="get-started">
+    <a href="#bundle-collections">GET STARTED</a>
+</div>
+<div class="product-overlay">
+  <div class="close">
+      {% render 'icon-close' %}
+  </div>
+  <div class="product-overlay-image">
+      <img class="info-image" src="">
+  </div>
+</div>
+<div class="product-play-overlay">
+  <div class="close-play">
+      {% render 'icon-close' %}
+  </div>
+  <div class="product-overlay-video">
+    <video class="info-video lg:max-w-[75%] mx-auto rounded-[20px]" width="100%" height="100%" controls>
+      <source src="" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+<section class="section-bundle bundle-variant currency" data-currency-symbol="{{ shop.currency.symbol }}"">
+    <div class="section-bundle__container">
+        {% if section_title != blank %}
+            <header class="section-bundle__heading">
+                <h2 class="section-bundle__title color-black">{{ section_title }}</h2>
+                {% if section_copy != blank %}
+                    <p class="section-bundle__copy color-black">{{ section_copy }}</p>
+                {% endif %}
+            </header>
+        {% endif %}
+
+        {% comment %} BUNDLE PRICE TRACKER LINE {% endcomment %}
+        {% if bundle_tracker.size > 0 %}
+            <div class="section-bundle__tracker">
+                {% for block in bundle_tracker %}
+                    {% assign tracker_price = block.settings.tracker_price %}
+                    {% assign tracker_label = block.settings.tracker_label %}
+
+                    <div class="section-bundle__tracker-box">
+                        <div class="line line-left"></div>
+                        <div class="point">{{ tracker_price }}</div>
+                        <div class="line line-right"></div>
+                        {% if tracker_label != blank %}
+                            <span class="point-label">{{ tracker_label }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% comment %} BUNDLE CART ITEMS CAROUSEL {% endcomment %}
+        <div class="bundle-wrap">
+          <div class="section-bundle__cart-carousel swiper">
+              <div class="swiper-wrapper js-holder">
+                  {% for i in (1..12) %}
+                      <div class="swiper-slide">
+                          <div class="section-bundle__cart-carousel-item">
+                              <div class="col-quantity__button increase  p dm-sans-normal color-white text-center">+</div>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
+              <div class="swiper-button-next">
+              </div>
+
+              <div class="swiper-button-prev">
+              </div>
+              <div class="swiper-scrollbar"></div>
+          </div>
+        </div>
+
+        <div class="bundle-toggler">
+            <button class="js-bundle-toggle">HIDE BUNDLE</button>
+        </div>
+
+        {% comment %} BUNDLE COLLECTION PRODUCTS {% endcomment %}
+        {% if bundle_collection.size > 0 %}
+            <div class="section-bundle__collections" id="bundle-collections">
+              <div class="section-bundle__collection-tabs">
+                {% for block in bundle_collection %}
+                    {% assign collection = block.settings.collection %}
+                    {% if block.settings.collection_title_override != blank %}
+                        {% assign bundle_collection_title = block.settings.collection_title_override %}
+                    {% else %}
+                        {% assign bundle_collection_title = collection.title %}
+                    {% endif %}
+
+                    <button class="section-bundle__collection-tab{% if forloop.index == 1 %} active {% endif %}" data-tab="{{ forloop.index }}">
+                        {{ bundle_collection_title }}
+                    </button>
+                {% endfor %}
+              </div>
+
+              <div class="section-bundle__products-wrapper">
+                {% for block in bundle_collection %}
+                    {% assign collection = collections[block.settings.collection] %}
+                    {% if block.settings.collection_title_override != blank %}
+                        {% assign bundle_collection_title = block.settings.collection_title_override %}
+                    {% else %}
+                        {% assign bundle_collection_title = collection.title %}
+                    {% endif %}
+
+                    <div class="section-bundle__products-holder{% if forloop.index == 1 %} active{% endif %}"data-panel="{{ forloop.index }}">
+                        <h3 class="section-bundle__collection-title color-black">{{ bundle_collection_title }}</h3>
+                        <div class="section-bundle__products">
+                            {% for product in collection.products %}
+                                {% assign product_image = product.featured_image %}
+                                {% assign product_title = product.title %}
+                                {% assign product_price = product.price | money %}
+                                {% assign product_price_compared = product.compare_at_price | money %}
+
+                                <article class="section-bundle__product relative product" data-product-id="{{ product.id }}">
+                                  {% if  product.metafields.custom.video %}
+                                    <div data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="info-play-trigger">
+                                        <img data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="w-[53%] mx-auto" width="100%" height="100%" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-play-90.png?v=1715954554">
+                                    </div>
+                                  {% endif %}
+                                  <div data-image="{{product.images[2].src | img_url: 'master'}}" class="info-icon-trigger">i</div>
+                                    <figure class="section-bundle__product-image">
+                                        {{ product_image | image_url: width: 360 | image_tag: height: 360 }}
+                                    </figure>
+
+                                    <div class="section-bundle__product-details">
+                                        <h4 class="section-bundle__product-title">{{ product_title }}</h4>
+                                        <div class="section-bundle__product-prices">
+                                            <span class="section-bundle__product-price js-regular-price">{{ product_price }}</span>
+                                            {% if product_price_compared %}
+                                                <span class="section-bundle__product-price-compared js-compare-price">{{ product_price_compared }}</span>
+                                            {% endif %}
+                                        </div>
+                                         {% comment %} VARIANT SELECTOR START {% endcomment %}
+                                        {% if product.options_with_values.size  > 0 %}
+                                        <div class="variant-selectors" data-product-id="{{ product.id }}">
+                                          {% for option in product.options_with_values %}
+                                            {% if option.values.size > 1 %}
+                                            <label for="{{ option.name }}">{{ option.name }}:</label>
+                                            <select data-option-index="{{ forloop.index0 }}" class="{{option.name}}" data-var="{{forloop.index}}">
+                                              {% for values in option.values %}
+                                                    <option value="{{values}}">{{values}}</option>
+                                              {% endfor %}
+                                            </select>
+                                            {% endif %}
+                                          {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                       <div style="position:absolute;left:-4000px;">
+                                        {% for variant in product.variants %}
+                                          <div data-image="{{ variant.image | img_url:'master' }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                                        {% endfor %}
+                                        </div>
+                                        {% comment %} VARIANT SELECTOR END {% endcomment %}
+
+                                        {% comment %} Dummy text for now {% endcomment %}
+                                        {% if product.metafields.custom.ticks %}
+                                          {{product.metafields.custom.ticks | metafield_tag }}
+                                        {% endif %}
+
+                                        {% comment %} QTY THAT APPEARS ONCE PRODUCT IS ADDED TO BUNDLE {% endcomment %}
+                                        <div
+                                            {% comment %} style="display: none" {% endcomment %}
+                                            data-image = "{{ product_image | img_url: 'master' }}"
+                                            data-item-qty="0"
+                                            data-item-id="{{ product.selected_or_first_available_variant.id}}"
+                                            data-item-price="{{ product.selected_or_first_available_variant.price}}"
+                                            data-item-compare-price="{{ product.selected_or_first_available_variant.compare_at_price}}"
+                                            class="class-{{ product.id }} qty color-black flex items-center justify-center my-[20px] gap-[10px] js-id-selector">
+                                            <div style="padding-bottom:5px !important;" data-quantity="0" class="col-quantity__button  p dm-sans-normal color-white gray text-center minus pb-[5px]">-</div>
+                                            <div class="col-quantity__amount op js-qty-number">0</div>
+                                            <div data-quantity="1" class="col-quantity__button  p dm-sans-normal color-white text-center plus">+</div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <script>
+                                  window.productVariants = window.productVariants || {};
+                                  window.productVariants[{{ product.id }}] = [
+                                    {% for variant in product.variants %}
+                                    {
+                                      id: '{{ variant.id }}',
+                                      priceMoney: '{{ variant.price | money }}',
+                                      priceRaw: '{{ variant.price }}',
+                                      comparepriceMoney: '{{ variant.compare_at_price | money }}',
+                                      comparepriceRaw: '{{ variant.compare_at_price }}',
+                                      options: [
+                                        {% for option in variant.options %}
+                                        '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
+                                        {% endfor %}
+                                      ]
+                                    }{% unless forloop.last %}, {% endunless %}
+                                    {% endfor %}
+                                  ];
+                                </script>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+              </div>
+            </div>
+        {% endif %}
+    </div>
+    {% comment %} STICKY SECTION {% endcomment %}
+    <aside class="section-bundle__sticky">
+        <div class="subtotal">
+            <h4>Subtotal: </h4>
+            <div class="section-bundle__sticky-price">
+                <span class="js-sticky-price">0</span>
+            </div>
+            <div class="section-bundle__sticky-price-compare crossed">
+              <span class="js-sticky-price">0</span>
+          </div>
+            <div style="position:absolute; left:-4000px;" data-second-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_in_1_cable_icon_105861a6-53fe-4485-a59e-4ea02989852a.png?v=1702556590" data-first-image="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/3_in_1_cable_icon_105861a6-53fe-4485-a59e-4ea02989852a.png?v=1702556590" data-first="{{all_products['pd'].price }}" data-second="{{all_products['turbo-dock-holder-do-not-delete'].price }}" class="gift-tracker-holder relative h-[140px] w-[140px] items-center flex text-center mt-[-90px]">
+              <div class="left-to-gift w-full"></div>
+              <svg class="circle-chart absolute top-0 left-0 rotate-[270deg]" viewBox="0 0 180 180" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+                <circle class="circle-chart__background" stroke="#000" stroke-width="8" fill="none" cx="90" cy="90" r="85"></circle>
+                <circle class="circle-chart__circle" stroke="#00acc1" stroke-width="11" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" fill="none" cx="90" cy="90" r="85"></circle>
+              </svg>
+            </div>
+        </div>
+
+        <div class="section-bundle__sticky-checkout">
+            <div class="zeleno js-atc">Add To Cart</div>
+        </div>
+        <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
+    </aside>
+</section>
+<style>
+  .col-quantity__button {
+    font-size: 45px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    background: linear-gradient(66deg, rgba(96, 198, 85, .8) 12.82%, #5aef55c9 56.41%, #35ff2e);
+    box-shadow: 1px 2px 7px #b3b3b3d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .col-quantity__button.gray {
+    background: linear-gradient(66deg, rgb(151 151 151 / 80%) 12.82%, #656565c9 56.41%, #434343);
+    opacity: .5;
+  }
+  .col-quantity__amount {
+    color: #2b2b2b;
+    font-size: 44px;
+    opacity:.7;
+    font-weight:700;
+  }
+  .section-bundle__product ul {
+    color:black;
+    margin-left: -10px;
+    font-size: 13px;
+    margin-top:10px;
+  }
+  .section-bundle__product ul li::before {
+    content: "✓";
+    font-weight: 600;
+    color: #60c655;
+    margin-right: 5px;
+  }
+  #rebuy-cart {
+    display: block !important;
+  }
+
+</style>
+
+<script src="{{ 'section-bundle-atc.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Bundle Builder ATC",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Section Image",
+      "id": "image"
+    },
+    {
+      "type": "image_picker",
+      "label": "Section Image Mobile",
+      "id": "image_mobile"
+    },
+    {
+      "type": "text",
+      "label": "Section title",
+      "id": "section_title",
+      "default": "Build Your Own Bundle"
+    },
+    {
+      "type": "textarea",
+      "label": "Section copy",
+      "id": "section_copy",
+      "default": "Add your favorite Squatch goods and rack up the savings!"
+    },
+    {
+      "type": "textarea",
+      "label": "Free shipping sticky text",
+      "id": "free_shipping",
+      "default": "Free Shipping on orders over €65."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle_collection",
+      "name": "Bundle collection",
+      "settings": [
+        {
+          "type": "collection",
+          "label": "Select collection",
+          "id": "collection"
+        },
+        {
+          "type": "text",
+          "label": "Collection title manual input",
+          "id": "collection_title_override"
+        }
+      ]
+    },
+    {
+      "type": "bundle_tracker",
+      "name": "Bundle tracker",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Tracker price",
+          "id": "tracker_price"
+        },
+        {
+          "type": "text",
+          "label": "Tracker label",
+          "id": "tracker_label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder ATC"
+    }
+  ]
+}
+{% endschema %}

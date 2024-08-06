@@ -142,8 +142,9 @@
 
                                 <article class="section-bundle__product relative product" data-product-id="{{ product.id }}">
                                   {% if  product.metafields.custom.video %}
-                                    <div data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="info-play-trigger">
-                                        <img data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="w-[53%] mx-auto" width="100%" height="100%" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-play-90.png?v=1715954554">
+                                    <div data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="info-play-trigger relative cursor-pointer">
+                                        <div style="display:block !important;z-index:999999" data-video="{{product.metafields.custom.video.value.sources[1].url }}" class="overlay absolute top-0 left-0 w-full h-full js-video-trig"></div>
+                                        {% render 'video-animated' %}
                                     </div>
                                   {% endif %}
                                   <div data-image="{{product.images[2].src | img_url: 'master'}}" class="info-icon-trigger">i</div>

@@ -871,12 +871,14 @@
     transition: all .3s ease-in-out;
 }
 
-svg,
-.logo {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
+.bundle-overlay {
+    svg,
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
 }
 
 .logo {
@@ -938,5 +940,20 @@ select {
         margin-bottom: 5px;
         text-align: center;
         color: #000;
+    }
+}
+.aha--new-bundle-variant-atc-direct {
+    .info-play-trigger {
+        background:transparent;
+        display: block !important;
+        width:40px;
+        height: 40px;
+        top:15px;
+    }
+    .section-bundle__sticky {
+        z-index: 999999999;
+    }
+    .section-bundle__tracker.tracker-fixed {
+        z-index: 9999999999;
     }
 }

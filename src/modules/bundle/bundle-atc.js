@@ -449,7 +449,7 @@ closeBtn.addEventListener('click', (e) => {
     document.querySelector('html').classList.remove('no-scroll')
 })
 
-let infoPlayTrigers = document.querySelectorAll('.info-play-trigger');
+let infoPlayTrigers = document.querySelectorAll('.js-video-trig');
 let closePlayBtn = document.querySelector('.close-play');
 infoPlayTrigers.forEach((infoTriger) => {
     infoTriger.addEventListener('click', (e) => {

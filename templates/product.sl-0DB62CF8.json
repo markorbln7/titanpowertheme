@@ -9,6 +9,11 @@
 */
 {
   "sections": {
+    "zp-product-header-content": {
+      "type": "product-header-content-zipifypages",
+      "settings": {
+      }
+    },
     "section_pdp_hero_case_iktAWH": {
       "type": "section-pdp-hero-case",
       "blocks": {
@@ -95,11 +100,6 @@
         "product_highlighted_message": "50% OFF WHEN YOU GET WITH THE 4-IN-1 CABLE"
       }
     },
-    "zp-product-header-content": {
-      "type": "product-header-content-zipifypages",
-      "settings": {
-      }
-    },
     "slideshow_NnVUdC": {
       "type": "slideshow",
       "blocks": {
@@ -127,6 +127,7 @@
       "block_order": [
         "slide_GbNkyE"
       ],
+      "disabled": true,
       "custom_css": [
         "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}"
       ],
@@ -894,8 +895,8 @@
     }
   },
   "order": [
-    "section_pdp_hero_case_iktAWH",
     "zp-product-header-content",
+    "section_pdp_hero_case_iktAWH",
     "slideshow_NnVUdC",
     "product_icons_zzERAK",
     "section_text_with_icons_3b7KcJ",

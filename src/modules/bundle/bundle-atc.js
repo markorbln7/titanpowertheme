@@ -14,6 +14,7 @@ const generateCart = () => {
     cartSample = {
         "items":[]
     }
+    let totalQty = 0;
     activeProduct.forEach((product) => {
         let image = product.getAttribute('data-image')
         let id = product.getAttribute('data-item-id')
@@ -29,6 +30,32 @@ const generateCart = () => {
             "image":image
         })
     })
+    let firstGift = parseInt(document.querySelector('.first-gift').getAttribute('data-gift-ammount'))
+    let firstGiftImage = document.querySelector('.first-gift img').src
+    let secondGift = parseInt(document.querySelector('.second-gift').getAttribute('data-gift-ammount'))
+    let secondGiftImage = document.querySelector('.second-gift img').src
+    cartSample.items.forEach(item => {
+        totalQty += parseInt(item.price * item.quantity);
+    });
+    if(totalQty >= firstGift) {
+        cartSample.items.push({
+            "quantity":1,
+            "variant_id":42160297509042,
+            "comparePrice":0,
+            "price":0,
+            "image":firstGiftImage
+        })
+    }
+    if(totalQty >= secondGift) {
+        cartSample.items.push({
+            "quantity":1,
+            "variant_id":42160297509042,
+            "comparePrice":0,
+            "price":0,
+            "image":secondGiftImage
+        })
+    }
+    console.log(firstGift,secondGift,totalQty, 'totalQty')
     return cartSample;
 }
 

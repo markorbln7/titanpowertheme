@@ -375,8 +375,8 @@ async function refreshCart() {
         }
         throw new Error(`Failed to get request, Shopify returned ${result.status} ${result.statusText}`);
     }
-    const cartSymbol = await getCart();
-    const currencySymbol = cartSymbol.currency;
+    let cartSymbol = await getCart();
+    let currencySymbol = cartSymbol.currency;
     if(currencySymbol == 'USD') {
         currencySymbol = '$'
     }

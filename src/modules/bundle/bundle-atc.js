@@ -329,6 +329,9 @@ async function refreshCart() {
     if(currencySymbol == 'EUR') {
         currencySymbol = '€'
     }
+    if(currencySymbol == 'GBP') {
+        currencySymbol = '£'
+    }
     const formattedPrice = currencySymbol + (totalPrice/100).toFixed(2)
     const formattedPriceCompare = currencySymbol + (comparePrice/100).toFixed(2)
     const totalPriceElement = document.querySelector('.section-bundle__sticky-price');

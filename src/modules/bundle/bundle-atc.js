@@ -305,15 +305,22 @@ async function refreshCart() {
     });
 
     console.log(totalQty, 'duzina')
-    if(totalQty >= 5) {
+    if(totalQty >= 5 && totalQty < 7) {
         totalPrice = totalPrice * 0.9;
-    }
-    if(totalQty >= 7) {
+        console.log('usao u 5')
+    } else if(totalQty >= 7 && totalQty < 10) {
+        console.log('usao u 7')
         totalPrice = totalPrice * 0.7;
-    }
-    if(totalQty > 10) {
+    } else if(totalQty >= 10) {
+        console.log('usao u 10')
         totalPrice = totalPrice * 0.6;
     }
+    // if(totalQty >= 7) {
+    //     totalPrice = totalPrice * 0.7;
+    // }
+    // if(totalQty > 10) {
+    //     totalPrice = totalPrice * 0.6;
+    // }
     async function getCart() {
         const result = await fetch("/cart.json");
         if (result.status === 200) {

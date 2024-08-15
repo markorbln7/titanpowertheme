@@ -22,6 +22,7 @@ const generateCart = () => {
         let price = product.getAttribute('data-item-price')
         let comparePrice = product.getAttribute('data-item-compare-price')
         cartSample.items.push({
+            "type":"product",
             "id":id,
             "quantity":quantity,
             "variant_id":42160297509042,
@@ -39,6 +40,7 @@ const generateCart = () => {
     });
     if(totalQty >= firstGift) {
         cartSample.items.push({
+            "type":"gift",
             "quantity":1,
             "variant_id":42160297509042,
             "comparePrice":0,
@@ -48,6 +50,7 @@ const generateCart = () => {
     }
     if(totalQty >= secondGift) {
         cartSample.items.push({
+            "type":"gift",
             "quantity":1,
             "variant_id":42160297509042,
             "comparePrice":0,
@@ -168,72 +171,6 @@ if (bundleAtcButtons) {
     })
 }
 
-async function getCart() {
-    const cart = {
-        "items":[
-            {
-               "id":42160297509042,
-               "properties":{
-
-               },
-               "quantity":1,
-               "variant_id":42160297509042,
-               "key":"42160297509042:551d63083b1513a1b9b73a2587483f7e",
-               "title":"Titan Smart iPhone Cable™ - 4ft (1.2m)",
-               "price":230000,
-               "original_price":230000,
-               "presentment_price":2300,
-               "discounted_price":230000,
-               "line_price":230000,
-               "original_line_price":230000,
-               "total_discount":0,
-               "discounts":[
-
-               ],
-               "sku":"12829225-china-for-iphone-black-1-2m",
-               "grams":0,
-               "vendor":"Titan Power Plus",
-               "taxable":true,
-               "product_id":7383457628338,
-               "product_has_only_default_variant":false,
-               "gift_card":false,
-               "final_price":230000,
-               "final_line_price":230000,
-               "url":"/products/the-titan-smart-cable%E2%84%A2-bundle-offer?variant=42160297509042",
-               "featured_image":{
-                  "aspect_ratio":1,
-                  "alt":"Titan Smart iPhone Cable™",
-                  "height":549,
-                  "url":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/ProductImagesIndividual-TitanCable.jpg?v=1701363873",
-                  "width":549
-               },
-               "image":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/ProductImagesIndividual-TitanCable.jpg?v=1701363873",
-               "handle":"the-titan-smart-cable™-bundle-offer",
-               "requires_shipping":true,
-               "product_type":"",
-               "product_title":"Titan Smart iPhone Cable™",
-               "product_description":"Say goodbye to broken cables and slow charging with the unbreakable Titan Cable—built to outlast your device with its durable, unbreakable design!\n\nUltra-Fast Charging\nUnique 90° head\nLifetime Warranty\n",
-               "variant_title":"4ft (1.2m)",
-               "variant_options":[
-                  "4ft (1.2m)"
-               ],
-               "options_with_values":[
-                  {
-                     "name":"Length",
-                     "value":"4ft (1.2m)"
-                  }
-               ],
-               "line_level_discount_allocations":[
-
-               ],
-               "line_level_total_discount":0,
-               "has_components":false
-            }
-         ]
-    }
-    return cart;
-}
-
 async function refreshCart() {
     const cart = cartSample;
     const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');
@@ -287,6 +224,12 @@ async function refreshCart() {
         }
     });
     let allQty = document.querySelectorAll('.js-qty-number');
+    let qty = 0;
+    cart.items.forEach(item => {
+        if(item.type !== 'gift') {
+            qty += parseInt(item.quantity);
+        }
+    });
     let points = document.querySelectorAll('.point');
     let allLines = document.querySelectorAll('.line');
     let allNumber = 0;
@@ -303,12 +246,12 @@ async function refreshCart() {
             allLine.style.backgroundColor = '#adadad'
         }
     })
-    for (let z = 0; z < allNumber; z++) {
+    for (let z = 0; z < qty; z++) {
         if(points[z]) {
             points[z].style.backgroundColor = '#60c655';
         }
     }
-    let limiter = allNumber * 2 - 1;
+    let limiter = qty * 2 - 1;
     for (let k = 0; k < limiter; k++) {
         if(allLines[k]) {
             allLines[k].style.backgroundColor = '#60c655';
@@ -353,9 +296,12 @@ async function refreshCart() {
     let totalQty = 0;
 
     cart.items.forEach(item => {
-        totalQty += parseInt(item.quantity);
-        totalPrice += item.price * item.quantity;
-        comparePrice += item.comparePrice * item.quantity;
+        if(item.type !== 'gift') {
+            console.log(item.type, 'gift')
+            totalQty += parseInt(item.quantity);
+            totalPrice += item.price * item.quantity;
+            comparePrice += item.comparePrice * item.quantity;
+        }
     });
 
     console.log(totalQty, 'duzina')

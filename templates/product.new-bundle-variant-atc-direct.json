@@ -134,11 +134,12 @@
       ],
       "custom_css": [
         ".variant-selectors{margin-top:0}",
-        "@media(max-width:950px){.section-bundle__sticky-checkout{width:100%;margin-left:0;margin-top:15px}}",
+        "@media(max-width:950px){.section-bundle__sticky-checkout{width:100%;margin:15px 0 0}}",
         "select{margin-top:12px;box-shadow:0 2px 3px 2px #00000024}",
-        "@media(max-width:767px){.bundle-gifts-wrapper{padding:0!important}.section-bundle__products{column-gap:7px}.section-bundle__container{padding-inline:12px}}",
-        "@media(max-width:768px){.bundle-gifts__single.second-gift{margin-top:-20px}}",
-        ".section-bundle__product{padding:7px}"
+        "@media(max-width:950px){.bundle-gifts-wrapper{padding:0!important}.section-bundle__products{column-gap:7px}.section-bundle__container{padding-inline:12px}}",
+        "@media(max-width:950px){.bundle-gifts__single.second-gift{margin-top:-20px}}",
+        ".section-bundle__product{padding:7px}",
+        ".section-bundle__product ul li::before{margin:0 2px 0 5px}"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/Titan_Kit_bundle_builder_banner_titan_power_plus_1.jpg",

@@ -24,18 +24,18 @@
             "collection_title_override": "CABLES"
           }
         },
-        "bundle_collection_XADcqL": {
-          "type": "bundle_collection",
-          "settings": {
-            "collection": "wireless-new",
-            "collection_title_override": "WIRELESS"
-          }
-        },
         "bundle_collection_MpwGHt": {
           "type": "bundle_collection",
           "settings": {
             "collection": "plugs",
             "collection_title_override": "CHARGERS"
+          }
+        },
+        "bundle_collection_XADcqL": {
+          "type": "bundle_collection",
+          "settings": {
+            "collection": "wireless-new",
+            "collection_title_override": "WIRELESS"
           }
         },
         "bundle_collection_jJA3hB": {
@@ -118,8 +118,8 @@
       },
       "block_order": [
         "bundle_collection_PajyGe",
-        "bundle_collection_XADcqL",
         "bundle_collection_MpwGHt",
+        "bundle_collection_XADcqL",
         "bundle_collection_jJA3hB",
         "bundle_tracker_pPCcTQ",
         "bundle_tracker_7T3LMa",
@@ -133,13 +133,13 @@
         "bundle_tracker_gehMX8"
       ],
       "custom_css": [
-        ".variant-selectors{margin-top:0}",
-        "@media(max-width:950px){.section-bundle__sticky-checkout{width:100%;margin:15px 0 0}}",
-        "select{margin-top:12px;box-shadow:0 2px 3px 2px #00000024}",
-        "@media(max-width:950px){.bundle-gifts-wrapper{padding:0!important}.section-bundle__products{column-gap:7px}.section-bundle__container{padding-inline:12px}}",
-        "@media(max-width:950px){.bundle-gifts__single.second-gift{margin-top:-20px}}",
-        ".section-bundle__product{padding:7px}",
-        ".section-bundle__product ul li::before{margin:0 2px 0 5px}"
+        ".variant-selectors {margin-top: 0;}",
+        "@media (max-width: 950px) {.section-bundle__sticky-checkout {width: 100%; margin: 15px 0 0; }}",
+        "select {margin-top: 12px; box-shadow: 0 2px 3px 2px #00000024;}",
+        "@media (max-width: 950px) {.bundle-gifts-wrapper {padding: 0 !important; } .section-bundle__products {column-gap: 7px; } .section-bundle__container {padding-inline: 12px; }}",
+        "@media (max-width: 950px) {.bundle-gifts__single.second-gift {margin-top: -20px; }}",
+        ".section-bundle__product {padding: 7px;}",
+        ".section-bundle__product ul li::before {margin: 0 2px 0 5px;}"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/Titan_Kit_bundle_builder_banner_titan_power_plus_1.jpg",

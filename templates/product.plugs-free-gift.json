@@ -51,6 +51,70 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
+    "testimonial_slider_7RJDTC": {
+      "type": "testimonial-slider",
+      "settings": {
+        "title": "",
+        "subtitle": "Titan Power+ - Loved and trusted by thousands.."
+      }
+    },
+    "loox_carousel_reviews_wfMhex": {
+      "type": "loox-carousel-reviews",
+      "custom_css": [
+
+      ],
+      "settings": {
+        "max_width": 1080,
+        "arrows_color": "#000000",
+        "dots_color": "",
+        "button_color": "",
+        "show_more": true,
+        "only_photos": true,
+        "use_widget_font": false,
+        "product_handle": ""
+      }
+    },
+    "product_icons_jkQKR3": {
+      "type": "product-icons",
+      "blocks": {
+        "icons_3GEHTq": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/icons8-storage-box-96.png",
+            "text": "Huge Storage Capacity"
+          }
+        },
+        "icons_jiTpH9": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/icons8-arrow-down-90.png",
+            "text": "Compressible for Great Fit"
+          }
+        },
+        "icons_p6QkY6": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/icons8-muscle-100_12ef8d13-ef3a-4bc6-a1fa-b1e567f8dc43.webp",
+            "text": "Ultra Durable Design"
+          }
+        },
+        "icons_GVypU8": {
+          "type": "icons",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-warranty.png",
+            "text": "2-Year Warranty"
+          }
+        }
+      },
+      "block_order": [
+        "icons_3GEHTq",
+        "icons_jiTpH9",
+        "icons_p6QkY6",
+        "icons_GVypU8"
+      ],
+      "settings": {
+      }
+    },
     "image_with_text_hgpCLK": {
       "type": "image-with-text",
       "blocks": {
@@ -136,7 +200,7 @@
         "desktop_content_position": "top",
         "desktop_content_alignment": "left",
         "content_layout": "no-overlap",
-        "color_scheme": "",
+        "color_scheme": "background-2",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
         "padding_top": 36,
@@ -182,7 +246,7 @@
         "desktop_content_position": "top",
         "desktop_content_alignment": "left",
         "content_layout": "no-overlap",
-        "color_scheme": "",
+        "color_scheme": "background-2",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
         "padding_top": 36,
@@ -228,11 +292,56 @@
         "desktop_content_position": "top",
         "desktop_content_alignment": "left",
         "content_layout": "no-overlap",
-        "color_scheme": "",
+        "color_scheme": "background-2",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "rich_text_e6FWBh": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_LNVLTW": {
+          "type": "heading",
+          "settings": {
+            "heading": "ORDER YOURS BELOW",
+            "heading_size": "h0"
+          }
+        },
+        "text_gDRbit": {
+          "type": "text",
+          "settings": {
+            "text": ""
+          }
+        },
+        "button_3bwpUA": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_LNVLTW",
+        "text_gDRbit",
+        "button_3bwpUA"
+      ],
+      "custom_css": [
+
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 68,
+        "padding_bottom": 0
       }
     },
     "section_pdp_hero_case_VY9NKa": {
@@ -247,17 +356,6 @@
             "product_title_custom": "",
             "upsell_product_discount": "",
             "upsell_message": "CHOOSE YOUR DISCOUNT"
-          }
-        },
-        "product_repeater_QFfyDk": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "2-product",
-            "product_obj": "titan-m-travel-case™",
-            "upsell_product_image": "shopify:\/\/shop_images\/titan-power-plus-titan-travel-case_1d4be09e-96e7-4c49-87a8-853729d4935b.png",
-            "product_title_custom": "",
-            "upsell_product_discount": "",
-            "upsell_message": ""
           }
         },
         "props_MLQBYL": {
@@ -311,7 +409,6 @@
       },
       "block_order": [
         "product_repeater_cJqGpN",
-        "product_repeater_QFfyDk",
         "props_MLQBYL",
         "props_mqnypn",
         "props_rtV34X",
@@ -327,78 +424,14 @@
         ".pdp-hero__upsell-price {text-align: -webkit-center;}"
       ],
       "settings": {
-        "product_main": "titan-travel-case-5",
+        "product_main": "titan-cube™-free-gift",
         "logo_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-        "product_subtitle": "\"Nothing better than cleaner draws and stopping my tech flying around my suitcase\"",
+        "product_subtitle": "\"One adapter to rule them all on my global adventures!\"",
         "discount_content": "33% OFF",
         "atc_label": "In stock, limited availability",
         "product_highlighted": "3-x-titan-smart-cable™-black-friday",
         "product_highlighted_title": "Add 3x Titan Cables",
         "product_highlighted_message": "65% OFF - WHEN BUYING WITH CASE"
-      }
-    },
-    "product_icons_jkQKR3": {
-      "type": "product-icons",
-      "blocks": {
-        "icons_3GEHTq": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/icons8-storage-box-96.png",
-            "text": "Huge Storage Capacity"
-          }
-        },
-        "icons_jiTpH9": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/icons8-arrow-down-90.png",
-            "text": "Compressible for Great Fit"
-          }
-        },
-        "icons_p6QkY6": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/icons8-muscle-100_12ef8d13-ef3a-4bc6-a1fa-b1e567f8dc43.webp",
-            "text": "Ultra Durable Design"
-          }
-        },
-        "icons_GVypU8": {
-          "type": "icons",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-warranty.png",
-            "text": "2-Year Warranty"
-          }
-        }
-      },
-      "block_order": [
-        "icons_3GEHTq",
-        "icons_jiTpH9",
-        "icons_p6QkY6",
-        "icons_GVypU8"
-      ],
-      "settings": {
-      }
-    },
-    "testimonial_slider_7RJDTC": {
-      "type": "testimonial-slider",
-      "settings": {
-        "title": "",
-        "subtitle": "Titan Power+ - Loved and trusted by thousands.."
-      }
-    },
-    "loox_carousel_reviews_wfMhex": {
-      "type": "loox-carousel-reviews",
-      "custom_css": [
-
-      ],
-      "settings": {
-        "max_width": 1080,
-        "arrows_color": "#000000",
-        "dots_color": "",
-        "button_color": "",
-        "show_more": true,
-        "only_photos": true,
-        "use_widget_font": false,
-        "product_handle": ""
       }
     },
     "section_pdp_hero_secondary_PkFqfF": {
@@ -412,16 +445,6 @@
             "product_title_custom": "",
             "upsell_product_discount": "",
             "upsell_message": "LIMITED STOCK OFFER  GET 5% EXTRA DISCOUNT"
-          }
-        },
-        "product_repeater_CrxLyL": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "",
-            "product_obj": "titan-travel-case",
-            "product_title_custom": "",
-            "upsell_product_discount": "",
-            "upsell_message": ""
           }
         },
         "props_TdEche": {
@@ -484,7 +507,6 @@
       },
       "block_order": [
         "product_repeater_gDAyHe",
-        "product_repeater_CrxLyL",
         "props_TdEche",
         "props_KUtiyk",
         "props_LdBL8X",
@@ -493,7 +515,6 @@
         "icons_rkRiG4",
         "icons_KF6jUW"
       ],
-      "disabled": true,
       "settings": {
         "product_main": "titan-travel-case",
         "logo_image": "shopify:\/\/shop_images\/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
@@ -505,49 +526,28 @@
         "product_highlighted_message": "65% OFF - WHEN BUYING WITH THE CASE"
       }
     },
-    "rich_text_e6FWBh": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_LNVLTW": {
-          "type": "heading",
-          "settings": {
-            "heading": "Why choose a Titan Travel Case?",
-            "heading_size": "h0"
-          }
-        },
-        "text_gDRbit": {
-          "type": "text",
-          "settings": {
-            "text": ""
-          }
-        },
-        "button_3bwpUA": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_LNVLTW",
-        "text_gDRbit",
-        "button_3bwpUA"
-      ],
-      "custom_css": [
-
-      ],
+    "section_pdp_hero_organizer_d9dRbG": {
+      "type": "section-pdp-hero-organizer",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 68,
-        "padding_bottom": 16
+        "product_main": "",
+        "product_subtitle": "",
+        "discount_content": "36% OFF",
+        "atc_label": "96% OF the reviews for this item are positive",
+        "product_highlighted": "",
+        "product_highlighted_title": "",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+      }
+    },
+    "section_pdp_hero_organizer_qanYe7": {
+      "type": "section-pdp-hero-organizer",
+      "settings": {
+        "product_main": "",
+        "product_subtitle": "",
+        "discount_content": "36% OFF",
+        "atc_label": "96% OF the reviews for this item are positive",
+        "product_highlighted": "",
+        "product_highlighted_title": "",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
       }
     },
     "image_with_text_YMUnc3": {
@@ -581,6 +581,7 @@
         "text_x8dEVL",
         "button_m8bkJW"
       ],
+      "disabled": true,
       "custom_css": [
 
       ],
@@ -625,6 +626,7 @@
       "block_order": [
         "slide_HkLJfQ"
       ],
+      "disabled": true,
       "settings": {
         "layout": "full_bleed",
         "slide_height": "medium",
@@ -966,16 +968,18 @@
   "order": [
     "zp-product-header-content",
     "slideshow_YRPeni",
+    "testimonial_slider_7RJDTC",
+    "loox_carousel_reviews_wfMhex",
+    "product_icons_jkQKR3",
     "image_with_text_hgpCLK",
     "image_with_text_mChUeC",
     "image_with_text_6cDCYW",
     "image_with_text_hDNDhw",
-    "section_pdp_hero_case_VY9NKa",
-    "product_icons_jkQKR3",
-    "testimonial_slider_7RJDTC",
-    "loox_carousel_reviews_wfMhex",
-    "section_pdp_hero_secondary_PkFqfF",
     "rich_text_e6FWBh",
+    "section_pdp_hero_case_VY9NKa",
+    "section_pdp_hero_secondary_PkFqfF",
+    "section_pdp_hero_organizer_d9dRbG",
+    "section_pdp_hero_organizer_qanYe7",
     "image_with_text_YMUnc3",
     "slideshow_4Brfdt",
     "section_zigzag_zn78GD",

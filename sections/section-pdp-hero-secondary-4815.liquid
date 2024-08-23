@@ -31,6 +31,7 @@
   assign product_repeater = section.blocks | where: 'type', 'product_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
+  assign accRepeater = section.blocks | where: 'type', 'accesories'
 %}
 
 <section class="section-pdp-hero section-pdp-hero-secondary js-scroll">
@@ -107,6 +108,15 @@
           <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,131)</span>
         </div>
         <div class="pdp-hero__heading">
+          {% if section.settings.promo_line %}
+            <div class="promo_line">
+              <div>
+                <span class="green-dot"></span>
+                <span>{{ section.settings.promo_line }}</span>
+              </div>
+              <span class="promo_line_image"><img width="100%" height="auto" src="{{ section.settings.product_line_image | img_url:'master' }}"></span>
+            </div>
+          {% endif %}
           <h2 class="pdp-hero__product-title">{{ mainProduct.title }}</h2>
           {% if productSubtitle != blank %}
             <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
@@ -266,6 +276,11 @@
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper scroll-reveal">
+          {% if atcLabel != blank %}
+            <p class="pdp-hero__atc-label">
+              {{ atcLabel }}
+            </p>
+          {% endif %}
           <div
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
@@ -273,12 +288,39 @@
           >
             ADD TO CART
           </div>
-          {% if atcLabel != blank %}
-            <p class="pdp-hero__atc-label">
-              {{ atcLabel }}
-            </p>
-          {% endif %}
         </div>
+        {% if accRepeater.size > 0 %}
+          <h4 class="pdp-hero__upsell-title text-center">
+            Titan Accessories:
+          </h4>
+          <div class="acc">
+            {% for block in accRepeater %}
+              {% assign acc_text = block.settings.acc_title %}
+              {% assign acc_product = block.settings.acc_product %}
+              {% assign acc_image = block.settings.acc_image %}
+              <div class="acc_single" data-product-id="{{ acc_product.first_available_variant.id }}">
+                <div class="acc_single_overlay"></div>
+                <div class="acc_single_content">
+                  <div class="acc_single__title">{{ acc_text }}</div>
+                  <div class="acc_single_content--price">
+                    <div class="pdp-hero__extra-checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="acc_single__price">{{ acc_product.first_available_variant.price | money }}</div>
+                      <div class="acc_single__compareprice">{{ acc_product.first_available_variant.compare_at_price | money }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc_single_image">
+                  {% render 'titan-image', image: acc_image %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
 
         {% if propsRepeater.size > 0 %}
           <div class="pdp-hero__props">
@@ -452,6 +494,17 @@
   "name": "PDP Hero Secondary",
   "settings": [
     {
+      "type": "text",
+      "id": "promo_line",
+      "label": "Promo Line",
+      "default":"Order by Aug 26 for FREE Cable Holder"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_line_image",
+      "label": "Promo Line image"
+    },
+    {
       "type": "product",
       "id": "product_main",
       "label": "Select main product"
@@ -577,6 +630,27 @@
           "type": "text",
           "id": "pdp_hero_icon_text",
           "label": "Gallery icon text"
+        }
+      ]
+    },
+    {
+      "type": "accesories",
+      "name": "Accessories",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "acc_image",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "product",
+          "id": "acc_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "acc_title",
+          "label": "Product title"
         }
       ]
     }

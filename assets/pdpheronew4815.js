@@ -94,6 +94,14 @@ addUpsell.addEventListener('click', (e) => {
     }
 })
 
+let accTrigger = document.querySelectorAll('.acc_single_overlay')
+accTrigger.forEach(acc => {
+    acc.addEventListener('click', (e) => {
+      let panel = acc.parentNode
+      panel.classList.toggle('selected')
+    })
+})
+
 console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {
     addToCart.addEventListener('click', (e) => {
@@ -119,6 +127,17 @@ addToCarts.forEach(addToCart => {
           }
         ]
       }
+      let accSelector = document.querySelectorAll('.selected')
+      console.log(accSelector, 'accSelector');
+      accSelector.forEach(acc => {
+          let product = acc.getAttribute('data-product-id')
+          console.log(product, 'productacc');
+          addItems.push({
+            id: product,
+            quantity: 1
+          })
+      })
+      console.log(addItems, 'addItems');
       const formData = {
         items: addItems
       }

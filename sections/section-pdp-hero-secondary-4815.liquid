@@ -268,7 +268,11 @@
                     <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
                   </div>
                 </div>
+                {% if section.settings.product_highlighted_image_custom %}
+                  <img width="100%" height="auto" src="{{ section.settings.product_highlighted_image_custom | img_url:'master' }}">
+                {% else %}
                 {% render 'titan-image', image: product_highlighted_image %}
+                {% endif %}
               </div>
             </div>
           {% endif %}
@@ -540,6 +544,11 @@
       "type": "product",
       "id": "product_highlighted",
       "label": "Highlighted upsell product"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_highlighted_image_custom",
+      "label": "Highlighted upsell product image"
     },
     {
       "type": "text",

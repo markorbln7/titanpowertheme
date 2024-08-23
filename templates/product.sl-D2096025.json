@@ -227,16 +227,13 @@
         "bundle_tracker_gehMX8"
       ],
       "custom_css": [
-        ".bundle-toggler {display: none;}",
-        ".section-bundle__collection-tabs {padding: 0 0 10px;}",
-        "img {border-radius: 20px;}",
-        ".bundle-gifts-wrapper {margin-top: -10px; display: none;}",
-        "@media only screen and (max-width: 950px) {.circle-chart, .gift-tracker-holder {width: 21vw; height: 21vw; }}",
+        ".bundle-toggler,.bundle-gifts-wrapper,.get-started,.bundle-image.bg-black {display: none !important;}",
+        ".bundle-gifts-wrapper {margin-top: -10px; padding: 0 !important;}",
         ".free-item {line-height: 0.9;}",
-        ".get-started {padding: 0 0 50px; display: none;}",
-        ".section-bundle__product-prices {text-align: center;}",
-        ".section-bundle__product-title {font-size: 16px; text-align: center;}",
-        ".bundle-image.bg-black {display: none !important;}"
+        ".section-bundle__product-prices,.section-bundle__product-title {text-align: center; font-size: 16px;}",
+        ".section-bundle__products {column-gap: 7px;}",
+        ".section-bundle__container {padding-inline: 12px;}",
+        ".bundle-gifts__single.second-gift {margin-top: -20px;}"
       ],
       "settings": {
         "image": "shopify:\/\/shop_images\/4th_July_desktop_banner.png",

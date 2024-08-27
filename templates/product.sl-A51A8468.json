@@ -17,13 +17,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {
@@ -37,7 +30,7 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button"
+            "picker_type": "dropdown"
           }
         },
         "quantity_selector": {
@@ -49,41 +42,38 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
-            "show_gift_card_recipient": true
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {
+            "show_gift_card_recipient": false
           }
         }
       },
       "block_order": [
-        "vendor",
         "title",
         "price",
         "variant_picker",
         "quantity_selector",
-        "buy_buttons",
-        "description"
+        "buy_buttons"
+      ],
+      "custom_css": [
+        ".product__tax {display: none;}"
       ],
       "settings": {
         "enable_sticky_info": true,
         "media_size": "medium",
         "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail_slider",
         "media_position": "left",
         "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
+        "mobile_thumbnails": "show",
         "hide_variants": false,
         "enable_video_looping": false,
-        "padding_top": 24,
+        "padding_top": 36,
         "padding_bottom": 24
       }
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
@@ -104,12 +94,62 @@
       "type": "product-footer-content-zipifypages",
       "settings": {
       }
+    },
+    "image_banner_8PRAdm": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_N8eYam": {
+          "type": "heading",
+          "settings": {
+            "heading": "Shop Titan",
+            "heading_size": "h1"
+          }
+        },
+        "text_KwA3QF": {
+          "type": "text",
+          "settings": {
+            "text": "Explore the full titan range of the most premium charging tech or simply dive into our bundle builder for up to 75% OFF",
+            "text_style": "body"
+          }
+        },
+        "buttons_9KzFh3": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Visit Shop",
+            "button_link_1": "https:\/\/titanpowerplus.com\/pages\/shop23",
+            "button_style_secondary_1": false,
+            "button_label_2": "Build Your Own Bundle",
+            "button_link_2": "https:\/\/titanpowerplus.com\/products\/new-bundle",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_N8eYam",
+        "text_KwA3QF",
+        "buttons_9KzFh3"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Random_shop_page_banner.jpg",
+        "gray": false,
+        "image_overlay_opacity": 50,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-5061e01e-2a17-4232-a41e-6d666d2e8273",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
     }
   },
   "order": [
     "zp-product-header-content",
     "main",
     "related-products",
-    "zp-product-footer-content"
+    "zp-product-footer-content",
+    "image_banner_8PRAdm"
   ]
 }

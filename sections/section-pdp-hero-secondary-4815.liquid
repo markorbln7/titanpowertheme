@@ -303,7 +303,36 @@
               {% assign acc_product = block.settings.acc_product %}
               {% assign acc_image = block.settings.acc_image %}
               <div class="acc_single" data-product-id="{{ acc_product.first_available_variant.id }}">
-                <div class="acc_single_overlay"></div>
+                <div class="product-popup">
+                  <div class="close">
+                    {% render 'icon-close' %}
+                  </div>
+                  <div class="product-popup__content">
+                      <div class="product-popup__content--image">
+                         <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                     </div>
+                     <div class="product-popup__content--title">
+                      {{ acc_text }}
+                     </div>
+                     <div class="product-popup__content--prices">
+                         <div>
+                           <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                           <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                         </div>
+                         <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
+                     </div>
+                     {% if acc_product.metafields.custom.ticks %}
+                       {{acc_product.metafields.custom.ticks | metafield_tag }}
+                     {% endif %}
+                     <div class="product-popup__content--buttons">
+                        <button class="js-return">Return To Order</button>
+                        <button class="js-add">+ Add To Order</button>
+                     </div>
+                 </div>
+               </div>
+                <div class="acc_single_overlay">
+                </div>
+                <div class="accinfo-icon-trigger js-info-trigger">i</div>
                 <div class="acc_single_content">
                   <div class="acc_single__title">{{ acc_text }}</div>
                   <div class="acc_single_content--price">
@@ -660,6 +689,12 @@
           "type": "text",
           "id": "acc_title",
           "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "acc_discount_pill",
+          "label": "Custom discount pill",
+          "default": "50% OFF"
         }
       ]
     }

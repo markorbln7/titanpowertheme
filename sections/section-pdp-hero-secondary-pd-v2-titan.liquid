@@ -341,11 +341,7 @@
                       <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
                     </div>
                   </div>
-                  {% if section.settings.product_highlighted_image_custom %}
-                    <img width="100%" height="auto" src="{{ section.settings.product_highlighted_image_custom | img_url:'master' }}">
-                  {% else %}
                   {% render 'titan-image', image: product_highlighted_image %}
-                  {% endif %}
                 </div>
               </div>
             {% endif %}
@@ -455,7 +451,11 @@
                     <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
                   </div>
                 </div>
+                {% if section.settings.product_highlighted_image_custom %}
+                  <img width="100%" height="auto" src="{{ section.settings.product_highlighted_image_custom | img_url:'master' }}">
+                {% else %}
                 {% render 'titan-image', image: product_highlighted_image %}
+                {% endif %}
               </div>
             </div>
           {% endif %}

@@ -111,6 +111,52 @@ accTrigger.forEach(acc => {
       panel.classList.toggle('selected')
     })
 })
+let infoTriggers = document.querySelectorAll('.js-info-trigger')
+let closeBtns = document.querySelectorAll('.close');
+let returnToOrders = document.querySelectorAll('.js-return')
+let SelectOrders = document.querySelectorAll('.js-add')
+infoTriggers.forEach(infoTrigger => {
+    infoTrigger.addEventListener('click', (e) => {
+      let panel = infoTrigger.parentNode.querySelector('.product-popup')
+      document.querySelector('body').classList.add('no-scroll')
+      document.querySelector('html').classList.add('no-scroll')
+      panel.classList.add('active')
+    })
+})
+closeBtns.forEach(closeBtn => {
+  closeBtn.addEventListener('click', (e) => {
+    closeBtn.parentNode.parentNode.classList.remove('active');
+    closeBtn.parentNode.classList.remove('active');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+returnToOrders.forEach(returnToOrder => {
+  returnToOrder.addEventListener('click', (e) => {
+    returnToOrder.parentNode.parentNode.parentNode.classList.remove('active');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+SelectOrders.forEach(SelectOrder => {
+  SelectOrder.addEventListener('click', (e) => {
+    SelectOrder.parentNode.parentNode.parentNode.classList.remove('active');
+    SelectOrder.parentNode.parentNode.parentNode.parentNode.classList.add('selected');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+let overlayCls = document.querySelectorAll('.product-popup');
+overlayCls.forEach(overlayCl => {
+  overlayCl.addEventListener('click', (e) => {
+    console.log(e.target.classList, 'overlayCl');
+      if(e.target.classList.contains('product-popup')) {
+          e.target.classList.remove('active');
+          document.querySelector('body').classList.remove('no-scroll')
+          document.querySelector('html').classList.remove('no-scroll')
+      }
+  })
+})
 
 console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {

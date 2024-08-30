@@ -42,7 +42,7 @@
         "slide_GtYBCc"
       ],
       "custom_css": [
-        ".banner--mobile-bottom:not(.banner--stacked) .banner__content {background-color: #d6e1e1;}"
+        "@media only screen and (max-width: 768px) {.banner--mobile-bottom:not(.banner--stacked) .banner__content {background-color: #d6e1e1;} }"
       ],
       "settings": {
         "layout": "full_bleed",

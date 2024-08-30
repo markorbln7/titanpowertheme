@@ -1,0 +1,92 @@
+<!-- Custom Section -->
+<section id="custom-section" style="max-width: 1140px; margin: 0 auto;padding:0px 10px;">
+    <div class="custom-container">
+      {% for block in section.blocks %}
+        <div class="custom-block" data-target="{{ block.settings.custom_id }}">
+          <img width="100%" height="auto" src="{{ block.settings.image | img_url: 'medium' }}" alt="Image">
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <style>
+    .custom-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .custom-block {
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    .custom-block img {
+      height: auto;
+      max-width: 100%;
+      margin-bottom: 10px;
+      border-radius: 999px;
+    }
+    .custom-block p {
+      margin: 0;
+      font-family: var(--font-heading-family);
+      font-style: var(--font-heading-style);
+    }
+  </style>
+
+  <script>
+    document.querySelectorAll('.custom-block').forEach(block => {
+      block.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+  {% schema %}
+  {
+    "name": "Scroll TO",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Custom Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "custom_id",
+            "label": "Custom ID"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Scroll TO",
+        "category": "Custom"
+      }
+    ]
+  }
+  {% endschema %}

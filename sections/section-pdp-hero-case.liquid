@@ -42,7 +42,6 @@
     }
     .video-trigger {
       position: absolute;
-      background: #60c655;
       width: 50px;
       height: 50px;
       display: flex;
@@ -51,11 +50,14 @@
       font-size: 20px;
       color: #fff;
       border-radius: 50%;
-      left: 20px;
-      top: 20px;
+      left: 0px;
+      top: 0px;
       font-weight: 700;
       z-index: 999;
       cursor: pointer;
+  }
+  .pdp-hero__container .Header_linePart__1tpw_ {
+    bottom:36% !important;
   }
   .w-53 {
     width: 65%;
@@ -141,8 +143,9 @@
       {% comment %} Gallery {% endcomment %}
       <div class="pdp-hero__gallery relative">
           {% if section.settings.video %}
-          <div data-video="{{section.settings.video.sources[1].url }}" class="video-trigger">
-              <img data-video="{{section.settings.video.sources[1].url }}" class="w-53 mx-auto" width="100%" height="100%" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/icons8-play-90.png?v=1715954554">
+          <div data-video="{{section.settings.video.sources[1].url }}" class="video-trigger relative cursor-pointer">
+            <div style="display:block !important;z-index:999999" data-video="{{section.settings.video.sources[1].url }}" class="overlay absolute top-0 left-0 w-full h-full video-trigger"></div>
+              {% render 'video-animated' %}
           </div>
           {% endif %}
         {% if logoImage %}
@@ -597,6 +600,15 @@ closePlayBtn.addEventListener('click', (e) => {
     document.querySelector('body').classList.remove('no-scroll')
     document.querySelector('html').classList.remove('no-scroll')
     document.querySelector('.info-video').pause();
+})
+let overlayCls = document.querySelector('.product-play-overlay');
+overlayCls.addEventListener('click', (e) => {
+    if(e.target.classList.contains('product-play-overlay')) {
+        document.querySelector('.product-play-overlay').classList.remove('show');
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+        document.querySelector('.info-video').pause();
+    }
 })
 </script>
 

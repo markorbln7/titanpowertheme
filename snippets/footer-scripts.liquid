@@ -1,44 +1,83 @@
  <script>
-      $('.js-section-scroll').on('click', function (e) {
+  if(document.querySelector('.js-section-scroll')) {
+    document.querySelector('.js-section-scroll').addEventListener('click', function(event) {
+      console.log('scrolling')
+      event.preventDefault();
+      document.querySelector('#product-rev').scrollIntoView({
+          behavior: 'smooth'
+      });
+    });
+  }
+      {% comment %} $('.js-section-scroll').on('click', function (e) {
         e.preventDefault()
         const $section = $('#product-rev')
 
         $('html, body').animate({
           scrollTop: $section.offset().top + 'px'
         }, 1000)
-      })
-      $('.js-stars-scroll').on('click', function (e) {
+      }) {% endcomment %}
+      {% comment %} $('.js-stars-scroll').on('click', function (e) {
         e.preventDefault()
         const $section = $('#shopify-block-loox_reviews_loox_dynamic_section_dEptDN')
 
         $('html, body').animate({
           scrollTop: $section.offset().top + 'px'
         }, 1000)
-      })
-      $('.js-atc-scroll').on('click', function (e) {
-        e.preventDefault()
-        const $section = $('.js-scroll')
-
-        $('html, body').animate({
-          scrollTop: $section.offset().top + 'px'
-        }, 1000)
-      })
-      $('.aha--massage-gun .banner__buttons .button').on('click', function (e) {
+      }) {% endcomment %}
+      if(document.querySelector('.js-stars-scroll')) {
+        document.querySelector('.js-stars-scroll').addEventListener('click', function(event) {
+          console.log('scrolling')
+          event.preventDefault();
+          document.querySelector('#shopify-block-loox_reviews_loox_dynamic_section_dEptDN').scrollIntoView({
+              behavior: 'smooth'
+          });
+        });
+      }
+      if(document.querySelectorAll('.js-atc-scroll')) {
+        console.log('scrolling bi trebalo da radi')
+        let scrollButtons = document.querySelectorAll('.js-atc-scroll')
+        scrollButtons.forEach((button) => {
+          button.addEventListener('click', function(event) {
+            console.log('scrolling')
+            event.preventDefault();
+            document.querySelector('.js-scroll').scrollIntoView({
+                behavior: 'smooth'
+            });
+          });
+        })
+        {% comment %} document.querySelector('.js-atc-scroll').addEventListener('click', function(event) {
+          console.log('scrolling')
+          event.preventDefault();
+          document.querySelector('.js-scroll').scrollIntoView({
+              behavior: 'smooth'
+          });
+        }); {% endcomment %}
+      }
+      {% comment %} $('.aha--massage-gun .banner__buttons .button').on('click', function (e) {
         e.preventDefault()
         const $section = $('#section-pdp-hero')
 
         $('html, body').animate({
           scrollTop: $section.offset().top + 'px'
         }, 1000)
-      })
-      $('.js-atc-scroll').on('click', function (e) {
+      }) {% endcomment %}
+      if(document.querySelector('.aha--massage-gun .banner__buttons .button')) {
+        document.querySelector('.aha--massage-gun .banner__buttons .button').addEventListener('click', function(event) {
+          console.log('scrolling')
+          event.preventDefault();
+          document.querySelector('#section-pdp-hero').scrollIntoView({
+              behavior: 'smooth'
+          });
+        });
+      }
+      {% comment %} $('.js-atc-scroll').on('click', function (e) {
         e.preventDefault()
         const $section = $('.js-scroll')
 
         $('html, body').animate({
           scrollTop: $section.offset().top + 'px'
         }, 1000)
-      })
+      }) {% endcomment %}
 
       const accordions = document.querySelectorAll('.accordion')
       console.log(accordions, 'accordionsaccordions')
@@ -69,32 +108,37 @@
           }
         })
       }
+      if(document.querySelector('.aha--titan-cube .product-icons')) {
+        console.log('111')
+          const distancecube = $('.aha--titan-cube .product-icons').offset().top
+          $(window).scroll(function () {
+            const top_of_element = $('#shopify-section-footer').offset().top
+            const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+            const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+            const top_of_screen = $(window).scrollTop()
+            if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancecube) {
+              $('.atc-fixed').addClass('show')
+            } else {
+              $('.atc-fixed').removeClass('show')
+            }
+          })
+      }
 
-       const distancecube = $('.aha--titan-cube .product-icons').offset().top
-      $(window).scroll(function () {
-        const top_of_element = $('#shopify-section-footer').offset().top
-        const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
-        const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
-        const top_of_screen = $(window).scrollTop()
-        if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancecube) {
-          $('.atc-fixed').addClass('show')
-        } else {
-          $('.atc-fixed').removeClass('show')
-        }
-      })
-
-      const distancebuds = $('.aha--new-buds-2-0 .section-text-with-icons').offset().top
-      $(window).scroll(function () {
-        const top_of_element = $('#shopify-section-footer').offset().top
-        const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
-        const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
-        const top_of_screen = $(window).scrollTop()
-        if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancebuds) {
-          $('.atc-fixed').addClass('show')
-        } else {
-          $('.atc-fixed').removeClass('show')
-        }
-      })
+      if(document.querySelector('.aha--new-buds-2-0 .section-text-with-icons')) {
+        console.log('adafsagaga')
+        const distancebuds = $('.aha--new-buds-2-0 .section-text-with-icons').offset().top
+        $(window).scroll(function () {
+          const top_of_element = $('#shopify-section-footer').offset().top
+          const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+          const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+          const top_of_screen = $(window).scrollTop()
+          if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distancebuds) {
+            $('.atc-fixed').addClass('show')
+          } else {
+            $('.atc-fixed').removeClass('show')
+          }
+        })
+      }
     </script>
 
     <script src="{{ 'runtime.js' | asset_url }}" defer="defer"></script>

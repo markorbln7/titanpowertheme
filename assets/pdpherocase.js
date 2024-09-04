@@ -150,30 +150,34 @@ let selectedName = nameFirst + ' / ' + nameSecond;
 var variantSelectorFirst = document.querySelector('.variant-selector-1');
 var variantSelectorSecond = document.querySelector('.variant-selector-2');
 console.log(variantSelectorSecond, variantSelectorFirst);
-variantSelectorFirst.addEventListener('change', function() {
-  let variantId = variantSelectorFirst.value;
-  nameFirst = variantId;
-  selectedName = nameFirst + ' / ' + nameSecond;
-  let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
-  let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
-  let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
-  window.selectLogic.addon = productId
-  addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
-  addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
-  addUpsell.setAttribute('data-addon-id', productId);
-});
-variantSelectorSecond.addEventListener('change', function() {
-  let variantId = variantSelectorSecond.value;
-  nameSecond = variantId;
-  selectedName = nameFirst + ' / ' + nameSecond;
-  let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
-  let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
-  let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
-  window.selectLogic.addon = productId
-  addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
-  addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
-  addUpsell.setAttribute('data-addon-id', productId);
-});
+if(variantSelectorFirst) {
+  variantSelectorFirst.addEventListener('change', function() {
+    let variantId = variantSelectorFirst.value;
+    nameFirst = variantId;
+    selectedName = nameFirst + ' / ' + nameSecond;
+    let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+    let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+    let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+    window.selectLogic.addon = productId
+    addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
+    addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
+    addUpsell.setAttribute('data-addon-id', productId);
+  });
+}
+if(variantSelectorSecond) {
+  variantSelectorSecond.addEventListener('change', function() {
+    let variantId = variantSelectorSecond.value;
+    nameSecond = variantId;
+    selectedName = nameFirst + ' / ' + nameSecond;
+    let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+    let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+    let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+    window.selectLogic.addon = productId
+    addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
+    addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
+    addUpsell.setAttribute('data-addon-id', productId);
+  });
+}
 
 let mainVariantSelector = document.querySelector('.main-variant-selector');
 console.log(mainVariantSelector, 'mainVariantSelector')

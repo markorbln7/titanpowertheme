@@ -277,10 +277,9 @@
 
 .section-bundle__collection-tabs {
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-content: center;
         margin: 0 auto 20px;
-        overflow-y: hidden;
         padding: 30px 0 10px 0px;
     }
 
@@ -298,8 +297,16 @@
         white-space: nowrap;
         background-color: #fff;
         transition: all 0.3s ease;
-        color: #000
+        color: #000;
+        justify-content: center;
     }
+
+@media (max-width: 800px) {
+
+        .section-bundle__collection-tab {
+                width: calc(50% - 25px);
+        }
+}
 
 .section-bundle__collection-tab.active {
         background-color: rgb(96, 198, 85);
@@ -313,11 +320,11 @@
         line-height: 120%;
         margin: 0 0 14px 10px;
         width: 100%;
-    }
+}
 
 .section-bundle__products-holder {
-        display: none
-    }
+        display: none;
+}
 
 .section-bundle__products-holder.active {
         display: block;
@@ -329,7 +336,7 @@
         -moz-column-gap: 20px;
              column-gap: 20px;
         row-gap: 60px;
-    }
+}
 
 .section-bundle__product {
         border: 1px solid #60c655;
@@ -343,7 +350,7 @@
         box-shadow: 0 0 10px #b5b5b5;
         background: linear-gradient(131deg, #c4d3d3, #ffffff 98%);
         overflow: visible;
-    }
+}
 
 .section-bundle__product-image {
             border-top-left-radius: 5px;
@@ -432,11 +439,11 @@
         cursor: pointer;
         box-shadow: 0 7px 7px #0000001a;
         transition: opacity .3s ease;
-    }
+}
 
 .section-bundle .qty {
         gap: 30px;
-    }
+}
 
 /* STICKY */
 
@@ -451,7 +458,7 @@
         bottom: 0;
         background-color: #fff;
         left: 0;
-    }
+}
 
 .section-bundle__sticky .subtotal {
             display: flex;
@@ -956,3 +963,14 @@ select {
 .aha--new-bundle-variant-atc-direct .section-bundle__tracker.tracker-fixed {
         z-index: 9999999999;
     }
+
+.tp-buttons-work {
+    width: unset;
+}
+
+@media only screen and (max-width: 980px) {
+
+        .tp-buttons-work {
+                width: 100%;
+        }
+}

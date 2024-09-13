@@ -279,10 +279,9 @@
 
     &__collection-tabs {
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-content: center;
         margin: 0 auto 20px;
-        overflow-y: hidden;
         padding: 30px 0 10px 0px;
     }
 
@@ -301,6 +300,10 @@
         background-color: #fff;
         transition: all 0.3s ease;
         color: #000;
+        justify-content: center;
+        @media(max-width: 800px) {
+            width: calc(50% - 25px);
+        }
 
         &.active {
             background-color: rgb(96, 198, 85);
@@ -955,5 +958,11 @@ select {
     }
     .section-bundle__tracker.tracker-fixed {
         z-index: 9999999999;
+    }
+}
+.tp-buttons-work {
+    width: unset;
+    @media only screen and (max-width: 980px) {
+        width: 100%;
     }
 }

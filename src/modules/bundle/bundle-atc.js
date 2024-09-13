@@ -171,6 +171,71 @@ if (bundleAtcButtons) {
     })
 }
 
+const bundleCheckoutButtons = document.querySelectorAll('.js-checkout-now');
+if(bundleCheckoutButtons) {
+    bundleCheckoutButtons.forEach(bundleCheckoutButton => {
+        bundleCheckoutButton.addEventListener('click', async (e) => {
+            await clearCart();
+        })
+    })
+}
+async function clearCart() {
+    document.querySelector('#rebuy-cart').style.visibility = "hidden";
+    fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Cart cleared successfully');
+        return AtC();
+      } else {
+        console.error('Failed to clear cart');
+      }
+    })
+    .catch(error => {
+      console.error('Error clearing cart:', error);
+    });
+}
+function AtC() {
+    let overlayBundle = document.querySelector('.bundle-overlay');
+            overlayBundle.classList.add('show');
+            let idSelectors = document.querySelectorAll('.js-id-selector');
+            let addItems = []
+            idSelectors.forEach((idSelector) => {
+                let id = idSelector.getAttribute('data-item-id');
+                let quantity = idSelector.getAttribute('data-item-qty');
+                if(quantity > 0) {
+                    addItems.push({
+                        id: id,
+                        quantity: quantity
+                    })
+                }
+            })
+            const formData = {
+                items: addItems
+            }
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log(response.status, 'ok')
+                        window.location.href = '/checkout'
+                        overlayBundle.classList.remove('show');
+                    }
+                    return response.json()
+                })
+                .catch((error) => {
+                    console.error('Error:', error)
+                })
+}
 async function refreshCart() {
     const cart = cartSample;
     const bundleItems = document.querySelectorAll('.section-bundle__cart-carousel-item');

@@ -247,14 +247,50 @@
               </svg>
             </div>
         </div>
-
-        <div class="section-bundle__sticky-checkout">
+        <div class="tp-buttons-work flex gap-[10px]">
+          <div class="section-bundle__sticky-checkout">
             <div class="zeleno js-atc">Add To Cart</div>
+          </div>
+          <div class="section-bundle__sticky-checkout">
+            <div class="zeleno js-checkout-now">Checkout Now</div>
+          </div>
         </div>
         <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
     </aside>
 </section>
 <style>
+  .section-bundle__tracker.tracker-fixed {
+    position: fixed;
+    width: 100%;
+    max-width: 960px;
+    left: auto;
+    z-index: 999999;
+    bottom: 35px;
+    right: auto;
+  }
+  .section-bundle__sticky {
+    padding-top:25px;
+  }
+  @media only screen and (max-width: 950px) {
+    .section-bundle__tracker.tracker-fixed {
+        bottom: 35px;
+        left: 5%;
+        width: 90%;
+    }
+    .section-bundle__sticky {
+      padding-top:20px;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .section-bundle__tracker.tracker-fixed {
+        bottom: 75px;
+        left: 5%;
+        width: 90%;
+    }
+    .section-bundle__sticky {
+      padding-top:20px;
+    }
+  }
   .col-quantity__button {
     font-size: 45px;
     width: 60px;

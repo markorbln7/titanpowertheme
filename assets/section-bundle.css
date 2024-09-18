@@ -527,12 +527,18 @@
             height: 100%;
             display: flex;
             align-items: center;
-            justify-content: center
+            justify-content: center;
+            border:1px solid #60c655
         }
 
 .section-bundle__sticky .zeleno[disabled] {
         cursor: not-allowed;
         opacity: 0.8;
+}
+
+.section-bundle__sticky .zeleno.zeleno-invert {
+        background-color: transparent;
+        color:#60c655;
 }
 
 .section-bundle__sticky-shipping {

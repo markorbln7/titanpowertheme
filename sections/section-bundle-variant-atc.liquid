@@ -249,10 +249,10 @@
         </div>
         <div class="tp-buttons-work flex gap-[10px]">
           <div class="section-bundle__sticky-checkout">
-            <div class="zeleno js-atc">Add To Cart</div>
+            <button disabled class="zeleno js-atc">Add To Cart</button>
           </div>
           <div class="section-bundle__sticky-checkout">
-            <div class="zeleno js-checkout-now">Checkout Now</div>
+            <button disabled class="zeleno-invert zeleno js-checkout-now">Checkout Now</button>
           </div>
         </div>
         <input type="hidden" value="{{ shop.currency }}" class="js-format-currency"/>
@@ -265,15 +265,16 @@
     max-width: 960px;
     left: auto;
     z-index: 999999;
-    bottom: 35px;
+    bottom: 76px;
     right: auto;
+    padding-bottom:0;
   }
   .section-bundle__sticky {
     padding-top:25px;
   }
   @media only screen and (max-width: 950px) {
     .section-bundle__tracker.tracker-fixed {
-        bottom: 35px;
+        bottom: 75px;
         left: 5%;
         width: 90%;
     }
@@ -283,7 +284,7 @@
   }
   @media only screen and (max-width: 768px) {
     .section-bundle__tracker.tracker-fixed {
-        bottom: 75px;
+        bottom: 115px;
         left: 5%;
         width: 90%;
     }

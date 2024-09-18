@@ -59,6 +59,14 @@ const generateCart = () => {
         })
     }
     console.log(firstGift,secondGift,totalQty, 'totalQty')
+    if(totalQty > 0) {
+        document.querySelector('.js-atc').removeAttribute('disabled')
+        document.querySelector('.js-checkout-now').removeAttribute('disabled')
+    }
+    if(totalQty < 1) {
+        document.querySelector('.js-atc').setAttribute('disabled', true)
+        document.querySelector('.js-checkout-now').setAttribute('disabled', true)
+    }
     return cartSample;
 }
 

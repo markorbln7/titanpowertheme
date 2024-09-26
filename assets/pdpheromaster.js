@@ -13,21 +13,27 @@ const originalTwo = document.querySelector('.js-price-discount-2')
 const discTwo = document.querySelector('.js-price-original-2')
 const originalThree = document.querySelector('.js-price-discount-3')
 const discThree = document.querySelector('.js-price-original-3')
-const addUpsell = document.querySelector('.js-addon')
+const addUpsells = document.querySelectorAll('.js-addon')
 const priceDisplay = () => {
-    if (addUpsell.classList.contains('added')) {
-        const productSelection = window.selectLogic.productCount
-        console.log(productSelection, 'productSelection')
-        price.innerHTML = window.jointPrice[productSelection]
-        crossedPrice.innerHTML = window.jointComparePrice[productSelection]
-        savedPrice.innerHTML = window.jointSavePrices[productSelection] + ' SAVED'
-    } else {
-        const productSelection = window.selectLogic.productCount
-        console.log(productSelection, 'productSelection')
-        price.innerHTML = window.prices[productSelection]
-        crossedPrice.innerHTML = window.comparePrices[productSelection]
-        savedPrice.innerHTML = window.savePrices[productSelection] + ' SAVED'
-    }
+    let currency = document.querySelector(".js-currency").getAttribute("data-currency");
+    const productSelection = window.selectLogic.productCount
+    console.log(productSelection, 'productSelection')
+    let totalPrice = parseInt(window.pricesRaw[productSelection])
+    let comparePrice = parseInt(window.comparePricesRaw[productSelection])
+    addUpsells.forEach(addUpsell => {
+      if(addUpsell.classList.contains('added')) {
+        const addonPrice = addUpsell.getAttribute('data-addon-price')
+        const addonComparePrice = addUpsell.getAttribute('data-addon-compare-price')
+        totalPrice += parseFloat(addonPrice)
+        comparePrice += parseFloat(addonComparePrice)
+      }
+    })
+    let finalPrice = totalPrice / 100
+    let finalComparePrice = comparePrice / 100
+    let savefinalPrice = finalComparePrice - finalPrice
+    price.innerHTML = finalPrice + '.00 ' + currency
+    crossedPrice.innerHTML = finalComparePrice + '.00 ' + currency
+    savedPrice.innerHTML = savefinalPrice + '.00 ' + currency + ' SAVED'
 }
 typeSelectors.forEach(typeSelector => {
     typeSelector.addEventListener('click', (e) => {
@@ -84,18 +90,14 @@ productSelectors.forEach(productSelector => {
       }, '500')
     })
 })
-window.selectLogic.addon = addUpsell.getAttribute('data-addon-id')
-let addonWrapper = document.querySelector('.addon-wrapper')
+let addonWrappers = document.querySelectorAll('.addon-wrapper')
 let addonAdded = false
-addonWrapper.addEventListener('click', (e) => {
+addonWrappers.forEach(addonWrapper => {
+  addonWrapper.addEventListener('click', (e) => {
     addonWrapper.classList.toggle('added')
-    if (addonWrapper.classList.contains('added')) {
-      addonAdded = true
-      console.log(window.selectLogic.addon, addonAdded, 'addonAdded')
-    } else {
-      addonAdded = false
-      console.log(window.selectLogic.addon, addonAdded, 'addonAdded')
-    }
+    addonWrapper.parentElement.classList.toggle('added')
+    priceDisplay()
+  })
 })
 
 console.log(addToCarts, 'window.selectLogic');
@@ -105,26 +107,20 @@ addToCarts.forEach(addToCart => {
       const quantity = e.target.getAttribute('data-quantity')
       console.log(quantity, 'quantity')
       console.log(window.products, window.products[productSelection],productSelection, 'productSelection');
-      let addItems
-      if (addonAdded === true) {
-        addItems = [
-          {
-            id: window.products[productSelection],
-            quantity: quantity
-          },
-          {
-            id: window.selectLogic.addon,
+      let addItems = []
+      addonWrappers.forEach(addonWrapper => {
+        if(addonWrapper.classList.contains('added')) {
+          const addonId = addonWrapper.parentElement.getAttribute('data-addon-id')
+          addItems.push({
+            id: addonId,
             quantity: 1
-          }
-        ]
-      } else {
-        addItems = [
-          {
-            id: window.products[productSelection],
-            quantity: quantity
-          }
-        ]
-      }
+          })
+        }
+      })
+      addItems.push({
+        id: window.products[productSelection],
+        quantity: 1
+      })
       const formData = {
         items: addItems
       }
@@ -146,39 +142,50 @@ addToCarts.forEach(addToCart => {
 })
 
 
-let nameFirst = '3 x iPhone';
-let nameSecond = '4ft (1.2m)';
-let selectedName = nameFirst + ' / ' + nameSecond;
-var variantSelectorFirst = document.querySelector('.variant-selector-1');
-var variantSelectorSecond = document.querySelector('.variant-selector-2');
-console.log(variantSelectorSecond, variantSelectorFirst);
-if(variantSelectorFirst) {
-  variantSelectorFirst.addEventListener('change', function() {
-    let variantId = variantSelectorFirst.value;
-    nameFirst = variantId;
-    selectedName = nameFirst + ' / ' + nameSecond;
-    let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
-    let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
-    let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
-    window.selectLogic.addon = productId
-    addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
-    addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
-    addUpsell.setAttribute('data-addon-id', productId);
-  });
+var variantSelectorFirsts = document.querySelectorAll('.variant-selector-1');
+var variantSelectorSeconds = document.querySelectorAll('.variant-selector-2');
+if(variantSelectorFirsts) {
+  variantSelectorFirsts.forEach(variantSelectorFirst => {
+    variantSelectorFirst.addEventListener('change', function() {
+      let parent = variantSelectorFirst.parentElement.parentElement;
+      let variantId = variantSelectorFirst.value;
+      nameFirst = variantId;
+      nameSecond = parent.querySelector('.variant-selector-2').value;
+      selectedName = nameFirst + ' / ' + nameSecond;
+      let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+      let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+      let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+      parent.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
+      parent.querySelector('.crossed').innerHTML = productComparePrice;
+      parent.setAttribute('data-addon-id', productId);
+      parent.setAttribute('data-addon-price', productPrice);
+      parent.setAttribute('data-addon-compare-price', productComparePrice);
+      priceDisplay();
+    });
+  })
 }
-if(variantSelectorSecond) {
-  variantSelectorSecond.addEventListener('change', function() {
-    let variantId = variantSelectorSecond.value;
-    nameSecond = variantId;
-    selectedName = nameFirst + ' / ' + nameSecond;
-    let productId = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
-    let productPrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
-    let productComparePrice = document.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
-    window.selectLogic.addon = productId
-    addUpsell.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
-    addUpsell.querySelector('.crossed').innerHTML = productComparePrice;
-    addUpsell.setAttribute('data-addon-id', productId);
-  });
+if(variantSelectorSeconds) {
+  variantSelectorSeconds.forEach(variantSelectorSecond => {
+    variantSelectorSecond.addEventListener('change', function() {
+      let parent = variantSelectorSecond.parentElement.parentElement;
+      let variantId = variantSelectorSecond.value;
+      nameFirst = parent.querySelector('.variant-selector-1').value;
+      nameSecond = variantId;
+      selectedName = nameFirst + ' / ' + nameSecond;
+      let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+      let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+      let productPriceCur = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price-cur');
+      let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+      let productComparePriceCur = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price-cur');
+      window.selectLogic.addon = productId
+      parent.querySelector('.pdp-hero__pricing-price').innerHTML = productPriceCur;
+      parent.querySelector('.crossed').innerHTML = productComparePriceCur;
+      parent.setAttribute('data-addon-id', productId);
+      parent.setAttribute('data-addon-price', productPrice);
+      parent.setAttribute('data-addon-compare-price', productComparePrice);
+      priceDisplay();
+    });
+  })
 }
 
 let mainVariantSelector = document.querySelector('.main-variant-selector');

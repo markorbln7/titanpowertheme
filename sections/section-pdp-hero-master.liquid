@@ -123,8 +123,10 @@
     Blocks
   endcomment
   assign product_repeater = section.blocks | where: 'type', 'product_repeater'
+  assign highlighted_product_repeater = section.blocks | where: 'type', 'highlighted_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
+  assign currency = cart.currency.iso_code
 %}
 <div class="product-play-overlay">
   <div class="close-play">
@@ -137,7 +139,7 @@
     </video>
   </div>
 </div>
-<section class="section-pdp-hero section-pdp-hero-secondary js-scroll">
+<section data-currency="{{ currency }}" class="js-currency section-pdp-hero section-pdp-hero-secondary js-scroll">
   <div class="content-wrapper">
     <div class="pdp-hero__container">
       {% comment %} Gallery {% endcomment %}
@@ -334,22 +336,27 @@
           {% endif %}
 
           {% comment %} HIGHLIGHTED UPSELL PRODUCT {% endcomment %}
-          {% if product_highlighted %}
-            {% liquid
-              assign product_highlighted_image = product_highlighted.featured_image
-              assign product_highlighted_price = product_highlighted.price
-              assign product_highlighted_compare_at_price = product_highlighted.compare_at_price
+          {% if highlighted_product_repeater.size > 0 %}
+            {% for highlighted_product in highlighted_product_repeater %}
+              {% liquid
+                  assign highlighted_product_obj = all_products[highlighted_product.settings.highlighted_product_obj]
+                  assign product_highlighted_message = highlighted_product.settings.product_highlighted_message
+                  assign product_highlighted_image = highlighted_product.settings.highlighted_product_image
+                  assign product_highlighted_price = highlighted_product_obj.price
+                  assign product_highlighted_compare_at_price = highlighted_product_obj.compare_at_price
 
-              assign product_highlighted_title = section.settings.product_highlighted_title
-              if product_highlighted_title == blank
-                assign product_highlighted_title = product_highlighted.title
+                  assign product_highlighted_title = highlighted_product.settings.highlighted_product_title_custom
+                  if product_highlighted_title == blank
+                      assign product_highlighted_title = highlighted_product_obj.title
 
-              else
-                assign product_highlighted_title = section.settings.product_highlighted_title
-              endif
-            %}
+                  else
+                      assign product_highlighted_title = highlighted_product.settings.highlighted_product_title_custom
+                  endif
+              %}
             <div
-              data-addon-id="{{ product_highlighted.first_available_variant.id }}"
+              data-addon-price = "{{ highlighted_product_obj.first_available_variant.price }}"
+              data-addon-compare-price = "{{ highlighted_product_obj.first_available_variant.compare_at_price }}"
+              data-addon-id="{{ highlighted_product_obj.first_available_variant.id }}"
               class="pdp-hero__upsell-highlighted js-addon"
             >
               <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
@@ -371,24 +378,25 @@
                 </div>
                 {% render 'titan-image', image: product_highlighted_image %}
               </div>
-              {% if product_highlighted.options_with_values.size  > 1 %}
+              {% if highlighted_product_obj.options_with_values.size  > 1 %}
                <div class="f jcc aic gap-10 mx-20 fw">
-                {% for option in product_highlighted.options_with_values %}
+                {% for option in highlighted_product_obj.options_with_values %}
                   <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
                     {% for values in option.values %}
                         <option value="{{values}}">{{values}}</option>
                     {% endfor %}
                   </select>
                 {% endfor %}
+                <div style="position:absolute;left:-4000px;">
+                  {% for variant in highlighted_product_obj.variants %}
+                    <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                  {% endfor %}
+                </div>
               </div>
               {% endif %}
             </div>
+          {% endfor %}
           {% endif %}
-          <div style="position:absolute;left:-4000px;">
-            {% for variant in product_highlighted.variants %}
-              <div data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
-            {% endfor %}
-          </div>
         </div>
         {% if section.settings.show_qty %}
         <div class="qty">
@@ -520,7 +528,24 @@
       "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
       "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
     }
-    console.log(window.mainImages, 'window.mainImages')
+    window.pricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign index = forloop.index | append:'-'  %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+         '{{ index | append: 'product' | remove:" "}}' : '{{ variant.price }}',
+       {% endfor %}
+      {% endfor %}
+    }
+    window.comparePricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign index = forloop.index | append:'-'  %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+         '{{ index | append: 'product' | remove:" "}}' : '{{ variant.compare_at_price }}',
+       {% endfor %}
+      {% endfor %}
+    }
   window.prices = {
     {% for upsell_product in product_repeater %}
       {% assign index = forloop.index | append:'-'  %}
@@ -531,6 +556,7 @@
     {% endfor %}
   }
   console.log(window.prices, 'window.prices')
+  console.log(window.pricesRaw, 'window.pricesRaw')
   window.comparePrices = {
     {% for upsell_product in product_repeater %}
       {% assign index = forloop.index | append:'-'  %}
@@ -731,6 +757,38 @@ overlayCls.addEventListener('click', (e) => {
           "id": "upsell_message",
           "label": "Upsell message",
           "default": "LIMITED STOCK OFFER  GET +1 FREE"
+        }
+      ]
+    },
+    {
+      "type": "highlighted_repeater",
+      "name": "Highlighted Repeater",
+      "settings": [
+        {
+          "type": "product",
+          "id": "highlighted_product_obj",
+          "label": "Highlighted Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "highlighted_product_image",
+          "label": "Highlighted Product Image"
+        },
+        {
+          "type": "text",
+          "id": "highlighted_product_title_custom",
+          "label": "Highlighted Product Title"
+        },
+        {
+          "type": "text",
+          "id": "highlighted_product_discount",
+          "label": "Highlighted Product Discount"
+        },
+        {
+          "type": "textarea",
+          "id": "product_highlighted_message",
+          "label": "Highlighted Upsell Message",
+          "default": "50% OFF WHEN YOU GET WITH CABLE"
         }
       ]
     },

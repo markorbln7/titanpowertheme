@@ -9,6 +9,115 @@
 */
 {
   "sections": {
+    "section_pdp_hero_case_iktAWH": {
+      "type": "section-pdp-hero-master",
+      "blocks": {
+        "product_repeater_yj83xn": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "1-product",
+            "product_obj": "magtech-powerbank",
+            "upsell_product_image": "shopify://shop_images/PRODUCT_PIC_1_PNG.png",
+            "product_title_custom": "MagTech Power Bank™",
+            "upsell_product_discount": "-5%",
+            "upsell_message": "CHOOSE YOUR DISCOUNT"
+          }
+        },
+        "product_repeater_9PkcXr": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "2-product",
+            "product_obj": "titan-magtech-power-bank™-copy",
+            "upsell_product_image": "shopify://shop_images/PRODUCT_PIC_1_PNG.png",
+            "product_title_custom": "MagTech Power Bank™",
+            "upsell_product_discount": "",
+            "upsell_message": ""
+          }
+        },
+        "props_CCEcp4": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FLEXIBILE 30 DAY RETURNS",
+            "prop_icon": "",
+            "prop_description": ""
+          }
+        },
+        "props_xnJXMV": {
+          "type": "props",
+          "settings": {
+            "prop_text": "FREE TRACKED SHIPPING",
+            "prop_icon": "",
+            "prop_description": ""
+          }
+        },
+        "props_9NRVrn": {
+          "type": "props",
+          "settings": {
+            "prop_text": "JOIN 1,000,000 CUSTOMERS",
+            "prop_icon": "",
+            "prop_description": ""
+          }
+        },
+        "highlighted_repeater_hnbxdr": {
+          "type": "highlighted_repeater",
+          "settings": {
+            "highlighted_product_obj": "magtech",
+            "highlighted_product_image": "shopify://shop_images/MAGTECH_pd_CABLE.jpg",
+            "highlighted_product_title_custom": "",
+            "highlighted_product_discount": "",
+            "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+          }
+        },
+        "highlighted_repeater_yaQHGr": {
+          "type": "highlighted_repeater",
+          "settings": {
+            "highlighted_product_obj": "titan-pd-cable™",
+            "highlighted_product_image": "shopify://shop_images/cube-gray.webp",
+            "highlighted_product_title_custom": "",
+            "highlighted_product_discount": "",
+            "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+          }
+        },
+        "highlighted_repeater_dNP33a": {
+          "type": "highlighted_repeater",
+          "settings": {
+            "highlighted_product_obj": "titan-cube™-5",
+            "highlighted_product_image": "shopify://shop_images/cube-gray.webp",
+            "highlighted_product_title_custom": "",
+            "highlighted_product_discount": "",
+            "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_yj83xn",
+        "product_repeater_9PkcXr",
+        "props_CCEcp4",
+        "props_xnJXMV",
+        "props_9NRVrn",
+        "highlighted_repeater_hnbxdr",
+        "highlighted_repeater_yaQHGr",
+        "highlighted_repeater_dNP33a"
+      ],
+      "custom_css": [
+        "span.product-template-new__wrapper--content__review--number.color-black.font-lato {display: NONE;}",
+        "select.variant-selector-1.Cable.Type {border: 0px solid #60c655;}",
+        "select.variant-selector-2.Length {border: 0px solid #60c655;}"
+      ],
+      "settings": {
+        "show_qty": true,
+        "show_disc_box": true,
+        "product_main": "magtech-powerbank",
+        "product_image": "shopify://shop_images/new_product_product_pic_2.jpg",
+        "logo_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
+        "product_subtitle": "\"Perfectly compact, charges all my gadgets effortlessly!\"",
+        "discount_content": "50% OFF",
+        "atc_label": "In stock, limited availability",
+        "product_highlighted": "magtech",
+        "product_highlighted_title": "",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH THE POWER BANK"
+      }
+    },
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
       "settings": {
@@ -559,80 +668,6 @@
       "settings": {
       }
     },
-    "section_pdp_hero_case_iktAWH": {
-      "type": "section-pdp-hero-master",
-      "blocks": {
-        "product_repeater_yj83xn": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "1-product",
-            "product_obj": "magtech-powerbank",
-            "upsell_product_image": "shopify://shop_images/PRODUCT_PIC_1_PNG.png",
-            "product_title_custom": "MagTech Power Bank™",
-            "upsell_product_discount": "-5%",
-            "upsell_message": "CHOOSE YOUR DISCOUNT"
-          }
-        },
-        "product_repeater_9PkcXr": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "2-product",
-            "product_obj": "titan-magtech-power-bank™-copy",
-            "upsell_product_image": "shopify://shop_images/PRODUCT_PIC_1_PNG.png",
-            "product_title_custom": "MagTech Power Bank™",
-            "upsell_product_discount": "",
-            "upsell_message": ""
-          }
-        },
-        "props_CCEcp4": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FLEXIBILE 30 DAY RETURNS",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        },
-        "props_xnJXMV": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FREE TRACKED SHIPPING",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        },
-        "props_9NRVrn": {
-          "type": "props",
-          "settings": {
-            "prop_text": "JOIN 1,000,000 CUSTOMERS",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_repeater_yj83xn",
-        "product_repeater_9PkcXr",
-        "props_CCEcp4",
-        "props_xnJXMV",
-        "props_9NRVrn"
-      ],
-      "custom_css": [
-        "span.product-template-new__wrapper--content__review--number.color-black.font-lato {display: NONE;}",
-        "select.variant-selector-1.Cable.Type {border: 0px solid #60c655;}",
-        "select.variant-selector-2.Length {border: 0px solid #60c655;}"
-      ],
-      "settings": {
-        "product_main": "magtech-powerbank",
-        "product_image": "shopify://shop_images/new_product_product_pic_2.jpg",
-        "logo_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-        "product_subtitle": "\"Perfectly compact, charges all my gadgets effortlessly!\"",
-        "discount_content": "50% OFF",
-        "atc_label": "In stock, limited availability",
-        "product_highlighted": "magtech",
-        "product_highlighted_title": "",
-        "product_highlighted_message": "50% OFF WHEN YOU GET WITH THE POWER BANK"
-      }
-    },
     "section-pdp-hero": {
       "type": "section-pdp-hero",
       "blocks": {
@@ -875,6 +910,7 @@
     }
   },
   "order": [
+    "section_pdp_hero_case_iktAWH",
     "zp-product-header-content",
     "slideshow_NnVUdC",
     "product_icons_zzERAK",
@@ -887,7 +923,6 @@
     "slideshow_fwkE7q",
     "section_air_tabs_4tKUCL",
     "compare-table",
-    "section_pdp_hero_case_iktAWH",
     "section-pdp-hero",
     "1707579564616101b2",
     "section_faq_bgPWp8",

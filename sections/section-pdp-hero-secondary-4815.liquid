@@ -152,12 +152,14 @@
           </div>
 
           <div class="pdp-hero__sizes">
-            <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
-              <span>1.2m</span>
-            </div>
-            <div data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
+            {% if section.settings.hide_first_variant != true %}
+              <button data-length="4ft(1.2m)" class="pdp-hero__option active js-length-selector">
+                <span>1.2m</span>
+              </button>
+            {% endif %}
+            <button data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
               <span>1.8m</span>
-            </div>
+            </button>
             <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
               <span>3.0m</span>
             </div>
@@ -526,6 +528,12 @@
 {
   "name": "PDP Hero Secondary",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_first_variant",
+      "label": "Hide 1.2m",
+      "default": true
+    },
     {
       "type": "text",
       "id": "promo_line",

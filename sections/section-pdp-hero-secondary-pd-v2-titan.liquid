@@ -218,10 +218,12 @@
           </div>
 
           <div class="pdp-hero__sizes">
-            <button data-length="4ft(1.2m)" class="pdp-hero__option active js-length-selector">
-              <span>1.2m</span>
-            </button>
-            <button data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
+            {% if section.settings.hide_first_variant != true %}
+              <button data-length="4ft(1.2m)" class="pdp-hero__option active js-length-selector">
+                <span>1.2m</span>
+              </button>
+            {% endif %}
+            <button data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector {% if section.settings.hide_first_variant == true %}active{% endif %}">
               <span>1.8m</span>
             </button>
             {% if section.settings.pd_first %}
@@ -632,6 +634,27 @@ button[disabled]{
 {% endif %}
 
 <script>
+    {% if section.settings.hide_first_variant %}
+      {% if section.settings.pd_first %}
+        window.selectLogic = {
+          productCount: 'pd4x',
+          productHandle: '',
+          productId: '',
+          phoneType: 'iPhone',
+          cableLength: '6ft(1.8m)',
+          addon: ''
+        }
+      {% else %}
+        window.selectLogic = {
+          productCount: '4x',
+          productHandle: '',
+          productId: '',
+          phoneType: 'iPhone',
+          cableLength: '6ft(1.8m)',
+          addon: ''
+        }
+      {% endif %}
+    {% else %}
     {% if section.settings.pd_first %}
       window.selectLogic = {
         productCount: 'pd4x',
@@ -650,6 +673,7 @@ button[disabled]{
         cableLength: '4ft(1.2m)',
         addon: ''
       }
+    {% endif %}
     {% endif %}
 
     window.products = {
@@ -772,6 +796,12 @@ button[disabled]{
 {
   "name": "PDP Hero PD TITAN",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_first_variant",
+      "label": "Hide 1.2m",
+      "default": true
+    },
     {
       "type": "checkbox",
       "id": "pd_first",

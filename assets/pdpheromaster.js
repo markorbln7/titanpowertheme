@@ -100,6 +100,59 @@ addonWrappers.forEach(addonWrapper => {
   })
 })
 
+let accTrigger = document.querySelectorAll('.acc_single_overlay')
+accTrigger.forEach(acc => {
+    acc.addEventListener('click', (e) => {
+      let panel = acc.parentNode
+      panel.classList.toggle('selected')
+    })
+})
+let infoTriggers = document.querySelectorAll('.js-info-trigger')
+let closeBtns = document.querySelectorAll('.close');
+let returnToOrders = document.querySelectorAll('.js-return')
+let SelectOrders = document.querySelectorAll('.js-add')
+infoTriggers.forEach(infoTrigger => {
+    infoTrigger.addEventListener('click', (e) => {
+      let panel = infoTrigger.parentNode.querySelector('.product-popup')
+      document.querySelector('body').classList.add('no-scroll')
+      document.querySelector('html').classList.add('no-scroll')
+      panel.classList.add('active')
+    })
+})
+closeBtns.forEach(closeBtn => {
+  closeBtn.addEventListener('click', (e) => {
+    closeBtn.parentNode.parentNode.classList.remove('active');
+    closeBtn.parentNode.classList.remove('active');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+returnToOrders.forEach(returnToOrder => {
+  returnToOrder.addEventListener('click', (e) => {
+    returnToOrder.parentNode.parentNode.parentNode.classList.remove('active');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+SelectOrders.forEach(SelectOrder => {
+  SelectOrder.addEventListener('click', (e) => {
+    SelectOrder.parentNode.parentNode.parentNode.classList.remove('active');
+    SelectOrder.parentNode.parentNode.parentNode.parentNode.classList.add('selected');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+  })
+})
+let overlayClsTT = document.querySelectorAll('.product-popup');
+overlayClsTT.forEach(overlayCl => {
+  overlayCl.addEventListener('click', (e) => {
+    console.log(e.target.classList, 'overlayCl');
+      if(e.target.classList.contains('product-popup')) {
+          e.target.classList.remove('active');
+          document.querySelector('body').classList.remove('no-scroll')
+          document.querySelector('html').classList.remove('no-scroll')
+      }
+  })
+})
 console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {
     addToCart.addEventListener('click', (e) => {
@@ -119,7 +172,17 @@ addToCarts.forEach(addToCart => {
       })
       addItems.push({
         id: window.products[productSelection],
-        quantity: 1
+        quantity: quantity
+      })
+      let accSelector = document.querySelectorAll('.selected')
+      console.log(accSelector, 'accSelector');
+      accSelector.forEach(acc => {
+          let product = acc.getAttribute('data-product-id')
+          console.log(product, 'productacc');
+          addItems.push({
+            id: product,
+            quantity: 1
+          })
       })
       const formData = {
         items: addItems
@@ -221,14 +284,14 @@ ttplus.forEach((plus) => {
       buyMore.classList.remove('hidden')
     }
     if (currentQty >= 4) {
-      buyMore.textContent = 'Add 6 save 35%'
-      buyMore.setAttribute('data-count', 6)
+      buyMore.textContent = 'Add 8 save 35%'
+      buyMore.setAttribute('data-count', 8)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty < 6) {
+    if (currentQty < 8) {
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 6) {
+    if (currentQty >= 8) {
       buyMore.classList.add('hidden')
     }
     ttquantity.setAttribute('data-count', currentQty)
@@ -254,14 +317,14 @@ ttminus.forEach((minus) => {
       buyMore.classList.remove('hidden')
     }
     if (currentQty >= 4) {
-      buyMore.textContent = 'Add 6 save 35%'
-      buyMore.setAttribute('data-count', 6)
+      buyMore.textContent = 'Add 8 save 35%'
+      buyMore.setAttribute('data-count', 8)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty < 6) {
+    if (currentQty < 8) {
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 6) {
+    if (currentQty >= 8) {
       buyMore.classList.add('hidden')
     }
     ttquantity.setAttribute('data-count', currentQty)
@@ -283,17 +346,17 @@ buyMore.addEventListener('click', (e) => {
     _this.textContent = 'Add 4 save 20%'
   }
   if(currentQty >= 4) {
-    _this.textContent = 'Add 6 save 35%'
+    _this.textContent = 'Add 8 save 35%'
   }
-  if (currentQty < 6) {
-    _this.setAttribute('data-count', parseInt(currentQty) + 2)
+  if (currentQty < 8) {
+    _this.setAttribute('data-count', parseInt(currentQty) * 2)
   }
   let currentQtyS = ttquantity.getAttribute('data-count')
-  if (currentQtyS < 6) {
+  if (currentQtyS < 8) {
     buyMore.classList.remove('hidden')
   }
-  if (currentQtyS >= 6) {
+  if (currentQtyS >= 8) {
     buyMore.classList.add('hidden')
   }
-
+  console.log(currentQty, 'currentQty')
 })

@@ -126,6 +126,7 @@
   assign highlighted_product_repeater = section.blocks | where: 'type', 'highlighted_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
+  assign accRepeater = section.blocks | where: 'type', 'accesories'
   assign currency = cart.currency.iso_code
 %}
 <div class="product-play-overlay">
@@ -412,6 +413,11 @@
           {% endif %}
         </div>
         {% endif %}
+        {% if atcLabel != blank %}
+          <p class="pdp-hero__atc-label">
+            {{ atcLabel }}
+          </p>
+        {% endif %}
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper scroll-reveal">
@@ -422,11 +428,68 @@
           >
             ADD TO CART
           </div>
-          {% if atcLabel != blank %}
-            <p class="pdp-hero__atc-label">
-              {{ atcLabel }}
-            </p>
+          {% if accRepeater.size > 0 %}
+            <h4 style="margin-top:20px;" class="pdp-hero__upsell-title text-center">
+              Titan Accessories:
+            </h4>
+            <div class="acc">
+              {% for block in accRepeater %}
+                {% assign acc_text = block.settings.acc_title %}
+                {% assign acc_product = block.settings.acc_product %}
+                {% assign acc_image = block.settings.acc_image %}
+                <div class="acc_single" data-product-id="{{ acc_product.first_available_variant.id }}">
+                  <div class="product-popup">
+                    <div class="close">
+                      {% render 'icon-close' %}
+                    </div>
+                    <div class="product-popup__content">
+                        <div class="product-popup__content--image">
+                           <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                       </div>
+                       <div class="product-popup__content--title">
+                        {{ acc_text }}
+                       </div>
+                       <div class="product-popup__content--prices">
+                           <div>
+                             <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                             <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                           </div>
+                           <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
+                       </div>
+                       {% if acc_product.metafields.custom.ticks %}
+                         {{acc_product.metafields.custom.ticks | metafield_tag }}
+                       {% endif %}
+                       <div class="product-popup__content--buttons">
+                          <button class="js-return">Return To Order</button>
+                          <button class="js-add">+ Add To Order</button>
+                       </div>
+                   </div>
+                 </div>
+                  <div class="acc_single_overlay">
+                  </div>
+                  <div class="accinfo-icon-trigger js-info-trigger">i</div>
+                  <div class="acc_single_content">
+                    <div class="acc_single__title">{{ acc_text }}</div>
+                    <div class="acc_single_content--price">
+                      <div class="pdp-hero__extra-checkbox">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                          <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="acc_single__price">{{ acc_product.first_available_variant.price | money }}</div>
+                        <div class="acc_single__compareprice">{{ acc_product.first_available_variant.compare_at_price | money }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="acc_single_image">
+                    {% render 'titan-image', image: acc_image %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
           {% endif %}
+
         </div>
 
         {% if propsRepeater.size > 0 %}
@@ -810,6 +873,33 @@ overlayCls.addEventListener('click', (e) => {
           "type": "richtext",
           "id": "prop_description",
           "label": "Prop description"
+        }
+      ]
+    },
+    {
+      "type": "accesories",
+      "name": "Accessories",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "acc_image",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "product",
+          "id": "acc_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "acc_title",
+          "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "acc_discount_pill",
+          "label": "Custom discount pill",
+          "default": "50% OFF"
         }
       ]
     },

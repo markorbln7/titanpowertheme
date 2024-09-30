@@ -31,9 +31,9 @@ const priceDisplay = () => {
     let finalPrice = totalPrice / 100
     let finalComparePrice = comparePrice / 100
     let savefinalPrice = finalComparePrice - finalPrice
-    price.innerHTML = finalPrice + '.00 ' + currency
-    crossedPrice.innerHTML = finalComparePrice + '.00 ' + currency
-    savedPrice.innerHTML = savefinalPrice + '.00 ' + currency + ' SAVED'
+    price.innerHTML = finalPrice.toLocaleString("en-US",{ style: "currency", currency: currency })
+    crossedPrice.innerHTML = finalComparePrice.toLocaleString("en-US",{ style: "currency", currency: currency })
+    savedPrice.innerHTML = savefinalPrice.toLocaleString("en-US",{ style: "currency", currency: currency }) + ' SAVED'
 }
 typeSelectors.forEach(typeSelector => {
     typeSelector.addEventListener('click', (e) => {

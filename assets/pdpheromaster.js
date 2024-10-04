@@ -171,7 +171,7 @@ addToCarts.forEach(addToCart => {
         }
       })
       addItems.push({
-        id: window.products[productSelection],
+        id: document.querySelector('.js-product-selector.active').getAttribute('data-product-id'),
         quantity: quantity
       })
       let accSelector = document.querySelectorAll('.selected')
@@ -207,6 +207,8 @@ addToCarts.forEach(addToCart => {
 
 var variantSelectorFirsts = document.querySelectorAll('.variant-selector-1');
 var variantSelectorSeconds = document.querySelectorAll('.variant-selector-2');
+var pdvariantSelectorFirsts = document.querySelectorAll('.pd-variant-selector-1');
+var pdvariantSelectorSeconds = document.querySelectorAll('.pd-variant-selector-2');
 if(variantSelectorFirsts) {
   variantSelectorFirsts.forEach(variantSelectorFirst => {
     variantSelectorFirst.addEventListener('change', function() {
@@ -223,6 +225,26 @@ if(variantSelectorFirsts) {
       parent.setAttribute('data-addon-id', productId);
       parent.setAttribute('data-addon-price', productPrice);
       parent.setAttribute('data-addon-compare-price', productComparePrice);
+      priceDisplay();
+    });
+  })
+}
+if(pdvariantSelectorFirsts) {
+  pdvariantSelectorFirsts.forEach(variantSelectorFirst => {
+    variantSelectorFirst.addEventListener('change', function() {
+      let parent = variantSelectorFirst.parentElement.parentElement;
+      let variantId = variantSelectorFirst.value;
+      nameFirst = variantId;
+      nameSecond = parent.querySelector('.pd-variant-selector-2').value;
+      selectedName = nameFirst + ' / ' + nameSecond;
+      let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+      let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+      let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+      // parent.querySelector('.pdp-hero__pricing-price').innerHTML = productPrice;
+      // parent.querySelector('.crossed').innerHTML = productComparePrice;
+      parent.setAttribute('data-product-id', productId);
+      parent.setAttribute('data-product-price', productPrice);
+      parent.setAttribute('data-product-compare-price', productComparePrice);
       priceDisplay();
     });
   })
@@ -246,6 +268,29 @@ if(variantSelectorSeconds) {
       parent.setAttribute('data-addon-id', productId);
       parent.setAttribute('data-addon-price', productPrice);
       parent.setAttribute('data-addon-compare-price', productComparePrice);
+      priceDisplay();
+    });
+  })
+}
+if(pdvariantSelectorSeconds) {
+  pdvariantSelectorSeconds.forEach(variantSelectorSecond => {
+    variantSelectorSecond.addEventListener('change', function() {
+      let parent = variantSelectorSecond.parentElement.parentElement;
+      let variantId = variantSelectorSecond.value;
+      nameFirst = parent.querySelector('.pd-variant-selector-1').value;
+      nameSecond = variantId;
+      selectedName = nameFirst + ' / ' + nameSecond;
+      let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
+      let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
+      let productPriceCur = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price-cur');
+      let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
+      let productComparePriceCur = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price-cur');
+      window.selectLogic.addon = productId
+      // parent.querySelector('.pdp-hero__pricing-price').innerHTML = productPriceCur;
+      // parent.querySelector('.crossed').innerHTML = productComparePriceCur;
+      parent.setAttribute('data-product-id', productId);
+      parent.setAttribute('data-product-price', productPrice);
+      parent.setAttribute('data-product-compare-price', productComparePrice);
       priceDisplay();
     });
   })

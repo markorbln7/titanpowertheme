@@ -295,13 +295,17 @@
               </div>
               <div
                 data-image="{{ product_obj.featured_image.src | img_url: 'master'}}"
+                data-product-id="{{ product_obj.first_available_variant.id }}"
+                data-product-price = "{{ product_obj.first_available_variant.price }}"
+                data-product-compare-price = "{{ product_obj.first_available_variant.compare_at_price }}"
                 data-count="{{ upsell_product_selector_number }}"
-                class="pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
+                class="fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
               >
                 <input
                   type="checkbox"
                   id="pdp-hero__checkbox"
                   class="js-upsell-checkbox"
+                  style="z-index:99;"
                   {% if forloop.index == 1 %}
                     checked
                   {% endif %}
@@ -332,7 +336,24 @@
                   </div>
                 </div>
                 {% render 'titan-image', image: upsell_product_image %}
+                {% if product_obj.options_with_values.size  > 1 %}
+                  <div style="z-index:999;" class="f jcc aic gap-10 mx-20 fw w-100">
+                  {% for option in product_obj.options_with_values %}
+                    <select  class="pd-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                      {% for values in option.values %}
+                          <option value="{{values}}">{{values}}</option>
+                      {% endfor %}
+                    </select>
+                  {% endfor %}
+                  <div style="position:absolute;left:-4000px;">
+                    {% for variant in product_obj.variants %}
+                      <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
               </div>
+
             {% endfor %}
           {% endif %}
 
@@ -362,7 +383,7 @@
             >
               <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
               <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper addon-wrapper">
-                <input type="checkbox" id="pdp-hero__checkbox">
+                <input style="z-index:99;" type="checkbox" id="pdp-hero__checkbox">
                 <div class="pdp-hero__extra-checkbox">
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
                     <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
@@ -380,20 +401,20 @@
                 {% render 'titan-image', image: product_highlighted_image %}
               </div>
               {% if highlighted_product_obj.options_with_values.size  > 1 %}
-               <div class="f jcc aic gap-10 mx-20 fw">
-                {% for option in highlighted_product_obj.options_with_values %}
-                  <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
-                    {% for values in option.values %}
-                        <option value="{{values}}">{{values}}</option>
-                    {% endfor %}
-                  </select>
-                {% endfor %}
-                <div style="position:absolute;left:-4000px;">
-                  {% for variant in highlighted_product_obj.variants %}
-                    <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+               <div style="z-index:9999;" class="f jcc aic gap-10 mx-20 fw">
+                  {% for option in highlighted_product_obj.options_with_values %}
+                    <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                      {% for values in option.values %}
+                          <option value="{{values}}">{{values}}</option>
+                      {% endfor %}
+                    </select>
                   {% endfor %}
+                  <div style="position:absolute;left:-4000px;">
+                    {% for variant in highlighted_product_obj.variants %}
+                      <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                    {% endfor %}
+                  </div>
                 </div>
-              </div>
               {% endif %}
             </div>
           {% endfor %}

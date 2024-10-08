@@ -1,0 +1,233 @@
+
+{{ 'section-explore.css' | asset_url | stylesheet_tag }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+{% if page.handle == 'test-sections' %}
+  <script src="https://cdn.tailwindcss.com" defer></script>
+{% endif %}
+
+
+{% liquid
+    assign section_title = section.settings.section_title
+    assign first_collection_label = section.settings.first_collection_label
+    assign second_collection_label = section.settings.second_collection_label
+    assign first_collection = section.settings.first_collection
+    assign second_collection = section.settings.second_collection
+%}
+
+<section class="section-explore py-[50px] bg-[#141414]">
+  <div class="section-explore__wrapper px-[24px]">
+      {% if section_title != blank %}
+          <h2 class="mb-[30px] text-center text-white text-[26px] font-[600] md:text-[54px]" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
+      {% endif %}
+
+      <div class="section-explore__product-content relative h-[350px] w-[1280px] mx-auto hidden lg:!block">
+        {% for product in collections[first_collection].products limit: 4 %}
+          <div class="absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
+           <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right">
+              <div class="relative mb-[50px] pr-[20px]">
+                <h3>{{ product.metafields.custom.info_title_one}}</h3>
+                <p>{{product.metafields.custom.info_text_one}}</p>
+                <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                </div>
+              </div>
+              <div class="relative pr-[20px]">
+                <h3>{{ product.metafields.custom.info_title_two }}</h3>
+                <p>{{ product.metafields.custom.info_text_two }}</p>
+                <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                </div>
+              </div>
+           </div>
+
+            <figure class="h-full w-[800px]">
+              <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
+            </figure>
+
+            <div class="section-explore__product-info flex flex-col justify-center text-left">
+              <div class="relative mb-[30px] pl-[20px]">
+                <h3> {{ product.metafields.custom.info_title_three }}</h3>
+                <p> {{ product.metafields.custom.info_text_three }}</p>
+                <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                </div>
+              </div>
+              <div class="relative pl-[20px]">
+                <h3> {{ product.metafields.custom.info_title_four }}</h3>
+                <p> {{ product.metafields.custom.info_text_four }}</p>
+                <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+        {% for product in collections[second_collection].products limit: 4 %}
+          <div class="absolute left-0 top-0 w-full h-full flex opacity-0" data-product="for-travel-{{ forloop.index }}">
+           <div class="section-explore__product-info flex flex-col justify-center text-right">
+              <div class="relative mb-[50px] pr-[20px]">
+                <h3>{{ product.metafields.custom.info_title_one}}</h3>
+                <p>{{product.metafields.custom.info_text_one}}</p>
+                 <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                </div>
+              </div>
+              <div class="relative pr-[20px]">
+                <h3>{{ product.metafields.custom.info_title_two }}</h3>
+                <p>{{ product.metafields.custom.info_text_two }}</p>
+                 <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                </div>
+              </div>
+           </div>
+
+            <figure class="h-full w-[800px]">
+              <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
+            </figure>
+
+            <div class="section-explore__product-info flex flex-col justify-center text-left">
+              <div class="relative mb-[30px] pl-[20px]">
+                <h3> {{ product.metafields.custom.info_title_three }}</h3>
+                <p> {{ product.metafields.custom.info_text_three }}</p>
+                 <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                </div>
+              </div>
+              <div class="relative pl-[20px]">
+                <h3> {{ product.metafields.custom.info_title_four }}</h3>
+                <p> {{ product.metafields.custom.info_text_four }}</p>
+                 <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="section-explore__collections flex flex-col justify-center gap-[30px]">
+        <div class="w-full lg:flex lg:flex-col">
+          <h3 class="section-explore__collection-label section-explore__collection-label-desktop mb-[12px] text-center text-[21px] text-[#fff] font-medium active">
+              {{ first_collection_label }}
+          </h3>
+            <div class="section-explore__products flex w-full justify-center flex-wrap gap-[10px]">
+              {% for product in collections[first_collection].products limit: 4 %}
+                  <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-desktop-{{ forloop.index }}">
+                    <div>
+                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000]">
+                          {{ product.title }}
+                        </h4>
+                        <div class="mb-[12px] price-wrapper">
+                          <p class="product-price text-black font-[600] leading-[1] text-[16px]">{{ product.price | money }}</p>
+                          <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
+                        </div>
+                    </div>
+                    <button class="section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white">BUY NOW</button>
+                    <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                    {% if product.compare_at_price %}
+                      <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
+                        {{ product.compare_at_price | minus: product.price | money }} OFF
+                      </div>
+                    {% endif %}
+                  </div>
+              {% endfor %}
+            </div>
+        </div>
+        <div class="w-full">
+            <h3 class="section-explore__collection-label section-explore__collection-label-travel mb-[12px] text-center text-[21px] text-[#fff] font-medium">
+            {{ second_collection_label }}
+            </h3>
+            <div class="flex w-full justify-center flex-wrap gap-[10px]">
+            {% for product in collections[second_collection].products limit: 4 %}
+                <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-travel-{{ forloop.index }}">
+                  <div>
+                    <figure>
+                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                    </figure>
+                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000]">
+                        {{ product.title }}
+                      </h4>
+                     <div class="mb-[12px] price-wrapper">
+                        <p class="product-price text-black font-[600] leading-[1] text-[16px]">{{ product.price | money }}</p>
+                        <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
+                     </div>
+                  </div>
+                  <button class="section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white">BUY NOW</button>
+                  <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                  {% if product.compare_at_price %}
+                    <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
+                      {{ product.compare_at_price | minus: product.price | money }} OFF
+                    </div>
+                  {% endif %}
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  AOS.init();
+  document.addEventListener("shopify:section:load", () => {
+    AOS.init();
+  })
+</script>
+  
+  
+
+{% schema %}
+{
+  "name": "Explore the lineup",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Section title",
+      "id": "section_title",
+      "default": "EXPLORE THE LINEUP"
+    },
+    {
+      "type": "text",
+      "label": "First collection label",
+      "id": "first_collection_label",
+      "default": "For Desktop"
+    },
+    {
+      "type": "text",
+      "label": "Second collection label",
+      "id": "second_collection_label",
+      "default": "For travel"
+    },
+    {
+      "type": "collection",
+      "label": "First collection",
+      "id": "first_collection"
+    },
+    {
+      "type": "collection",
+      "label": "Second collection",
+      "id": "second_collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Explore the lineup"
+    }
+  ]
+}
+{% endschema %}
+

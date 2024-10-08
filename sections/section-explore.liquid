@@ -27,20 +27,32 @@
           <div class="absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
            <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right">
               <div class="relative mb-[50px] pr-[20px]">
-                <h3>{{ product.metafields.custom.info_title_one}}</h3>
-                <p>{{product.metafields.custom.info_text_one}}</p>
-                <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
-                </div>
+                {% if product.metafields.custom.info_title_one != blank %}
+                  <h3>{{ product.metafields.custom.info_title_one }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_one != blank %}
+                  <p>{{ product.metafields.custom.info_text_one }}</p>
+                {% endif %}
+                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}   
+                  <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                    <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                  </div>
+                {% endif %}
               </div>
               <div class="relative pr-[20px]">
-                <h3>{{ product.metafields.custom.info_title_two }}</h3>
-                <p>{{ product.metafields.custom.info_text_two }}</p>
-                <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
-                </div>
+                {% if product.metafields.custom.info_title_two != blank %}
+                  <h3>{{ product.metafields.custom.info_title_two }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_two != blank %}
+                  <p>{{ product.metafields.custom.info_text_two }}</p>
+                {% endif %}
+                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two != blank %}      
+                  <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                    <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                  </div>
+                {% endif %}
               </div>
            </div>
 
@@ -50,20 +62,32 @@
 
             <div class="section-explore__product-info flex flex-col justify-center text-left">
               <div class="relative mb-[30px] pl-[20px]">
-                <h3> {{ product.metafields.custom.info_title_three }}</h3>
-                <p> {{ product.metafields.custom.info_text_three }}</p>
-                <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
-                </div>
+                {% if product.metafields.custom.info_title_three != blank %}                  
+                  <h3> {{ product.metafields.custom.info_title_three }}</h3>
+                {% endif %}
+                {% if  product.metafields.custom.info_text_three != blank %}
+                  <p> {{ product.metafields.custom.info_text_three }}</p>
+                {% endif %}
+                {% if product.metafields.custom.info_title_three != blank or  product.metafields.custom.info_text_three != blank %}   
+                  <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                    <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                  </div>
+                {% endif %}
               </div>
               <div class="relative pl-[20px]">
-                <h3> {{ product.metafields.custom.info_title_four }}</h3>
-                <p> {{ product.metafields.custom.info_text_four }}</p>
-                <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
-                </div>
+                {% if  product.metafields.custom.info_title_four != blank %}
+                  <h3> {{ product.metafields.custom.info_title_four }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_four != blank %}
+                  <p> {{ product.metafields.custom.info_text_four }}</p>
+                {% endif %}
+                {% if product.metafields.custom.info_title_four != blank or  product.metafields.custom.info_text_four != blank %}   
+                  <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
+                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                    <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
+                  </div>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -73,20 +97,33 @@
           <div class="absolute left-0 top-0 w-full h-full flex opacity-0" data-product="for-travel-{{ forloop.index }}">
            <div class="section-explore__product-info flex flex-col justify-center text-right">
               <div class="relative mb-[50px] pr-[20px]">
-                <h3>{{ product.metafields.custom.info_title_one}}</h3>
-                <p>{{product.metafields.custom.info_text_one}}</p>
-                 <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
-                </div>
+                {% if product.metafields.custom.info_title_one != blank %}
+                  <h3>{{ product.metafields.custom.info_title_one }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_one != blank %}
+                  <p>{{ product.metafields.custom.info_text_one }}</p>
+                {% endif %}
+                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}   
+                  <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                   <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                   <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                 </div>
+                {% endif %}
               </div>
               <div class="relative pr-[20px]">
-                <h3>{{ product.metafields.custom.info_title_two }}</h3>
-                <p>{{ product.metafields.custom.info_text_two }}</p>
-                 <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
-                  <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
-                  <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
-                </div>
+                {% if product.metafields.custom.info_title_two != blank %}
+                  <h3>{{ product.metafields.custom.info_title_two }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_two != blank %}
+                  <p>{{ product.metafields.custom.info_text_two }}</p>
+                {% endif %}
+
+                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two  != blank %}   
+                  <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
+                   <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
+                   <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
+                 </div>
+                {% endif %}
               </div>
            </div>
 
@@ -96,16 +133,24 @@
 
             <div class="section-explore__product-info flex flex-col justify-center text-left">
               <div class="relative mb-[30px] pl-[20px]">
-                <h3> {{ product.metafields.custom.info_title_three }}</h3>
-                <p> {{ product.metafields.custom.info_text_three }}</p>
+                {% if product.metafields.custom.info_title_three != blank %}
+                  <h3> {{ product.metafields.custom.info_title_three }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_three != blank %}
+                  <p> {{ product.metafields.custom.info_text_three }}</p>
+                {% endif %}
                  <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
                   <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                   <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
                 </div>
               </div>
               <div class="relative pl-[20px]">
-                <h3> {{ product.metafields.custom.info_title_four }}</h3>
-                <p> {{ product.metafields.custom.info_text_four }}</p>
+                {% if product.metafields.custom.info_title_four != blank %}
+                  <h3> {{ product.metafields.custom.info_title_four }}</h3>
+                {% endif %}
+                {% if product.metafields.custom.info_text_four != blank %}
+                  <p> {{ product.metafields.custom.info_text_four }}</p>
+                {% endif %}
                  <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
                   <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                   <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>

@@ -318,25 +318,25 @@ ttplus.forEach((plus) => {
   plus.addEventListener('click', () => {
     let currentQty = ttquantity.getAttribute('data-count')
     currentQty++
-    if (currentQty < 2) {
+    if (currentQty < 2 && buyMore) {
       buyMore.textContent = 'Add 2 save 10%'
       buyMore.setAttribute('data-count', 2)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 2 && currentQty < 4) {
+    if (currentQty >= 2 && currentQty < 4 && buyMore) {
       buyMore.textContent = 'Add 4 save 20%'
       buyMore.setAttribute('data-count', 4)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 4) {
+    if (currentQty >= 4 && buyMore) {
       buyMore.textContent = 'Add 8 save 35%'
       buyMore.setAttribute('data-count', 8)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty < 8) {
+    if (currentQty < 8 && buyMore) {
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 8) {
+    if (currentQty >= 8 && buyMore) {
       buyMore.classList.add('hidden')
     }
     ttquantity.setAttribute('data-count', currentQty)
@@ -348,28 +348,28 @@ ttminus.forEach((minus) => {
   minus.addEventListener('click', () => {
     let currentQty = ttquantity.getAttribute('data-count')
     currentQty--
-    if (currentQty < 1) {
+    if (currentQty < 1 && buyMore) {
       currentQty = 1
     }
-    if (currentQty < 2) {
+    if (currentQty < 2 && buyMore) {
       buyMore.textContent = 'Add 2 save 10%'
       buyMore.setAttribute('data-count', 2)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 2 && currentQty < 4) {
+    if (currentQty >= 2 && currentQty < 4 && buyMore) {
       buyMore.textContent = 'Add 4 save 20%'
       buyMore.setAttribute('data-count', 4)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 4) {
+    if (currentQty >= 4 && buyMore) {
       buyMore.textContent = 'Add 8 save 35%'
       buyMore.setAttribute('data-count', 8)
       buyMore.classList.remove('hidden')
     }
-    if (currentQty < 8) {
+    if (currentQty < 8 && buyMore) {
       buyMore.classList.remove('hidden')
     }
-    if (currentQty >= 8) {
+    if (currentQty >= 8 && buyMore) {
       buyMore.classList.add('hidden')
     }
     ttquantity.setAttribute('data-count', currentQty)
@@ -377,31 +377,68 @@ ttminus.forEach((minus) => {
     document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
   })
 })
-buyMore.addEventListener('click', (e) => {
-  e.preventDefault()
-  let _this = e.target
-  let currentQty = _this.getAttribute('data-count')
-  ttquantity.setAttribute('data-count', currentQty)
-  ttquantity.textContent = currentQty
-  document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
-  if(currentQty < 2) {
-    _this.textContent = 'Add 2 save 10%'
-  }
-  if(currentQty >= 2 && currentQty < 4) {
-    _this.textContent = 'Add 4 save 20%'
-  }
-  if(currentQty >= 4) {
-    _this.textContent = 'Add 8 save 35%'
-  }
-  if (currentQty < 8) {
-    _this.setAttribute('data-count', parseInt(currentQty) * 2)
-  }
-  let currentQtyS = ttquantity.getAttribute('data-count')
-  if (currentQtyS < 8) {
-    buyMore.classList.remove('hidden')
-  }
-  if (currentQtyS >= 8) {
-    buyMore.classList.add('hidden')
-  }
-  console.log(currentQty, 'currentQty')
+if(buyMore) {
+  buyMore.addEventListener('click', (e) => {
+    e.preventDefault()
+    let _this = e.target
+    let currentQty = _this.getAttribute('data-count')
+    ttquantity.setAttribute('data-count', currentQty)
+    ttquantity.textContent = currentQty
+    document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
+    if(currentQty < 2) {
+      _this.textContent = 'Add 2 save 10%'
+    }
+    if(currentQty >= 2 && currentQty < 4) {
+      _this.textContent = 'Add 4 save 20%'
+    }
+    if(currentQty >= 4) {
+      _this.textContent = 'Add 8 save 35%'
+    }
+    if (currentQty < 8) {
+      _this.setAttribute('data-count', parseInt(currentQty) * 2)
+    }
+    let currentQtyS = ttquantity.getAttribute('data-count')
+    if (currentQtyS < 8) {
+      buyMore.classList.remove('hidden')
+    }
+    if (currentQtyS >= 8) {
+      buyMore.classList.add('hidden')
+    }
+    console.log(currentQty, 'currentQty')
+  })
+}
+
+let gridImages = document.querySelectorAll('.js-grid-image')
+gridImages.forEach(gridImage => {
+  gridImage.addEventListener('click', (e) => {
+    let _this = gridImage
+    let imageQty = _this.getAttribute('data-image-qty')
+    ttquantity.setAttribute('data-count', imageQty)
+    ttquantity.textContent = imageQty
+    document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', imageQty)
+    if (imageQty < 1 && buyMore) {
+      imageQty = 1
+    }
+    if (imageQty < 2 && buyMore) {
+      buyMore.textContent = 'Add 2 save 10%'
+      buyMore.setAttribute('data-count', 2)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 2 && imageQty < 4 && buyMore) {
+      buyMore.textContent = 'Add 4 save 20%'
+      buyMore.setAttribute('data-count', 4)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 4 && buyMore) {
+      buyMore.textContent = 'Add 8 save 35%'
+      buyMore.setAttribute('data-count', 8)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty < 8 && buyMore) {
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 8 && buyMore) {
+      buyMore.classList.add('hidden')
+    }
+  })
 })

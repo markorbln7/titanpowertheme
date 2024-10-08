@@ -732,3 +732,15 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
         display: none;
     }
 }
+.grid-images {
+    display: flex;
+    gap:10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &__single {
+        width: 33%;
+    }
+    img {
+        width: 100%;
+    }
+}

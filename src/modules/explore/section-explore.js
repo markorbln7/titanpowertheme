@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buyNowButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
-            const popup = popups[index]; 
+            const popup = popups[index];
             if (popup) {
                 openPopup(popup);
 
@@ -88,22 +88,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 const descriptionInner = popup.querySelector('.buy-now-popup__description-inner');
 
                 if (learnMoreButton) {
-                    learnMoreButton.addEventListener('click', () => {
+                    const clonedLearnMoreButton = learnMoreButton.cloneNode(true);
+                    learnMoreButton.parentNode.replaceChild(clonedLearnMoreButton, learnMoreButton);
+
+                    clonedLearnMoreButton.addEventListener('click', () => {
                         const expanded = descriptionEl.classList.contains('expanded');
 
                         if (expanded) {
                             descriptionEl.classList.remove('expanded');
                             descriptionInner.style.height = '100px';
-                            learnMoreButton.querySelector('span').textContent = 'Learn More';
+                            clonedLearnMoreButton.querySelector('span').textContent = 'Learn More';
                             descriptionInner.classList.add('with-gradient');
                         } else {
                             descriptionEl.classList.add('expanded');
                             descriptionInner.style.height = `${descriptionInner.scrollHeight}px`;
-                            learnMoreButton.querySelector('span').textContent = 'Show Less';
+                            clonedLearnMoreButton.querySelector('span').textContent = 'Show Less';
                             descriptionInner.classList.remove('with-gradient');
                         }
                     });
-
                 }
 
                 // Upsell checkbox toggle logic
@@ -129,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const closeButtons = popup.querySelectorAll('.close-buy-now-popup');
         closeButtons.forEach((button) => {
             button.addEventListener('click', () => {
-                closePopup(popup); 
+                closePopup(popup);
             });
         })
     });

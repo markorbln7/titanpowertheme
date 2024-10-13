@@ -1,7 +1,7 @@
 import './section-explore.css'
 
 document.addEventListener('DOMContentLoaded', function () {
-    //Product cards hover logic
+    // Product cards hover logic
     const productCards = document.querySelectorAll('.section-explore__product');
     const desktopLabel = document.querySelector('.section-explore__collection-label-desktop');
     const travelLabel = document.querySelector('.section-explore__collection-label-travel');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Poppup toggle logic
+    // Popup toggle logic
     const buyNowButtons = document.querySelectorAll('.section-explore__buy-now');
     const popups = document.querySelectorAll('.buy-now-popup');
 
@@ -76,11 +76,72 @@ document.addEventListener('DOMContentLoaded', function () {
         popup.classList.remove('active');
     }
 
+    // Function to update the state of the minus button based on quantity
+    function updateQuantityButtonsState(input, minusButton) {
+        const quantity = parseInt(input.value);
+        if (quantity <= 1) {
+            minusButton.setAttribute("disabled", true); 
+            minusButton.classList.add('disabled');
+        } else {
+            minusButton.removeAttribute("disabled"); 
+            minusButton.classList.remove('disabled');
+        }
+    }
+
+    // Reset quantity button event listeners
+    function resetQuantityListeners() {
+        const quantityMinusButtons = document.querySelectorAll('.buy-now-popup__quantity button[name="minus"]');
+        const quantityPlusButtons = document.querySelectorAll('.buy-now-popup__quantity button[name="plus"]');
+
+        quantityMinusButtons.forEach((button) => {
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+        });
+
+        quantityPlusButtons.forEach((button) => {
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+        });
+    }
+
+    // Handling Buy Now button clicks
     buyNowButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
             const popup = popups[index];
             if (popup) {
                 openPopup(popup);
+                resetQuantityListeners();
+
+                // Add quantity control logic
+                const quantityInputs = popup.querySelectorAll('.buy-now-popup__quantity input[type="number"]');
+                const quantityMinusButtons = popup.querySelectorAll('.buy-now-popup__quantity button[name="minus"]');
+                const quantityPlusButtons = popup.querySelectorAll('.buy-now-popup__quantity button[name="plus"]');
+
+                quantityInputs.forEach((input, idx) => {
+                    const minusButton = quantityMinusButtons[idx];
+                    const plusButton = quantityPlusButtons[idx];
+
+                    // Initially check if the minus button should be disabled
+                    updateQuantityButtonsState(input, minusButton);
+
+                    minusButton.addEventListener('click', () => {
+                        let quantity = parseInt(input.value);
+                        if (quantity > 1) {
+                            input.value = quantity - 1;
+                            const addToCartButton = popup.querySelector('.js-atc');
+                            addToCartButton.setAttribute("data-quantity", input.value);
+                        }
+                        updateQuantityButtonsState(input, minusButton); // Update button state after quantity change
+                    });
+
+                    plusButton.addEventListener('click', () => {
+                        let quantity = parseInt(input.value);
+                        input.value = quantity + 1;
+                        const addToCartButton = popup.querySelector('.js-atc');
+                        addToCartButton.setAttribute("data-quantity", input.value);
+                        updateQuantityButtonsState(input, minusButton); // Update button state after quantity change
+                    });
+                });
 
                 // Expand description logic
                 const learnMoreButton = popup.querySelector('.buy-now-popup__expand-desc');
@@ -134,5 +195,53 @@ document.addEventListener('DOMContentLoaded', function () {
                 closePopup(popup);
             });
         })
+    });
+
+    // Add to cart logic
+    let addToCarts = document.querySelectorAll(".js-atc")  // Select all add to cart buttons
+    addToCarts.forEach((addToCart) => {
+        addToCart.addEventListener("click", (e) => {
+            let checkout = false;
+            if (addToCart.classList.contains('js-checkout')) { // Check if the button is checkout
+                checkout = true;
+            }
+            let _this = e.target;
+            let productId = _this.getAttribute("data-product-id"); // Get the product id
+            let quantity = _this.getAttribute("data-quantity"); // Get the quantity
+            const upsellProductSelectors = document.querySelectorAll(".js-upsell-selector.active"); // Get all active upsell products
+            const addItems = []; // Create an array for items
+            addItems.push({  // Add the main product to the array
+                id: productId,
+                quantity: quantity
+            })
+            upsellProductSelectors.forEach((upsellProductSelector) => {  // Add upsell products to the array
+                const productId = upsellProductSelector.getAttribute("data-product-id");
+                addItems.push({
+                    id: productId,
+                    quantity: 1,
+                });
+            });
+            console.log(addItems);
+            const formData = { // Form data for the cart
+                items: addItems,
+            };
+            fetch(window.Shopify.routes.root + "cart/add.js", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => {
+                    console.log(response.status, "ok"); // Check if the response is OK
+                    if (response.status === 200 && checkout) { 
+                        window.location.href = '/checkout'; 
+                      }
+                    return response.json();
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
     });
 });

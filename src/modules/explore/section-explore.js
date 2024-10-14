@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateQuantityButtonsState(input, minusButton) {
         const quantity = parseInt(input.value);
         if (quantity <= 1) {
-            minusButton.setAttribute("disabled", true); 
+            minusButton.setAttribute("disabled", true);
             minusButton.classList.add('disabled');
         } else {
-            minusButton.removeAttribute("disabled"); 
+            minusButton.removeAttribute("disabled");
             minusButton.classList.remove('disabled');
         }
     }
@@ -129,7 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (quantity > 1) {
                             input.value = quantity - 1;
                             const addToCartButton = popup.querySelector('.js-atc');
+                            const addToCheckoutButton = popup.querySelector('.js-checkout');
                             addToCartButton.setAttribute("data-quantity", input.value);
+                            addToCheckoutButton.setAttribute("data-quantity", input.value);
                         }
                         updateQuantityButtonsState(input, minusButton); // Update button state after quantity change
                     });
@@ -138,7 +140,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         let quantity = parseInt(input.value);
                         input.value = quantity + 1;
                         const addToCartButton = popup.querySelector('.js-atc');
+                        const addToCheckoutButton = popup.querySelector('.js-checkout');
                         addToCartButton.setAttribute("data-quantity", input.value);
+                        addToCheckoutButton.setAttribute("data-quantity", input.value);
                         updateQuantityButtonsState(input, minusButton); // Update button state after quantity change
                     });
                 });
@@ -234,8 +238,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then((response) => {
                     console.log(response.status, "ok"); // Check if the response is OK
-                    if (response.status === 200 && checkout) { 
-                        window.location.href = '/checkout'; 
+                    if (response.status === 200 && checkout) {
+                        window.location.href = '/checkout';
                       }
                     return response.json();
                 })

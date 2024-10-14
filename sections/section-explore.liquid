@@ -1,7 +1,7 @@
 
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 {% if page.handle == 'test-sections' %}
   <script src="https://cdn.tailwindcss.com" defer></script>
@@ -19,7 +19,7 @@
 <section class="section-explore py-[50px] bg-[#141414]">
   <div class="section-explore__wrapper px-[24px]">
       {% if section_title != blank %}
-          <h2 class="mb-[30px] text-center text-white text-[26px] font-[600] md:text-[54px]" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
+          <h2 class="mb-[30px] text-center text-white text-[26px] font-[600] md:text-[54px] explore-title" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
       {% endif %}
 
       <div class="section-explore__product-content relative h-[350px] w-[1280px] mx-auto hidden lg:!block">
@@ -33,7 +33,7 @@
                 {% if product.metafields.custom.info_text_one != blank %}
                   <p>{{ product.metafields.custom.info_text_one }}</p>
                 {% endif %}
-                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}   
+                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}
                   <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
                     <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                     <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
@@ -47,7 +47,7 @@
                 {% if product.metafields.custom.info_text_two != blank %}
                   <p>{{ product.metafields.custom.info_text_two }}</p>
                 {% endif %}
-                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two != blank %}      
+                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two != blank %}
                   <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
                     <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                     <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
@@ -62,13 +62,13 @@
 
             <div class="section-explore__product-info flex flex-col justify-center text-left">
               <div class="relative mb-[30px] pl-[20px]">
-                {% if product.metafields.custom.info_title_three != blank %}                  
+                {% if product.metafields.custom.info_title_three != blank %}
                   <h3> {{ product.metafields.custom.info_title_three }}</h3>
                 {% endif %}
                 {% if  product.metafields.custom.info_text_three != blank %}
                   <p> {{ product.metafields.custom.info_text_three }}</p>
                 {% endif %}
-                {% if product.metafields.custom.info_title_three != blank or  product.metafields.custom.info_text_three != blank %}   
+                {% if product.metafields.custom.info_title_three != blank or  product.metafields.custom.info_text_three != blank %}
                   <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
                     <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                     <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
@@ -82,7 +82,7 @@
                 {% if product.metafields.custom.info_text_four != blank %}
                   <p> {{ product.metafields.custom.info_text_four }}</p>
                 {% endif %}
-                {% if product.metafields.custom.info_title_four != blank or  product.metafields.custom.info_text_four != blank %}   
+                {% if product.metafields.custom.info_title_four != blank or  product.metafields.custom.info_text_four != blank %}
                   <div class="h-full flex items-center absolute left-0 top-[50%] z-[5] translate-y-[-50%]">
                     <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                     <div class="h-[1px] bg-white !block absolute right-0 animate-line"></div>
@@ -103,7 +103,7 @@
                 {% if product.metafields.custom.info_text_one != blank %}
                   <p>{{ product.metafields.custom.info_text_one }}</p>
                 {% endif %}
-                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}   
+                {% if product.metafields.custom.info_title_one != blank or product.metafields.custom.info_text_one != blank %}
                   <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                    <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
@@ -118,7 +118,7 @@
                   <p>{{ product.metafields.custom.info_text_two }}</p>
                 {% endif %}
 
-                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two  != blank %}   
+                {% if product.metafields.custom.info_title_two != blank or  product.metafields.custom.info_text_two  != blank %}
                   <div class="h-full flex items-center absolute right-0 top-[50%] z-[5] translate-y-[-50%]">
                    <div class="animated-border h-full w-[1px] bg-white !block absolute"></div>
                    <div class="h-[1px] bg-white !block absolute left-0 animate-line"></div>
@@ -171,30 +171,37 @@
                 {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
                 {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
                 {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
-                
+
                   <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-desktop-{{ forloop.index }}">
                     <div>
-                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000]">
+                      {% if product.metafields.custom.custom_product_image %}
+                        <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                      {% else %}
+                        <img src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                      {% endif %}
+                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
                           {{ product.title }}
                         </h4>
                         <div class="mb-[12px] price-wrapper">
-                          <p class="product-price text-black font-[600] leading-[1] text-[16px]">{{ product.price | money }}</p>
+                          <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
                           <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
                         </div>
                     </div>
-                    <button class="section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white">BUY NOW</button>
+                    <button class="section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px]">BUY NOW</button>
                     <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
                     {% if product.compare_at_price %}
                       <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
-                        {{ product.compare_at_price | minus: product.price | money }} OFF
+                        {% assign productdifference = product.compare_at_price | minus: product.price %}
+                        {% assign divider = product.compare_at_price | times: 1.0 %}
+                        {% assign percentage = productdifference | divided_by:  divider %}
+                        {{ percentage | times: 100 | round }}% OFF
                       </div>
                     {% endif %}
                   </div>
 
-                  {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title  
+                  {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
                      upsell_product_one: product.metafields.custom.first_upsell_product
-                     description: product_description upsell_product_one: 
+                     description: product_description upsell_product_one:
                      upsell_product_one upsell_product_two: upsell_product_two
                      product_id: product.selected_or_first_available_variant.id
                      quantity: '1'
@@ -215,29 +222,37 @@
 
                 <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-travel-{{ forloop.index }}">
                   <div>
-                    <figure>
-                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                    </figure>
-                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000]">
+                    {% if product.metafields.custom.custom_product_image %}
+                      <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                    {% else %}
+                      <img src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                    {% endif %}
+                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
                         {{ product.title }}
                       </h4>
                      <div class="mb-[12px] price-wrapper">
-                        <p class="product-price text-black font-[600] leading-[1] text-[16px]">{{ product.price | money }}</p>
+                        <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
                         <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
                      </div>
                   </div>
-                  <button class="section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white">BUY NOW</button>
+                  <button class="section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[16px] rounded-[10px]">BUY NOW</button>
                   <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
                   {% if product.compare_at_price %}
                     <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
-                      {{ product.compare_at_price | minus: product.price | money }} OFF
+                      {% assign productdifference = product.compare_at_price | minus: product.price %}
+                      {% assign divider = product.compare_at_price | times: 1.0 %}
+                      {% assign percentage = productdifference | divided_by:  divider %}
+                      {{ percentage | times: 100 | round }}% OFF
                     </div>
                   {% endif %}
                 </div>
-                {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title 
-                  description: product_description 
-                  upsell_product_one: upsell_product_one 
-                  upsell_product_two: upsell_product_two %}
+                {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
+                  upsell_product_one: product.metafields.custom.first_upsell_product
+                  description: product_description upsell_product_one:
+                  upsell_product_one upsell_product_two: upsell_product_two
+                  product_id: product.selected_or_first_available_variant.id
+                  quantity: '1'
+               %}
             {% endfor %}
           </div>
         </div>
@@ -253,8 +268,8 @@
     AOS.init();
   })
 </script>
-  
-  
+
+
 
 {% schema %}
 {

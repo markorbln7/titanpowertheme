@@ -1,12 +1,35 @@
 {
-  "sections": {
-    "game": {
-      "type": "compare-table",
-      "settings": {
-      }
-    }
+  "sections":{
+     "game":{
+        "type":"compare-table",
+        "disabled":true,
+        "settings":{
+
+        }
+     },
+     "section_explore_fXzahR":{
+        "type":"section-explore",
+        "settings":{
+           "section_title":"<span>OCTOBER</span> DEALS",
+           "first_collection_label":"For Desktop",
+           "second_collection_label":"For travel",
+           "first_collection":"plugs",
+           "second_collection":"titan-car-chargers"
+        }
+     },
+     "section_collections_with_nav_Xpintm":{
+        "type":"section-collections-with-nav",
+        "settings":{
+           "collections":[
+              "plugs",
+              "cables-byob"
+           ]
+        }
+     }
   },
-  "order": [
-    "game"
+  "order":[
+     "game",
+     "section_explore_fXzahR",
+     "section_collections_with_nav_Xpintm"
   ]
 }

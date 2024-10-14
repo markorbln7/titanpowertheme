@@ -288,6 +288,11 @@
 
 @media(max-width:767px) {
     .section-explore {
+        &__buy-now {
+            padding-inline: 10px;
+            max-width: 100%;
+        }
+        
         .buy-now-popup {
             &__wrapper {
                 padding-top: 30px;

@@ -20,7 +20,7 @@
   <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
-        <div class="collection" id="{{ collection_obj.handle  | strip }}">
+        <div class="collection" id="{{ collection_obj.handle  | strip }}" data-aos="fade-in" data-aos-duration="700">
           <h2 class="text-[38px] font-semibold text-black mb-[16px]">{{ collection_obj.title }}</h2>
           <div class="products grid grid-cols-4 gap-[20px]">
             {% for product in collection_obj.products %}
@@ -42,13 +42,27 @@
                             {{product.metafields.custom.ticks | metafield_tag }}
                           {% endif %}
 
-                          <div
-                              data-item-id="{{ product.selected_or_first_available_variant.id}}"
-                              class="class-{{ product.id }} qty color-black flex items-center justify-between my-[20px] gap-[10px]">
-                              <div style="padding-bottom:5px !important;" data-quantity="0" class="col-quantity__button  p dm-sans-normal color-white gray text-center minus pb-[5px]">-</div>
-                              <div class="col-quantity__amount op js-qty-number">1</div>
-                              <div data-quantity="1" class="col-quantity__button  p dm-sans-normal color-white text-center plus">+</div>
-                          </div>
+                          <quantity-input class="quantity cart-quantity my-[20px] mx-auto">
+                            <button class="quantity__button" name="minus" type="button">
+                              {% render 'icon-minus' %}
+                            </button>
+                            <input
+                              class="quantity__input"
+                              type="number"
+                              value="1"
+                              min="1"
+                            >
+                            <button class="quantity__button" name="plus" type="button">
+                              {% render 'icon-plus' %}
+                            </button>
+                          </quantity-input>
+                          <button data-product-id="{{ product.selected_or_first_available_variant.id}}" data-quantity="1"
+                            class="js-atc h-[45px] text-[18px] text-white font-semibold rounded-[22px] mb-[12px] bg-[#60c655]"
+                        >
+                            Add To Cart
+                        </button>
+
+                        <a href="{{ product.url }}" class="text-[#60c655] text-center underline font-medium text-[16px] block mt-auto">Learn more</a>
                       </div>
                   </article>
             {% endfor %}
@@ -58,21 +72,14 @@
   </div>
 </section>
 
-<style>
-    .col-quantity__button {
-        background: linear-gradient(66deg, rgba(96, 198, 85, .8) 12.82%, #5aef55c9 56.41%, #35ff2e);
-      }
-</style>
-
-
-<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
-
 <script>
-  AOS.init();
-  document.addEventListener("shopify:section:load", () => {
     AOS.init();
-  })
-</script>
+    document.addEventListener("shopify:section:load", () => {
+      AOS.init();
+    })
+  </script>
+  
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {

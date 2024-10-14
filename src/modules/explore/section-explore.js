@@ -1,15 +1,18 @@
 import './section-explore.css'
 
 document.addEventListener('DOMContentLoaded', function () {
+    //Select parent section
+    const parentSection = document.querySelector('.section-explore');
+
     // Product cards hover logic
-    const productCards = document.querySelectorAll('.section-explore__product');
-    const desktopLabel = document.querySelector('.section-explore__collection-label-desktop');
-    const travelLabel = document.querySelector('.section-explore__collection-label-travel');
+    const productCards = parentSection.querySelectorAll('.section-explore__product');
+    const desktopLabel = parentSection.querySelector('.section-explore__collection-label-desktop');
+    const travelLabel = parentSection.querySelector('.section-explore__collection-label-travel');
 
     let activeProduct = null;
     let activeCard = null;
 
-    const initialProduct = document.querySelector('.section-explore__product-content [data-product="for-desktop-1"]');
+    const initialProduct = parentSection.querySelector('.section-explore__product-content [data-product="for-desktop-1"]');
     if (initialProduct) {
         initialProduct.style.opacity = '1';
         initialProduct.style.transition = 'opacity 0.5s ease';
@@ -18,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initialLines.forEach(line => line.classList.add('active-line'));
         activeProduct = initialProduct;
 
-        const firstCard = document.querySelector('.section-explore__product[data-product-hover="for-desktop-1"]');
+        const firstCard = parentSection.querySelector('.section-explore__product[data-product-hover="for-desktop-1"]');
         if (firstCard) {
             firstCard.classList.add('active');
             activeCard = firstCard;
@@ -43,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 activeLines.forEach(line => line.classList.remove('active-line'));
             }
 
-            const targetContent = document.querySelector(`.section-explore__product-content [data-product="${productIndex}"]`);
+            const targetContent = parentSection.querySelector(`.section-explore__product-content [data-product="${productIndex}"]`);
 
             if (targetContent) {
                 targetContent.style.opacity = '1';
@@ -63,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Popup toggle logic
-    const buyNowButtons = document.querySelectorAll('.section-explore__buy-now');
-    const popups = document.querySelectorAll('.buy-now-popup');
+    const buyNowButtons = parentSection.querySelectorAll('.section-explore__buy-now');
+    const popups = parentSection.querySelectorAll('.buy-now-popup');
 
     function openPopup(popup) {
         popup.style.display = 'block';
@@ -90,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Reset quantity button event listeners
     function resetQuantityListeners() {
-        const quantityMinusButtons = document.querySelectorAll('.buy-now-popup__quantity button[name="minus"]');
-        const quantityPlusButtons = document.querySelectorAll('.buy-now-popup__quantity button[name="plus"]');
+        const quantityMinusButtons = parentSection.querySelectorAll('.buy-now-popup__quantity button[name="minus"]');
+        const quantityPlusButtons = parentSection.querySelectorAll('.buy-now-popup__quantity button[name="plus"]');
 
         quantityMinusButtons.forEach((button) => {
             const newButton = button.cloneNode(true);
@@ -202,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Add to cart logic
-    let addToCarts = document.querySelectorAll(".js-atc")  // Select all add to cart buttons
+    let addToCarts = parentSection.querySelectorAll(".js-atc")  // Select all add to cart buttons
     addToCarts.forEach((addToCart) => {
         addToCart.addEventListener("click", (e) => {
             let checkout = false;
@@ -212,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let _this = e.target;
             let productId = _this.getAttribute("data-product-id"); // Get the product id
             let quantity = _this.getAttribute("data-quantity"); // Get the quantity
-            const upsellProductSelectors = document.querySelectorAll(".js-upsell-selector.active"); // Get all active upsell products
+            const upsellProductSelectors = parentSection.querySelectorAll(".js-upsell-selector.active"); // Get all active upsell products
             const addItems = []; // Create an array for items
             addItems.push({  // Add the main product to the array
                 id: productId,

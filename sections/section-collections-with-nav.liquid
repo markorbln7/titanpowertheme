@@ -1,0 +1,93 @@
+{{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+{% if page.handle == 'test-sections' %}
+  <script src="https://cdn.tailwindcss.com" defer></script>
+{% endif %}
+
+<section class="section-collections-with-nav py-[80px]">
+    <nav class="section-collections-with-nav__navigation">
+       <ul class="flex items-center justify-center gap-[10px]">
+            {% for collection in section.settings.collections  %}
+                {% assign collection_obj = collections[collection.handle] %}
+                <li class="{% if forloop.index == 1 %}active {% endif %}">
+                    <a href='#{{ collection_obj.handle }}' class="collection-link">{{ collection_obj.title }}</a>
+                </li>
+            {% endfor %}
+       </ul>
+    </nav>
+  <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px]">
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <div class="collection" id="{{ collection_obj.handle  | strip }}">
+          <h2 class="text-[38px] font-semibold text-black mb-[16px]">{{ collection_obj.title }}</h2>
+          <div class="products grid grid-cols-4 gap-[20px]">
+            {% for product in collection_obj.products %}
+                <article class="section-collections-with-nav__product">
+                      <figure class="section-collections-with-nav__product-image">
+                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                      </figure>
+
+                      <div class="section-collections-with-nav__product-details">
+                          <h4 class="section-collections-with-nav__product-title">{{ product.title }}</h4>
+                          <div class="section-collections-with-nav__product-prices flex items-center flex-wrap">
+                              <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                              {% if product.compare_at_price  %}
+                                  <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                              {% endif %}
+                          </div>
+
+                          {% if product.metafields.custom.ticks %}
+                            {{product.metafields.custom.ticks | metafield_tag }}
+                          {% endif %}
+
+                          <div
+                              data-item-id="{{ product.selected_or_first_available_variant.id}}"
+                              class="class-{{ product.id }} qty color-black flex items-center justify-between my-[20px] gap-[10px]">
+                              <div style="padding-bottom:5px !important;" data-quantity="0" class="col-quantity__button  p dm-sans-normal color-white gray text-center minus pb-[5px]">-</div>
+                              <div class="col-quantity__amount op js-qty-number">1</div>
+                              <div data-quantity="1" class="col-quantity__button  p dm-sans-normal color-white text-center plus">+</div>
+                          </div>
+                      </div>
+                  </article>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</section>
+
+<style>
+    .col-quantity__button {
+        background: linear-gradient(66deg, rgba(96, 198, 85, .8) 12.82%, #5aef55c9 56.41%, #35ff2e);
+      }
+</style>
+
+
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  AOS.init();
+  document.addEventListener("shopify:section:load", () => {
+    AOS.init();
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Collections with nav",
+  "settings": [
+    {
+      "type": "collection_list",
+      "label": "Collections",
+      "id": "collections"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections with nav"
+    }
+  ]
+}
+{% endschema %}

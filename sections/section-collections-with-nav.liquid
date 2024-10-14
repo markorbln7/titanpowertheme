@@ -17,7 +17,7 @@
             {% endfor %}
        </ul>
     </nav>
-  <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px]">
+  <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px] lg:gap-[60px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
         <div class="collection" id="{{ collection_obj.handle  | strip }}" data-aos="fade-in" data-aos-duration="700">

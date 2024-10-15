@@ -1,4 +1,9 @@
 .section-explore {
+    .explore-title {
+        span {
+            color:#60C655;
+        }
+    }
     .discount-label {
         clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
     }
@@ -208,7 +213,7 @@
 
             h4 {
                 color: #fff;
-                font-size: 14px;
+                font-size: 12px;
             }
 
             .price-wrapper {
@@ -217,7 +222,6 @@
 
             .product-price {
                 color: #fff;
-                font-size: 21px;
                 margin-bottom: 3px;
 
                 &--compared {
@@ -284,6 +288,11 @@
 
 @media(max-width:767px) {
     .section-explore {
+        &__buy-now {
+            padding-inline: 10px;
+            max-width: 100%;
+        }
+        
         .buy-now-popup {
             &__wrapper {
                 padding-top: 30px;

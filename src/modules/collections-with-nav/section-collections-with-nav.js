@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-collections-with-nav.css';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -43,18 +44,54 @@ document.addEventListener('DOMContentLoaded', function () {
       const input = quantityInputs[index];
       let quantity = parseInt(input.value);
       const addToCartButton = plusButton.closest('.section-collections-with-nav__product').querySelector('.js-atc');
-      addToCartButton.setAttribute('data-quantity', input.value); 
+      addToCartButton.setAttribute('data-quantity', input.value);
     });
+  });
+
+  console.log('ovo radi ili ne radi')
+
+  // Variant selector
+  document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
+    console.log('productElement', productElement);
+    const productId = productElement.getAttribute('data-product-id');
+    const selectors = productElement.querySelectorAll('.variant-selectors select');
+    const addToCartButton = productElement.querySelector('.js-atc');
+
+    function getVariantId(selectedOptions) {
+      const productVariants = window.productVariants[productId];
+      const variant = productVariants.find(variant =>
+        variant.options.every((option, index) => option === selectedOptions[index])
+      );
+      return variant ? variant.id : '';
+    }
+
+    function updateAddToCartButton() {
+      let selectedOptions = [];
+      selectors.forEach(selector => {
+        selectedOptions.push(selector.value);
+      });
+
+      const variantId = getVariantId(selectedOptions);
+
+      addToCartButton.setAttribute('data-product-id', variantId);
+    }
+
+    selectors.forEach(selector => {
+      selector.addEventListener('change', updateAddToCartButton);
+      console.log('selector', selector);
+    });
+
+    updateAddToCartButton();
   });
 
   // Add to cart logic
   const addToCartButtons = parentSection.querySelectorAll('.js-atc');
-  
+
   addToCartButtons.forEach((addToCartButton) => {
     addToCartButton.addEventListener('click', (e) => {
       const productId = e.target.getAttribute('data-product-id');
       const quantity = e.target.getAttribute('data-quantity');
-      
+
       const formData = {
         items: [
           {

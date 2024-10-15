@@ -11,7 +11,13 @@
                 <div class="w-[80px] h-[80px] absolute top-[-2px] left-[-2px] flex items-center justify-center rounded-[8px] bg-[#60c655] text-white text-[14px] font-bold rotate-90"
                     style="clip-path: polygon(100% 0, 86% 50%, 100% 99%, 0% 100%, 0 49%, 0% 0%);"
                 >
-                    <div class="text-center rotate-[-90deg]">{{ compare_at_price | minus: price | money }}<br> OFF</div>
+                    <div class="text-center rotate-[-90deg]">
+                      {% assign productdifference = compare_at_price | minus: price %}
+                      {% assign divider = compare_at_price | times: 1.0 %}
+                      {% assign percentage = productdifference | divided_by:  divider %}
+                      {{ percentage | times: 100 | round }}% OFF
+                      {% comment %} {{ compare_at_price | minus: price | money }}<br> OFF {% endcomment %}
+                    </div>
                 </div>
                 <img src="{{ product_image | img_url: 'master' }}" alt="{{product_image.alt}}" height="432" width="432" class="h-full w-full object-cover"/>
             </figure>
@@ -133,7 +139,7 @@
                 >
                     Add To Cart
                 </button>
-                <button data-product-id="{{ product_id}}" data-quantity="{{ quantity }}"
+                <button data-product-id="{{ product_id}}"
                     class="js-checkout js-atc buy-now-popup__atc min-w-[200px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px]">
                     Buy Now
                 </button>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-explore.css'
 
 document.addEventListener('DOMContentLoaded', function () {

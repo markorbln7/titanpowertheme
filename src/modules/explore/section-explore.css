@@ -18,16 +18,17 @@
         transition: opacity 0.3s ease-in-out;
 
         .quantity {
-            color: white;
+            color: black;
 
             &::before {
-                background-color: #60c655;
+                background-color: transparent;
             }
 
             &__button {
                 svg {
-                    color: white;
+                    color: black;
                     width: 16px;
+                    fill:black;
                 }
             }
         }
@@ -292,7 +293,7 @@
             padding-inline: 10px;
             max-width: 100%;
         }
-        
+
         .buy-now-popup {
             &__wrapper {
                 padding-top: 30px;

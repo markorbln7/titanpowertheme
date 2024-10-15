@@ -17,14 +17,15 @@
         transition: opacity 0.3s ease-in-out;
     }
     .section-explore .buy-now-popup .quantity {
-            color: white
+            color: black
         }
     .section-explore .buy-now-popup .quantity::before {
-            background-color: #60c655;
+            background-color: transparent;
 }
     .section-explore .buy-now-popup .quantity__button svg {
-                    color: white;
+                    color: black;
                     width: 16px;
+                    fill:black;
                 }
     .section-explore .buy-now-popup__description svg {
                 transition: all 0.3s ease-in;

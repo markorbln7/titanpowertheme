@@ -1,4 +1,7 @@
 .section-collections-with-nav {
+    .metafield-rich_text_field {
+        text-align: center;
+    }
     &__navigation {
         ul {
             list-style: none;
@@ -20,7 +23,7 @@
             transition: all .3s ease;
             color: #000;
             justify-content: center;
-            
+
             &.active {
                 color: #fff;
                 background-color: #60c655;
@@ -163,7 +166,7 @@
         }
 
         .products {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
 
             li {
                 font-size: 12px;

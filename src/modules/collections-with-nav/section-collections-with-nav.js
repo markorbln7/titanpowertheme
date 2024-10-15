@@ -80,8 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
       selector.addEventListener('change', updateAddToCartButton);
       console.log('selector', selector);
     });
-
-    updateAddToCartButton();
   });
 
   // Add to cart logic

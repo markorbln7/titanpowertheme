@@ -48,11 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  console.log('ovo radi ili ne radi')
 
   // Variant selector
   document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
-    console.log('productElement', productElement);
     const productId = productElement.getAttribute('data-product-id');
     const selectors = productElement.querySelectorAll('.variant-selectors select');
     const addToCartButton = productElement.querySelector('.js-atc');
@@ -78,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     selectors.forEach(selector => {
       selector.addEventListener('change', updateAddToCartButton);
-      console.log('selector', selector);
     });
 
     updateAddToCartButton();
@@ -111,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((response) => {
           if (response.status === 200) {
             console.log('Product added to cart successfully');
-            // Optionally, show a confirmation to the user
           }
           return response.json();
         })

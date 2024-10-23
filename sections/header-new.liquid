@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if settings.predictive_search_enabled -%}
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'component-loading-overlay.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if section.settings.menu_type_desktop == 'mega' -%}
+  <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'component-mega-menu.css' | asset_url | stylesheet_tag }}</noscript>
+{%- endif -%}
+
+{%- if settings.cart_type == "drawer" -%}
+    {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+    {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+    {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+    {{ 'component-price.css' | asset_url | stylesheet_tag }}
+    {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+    {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+  
+<noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
+
+{{ 'section-header-new.css' | asset_url | stylesheet_tag }}
+<script src="https://cdn.tailwindcss.com" defer></script>
+<header class="section-header{% if section.settings.mobile_menu_on_top %} menu-on-top{% endif %}">
+    <div class="section-header__wrapper">
+        <div class="section-header__content">
+            <div class="md:hidden h-[18px] w-[18px] relative section-header__toggler menu-toggler">
+                <div class="section-header__hamburger">
+                    {% render 'icon-hamburger' %}
+                </div>
+                <div class="section-header__close">
+                    {% render 'icon-close' %}
+                </div>
+            </div>
+            <a href='{{ shop.url }}' title='{{ shop.name }}' class="flex items-center">
+                <figure class="section-header__logo-wrapper">
+                    {{ settings.logo | image_url: width: 600 | image_tag: preload: true}}
+                </figure>
+            </a>
+    
+            <nav class="section-header__nav">
+            {% for link in linklists[section.settings.main_linklist].links %}
+                <div class="section-header__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
+                    <a href="{{ link.url }}" title="{{ link.title}}">
+                        {{ link.title | escape}}
+                    </a>
+    
+                    {% if link.links.size != 0 %}
+                        <div 
+                            class="w-[25px] h-[25px] flex items-center justify-center pointer-none rounded-[50%] bg-[#f2f2f2] md:w-auto md:h-auto md:bg-transparent">
+                            <svg
+                                width='12'
+                                height='8'
+                                viewBox='0 0 12 8'
+                                fill='black'
+                                xmlns='http://www.w3.org/2000/svg'
+                                class="ml-[7px]"
+                              >
+                                <path
+                                  d="M0.808594 1L5.80859 6L10.8086 1"
+                                  stroke="black"
+                                  stroke-width="1.5" />
+                            </svg>
+                        </div>
+                        {% render 'mega-menu' links: link.links title: link.title %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </nav>
+    
+            {% comment %} Cart, search, account icons... {% endcomment %}
+            <ul class="section-header__actions">
+                <li>
+                    <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+                        {%- liquid
+                            if cart == empty
+                            render 'icon-cart-empty'
+                            else
+                            render 'icon-cart'
+                            endif
+                        -%}
+                        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+                        {%- if cart != empty -%}
+                            <div class="cart-count-bubble">
+                            {%- if cart.item_count < 100 -%}
+                                <span aria-hidden="true">{{ cart.item_count }}</span>
+                            {%- endif -%}
+                            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                            </div>
+                        {%- endif -%}
+                        </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="section-header__overlay menu-toggler"></div>
+
+<style>
+    .section-header__wrapper {
+        box-shadow: 0 0 0 1px #0000000f, 0 1px 1px -.5px #0000000f, 0 3px 3px -1.5px #0000000f, 0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f, 0 24px 24px -12px #0000000f;
+    }
+</style>
+<script src="{{ 'section-header-new.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Header new",
+  "class": "section-header__holder",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Main Menu"
+    },
+    {
+      "type": "checkbox",
+      "label": "Mobile menu on top",
+      "id": "mobile_menu_on_top",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header new"
+    }
+  ]
+}
+{% endschema %}

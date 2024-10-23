@@ -1,0 +1,112 @@
+<div class="mega-menu">
+    <div class="mega-menu__wrapper">
+        {% comment %} Desktop layout {% endcomment %}
+        {%- for link in  links-%}
+        <div class="mega-menu__item desktop-items">
+          <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Titan_LB_Buds_Web_Banner_Desktop_4.jpg?v=1695122652" width="245" height="118">  
+          <div class="mega-menu__links">
+            <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
+                <svg
+                    class="md:hidden"
+                    width='12'
+                    height='8'
+                    viewBox='0 0 12 8'
+                    fill='black'
+                    xmlns='http://www.w3.org/2000/svg'
+                    class="ml-[4px]"
+                  >
+                    <path
+                      d="M0.808594 1L5.80859 6L10.8086 1"
+                      stroke="black"
+                      stroke-width="1.5" />
+                </svg>
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            </h3>
+  
+            {% if link.links.size > 0 %}
+              <ul class="flex flex-col gap-[8px]">
+                {% for childlink in link.links %}
+                  <li class="child-link">
+                    <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+
+      {% comment %} Mobile layout {% endcomment %}
+      <div class="mega-menu__item mobile-items">
+        <button class="back-button mega-menu__back-button">
+            <svg
+                class="md:hidden"
+                width='12'
+                height='8'
+                viewBox='0 0 12 8'
+                fill='black'
+                xmlns='http://www.w3.org/2000/svg'
+                class="ml-[4px]"
+              >
+                <path
+                  d="M0.808594 1L5.80859 6L10.8086 1"
+                  stroke="black"
+                  stroke-width="1.5" />
+            </svg>
+            {{ title}}
+        </button>
+        {% for link in links %}
+            <div class="mega-menu__links">
+                {% if link.links.size > 0 %}
+                    <h3 class="mega-menu__links-title">
+                        {{ link.title }}
+                       <div class="w-[25px] h-[25px] flex items-center justify-center pointer-events-none rounded-[50%] bg-[#f2f2f2]">
+                            <svg
+                                class="md:hidden rotate-[-90deg]"
+                                width='12'
+                                height='8'
+                                viewBox='0 0 12 8'
+                                fill='black'
+                                xmlns='http://www.w3.org/2000/svg'
+                                class="ml-[4px]"
+                            >
+                                <path
+                                d="M0.808594 1L5.80859 6L10.8086 1"
+                                stroke="black"
+                                stroke-width="1.5" />
+                            </svg>
+                       </div>
+                    </h3>
+                    {% else %}
+                        <a href="{{ link.url}}">{{ link.title }}</a>
+                {% endif %}
+                <ul class="inner-children">
+                    <button class="children-back-button mega-menu__back-button">
+                        <svg
+                            class="md:hidden"
+                            width='12'
+                            height='8'
+                            viewBox='0 0 12 8'
+                            fill='black'
+                            xmlns='http://www.w3.org/2000/svg'
+                            class="ml-[4px]"
+                        >
+                            <path
+                                d="M0.808594 1L5.80859 6L10.8086 1"
+                                stroke="black"
+                                stroke-width="1.5" />
+                        </svg>
+                        {{ link.title }}
+                    </button>
+                    {% for childlink in link.links %}
+                        <li>
+                            <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+  

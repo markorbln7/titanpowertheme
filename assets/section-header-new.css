@@ -3,7 +3,6 @@
   \******************************************************************************************************************************************************************************************************************************/
 .section-header {
     bottom: unset;
-    margin-top: -15px;
     padding: 15px;
     position: sticky;
     top: 0;
@@ -12,6 +11,8 @@
 
     .section-header__holder {
         z-index: 999999999;
+        position: sticky;
+        top: 0;
     }
 
     .section-header__wrapper {
@@ -225,8 +226,12 @@
         max-width: 100%;
         padding: 10px;
         position: fixed;
-        width: 100%
+        width: 100%;
     }
+
+        .section-header__container {
+            position: static;
+        }
     .section-header.menu-on-top {
         top: 0;
         bottom: auto;

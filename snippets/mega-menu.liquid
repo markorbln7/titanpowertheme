@@ -1,39 +1,48 @@
 <div class="mega-menu">
     <div class="mega-menu__wrapper">
         {% comment %} Desktop layout {% endcomment %}
-        {%- for link in  links-%}
-        <div class="mega-menu__item desktop-items">
-          <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/TPP_Titan_LB_Buds_Web_Banner_Desktop_4.jpg?v=1695122652" width="245" height="118">  
-          <div class="mega-menu__links">
-            <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
-                <svg
-                    class="md:hidden"
-                    width='12'
-                    height='8'
-                    viewBox='0 0 12 8'
-                    fill='black'
-                    xmlns='http://www.w3.org/2000/svg'
-                    class="ml-[4px]"
-                  >
-                    <path
-                      d="M0.808594 1L5.80859 6L10.8086 1"
-                      stroke="black"
-                      stroke-width="1.5" />
-                </svg>
-              <a href="{{ link.url }}">{{ link.title | escape }}</a>
-            </h3>
-  
-            {% if link.links.size > 0 %}
-              <ul class="flex flex-col gap-[8px]">
-                {% for childlink in link.links %}
-                  <li class="child-link">
-                    <a href="{{ childlink.url }}">{{ childlink.title }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          </div>
-        </div>
+        {%- for link in  links -%}
+            {%- assign collection_handle = link.url | split: '/' | last -%}
+            {%- assign collection = collections[collection_handle] -%}
+            {% assign megamenu_image = collection.metafields.custom.megamenu_image %}
+
+
+            <div class="mega-menu__item desktop-items">
+                {% if megamenu_image != blank %}
+                    <img src="{{ megamenu_image | image_url}}" width="245" height="118" class="object-cover">  
+                {% else %}
+                    <img src="{{ collection.image | image_url}}" width="245" height="118" class="object-cover">  
+                {% endif %}
+            <div class="mega-menu__links">
+                <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
+                    <svg
+                        class="md:hidden"
+                        width='12'
+                        height='8'
+                        viewBox='0 0 12 8'
+                        fill='black'
+                        xmlns='http://www.w3.org/2000/svg'
+                        class="ml-[4px]"
+                    >
+                        <path
+                        d="M0.808594 1L5.80859 6L10.8086 1"
+                        stroke="black"
+                        stroke-width="1.5" />
+                    </svg>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                </h3>
+    
+                {% if link.links.size > 0 %}
+                <ul class="flex flex-col gap-[8px]">
+                    {% for childlink in link.links %}
+                    <li class="child-link">
+                        <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            </div>
       {% endfor %}
 
       {% comment %} Mobile layout {% endcomment %}

@@ -71,6 +71,8 @@
                 font-weight: 700;
                 line-height: 20px;
                 transition: all .25s ease-out;
+                letter-spacing: 0.5px;
+                text-transform: capitalize;
             }
 
             svg {
@@ -152,6 +154,27 @@
             ul a {
                 font-size: 14px;
                 text-decoration: none;
+                position: relative;
+                display: inline-flex;
+                text-transform: capitalize;
+
+                &::after {
+                    background-color: #000;
+                    bottom: 0;
+                    content: "";
+                    display: block;
+                    height: 2px;
+                    left: 0;
+                    position: absolute;
+                    transition: width .5s ease;
+                    width: 0;
+                }
+
+                &:hover {
+                    &::after {
+                        width: calc(100% + 1px);
+                    }
+                }
             }
         }
 
@@ -259,7 +282,7 @@
             padding: 16px 22px;
             position: relative;
             transition: width .3s cubic-bezier(.4, 0, .22, 1);
-            width: 238px;
+            width: 85%;
 
             &.active {
                 width: 100%;
@@ -294,10 +317,10 @@
             justify-content: flex-start;
             align-items: flex-start;
             gap: 24px;
+            padding: 32px 30px;
 
             &.menu-active {
                 opacity: 1;
-                padding: 32px 30px;
                 visibility: visible;
             }
 
@@ -361,15 +384,32 @@
                 flex-direction: column;
                 gap: 20px;
                 padding: 10px;
+                transition: opacity .3s cubic-bezier(.4, 0, .22, 1), visibility .3s cubic-bezier(.4, 0, .22, 1);
             }
 
             &.active {
+                transition: opacity .2s cubic-bezier(.4, 0, .22, 1) .2s, visibility .14s cubic-bezier(.4, 0, .22, 1) .2s;
                 box-shadow: 0 24px 24px -12px #0000000f, 0 12px 12px -6px #0000000f, 0 6px 6px -3px #0000000f, 0 3px 3px -1.5px #0000000f, 0 1px 1px -.5px #0000000f, 0 0 0 1px #0000000f;
                 height: calc(64px + var(--headerHeight));
                 opacity: 1;
                 visibility: visible;
                 height: 100%;
                 z-index: 100;
+
+                .mega-menu__item-inner {
+                    opacity: 1;
+                    transition: opacity .2s cubic-bezier(.4, 0, .22, 1) .2s, visibility .14s cubic-bezier(.4, 0, .22, 1) .2s;
+                    visibility: visible;
+                }
+            }
+
+            &__item-inner {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity .3s cubic-bezier(.4, 0, .22, 1), visibility .3s cubic-bezier(.4, 0, .22, 1);
             }
 
             &__wrapper {
@@ -407,14 +447,15 @@
                     display: flex;
                     flex-direction: column;
                     gap: 20px;
-                    transition: all 0.3s cubic-bezier(.52, 0, .61, .99);
+                    transition: height .28s cubic-bezier(.4, 0, .22, 1), opacity .28s cubic-bezier(.4, 0, .22, 1), visibility .28s cubic-bezier(.4, 0, .22, 1);
+                    padding: 10px;
 
                     &.active {
                         opacity: 1;
                         visibility: visible;
                         z-index: 100;
                         pointer-events: all;
-                        padding: 0 10px;
+                        transition: height .28s cubic-bezier(.4, 0, .22, 1), opacity .28s cubic-bezier(.4, 0, .22, 1), visibility .28s cubic-bezier(.4, 0, .22, 1);
                     }
 
                     li a {
@@ -487,10 +528,6 @@
         a,
         svg {
             transform: scale(1.08);
-        }
-
-        svg {
-            margin-left: 11px;
         }
     }
 }

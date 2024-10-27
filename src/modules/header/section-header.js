@@ -87,28 +87,26 @@ document.addEventListener('DOMContentLoaded', function () {
             navItem.addEventListener('click', function (e) {
                 megaMenu.classList.add('active');
                 megaMenuItems.classList.add('active');
-
+                
                 const navHeight = calculateMenuHeight(megaMenuLinks);
                 headerNav.style.height = `${navHeight}px`;
 
                 if (e.target.classList.contains('mega-menu__links-title')) {
                     const childrenLinksParent = e.target.closest('.mega-menu__links').querySelector('.inner-children');
                     const childrenLinks = childrenLinksParent.querySelectorAll('li');
-
-                    childrenLinksParent.classList.add('active');
                     const navHeight = calculateMenuHeight(childrenLinks);
                     headerNav.style.height = `${navHeight}px`;
+                    childrenLinksParent.classList.add('active');
 
                     const childrenBackButton = childrenLinksParent.querySelector('.children-back-button');
 
                     if (childrenBackButton) {
                         childrenBackButton.addEventListener('click', function (event) {
                             event.stopPropagation();
-
-                            childrenLinksParent.classList.remove('active');
-
                             const navHeight = calculateMenuHeight(megaMenuLinks);
                             headerNav.style.height = `${navHeight}px`;
+
+                            childrenLinksParent.classList.remove('active');
                         });
                     }
                 }
@@ -117,11 +115,11 @@ document.addEventListener('DOMContentLoaded', function () {
             backButton.addEventListener('click', function (e) {
                 e.stopPropagation();
                 if (megaMenuItems.classList.contains('active')) {
-                    megaMenu.classList.remove('active');
-                    megaMenuItems.classList.remove('active');
-
                     const navHeight = calculateMenuHeight(menuItems);
                     headerNav.style.height = `${navHeight}px`;
+
+                    megaMenu.classList.remove('active');
+                    megaMenuItems.classList.remove('active');
                 }
             });
         });

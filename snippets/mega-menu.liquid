@@ -15,28 +15,14 @@
                 {% endif %}
             <div class="mega-menu__links">
                 <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
-                    <svg
-                        class="md:hidden"
-                        width='12'
-                        height='8'
-                        viewBox='0 0 12 8'
-                        fill='black'
-                        xmlns='http://www.w3.org/2000/svg'
-                        class="ml-[4px]"
-                    >
-                        <path
-                        d="M0.808594 1L5.80859 6L10.8086 1"
-                        stroke="black"
-                        stroke-width="1.5" />
-                    </svg>
-                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                    <a href="{{ link.url }}">{{ link.title | escape  | capitalize }}</a>
                 </h3>
     
                 {% if link.links.size > 0 %}
                 <ul class="flex flex-col gap-[8px]">
                     {% for childlink in link.links %}
                     <li class="child-link">
-                        <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                        <a href="{{ childlink.url }}">{{ childlink.title | capitalize }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -47,74 +33,38 @@
 
       {% comment %} Mobile layout {% endcomment %}
       <div class="mega-menu__item mobile-items">
-        <button class="back-button mega-menu__back-button">
-            <svg
-                class="md:hidden"
-                width='12'
-                height='8'
-                viewBox='0 0 12 8'
-                fill='black'
-                xmlns='http://www.w3.org/2000/svg'
-                class="ml-[4px]"
-              >
-                <path
-                  d="M0.808594 1L5.80859 6L10.8086 1"
-                  stroke="black"
-                  stroke-width="1.5" />
-            </svg>
-            {{ title}}
-        </button>
-        {% for link in links %}
-            <div class="mega-menu__links">
-                {% if link.links.size > 0 %}
-                    <h3 class="mega-menu__links-title">
-                        {{ link.title }}
-                       <div class="w-[25px] h-[25px] flex items-center justify-center pointer-events-none rounded-[50%] bg-[#f2f2f2]">
-                            <svg
-                                class="md:hidden rotate-[-90deg]"
-                                width='12'
-                                height='8'
-                                viewBox='0 0 12 8'
-                                fill='black'
-                                xmlns='http://www.w3.org/2000/svg'
-                                class="ml-[4px]"
-                            >
-                                <path
-                                d="M0.808594 1L5.80859 6L10.8086 1"
-                                stroke="black"
-                                stroke-width="1.5" />
-                            </svg>
-                       </div>
-                    </h3>
-                    {% else %}
-                        <a href="{{ link.url}}">{{ link.title }}</a>
-                {% endif %}
-                <ul class="inner-children">
-                    <button class="children-back-button mega-menu__back-button">
-                        <svg
-                            class="md:hidden"
-                            width='12'
-                            height='8'
-                            viewBox='0 0 12 8'
-                            fill='black'
-                            xmlns='http://www.w3.org/2000/svg'
-                            class="ml-[4px]"
-                        >
-                            <path
-                                d="M0.808594 1L5.80859 6L10.8086 1"
-                                stroke="black"
-                                stroke-width="1.5" />
-                        </svg>
-                        {{ link.title }}
-                    </button>
-                    {% for childlink in link.links %}
-                        <li>
-                            <a href="{{ childlink.url }}">{{ childlink.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+        <div class="mega-menu__item-inner">
+            <button class="back-button mega-menu__back-button">
+                <svg class="md:hidden" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g>
+                </svg>
+                {{ title}}
+            </button>
+            {% for link in links %}
+                <div class="mega-menu__links">
+                    {% if link.links.size > 0 %}
+                        <h3 class="mega-menu__links-title">
+                            {{ link.title | capitalize}}
+                           <div class="w-[25px] h-[25px] flex items-center justify-center pointer-events-none rounded-[50%] bg-[#f2f2f2]">
+                            <svg class="md:hidden rotate-[-90deg]" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g></svg>
+                           </div>
+                        </h3>
+                        {% else %}
+                            <a href="{{ link.url}}">{{ link.title | capitalize }}</a>
+                    {% endif %}
+                    <ul class="inner-children">
+                        <button class="children-back-button mega-menu__back-button">
+                            <svg class="md:hidden" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g></svg>
+                            {{ link.title }}
+                        </button>
+                        {% for childlink in link.links %}
+                            <li>
+                                <a href="{{ childlink.url }}">{{ childlink.title | capitalize }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
       </div>
     </div>
 </div>

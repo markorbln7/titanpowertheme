@@ -175,6 +175,7 @@
         &__collections {
             flex-direction: row;
             gap: 14px;
+            margin-top: 40px;
         }
 
         &__products {
@@ -182,10 +183,30 @@
             justify-content: flex-start;
         }
 
+        .section-explore__products--single {
+            justify-content: center;
+            .section-explore__product {
+                max-width: 100%;
+
+                img {
+                    width: 100%;
+                    max-width: 90%;
+                    height: 200px;
+                }
+
+                h4 {
+                    margin-top: 20px;
+                    font-size: 16px;
+                }
+            }
+        }
+
         &__product {
             background-color: transparent;
             padding-inline: 0;
-            padding-bottom: 0;
+            padding-bottom: 12px;
+            padding-top: 0;
+            margin-top: 14px;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -196,7 +217,7 @@
                 background: linear-gradient(0deg, rgba(132, 160, 255, 0.1) 0%, rgba(132, 160, 255, 0.07) 20.08%, rgba(132, 160, 255, 0.1) 47.85%, rgba(132, 160, 255, 0.12) 83.03%, rgba(132, 160, 255, 0.3) 100%);
 
                 img {
-                    transform: scale(1.1);
+                    transform: scale(1.116);
                 }
             }
 

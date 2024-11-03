@@ -211,7 +211,7 @@ async function refreshCart() {
             currency = '€'
         }
         circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540);
-        document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_dock.png?v=1714648076">' +((secondGift - giftCount)/100) + currency +  '<br> MORE!';
+        document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_cable_Icon_titan_kit_wheel_-_green_glow.png?v=1730623927">' +((secondGift - giftCount)/100) + currency +  '<br> MORE!';
      }
      if(secondGift - giftCount <= 0) {
         document.querySelector('.left-to-gift').innerHTML ='ALL GIFTS UNLOCKED!';

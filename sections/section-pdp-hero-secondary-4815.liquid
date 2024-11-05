@@ -45,7 +45,7 @@
         <figure class="pdp-hero__gallery-main-image relative">
           <img
             class="js-main-image-change w-100"
-            src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone15.jpg?v=1707753874"
+            src="{{ section.settings.product_image | img_url: 'master' }}"
             alt="{{ featured_image.alt }}"
           >
         </figure>

@@ -141,6 +141,7 @@
         .section-explore__products {
             gap: 14px;
             justify-content: flex-start;
+            width: 100%;
         }
 
         .section-explore .section-explore__products--single {
@@ -148,12 +149,12 @@
         }
             .section-explore .section-explore__products--single .section-explore__product {
                 max-width: 100%;
+                overflow: hidden;
             }
 
                 .section-explore .section-explore__products--single .section-explore__product img {
                     width: 100%;
-                    max-width: 90%;
-                    height: 200px;
+                    max-width: 100%;
                 }
 
                 .section-explore .section-explore__products--single .section-explore__product h4 {
@@ -188,8 +189,6 @@
             }
 
         .section-explore__product img {
-                width: 100px;
-                height: 100px;
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 margin-inline: auto;
             }
@@ -214,7 +213,7 @@
 
         .section-explore__buy-now {
             height: 38px;
-            margin-top: auto;
+            margin-top: 12px;
         }
             .section-explore__product-info h3 {
                 font-size: 26px;

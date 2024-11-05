@@ -181,17 +181,18 @@
         &__products {
             gap: 14px;
             justify-content: flex-start;
+            width: 100%;
         }
 
         .section-explore__products--single {
             justify-content: center;
             .section-explore__product {
                 max-width: 100%;
+                overflow: hidden;
 
                 img {
                     width: 100%;
-                    max-width: 90%;
-                    height: 200px;
+                    max-width: 100%;
                 }
 
                 h4 {
@@ -227,8 +228,6 @@
             }
 
             img {
-                width: 100px;
-                height: 100px;
                 transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
                 margin-inline: auto;
             }
@@ -254,7 +253,7 @@
 
         &__buy-now {
             height: 38px;
-            margin-top: auto;
+            margin-top: 12px;
         }
 
         &__product-info {

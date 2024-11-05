@@ -6,8 +6,8 @@
   <script src="https://cdn.tailwindcss.com" defer></script>
 {% endif %}
 
-<section class="section-collections-with-nav py-[80px]">
-    <nav class="section-collections-with-nav__navigation">
+<section class="section-collections-with-nav">
+    <nav class="section-collections-with-nav__navigation py-[20px] bg-white">
        <ul class="flex items-center justify-center gap-[10px]">
             {% for collection in section.settings.collections  %}
                 {% assign collection_obj = collections[collection.handle] %}
@@ -17,12 +17,12 @@
             {% endfor %}
        </ul>
     </nav>
-  <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px] lg:gap-[60px]">
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
         <div class="collection" id="{{ collection_obj.handle  | strip }}" data-aos="fade-in" data-aos-duration="700">
-          <h2 class="text-[38px] font-semibold text-black mb-[16px]">{{ collection_obj.title }}</h2>
-          <div class="products grid grid-cols-3 gap-[20px]">
+          <h2 class="lg:text-[50px] md:text-[38px] font-semibold text-black mb-[16px] text-center">{{ collection_obj.title }}</h2>
+          <div class="products grid grid-cols-4 gap-[20px]">
             {% for product in collection_obj.products %}
                 <article class="section-collections-with-nav__product" data-product-id="{{ product.id }}">
                       <figure class="section-collections-with-nav__product-image">
@@ -32,17 +32,23 @@
                       <div class="section-collections-with-nav__product-details justify-between">
                           <div class="top-part">
                             <h4 class="section-collections-with-nav__product-title text-center">{{ product.title }}</h4>
-                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center justify-center">
-                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
-                                {% if product.compare_at_price  %}
-                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
-                                {% endif %}
-                            </div>
+
 
                             {% if product.metafields.custom.ticks %}
                               {{product.metafields.custom.ticks | metafield_tag }}
                             {% endif %}
-                            <div class="variant-selectors text-center myb-[5px] mt-[10px]">
+                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px]">
+                              <div clas="prices">
+                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                                {% if product.compare_at_price  %}
+                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                                {% endif %}
+                              </div>
+                              <a href="{{ product.url }}" class="arrow">
+                                <img class="w-full" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
+                              </a>
+                            </div>
+                            {% comment %} <div class="variant-selectors text-center myb-[5px] mt-[10px]">
                               {% for option in product.options_with_values %}
                                 {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
                                   <label for="option-{{ option.name | handle }}" class="text-[16px] font-semibold">{{ option.name }}</label>
@@ -54,10 +60,10 @@
                                   </select>
                                 {% endif %}
                               {% endfor %}
-                            </div>
+                            </div> {% endcomment %}
                           </div>
 
-                          <div class="bottom-part">
+                          {% comment %} <div class="bottom-part">
                             <quantity-input class="quantity cart-quantity my-[20px] mx-auto">
                               <button class="quantity__button" name="minus" type="button">
                                 {% render 'icon-minus' %}
@@ -79,7 +85,7 @@
                           </button>
                           <a href="{{ product.url }}" class="text-[#60c655] text-center underline font-medium text-[16px] block mt-auto">Learn more</a>
 
-                        </div>
+                        </div> {% endcomment %}
                       </div>
                   </article>
                   <script>

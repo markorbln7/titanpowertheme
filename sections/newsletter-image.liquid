@@ -1,0 +1,67 @@
+{% schema %}
+{
+  "name": "Image with Email Capture",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Join Our Community"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Section Text",
+      "default": "Stay updated with our latest news and offers. Subscribe today!"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Email Capture"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="bg-white pt-[20px] pb-0 md:pt-[40px] md:pb-[60px] relative">
+  <div class="max-w-screen-xl mx-auto relative">
+    <!-- Desktop Image (shown on screens medium and up) -->
+    <div class="desktop">
+      <img width="100" height="auto" src="{{ section.settings.desktop_image | img_url: '800x' }}" alt="Desktop Image" class="w-full rounded-[300px]">
+    </div>
+
+    <!-- Mobile Image (shown on screens below medium) -->
+    <div class="mobile">
+      <img width="100" height="auto" src="{{ section.settings.mobile_image | img_url: '800x' }}" alt="Mobile Image" class="w-full">
+    </div>
+
+    <!-- Content Over the Image -->
+    <div class="absolute inset-y-0 left-10 md:left-40 flex flex-col justify-center text-left px-4">
+        <!-- Title -->
+        <h2 class="text-white text-4xl md:text-6xl font-bold mb-4">
+          {{ section.settings.title }}
+        </h2>
+        <!-- Text -->
+        <p class="text-white text-lg md:text-2xl mb-6">
+          {{ section.settings.text }}
+        </p>
+        <!-- Email Capture Form -->
+        <form action="/contact#newsletter" method="post" class="flex flex-col md:flex-row items-center w-full max-w-md">
+          <input type="email" name="contact[email]" placeholder="Enter your email" class="w-full md:w-auto mb-4 md:mb-0 md:mr-4 px-4 py-2 bg-white text-black rounded-md">
+          <button type="submit" class="w-full md:w-auto px-6 py-2 bg-white text-black font-bold rounded-md">
+            Subscribe
+          </button>
+        </form>
+    </div>
+  </div>
+</section>

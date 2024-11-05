@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Popup toggle logic
-        const buyNowButtons = section.querySelectorAll('.section-explore__buy-now');
+        const buyNowButtons = section.querySelectorAll('.js-section-explore__buy-now');
         const popups = section.querySelectorAll('.buy-now-popup');
 
         function openPopup(popup) {

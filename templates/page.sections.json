@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "game": {
       "type": "compare-table",
@@ -15,14 +15,26 @@
       "settings": {
       }
     },
+    "vault_promo_7GbWMk": {
+      "type": "vault-promo",
+      "settings": {
+        "title": "Black Friday Countdown",
+        "subtitle": "Early bird deals every 72 hrs in the Titan Vault",
+        "description": "Flash Sales, mystery gifts, 80% off, and new products",
+        "main_image": "shopify://shop_images/titan_power_logo_faded.png",
+        "bleed_image": "shopify://shop_images/ICON_4_-_3_BULLET_POINTS-removebg-preview.png",
+        "top_image": "shopify://shop_images/BFCM_badge_2024_COUNTDOWN_PNG_-_compressed.png"
+      }
+    },
     "section_explore_7JQkGw": {
       "type": "section-explore",
       "settings": {
-        "section_title": "OCTOBER DEALS",
-        "first_collection_label": "For Desktop",
-        "second_collection_label": "For travel",
-        "first_collection": "plugs",
-        "second_collection": ""
+        "section_title": "",
+        "explore_top_image": "shopify://shop_images/Shop_Page_Vaults.jpg",
+        "first_collection_label": "VAULT OFFERS",
+        "second_collection_label": "NOVEMBER DEALS",
+        "first_collection": "vault-offers",
+        "second_collection": "november-deals"
       }
     },
     "section_collections_with_nav_Xpintm": {
@@ -34,21 +46,42 @@
         ]
       }
     },
+    "titan_linked_image_A4GJp6": {
+      "type": "titan-linked-image",
+      "settings": {
+        "title": "Bundle and Save",
+        "desktop_image": "shopify://shop_images/BLACK_FRIDAY_BUNDLE_BUILDER_SHOP_PAGE.jpg",
+        "mobile_image": "shopify://shop_images/Black_friday_bundle_shop_page_-_mobile_jpeg.jpg",
+        "link": "https://titanpowerplus.com/products/black-friday-bundle"
+      }
+    },
     "section_explore_fXzahR": {
       "type": "section-explore",
       "settings": {
-        "section_title": "OCTOBER DEALS",
+        "section_title": "NEW ARRIVALS",
         "first_collection_label": "For Desktop",
         "second_collection_label": "For travel",
         "first_collection": "plugs",
         "second_collection": "titan-car-chargers"
       }
+    },
+    "newsletter_image_JefRx4": {
+      "type": "newsletter-image",
+      "settings": {
+        "title": "Get Notified",
+        "text": "Stay updated with our latest news and offers. Subscribe today!",
+        "desktop_image": "shopify://shop_images/Newsletter-banner-titan-power-plus-chargers-cables-iphone-usb-c.jpg",
+        "mobile_image": "shopify://shop_images/Newsletter-banner-titan-power-plus-chargers-cables-iphone-usb-c.jpg"
+      }
     }
   },
   "order": [
     "game",
+    "vault_promo_7GbWMk",
     "section_explore_7JQkGw",
     "section_collections_with_nav_Xpintm",
-    "section_explore_fXzahR"
+    "titan_linked_image_A4GJp6",
+    "section_explore_fXzahR",
+    "newsletter_image_JefRx4"
   ]
 }

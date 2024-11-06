@@ -43,14 +43,14 @@
   ]
 }
 {% endschema %}
-<div class="bg-[#141414] pt-[120px] pb-[80px]">
+<div class="bg-[#141414] pt-[80px]">
     <section class="relative bg-[#141414] text-white rounded-[10px] shadow-[0_0_20px_rgba(255,255,255,0.5)] max-w-[960px] mx-auto">
     <!-- Top Image (Bleeds 50% on Top) -->
     <div class="absolute left-0 -top-1/2">
         <img width="100" height="auto" src="{{ section.settings.top_image | img_url: '800x' }}" alt="Top Image" class="w-full max-w-xs">
     </div>
      <!-- Bleeding Image (Bleeds 20px Top, 10px Bottom) -->
-     <div class="absolute top-[-60%] right-[-10%] max-w-[300px] desktop">
+     <div class="absolute top-[-43%] right-[-5%] desktop max-w-[300px] w-[300px]">
         <img width="100" height="auto" src="{{ section.settings.bleed_image | img_url: '800x' }}" alt="Bleed Image" class="w-full h-auto">
     </div>
 

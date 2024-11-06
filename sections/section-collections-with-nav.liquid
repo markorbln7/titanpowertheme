@@ -7,7 +7,7 @@
 {% endif %}
 
 <section class="section-collections-with-nav">
-    <nav class="section-collections-with-nav__navigation py-[20px] bg-white">
+    <nav class="section-collections-with-nav__navigation py-[20px] bg-white tp-sticky">
        <ul class="flex items-center justify-center gap-[10px]">
             {% for collection in section.settings.collections  %}
                 {% assign collection_obj = collections[collection.handle] %}
@@ -24,14 +24,20 @@
           <h2 class="lg:text-[50px] md:text-[38px] font-semibold text-black mb-[16px] text-center">{{ collection_obj.title }}</h2>
           <div class="products grid grid-cols-4 gap-[20px]">
             {% for product in collection_obj.products %}
-                <article class="section-collections-with-nav__product" data-product-id="{{ product.id }}">
+                <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
+                  <a class="!block absolute w-full h-full top-0 left-0" href="{{ product.url }}"></a>
                       <figure class="section-collections-with-nav__product-image">
-                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+
+                          {% if product.metafields.custom.new_shop_image %}
+                            <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                          {% else %}
+                            {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                          {% endif %}
                       </figure>
 
                       <div class="section-collections-with-nav__product-details justify-between">
                           <div class="top-part">
-                            <h4 class="section-collections-with-nav__product-title text-center">{{ product.title }}</h4>
+                            <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
 
 
                             {% if product.metafields.custom.ticks %}
@@ -45,7 +51,7 @@
                                 {% endif %}
                               </div>
                               <a href="{{ product.url }}" class="arrow">
-                                <img class="w-full" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
+                                <img class="w-full ml-[5px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
                               </a>
                             </div>
                             {% comment %} <div class="variant-selectors text-center myb-[5px] mt-[10px]">

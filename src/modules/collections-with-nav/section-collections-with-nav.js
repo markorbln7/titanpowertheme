@@ -117,3 +117,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+window.onscroll = function() {
+  makeSticky();
+};
+
+// Get the navigation element
+var navbar = document.querySelector(".tp-sticky");
+
+// Get the offset position of the navbar
+var stickyOffset = navbar.offsetTop;
+console.log(window.pageYOffset, stickyOffset, 'offset')
+// Add or remove the sticky class based on scroll position
+function makeSticky() {
+  if (window.pageYOffset >= stickyOffset) {
+    navbar.classList.add("sticky");
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}

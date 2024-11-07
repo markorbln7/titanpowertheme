@@ -125,8 +125,8 @@
 
         <div class="pdp-hero__pricing-wrapper">
           <div class="pdp-hero__pricing product__list--single--price color-white">
-            <span class="pdp-hero__pricing-price js-price">{{ mainProduct.variants[1].price | money_with_currency }}</span>
-            <span class="crossed js-crossed-price">{{ mainProduct.variants[1].compare_at_price | money_with_currency }}</span>
+            <span class="pdp-hero__pricing-price js-price">{{ mainProduct.variants[0].price | money_with_currency }}</span>
+            <span class="crossed js-crossed-price">{{ mainProduct.variants[0].compare_at_price | money_with_currency }}</span>
 
             {% if discountContent != blank %}
               <div class="pdp-hero__discount">{{ discountContent }}</div>
@@ -412,7 +412,7 @@
       productHandle: '',
       productId: '',
       phoneType: 'iPhone',
-      cableLength: '6ft(1.8m)',
+      cableLength: '4ft(1.2m)',
       addon: ''
     }
 

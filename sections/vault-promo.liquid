@@ -43,10 +43,10 @@
   ]
 }
 {% endschema %}
-<div class="bg-[#141414] pt-[80px]">
-    <section class="relative bg-[#141414] text-white rounded-[10px] shadow-[0_0_20px_rgba(255,255,255,0.5)] max-w-[960px] mx-auto">
+<div class="bg-[#141414] px-[10px] md:pt-[80px] pt-[120px]">
+    <section class="relative bg-[#141414] text-white rounded-[10px] shadow-[0_0_20px_rgba(255,255,255,0.5)] max-w-[960px] mx-auto pt-[45px] md:pt-0">
     <!-- Top Image (Bleeds 50% on Top) -->
-    <div class="absolute left-0 -top-1/2">
+    <div class="absolute left-[20%] md:left-0 -top-1/2">
         <img width="100" height="auto" src="{{ section.settings.top_image | img_url: '800x' }}" alt="Top Image" class="w-full max-w-xs">
     </div>
      <!-- Bleeding Image (Bleeds 20px Top, 10px Bottom) -->
@@ -56,25 +56,25 @@
 
     <div class="flex flex-col md:flex-row relative z-10 px-[20px]">
         <!-- Text Section (70%) -->
-        <div class="w-[65%] flex flex-col justify-end mb-[10px]">
+        <div class="w-full md:w-[65%] flex flex-col justify-end mb-[10px]">
 
         <!-- Subtitle with Green "72 hrs" -->
-        <p class="text-[24px] md:text-[20px] bold">
+        <p class="text-[20px] md:text-[20px] bold text-center md:text-left">
             {{ section.settings.subtitle | replace: "72 hrs", "<span class='text-green-500'>72 hrs</span>" }}
         </p>
 
         <!-- Description (White, 200 Font Weight) -->
-        <p class="text-white text-[20px] md:text-[16px] font-light">
+        <p class="text-white text-[16px] md:text-[20px] font-light text-center md:text-left">
             {{ section.settings.description }}
         </p>
         </div>
 
         <!-- Image Section (30%) -->
-        <div class="w-[35%] relative">
-        <!-- Main Image (Fits in Section) -->
-        <div class="max-w-[100px]">
-            <img width="100" height="auto" src="{{ section.settings.main_image | img_url: '800x' }}" alt="Main Image" class="w-full h-auto">
-        </div>
+        <div class="w-[35%] relative desktop">
+          <!-- Main Image (Fits in Section) -->
+          <div class="max-w-[100px]">
+              <img width="100" height="auto" src="{{ section.settings.main_image | img_url: '800x' }}" alt="Main Image" class="w-full h-auto">
+          </div>
 
 
         </div>

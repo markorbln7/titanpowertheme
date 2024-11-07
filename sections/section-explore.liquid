@@ -16,15 +16,15 @@
     assign second_collection = section.settings.second_collection
 %}
 
-<section class="section-explore py-[50px] bg-[#141414]">
+<section class="section-explore md:py-[50px] py-[20px] bg-[#141414]">
   <div class="section-explore__wrapper px-[24px] {% if section.settings.narrow_version %}narrow{% endif %}">
       {% if section.settings.explore_top_image %}
-        <div class="explore-top-image md:max-w-[60%] mx-auto mb-[40px]">
+        <div class="explore-top-image md:max-w-[60%] mx-auto md:mb-[40px] mb-[20px]">
           <img width="100" height="auto" src="{{ section.settings.explore_top_image | img_url:'master' }}" alt="explore-top-image" class="w-full h-full object-cover"/>
         </div>
       {% endif %}
       {% if section_title != blank %}
-          <h2 class="mb-[30px] text-center text-white text-[26px] font-[600] md:text-[54px] explore-title" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
+          <h2 class="mb-[30px] text-center text-white text-[54px] font-[600] md:text-[54px] explore-title" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
       {% endif %}
 
       <div class="section-explore__product-content relative h-[350px] w-full mx-auto hidden lg:!block">
@@ -61,7 +61,7 @@
               </div>
            </div>
 
-            <figure class="h-full w-[600px]">
+            <figure class="h-full w-[600px] mx-auto">
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 
@@ -132,7 +132,7 @@
               </div>
            </div>
 
-            <figure class="h-full w-[600px]">
+            <figure class="h-full w-[600px] mx-auto">
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 

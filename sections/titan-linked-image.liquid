@@ -32,7 +32,7 @@
 }
 {% endschema %}
 
-<section class="bg-white pt-[20px] pb-0 md:pt-[40px] md:pb-[60px]">
+<section class="bg-[#d6e1e1] pt-[20px] pb-0 md:pt-[40px] md:pb-[60px]">
   <div class="max-w-screen-xl mx-auto">
     <!-- Section Title -->
     <h2 class="text-center font-bold mb-8 text-[54px] font-[600] md:text-[26px">
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Mobile Image (shown on screens below medium) -->
-    <div class="mobile justify-center">
+    <div class="mobile justify-center max-w-[90%] mx-auto mb-[20px] rounded-[20px] overflow-hidden">
       <a href="{{ section.settings.link }}">
         <img width="100" height="auto" src="{{ section.settings.mobile_image | img_url: '800x' }}" alt="Mobile Image" class="w-full">
       </a>

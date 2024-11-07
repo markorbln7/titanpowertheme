@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       this.closest('li').classList.add('active');
 
-      const targetSection = parentSection.querySelector(`${this.getAttribute('href')}`);
+      const targetSection = document.querySelector(`${this.getAttribute('href')}`);
       if (targetSection) {
         targetSection.scrollIntoView({ behavior: 'smooth' });
       }

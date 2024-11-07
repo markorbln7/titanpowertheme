@@ -33,7 +33,7 @@
 }
 {% endschema %}
 
-<section class="bg-white pt-[20px] pb-0 md:pt-[40px] md:pb-[60px] relative">
+<section class="bg-[#d6e1e1] pt-[20px] pb-0 md:pt-[40px] md:pb-[60px] relative">
   <div class="max-w-screen-xl mx-auto relative">
     <!-- Desktop Image (shown on screens medium and up) -->
     <div class="desktop shadow rounded-[300px]">
@@ -41,14 +41,14 @@
     </div>
 
     <!-- Mobile Image (shown on screens below medium) -->
-    <div class="mobile">
+    <div class="mobile justify-center max-w-[90%] mx-auto mb-[20px] rounded-[20px] overflow-hidden">
       <img width="100" height="auto" src="{{ section.settings.mobile_image | img_url: '800x' }}" alt="Mobile Image" class="w-full">
     </div>
 
     <!-- Content Over the Image -->
     <div class="absolute inset-y-0 left-10 md:left-40 flex flex-col justify-center text-left px-4">
         <!-- Title -->
-        <h2 class="text-white text-4xl md:text-6xl font-bold mb-4">
+        <h2 class="text-white text-[30px] md:text-[40px] font-bold mb-4">
           {{ section.settings.title }}
         </h2>
         <!-- Text -->

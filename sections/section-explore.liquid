@@ -30,7 +30,7 @@
       <div class="section-explore__product-content relative h-[350px] w-full mx-auto hidden lg:!block">
         {% for product in collections[first_collection].products limit: 4 %}
           <div class="absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
-           <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right">
+           <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right min-w-[226px] max-w-[226px]">
               <div class="relative mb-[50px] pr-[20px]">
                 {% if product.metafields.custom.info_title_one != blank %}
                   <h3>{{ product.metafields.custom.info_title_one }}</h3>
@@ -65,7 +65,7 @@
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 
-            <div class="section-explore__product-info flex flex-col justify-center text-left">
+            <div class="section-explore__product-info flex flex-col justify-center text-left min-w-[226px] max-w-[226px]">
               <div class="relative mb-[30px] pl-[20px]">
                 {% if product.metafields.custom.info_title_three != blank %}
                   <h3> {{ product.metafields.custom.info_title_three }}</h3>
@@ -100,7 +100,7 @@
 
         {% for product in collections[second_collection].products limit: 4 %}
           <div class="absolute left-0 top-0 w-full h-full flex opacity-0" data-product="for-travel-{{ forloop.index }}">
-           <div class="section-explore__product-info flex flex-col justify-center text-right">
+           <div class="section-explore__product-info flex flex-col justify-center text-right min-w-[226px] max-w-[226px]">
               <div class="relative mb-[50px] pr-[20px]">
                 {% if product.metafields.custom.info_title_one != blank %}
                   <h3>{{ product.metafields.custom.info_title_one }}</h3>
@@ -136,7 +136,7 @@
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 
-            <div class="section-explore__product-info flex flex-col justify-center text-left">
+            <div class="section-explore__product-info flex flex-col justify-center text-left min-w-[226px] max-w-[226px]">
               <div class="relative mb-[30px] pl-[20px]">
                 {% if product.metafields.custom.info_title_three != blank %}
                   <h3> {{ product.metafields.custom.info_title_three }}</h3>

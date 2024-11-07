@@ -36,7 +36,12 @@
                       </div>
                     </div>
                   {% endif %}
-                  <a class="!block absolute w-full h-full top-0 left-0" href="{{ product.url }}"></a>
+                  {% if product.metafields.custom.custom_url %}
+                    {% assign url = product.metafields.custom.custom_url %}
+                  {% else %}
+                    {% assign url = product.url %}
+                  {% endif %}
+                  <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
                       <figure class="section-collections-with-nav__product-image">
 
                           {% if product.metafields.custom.new_shop_image %}

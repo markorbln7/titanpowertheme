@@ -18,7 +18,7 @@
       "type": "vault-promo",
       "settings": {
         "title": "Black Friday Countdown",
-        "subtitle": "Early bird deals every 72 hrs in the Titan Vault",
+        "subtitle": "Early bird deals every 72 hrs",
         "description": "Flash Sales, mystery gifts, 80% off, and new products",
         "main_image": "shopify://shop_images/titan_power_logo_faded.png",
         "bleed_image": "shopify://shop_images/The_titan_vaults_top_image_19a1e552-c8f4-4786-a98f-c40a05b62e65.png",
@@ -40,6 +40,14 @@
     "section_collections_with_nav_Xpintm": {
       "type": "section-collections-with-nav",
       "blocks": {
+        "nav_cc9cT7": {
+          "type": "nav",
+          "settings": {
+            "heading": "Cables",
+            "anchor": "#cables-byob",
+            "icon": "shopify://shop_images/cable_icon_shop.png"
+          }
+        },
         "nav_7DVmXb": {
           "type": "nav",
           "settings": {
@@ -48,12 +56,25 @@
             "icon": "shopify://shop_images/plug_icon_shop.png"
           }
         },
-        "nav_cc9cT7": {
+        "nav_6tjcah": {
           "type": "nav",
           "settings": {
-            "heading": "Cables",
-            "anchor": "#cables-byob",
-            "icon": "shopify://shop_images/cable_icon_shop.png"
+            "heading": "",
+            "anchor": ""
+          }
+        },
+        "nav_ihnPa7": {
+          "type": "nav",
+          "settings": {
+            "heading": "",
+            "anchor": ""
+          }
+        },
+        "nav_cahXtQ": {
+          "type": "nav",
+          "settings": {
+            "heading": "",
+            "anchor": ""
           }
         },
         "nav_7hL3VQ": {
@@ -65,14 +86,19 @@
         }
       },
       "block_order": [
-        "nav_7DVmXb",
         "nav_cc9cT7",
+        "nav_7DVmXb",
+        "nav_6tjcah",
+        "nav_ihnPa7",
+        "nav_cahXtQ",
         "nav_7hL3VQ"
       ],
       "settings": {
         "collections": [
+          "cables-byob",
+          "premium-new",
           "plugs",
-          "cables-byob"
+          "wireless-new"
         ]
       }
     },
@@ -89,7 +115,7 @@
       "type": "section-explore",
       "settings": {
         "narrow_version": false,
-        "section_title": "New Arrivale",
+        "section_title": "New Arrivals",
         "first_collection_label": "New Chargers",
         "second_collection_label": "New Accessories",
         "first_collection": "new-chargers",

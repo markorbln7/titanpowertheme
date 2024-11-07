@@ -1,7 +1,10 @@
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js?importLoaders=1!./node_modules/postcss-loader/dist/cjs.js!./node_modules/style-resources-loader/lib/index.js??clonedRuleSet-2.use[3]!./src/modules/explore/section-explore.css ***!
   \********************************************************************************************************************************************************************************************************************************/
-.section-explore .explore-title span {
+.section-explore .product-image {
+        background-color: #141414;
+    }
+    .section-explore .explore-title span {
             color:#60C655;
         }
     .section-explore .discount-label {
@@ -20,7 +23,7 @@
             color: black
         }
     .section-explore .buy-now-popup .quantity::before {
-            background-color: transparent;
+        background-color: transparent;
 }
     .section-explore .buy-now-popup .quantity__button svg {
                     color: black;
@@ -39,15 +42,15 @@
                 transition: height 0.3s ease;
 }
     .section-explore .buy-now-popup__description-inner.with-gradient::after {
-            position: absolute;
-            height: 30%;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75) 54%, #fff);
-            clear: both;
-            content: " ";
-            display: block;
+        position: absolute;
+        height: 30%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75) 54%, #fff);
+        clear: both;
+        content: " ";
+        display: block;
 }
     .section-explore .buy-now-popup__description-inner h1, .section-explore .buy-now-popup__description-inner h2, .section-explore .buy-now-popup__description-inner h3, .section-explore .buy-now-popup__description-inner h4, .section-explore .buy-now-popup__description-inner h5, .section-explore .buy-now-popup__description-inner h6, .section-explore .buy-now-popup__description-inner p, .section-explore .buy-now-popup__description-inner ul, .section-explore .buy-now-popup__description-inner ol {
                     margin-bottom: 1rem;
@@ -69,7 +72,7 @@
                 transition: border-color 0.3s ease
             }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {
-            border-color: #60c655;
+        border-color: #60c655;
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box .custom-checkbox {
                     width: 20px;
@@ -83,18 +86,18 @@
                     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box .custom-checkbox:before {
-            content: "";
+        content: "";
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box input[type="checkbox"] {
                     display: none;
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box input[type="checkbox"]:checked+.custom-checkbox {
-            background-color: #60c655;
-            border-color: #60c655;
+        background-color: #60c655;
+        border-color: #60c655;
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box input[type="checkbox"]:checked+.custom-checkbox:before {
-            content: "✔";
-            color: #fff;
+        content: "✔";
+        color: #fff;
 }
     .section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box label.buy-now-popup__checkbox {
                     position: absolute;
@@ -115,8 +118,8 @@
             margin-inline: auto
         }
         .section-explore__wrapper.narrow {
-                        max-width: 1100px;
-            }
+                max-width: 1100px;
+        }
 
         .section-explore__collection-label {
             margin-bottom: 12px;
@@ -127,8 +130,8 @@
         }
 
         .section-explore__collection-label.active {
-                        border-color: #60C655;
-            }
+                border-color: #60C655;
+        }
 
         .section-explore__collection-label.active {
             color: #60C655;
@@ -182,31 +185,31 @@
 
         .section-explore__product.active img {
                     transform: scale(1.116);
-            }
+        }
 
         .section-explore__product figure {
                 aspect-ratio: 1.47;
                 width: 100%;
-            }
+        }
 
         .section-explore__product img {
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 margin-inline: auto;
-            }
+        }
 
         .section-explore__product h4 {
                 color: #fff;
                 font-size: 12px;
-            }
+        }
 
         .section-explore__product .price-wrapper {
                 min-height: 36px;
-            }
+        }
 
         .section-explore__product .product-price {
                 color: #fff;
                 margin-bottom: 3px;
-            }
+        }
 
                 .section-explore__product .product-price--compared {
                     display: block;
@@ -260,6 +263,20 @@
         }
 }
     @media(max-width:767px) {
+    .section-explore__product {
+        border: 1.75px solid #ececec;
+        border-radius: 30px;
+        box-shadow: 0 0 10px #b5b5b5;
+        background: linear-gradient(131deg, #c4d3d3, #fff 98%);
+        overflow: visible;
+    }
+        .narrow .section-explore__product {
+            border: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            background: transparent;
+            overflow: visible;
+        }
         .section-explore__buy-now {
             padding-inline: 10px;
             max-width: 100%;
@@ -306,12 +323,12 @@
                 }
 
                 .section-explore .buy-now-popup__price span:first-child {
-                        font-size: 14px;
-            }
+                font-size: 14px;
+        }
 
                 .section-explore .buy-now-popup__price span:last-child {
-                        font-size: 12px;
-            }
+                font-size: 12px;
+        }
 
             .section-explore .buy-now-popup__atc {
                 height: 40px;

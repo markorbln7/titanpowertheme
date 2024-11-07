@@ -16,7 +16,7 @@
     assign second_collection = section.settings.second_collection
 %}
 
-<section class="section-explore md:py-[30px] py-[20px] {% if section.settings.narrow_version %}bg-[#141414]{% else %}bg-black{% endif %}">
+<section class="mt-[-1px] section-explore md:py-[30px] py-[20px] {% if section.settings.narrow_version %}bg-[#141414]{% else %}bg-black{% endif %}">
   <div class="section-explore__wrapper px-[24px] {% if section.settings.narrow_version %}narrow{% endif %}">
       {% if section.settings.explore_top_image %}
         <div class="explore-top-image md:max-w-[50%] mx-auto md:mb-[40px] mb-[20px]">
@@ -182,7 +182,7 @@
 
                     <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-desktop-{{ forloop.index }}">
                       <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
-                        <div class="product-image h-[150px] overflow-hidden pt-[100%] relative">
+                        <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
                           {% if product.metafields.custom.custom_product_image %}
                             <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
                           {% else %}
@@ -247,7 +247,7 @@
 
                   <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-travel-{{ forloop.index }}">
                     <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
-                      <div class="product-image h-[150px] overflow-hidden pt-[100%] relative">
+                      <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
                         {% if product.metafields.custom.custom_product_image %}
                           <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
                         {% else %}

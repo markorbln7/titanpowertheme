@@ -6,43 +6,66 @@
   <script src="https://cdn.tailwindcss.com" defer></script>
 {% endif %}
 
-<section class="section-collections-with-nav py-[80px]">
-    <nav class="section-collections-with-nav__navigation">
-       <ul class="flex items-center justify-center gap-[10px]">
-            {% for collection in section.settings.collections  %}
-                {% assign collection_obj = collections[collection.handle] %}
-                <li class="{% if forloop.index == 1 %}active {% endif %}">
-                    <a href='#{{ collection_obj.handle }}' class="collection-link">{{ collection_obj.title }}</a>
+<section class="section-collections-with-nav">
+    <nav class="section-collections-with-nav__navigation py-[20px] tp-sticky">
+       <ul class="flex items-center justify-center md:gap-[10px] gap-[10px] max-w-[750px] mx-auto flex-wrap">
+            {% for block in section.blocks  %}
+                {% comment %} {% assign collection_obj = collections[collection.handle] %} {% endcomment %}
+                <li class="{% if forloop.index == 1 %}active {% endif %} lg:min-w-[180px] relative lg:flex-wrap w-[30%] pt-[14px] md:pt-0 !mb-[10px] !md:mb-0">
+                     {% if block.settings.icon != blank %}
+                      <div class="small-icon top-[-18px] md:top-[3px] image md:max-w-[35px] max-w-[25px] absolute md:left-[10px] left-[50%] translate-x-[-50%] translate-y-0 md:transform-none"><img width="100" height="auto" src="{{ block.settings.icon | img_url:'master' }}"></div>
+                     {% endif %}
+                    <a href='{{ block.settings.anchor }}' class="collection-link">{{ block.settings.heading }}</a>
                 </li>
             {% endfor %}
        </ul>
     </nav>
-  <div class="section-collections-with-nav__wrapper max-w-[960px] mx-auto grid gap-[40px] lg:gap-[60px]">
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
         <div class="collection" id="{{ collection_obj.handle  | strip }}" data-aos="fade-in" data-aos-duration="700">
-          <h2 class="text-[38px] font-semibold text-black mb-[16px]">{{ collection_obj.title }}</h2>
-          <div class="products grid grid-cols-3 gap-[20px]">
+          <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[16px] text-center collection-title">{{ collection_obj.title }}</h2>
+          <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
             {% for product in collection_obj.products %}
-                <article class="section-collections-with-nav__product" data-product-id="{{ product.id }}">
+                <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
+                  {% if product.metafields.custom.new_shop_discount %}
+                    <div class="absolute left-[10px] top-[10px]">
+                      <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                        <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                        <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                      </div>
+                    </div>
+                  {% endif %}
+                  <a class="!block absolute w-full h-full top-0 left-0" href="{{ product.url }}"></a>
                       <figure class="section-collections-with-nav__product-image">
-                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+
+                          {% if product.metafields.custom.new_shop_image %}
+                            <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                          {% else %}
+                            {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                          {% endif %}
                       </figure>
 
                       <div class="section-collections-with-nav__product-details justify-between">
                           <div class="top-part">
-                            <h4 class="section-collections-with-nav__product-title text-center">{{ product.title }}</h4>
-                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center justify-center">
-                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
-                                {% if product.compare_at_price  %}
-                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
-                                {% endif %}
-                            </div>
+                            <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
 
                             {% if product.metafields.custom.ticks %}
                               {{product.metafields.custom.ticks | metafield_tag }}
                             {% endif %}
-                            <div class="variant-selectors text-center myb-[5px] mt-[10px]">
+                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                              <div clas="prices">
+                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                                {% if product.compare_at_price  %}
+                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                                {% endif %}
+                              </div>
+                              <a href="{{ product.url }}" class="arrow">
+                                <img class="w-full md:ml-[5px] ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
+                              </a>
+                            </div>
+                            {% comment %} <div class="variant-selectors text-center myb-[5px] mt-[10px]">
                               {% for option in product.options_with_values %}
                                 {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
                                   <label for="option-{{ option.name | handle }}" class="text-[16px] font-semibold">{{ option.name }}</label>
@@ -54,10 +77,10 @@
                                   </select>
                                 {% endif %}
                               {% endfor %}
-                            </div>
+                            </div> {% endcomment %}
                           </div>
 
-                          <div class="bottom-part">
+                          {% comment %} <div class="bottom-part">
                             <quantity-input class="quantity cart-quantity my-[20px] mx-auto">
                               <button class="quantity__button" name="minus" type="button">
                                 {% render 'icon-minus' %}
@@ -79,7 +102,7 @@
                           </button>
                           <a href="{{ product.url }}" class="text-[#60c655] text-center underline font-medium text-[16px] block mt-auto">Learn more</a>
 
-                        </div>
+                        </div> {% endcomment %}
                       </div>
                   </article>
                   <script>
@@ -121,6 +144,29 @@
       "type": "collection_list",
       "label": "Collections",
       "id": "collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav",
+      "name": "Nav",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        }
+      ]
     }
   ],
   "presets": [

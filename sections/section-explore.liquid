@@ -4,7 +4,7 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 {% if page.handle == 'test-sections' %}
-  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
 
 
@@ -16,16 +16,21 @@
     assign second_collection = section.settings.second_collection
 %}
 
-<section class="section-explore py-[50px] bg-[#141414]">
-  <div class="section-explore__wrapper px-[24px]">
+<section class="mt-[-1px] section-explore md:py-[30px] py-[20px] {% if section.settings.narrow_version %}bg-[#141414]{% else %}bg-black{% endif %}">
+  <div class="section-explore__wrapper px-[24px] {% if section.settings.narrow_version %}narrow{% endif %}">
+      {% if section.settings.explore_top_image %}
+        <div class="explore-top-image md:max-w-[50%] mx-auto md:mb-[40px] mb-[20px]">
+          <img width="100" height="auto" src="{{ section.settings.explore_top_image | img_url:'master' }}" alt="explore-top-image" class="w-full h-full object-cover"/>
+        </div>
+      {% endif %}
       {% if section_title != blank %}
-          <h2 class="mb-[30px] text-center text-white text-[26px] font-[600] md:text-[54px] explore-title" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
+          <h2 class="mb-[30px] text-center text-white text-[54px] font-[600] md:text-[54px] explore-title" data-aos="fade-in" data-aos-duration="1000">{{ section_title }}</h2>
       {% endif %}
 
-      <div class="section-explore__product-content relative h-[350px] w-[1280px] mx-auto hidden lg:!block">
+      <div class="section-explore__product-content relative h-[350px] w-full mx-auto hidden lg:!block">
         {% for product in collections[first_collection].products limit: 4 %}
           <div class="absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
-           <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right">
+           <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right min-w-[226px] max-w-[226px]">
               <div class="relative mb-[50px] pr-[20px]">
                 {% if product.metafields.custom.info_title_one != blank %}
                   <h3>{{ product.metafields.custom.info_title_one }}</h3>
@@ -56,11 +61,11 @@
               </div>
            </div>
 
-            <figure class="h-full w-[800px]">
+            <figure class="h-full w-[600px] mx-auto">
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 
-            <div class="section-explore__product-info flex flex-col justify-center text-left">
+            <div class="section-explore__product-info flex flex-col justify-center text-left min-w-[226px] max-w-[226px]">
               <div class="relative mb-[30px] pl-[20px]">
                 {% if product.metafields.custom.info_title_three != blank %}
                   <h3> {{ product.metafields.custom.info_title_three }}</h3>
@@ -95,7 +100,7 @@
 
         {% for product in collections[second_collection].products limit: 4 %}
           <div class="absolute left-0 top-0 w-full h-full flex opacity-0" data-product="for-travel-{{ forloop.index }}">
-           <div class="section-explore__product-info flex flex-col justify-center text-right">
+           <div class="section-explore__product-info flex flex-col justify-center text-right min-w-[226px] max-w-[226px]">
               <div class="relative mb-[50px] pr-[20px]">
                 {% if product.metafields.custom.info_title_one != blank %}
                   <h3>{{ product.metafields.custom.info_title_one }}</h3>
@@ -127,11 +132,11 @@
               </div>
            </div>
 
-            <figure class="h-full w-[800px]">
+            <figure class="h-full w-[600px] mx-auto">
               <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
             </figure>
 
-            <div class="section-explore__product-info flex flex-col justify-center text-left">
+            <div class="section-explore__product-info flex flex-col justify-center text-left min-w-[226px] max-w-[226px]">
               <div class="relative mb-[30px] pl-[20px]">
                 {% if product.metafields.custom.info_title_three != blank %}
                   <h3> {{ product.metafields.custom.info_title_three }}</h3>
@@ -162,35 +167,115 @@
       </div>
 
       <div class="section-explore__collections flex flex-col justify-center gap-[30px]">
-        <div class="w-full lg:flex lg:flex-col">
-          <h3 class="section-explore__collection-label section-explore__collection-label-desktop mb-[12px] text-center text-[21px] text-[#fff] font-medium active">
-              {{ first_collection_label }}
-          </h3>
-            <div class="section-explore__products flex w-full justify-center flex-wrap gap-[10px]">
-              {% for product in collections[first_collection].products limit: 4 %}
+        {% if first_collection != blank %}
+          <div class="w-full lg:flex lg:flex-col">
+            {% if first_collection_label != blank %}
+              <h3 class="section-explore__collection-label section-explore__collection-label-desktop mb-[12px] text-center text-[21px] text-[#fff] font-medium active">
+                  {{ first_collection_label }}
+              </h3>
+            {% endif %}
+              <div class="section-explore__products flex w-full justify-center flex-wrap gap-[10px]{% if second_collection == blank %} section-explore__products--single{% endif %}">
+                {% for product in collections[first_collection].products limit: 4 %}
+                  {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+                  {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+                  {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+
+                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-desktop-{{ forloop.index }}">
+                      <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
+                        <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
+                          {% if product.metafields.custom.custom_product_image %}
+                            <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                          {% else %}
+                            <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                          {% endif %}
+                        </div>
+                        {% unless product.metafields.custom.hide_details  %}
+                          <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
+                            {{ product.title }}
+                          </h4>
+                         <div class="mb-[12px] price-wrapper">
+                            <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
+                            <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
+                         </div>
+                        {% endunless %}
+                      </div>
+                      {% if product.metafields.custom.custom_url %}
+                        <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white max-w-[100%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
+                      {% else %}
+                        <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">BUY NOW</button>
+                      {% endif %}
+                      {% if product.metafields.custom.custom_url != blank %}
+                        <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                      {% else %}
+                        <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                      {% endif %}
+                      {% if product.compare_at_price %}
+                        <div class="discount-label absolute top-[14px] left-[10px] bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
+                          {% assign productdifference = product.compare_at_price | minus: product.price %}
+                          {% assign divider = product.compare_at_price | times: 1.0 %}
+                          {% assign percentage = productdifference | divided_by:  divider %}
+                          {{ percentage | times: 100 | round }}% OFF
+                        </div>
+                      {% endif %}
+                    </div>
+
+                    {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
+                       upsell_product_one: product.metafields.custom.first_upsell_product
+                       description: product_description upsell_product_one:
+                       upsell_product_one upsell_product_two: upsell_product_two
+                       product_id: product.selected_or_first_available_variant.id
+                       quantity: '1'
+                    %}
+
+                {% endfor %}
+              </div>
+          </div>
+        {% endif %}
+
+        {% if second_collection != blank %}
+          <div class="w-full">
+            {% if second_collection_label != blank %}
+              <h3 class="section-explore__collection-label section-explore__collection-label-travel mb-[12px] text-center text-[21px] text-[#fff] font-medium">
+                {{ second_collection_label }}
+              </h3>
+            {% endif %}
+              <div class="flex w-full justify-center flex-wrap gap-[10px]">
+              {% for product in collections[second_collection].products limit: 4 %}
                 {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
                 {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
                 {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
 
-                  <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-desktop-{{ forloop.index }}">
-                    <div>
-                      {% if product.metafields.custom.custom_product_image %}
-                        <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                      {% else %}
-                        <img src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                      {% endif %}
-                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
+                  <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-travel-{{ forloop.index }}">
+                    <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
+                      <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
+                        {% if product.metafields.custom.custom_product_image %}
+                          <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                        {% else %}
+                          <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                        {% endif %}
+                      </div>
+                      {% unless product.metafields.custom.hide_details  %}
+                        <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
                           {{ product.title }}
                         </h4>
-                        <div class="mb-[12px] price-wrapper">
+                       <div class="mb-[12px] price-wrapper">
                           <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
                           <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
-                        </div>
+                       </div>
+                      {% endunless %}
                     </div>
-                    <button class="section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px]">BUY NOW</button>
-                    <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                    {% if product.metafields.custom.custom_url %}
+                      <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white max-w-[100%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
+                    {% else %}
+                      <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">BUY NOW</button>
+                    {% endif %}
+                    {% if product.metafields.custom.custom_url != blank %}
+                      <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                    {% else %}
+                      <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                    {% endif %}
                     {% if product.compare_at_price %}
-                      <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
+                      <div class="discount-label absolute top-[14px] left-[10px] bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
                         {% assign productdifference = product.compare_at_price | minus: product.price %}
                         {% assign divider = product.compare_at_price | times: 1.0 %}
                         {% assign percentage = productdifference | divided_by:  divider %}
@@ -198,64 +283,17 @@
                       </div>
                     {% endif %}
                   </div>
-
                   {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
-                     upsell_product_one: product.metafields.custom.first_upsell_product
-                     description: product_description upsell_product_one:
-                     upsell_product_one upsell_product_two: upsell_product_two
-                     product_id: product.selected_or_first_available_variant.id
-                     quantity: '1'
-                  %}
-
+                    upsell_product_one: product.metafields.custom.first_upsell_product
+                    description: product_description upsell_product_one:
+                    upsell_product_one upsell_product_two: upsell_product_two
+                    product_id: product.selected_or_first_available_variant.id
+                    quantity: '1'
+                 %}
               {% endfor %}
             </div>
-        </div>
-        <div class="w-full">
-            <h3 class="section-explore__collection-label section-explore__collection-label-travel mb-[12px] text-center text-[21px] text-[#fff] font-medium">
-            {{ second_collection_label }}
-            </h3>
-            <div class="flex w-full justify-center flex-wrap gap-[10px]">
-            {% for product in collections[second_collection].products limit: 4 %}
-              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
-              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
-              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
-
-                <div class="section-explore__product max-w-[150px] relative pt-[14px] bg-[#fff] px-[14px] pb-[10px]" data-product-hover="for-travel-{{ forloop.index }}">
-                  <div>
-                    {% if product.metafields.custom.custom_product_image %}
-                      <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                    {% else %}
-                      <img src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                    {% endif %}
-                      <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
-                        {{ product.title }}
-                      </h4>
-                     <div class="mb-[12px] price-wrapper">
-                        <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
-                        <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
-                     </div>
-                  </div>
-                  <button class="section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[16px] rounded-[10px]">BUY NOW</button>
-                  <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
-                  {% if product.compare_at_price %}
-                    <div class="discount-label absolute top-0 left-0 bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
-                      {% assign productdifference = product.compare_at_price | minus: product.price %}
-                      {% assign divider = product.compare_at_price | times: 1.0 %}
-                      {% assign percentage = productdifference | divided_by:  divider %}
-                      {{ percentage | times: 100 | round }}% OFF
-                    </div>
-                  {% endif %}
-                </div>
-                {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
-                  upsell_product_one: product.metafields.custom.first_upsell_product
-                  description: product_description upsell_product_one:
-                  upsell_product_one upsell_product_two: upsell_product_two
-                  product_id: product.selected_or_first_available_variant.id
-                  quantity: '1'
-               %}
-            {% endfor %}
           </div>
-        </div>
+        {% endif %}
       </div>
   </div>
 </section>
@@ -273,10 +311,21 @@
   "name": "Explore the lineup",
   "settings": [
     {
+      "type": "checkbox",
+      "label": "Narrow version",
+      "id": "narrow_version",
+      "default": true
+    },
+    {
       "type": "text",
       "label": "Section title",
       "id": "section_title",
       "default": "EXPLORE THE LINEUP"
+    },
+    {
+      "type": "image_picker",
+      "label": "Top image",
+      "id": "explore_top_image"
     },
     {
       "type": "text",

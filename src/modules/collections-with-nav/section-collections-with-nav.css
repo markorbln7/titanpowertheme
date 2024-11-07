@@ -5,10 +5,11 @@
     &__navigation {
         ul {
             list-style: none;
+            background-color: #d6e1e1;
         }
 
         li {
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 400;
             line-height: 130%;
             letter-spacing: 2px;
@@ -16,13 +17,14 @@
             display: flex;
             align-items: center;
             padding: 10px 30px;
-            margin: 7px 7px 14px;
             border-radius: 10px;
             white-space: nowrap;
             background-color: #fff;
             transition: all .3s ease;
             color: #000;
             justify-content: center;
+            background-color: rgb(228, 234, 234);
+            box-shadow: rgba(46, 42, 57, 0) 10px 12px 20px 0px;
 
             &.active {
                 color: #fff;
@@ -77,7 +79,7 @@
         display: flex;
         flex: 1;
         flex-flow: column nowrap;
-        min-height: 210px;
+        /* min-height: 210px; */
         padding: 10px 14px 14px;
     }
 
@@ -91,10 +93,14 @@
     }
 
     &__product-price {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 700;
         padding-right: 8px;
         color: #60c655;
+        @media (max-width: 768px) {
+            font-size: 16px;
+            padding-right: 5px;
+        }
     }
 
     &__product-price-compared {
@@ -102,6 +108,9 @@
         font-weight: 600;
         color: #777;
         text-decoration: line-through;
+        @media (max-width: 768px) {
+            font-size: 12px;
+        }
     }
 
     &__product-description {
@@ -142,18 +151,16 @@
 
 @media (max-width: 768px) {
     .section-collections-with-nav {
-        padding-inline: 20px;
-        padding-block: 50px;
+        padding-inline: 0px;
+        padding-block: 0px;
 
         &__navigation {
-            margin-inline: -20px;
-            overflow-x: auto;
+            margin-inline: 0px;
             margin-bottom: 20px;
             padding-bottom: 10px;
 
             ul {
-                padding-inline: 20px;
-                width: max-content;
+                padding-inline: 0px;
                 margin-inline: auto;
             }
 
@@ -167,18 +174,32 @@
 
         .products {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 10px;
 
             li {
                 font-size: 12px;
             }
 
             .section-collections-with-nav__product-image {
-                max-width: 135px;
+                max-width: 100%;
                 margin-inline: auto;
 
                 img {
                     max-width: 100%;
                 }
+            }
+            .section-collections-with-nav__product-title {
+                color: #000;
+                font-family: adrianna-bold, Arial, sans-serif;
+                font-size: 15px;
+                font-weight: 700;
+                line-height: 130%;
+                margin:0;
+            }
+            .arrow {
+                max-width: 30px;
+                width: 30px;
+                height: 30px;
             }
         }
 
@@ -190,4 +211,53 @@
             margin-left: -6px;
         }
     }
+}
+.arrow {
+    max-width: 30px;
+    width: 30px;
+    height: 30px;
+    background: #60c655;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.tp-sticky {
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #d6e1e1
+}
+.tp-sticky.sticky {
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #d6e1e1;
+    box-shadow: 0 4px 2px -2px gray; /* Optional: Shadow for better visibility */
+    z-index: 99999999999;
+    .small-icon {
+        display: none;
+    }
+}
+.narrow {
+    .section-explore__product {
+        @media screen and (max-width: 768px) {
+            padding: 0;
+            background: #141414;
+            width: 48%;
+            max-width: 50%;
+        }
+    }
+}
+.collection-title {
+    font-size: 54px;
+    color:#2e2a39;
+}
+.metafield-rich_text_field ul {
+    margin-top: 0;
 }

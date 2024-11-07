@@ -1,0 +1,56 @@
+{% schema %}
+{
+  "name": "Image with Title Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Your Section Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Image Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Title Link"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="bg-[#d6e1e1] pt-[20px] pb-0 md:pt-[40px] md:pb-[60px]">
+  <div class="max-w-screen-xl mx-auto">
+    <!-- Section Title -->
+    <h2 class="text-center font-bold mb-8 text-[54px] font-[600] md:text-[26px">
+      {{ section.settings.title }}
+    </h2>
+
+    <!-- Desktop Image (shown on screens medium and up) -->
+    <div class="desktop justify-center shadow rounded-[300px]">
+      <a href="{{ section.settings.link }}">
+        <img width="100" height="auto" src="{{ section.settings.desktop_image | img_url: '800x' }}" alt="Desktop Image" class="rounded-[300px] w-full">
+      </a>
+    </div>
+
+    <!-- Mobile Image (shown on screens below medium) -->
+    <div class="mobile justify-center max-w-[90%] mx-auto mb-[20px] rounded-[20px] overflow-hidden">
+      <a href="{{ section.settings.link }}">
+        <img width="100" height="auto" src="{{ section.settings.mobile_image | img_url: '800x' }}" alt="Mobile Image" class="w-full">
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,83 @@
+{% schema %}
+{
+  "name": "Black Friday Countdown",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Black Friday Countdown"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Early bird deals every 72 hrs in the Titan Vault"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Flash Sales, mystery gifts, 80% off, and new products"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bleed_image",
+      "label": "Bleeding Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "Top Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black Friday Countdown"
+    }
+  ]
+}
+{% endschema %}
+<div class="bg-[#141414] px-[10px] md:pt-[80px] pt-[80px]">
+    <section class="relative bg-[#141414] text-white rounded-[10px] shadow-[0_0_20px_rgba(255,255,255,0.5)] max-w-[960px] mx-auto pt-[35px] md:pt-0">
+    <!-- Top Image (Bleeds 50% on Top) -->
+    <div class="absolute  left-[50%] translate-x-[-50%] translate-y-0 md:transform-none md:left-0 -top-1/2">
+        <img width="100" height="auto" src="{{ section.settings.top_image | img_url: '800x' }}" alt="Top Image" class="w-full max-w-xs">
+    </div>
+     <!-- Bleeding Image (Bleeds 20px Top, 10px Bottom) -->
+     <div class="absolute top-[-43%] right-[-5%] desktop max-w-[300px] w-[300px]">
+        <img width="100" height="auto" src="{{ section.settings.bleed_image | img_url: '800x' }}" alt="Bleed Image" class="w-full h-auto">
+    </div>
+
+    <div class="flex flex-col md:flex-row relative z-10 px-[20px]">
+        <!-- Text Section (70%) -->
+        <div class="w-full md:w-[65%] flex flex-col justify-end mb-[10px]">
+
+        <!-- Subtitle with Green "72 hrs" -->
+        <p class="text-[18px] md:text-[24px] bold text-center md:text-left font-bold">
+            {{ section.settings.subtitle | replace: "72 hrs", "<span class='text-green-500'>72 hrs</span>" }}
+        </p>
+
+        <!-- Description (White, 200 Font Weight) -->
+        <p class="text-[#a9aaaa] text-[14px] md:text-[20px] font-light text-center md:text-left">
+            {{ section.settings.description }}
+        </p>
+        </div>
+
+        <!-- Image Section (30%) -->
+        <div class="w-[35%] relative desktop">
+          <!-- Main Image (Fits in Section) -->
+          <div class="max-w-[100px]">
+              <img width="100" height="auto" src="{{ section.settings.main_image | img_url: '800x' }}" alt="Main Image" class="w-full h-auto">
+          </div>
+
+
+        </div>
+    </div>
+    </section>
+</div>

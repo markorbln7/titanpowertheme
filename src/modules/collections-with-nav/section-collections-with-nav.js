@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       this.closest('li').classList.add('active');
 
-      const targetSection = parentSection.querySelector(`${this.getAttribute('href')}`);
+      const targetSection = document.querySelector(`${this.getAttribute('href')}`);
       if (targetSection) {
         targetSection.scrollIntoView({ behavior: 'smooth' });
       }
@@ -48,11 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  console.log('ovo radi ili ne radi')
 
   // Variant selector
   document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
-    console.log('productElement', productElement);
     const productId = productElement.getAttribute('data-product-id');
     const selectors = productElement.querySelectorAll('.variant-selectors select');
     const addToCartButton = productElement.querySelector('.js-atc');
@@ -78,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     selectors.forEach(selector => {
       selector.addEventListener('change', updateAddToCartButton);
-      console.log('selector', selector);
     });
   });
 
@@ -109,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((response) => {
           if (response.status === 200) {
             console.log('Product added to cart successfully');
-            // Optionally, show a confirmation to the user
           }
           return response.json();
         })
@@ -119,3 +115,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+window.onscroll = function() {
+  makeSticky();
+};
+
+// Get the navigation element
+var navbar = document.querySelector(".tp-sticky");
+
+// Get the offset position of the navbar
+var stickyOffset = navbar.offsetTop;
+console.log(window.pageYOffset, stickyOffset, 'offset')
+// Add or remove the sticky class based on scroll position
+function makeSticky() {
+  if (window.pageYOffset >= stickyOffset) {
+    navbar.classList.add("sticky");
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}

@@ -181,7 +181,7 @@
         &__collections {
             flex-direction: row;
             gap: 14px;
-            margin-top: 40px;
+            margin-top: 10px;
         }
 
         &__products {
@@ -340,6 +340,13 @@
             box-shadow: none;
             background: transparent;
             overflow: visible;
+        }
+        .section-explore__buy-now {
+            padding-inline: 5px;
+            max-width: 70%;
+            font-weight: 800;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
     }
     .section-explore {

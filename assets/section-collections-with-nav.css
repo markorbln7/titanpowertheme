@@ -228,9 +228,11 @@
     box-shadow: 0 4px 2px -2px gray; /* Optional: Shadow for better visibility */
     z-index: 99999999999;
 }
-    .tp-sticky.sticky .small-icon {
-        display: none;
-    }
+    @media screen and (max-width: 768px) {
+        .tp-sticky.sticky .small-icon {
+                display: none;
+        }
+}
     @media screen and (max-width: 768px) {
         .narrow .section-explore__product {
                 padding: 0;

@@ -16,10 +16,10 @@
     assign second_collection = section.settings.second_collection
 %}
 
-<section class="mt-[-1px] section-explore md:py-[30px] py-[20px] {% if section.settings.narrow_version %}bg-[#141414]{% else %}bg-black{% endif %}">
+<section class="mt-[-1px] section-explore pt-[5px] md:pt-[10px] md:pb-[50px] py-[20px] {% if section.settings.narrow_version %}bg-[#141414]{% else %}bg-black{% endif %}">
   <div class="section-explore__wrapper px-[24px] {% if section.settings.narrow_version %}narrow{% endif %}">
       {% if section.settings.explore_top_image %}
-        <div class="explore-top-image md:max-w-[50%] mx-auto md:mb-[40px] mb-[20px]">
+        <div class="explore-top-image md:max-w-[50%] mx-auto md:mb-[0px] mb-[20px]">
           <img width="100" height="auto" src="{{ section.settings.explore_top_image | img_url:'master' }}" alt="explore-top-image" class="w-full h-full object-cover"/>
         </div>
       {% endif %}
@@ -29,7 +29,7 @@
 
       <div class="section-explore__product-content relative h-[350px] w-full mx-auto hidden lg:!block">
         {% for product in collections[first_collection].products limit: 4 %}
-          <div class="absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
+          <div class="md:p-[15px] absolute left-0 top-0 w-full h-full flex {% if forloop.first %} opacity-1 {% else %} opacity-0 {% endif %}" data-product="for-desktop-{{ forloop.index }}">
            <div class="section-explore__product-info flex flex-col justify-center gap-[20px] text-right min-w-[226px] max-w-[226px]">
               <div class="relative mb-[50px] pr-[20px]">
                 {% if product.metafields.custom.info_title_one != blank %}
@@ -62,7 +62,11 @@
            </div>
 
             <figure class="h-full w-[600px] mx-auto">
-              <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
+              {% if product.metafields.custom.custom_product_image_hover %}
+                <img src="{{ product.metafields.custom.custom_product_image_hover | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
+              {% else %}
+                <img src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="350" width="1280" class="h-full w-full object-contain"/>
+              {% endif %}
             </figure>
 
             <div class="section-explore__product-info flex flex-col justify-center text-left min-w-[226px] max-w-[226px]">
@@ -200,7 +204,7 @@
                         {% endunless %}
                       </div>
                       {% if product.metafields.custom.custom_url %}
-                        <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white max-w-[100%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
+                        <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white md:max-w-[100%] md:max-w-[70%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
                       {% else %}
                         <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">BUY NOW</button>
                       {% endif %}

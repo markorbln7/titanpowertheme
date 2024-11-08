@@ -241,7 +241,9 @@
     box-shadow: 0 4px 2px -2px gray; /* Optional: Shadow for better visibility */
     z-index: 99999999999;
     .small-icon {
-        display: none;
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
     }
 }
 .narrow {

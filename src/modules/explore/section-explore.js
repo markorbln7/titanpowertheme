@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (initialProduct) {
             initialProduct.style.opacity = '1';
             initialProduct.style.transition = 'opacity 0.5s ease';
-            desktopLabel.classList.add('active');
+            if(desktopLabel) {
+                desktopLabel.classList.add('active');
+            }
             const initialLines = initialProduct.querySelectorAll('.animate-line');
             initialLines.forEach(line => line.classList.add('active-line'));
             activeProduct = initialProduct;
@@ -34,11 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const productIndex = card.getAttribute('data-product-hover');
 
                 if (productIndex.startsWith('for-desktop')) {
-                    desktopLabel.classList.add('active');
+                    if(desktopLabel) desktopLabel.classList.add('active');
                     if (travelLabel) travelLabel.classList.remove('active');
                 } else if (productIndex.startsWith('for-travel')) {
-                    travelLabel.classList.add('active');
-                    desktopLabel.classList.remove('active');
+                    if (travelLabel) travelLabel.classList.add('active');
+                    if(desktopLabel) desktopLabel.classList.remove('active');
                 }
 
                 if (activeProduct) {

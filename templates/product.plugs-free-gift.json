@@ -821,10 +821,19 @@
     "custom_liquid_tUkEcN": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<img src=\"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/MULTIBUY_OFFER_general_-_desktop_d0a34d9c-58aa-45d2-887a-b7a4c22ad94c.jpg?v=1731081562\" ; width=100%; >",
+        "custom_liquid": "<style>\n  /* CSS to hide the image on screens smaller than 720px */\n  @media (max-width: 719px) {\n    .desktop-only-image {\n      display: none;\n    }\n  }\n</style>\n\n<img src=\"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/MULTIBUY_OFFER_general_-_desktop_d0a34d9c-58aa-45d2-887a-b7a4c22ad94c.jpg?v=1731081562\" \n     width=\"100%\" class=\"desktop-only-image\">",
         "color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
+      }
+    },
+    "custom_liquid_FRQyJT": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  /* CSS to show the image only on screens 720px wide or smaller */\n  @media (min-width: 721px) {\n    .mobile-only-image {\n      display: none;\n    }\n  }\n</style>\n\n<img src=\"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/B32.jpg?v=1731087703\" \n     width=\"100%\" class=\"mobile-only-image\">",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "rich_text_k4X7wz": {
@@ -1067,6 +1076,7 @@
     "section_pdp_hero_secondary_mFy8BB",
     "compare-table",
     "custom_liquid_tUkEcN",
+    "custom_liquid_FRQyJT",
     "rich_text_k4X7wz",
     "loox_all_reviews_6JXY64",
     "home_product_block_qHGw9i",

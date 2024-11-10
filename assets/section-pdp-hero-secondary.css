@@ -739,3 +739,43 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     width: 20px;
     cursor: pointer;
 }
+
+.qty-selector {
+    display: flex;
+    width: 150px;
+    max-width: calc(50% - 10px);
+    justify-content: space-between;
+    border:2px solid #5e5e5e52;
+    border-radius: 16px;
+    box-shadow: 0 4px 4px #00000015;
+    margin-bottom: 20px;
+}
+
+.qty-selector .single-button {
+        width: 30%;
+        text-align: center;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+.qty {
+    display: flex;
+    gap:10px;
+    align-items: flex-start;
+}
+
+.buy-more {
+    color: #000;
+    background: #60c655;
+    border-color: #d6e1e1;
+    border-width: 0;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer
+}
+
+.buy-more.hidden {
+    display: none;
+}

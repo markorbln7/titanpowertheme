@@ -483,6 +483,18 @@
         </div>
 
         {% endif %}
+        {% if section.settings.show_qty %}
+        <div class="qty">
+          <div class="qty-selector">
+            <div class="tt-minus single-button">-</div>
+            <div data-count="1" class="tt-quantity single-button">1</div>
+            <div class="tt-plus single-button">+</div>
+          </div>
+            <div data-count="2" class="buy-more js-buy-more">
+              Add 2 Save 10%
+            </div>
+        </div>
+        {% endif %}
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper scroll-reveal">
@@ -819,6 +831,12 @@ button[disabled]{
       "type": "checkbox",
       "id": "hide_first_variant",
       "label": "Hide 1.2m",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_qty",
+      "label": "Show qty",
       "default": true
     },
     {

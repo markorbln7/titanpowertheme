@@ -172,14 +172,14 @@ addToCarts.forEach(addToCart => {
           },
           {
             id: window.selectLogic.addon,
-            quantity: 1
+            quantity: document.querySelector('.js-add-to-cart-pd').getAttribute('data-quantity')
           }
         ]
       } else {
         addItems = [
           {
             id: window.products[productSelection],
-            quantity: 1
+            quantity: document.querySelector('.js-add-to-cart-pd').getAttribute('data-quantity')
           }
         ]
       }
@@ -212,3 +212,103 @@ addToCarts.forEach(addToCart => {
         })
     })
 })
+
+let ttplus = document.querySelectorAll('.tt-plus')
+let ttminus = document.querySelectorAll('.tt-minus')
+let ttquantity = document.querySelector('.tt-quantity')
+let buyMore = document.querySelector('.js-buy-more')
+if(ttquantity) {
+  ttplus.forEach((plus) => {
+    plus.addEventListener('click', () => {
+      let currentQty = ttquantity.getAttribute('data-count')
+      currentQty++
+      if (currentQty < 2 && buyMore) {
+        buyMore.textContent = 'Add 2 save 10%'
+        buyMore.setAttribute('data-count', 2)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 2 && currentQty < 4 && buyMore) {
+        buyMore.textContent = 'Add 4 save 20%'
+        buyMore.setAttribute('data-count', 4)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 4 && buyMore) {
+        buyMore.textContent = 'Add 8 save 35%'
+        buyMore.setAttribute('data-count', 8)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty < 8 && buyMore) {
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 8 && buyMore) {
+        buyMore.classList.add('hidden')
+      }
+      ttquantity.setAttribute('data-count', currentQty)
+      ttquantity.textContent = currentQty
+      document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
+    })
+  })
+  ttminus.forEach((minus) => {
+    minus.addEventListener('click', () => {
+      let currentQty = ttquantity.getAttribute('data-count')
+      currentQty--
+      if (currentQty < 1 && buyMore) {
+        currentQty = 1
+      }
+      if (currentQty < 2 && buyMore) {
+        buyMore.textContent = 'Add 2 save 10%'
+        buyMore.setAttribute('data-count', 2)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 2 && currentQty < 4 && buyMore) {
+        buyMore.textContent = 'Add 4 save 20%'
+        buyMore.setAttribute('data-count', 4)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 4 && buyMore) {
+        buyMore.textContent = 'Add 8 save 35%'
+        buyMore.setAttribute('data-count', 8)
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty < 8 && buyMore) {
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQty >= 8 && buyMore) {
+        buyMore.classList.add('hidden')
+      }
+      ttquantity.setAttribute('data-count', currentQty)
+      ttquantity.textContent = currentQty
+      document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
+    })
+  })
+  if(buyMore) {
+    buyMore.addEventListener('click', (e) => {
+      e.preventDefault()
+      let _this = e.target
+      let currentQty = _this.getAttribute('data-count')
+      ttquantity.setAttribute('data-count', currentQty)
+      ttquantity.textContent = currentQty
+      document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', currentQty)
+      if(currentQty < 2) {
+        _this.textContent = 'Add 2 save 10%'
+      }
+      if(currentQty >= 2 && currentQty < 4) {
+        _this.textContent = 'Add 4 save 20%'
+      }
+      if(currentQty >= 4) {
+        _this.textContent = 'Add 8 save 35%'
+      }
+      if (currentQty < 8) {
+        _this.setAttribute('data-count', parseInt(currentQty) * 2)
+      }
+      let currentQtyS = ttquantity.getAttribute('data-count')
+      if (currentQtyS < 8) {
+        buyMore.classList.remove('hidden')
+      }
+      if (currentQtyS >= 8) {
+        buyMore.classList.add('hidden')
+      }
+      console.log(currentQty, 'currentQty')
+    })
+  }
+}

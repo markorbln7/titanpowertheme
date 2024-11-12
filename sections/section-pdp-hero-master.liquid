@@ -221,6 +221,15 @@
           <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,131)</span>
         </div>
         <div class="pdp-hero__heading">
+          {% if section.settings.promo_line %}
+            <div class="promo_line">
+              <div>
+                <span class="green-dot"></span>
+                <span>{{ section.settings.promo_line }}</span>
+              </div>
+              <span class="promo_line_image"><img width="100%" height="auto" src="{{ section.settings.product_line_image | img_url:'master' }}"></span>
+            </div>
+          {% endif %}
           <h2 class="pdp-hero__product-title">{{ mainProduct.title }}</h2>
           {% if productSubtitle != blank %}
             <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
@@ -767,6 +776,17 @@ overlayCls.addEventListener('click', (e) => {
       "id": "show_disc_box",
       "label": "Show discount box",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "promo_line",
+      "label": "Promo Line",
+      "default":"Order by Aug 26 for FREE Cable Holder"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_line_image",
+      "label": "Promo Line image"
     },
     {
       "type": "product",

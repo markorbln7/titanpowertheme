@@ -23,16 +23,38 @@ if (allShopSections.length) {
         upsellProducts.forEach(el => {
           el.classList.remove('active')
         })
-
-        upsellMessages.forEach(el => {
-          el.classList.remove('active')
-        })
+        if(upsellMessages) {
+          upsellMessages.forEach(el => {
+            el.classList.remove('active')
+          })
+        }
 
         const upsellProduct = checkbox.closest('.pdp-hero__upsell-wrapper')
-        const upsellMessage = checkbox.closest('.pdp-hero__upsell-wrapper').previousElementSibling
+        const upsellMessage = checkbox.parentNode
+        const giftUnlockerNumber = upsellMessage.getAttribute('data-gift')
+        const giftSelectorsActive = document.querySelectorAll(`.gift_card[data-gift]`)
+        const giftTitlesActive = document.querySelectorAll(`.gift_title[data-gift]`)
 
-        upsellProduct.classList.add('active')
-        upsellMessage.classList.add('active')
+        giftSelectorsActive.forEach(gift => {
+          gift.classList.remove('is-active')
+          gift.querySelector('.gift-overlay').classList.remove('is-active')
+          let giftNumber = gift.getAttribute('data-gift')
+          if (giftNumber <= giftUnlockerNumber) {
+            gift.classList.add('is-active')
+            gift.querySelector('.gift-overlay').classList.add('is-active')
+          }
+        })
+        giftTitlesActive.forEach(gift => {
+          gift.classList.remove('is-active')
+          let giftNumber = gift.getAttribute('data-gift')
+          if (giftNumber <= giftUnlockerNumber) {
+            gift.classList.add('is-active')
+          }
+        })
+
+
+        // if(upsellProduct) upsellProduct.classList.add('active')
+        if(upsellMessage) upsellMessage.classList.add('active')
       })
     })
 

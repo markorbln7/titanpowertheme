@@ -75,11 +75,13 @@ document.addEventListener('DOMContentLoaded', function () {
         function openPopup(popup) {
             popup.style.display = 'block';
             popup.classList.add('active');
+            document.querySelector('body').style.overflow = 'hidden';
         }
 
         function closePopup(popup) {
             popup.style.display = 'none';
             popup.classList.remove('active');
+            document.querySelector('body').style.overflow = 'auto';
         }
 
         // Function to update the state of the minus button based on quantity
@@ -244,6 +246,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                     .then((response) => {
                         console.log(response.status, "ok"); // Check if the response is OK
+                        if(response.status === 200) {
+                            document.querySelector('.buy-now-popup.active').classList.remove('active');
+                            document.querySelector('body').style.overflow = 'auto';
+                        }
                         if (response.status === 200 && checkout) {
                             window.location.href = '/checkout';
                         }

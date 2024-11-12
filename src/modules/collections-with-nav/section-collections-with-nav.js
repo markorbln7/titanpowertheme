@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
     const productId = productElement.getAttribute('data-product-id');
     const selectors = productElement.querySelectorAll('.variant-selectors select');
-    const addToCartButton = productElement.querySelector('.js-atc');
+    const addToCartButtonS = productElement.querySelectorAll('.js-atc');
 
     function getVariantId(selectedOptions) {
       const productVariants = window.productVariants[productId];
@@ -70,8 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       const variantId = getVariantId(selectedOptions);
+      addToCartButtonS.forEach(addToCartButton => {
+        addToCartButton.setAttribute('data-product-id', variantId);
+      });
 
-      addToCartButton.setAttribute('data-product-id', variantId);
     }
 
     selectors.forEach(selector => {

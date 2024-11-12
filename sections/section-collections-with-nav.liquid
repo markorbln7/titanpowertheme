@@ -6,7 +6,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
 
-<section class="section-collections-with-nav">
+<section class="section-collections-with-nav section-explore">
     <nav class="section-collections-with-nav__navigation py-[30px] tp-sticky">
        <ul class="flex items-center justify-center md:gap-[10px] gap-[10px] max-w-[750px] mx-auto flex-wrap">
             {% for block in section.blocks  %}
@@ -23,10 +23,13 @@
   <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
-        <div class="collection" id="{{ collection_obj.handle  | strip }}" data-aos="fade-in" data-aos-duration="700">
+        <div class="collection" id="{{ collection_obj.handle  | strip }}">
           <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[16px] text-center collection-title">{{ collection_obj.title }}</h2>
           <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
             {% for product in collection_obj.products %}
+              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
                 <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
                   {% if product.metafields.custom.new_shop_discount %}
                     <div class="absolute left-[10px] top-[10px]">
@@ -41,12 +44,16 @@
                   {% else %}
                     {% assign url = product.url %}
                   {% endif %}
-                  <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
+                  {% unless product.metafields.custom.open_popup == true %}
+                    <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
+                  {% endunless %}
                       <figure class="section-collections-with-nav__product-image">
 
                           {% if product.metafields.custom.new_shop_image %}
+                            {% assign product_image =  product.metafields.custom.new_shop_image %}
                             <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
                           {% else %}
+                            {% assign product_image = product.featured_image %}
                             {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
                           {% endif %}
                       </figure>
@@ -66,49 +73,31 @@
                                     <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
                                 {% endif %}
                               </div>
-                              <a href="{{ product.url }}" class="arrow">
+                              {% if product.metafields.custom.open_popup == true %}
+                                <div class="arrow pointer js-section-explore__buy-now">
+                                  <img class="w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
+                                </div>
+                              {% else %}
+                                <a href="{{ product.url }}" class="arrow">
+                                  <img class="w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
+                                </a>
+                              {% endif %}
+                              {% comment %} <a href="{{ product.url }}" class="arrow">
                                 <img class="w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298">
                               </a>
+                              <div class="js-section-explore__buy-now">TOGGLE POPUP</div> {% endcomment %}
                             </div>
-                            {% comment %} <div class="variant-selectors text-center myb-[5px] mt-[10px]">
-                              {% for option in product.options_with_values %}
-                                {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
-                                  <label for="option-{{ option.name | handle }}" class="text-[16px] font-semibold">{{ option.name }}</label>
-                                  <select class="variant-selector rounded-[10px] p-[5px] min-w-[100px] md:min-w-[200px] mb-[10px] text-center" data-option-index="{{ forloop.index }}">
-                                    {% comment %} <option value="" disabled selected>Select {{ option.name }}</option> {% endcomment %}
-                                    {% for value in option.values %}
-                                      <option value="{{ value }}">{{ value }}</option>
-                                    {% endfor %}
-                                  </select>
-                                {% endif %}
-                              {% endfor %}
-                            </div> {% endcomment %}
                           </div>
-
-                          {% comment %} <div class="bottom-part">
-                            <quantity-input class="quantity cart-quantity my-[20px] mx-auto">
-                              <button class="quantity__button" name="minus" type="button">
-                                {% render 'icon-minus' %}
-                              </button>
-                              <input
-                                class="quantity__input"
-                                type="number"
-                                value="1"
-                                min="1"
-                              >
-                              <button class="quantity__button" name="plus" type="button">
-                                {% render 'icon-plus' %}
-                              </button>
-                            </quantity-input>
-                            <button data-product-id="{{ product.selected_or_first_available_variant.id}}" data-quantity="1"
-                              class="js-atc h-[45px] text-[18px] text-white font-semibold rounded-[22px] mb-[12px] bg-[#60c655] w-full"
-                          >
-                              Add To Cart
-                          </button>
-                          <a href="{{ product.url }}" class="text-[#60c655] text-center underline font-medium text-[16px] block mt-auto">Learn more</a>
-
-                        </div> {% endcomment %}
                       </div>
+                      {% render 'buy-now-popup'  product_image: product_image price: product.price compare_at_price: product.compare_at_price title: product.title
+                        upsell_product_one: product.metafields.custom.first_upsell_product
+                        description: product_description upsell_product_one:
+                        upsell_product_one upsell_product_two: upsell_product_two
+                        product_id: product.selected_or_first_available_variant.id
+                        quantity: '1'
+                        product: product
+                        badge_text: product.metafields.custom.new_shop_discount
+                     %}
                   </article>
                   <script>
                     window.productVariants = window.productVariants || {};
@@ -125,6 +114,7 @@
                       {% endfor %}
                     ];
                   </script>
+
             {% endfor %}
           </div>
         </div>

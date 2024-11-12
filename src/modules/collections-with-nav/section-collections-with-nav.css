@@ -1,7 +1,4 @@
 .section-collections-with-nav {
-    .metafield-rich_text_field {
-        text-align: center;
-    }
     &__navigation {
         ul {
             list-style: none;
@@ -260,6 +257,11 @@
     font-size: 54px;
     color:#2e2a39;
 }
-.metafield-rich_text_field ul {
-    margin-top: 0;
+.top-part {
+    .metafield-rich_text_field {
+        text-align: center;
+    }
+    .metafield-rich_text_field ul {
+        margin-top: 0;
+    }
 }

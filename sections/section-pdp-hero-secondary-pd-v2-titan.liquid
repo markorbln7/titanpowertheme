@@ -32,6 +32,7 @@
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
   assign accRepeater = section.blocks | where: 'type', 'accesories'
+  assign imgRepeater = section.blocks | where: 'type', 'gridImages'
 %}
 
 <section class="section-pdp-hero section-pdp-hero-secondary js-scroll product-template-new">
@@ -483,6 +484,15 @@
         </div>
 
         {% endif %}
+        {% if section.settings.show_grid_images %}
+          <div class="grid-images">
+            {% for block in imgRepeater %}
+              <div data-image-qty="{{ block.settings.image_qty }}" class="grid-images__single js-grid-image">
+                  <img width="100" height="auto" src="{{ block.settings.grid_image | img_url: 'master' }}" alt="">
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
         {% if section.settings.show_qty %}
         <div class="qty">
           <div class="qty-selector">
@@ -835,6 +845,12 @@ button[disabled]{
     },
     {
       "type": "checkbox",
+      "id": "show_grid_images",
+      "label": "Show Grid Images",
+      "default": false
+    },
+    {
+      "type": "checkbox",
       "id": "show_qty",
       "label": "Show qty",
       "default": true
@@ -980,6 +996,22 @@ button[disabled]{
           "type": "text",
           "id": "pdp_hero_icon_text",
           "label": "Gallery icon text"
+        }
+      ]
+    },
+    {
+      "type": "gridImages",
+      "name": "Grid Images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "grid_image",
+          "label": "Grid image"
+        },
+        {
+          "type": "text",
+          "id": "image_qty",
+          "label": "Grid image"
         }
       ]
     },

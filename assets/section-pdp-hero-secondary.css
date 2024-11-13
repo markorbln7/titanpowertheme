@@ -779,3 +779,18 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 .buy-more.hidden {
     display: none;
 }
+
+.grid-images {
+    display: flex;
+    gap:10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.grid-images__single {
+        width: 33%;
+    }
+
+.grid-images img {
+        width: 100%;
+    }

@@ -111,3 +111,38 @@ if (allShopSections.length) {
     }
   })
 }
+
+let gridImages = document.querySelectorAll('.js-grid-image')
+gridImages.forEach(gridImage => {
+  gridImage.addEventListener('click', (e) => {
+    let _this = gridImage
+    let imageQty = _this.getAttribute('data-image-qty')
+    ttquantity.setAttribute('data-count', imageQty)
+    ttquantity.textContent = imageQty
+    document.querySelector('.js-add-to-cart-pd').setAttribute('data-quantity', imageQty)
+    if (imageQty < 1 && buyMore) {
+      imageQty = 1
+    }
+    if (imageQty < 2 && buyMore) {
+      buyMore.textContent = 'Add 2 save 10%'
+      buyMore.setAttribute('data-count', 2)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 2 && imageQty < 4 && buyMore) {
+      buyMore.textContent = 'Add 4 save 20%'
+      buyMore.setAttribute('data-count', 4)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 4 && buyMore) {
+      buyMore.textContent = 'Add 8 save 35%'
+      buyMore.setAttribute('data-count', 8)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty < 8 && buyMore) {
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 8 && buyMore) {
+      buyMore.classList.add('hidden')
+    }
+  })
+})

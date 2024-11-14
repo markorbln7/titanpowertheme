@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
     const productId = productElement.getAttribute('data-product-id');
     const selectors = productElement.querySelectorAll('.variant-selectors select');
-    const addToCartButton = productElement.querySelector('.js-atc');
+    const addToCartButtonS = productElement.querySelectorAll('.js-atc');
 
     function getVariantId(selectedOptions) {
       const productVariants = window.productVariants[productId];
@@ -63,6 +63,28 @@ document.addEventListener('DOMContentLoaded', function () {
       return variant ? variant.id : '';
     }
 
+    function getVariantImage(selectedOptions) {
+      const productVariants = window.productVariants[productId];
+      const variant = productVariants.find(variant =>
+        variant.options.every((option, index) => option === selectedOptions[index])
+      );
+      return variant ? variant.image : '';
+    }
+    function getVariantPrice(selectedOptions) {
+      const productVariants = window.productVariants[productId];
+      const variant = productVariants.find(variant =>
+        variant.options.every((option, index) => option === selectedOptions[index])
+      );
+      return variant ? variant.price : '';
+    }
+    function getVariantComparePrice(selectedOptions) {
+      const productVariants = window.productVariants[productId];
+      const variant = productVariants.find(variant =>
+        variant.options.every((option, index) => option === selectedOptions[index])
+      );
+      return variant ? variant.compare_at_price : '';
+    }
+
     function updateAddToCartButton() {
       let selectedOptions = [];
       selectors.forEach(selector => {
@@ -70,8 +92,24 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       const variantId = getVariantId(selectedOptions);
+      const getImage = getVariantImage(selectedOptions);
+      const getPrice = getVariantPrice(selectedOptions);
+      const getComparePrice = getVariantComparePrice(selectedOptions);
+      const priceContainer = productElement.querySelector('.js-variant-price');
+      const comparePriceContainer = productElement.querySelector('.js-variant-compare-price');
+      const priceContainer2 = productElement.querySelector('.js-variant-price-2');
+      const comparePriceContainer2 = productElement.querySelector('.js-variant-compare-price-2');
+      priceContainer.innerHTML = getPrice;
+      comparePriceContainer.innerHTML = getComparePrice;
+      priceContainer2.innerHTML = getPrice;
+      comparePriceContainer2.innerHTML = getComparePrice;
+      const imageContainer = productElement.querySelector('.js-variant-image');
+      imageContainer.src = getImage;
+      console.log(getImage, 'image')
+      addToCartButtonS.forEach(addToCartButton => {
+        addToCartButton.setAttribute('data-product-id', variantId);
+      });
 
-      addToCartButton.setAttribute('data-product-id', variantId);
     }
 
     selectors.forEach(selector => {

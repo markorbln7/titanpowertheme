@@ -8,36 +8,47 @@
         </svg>
         <div class="buy-now-popup__product-body flex h-full px-[70px] overflow-y-auto">
             <figure class="max-h-[432px] h-full w-[47%] mr-[5%] relative">
-                <div class="w-[80px] h-[80px] absolute top-[-2px] left-[-2px] flex items-center justify-center rounded-[8px] bg-[#60c655] text-white text-[14px] font-bold rotate-90"
-                    style="clip-path: polygon(100% 0, 86% 50%, 100% 99%, 0% 100%, 0 49%, 0% 0%);"
-                >
-                    <div class="text-center rotate-[-90deg]">
-                      {% assign productdifference = compare_at_price | minus: price %}
-                      {% assign divider = compare_at_price | times: 1.0 %}
-                      {% assign percentage = productdifference | divided_by:  divider %}
-                      {{ percentage | times: 100 | round }}% OFF
-                      {% comment %} {{ compare_at_price | minus: price | money }}<br> OFF {% endcomment %}
+                {% if badge_text %}
+                  <div class="absolute left-[10px] top-[10px]">
+                    <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                      <div>{{ badge_text }}</div>
+                      <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
                     </div>
-                </div>
-                <img src="{{ product_image | img_url: 'master' }}" alt="{{product_image.alt}}" height="432" width="432" class="h-full w-full object-cover"/>
+                  </div>
+                {% endif %}
+                <img src="{{ product_image | img_url: 'master' }}" alt="{{product_image.alt}}" height="432" width="432" class="h-full w-full object-cover js-variant-image"/>
             </figure>
             <div class="buy-now-popup__content flex-1">
-                <h3 class="text-[21px] pb-[6px] border-b border-solid border-[#e5e5e5] leading-[1.2]">{{ title }}</h3>
+                <a href="{{ product.url }}" class="text-[21px] pb-[6px] border-b border-solid border-[#e5e5e5] leading-[1.2] font-bold">{{ title }}</a>
                 <div class="flex items-center mt-[12px]">
-                    <span class="mr-[8px] text-[21px] text-[#60c655] font-bold">{{ price | money }}</span> <span class="crossed text-[#999]">{{ compare_at_price | money }}</span>
+                    <span class="mr-[8px] text-[21px] text-[#60c655] font-bold js-variant-price">{{ price | money }}</span> <span class="crossed text-[#999] js-variant-compare-price">{{ compare_at_price | money }}</span>
                 </div>
                 {% if description != blank %}
                     <div class="buy-now-popup__description pb-[24px] overflow-hidden">
                         <div class="buy-now-popup__description-inner h-[100px] with-gradient overflow-hidden">
                             <div>{{ description }}</div>
                         </div>
-                        <p class="buy-now-popup__expand-desc text-black text-[16px] pt-[14px] pointer flex items-center gap-[6px]">
+                        <p class="buy-now-popup__expand-desc text-black text-[16px] pt-[14px] pointer flex items-center gap-[6px] color-[#60c655] color-titan-green">
                            <span> Learn More</span>
                             <svg class="text-black w-[16px] h-[16px]" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5772" width="32" height="32">
-                                <path d="M225.408 368.384L496 640.641l270.592-272.257-48.64-49.024L496 542.592 274.176 319.36l-48.768 49.024z m0 0z" fill="" p-id="5773"></path>
+                                <path d="M225.408 368.384L496 640.641l270.592-272.257-48.64-49.024L496 542.592 274.176 319.36l-48.768 49.024z m0 0z" fill="#60c655" p-id="5773"></path>
                             </svg>
                         </p>
                     </div>
+                {% endif %}
+                {% if product.variants.size > 1 %}
+                  <div class="variant-selectors text-center myb-[5px] mt-[10px] flex gap-[20px] mb-[20px]">
+                    {% for option in product.options_with_values %}
+                      {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
+                        <select class="variant-selector h-[46px] bg-transparent text-[16px] font-semibold rounded-[20px] leading-[46px] border border-solid border-[1px] border-[#000] min-w-[120px] p-[10px]" data-option-index="{{ forloop.index }}">
+                          {% comment %} <option value="" disabled selected>Select {{ option.name }}</option> {% endcomment %}
+                          {% for value in option.values %}
+                            <option value="{{ value }}">{{ value }}</option>
+                          {% endfor %}
+                        </select>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
                 {% endif %}
                 <div class="buy-now-popup__quantity">
                     <h4 class="text-[16px] font-semibold">Quantity</h4>
@@ -61,7 +72,7 @@
 
                 {% if upsell_product_one or upsell_product_two %}
                     <div class="buy-now-popup__upsell">
-                      <h4 class="text-[16px] font-semibold">You May Also Need:</h4>
+                      <h4 class="text-[16px] font-semibold">You May Also Like:</h4>
                       <div class="mt-[10px]">
                         {% if upsell_product_one %}
                           <div class="mb-4 last:mb-0">
@@ -83,7 +94,7 @@
                                         <div class="text-[14px] font-semibold text-[#777777] line-through">{{ first_upsell_product.compare_at_price | money }}</div>
                                     {% endif %}
                                     {% if first_upsell_product.compare_at_price > first_upsell_product.price  %}
-                                      <div class="ml-1 flex-none text-[10px] font-medium !text-[#FF8142]">
+                                      <div class="ml-1 flex-none text-[10px] font-medium titan-red">
                                         Save {{ first_upsell_product.compare_at_price | minus: first_upsell_product.price | money }}
                                       </div>
                                     {% endif %}
@@ -113,7 +124,7 @@
                                         <div class="text-[14px] font-semibold text-[#777777] line-through">{{ second_upsell_product.compare_at_price | money }}</div>
                                     {% endif %}
                                     {% if second_upsell_product.compare_at_price > second_upsell_product.price %}
-                                      <div class="ml-1 flex-none text-[10px] font-medium !text-[#FF8142]">
+                                      <div class="ml-1 flex-none text-[10px] font-medium titan-red">
                                         Save {{ second_upsell_product.compare_at_price | minus: second_upsell_product.price | money }}
                                       </div>
                                     {% endif %}
@@ -130,8 +141,8 @@
         </div>
         <div class="buy-now-popup__footer absolute bg-white bottom-0 left-0 z-[1] flex items-center rounded-b-[20px] justify-end w-full p-[13px_72px] shadow-[0_-4px_8px_rgba(0,_0,_0,_0.08)]">
             <div class="buy-now-popup__price mr-[20px] text-right flex items-center">
-                <span class="mr-[8px] text-[21px] text-[#60c655] font-bold">{{ price | money }}</span>
-                <span class="text-[#999] font-medium text-[16px] crossed">{{ compare_at_price | money }}</span>
+                <span class="mr-[8px] text-[21px] text-[#60c655] font-bold js-variant-price-2">{{ price | money }}</span>
+                <span class="text-[#999] font-medium text-[16px] crossed js-variant-compare-price-2">{{ compare_at_price | money }}</span>
             </div>
             <div class="flex items-center justify-end gap-[10px]">
                 <button data-product-id="{{ product_id}}" data-quantity="{{ quantity }}"

@@ -38,10 +38,18 @@ if (allShopSections.length) {
         giftSelectorsActive.forEach(gift => {
           gift.classList.remove('is-active')
           gift.querySelector('.gift-overlay').classList.remove('is-active')
+          gift.querySelector('.top-note').classList.remove('is-active')
+          if(gift.querySelector('.conf')) {
+            gift.querySelector('.conf').classList.remove('is-active')
+          }
           let giftNumber = gift.getAttribute('data-gift')
           if (giftNumber <= giftUnlockerNumber) {
             gift.classList.add('is-active')
             gift.querySelector('.gift-overlay').classList.add('is-active')
+            gift.querySelector('.top-note').classList.add('is-active')
+            if(gift.querySelector('.conf')) {
+              gift.querySelector('.conf').classList.add('is-active')
+            }
           }
         })
         giftTitlesActive.forEach(gift => {

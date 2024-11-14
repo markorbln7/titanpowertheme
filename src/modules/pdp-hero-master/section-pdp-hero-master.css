@@ -757,7 +757,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
         border-radius: 4px !important;
         justify-content: center;
         align-items: center;
-        padding: 16px;
+        padding: 12px 5px;
         display: flex;
         position: relative;
         overflow: visible;
@@ -861,9 +861,10 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     display: flex;
+    opacity: .7;
 }
 .w-embed:before, .w-embed:after {
     content: " ";
@@ -905,6 +906,15 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     position: relative;
     inset: 0%;
     display: block;
+}
+.conf {
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    opacity: 0;
+}
+.conf.is-active {
+    opacity: 1;
 }
 .gift-overlay.is-active {
     opacity: 1;
@@ -954,5 +964,24 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     letter-spacing: 0.07em;
     @media only screen and (max-width: 600px) {
         font-size: 11px;
+    }
+}
+.top-note {
+    z-index: 500;
+    border-radius:4px;
+    color: #fff;
+    background-color: #c8202f;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    position: absolute;
+    top:-10px;
+    opacity: 0;
+    &.is-active {
+        opacity: 1;
     }
 }

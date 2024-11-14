@@ -1070,3 +1070,39 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
 .top-note.is-active {
     opacity: 1;
 }
+
+.gift-upsell .pdp-hero__extra-add.active {
+    background: #b3f5aef5
+}
+
+.promo_line {
+    background: #FFFFE0;
+    border: 1.65px dashed #FFEB58;
+ font-size:14px;
+}
+
+.top-note {
+    color: #fff;
+    background-color: #000000;
+}
+
+.gift-upsell .most-pouplar {
+    background-color: #60C655;
+    color: #FFFFFF;
+}
+
+.gift-title_text {
+    letter-spacing: 0em;
+line-height:1.2;
+}
+
+.gift-locker {
+    background-color: #F0F0F0;
+    border-radius: 0px;
+}
+
+@media screen and (max-width: 768px) {
+   .bf-text, .promo_line {
+    font-size: 12px;
+   }
+}

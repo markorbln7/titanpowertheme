@@ -140,11 +140,10 @@
         },
         "block_t9nxLT": {
           "type": "block",
-          "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/5_4f6f9910-73d3-4e10-9aed-c4b7168bf7e2.jpg",
+            "image": "shopify://shop_images/download_961201d8-efe9-4428-a29d-3e7b27ac2c4a.jpg",
             "custom_id": "",
-            "text": "3-IN-1 CABLE"
+            "text": "MULTI CABLE"
           }
         }
       },
@@ -449,6 +448,55 @@
         "padding_bottom": 36
       }
     },
+    "image_with_text_hMPKAq": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_WAgULC": {
+          "type": "heading",
+          "settings": {
+            "heading": "TITAN 100W MULTI CABLE™",
+            "heading_size": "h2"
+          }
+        },
+        "text_XcDFd8": {
+          "type": "text",
+          "settings": {
+            "text": "<h3><strong>Power on the Go</strong></h3><p>Never be without a charger again. The Titan Keychain Cable is your portable charging solution that fits right on your keychain for ultimate convenience.</p><ul><li>Ultra-portable design clips to anything</li><li>High-speed charging for all your devices</li><li>Durable & built to withstand everyday use</li><li>Lightning & USB-C connectors</li></ul>",
+            "text_style": "body"
+          }
+        },
+        "button_GRYUyY": {
+          "type": "button",
+          "settings": {
+            "button_label": "GET YOURS NOW",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_WAgULC",
+        "text_XcDFd8",
+        "button_GRYUyY"
+      ],
+      "custom_css": [
+        ".h2 {color: #60c655; font-size: 15px;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/3_in_1_21473dcb-7482-425b-b286-bb90eef9f13e.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "rich_text_r9HKPd": {
       "type": "rich-text",
       "blocks": {
@@ -498,6 +546,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
+            "product_number_unlocker": "",
             "product_obj": "3-x-titan-pd-cable™-b2g1f",
             "upsell_product_image": "shopify://shop_images/C_TO_light.png",
             "product_title_custom": "USB-C  - iPhone",
@@ -509,6 +558,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
+            "product_number_unlocker": "",
             "product_obj": "3-x-titan-pd-cable™-type-c",
             "upsell_product_image": "shopify://shop_images/C_TO_C.png",
             "product_title_custom": "USB-C - USB-C",
@@ -520,6 +570,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "3-product",
+            "product_number_unlocker": "",
             "product_obj": "3x-120w-magtech-pd-cable™-b2g1f",
             "upsell_product_image": "shopify://shop_images/magtech_png_ab8c3472-efc0-498a-ac36-290282b25024.png",
             "product_title_custom": "USB-C - iPhone(MT)",
@@ -531,6 +582,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "4-product",
+            "product_number_unlocker": "",
             "product_obj": "3x-120w-magtech-pd-cable™-usb-c",
             "upsell_product_image": "shopify://shop_images/magtech_png_ab8c3472-efc0-498a-ac36-290282b25024.png",
             "product_title_custom": "USB-C - USB-C(MT)",
@@ -542,6 +594,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "5-product",
+            "product_number_unlocker": "",
             "product_obj": "3x-titan-100w-4-in-1-cable-b2g1f",
             "upsell_product_image": "shopify://shop_images/Titan_Accessories_-_4_in_1_cable.png",
             "product_title_custom": "4-in-1 Cable",
@@ -553,6 +606,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "6-product",
+            "product_number_unlocker": "",
             "product_obj": "3x-4-in-1-keychain-cable-b2g1f",
             "upsell_product_image": "shopify://shop_images/z2.png",
             "product_title_custom": "Keychain Cable",
@@ -676,8 +730,10 @@
       "settings": {
         "show_grid_images": false,
         "show_qty": false,
+        "show_gift_layout": false,
         "show_disc_box": false,
         "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "choose-your-cable",
         "product_image": "shopify://shop_images/PRODUCTPICcablelightning-usbc.jpg",
         "product_subtitle": "BUY 2 GET 1 CABLE FREE",
@@ -1131,6 +1187,7 @@
     "image_with_text_6cDCYW",
     "image_with_text_hDNDhw",
     "image_with_text_DBHQ3U",
+    "image_with_text_hMPKAq",
     "rich_text_r9HKPd",
     "section_pdp_hero_master_BzkYGh",
     "section_pdp_hero_organizer_PwePbF",

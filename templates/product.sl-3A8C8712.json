@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -560,6 +560,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
+            "product_number_unlocker": "",
             "product_obj": "100wmulticablebogof",
             "upsell_product_image": "shopify://shop_images/Z1_1278ad97-1f22-4401-8b54-d4b0adc1eb99.png",
             "product_title_custom": "2x Multi Cable™",
@@ -571,6 +572,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
+            "product_number_unlocker": "",
             "product_obj": "titan-100w-multi-cable™-buy-2-get-2-free",
             "upsell_product_image": "shopify://shop_images/4x.png",
             "product_title_custom": "4x Multi Cable™",
@@ -582,6 +584,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "3-product",
+            "product_number_unlocker": "",
             "product_obj": "titan-100w-multi-cable™-buy-3-get-3-free",
             "upsell_product_image": "shopify://shop_images/6x.png",
             "product_title_custom": "6x Multi Cable™",
@@ -659,7 +662,7 @@
           "type": "accesories",
           "settings": {
             "acc_image": "shopify://shop_images/Xl_travel_case_2_b4999217-4370-4b26-bc03-c4692a709031.png",
-            "acc_product": "titan-travel-case-5",
+            "acc_product": "titan-xl-travel-case",
             "acc_title": "XL Cable Case",
             "acc_discount_pill": "33% OFF"
           }
@@ -668,7 +671,7 @@
           "type": "accesories",
           "settings": {
             "acc_image": "shopify://shop_images/PRODUCT_PIC_1_PNG.png",
-            "acc_product": "magtech-powerpack",
+            "acc_product": "magtech-powerpack™",
             "acc_title": "Titan Power Bank",
             "acc_discount_pill": "40% OFF"
           }
@@ -692,8 +695,10 @@
       "settings": {
         "show_grid_images": false,
         "show_qty": true,
+        "show_gift_layout": false,
         "show_disc_box": true,
         "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "100wmulticablebogof",
         "product_image": "shopify://shop_images/AEge.jpg",
         "logo_image": "shopify://shop_images/massage_gun_Titan_logo_a3edc17c-3d5b-46fa-a07e-50baaf1f603a.png",

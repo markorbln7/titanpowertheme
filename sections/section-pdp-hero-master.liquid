@@ -281,7 +281,7 @@
         {% comment %} UPSELL PRODUCTS {% endcomment %}
         {% if section.settings.show_gift_layout %}
           {% if section.settings.gift_promo_line %}
-            <div style="margin-bottom:20px;border:2px dashed #a2e59b;" class="promo_line">
+            <div style="margin-bottom:20px;border:2px dashed #a2e59b;" class="promo_line new-promo-line">
               <div>
                 <span class="green-dot"></span>
                 <span>{{ section.settings.gift_promo_line }}</span>
@@ -893,6 +893,11 @@ overlayCls.addEventListener('click', (e) => {
       "type": "text",
       "id": "promo_line",
       "label": "Promo Line"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_line_image",
+      "label": "Promo Line Image"
     },
     {
       "type": "text",

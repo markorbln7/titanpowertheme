@@ -345,7 +345,7 @@
                               <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
                             </div>
                           {% endif %}
-                          <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">{{ block.settings.top_note  }}</div>
+                          <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">{{ block.settings.top_note }} {{ all_products[block.settings.gift_price_product].price | money }}</div>
                           <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
                           <div class="gift-locker">
                             <div class="gift-lockings w-embed">
@@ -1124,6 +1124,11 @@ overlayCls.addEventListener('click', (e) => {
           "id": "top_note",
           "label": "Top Note",
           "default": "Free $9.95"
+        },
+        {
+          "type": "product",
+          "id": "gift_price_product",
+          "label": "Gift Product"
         }
       ]
     }

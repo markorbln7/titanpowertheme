@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -560,33 +560,36 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
+            "product_number_unlocker": "1",
             "product_obj": "100wmulticablebogof",
             "upsell_product_image": "shopify://shop_images/Z1_1278ad97-1f22-4401-8b54-d4b0adc1eb99.png",
-            "product_title_custom": "2x Multi Cable™",
+            "product_title_custom": "1 Bag",
             "upsell_product_discount": "1 FREE",
-            "upsell_message": "BUY 1 GET 1 FREE"
+            "upsell_message": "2"
           }
         },
         "product_repeater_dynKj7": {
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
+            "product_number_unlocker": "2",
             "product_obj": "titan-100w-multi-cable™-buy-2-get-2-free",
             "upsell_product_image": "shopify://shop_images/4x.png",
-            "product_title_custom": "4x Multi Cable™",
+            "product_title_custom": "2 Bags",
             "upsell_product_discount": "2 FREE",
-            "upsell_message": "BUT 2 GET 2 FREE"
+            "upsell_message": "4"
           }
         },
         "product_repeater_TWhpNb": {
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "3-product",
+            "product_number_unlocker": "3",
             "product_obj": "titan-100w-multi-cable™-buy-3-get-3-free",
             "upsell_product_image": "shopify://shop_images/6x.png",
-            "product_title_custom": "6x Multi Cable™",
+            "product_title_custom": "3 Bags",
             "upsell_product_discount": "3 FREE",
-            "upsell_message": "BUT 3 GET 3 FREE"
+            "upsell_message": "6"
           }
         },
         "props_p464AH": {
@@ -672,6 +675,42 @@
             "acc_title": "Titan Power Bank",
             "acc_discount_pill": "40% OFF"
           }
+        },
+        "gift_images_3tTcCH": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping.webp",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "Free Shipping",
+            "top_note": "Free $9.95"
+          }
+        },
+        "gift_images_fzgweC": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/Z1_1278ad97-1f22-4401-8b54-d4b0adc1eb99.png",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "+ 1 Free",
+            "top_note": "Free $9.95"
+          }
+        },
+        "gift_images_jQMMyM": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/6x.png",
+            "product_number_unlocker": "2",
+            "pdp_hero_icon_title": "+ 2 Free",
+            "top_note": "Free $9.95"
+          }
+        },
+        "gift_images_LcTjTK": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/4x.png",
+            "product_number_unlocker": "3",
+            "pdp_hero_icon_title": "+ 3 Free",
+            "top_note": "Free $9.95"
+          }
         }
       },
       "block_order": [
@@ -687,13 +726,18 @@
         "icons_BQFAMb",
         "icons_bQrx4c",
         "accesories_kFemNz",
-        "accesories_6AmBp9"
+        "accesories_6AmBp9",
+        "gift_images_3tTcCH",
+        "gift_images_fzgweC",
+        "gift_images_jQMMyM",
+        "gift_images_LcTjTK"
       ],
       "settings": {
         "show_grid_images": false,
-        "show_qty": true,
+        "show_qty": false,
+        "show_gift_layout": true,
         "show_disc_box": true,
-        "promo_line": "",
+        "gift_promo_line": "Order by Nov. 25th to secure our best pricing.",
         "product_main": "100wmulticablebogof",
         "product_image": "shopify://shop_images/AEge.jpg",
         "logo_image": "shopify://shop_images/massage_gun_Titan_logo_a3edc17c-3d5b-46fa-a07e-50baaf1f603a.png",

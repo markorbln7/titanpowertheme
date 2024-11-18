@@ -547,9 +547,9 @@
           "settings": {
             "product_selector_number": "1-product",
             "product_number_unlocker": "",
-            "product_obj": "3-x-titan-pd-cable™-b2g1f",
+            "product_obj": "3-x-titan-pd-cable™-1",
             "upsell_product_image": "shopify://shop_images/C_TO_light.png",
-            "product_title_custom": "USB-C  - iPhone",
+            "product_title_custom": "Smart PD Cable",
             "upsell_product_discount": "2+1 FREE",
             "upsell_message": "SALE - BUY 2 GET 1 FREE"
           }
@@ -559,9 +559,9 @@
           "settings": {
             "product_selector_number": "2-product",
             "product_number_unlocker": "",
-            "product_obj": "3-x-titan-pd-cable™-type-c",
-            "upsell_product_image": "shopify://shop_images/C_TO_C.png",
-            "product_title_custom": "USB-C - USB-C",
+            "product_obj": "3x-titan-magtech-pd-cable™",
+            "upsell_product_image": "shopify://shop_images/magtech_png_02503180-306e-4e3b-ba60-76526b0883b6.png",
+            "product_title_custom": "MagTech PD Cable",
             "upsell_product_discount": "2+1 FREE",
             "upsell_message": ""
           }
@@ -571,21 +571,9 @@
           "settings": {
             "product_selector_number": "3-product",
             "product_number_unlocker": "",
-            "product_obj": "3x-120w-magtech-pd-cable™-b2g1f",
-            "upsell_product_image": "shopify://shop_images/magtech_png_ab8c3472-efc0-498a-ac36-290282b25024.png",
-            "product_title_custom": "USB-C - iPhone(MT)",
-            "upsell_product_discount": "2+1 FREE",
-            "upsell_message": ""
-          }
-        },
-        "product_repeater_JmthnW": {
-          "type": "product_repeater",
-          "settings": {
-            "product_selector_number": "4-product",
-            "product_number_unlocker": "",
-            "product_obj": "3x-120w-magtech-pd-cable™-usb-c",
-            "upsell_product_image": "shopify://shop_images/magtech_png_ab8c3472-efc0-498a-ac36-290282b25024.png",
-            "product_title_custom": "USB-C - USB-C(MT)",
+            "product_obj": "3x-titan-100w-multi-cable™",
+            "upsell_product_image": "shopify://shop_images/100w_3_in_1_cable_PNG.png",
+            "product_title_custom": "100W Multi Cable",
             "upsell_product_discount": "2+1 FREE",
             "upsell_message": ""
           }
@@ -593,7 +581,7 @@
         "product_repeater_Jj9pm6": {
           "type": "product_repeater",
           "settings": {
-            "product_selector_number": "5-product",
+            "product_selector_number": "4-product",
             "product_number_unlocker": "",
             "product_obj": "3x-titan-100w-4-in-1-cable-b2g1f",
             "upsell_product_image": "shopify://shop_images/Titan_Accessories_-_4_in_1_cable.png",
@@ -605,7 +593,7 @@
         "product_repeater_hCFRpi": {
           "type": "product_repeater",
           "settings": {
-            "product_selector_number": "6-product",
+            "product_selector_number": "5-product",
             "product_number_unlocker": "",
             "product_obj": "3x-4-in-1-keychain-cable-b2g1f",
             "upsell_product_image": "shopify://shop_images/z2.png",
@@ -707,13 +695,33 @@
             "acc_title": "XL Travel Case",
             "acc_discount_pill": "50% OFF"
           }
+        },
+        "grid_images_PBFnF8": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_4c93cac1-6bc2-4986-b29f-f16c1809cff7.jpg",
+            "image_qty": "2"
+          }
+        },
+        "grid_images_w9NhNy": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_1_4e3f5e58-8254-4ef6-9e58-8d6d8f6aca31.jpg",
+            "image_qty": "4"
+          }
+        },
+        "grid_images_6HyVim": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_2_7a3dd1f5-8c4e-4ab4-8266-052e4b5efc33.jpg",
+            "image_qty": "8"
+          }
         }
       },
       "block_order": [
         "product_repeater_CpqP9k",
         "product_repeater_rJmAy3",
         "product_repeater_qGfqqY",
-        "product_repeater_JmthnW",
         "product_repeater_Jj9pm6",
         "product_repeater_hCFRpi",
         "props_tP6pCL",
@@ -726,7 +734,10 @@
         "icons_DKF7rd",
         "highlighted_repeater_PjEtif",
         "accesories_Yk49we",
-        "accesories_xGGVAi"
+        "accesories_xGGVAi",
+        "grid_images_PBFnF8",
+        "grid_images_w9NhNy",
+        "grid_images_6HyVim"
       ],
       "settings": {
         "show_grid_images": true,

@@ -215,8 +215,15 @@ if(variantSelectorFirsts) {
       let parent = variantSelectorFirst.parentElement.parentElement;
       let variantId = variantSelectorFirst.value;
       nameFirst = variantId;
-      nameSecond = parent.querySelector('.variant-selector-2').value;
-      selectedName = nameFirst + ' / ' + nameSecond;
+      let nameSecond;
+      if(parent.querySelector('.variant-selector-2')) {
+        nameSecond = parent.querySelector('.variant-selector-2').value;
+      }
+      if(parent.querySelector('.pd-variant-selector-2')) {
+        selectedName = nameFirst + ' / ' + nameSecond;
+      } else {
+        selectedName = nameFirst;
+      }
       let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
       let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
       let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');
@@ -235,8 +242,15 @@ if(pdvariantSelectorFirsts) {
       let parent = variantSelectorFirst.parentElement.parentElement;
       let variantId = variantSelectorFirst.value;
       nameFirst = variantId;
-      nameSecond = parent.querySelector('.pd-variant-selector-2').value;
-      selectedName = nameFirst + ' / ' + nameSecond;
+      let nameSecond;
+      if(parent.querySelector('.variant-selector-2')) {
+        nameSecond = parent.querySelector('.variant-selector-2').value;
+      }
+      if(parent.querySelector('.pd-variant-selector-2')) {
+        selectedName = nameFirst + ' / ' + nameSecond;
+      } else {
+        selectedName = nameFirst;
+      }
       let productId = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-variant');
       let productPrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-price');
       let productComparePrice = parent.querySelector("[data-title='" + selectedName + "']").getAttribute('data-compare-price');

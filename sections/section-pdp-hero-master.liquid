@@ -459,14 +459,16 @@
                     </div>
                   </div>
                   {% render 'titan-image', image: upsell_product_image %}
-                  {% if product_obj.options_with_values.size  > 1 %}
+                  {% if product_obj.options_with_values.size  > 0 %}
                     <div style="z-index:999;" class="f jcc aic gap-10 mx-20 fw w-100">
                     {% for option in product_obj.options_with_values %}
+                      {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
                       <select  class="pd-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
                         {% for values in option.values %}
                             <option value="{{values}}">{{values}}</option>
                         {% endfor %}
                       </select>
+                      {% endif %}
                     {% endfor %}
                     <div style="position:absolute;left:-4000px;">
                       {% for variant in product_obj.variants %}

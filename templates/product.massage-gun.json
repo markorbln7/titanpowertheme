@@ -557,16 +557,28 @@
     "section_pdp_hero_master_irwLdj": {
       "type": "section-pdp-hero-master",
       "blocks": {
-        "product_repeater_CJBkcy": {
+        "product_repeater_hJqpph": {
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "",
+            "product_number_unlocker": "",
+            "product_obj": "titan-massage-gun-5",
+            "upsell_product_image": "shopify://shop_images/Titan_Massage_Gun.png",
+            "product_title_custom": "Titan Massage Gun",
+            "upsell_product_discount": "-5%",
+            "upsell_message": "CHOOSE YOUR DISCOUNT"
+          }
+        },
+        "product_repeater_CJBkcy": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "1-product",
             "product_number_unlocker": "",
             "product_obj": "titan-massage-gun-bundlebirthday",
             "upsell_product_image": "shopify://shop_images/Titan_Massage_Gun.png",
             "product_title_custom": "",
             "upsell_product_discount": "",
-            "upsell_message": "BLACK FRIDAY MONTH DISCOUNT"
+            "upsell_message": ""
           }
         },
         "props_yhxqHG": {
@@ -595,6 +607,7 @@
         }
       },
       "block_order": [
+        "product_repeater_hJqpph",
         "product_repeater_CJBkcy",
         "props_yhxqHG",
         "props_rP4W63",

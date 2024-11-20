@@ -38,6 +38,7 @@
     },
     "header": {
       "type": "header",
+      "disabled": true,
       "custom_css": [
         "svg.modal__toggle-open.icon.icon-search {display: none;}",
         ".header__icon,.header__icon--cart .icon {height: 4.4rem; width: 4rem; padding: 0;}",
@@ -61,10 +62,18 @@
         "padding_top": 8,
         "padding_bottom": 8
       }
+    },
+    "header_new_kR4L84": {
+      "type": "header-new",
+      "settings": {
+        "main_linklist": "new-menu-test",
+        "mobile_menu_on_top": false
+      }
     }
   },
   "order": [
     "announcement_bar_yzaPKk",
-    "header"
+    "header",
+    "header_new_kR4L84"
   ]
 }

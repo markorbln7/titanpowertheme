@@ -209,10 +209,52 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         });
 
+        function updatePlaceholders() {
+            console.log('updating placeholders');
+            fetch('/cart.js')
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(cart => {
+                    // Example: Display cart items in a div
+                    console.log(cart, 'cart');
+                    document.querySelector('body').style.overflow = 'auto';
+                    const output = document.querySelector('.js-output');
+                    const item_count = cart.item_count;
+                    const placeholders = document.querySelectorAll('.placeholder');
+                    const cartItems = cart.items;
+                    placeholders.forEach(placeholder => {
+                        placeholder.classList.remove('filled');
+                        placeholder.innerHTML = '+';
+                    });
+                    // Fill placeholders with cart items
+                    cartItems.forEach((item, index) => {
+                        if (index < placeholders.length) {
+                        placeholders[index].classList.add('filled');
+                        placeholders[index].innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                            <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                                <p class="text-white text-center">${item.quantity}</p>
+                            </div>
+                        `;
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching cart:', error);
+                });
+                console.log('done updating placeholders');
+        }
+        window.addEventListener('load', updatePlaceholders);
+
         // Add to cart logic
         let addToCarts = section.querySelectorAll(".js-atc")  // Select all add to cart buttons
         addToCarts.forEach((addToCart) => {
             addToCart.addEventListener("click", (e) => {
+                document.querySelector('body').style.overflow = 'auto';
                 let checkout = false;
                 if (addToCart.classList.contains('js-checkout')) { // Check if the button is checkout
                     checkout = true;
@@ -247,8 +289,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then((response) => {
                         console.log(response.status, "ok"); // Check if the response is OK
                         if(response.status === 200) {
+                            document.querySelector('.buy-now-popup.active').style.display = 'none';
                             document.querySelector('.buy-now-popup.active').classList.remove('active');
                             document.querySelector('body').style.overflow = 'auto';
+                            updatePlaceholders();
                         }
                         if (response.status === 200 && checkout) {
                             window.location.href = '/checkout';

@@ -18,6 +18,7 @@
         display: none;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
+        visibility: hidden;
         z-index: 9999999999;
     }
     .section-explore .buy-now-popup .quantity {
@@ -112,6 +113,7 @@
     .section-explore .buy-now-popup.active {
         opacity: 1;
         display: block;
+        visibility: visible;
     }
     @media(min-width: 1024px) {
         .section-explore__wrapper {

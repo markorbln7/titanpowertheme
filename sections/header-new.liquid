@@ -16,16 +16,19 @@
                     {{ settings.logo | image_url: width: 600 | image_tag: preload: true}}
                 </figure>
             </a>
-    
+
             <nav class="section-header__nav">
             {% for link in linklists[section.settings.main_linklist].links %}
                 <div class="section-header__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
-                    <a href="{{ link.url }}" title="{{ link.title}}">
+                    {%- assign collection_handle = link.url | split: '/' | last -%}
+                    {%- assign collection = collections[collection_handle] -%}
+                    {% assign collection_url =  collection.metafields.custom.mega_menu_url %}
+                    <a href="{{ collection_url }}" title="{{ link.title}}">
                         {{ link.title | escape | capitalize }}
                     </a>
-    
+
                     {% if link.links.size != 0 %}
-                        <div 
+                        <div
                             class="w-[25px] h-[25px] flex items-center justify-center pointer-none rounded-[50%] bg-[#f2f2f2] md:w-auto md:h-auto md:bg-transparent">
                                 <svg class="ml-[5px]" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g>
                                 </svg>
@@ -35,7 +38,7 @@
                 </div>
             {% endfor %}
             </nav>
-    
+
             {% comment %} Cart, search, account icons... {% endcomment %}
             <ul class="section-header__actions">
                 <li>

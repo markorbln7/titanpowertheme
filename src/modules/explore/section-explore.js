@@ -232,14 +232,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                     // Fill placeholders with cart items
                     cartItems.forEach((item, index) => {
+                        console.log(item, index,placeholders.length, 'item, index');
                         if (index < placeholders.length) {
-                        placeholders[index].classList.add('filled');
-                        placeholders[index].innerHTML = `
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-                            <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
-                                <p class="text-white text-center">${item.quantity}</p>
+                            placeholders[index].innerHTML = `
+                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                                    <p class="text-white text-center">${item.quantity}</p>
+                                </div>
+                                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                                    x
+                                </div>
+                            `;
+                        } else {
+                            document.querySelector('.js-output').innerHTML += `
+                            <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">
+                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                                    <p class="text-white text-center">${item.quantity}</p>
+                                </div>
+                                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                                    x
+                                </div>
                             </div>
-                        `;
+                            `;
                         }
                     });
                 })
@@ -249,6 +264,43 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('done updating placeholders');
         }
         window.addEventListener('load', updatePlaceholders);
+
+        function removeProduct(productId) {
+            console.log('removing product', productId);
+            fetch(window.Shopify.routes.root + 'cart/change.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: productId,
+                    quantity: 0
+                })
+            })
+            .then(response => {
+                if(response.status === 200) {
+                    updatePlaceholders();
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        let removeProductButtons = document.querySelectorAll('.js-remove-product');
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.matches('.js-remove-product')) {
+              var dataId = event.target.getAttribute('data-id'); // Retrieve the data-id attribute
+              removeProduct(dataId);
+            }
+        });
+        // console.log(removeProductButtons, 'removeProductButtons');
+        // removeProductButtons.forEach(button => {
+        //     button.addEventListener('click', () => {
+        //         const productId = button.getAttribute('data-id');
+        //         removeProduct(productId);
+        //     });
+        // });
 
         // Add to cart logic
         let addToCarts = section.querySelectorAll(".js-atc")  // Select all add to cart buttons

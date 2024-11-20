@@ -98,20 +98,35 @@ function updatePlaceholders() {
           const placeholders = document.querySelectorAll('.placeholder');
           const cartItems = cart.items;
           placeholders.forEach(placeholder => {
-          placeholder.classList.remove('filled');
-          placeholder.innerHTML = '+';
+            placeholder.classList.remove('filled');
+            placeholder.innerHTML = '+';
           });
           // Fill placeholders with cart items
           cartItems.forEach((item, index) => {
           if (index < placeholders.length) {
-          placeholders[index].classList.add('filled');
-          placeholders[index].innerHTML = `
-              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-              <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
-                  <p class="text-white text-center">${item.quantity}</p>
-              </div>
-          `;
-          }
+            placeholders[index].classList.add('filled');
+            placeholders[index].innerHTML = `
+                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                    <p class="text-white text-center">${item.quantity}</p>
+                </div>
+                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                    x
+                </div>
+            `;
+          } else {
+            document.querySelector('.js-output').innerHTML += `
+            <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">
+                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                    <p class="text-white text-center">${item.quantity}</p>
+                </div>
+                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                    x
+                </div>
+            </div>
+            `;
+        }
           });
       })
       .catch(error => {

@@ -483,6 +483,52 @@
       "disabled": true,
       "settings": {}
     },
+    "section_pdp_hero_master_qKbXMY": {
+      "type": "section-pdp-hero-master",
+      "blocks": {
+        "product_repeater_QHfxbb": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "1-product",
+            "product_number_unlocker": "",
+            "product_obj": "4-in-1-mothership-dock",
+            "product_title_custom": "Mothership Dock",
+            "upsell_product_discount": "-10% OFF",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_t7LLMB": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "2-product",
+            "product_number_unlocker": "",
+            "product_obj": "4-in-1-mothership-dock-1",
+            "product_title_custom": "Mothership Dock",
+            "upsell_product_discount": "",
+            "upsell_message": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_QHfxbb",
+        "product_repeater_t7LLMB"
+      ],
+      "settings": {
+        "show_grid_images": false,
+        "show_qty": true,
+        "show_gift_layout": false,
+        "show_disc_box": true,
+        "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
+        "product_main": "4-in-1-mothership-dock",
+        "product_subtitle": "",
+        "discount_content": "50% OFF",
+        "atc_label": "In stock, limited availability",
+        "product_highlighted": "",
+        "product_highlighted_title": "",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+      }
+    },
     "section_pdp_hero_case_iktAWH": {
       "type": "section-pdp-hero-case",
       "blocks": {
@@ -805,6 +851,7 @@
     "section_zigzag_zn78GD",
     "section_air_tabs_4tKUCL",
     "compare-table",
+    "section_pdp_hero_master_qKbXMY",
     "section_pdp_hero_case_iktAWH",
     "section-pdp-hero",
     "1707579564616101b2",

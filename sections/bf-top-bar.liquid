@@ -1,0 +1,22 @@
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<div class="bf-top-bar bg-[#60c655] py-[10px]">
+    <p class="text-center uppercase text-[20px] color-black">{{ section.settings.welcome_message }}</p>
+</div>
+{% schema %}
+{
+    "name": "BF TOP BAR",
+    "settings": [
+      {
+        "type": "text",
+        "id": "welcome_message",
+        "label": "Message",
+        "default": "Everything is 40% off + 80% off in packs"
+      }
+    ],
+    "presets": [
+      {
+        "name": "BF TOP BAR"
+      }
+    ]
+  }
+{% endschema %}

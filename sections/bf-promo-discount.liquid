@@ -1,0 +1,120 @@
+
+<section class="bg-black text-center">
+  <div class="custom-pack-wrapper">
+    {% if section.settings.section_eyebrow %}
+      <div class="text-[#60c655] text-[18px] md:text-[24px]">
+        {{ section.settings.section_eyebrow }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.section_title %}
+      <h2 class="text-white text-[30px] md:text-[60px] font-sans mb-[20px] font-bold">
+        {{ section.settings.section_title }}
+      </h2>
+    {% endif %}
+
+    <div class="block-items flex flex-col md:flex-row">
+      {% for block in section.blocks limit: 3 %}
+        <div class="block-item">
+          {% if block.settings.eyebrow_position == false %}
+            <div class="text-[#60c655] text-[24px] md:text-[30px] leading-[1]">
+              {{ block.settings.block_eyebrow }}
+            </div>
+          {% endif %}
+
+          <h3 class="text-white text-[40px] md:text-[80px] font-sans leading-[1]">
+            {{ block.settings.block_title }}
+          </h3>
+
+          {% if block.settings.eyebrow_position %}
+            <div class="text-[#60c655] text-[24px] md:text-[30px] leading-[1]">
+              {{ block.settings.block_eyebrow }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+<style>
+   .font-sans {
+        font-family: "Work Sans", serif;
+        font-weight: 600;
+   }
+   .font-bold {
+        font-weight: 900;
+   }
+  .custom-pack-wrapper {
+    max-width: 1300px;
+    padding: 40px 10px;
+    margin: 0 auto;
+  }
+  .block-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-right: 4px solid white;
+    align-items: center;
+    justify-content: center;
+  }
+  .block-item:last-child {
+    border-right: none;
+  }
+  @media (min-width: 768px) {
+    .block-items {
+      flex-direction: row;
+    }
+  }
+</style>
+{% endstylesheet %}
+<!-- Shopify Section: Custom Pack Builder -->
+{% schema %}
+{
+  "name": "BF Promo Discount",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Build a Custom Pack"
+    },
+    {
+      "type": "text",
+      "id": "section_eyebrow",
+      "label": "Section Eyebrow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_item",
+      "name": "Block Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "block_eyebrow",
+          "label": "Block Eyebrow",
+          "default": "4+ items"
+        },
+        {
+          "type": "text",
+          "id": "block_title",
+          "label": "Block Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "eyebrow_position",
+          "label": "Eyebrow below title",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bf Promo Discount",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

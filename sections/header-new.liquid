@@ -22,7 +22,11 @@
                 <div class="section-header__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
                     {%- assign collection_handle = link.url | split: '/' | last -%}
                     {%- assign collection = collections[collection_handle] -%}
-                    {% assign collection_url =  collection.metafields.custom.mega_menu_url %}
+                    {% if collection.metafields.custom.mega_menu_url %}
+                        {% assign collection_url =  collection.metafields.custom.mega_menu_url %}
+                    {% else %}
+                        {% assign collection_url = link.url %}
+                    {% endif %}
                     <a href="{{ collection_url }}" title="{{ link.title}}">
                         {{ link.title | escape | capitalize }}
                     </a>

@@ -20,7 +20,7 @@
                 {% endif %}
             <div class="mega-menu__links">
                 <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
-                    <a href="{{ link.url }}">{{ link.title | escape  | capitalize }}</a>
+                    <a href="{{ megamenu_url }}">{{ link.title | escape  | capitalize }}</a>
                 </h3>
 
                 {% if link.links.size > 0 %}

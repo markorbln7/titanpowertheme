@@ -3,7 +3,7 @@
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-{% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'shop' or page.handle == 'titan-shop' %}
+{% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' %}
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
 
@@ -47,7 +47,7 @@
                   {% else %}
                     {% assign url = product.url %}
                   {% endif %}
-                  {% if product.metafields.custom.open_popup != true %}
+                  {% if section.settings.use_popup == true %}
                     <div class="!block absolute w-full h-full top-0 left-0 pointer js-section-explore__buy-now"></div>
                   {% else %}
                     <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
@@ -78,13 +78,13 @@
                                     <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
                                 {% endif %}
                               </div>
-                              {% if product.metafields.custom.open_popup != true %}
+                              {% if section.settings.use_popup == true %}
                                 <div class="arrow pointer js-section-explore__buy-now">
                                     +
                                 </div>
                               {% else %}
                                 <a href="{{ product.url }}" class="arrow">
-                                  +
+                                  <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
                                 </a>
                               {% endif %}
                             </div>
@@ -151,6 +151,12 @@
 {
   "name": "Collections with nav",
   "settings": [
+    {
+      "type": "checkbox",
+      "label": "Activate Popups",
+      "id": "use_popup",
+      "default": false
+    },
     {
       "type": "collection_list",
       "label": "Collections",

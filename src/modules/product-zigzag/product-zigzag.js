@@ -103,25 +103,25 @@ function updatePlaceholders() {
           });
           const giftSelectorsActive = document.querySelectorAll(`.gift_card[data-gift]`)
           const cartTotal = cart.total_price
-          if(giftSelectorsActive) {
-              giftSelectorsActive.forEach(gift => {
-                  gift.classList.remove('is-active')
-                  gift.querySelector('.gift-overlay').classList.remove('is-active')
-                  gift.querySelector('.top-note').classList.remove('is-active')
-                  if(gift.querySelector('.conf')) {
-                      gift.querySelector('.conf').classList.remove('is-active')
-                  }
-                  let giftNumber = gift.getAttribute('data-money')
-                  if (cartTotal >= giftNumber) {
-                      gift.classList.add('is-active')
-                      gift.querySelector('.gift-overlay').classList.add('is-active')
-                      gift.querySelector('.top-note').classList.add('is-active')
-                      if(gift.querySelector('.conf')) {
-                          gift.querySelector('.conf').classList.add('is-active')
-                      }
-                  }
-              })
-          }
+          // if(giftSelectorsActive) {
+          //     giftSelectorsActive.forEach(gift => {
+          //         gift.classList.remove('is-active')
+          //         gift.querySelector('.gift-overlay').classList.remove('is-active')
+          //         gift.querySelector('.top-note').classList.remove('is-active')
+          //         if(gift.querySelector('.conf')) {
+          //             gift.querySelector('.conf').classList.remove('is-active')
+          //         }
+          //         let giftNumber = gift.getAttribute('data-money')
+          //         if (cartTotal >= giftNumber) {
+          //             gift.classList.add('is-active')
+          //             gift.querySelector('.gift-overlay').classList.add('is-active')
+          //             gift.querySelector('.top-note').classList.add('is-active')
+          //             if(gift.querySelector('.conf')) {
+          //                 gift.querySelector('.conf').classList.add('is-active')
+          //             }
+          //         }
+          //     })
+          // }
           // Fill placeholders with cart items
           cartItems.forEach((item, index) => {
           if (index < placeholders.length) {

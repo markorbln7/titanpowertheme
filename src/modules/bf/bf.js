@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             let quantity = parseInt(input.value);
                             if (quantity > 1) {
                                 input.value = quantity - 1;
-                                const addToCartButton = popup.querySelector('.js-atc');
+                                const addToCartButton = popup.querySelector('.js-atc-bf');
                                 const addToCheckoutButton = popup.querySelector('.js-checkout');
                                 addToCartButton.setAttribute("data-quantity", input.value);
                                 addToCheckoutButton.setAttribute("data-quantity", input.value);
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         plusButton.addEventListener('click', () => {
                             let quantity = parseInt(input.value);
                             input.value = quantity + 1;
-                            const addToCartButton = popup.querySelector('.js-atc');
+                            const addToCartButton = popup.querySelector('.js-atc-bf');
                             const addToCheckoutButton = popup.querySelector('.js-checkout');
                             addToCartButton.setAttribute("data-quantity", input.value);
                             addToCheckoutButton.setAttribute("data-quantity", input.value);
@@ -234,25 +234,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     const giftSelectorsActive = document.querySelectorAll(`.gift_card[data-gift]`)
                     const cartTotal = cart.total_price;
                     console.log(giftSelectorsActive, cartTotal, 'giftSelectorsActive');
-                    if(giftSelectorsActive) {
-                        giftSelectorsActive.forEach(gift => {
-                            gift.classList.remove('is-active')
-                            gift.querySelector('.gift-overlay').classList.remove('is-active')
-                            gift.querySelector('.top-note').classList.remove('is-active')
-                            if(gift.querySelector('.conf')) {
-                                gift.querySelector('.conf').classList.remove('is-active')
-                            }
-                            let giftNumber = gift.getAttribute('data-money')
-                            if (cartTotal >= giftNumber) {
-                                gift.classList.add('is-active')
-                                gift.querySelector('.gift-overlay').classList.add('is-active')
-                                gift.querySelector('.top-note').classList.add('is-active')
-                                if(gift.querySelector('.conf')) {
-                                    gift.querySelector('.conf').classList.add('is-active')
-                                }
-                            }
-                        })
-                    }
+                    // if(giftSelectorsActive) {
+                    //     giftSelectorsActive.forEach(gift => {
+                    //         gift.classList.remove('is-active')
+                    //         gift.querySelector('.gift-overlay').classList.remove('is-active')
+                    //         gift.querySelector('.top-note').classList.remove('is-active')
+                    //         if(gift.querySelector('.conf')) {
+                    //             gift.querySelector('.conf').classList.remove('is-active')
+                    //         }
+                    //         let giftNumber = gift.getAttribute('data-money')
+                    //         if (cartTotal >= giftNumber) {
+                    //             gift.classList.add('is-active')
+                    //             gift.querySelector('.gift-overlay').classList.add('is-active')
+                    //             gift.querySelector('.top-note').classList.add('is-active')
+                    //             if(gift.querySelector('.conf')) {
+                    //                 gift.querySelector('.conf').classList.add('is-active')
+                    //             }
+                    //         }
+                    //     })
+                    // }
                     // Fill placeholders with cart items
                     cartItems.forEach((item, index) => {
                         console.log(item, index,placeholders.length, 'item, index');
@@ -330,6 +330,11 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('da li smo ovdeee');
         addToCarts.forEach((addToCart) => {
             addToCart.addEventListener("click", (e) => {
+                console.log('clicked');
+                document.addEventListener('rebuyCartUpdated', function(e) {
+                    e.preventDefault(); // Prevent the cart from opening
+                    console.log('Rebuy cart display suppressed.');
+                });
                 document.querySelector('body').style.overflow = 'auto';
                 let checkout = false;
                 if (addToCart.classList.contains('js-checkout')) { // Check if the button is checkout
@@ -421,3 +426,8 @@ gridImages.forEach(gridImage => {
     }
   })
 })
+
+document.addEventListener('rebuyCartUpdated', function(event) {
+    event.preventDefault(); // Prevent Rebuy cart from opening
+    console.log('Rebuy cart opening suppressed on this page.');
+});

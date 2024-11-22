@@ -21,7 +21,9 @@
             color: #000;
             justify-content: center;
             background-color: rgb(228, 234, 234);
-            box-shadow: rgba(46, 42, 57, 0) 10px 12px 20px 0px
+            box-shadow: rgba(46, 42, 57, 0) 10px 12px 20px 0px;
+            max-width: -moz-max-content;
+            max-width: max-content
         }
         .section-collections-with-nav__navigation li.active {
             color: #fff;
@@ -153,8 +155,9 @@
             .section-collections-with-nav__navigation li {
                 margin: 0;
                 padding-inline: 10px;
-                font-size: 12px;
+                font-size: 12px !important;
                 line-height: 14px;
+                padding: 8px 14px !important;
             }
 
         .section-collections-with-nav .products {

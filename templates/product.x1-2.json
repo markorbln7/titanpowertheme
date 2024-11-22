@@ -492,9 +492,9 @@
             "product_selector_number": "1-product",
             "product_number_unlocker": "",
             "product_obj": "4-in-1-mothership-dock",
-            "product_title_custom": "Mothership Dock",
-            "upsell_product_discount": "-10% OFF",
-            "upsell_message": "CHOOSE YOUR DISCOUNT"
+            "product_title_custom": "1 x Dock",
+            "upsell_product_discount": "",
+            "upsell_message": "1"
           }
         },
         "product_repeater_t7LLMB": {
@@ -503,9 +503,20 @@
             "product_selector_number": "2-product",
             "product_number_unlocker": "",
             "product_obj": "4-in-1-mothership-dock-1",
-            "product_title_custom": "Mothership Dock",
+            "product_title_custom": "2x Dock",
             "upsell_product_discount": "",
-            "upsell_message": ""
+            "upsell_message": "2"
+          }
+        },
+        "product_repeater_NBbp7L": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_number_unlocker": "",
+            "product_obj": "3-x-4-in-1-mothership-dock",
+            "product_title_custom": "3x Dock",
+            "upsell_product_discount": "",
+            "upsell_message": "3"
           }
         },
         "props_WayraP": {
@@ -559,22 +570,63 @@
             "acc_title": "XL Travel Case",
             "acc_discount_pill": "50% OFF"
           }
+        },
+        "gift_images_ANqTme": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "gift_images_MrAidw": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "gift_images_C3FyNm": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "gift_images_hV4JDg": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
         }
       },
       "block_order": [
         "product_repeater_QHfxbb",
         "product_repeater_t7LLMB",
+        "product_repeater_NBbp7L",
         "props_WayraP",
         "props_fgdHVB",
         "props_3w7HQU",
         "highlighted_repeater_tg7WiJ",
         "accesories_JjKrqY",
-        "accesories_tUMkMp"
+        "accesories_tUMkMp",
+        "gift_images_ANqTme",
+        "gift_images_MrAidw",
+        "gift_images_C3FyNm",
+        "gift_images_hV4JDg"
       ],
       "settings": {
         "show_grid_images": false,
         "show_qty": true,
-        "show_gift_layout": false,
+        "show_gift_layout": true,
         "show_disc_box": true,
         "promo_line": "",
         "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",

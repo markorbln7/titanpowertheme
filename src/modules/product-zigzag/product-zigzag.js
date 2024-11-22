@@ -80,6 +80,81 @@ variantSelectorSSecond.forEach((variantSelectorSecond) => {
     // addUpsell.setAttribute('data-addon-id', productId);
   });
 });
+function updatePlaceholders() {
+  console.log('updating placeholders');
+  fetch('/cart.js')
+      .then(response => {
+          if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(cart => {
+          // Example: Display cart items in a div
+          console.log(cart, 'cart');
+          document.querySelector('body').style.overflow = 'auto';
+          const output = document.querySelector('.js-output');
+          const item_count = cart.item_count;
+          const placeholders = document.querySelectorAll('.placeholder');
+          const cartItems = cart.items;
+          placeholders.forEach(placeholder => {
+            placeholder.classList.remove('filled');
+            placeholder.innerHTML = '+';
+          });
+          const giftSelectorsActive = document.querySelectorAll(`.gift_card[data-gift]`)
+          const cartTotal = cart.total_price
+          if(giftSelectorsActive) {
+              giftSelectorsActive.forEach(gift => {
+                  gift.classList.remove('is-active')
+                  gift.querySelector('.gift-overlay').classList.remove('is-active')
+                  gift.querySelector('.top-note').classList.remove('is-active')
+                  if(gift.querySelector('.conf')) {
+                      gift.querySelector('.conf').classList.remove('is-active')
+                  }
+                  let giftNumber = gift.getAttribute('data-money')
+                  if (cartTotal >= giftNumber) {
+                      gift.classList.add('is-active')
+                      gift.querySelector('.gift-overlay').classList.add('is-active')
+                      gift.querySelector('.top-note').classList.add('is-active')
+                      if(gift.querySelector('.conf')) {
+                          gift.querySelector('.conf').classList.add('is-active')
+                      }
+                  }
+              })
+          }
+          // Fill placeholders with cart items
+          cartItems.forEach((item, index) => {
+          if (index < placeholders.length) {
+            placeholders[index].classList.add('filled');
+            placeholders[index].innerHTML = `
+                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                    <p class="text-white text-center">${item.quantity}</p>
+                </div>
+                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                    x
+                </div>
+            `;
+          } else {
+            document.querySelector('.js-output').innerHTML += `
+            <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">
+                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                <div class="absolute bg-black flex items-center justify-center w-[30%] h-[30%] bottom-[5px] right-[5px]">
+                    <p class="text-white text-center">${item.quantity}</p>
+                </div>
+                <div data-id="${item.id}" class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer color-white rounded-[50%]">
+                    x
+                </div>
+            </div>
+            `;
+        }
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching cart:', error);
+      });
+      console.log('done updating placeholders');
+}
 
 const upsellProducts = document.querySelectorAll('.upsell-product')
 upsellProducts.forEach((upsellProduct) => {
@@ -93,20 +168,28 @@ const addToCartsZigs = document.querySelectorAll(".js-add-to-cart-zig");
 
 addToCartsZigs.forEach((addToCartsZig) => {
     addToCartsZig.addEventListener("click", (e) => {
+      let addItems = [];
       const _this = e.currentTarget;
       const parentDiv = _this.closest(".product-zigzag__content");
       const upsellProductSelectors = parentDiv.querySelectorAll(".js-upsell-selector.active");
-      const productSelector = _this.getAttribute("data-product");
-      const addItems = [{
-        id: productSelector,
-        quantity: 1,
-      }];
+      let productSelector = _this.getAttribute("data-product");
+      let productSelectorSans = productSelector.replace(/,$/, '')
+      let numbersArray = productSelectorSans.split(",").map(Number);
+      console.log(numbersArray);
+      // numbersArray.forEach((productSelector) => {
+      //   addItems.push({
+      //     id: productSelector,
+      //     quantity: 1,
+      //   });
+      // });
+      console.log(addItems, "addItems");
       upsellProductSelectors.forEach((productSelector) => {
         const _this = productSelector;
         const productId = _this.getAttribute("data-product-id");
+        const productQuantity = _this.getAttribute("data-product-qty");
         addItems.push({
           id: productId,
-          quantity: 1,
+          quantity: productQuantity,
         });
       });
       console.log(addItems, "addItems");
@@ -122,6 +205,9 @@ addToCartsZigs.forEach((addToCartsZig) => {
       })
         .then((response) => {
           console.log(response.status, "ok");
+          if(response.status === 200) {
+            updatePlaceholders();
+          }
           return response.json();
         })
         .catch((error) => {

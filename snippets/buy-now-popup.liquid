@@ -50,9 +50,22 @@
                     {% endfor %}
                   </div>
                 {% endif %}
+                {% if grid_1 %}
+                  <div class="grid-images flex gap-[10px] mb-[20px] cursor-pointer md:max-w-[60%]">
+                      <div data-image-qty="{{ grid_1_text }}" class="grid-images__single js-grid-image w-[33%]">
+                          <img class="w-full" width="100" height="auto" src="{{ grid_1 | img_url: 'master' }}" alt="">
+                      </div>
+                      <div data-image-qty="{{ grid_2_text }}" class="grid-images__single js-grid-image w-[33%]">
+                        <img class="w-full" width="100" height="auto" src="{{ grid_2 | img_url: 'master' }}" alt="">
+                    </div>
+                    <div data-image-qty="{{ grid_3_text }}" class="grid-images__single js-grid-image w-[33%]">
+                      <img class="w-full" width="100" height="auto" src="{{ grid_3 | img_url: 'master' }}" alt="">
+                  </div>
+                  </div>
+                {% endif %}
                 <div class="buy-now-popup__quantity">
                     <h4 class="text-[16px] font-semibold">Quantity</h4>
-                    <div class="buy-now-popup__quantity mt-[8px] mb-[24px]">
+                    <div class="buy-now-popup__quantity mt-[8px] mb-[24px] flex items-center gap-[20px]">
                         <quantity-input class="quantity cart-quantity">
                             <button class="quantity__button" name="minus" type="button">
                               {% render 'icon-minus' %}
@@ -67,6 +80,11 @@
                               {% render 'icon-plus' %}
                             </button>
                           </quantity-input>
+                          {% if grid_1 %}
+                            <div data-count="4" class="js-buy-more">
+                              Add 4 Save 10%
+                            </div>
+                          {% endif %}
                     </div>
                 </div>
 
@@ -146,12 +164,12 @@
             </div>
             <div class="flex items-center justify-end gap-[10px]">
                 <button data-product-id="{{ product_id}}" data-quantity="{{ quantity }}"
-                    class="js-atc buy-now-popup__atc min-w-[200px] h-[46px] bg-transparent text-[16px] font-semibold rounded-[20px] leading-[46px] border border-solid border-[1px] border-[#000]"
+                    class="js-atc-bf buy-now-popup__atc min-w-[200px] h-[46px] bg-transparent text-[16px] font-semibold rounded-[20px] leading-[46px] border border-solid border-[1px] border-[#000]"
                 >
                     Add To Cart
                 </button>
                 <button data-product-id="{{ product_id}}"
-                    class="js-checkout js-atc buy-now-popup__atc min-w-[200px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px]">
+                    class="js-checkout js-atc-bf buy-now-popup__atc min-w-[200px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px]">
                     Buy Now
                 </button>
             </div>

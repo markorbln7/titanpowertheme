@@ -30,7 +30,7 @@
 }
 
 .product-zigzag__image {
-    width: 41.7%;
+    width: 34%;
     flex: none;
     padding: 0;
     position: relative;
@@ -77,9 +77,10 @@
 }
 
 .product-zigzag__title {
+    font-family: "Work Sans", serif;
     font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
     margin-top: 0;
     color: #000;
 }
@@ -153,16 +154,17 @@
 }
 
 .product-zigzag__label {
+    font-family: "Work Sans", serif;
     margin-bottom: 16px;
     font-size: 14px;
     line-height: 15px;
-    color: #777;
+    color: #000;
     font-weight: 300;
 }
 
 .product-zigzag__upsell-products {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: 8px;
     margin-bottom: 32px;
     gap: 20px;
@@ -345,3 +347,9 @@
         height: 80px;
     }
 }
+
+.product-zigzag-section select {
+        color: black;
+        border-radius: 20px;
+        padding: 5px 10px;
+    }

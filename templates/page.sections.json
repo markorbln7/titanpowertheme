@@ -217,7 +217,7 @@
         "product": "",
         "section_title": "Adventurer Kit",
         "product_image": "shopify://shop_images/100w_3_in_1_cable_PNG.png",
-        "product_label": "Multi-Device Charging for Spring Venture",
+        "product_label": "Always Powered Up When Exploring",
         "discount_text": "70% OFF",
         "reverse_layout": true
       }
@@ -228,20 +228,41 @@
         "upsell_product_repeater_edgdyc": {
           "type": "upsell_product_repeater",
           "settings": {
-            "product_upsell": "120w-magtech-cable™",
-            "product_upsell_qty": "",
-            "product_upsell_title": ""
+            "product_upsell": "1xkeychaincable",
+            "product_upsell_qty": "2",
+            "product_upsell_title": "",
+            "product_upsell_image": "shopify://shop_images/z2_149de3f4-1b20-4961-8d3e-bd1a5c8476f8.png"
+          }
+        },
+        "upsell_product_repeater_YgHARB": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-cube™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "",
+            "product_upsell_image": "shopify://shop_images/TITAN_CUBE_HOME_PAGE.png"
+          }
+        },
+        "upsell_product_repeater_jDfpt9": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "magtech-powerpack",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "",
+            "product_upsell_image": "shopify://shop_images/PRODUCT_PIC_1_PNG_42b072f1-d773-4e83-9286-48d9c779a70f.png"
           }
         }
       },
       "block_order": [
-        "upsell_product_repeater_edgdyc"
+        "upsell_product_repeater_edgdyc",
+        "upsell_product_repeater_YgHARB",
+        "upsell_product_repeater_jDfpt9"
       ],
       "settings": {
         "product": "",
         "section_title": "Office Selection",
         "product_image": "shopify://shop_images/magtech_png_02503180-306e-4e3b-ba60-76526b0883b6.png",
-        "product_label": "Multi-Device Charging for Spring Ventures",
+        "product_label": "Clean Office & Powered Up Devices",
         "discount_text": "70% OFF",
         "reverse_layout": true
       }

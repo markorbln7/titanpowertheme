@@ -111,7 +111,7 @@
         "gift_images_rKPd7B": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/magtech_lightning.png",
+            "pdp_hero_icon": "shopify://shop_images/mystery_gift_ad980004-a248-48f5-8805-b402d8afd58a.png",
             "product_number_unlocker": "",
             "pdp_hero_icon_title": "MYSTERY GIFT",
             "pdp_hero_icon_title_top": "SPEND",
@@ -123,7 +123,7 @@
         "gift_images_4DTz49": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/z2_149de3f4-1b20-4961-8d3e-bd1a5c8476f8.png",
+            "pdp_hero_icon": "shopify://shop_images/free_cable_gift.png",
             "product_number_unlocker": "",
             "pdp_hero_icon_title": "TITAN CABLE",
             "pdp_hero_icon_title_top": "SPEND",
@@ -135,69 +135,7 @@
         "gift_images_yWcNKm": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/TPP_Banner_Mobile_v1_1.jpg",
-            "product_number_unlocker": "3",
-            "pdp_hero_icon_title": "TRAVEL CASE",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free $9.95",
-            "gift_price_product": "",
-            "money_product": "turbo-dock-holder-do-not-delete"
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_p8WriF",
-        "gift_images_rKPd7B",
-        "gift_images_4DTz49",
-        "gift_images_yWcNKm"
-      ],
-      "settings": {
-        "welcome_message": "Welcome to our store!"
-      }
-    },
-    "gift_display_section_PDXACjK": {
-      "type": "gift-display-section",
-      "blocks": {
-        "gift_images_p8WriF": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "FREE",
-            "top_note": "Free $9.95",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_rKPd7B": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/magtech_lightning.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free",
-            "gift_price_product": "",
-            "money_product": "mystery-gift-holder-do-not-delete"
-          }
-        },
-        "gift_images_4DTz49": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/z2_149de3f4-1b20-4961-8d3e-bd1a5c8476f8.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TITAN CABLE",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free $9.95",
-            "gift_price_product": "",
-            "money_product": "pd"
-          }
-        },
-        "gift_images_yWcNKm": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/TPP_Banner_Mobile_v1_1.jpg",
+            "pdp_hero_icon": "shopify://shop_images/Free_case_gift.png",
             "product_number_unlocker": "3",
             "pdp_hero_icon_title": "TRAVEL CASE",
             "pdp_hero_icon_title_top": "SPEND",
@@ -222,7 +160,13 @@
       "settings": {
         "collections": [
           "cables-byob"
-        ]
+        ],
+        "add_4": "shopify://shop_images/download_4c93cac1-6bc2-4986-b29f-f16c1809cff7.jpg",
+        "add_4_text": "4",
+        "add_6": "shopify://shop_images/download_1_4e3f5e58-8254-4ef6-9e58-8d6d8f6aca31.jpg",
+        "add_6_text": "6",
+        "add_10": "shopify://shop_images/download_2_7a3dd1f5-8c4e-4ab4-8266-052e4b5efc33.jpg",
+        "add_10_text": "10"
       }
     },
     "section_product_zigzag_BFhezE": {
@@ -232,16 +176,44 @@
           "type": "upsell_product_repeater",
           "settings": {
             "product_upsell": "magtech",
+            "product_upsell_qty": "1",
             "product_upsell_title": "upsell me",
             "product_upsell_image": "shopify://shop_images/TPP_Banner_Mobile_v1_1.jpg"
+          }
+        },
+        "upsell_product_repeater_P6rmQR": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "120w-magtech-cable™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": ""
+          }
+        },
+        "upsell_product_repeater_wpHcyV": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "4-in-1-mothership-dock-1",
+            "product_upsell_qty": "2",
+            "product_upsell_title": ""
+          }
+        },
+        "icons_repeater_FP3Ndn": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "for ios",
+            "icon": "shopify://shop_images/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-disconnect_5b33144f-15ed-4c9e-b98c-701b2434ec89.png"
           }
         }
       },
       "block_order": [
-        "upsell_product_repeater_KGWBBi"
+        "upsell_product_repeater_KGWBBi",
+        "upsell_product_repeater_P6rmQR",
+        "upsell_product_repeater_wpHcyV",
+        "icons_repeater_FP3Ndn"
       ],
       "settings": {
-        "product": "titan-30w-nano-pd-car-charger™-birthday",
+        "product": "",
+        "section_title": "Go Charge",
         "product_image": "shopify://shop_images/100w_3_in_1_cable_PNG.png",
         "product_label": "Multi-Device Charging for Spring Ventures",
         "discount_text": "70% OFF",
@@ -255,6 +227,7 @@
           "type": "upsell_product_repeater",
           "settings": {
             "product_upsell": "120w-magtech-cable™",
+            "product_upsell_qty": "",
             "product_upsell_title": ""
           }
         }
@@ -262,8 +235,10 @@
       "block_order": [
         "upsell_product_repeater_edgdyc"
       ],
+      "disabled": true,
       "settings": {
         "product": "magtech",
+        "section_title": "",
         "product_image": "shopify://shop_images/magtech_png_02503180-306e-4e3b-ba60-76526b0883b6.png",
         "product_label": "Multi-Device Charging for Spring Ventures",
         "discount_text": "70% OFF",
@@ -385,7 +360,72 @@
           "premium-new",
           "plugs",
           "wireless-new"
-        ]
+        ],
+        "add_4_text": "",
+        "add_6_text": "",
+        "add_10_text": ""
+      }
+    },
+    "gift_display_section_PDXACjK": {
+      "type": "gift-display-section",
+      "blocks": {
+        "gift_images_p8WriF": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "FREE SHIPPING",
+            "pdp_hero_icon_title_top": "FREE",
+            "top_note": "Free $9.95",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
+        "gift_images_rKPd7B": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/magtech_lightning.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "MYSTERY GIFT",
+            "pdp_hero_icon_title_top": "SPEND",
+            "top_note": "Free",
+            "gift_price_product": "",
+            "money_product": "mystery-gift-holder-do-not-delete"
+          }
+        },
+        "gift_images_4DTz49": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/z2_149de3f4-1b20-4961-8d3e-bd1a5c8476f8.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TITAN CABLE",
+            "pdp_hero_icon_title_top": "SPEND",
+            "top_note": "Free $9.95",
+            "gift_price_product": "",
+            "money_product": "pd"
+          }
+        },
+        "gift_images_yWcNKm": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/TPP_Banner_Mobile_v1_1.jpg",
+            "product_number_unlocker": "3",
+            "pdp_hero_icon_title": "TRAVEL CASE",
+            "pdp_hero_icon_title_top": "SPEND",
+            "top_note": "Free $9.95",
+            "gift_price_product": "",
+            "money_product": "turbo-dock-holder-do-not-delete"
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_p8WriF",
+        "gift_images_rKPd7B",
+        "gift_images_4DTz49",
+        "gift_images_yWcNKm"
+      ],
+      "settings": {
+        "welcome_message": "Welcome to our store!"
       }
     },
     "bf_promo_discount_AibFnrL": {

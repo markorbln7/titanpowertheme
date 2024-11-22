@@ -98,6 +98,12 @@
                         quantity: '1'
                         product: product
                         badge_text: product.metafields.custom.new_shop_discount
+                        grid_1: section.settings.add_4
+                        grid_2: section.settings.add_6
+                        grid_3: section.settings.add_10
+                        grid_1_text: section.settings.add_4_text
+                        grid_2_text: section.settings.add_6_text
+                        grid_3_text: section.settings.add_10_text
                      %}
                   </article>
                   <script>
@@ -138,8 +144,8 @@
       AOS.init();
     })
   </script>
-<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -149,6 +155,36 @@
       "type": "collection_list",
       "label": "Collections",
       "id": "collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_4",
+      "label": "Add 4 image"
+    },
+    {
+      "type": "text",
+      "id": "add_4_text",
+      "label": "Add 4 Number"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_6",
+      "label": "Add 6 image"
+    },
+    {
+      "type": "text",
+      "id": "add_6_text",
+      "label": "Add 6 Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_10",
+      "label": "Add 10 image"
+    },
+    {
+      "type": "text",
+      "id": "add_10_text",
+      "label": "Add 10 Number"
     }
   ],
   "blocks": [

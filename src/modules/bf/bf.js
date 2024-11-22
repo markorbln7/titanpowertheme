@@ -326,7 +326,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // });
 
         // Add to cart logic
-        let addToCarts = section.querySelectorAll(".js-atc")  // Select all add to cart buttons
+        let addToCarts = section.querySelectorAll(".js-atc-bf")  // Select all add to cart buttons
+        console.log('da li smo ovdeee');
         addToCarts.forEach((addToCart) => {
             addToCart.addEventListener("click", (e) => {
                 document.querySelector('body').style.overflow = 'auto';
@@ -350,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         quantity: 1,
                     });
                 });
-                console.log(addItems);
+                console.log(addItems, 'addItems');
                 const formData = { // Form data for the cart
                     items: addItems,
                 };
@@ -381,3 +382,42 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     })
 });
+
+let gridImages = document.querySelectorAll('.js-grid-image')
+console.log(gridImages, 'gridImages');
+gridImages.forEach(gridImage => {
+  gridImage.addEventListener('click', (e) => {
+    let _this = gridImage
+    let imageQty = _this.getAttribute('data-image-qty')
+    let ttquantity = gridImage.parentNode.parentNode.querySelector('.quantity__input')
+    let buyMore = gridImage.parentNode.parentNode.querySelector('.js-buy-more')
+    let atc = gridImage.parentNode.parentNode.parentNode.parentNode.querySelector('.js-atc-bf')
+    atc.setAttribute('data-quantity', imageQty)
+    gridImage.parentNode.parentNode.querySelector('.quantity__button').classList.remove('disabled')
+    ttquantity.value = imageQty
+    if (imageQty < 1 && buyMore) {
+      imageQty = 1
+    }
+    if (imageQty < 4 && buyMore) {
+      buyMore.textContent = 'Add 4 save 55%%'
+      buyMore.setAttribute('data-count', 4)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 4 && imageQty < 6 && buyMore) {
+      buyMore.textContent = 'Add 6 save 65%'
+      buyMore.setAttribute('data-count', 6)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 6 && buyMore) {
+      buyMore.textContent = 'Add 10 save 80%'
+      buyMore.setAttribute('data-count', 10)
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty < 10 && buyMore) {
+      buyMore.classList.remove('hidden')
+    }
+    if (imageQty >= 10 && buyMore) {
+      buyMore.classList.add('hidden')
+    }
+  })
+})

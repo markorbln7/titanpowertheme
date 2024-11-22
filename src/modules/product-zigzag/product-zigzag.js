@@ -168,20 +168,28 @@ const addToCartsZigs = document.querySelectorAll(".js-add-to-cart-zig");
 
 addToCartsZigs.forEach((addToCartsZig) => {
     addToCartsZig.addEventListener("click", (e) => {
+      let addItems = [];
       const _this = e.currentTarget;
       const parentDiv = _this.closest(".product-zigzag__content");
       const upsellProductSelectors = parentDiv.querySelectorAll(".js-upsell-selector.active");
-      const productSelector = _this.getAttribute("data-product");
-      const addItems = [{
-        id: productSelector,
-        quantity: 1,
-      }];
+      let productSelector = _this.getAttribute("data-product");
+      let productSelectorSans = productSelector.replace(/,$/, '')
+      let numbersArray = productSelectorSans.split(",").map(Number);
+      console.log(numbersArray);
+      // numbersArray.forEach((productSelector) => {
+      //   addItems.push({
+      //     id: productSelector,
+      //     quantity: 1,
+      //   });
+      // });
+      console.log(addItems, "addItems");
       upsellProductSelectors.forEach((productSelector) => {
         const _this = productSelector;
         const productId = _this.getAttribute("data-product-id");
+        const productQuantity = _this.getAttribute("data-product-qty");
         addItems.push({
           id: productId,
-          quantity: 1,
+          quantity: productQuantity,
         });
       });
       console.log(addItems, "addItems");

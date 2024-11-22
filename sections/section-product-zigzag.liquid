@@ -31,14 +31,18 @@
         </div>
 
         <div class="product-zigzag__content">
-            <h2 class="product-zigzag__title">{{ product.title }}</h2>
+            {% if section.settings.section_title != blank %}
+                <h2 class="product-zigzag__title">{{ section.settings.section_title }}</h2>
+            {% else %}
+                <h2 class="product-zigzag__title">{{ product.title }}</h2>
+            {% endif %}
 
-            <div class="product-zigzag__prices">
+            {% comment %} <div class="product-zigzag__prices">
                 <span class="price zig-js-upsel-product-price">{{ product.price | money }}</span>
                 {%- if product.compare_at_price -%}
                     <span class="price-compared zig-js-price-discount">{{ product.compare_at_price | money }}</span>
                 {% endif %}
-            </div>
+            </div> {% endcomment %}
 
 
             {% if product.options_with_values[0].name  == "Cable Type" %}
@@ -57,7 +61,12 @@
                   <div data-price-noformat="{{ variant.price }}" data-compareprice-noformat="{{ variant.compare_at_price }}" data-compare-price="{{ variant.compare_at_price | money }}" data-price="{{variant.price | money }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
                 {% endfor %}
               </div>
-              {% if icons_repeater.size > 0 %}
+
+
+            {% if product_label %}
+                <h3 class="product-zigzag__label">{{ product_label }}</h3>
+            {% endif %}
+            {% if icons_repeater.size > 0 %}
                 <div class="product-zigzag__icons">
                     {% for block in  icons_repeater %}
                         <div class="product-zigzag__icon">
@@ -68,12 +77,8 @@
                 </div>
             {% endif %}
 
-            {% if product_label %}
-                <h3 class="product-zigzag__label">{{ product_label }}</h3>
-            {% endif %}
-
             <div class="product-zigzag__upsell-products">
-                {% for block in upsell_products limit: 2 %}
+                {% for block in upsell_products %}
                     {% assign product_upsell = block.settings.product_upsell %}
                     {% assign product_upsell_image = block.settings.product_upsell_image %}
                     {% assign product_upsell_title = block.settings.product_upsell_title %}
@@ -92,7 +97,7 @@
                         {% assign product_upsell_title = block.settings.product_upsell_title %}
                     {% endif %}
 
-                    <div data-product-id="{{ product_upsell.first_available_variant.id }}" class="js-upsell-selector upsell-product active">
+                    <div data-product-qty="{{ block.settings.product_upsell_qty }}" data-product-id="{{ product_upsell.first_available_variant.id }}" class="js-upsell-selector upsell-product active">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -119,10 +124,16 @@
                     </div>
                 {% endfor %}
             </div>
-
+            {% assign variant_ids = '' %}
+            {% for block in section.blocks %}
+                {% if block.type == 'product_list' %}
+                    {% assign product_list = block.settings.product_list %}
+                    {% assign variant_ids = variant_ids | append: product_list.variants.first.id | append: ',' %}
+                {% endif %}
+            {% endfor %}
             <div class="product-zigzag__buttons">
                 <button
-                    data-product="{{ product.selected_or_first_available_variant.id }}"
+                    data-product="{{  variant_ids }}"
                     data-quantity="1"
                     class="js-add-to-cart-zig product-zigzag__atc bold uppercase"
                 >
@@ -145,6 +156,11 @@
             "type": "product",
             "id": "product",
             "label": "Choose product"
+        },
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Section title"
         },
         {
             "type": "image_picker",
@@ -170,6 +186,17 @@
         }
     ],
     "blocks": [
+    {
+        "type": "product_list",
+        "name": "Product",
+        "settings": [
+            {
+                "type": "product",
+                "id": "product_list",
+                "label": "Choose list product"
+            }
+        ]
+        },
       {
         "type": "upsell_product_repeater",
         "name": "Upsell Products",
@@ -178,6 +205,11 @@
             "type": "product",
             "id": "product_upsell",
             "label": "Choose upsell product"
+          },
+          {
+            "type": "text",
+            "id": "product_upsell_qty",
+            "label": "Product qty"
           },
           {
             "type": "text",

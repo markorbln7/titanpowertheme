@@ -116,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
         buyNowButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
                 const popup = button.parentNode.querySelector('.buy-now-popup');
-                console.log(popup, 'popup');
                 if (popup) {
                     openPopup(popup);
                     resetQuantityListeners();
@@ -211,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         function updatePlaceholders() {
-            console.log('updating placeholders');
             fetch('/cart.js')
                 .then(response => {
                     if (!response.ok) {
@@ -221,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(cart => {
                     // Example: Display cart items in a div
-                    console.log(cart, 'cart');
                     document.querySelector('body').style.overflow = 'auto';
                     const output = document.querySelector('.js-output');
                     const item_count = cart.item_count;
@@ -233,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                     const giftSelectorsActive = document.querySelectorAll(`.gift_card[data-gift]`)
                     const cartTotal = cart.total_price;
-                    console.log(giftSelectorsActive, cartTotal, 'giftSelectorsActive');
                     // if(giftSelectorsActive) {
                     //     giftSelectorsActive.forEach(gift => {
                     //         gift.classList.remove('is-active')
@@ -255,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     // }
                     // Fill placeholders with cart items
                     cartItems.forEach((item, index) => {
-                        console.log(item, index,placeholders.length, 'item, index');
                         if (index < placeholders.length) {
                             placeholders[index].innerHTML = `
                                 <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
@@ -295,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }));
 
             let cartItemCount = 0;
-            console.log(blocks, 'blocks');
 
 
 
@@ -367,9 +361,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         window.addEventListener('load', getCartItemCount);
         window.addEventListener('load', updatePlaceholders);
+        document.addEventListener('rebuy:cart.change', (event) => {
+            updatePlaceholders();
+            getCartItemCount();
+        });
 
         function removeProduct(productId) {
-            console.log('removing product', productId);
             fetch(window.Shopify.routes.root + 'cart/change.js', {
                 method: 'POST',
                 headers: {
@@ -398,21 +395,13 @@ document.addEventListener('DOMContentLoaded', function () {
               removeProduct(dataId);
             }
         });
-        // console.log(removeProductButtons, 'removeProductButtons');
-        // removeProductButtons.forEach(button => {
-        //     button.addEventListener('click', () => {
-        //         const productId = button.getAttribute('data-id');
-        //         removeProduct(productId);
-        //     });
-        // });
 
         // Add to cart logic
         let addToCarts = section.querySelectorAll(".js-atc-bf")  // Select all add to cart buttons
-        console.log('da li smo ovdeee');
         addToCarts.forEach((addToCart) => {
             addToCart.addEventListener("click", (e) => {
-                console.log('clicked');
                 document.querySelector('body').style.overflow = 'auto';
+                $('html').addClass('hide-drawer');
                 let checkout = false;
                 if (addToCart.classList.contains('js-checkout')) { // Check if the button is checkout
                     checkout = true;
@@ -467,7 +456,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 let gridImages = document.querySelectorAll('.js-grid-image')
-console.log(gridImages, 'gridImages');
 gridImages.forEach(gridImage => {
   gridImage.addEventListener('click', (e) => {
     let _this = gridImage
@@ -527,3 +515,24 @@ function initializeStickyTrackingBar() {
     handleStickyBehavior();
 }
 initializeStickyTrackingBar();
+
+$('html').addClass('hide-drawer');
+
+setTimeout(() => {
+    let closeRebuy = document.querySelector('.rebuy-cart__flyout-close');
+    console.log(closeRebuy, 'closeRebuy');
+    closeRebuy.addEventListener('click', () => {
+        $('html').addClass('hide-drawer');
+        Rebuy.SmartCart.hide()
+    })
+}, 4000);
+
+
+let openRebuys = document.querySelectorAll('.js-rebuy');
+console.log(openRebuys, 'openRebuy');
+openRebuys.forEach(openRebuy => {
+    openRebuy.addEventListener('click', () => {
+        $('html').removeClass('hide-drawer');
+        Rebuy.SmartCart.show()
+    })
+});

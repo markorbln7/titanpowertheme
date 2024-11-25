@@ -41,3 +41,9 @@
     z-index: 9999999999; /* Adjust as needed */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
   }
+  .hide-drawer #rebuy-cart {
+    display: none !important;
+  }
+  .hide-drawer .rebuy-modal-visible, .rebuy-cart-visible {
+    overflow: auto !important;
+}

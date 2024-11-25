@@ -46,7 +46,7 @@
             {% comment %} Cart, search, account icons... {% endcomment %}
             <ul class="section-header__actions">
                 <li>
-                    <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+                    <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset js-rebuy" id="cart-icon-bubble">
                         {%- liquid
                             if cart == empty
                             render 'icon-cart-empty'

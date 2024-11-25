@@ -715,6 +715,27 @@
             "top_note": "Free",
             "gift_price_product": "titan-100w-multi-cable™-dummy"
           }
+        },
+        "grid_images_zJQ36r": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_4c93cac1-6bc2-4986-b29f-f16c1809cff7.jpg",
+            "image_qty": "2"
+          }
+        },
+        "grid_images_F3JKM6": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_1_4e3f5e58-8254-4ef6-9e58-8d6d8f6aca31.jpg",
+            "image_qty": "4"
+          }
+        },
+        "grid_images_AypVM9": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/download_2_7a3dd1f5-8c4e-4ab4-8266-052e4b5efc33.jpg",
+            "image_qty": "8"
+          }
         }
       },
       "block_order": [
@@ -734,7 +755,10 @@
         "gift_images_3tTcCH",
         "gift_images_fzgweC",
         "gift_images_jQMMyM",
-        "gift_images_LcTjTK"
+        "gift_images_LcTjTK",
+        "grid_images_zJQ36r",
+        "grid_images_F3JKM6",
+        "grid_images_AypVM9"
       ],
       "custom_css": [
         ".promo_line.new-promo-line {border: 1.65px dashed #ffeb58 !important;}",
@@ -743,8 +767,8 @@
         "@media (max-width: 760px) {.bf-text, .promo_line {font-size: 11px; }}"
       ],
       "settings": {
-        "show_grid_images": false,
-        "show_qty": false,
+        "show_grid_images": true,
+        "show_qty": true,
         "show_gift_layout": true,
         "show_disc_box": true,
         "promo_line": "",

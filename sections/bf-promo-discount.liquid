@@ -13,21 +13,21 @@
       </h2>
     {% endif %}
 
-    <div class="block-items flex flex-col md:flex-row">
+    <div class="block-items flex flex-row md:flex-row">
       {% for block in section.blocks limit: 3 %}
         <div class="block-item">
           {% if block.settings.eyebrow_position == false %}
-            <div class="text-[#60c655] text-[24px] md:text-[30px] leading-[1]">
+            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}
 
-          <h3 class="text-white text-[40px] md:text-[80px] font-sans leading-[1]">
+          <h3 class="text-white text-[24px] md:text-[80px] font-sans leading-[1]">
             {{ block.settings.block_title }}
           </h3>
 
           {% if block.settings.eyebrow_position %}
-            <div class="text-[#60c655] text-[24px] md:text-[30px] leading-[1]">
+            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}
@@ -47,7 +47,7 @@
    }
   .custom-pack-wrapper {
     max-width: 1300px;
-    padding: 40px 10px;
+    padding: 20px 10px;
     margin: 0 auto;
   }
   .block-item {
@@ -64,6 +64,9 @@
   @media (min-width: 768px) {
     .block-items {
       flex-direction: row;
+    }
+    .custom-pack-wrapper {
+      padding: 40px 10px;
     }
   }
 </style>

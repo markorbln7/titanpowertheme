@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
@@ -34,6 +34,38 @@
         "enable_country_selector": false,
         "enable_language_selector": false
       }
+    },
+    "tracking_bar_deQARz": {
+      "type": "tracking-bar",
+      "blocks": {
+        "discount_block_Nm9Pgw": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 4,
+            "percentage_off": 55
+          }
+        },
+        "discount_block_jx8eyH": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 6,
+            "percentage_off": 65
+          }
+        },
+        "discount_block_PbWRYA": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 10,
+            "percentage_off": 80
+          }
+        }
+      },
+      "block_order": [
+        "discount_block_Nm9Pgw",
+        "discount_block_jx8eyH",
+        "discount_block_PbWRYA"
+      ],
+      "settings": {}
     },
     "header": {
       "type": "header",
@@ -72,6 +104,7 @@
   },
   "order": [
     "announcement_bar_yzaPKk",
+    "tracking_bar_deQARz",
     "header",
     "header_new_kR4L84"
   ]

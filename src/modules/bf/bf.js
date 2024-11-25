@@ -286,6 +286,86 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 console.log('done updating placeholders');
         }
+        function initializeTrackingBar() {
+            const messageContainer = document.querySelector('[data-tracking-bar-message]');
+            const progressBar = document.querySelector('[data-progress-bar]');
+            const blocks = Array.from(document.querySelectorAll('[data-tracking-bar-blocks] li')).map((block) => ({
+              itemCount: parseInt(block.getAttribute('data-item-count'), 10),
+              percentageOff: parseInt(block.getAttribute('data-percentage-off'), 10),
+            }));
+
+            let cartItemCount = 0;
+            console.log(blocks, 'blocks');
+
+
+
+            function updateTrackingBar() {
+              let currentBlock = null;
+              let nextBlock = null;
+
+              // Determine the current and next discount blocks
+              for (let i = 0; i < blocks.length; i++) {
+                if (cartItemCount >= blocks[i].itemCount) {
+                  currentBlock = blocks[i];
+                } else {
+                  nextBlock = blocks[i];
+                  break;
+                }
+              }
+
+              // Update message and progress bar
+              if (!currentBlock) {
+                // Before the first block
+                const itemsLeft = blocks[0].itemCount - cartItemCount;
+                messageContainer.textContent = `Add ${itemsLeft} more items to save ${blocks[0].percentageOff}%.`;
+                // const progress = (cartItemCount / blocks[0].itemCount) * 100;
+                // progressBar.style.width = `${progress}%`;
+              } else if (!nextBlock) {
+                // Maximum discount reached
+                messageContainer.textContent = `You are at your maximum discount of ${currentBlock.percentageOff}%.`;
+                // progressBar.style.width = '100%';
+              } else {
+                // Between blocks
+                const itemsLeft = nextBlock.itemCount - cartItemCount;
+                messageContainer.textContent = `You get ${currentBlock.percentageOff}% off. Add ${itemsLeft} more items to get ${nextBlock.percentageOff}% off.`;
+                const progress = ((cartItemCount - currentBlock.itemCount) / (nextBlock.itemCount - currentBlock.itemCount)) * 100;
+                // progressBar.style.width = `${progress}%`;
+              }
+              const maxItems = blocks[blocks.length - 1].itemCount;
+              const progress = Math.min((cartItemCount / maxItems) * 100, 100); // Cap at 100%
+              progressBar.style.width = `${progress}%`;
+            }
+            function fetchCartCount() {
+                fetch('/cart.js')
+                  .then(response => response.json())
+                  .then(cart => {
+                    cartItemCount = cart.item_count;
+                    updateTrackingBar();
+                  })
+                  .catch(error => console.error('Error fetching cart data:', error));
+            }
+
+
+
+            // Initial setup
+            fetchCartCount();
+          }
+
+        function getCartItemCount() {
+            fetch('/cart.js')
+              .then(response => response.json())
+              .then(cart => {
+                const itemCount = cart.item_count; // Total number of items in the cart
+                console.log('Cart item count:', itemCount);
+
+                // Use this value to update your tracking bar or any other UI elements
+                initializeTrackingBar(itemCount); // Example: Hook into your tracking bar logic
+              })
+              .catch(error => {
+                console.error('Error fetching cart data:', error);
+              });
+        }
+        window.addEventListener('load', getCartItemCount);
         window.addEventListener('load', updatePlaceholders);
 
         function removeProduct(productId) {
@@ -303,6 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if(response.status === 200) {
                     updatePlaceholders();
+                    getCartItemCount();
                 }
                 return response.json();
             })
@@ -331,10 +412,6 @@ document.addEventListener('DOMContentLoaded', function () {
         addToCarts.forEach((addToCart) => {
             addToCart.addEventListener("click", (e) => {
                 console.log('clicked');
-                document.addEventListener('rebuyCartUpdated', function(e) {
-                    e.preventDefault(); // Prevent the cart from opening
-                    console.log('Rebuy cart display suppressed.');
-                });
                 document.querySelector('body').style.overflow = 'auto';
                 let checkout = false;
                 if (addToCart.classList.contains('js-checkout')) { // Check if the button is checkout
@@ -374,6 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('.buy-now-popup.active').classList.remove('active');
                             document.querySelector('body').style.overflow = 'auto';
                             updatePlaceholders();
+                            getCartItemCount();
                         }
                         if (response.status === 200 && checkout) {
                             window.location.href = '/checkout';
@@ -426,8 +504,26 @@ gridImages.forEach(gridImage => {
     }
   })
 })
+function initializeStickyTrackingBar() {
+    const trackingBar = document.querySelector('[data-tracking-bar]');
+    const stickyClass = 'sticky-bar';
 
-document.addEventListener('rebuyCartUpdated', function(event) {
-    event.preventDefault(); // Prevent Rebuy cart from opening
-    console.log('Rebuy cart opening suppressed on this page.');
-});
+    function handleStickyBehavior() {
+      const scrollPosition = window.scrollY; // Current vertical scroll position
+      const viewportHeight = window.innerHeight; // Viewport height
+
+      if (scrollPosition > 40 || viewportHeight < 40) {
+        trackingBar.classList.add(stickyClass);
+      } else {
+        trackingBar.classList.remove(stickyClass);
+      }
+    }
+
+    // Attach scroll and resize event listeners
+    window.addEventListener('scroll', handleStickyBehavior);
+    window.addEventListener('resize', handleStickyBehavior);
+
+    // Initial check
+    handleStickyBehavior();
+}
+initializeStickyTrackingBar();

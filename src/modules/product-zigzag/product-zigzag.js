@@ -155,6 +155,83 @@ function updatePlaceholders() {
       });
       console.log('done updating placeholders');
 }
+function initializeTrackingBar() {
+  const messageContainer = document.querySelector('[data-tracking-bar-message]');
+  const progressBar = document.querySelector('[data-progress-bar]');
+  const blocks = Array.from(document.querySelectorAll('[data-tracking-bar-blocks] li')).map((block) => ({
+    itemCount: parseInt(block.getAttribute('data-item-count'), 10),
+    percentageOff: parseInt(block.getAttribute('data-percentage-off'), 10),
+  }));
+
+  let cartItemCount = 0;
+  console.log(blocks, 'blocks');
+
+
+
+  function updateTrackingBar() {
+    let currentBlock = null;
+    let nextBlock = null;
+
+    // Determine the current and next discount blocks
+    for (let i = 0; i < blocks.length; i++) {
+      if (cartItemCount >= blocks[i].itemCount) {
+        currentBlock = blocks[i];
+      } else {
+        nextBlock = blocks[i];
+        break;
+      }
+    }
+
+    // Update message and progress bar
+    if (!currentBlock) {
+      // Before the first block
+      const itemsLeft = blocks[0].itemCount - cartItemCount;
+      messageContainer.textContent = `Add ${itemsLeft} more items to save ${blocks[0].percentageOff}%.`;
+      //const progress = (cartItemCount / blocks[0].itemCount) * 100;
+      //progressBar.style.width = `${progress}%`;
+    } else if (!nextBlock) {
+      // Maximum discount reached
+      messageContainer.textContent = `You are at your maximum discount of ${currentBlock.percentageOff}%.`;
+      //progressBar.style.width = '100%';
+    } else {
+      // Between blocks
+      const itemsLeft = nextBlock.itemCount - cartItemCount;
+      messageContainer.textContent = `You get ${currentBlock.percentageOff}% off. Add ${itemsLeft} more items to get ${nextBlock.percentageOff}% off.`;
+      //const progress = ((cartItemCount - currentBlock.itemCount) / (nextBlock.itemCount - currentBlock.itemCount)) * 100;
+      //progressBar.style.width = `${progress}%`;
+    }
+    const maxItems = blocks[blocks.length - 1].itemCount;
+    const progress = Math.min((cartItemCount / maxItems) * 100, 100); // Cap at 100%
+    progressBar.style.width = `${progress}%`;
+  }
+  function fetchCartCount() {
+      fetch('/cart.js')
+        .then(response => response.json())
+        .then(cart => {
+          cartItemCount = cart.item_count;
+          updateTrackingBar();
+        })
+        .catch(error => console.error('Error fetching cart data:', error));
+    }
+
+
+  // Initial setup
+  fetchCartCount();
+}
+function getCartItemCount() {
+  fetch('/cart.js')
+    .then(response => response.json())
+    .then(cart => {
+      const itemCount = cart.item_count; // Total number of items in the cart
+      console.log('Cart item count:', itemCount);
+
+      // Use this value to update your tracking bar or any other UI elements
+      initializeTrackingBar(itemCount); // Example: Hook into your tracking bar logic
+    })
+    .catch(error => {
+      console.error('Error fetching cart data:', error);
+    });
+}
 
 const upsellProducts = document.querySelectorAll('.upsell-product')
 upsellProducts.forEach((upsellProduct) => {
@@ -207,6 +284,7 @@ addToCartsZigs.forEach((addToCartsZig) => {
           console.log(response.status, "ok");
           if(response.status === 200) {
             updatePlaceholders();
+            getCartItemCount();
           }
           return response.json();
         })

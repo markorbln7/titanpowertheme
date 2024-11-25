@@ -4,7 +4,7 @@
       {% if section.settings.image != blank %}
         <img width="100" height="auto" src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
       {% endif %}
-      <p class="text-center uppercase text-[20px] color-black">{{ section.settings.welcome_message }}</p>
+      <p class="text-center uppercase md:text-[20px] text-[14px] color-black">{{ section.settings.welcome_message }}</p>
   </div>
 </div>
 {% schema %}

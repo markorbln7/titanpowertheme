@@ -5,7 +5,7 @@
     endcomment
     assign giftRepeater = section.blocks | where: 'type', 'gift_images'
   %}
-  <div class="gift-unlocker max-w-[400px] mx-auto mt-[20px]">
+  <div class="gift-unlocker max-w-[400px] mx-auto mt-[20px] px-[10px]">
     <div data-gift="titles" class="gift-titles">
       {% for block in giftRepeater %}
           {% assign prHandle = block.settings.money_product %}

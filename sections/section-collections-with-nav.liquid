@@ -53,7 +53,9 @@
                     <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
                   {% endif %}
                       <figure class="section-collections-with-nav__product-image">
-
+                        {% if product.metafields.custom.top_new_shop_image %}
+                          <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
                           {% if product.metafields.custom.new_shop_image %}
                             {% assign product_image =  product.metafields.custom.new_shop_image %}
                             <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
@@ -61,6 +63,7 @@
                             {% assign product_image = product.featured_image %}
                             {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
                           {% endif %}
+                        {% endif %}
                       </figure>
 
                       <div class="section-collections-with-nav__product-details justify-between">

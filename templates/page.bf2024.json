@@ -285,7 +285,7 @@
           "settings": {
             "product_upsell": "titan-100w-multi-cable™",
             "product_upsell_qty": "2",
-            "product_upsell_title": "",
+            "product_upsell_title": "2x 100W Multi Cable",
             "product_upsell_image": "shopify://shop_images/PNG_3_47ad71c9-f317-4bdb-90c6-7412e8c42974.png"
           }
         },
@@ -294,7 +294,7 @@
           "settings": {
             "product_upsell": "titan-45w-nano-pd-plug™",
             "product_upsell_qty": "1",
-            "product_upsell_title": "",
+            "product_upsell_title": "45W Travel PD Plug",
             "product_upsell_image": "shopify://shop_images/new_45W_plug_upsell_cable_page_fe6efc67-88ea-4eed-941a-7a6ace6c8d29.png"
           }
         },
@@ -339,9 +339,7 @@
       ],
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
-        "@media (min-width: 768px) {.product-zigzag__icon {margin-bottom: 0px;}}",
-        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
-        ".product-zigzag__upsell-products {gap: 10px;}"
+        "@media (max-width: 768px) {.product-zigzag__icon {margin-bottom: 0px; }.product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}.product-zigzag__upsell-products {gap: 10px;}}"
       ],
       "settings": {
         "top_title": "",

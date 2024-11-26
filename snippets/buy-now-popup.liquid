@@ -19,7 +19,7 @@
                 <img src="{{ product_image | img_url: 'master' }}" alt="{{product_image.alt}}" height="432" width="432" class="h-full w-full object-cover js-variant-image"/>
             </figure>
             <div class="buy-now-popup__content flex-1">
-                <a href="{{ product.url }}" class="text-[21px] pb-[6px] border-b border-solid border-[#e5e5e5] leading-[1.2] font-bold">{{ title }}</a>
+                <a href="{{ product.url }}" class="text-[21px] pb-[6px] border-b border-solid border-[#e5e5e5] leading-[1.2] font-bold color-black">{{ title }}</a>
                 <div class="flex items-center mt-[12px]">
                     <span class="mr-[8px] text-[21px] text-[#60c655] font-bold js-variant-price">{{ price | money }}</span> <span class="crossed text-[#999] js-variant-compare-price">{{ compare_at_price | money }}</span>
                 </div>
@@ -82,7 +82,7 @@
                           </quantity-input>
                           {% if grid_1 %}
                             <div data-count="4" class="js-buy-more">
-                              Add 4 Save 10%
+                              Add 4 Save 55%
                             </div>
                           {% endif %}
                     </div>

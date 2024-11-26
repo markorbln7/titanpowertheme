@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "game": {
       "type": "compare-table",
@@ -159,6 +159,7 @@
       "type": "section-collections-with-nav",
       "settings": {
         "use_popup": true,
+        "show_alt_images": true,
         "collections": [
           "power-pairs"
         ],
@@ -231,6 +232,8 @@
         "icons_repeater_P3UrXM"
       ],
       "settings": {
+        "top_title": "Power Pairs",
+        "section_subtitle": "These hand picked staff favourites count as multiple items towards your discount - shop smarter!",
         "product": "",
         "section_title": "Adventurer Kit",
         "product_image": "shopify://shop_images/bundle_4.png",
@@ -300,12 +303,20 @@
         "icons_repeater_wQnWyM"
       ],
       "settings": {
+        "top_title": "",
+        "section_subtitle": "",
         "product": "",
         "section_title": "Office Selection",
         "product_image": "shopify://shop_images/bundle2.png",
         "product_label": "Clean Office & Powered Up Devices",
         "discount_text": "70% OFF",
         "reverse_layout": true
+      }
+    },
+    "bf_top_bar_8RrMkH": {
+      "type": "bf-top-bar",
+      "settings": {
+        "welcome_message": "Everything is 50% off + combine items for UP TO 80% off!"
       }
     },
     "bf_promo_discount_AibFnr": {
@@ -316,7 +327,7 @@
           "settings": {
             "block_eyebrow": "4+ items",
             "block_title": "55% Off",
-            "eyebrow_position": false
+            "eyebrow_position": true
           }
         },
         "block_item_D3V3fQ": {
@@ -324,7 +335,7 @@
           "settings": {
             "block_eyebrow": "6+ items",
             "block_title": "65% off",
-            "eyebrow_position": false
+            "eyebrow_position": true
           }
         },
         "block_item_XTEFBY": {
@@ -332,7 +343,7 @@
           "settings": {
             "block_eyebrow": "10+ items",
             "block_title": "80% off",
-            "eyebrow_position": false
+            "eyebrow_position": true
           }
         }
       },
@@ -342,14 +353,8 @@
         "block_item_XTEFBY"
       ],
       "settings": {
-        "section_title": "Build a Custom Pack",
+        "section_title": "Customize Your Pack",
         "section_eyebrow": "The More You Add, More You Save"
-      }
-    },
-    "bf_top_bar_8RrMkH": {
-      "type": "bf-top-bar",
-      "settings": {
-        "welcome_message": "Everything is 40% off + UP TO 80% off in packs"
       }
     },
     "section_collections_with_nav_Xpintm": {
@@ -421,6 +426,7 @@
       ],
       "settings": {
         "use_popup": true,
+        "show_alt_images": false,
         "collections": [
           "cables-byob",
           "premium-new",
@@ -594,8 +600,8 @@
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",
-    "bf_promo_discount_AibFnr",
     "bf_top_bar_8RrMkH",
+    "bf_promo_discount_AibFnr",
     "section_collections_with_nav_Xpintm",
     "gift_display_section_PDXACjK",
     "bf_promo_discount_AibFnrL",

@@ -27,7 +27,12 @@
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
         <div class="collection" id="{{ collection_obj.handle  | strip }}">
-          <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[16px] text-center collection-title">{{ collection_obj.title }}</h2>
+          <div class="mb-[16px]">
+            <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[0px] text-center collection-title">{{ collection_obj.title }}</h2>
+            {% if collection_obj.description %}
+              <p class="text-[16px] text-center font-bold">{{ collection_obj.description | strip_html }}</p>
+            {% endif %}
+          </div>
           <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
             {% for product in collection_obj.products %}
               {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
@@ -53,7 +58,7 @@
                     <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
                   {% endif %}
                       <figure class="section-collections-with-nav__product-image">
-                        {% if product.metafields.custom.top_new_shop_image %}
+                        {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
                           <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
                         {% else %}
                           {% if product.metafields.custom.new_shop_image %}
@@ -158,6 +163,12 @@
       "type": "checkbox",
       "label": "Activate Popups",
       "id": "use_popup",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "label": "Show Alt Images",
+      "id": "show_alt_images",
       "default": false
     },
     {

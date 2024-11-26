@@ -1,16 +1,17 @@
 
 <section class="bg-black text-center">
   <div class="custom-pack-wrapper">
-    {% if section.settings.section_eyebrow %}
-      <div class="text-[#60c655] text-[18px] md:text-[24px]">
-        {{ section.settings.section_eyebrow }}
-      </div>
-    {% endif %}
+
 
     {% if section.settings.section_title %}
-      <h2 class="text-white text-[30px] md:text-[60px] font-sans mb-[20px] font-bold">
+      <h2 class="text-white text-[30px] md:text-[60px] font-sans font-bold">
         {{ section.settings.section_title }}
       </h2>
+    {% endif %}
+    {% if section.settings.section_eyebrow %}
+      <div class="text-[#60c655] text-[18px] md:text-[24px] mb-[20px]">
+        {{ section.settings.section_eyebrow }}
+      </div>
     {% endif %}
 
     <div class="block-items flex flex-row md:flex-row">

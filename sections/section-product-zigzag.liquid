@@ -16,6 +16,12 @@
 {% endif %}
 
 <section class="product-zigzag-section">
+    {% if section.settings.top_title %}
+    <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[0px] text-center collection-title">{{ section.settings.top_title }}</h2>
+    {% endif %}
+    {% if section.settings.section_subtitle %}
+        <p class="text-[16px] text-center mb-[16px] font-bold">{{ section.settings.section_subtitle }}</p>
+    {% endif %}
  <div class="wrapper">
     <div class="product-zigzag__container{% if reverse_layout %} product-zigzag__container--reverse {% endif %}">
         {% if discount_text != blank %}
@@ -152,6 +158,16 @@
 {
     "name": "Product Zigzag Section",
     "settings": [
+        {
+            "type": "text",
+            "id": "top_title",
+            "label": "Section Title"
+        },
+        {
+            "type": "text",
+            "id": "section_subtitle",
+            "label": "Section Subtitle"
+        },
         {
             "type": "product",
             "id": "product",

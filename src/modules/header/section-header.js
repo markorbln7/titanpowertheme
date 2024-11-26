@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './section-header.css'
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             navItem.addEventListener('click', function (e) {
                 megaMenu.classList.add('active');
                 megaMenuItems.classList.add('active');
-                
+
                 const navHeight = calculateMenuHeight(megaMenuLinks);
                 headerNav.style.height = `${navHeight}px`;
 

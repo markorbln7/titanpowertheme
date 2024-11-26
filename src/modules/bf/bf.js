@@ -494,7 +494,9 @@ gridImages.forEach(gridImage => {
 })
 function initializeStickyTrackingBar() {
     const trackingBar = document.querySelector('[data-tracking-bar]');
+    const headerBar = document.querySelector('.header-wrapper');
     const stickyClass = 'sticky-bar';
+    const stickyHeaderClass = 'sticky-header';
 
     function handleStickyBehavior() {
       const scrollPosition = window.scrollY; // Current vertical scroll position
@@ -502,8 +504,10 @@ function initializeStickyTrackingBar() {
 
       if (scrollPosition > 40 || viewportHeight < 40) {
         trackingBar.classList.add(stickyClass);
+        headerBar.classList.add(stickyHeaderClass);
       } else {
         trackingBar.classList.remove(stickyClass);
+        headerBar.classList.remove(stickyHeaderClass);
       }
     }
 

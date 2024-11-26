@@ -41,12 +41,18 @@
     z-index: 9999999999; /* Adjust as needed */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
   }
-  .double-sticky {
-    top:60px;
+  .sticky-header {
+    top:42px;
+  }
+  .tp-sticky.sticky {
+    top:114px !important;
+  }
+  .aha--bf2024 .utility-bar {
+    display: none;
   }
   @media screen and (max-width: 768px) {
-    .double-sticky {
-      top:55px;
+    .tp-sticky.sticky {
+      top:94px !important;
     }
   }
   .hide-drawer #rebuy-cart {

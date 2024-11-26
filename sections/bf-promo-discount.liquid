@@ -1,10 +1,14 @@
 
 <section class="bg-black text-center">
   <div class="custom-pack-wrapper">
-
-
+    {% if section.settings.show_banner %}
+    <div class="max-w-[1000px] mx-auto">
+      <img class="w-full" width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/BLACK_FRIDAY_PAGE_TEXT.png?v=1732623147">
+    </div>
+    {% endif %}
     {% if section.settings.section_title %}
-      <h2 class="text-white text-[30px] md:text-[60px] font-sans font-bold">
+      <h2 class="text-white text-[30px] md:text-[60px] font-sans font-bold relative">
+
         {{ section.settings.section_title }}
       </h2>
     {% endif %}
@@ -14,7 +18,7 @@
       </div>
     {% endif %}
 
-    <div class="block-items flex flex-row md:flex-row">
+    <div class="block-items flex flex-row md:flex-row max-w-[800px] mx-auto">
       {% for block in section.blocks limit: 3 %}
         <div class="block-item">
           {% if block.settings.eyebrow_position == false %}
@@ -23,8 +27,9 @@
             </div>
           {% endif %}
 
-          <h3 class="text-white text-[24px] md:text-[80px] font-sans leading-[1]">
-            {{ block.settings.block_title }}
+          <h3 class="text-white text-[40px] md:text-[80px] font-sans leading-[1] relative">
+            <div class="text-[27px] md:text-[52px] absolute top-0 right-0">%</div>
+            <span>{{ block.settings.block_title }}</span><span class="text-[11px] md:text-[22px]"> OFF</span>
           </h3>
 
           {% if block.settings.eyebrow_position %}
@@ -77,6 +82,12 @@
 {
   "name": "BF Promo Discount",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show Banner",
+      "default": false
+    },
     {
       "type": "text",
       "id": "section_title",

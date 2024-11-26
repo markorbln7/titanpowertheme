@@ -39,13 +39,22 @@
               {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
               {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
                 <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
-                  {% if product.metafields.custom.new_shop_discount %}
+                  {% if product.metafields.custom.new_shop_discount_top %}
                     <div class="absolute left-[10px] top-[10px]">
                       <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                        <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                        <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
                         <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
                       </div>
                     </div>
+                  {% else %}
+                    {% if product.metafields.custom.new_shop_discount %}
+                      <div class="absolute left-[10px] top-[10px]">
+                        <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                          <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                          <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                        </div>
+                      </div>
+                    {% endif %}
                   {% endif %}
                   {% if product.metafields.custom.custom_url %}
                     {% assign url = product.metafields.custom.custom_url %}
@@ -98,6 +107,11 @@
                             </div>
                           </div>
                       </div>
+                      {% if product.metafields.custom.new_shop_discount_top %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+                      {% else %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount %}
+                      {% endif %}
                       {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
                         upsell_product_one: product.metafields.custom.first_upsell_product
                         description: product_description upsell_product_one:
@@ -105,7 +119,7 @@
                         product_id: product.selected_or_first_available_variant.id
                         quantity: '1'
                         product: product
-                        badge_text: product.metafields.custom.new_shop_discount
+                        badge_text: badge_text
                         grid_1: section.settings.add_4
                         grid_2: section.settings.add_6
                         grid_3: section.settings.add_10

@@ -49,13 +49,6 @@
         "second_collection": "november-deals"
       }
     },
-    "bf_top_bar_YUNa4V": {
-      "type": "bf-top-bar",
-      "settings": {
-        "welcome_message": "Everything is Half Price + Combine any items on this page for UP TO 80% off!",
-        "show_banner": false
-      }
-    },
     "bf_promo_discount_AibFnrK": {
       "type": "bf-promo-discount",
       "blocks": {
@@ -100,6 +93,16 @@
       "disabled": true,
       "settings": {
         "welcome_message": "",
+        "show_banner": false
+      }
+    },
+    "bf_top_bar_YUNa4V": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.1px;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything is 50% OFF + Combine any items on this page for UP TO 80% off!",
         "show_banner": false
       }
     },
@@ -786,9 +789,9 @@
     "game",
     "vault_promo_7GbWMk",
     "section_explore_7JQkGw",
-    "bf_top_bar_YUNa4V",
     "bf_promo_discount_AibFnrK",
     "bf_top_bar_xpEU8f",
+    "bf_top_bar_YUNa4V",
     "gift_display_section_PDXACj",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",

@@ -159,6 +159,7 @@ window.onscroll = function() {
 
 // Get the navigation element
 var navbar = document.querySelector(".tp-sticky");
+let track = document.querySelector('.tracking-bar-container');
 
 // Get the offset position of the navbar
 var stickyOffset = navbar.offsetTop;
@@ -167,7 +168,9 @@ console.log(window.pageYOffset, stickyOffset, 'offset')
 function makeSticky() {
   if (window.pageYOffset >= stickyOffset) {
     navbar.classList.add("sticky");
+    track.classList.add('double-sticky');
   } else {
     navbar.classList.remove("sticky");
+    track.classList.remove('double-sticky');
   }
 }

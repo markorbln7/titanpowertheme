@@ -5,6 +5,14 @@
     endcomment
     assign giftRepeater = section.blocks | where: 'type', 'gift_images'
   %}
+  {% if section.settings.welcome_message %}
+    <div class="bf-special-block mt-[10px]">
+      <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon">
+      <p class="bf-text">
+        {{ section.settings.welcome_message }}
+      </p>
+    </div>
+  {% endif %}
   <div class="gift-unlocker max-w-[400px] mx-auto mt-[20px] px-[10px]">
     <div data-gift="titles" class="gift-titles">
       {% for block in giftRepeater %}
@@ -21,13 +29,20 @@
     <div class="gift-unlocker-wrapper gift-blocks bigger-spacing">
        {% for block in giftRepeater %}
         {% assign prHandle = block.settings.money_product %}
-           <div data-money="{{ all_products[prHandle].price }}" class="gift_card is-active" data-gift="{{ block.settings.product_number_unlocker }}">
-               <div class="gift-overlay is-active"></div>
-                 <div class="conf is-active">
+           <div data-money="{{ all_products[prHandle].price }}" class="gift_card
+            {% if section.settings.set_inactive == true  %}
+              padlock-active
+            {% endif %}
+              {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}
+              {% unless section.settings.set_inactive == true  %}
+                is-active
+              {% endunless %}" data-gift="{{ block.settings.product_number_unlocker }}">
+               <div class="gift-overlay {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}"></div>
+                 <div class="conf {% unless section.settings.set_inactive == true  %}is-active{% endunless %} {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">
                    <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
                  </div>
-               <div class="top-note is-active">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
-               <img class="gift_image is-active" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
+               <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
+               <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
                <div class="gift-locker">
                  <div class="gift-lockings w-embed">
                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 18.6 18.6" style="enable-background:new 0 0 18.6 18.6;" xml:space="preserve" width="100%" height="100%">
@@ -62,6 +77,12 @@
         "id": "welcome_message",
         "label": "Welcome Message",
         "default": "Welcome to our store!"
+      },
+      {
+        "type": "checkbox",
+        "id": "set_inactive",
+        "label": "Set Inactive States",
+        "default": false
       }
     ],
     "blocks": [

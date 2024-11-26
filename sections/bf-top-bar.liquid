@@ -1,4 +1,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+{% if section.settings.show_banner %}
+  <div class="bg-black py-[10px]">
+  <div class="max-w-[1000px] mx-auto px-[10px]">
+    <img class="w-full" width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/BLACK_FRIDAY_PAGE_TEXT.png?v=1732623147">
+  </div>
+  </div>
+  {% endif %}
 <div class="bg-[#60c655]">
   <div class="bf-top-bar bg-[#60c655] md:py-[10px] py-[3px] max-w-[1300px] mx-auto">
       {% if section.settings.image != blank %}
@@ -16,6 +23,12 @@
         "id": "welcome_message",
         "label": "Message",
         "default": "Everything is 40% off + 80% off in packs"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_banner",
+        "label": "Show Banner",
+        "default": false
       },
       {
         "type": "image_picker",

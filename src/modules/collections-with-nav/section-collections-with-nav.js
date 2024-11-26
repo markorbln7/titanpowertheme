@@ -1,10 +1,11 @@
 /* eslint-disable */
 import './section-collections-with-nav.css';
 
-document.addEventListener('DOMContentLoaded', function () {
-  const parentSection = document.querySelector('.section-collections-with-nav');
+  const parentSections = document.querySelectorAll('.section-collections-with-nav');
+  parentSections.forEach(parentSection => {
 
   const collectionLinks = parentSection.querySelectorAll('.collection-link');
+  console.log(collectionLinks, 'collectionLinks')
 
   collectionLinks.forEach(link => {
     link.addEventListener('click', function (event) {

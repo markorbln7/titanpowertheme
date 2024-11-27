@@ -111,7 +111,8 @@
       "type": "bf-top-bar",
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 800;}",
-        "}.bf-top-bar.bg-\\[\\#60c655\\].md\\:py-\\[10px\\].py-\\[3px\\].max-w-\\[1300px\\].mx-auto {margin-bottom: 30px; padding-top: 10px; padding-bottom: 10px;}"
+        ".bf-top-bar {background-color: #60c655; /* Converted color syntax */ margin-bottom: 30px; max-width: 1300px; padding-top: 10px; /* Assuming this is for md screens */ padding-bottom: 10px; /* Assuming this is for md screens */ margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
       ],
       "settings": {
         "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",

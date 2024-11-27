@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Handling Buy Now button clicks
         buyNowButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
-                const popup = popups[index];
+                const popup = button.parentNode.querySelector('.buy-now-popup');
                 if (popup) {
                     openPopup(popup);
                     resetQuantityListeners();

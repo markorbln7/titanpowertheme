@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Handling Buy Now button clicks
         buyNowButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
+
                 const popup = button.parentNode.querySelector('.buy-now-popup');
                 if (popup) {
                     openPopup(popup);
@@ -333,7 +334,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 fetch('/cart.js')
                   .then(response => response.json())
                   .then(cart => {
-                    cartItemCount = cart.item_count;
+
+                    let cartItemCountMinus = 0;
+                    cart.items.forEach(item => {
+                        if(item.properties._attribution) {
+                            cartItemCountMinus += item.quantity;
+                        }
+                    });
+                    cartItemCount = cart.item_count - cartItemCountMinus;
                     updateTrackingBar();
                   })
                   .catch(error => console.error('Error fetching cart data:', error));
@@ -350,10 +358,15 @@ document.addEventListener('DOMContentLoaded', function () {
               .then(response => response.json())
               .then(cart => {
                 const itemCount = cart.item_count; // Total number of items in the cart
-                console.log('Cart item count:', itemCount);
+                let itemsCount = 0;
+                cart.items.forEach(item => {
+                    if(item.properties._attribution) {
+                        itemsCount += item.quantity;
+                    }
+                });
 
                 // Use this value to update your tracking bar or any other UI elements
-                initializeTrackingBar(itemCount); // Example: Hook into your tracking bar logic
+                initializeTrackingBar(8888888); // Example: Hook into your tracking bar logic
               })
               .catch(error => {
                 console.error('Error fetching cart data:', error);

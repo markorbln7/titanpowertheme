@@ -208,7 +208,14 @@ function initializeTrackingBar() {
       fetch('/cart.js')
         .then(response => response.json())
         .then(cart => {
-          cartItemCount = cart.item_count;
+
+          let cartItemCountMinus = 0;
+          cart.items.forEach(item => {
+              if(item.properties._attribution) {
+                  cartItemCountMinus += item.quantity;
+              }
+          });
+          cartItemCount = cart.item_count - cartItemCountMinus;
           updateTrackingBar();
         })
         .catch(error => console.error('Error fetching cart data:', error));

@@ -89,12 +89,26 @@
         "block_item_XTEFBY"
       ],
       "custom_css": [
-        ".flex-row {display: none;}"
+        ".flex-row {display: none;}",
+        ".max-w-\\[1000px\\] {max-width: 800px; margin-top: 20px;}",
+        ".custom-pack-wrapper {padding: 1px 10px;}"
       ],
       "settings": {
         "show_banner": true,
         "section_title": "",
         "section_eyebrow": ""
+      }
+    },
+    "bf_top_bar_YUNa4V": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; /* Converted color syntax */ margin-bottom: 0px; max-width: 1300px; padding-top: 10px; /* Assuming this is for md screens */ padding-bottom: 10px; /* Assuming this is for md screens */ margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + Save 80%  By Bundling",
+        "show_banner": false
       }
     },
     "bf_promo_discount_fjxfqV": {
@@ -131,7 +145,10 @@
         "block_item_8RTrqd"
       ],
       "custom_css": [
-        ".max-w-\\[1000px\\].mx-auto {display: none;}"
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-size: 18px; font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 50px; }}"
       ],
       "settings": {
         "show_banner": true,
@@ -144,18 +161,6 @@
       "disabled": true,
       "settings": {
         "welcome_message": "",
-        "show_banner": false
-      }
-    },
-    "bf_top_bar_YUNa4V": {
-      "type": "bf-top-bar",
-      "custom_css": [
-        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px; text-transform: capitalize;}",
-        ".bf-top-bar {background-color: #60c655; /* Converted color syntax */ margin-bottom: 20px; max-width: 1300px; padding-top: 10px; /* Assuming this is for md screens */ padding-bottom: 10px; /* Assuming this is for md screens */ margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
-      ],
-      "settings": {
-        "welcome_message": "Everything 50% OFF + Save 80%  By Bundling",
         "show_banner": false
       }
     },
@@ -943,9 +948,9 @@
     "vault_promo_7GbWMk",
     "section_explore_7JQkGw",
     "bf_promo_discount_AibFnrK",
+    "bf_top_bar_YUNa4V",
     "bf_promo_discount_fjxfqV",
     "bf_top_bar_xpEU8f",
-    "bf_top_bar_YUNa4V",
     "gift_display_section_PDXACj",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",

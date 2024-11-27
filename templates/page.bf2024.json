@@ -89,9 +89,49 @@
         "block_item_XTEFBY"
       ],
       "custom_css": [
-        ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-size: 18px; font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
-        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 45px; }}"
+        ".flex-row {display: none;}"
+      ],
+      "settings": {
+        "show_banner": true,
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "bf_promo_discount_fjxfqV": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_nCdMca": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_HwYx7R": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "6+ items",
+            "block_title": "65",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_8RTrqd": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_nCdMca",
+        "block_item_HwYx7R",
+        "block_item_8RTrqd"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}"
       ],
       "settings": {
         "show_banner": true,
@@ -903,6 +943,7 @@
     "vault_promo_7GbWMk",
     "section_explore_7JQkGw",
     "bf_promo_discount_AibFnrK",
+    "bf_promo_discount_fjxfqV",
     "bf_top_bar_xpEU8f",
     "bf_top_bar_YUNa4V",
     "gift_display_section_PDXACj",

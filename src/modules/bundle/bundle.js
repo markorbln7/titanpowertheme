@@ -185,8 +185,9 @@ async function refreshCart() {
 
     let firstGift = document.querySelector('.gift-tracker-holder').getAttribute('data-first');
     let secondGift = document.querySelector('.gift-tracker-holder').getAttribute('data-second');
+    let thirdGift = document.querySelector('.gift-tracker-holder').getAttribute('data-third');
 
-    console.log(firstGift, secondGift, giftCount , 'saberise')
+    console.log(firstGift, secondGift, thirdGift, giftCount , 'saberise')
 
     let circle = document.querySelector('.circle-chart__circle')
 
@@ -200,9 +201,8 @@ async function refreshCart() {
             currency = '€'
         }
         circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/firstGift)*540);
-        document.querySelector('.left-to-gift').innerHTML ='<img  class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/New_free_gift_titan_kit_symbol_cable_wheel.png?v=1714648077">' + ((firstGift - giftCount)/100) + currency + '<br> MORE!';
-    }
-    if(giftCount > firstGift) {
+        document.querySelector('.left-to-gift').innerHTML ='<img  class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/FREE_GIFT_-_mystery_1.png?v=1732712555">' + ((firstGift - giftCount)/100) + currency + '<br> MORE!';
+    } else if (giftCount >= firstGift && giftCount < secondGift) {
         let currency = cart.currency;
         if(currency == 'USD') {
             currency = '$'
@@ -211,12 +211,27 @@ async function refreshCart() {
             currency = '€'
         }
         circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/secondGift)*540);
-        document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_cable_Icon_titan_kit_wheel_-_green_glow.png?v=1730623927">' +((secondGift - giftCount)/100) + currency +  '<br> MORE!';
-     }
-     if(secondGift - giftCount <= 0) {
-        document.querySelector('.left-to-gift').innerHTML ='ALL GIFTS UNLOCKED!';
+        document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_gift_gift_tracker_casble_1.png?v=1732712554">' +((secondGift - giftCount)/100) + currency +  '<br> MORE!';
+     } else if (giftCount >= secondGift && giftCount < thirdGift) {
+        let currency = cart.currency;
+        if(currency == 'USD') {
+            currency = '$'
+        }
+        if(currency == 'EUR') {
+            currency = '€'
+        }
+        circle.setAttribute('stroke-dashoffset', 1000 - (giftCount/thirdGift)*540);
+        document.querySelector('.left-to-gift').innerHTML ='<img class="max-w-[40%] mx-auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_gift_gift_tracker_case_1.png?v=1732712554">' +((thirdGift - giftCount)/100) + currency +  '<br> MORE!';
 
-     }
+        } else {
+            circle.setAttribute('stroke-dashoffset', 1),
+            document.querySelector('.left-to-gift').innerHTML ='ALL GIFTS UNLOCKED!'
+        }
+
+    //  if(secondGift - giftCount <= 0) {
+    //     document.querySelector('.left-to-gift').innerHTML ='ALL GIFTS UNLOCKED!';
+
+    //  }
 
     var swiper = new Swiper('.section-bundle__cart-carousel', {
         spaceBetween: 8,

@@ -40,9 +40,10 @@
         "discount_block_tFL3T6"
       ],
       "custom_css": [
-        ".savings {color: #000000; margin-bottom: -3px; margin-top: -16px; background: linear-gradient(131deg, #c4d3d3, #fff 98%); box-shadow: 0 1px 5px rgb(0 0 0 / 15%); background: linear-gradient(131deg, #e0e0e0, #8ee584 98%);}",
+        ".savings {color: #000000; margin-bottom: -3px; background: linear-gradient(131deg, #c4d3d3, #fff 98%); box-shadow: 0 1px 5px rgb(0 0 0 / 15%); background: linear-gradient(131deg, #e0e0e0, #8ee584 98%);}",
         ".py-\\[20px\\] {padding-top: 7px; padding-bottom: 20px;}",
-        ".tracking-bar-progress {height: 7px; box-shadow: 0 3px 10px rgb(0 0 0 / 8%);}"
+        ".tracking-bar-progress {height: 7px; box-shadow: 0 3px 10px rgb(0 0 0 / 8%);}",
+        "@media screen and (max-width: 768px) {.savings {margin-top: -16px;}}"
       ],
       "settings": {
         "welcome_message": "Welcome to our store!"

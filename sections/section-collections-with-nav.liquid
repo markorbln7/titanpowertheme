@@ -39,7 +39,7 @@
               {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
               {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
                 <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
-                  {% if product.metafields.custom.new_shop_discount_top %}
+                  {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
                     <div class="absolute left-[10px] top-[10px]">
                       <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
                         <div>{{ product.metafields.custom.new_shop_discount_top }}</div>

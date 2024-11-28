@@ -1,4 +1,38 @@
-
+ 
+<style>
+   .font-sans {
+        font-family: "Work Sans", serif;
+        font-weight: 600;
+   }
+   .font-bold {
+        font-weight: 900;
+   }
+  .custom-pack-wrapper {
+    max-width: 1300px;
+    padding: 20px 10px;
+    margin: 0 auto;
+  }
+  .block-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-right: 4px solid white;
+    align-items: center;
+    justify-content: center;
+  }
+  .block-item:last-child {
+    border-right: none;
+  }
+  @media (min-width: 768px) {
+    .block-items {
+      flex-direction: row;
+    }
+    .custom-pack-wrapper {
+      padding: 40px 10px;
+    }
+  }
+</style>
+ 
 <section class="bg-black text-center">
   <div class="custom-pack-wrapper">
   {% if section.settings.show_banner %}
@@ -42,41 +76,7 @@
     </div>
   </div>
 </section>
-{% stylesheet %}
-<style>
-   .font-sans {
-        font-family: "Work Sans", serif;
-        font-weight: 600;
-   }
-   .font-bold {
-        font-weight: 900;
-   }
-  .custom-pack-wrapper {
-    max-width: 1300px;
-    padding: 20px 10px;
-    margin: 0 auto;
-  }
-  .block-item {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    border-right: 4px solid white;
-    align-items: center;
-    justify-content: center;
-  }
-  .block-item:last-child {
-    border-right: none;
-  }
-  @media (min-width: 768px) {
-    .block-items {
-      flex-direction: row;
-    }
-    .custom-pack-wrapper {
-      padding: 40px 10px;
-    }
-  }
-</style>
-{% endstylesheet %}
+
 <!-- Shopify Section: Custom Pack Builder -->
 {% schema %}
 {

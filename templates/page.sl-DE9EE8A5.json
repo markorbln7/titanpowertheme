@@ -9,6 +9,21 @@
  */
 {
   "sections": {
+    "bf_promo_discount_PACPXt": {
+      "type": "bf-promo-discount",
+      "custom_css": [
+        ".flex-row {display: none;}",
+        ".max-w-\\[1000px\\] {max-width: 600px; margin-top: 20px;}",
+        ".custom-pack-wrapper {padding: 1px 10px;}",
+        ".bg-black {--tw-bg-opacity: 1; background-color: #141414;}",
+        "@media (min-width: 768px) {.md\\:text-\\[60px\\] {font-size: 40px; }}"
+      ],
+      "settings": {
+        "show_banner": true,
+        "section_title": "Titan Shop",
+        "section_eyebrow": ""
+      }
+    },
     "game": {
       "type": "compare-table",
       "disabled": true,
@@ -16,6 +31,7 @@
     },
     "vault_promo_7GbWMk": {
       "type": "vault-promo",
+      "disabled": true,
       "custom_css": [
         "[class*=\"pt-\"][class*=\"80px\"] {padding-top: 70px;}"
       ],
@@ -23,9 +39,9 @@
         "title": "Black Friday Countdown",
         "subtitle": "Our Best Offers Every  72 hrs",
         "description": "Flash Sales, mystery gifts, 80% off, and new products",
-        "main_image": "shopify:\/\/shop_images\/titan_power_logo_faded.png",
-        "bleed_image": "shopify:\/\/shop_images\/The_titan_vaults_top_image_19a1e552-c8f4-4786-a98f-c40a05b62e65.png",
-        "top_image": "shopify:\/\/shop_images\/BFCM_badge_2024_COUNTDOWN_PNG_-_compressed_b86df29f-0577-4ee0-8c6d-5f586b5c20db.png"
+        "main_image": "shopify://shop_images/titan_power_logo_faded.png",
+        "bleed_image": "shopify://shop_images/The_titan_vaults_top_image_19a1e552-c8f4-4786-a98f-c40a05b62e65.png",
+        "top_image": "shopify://shop_images/BFCM_badge_2024_COUNTDOWN_PNG_-_compressed_b86df29f-0577-4ee0-8c6d-5f586b5c20db.png"
       }
     },
     "section_explore_7JQkGw": {
@@ -54,7 +70,7 @@
           "settings": {
             "heading": "Cables",
             "anchor": "#cables-byob",
-            "icon": "shopify:\/\/shop_images\/cable_icon_shop.png"
+            "icon": "shopify://shop_images/cable_icon_shop.png"
           }
         },
         "nav_6tjcah": {
@@ -62,7 +78,7 @@
           "settings": {
             "heading": "PREMIUM",
             "anchor": "#premium-new",
-            "icon": "shopify:\/\/shop_images\/premium_icon_shop.png"
+            "icon": "shopify://shop_images/premium_icon_shop.png"
           }
         },
         "nav_7DVmXb": {
@@ -70,7 +86,7 @@
           "settings": {
             "heading": "Plugs",
             "anchor": "#plugs",
-            "icon": "shopify:\/\/shop_images\/plug_icon_shop.png"
+            "icon": "shopify://shop_images/plug_icon_shop.png"
           }
         },
         "nav_ihnPa7": {
@@ -78,7 +94,7 @@
           "settings": {
             "heading": "Wireless",
             "anchor": "#wireless-new",
-            "icon": "shopify:\/\/shop_images\/wireless_icon_shop.png"
+            "icon": "shopify://shop_images/wireless_icon_shop.png"
           }
         },
         "nav_cahXtQ": {
@@ -86,7 +102,7 @@
           "settings": {
             "heading": "New Tech",
             "anchor": "#shopify-section-template--16599228448946__section_explore_fXzahR",
-            "icon": "shopify:\/\/shop_images\/new_tech_icon_d5f4f27a-306b-4cda-aa82-e2890b4ff79a.png"
+            "icon": "shopify://shop_images/new_tech_icon_d5f4f27a-306b-4cda-aa82-e2890b4ff79a.png"
           }
         },
         "nav_7hL3VQ": {
@@ -94,7 +110,7 @@
           "settings": {
             "heading": "Bundle",
             "anchor": "#shopify-section-template--16599228448946__titan_linked_image_A4GJp6",
-            "icon": "shopify:\/\/shop_images\/bundle_icon_shop.png"
+            "icon": "shopify://shop_images/bundle_icon_shop.png"
           }
         }
       },
@@ -112,21 +128,26 @@
         ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}"
       ],
       "settings": {
+        "use_popup": false,
+        "show_alt_images": false,
         "collections": [
           "cables-byob",
           "premium-new",
           "plugs",
           "wireless-new"
-        ]
+        ],
+        "add_4_text": "",
+        "add_6_text": "",
+        "add_10_text": ""
       }
     },
     "titan_linked_image_A4GJp6": {
       "type": "titan-linked-image",
       "settings": {
         "title": "Bundle and Save",
-        "desktop_image": "shopify:\/\/shop_images\/black_friday_bundle_banner_shop_page.jpg",
-        "mobile_image": "shopify:\/\/shop_images\/Black_friday_bundle_shop_page_-_mobile_jpeg.jpg",
-        "link": "https:\/\/titanpowerplus.com\/products\/black-friday-bundle"
+        "desktop_image": "shopify://shop_images/black_friday_bundle_banner_shop_page.jpg",
+        "mobile_image": "shopify://shop_images/Black_friday_bundle_shop_page_-_mobile_jpeg.jpg",
+        "link": "https://titanpowerplus.com/products/black-friday-bundle"
       }
     },
     "section_explore_fXzahR": {
@@ -145,12 +166,13 @@
       "settings": {
         "title": "Get Notified",
         "text": "Stay updated with our latest news and offers. Subscribe today!",
-        "desktop_image": "shopify:\/\/shop_images\/Newsletter-banner-titan-power-plus-chargers-cables-iphone-usb-c.jpg",
-        "mobile_image": "shopify:\/\/shop_images\/notified_mobile_section_shop.jpg"
+        "desktop_image": "shopify://shop_images/Newsletter-banner-titan-power-plus-chargers-cables-iphone-usb-c.jpg",
+        "mobile_image": "shopify://shop_images/notified_mobile_section_shop.jpg"
       }
     }
   },
   "order": [
+    "bf_promo_discount_PACPXt",
     "game",
     "vault_promo_7GbWMk",
     "section_explore_7JQkGw",

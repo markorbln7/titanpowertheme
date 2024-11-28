@@ -6,12 +6,7 @@
 {% if page.handle == 'test-sections' %}
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
-<script>
-  AOS.init();
-  document.addEventListener("shopify:section:load", () => {
-    AOS.init();
-  })
-</script>
+
 
 {% liquid
     assign section_title = section.settings.section_title
@@ -306,7 +301,12 @@
       </div>
   </div>
 </section>
-
+<script>
+  AOS.init();
+  document.addEventListener("shopify:section:load", () => {
+    AOS.init();
+  })
+</script>
 
 <script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
 

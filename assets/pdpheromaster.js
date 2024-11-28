@@ -153,6 +153,28 @@ overlayClsTT.forEach(overlayCl => {
       }
   })
 })
+
+let varSelect = document.querySelectorAll('.js-var-select')
+if(varSelect) {
+  varSelect.forEach(varS => {
+    varS.addEventListener('click', (e) => {
+      let _this = e.target
+      let productSelectors = document.querySelectorAll('.js-product-selector')
+      document.querySelector('.js-var-select.active')?.classList.remove('active');
+      _this.classList.add('active')
+      let variantName = _this.getAttribute('data-selector')
+      productSelectors.forEach(productSelector => {
+        let productId = productSelector.getAttribute('data-product-selector-id')
+        const jsonData = window.productVariants[productId]
+        const result = jsonData.find(item => item.options.includes(variantName));
+        productSelector.setAttribute('data-product-id', result.id)
+        console.log(result.id, 'result')
+      })
+      console.log(variantName, 'variantName')
+    })
+  })
+}
+
 console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {
     addToCart.addEventListener('click', (e) => {

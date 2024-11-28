@@ -1,5 +1,41 @@
-<div class="sticky-card flex justify-between fixed bottom-[0px] w-full bg-[#d6e1e1] md:px-[40px] px-[10px] items-center z-[999999]">
+
+<div class="fixed bottom-[0px] w-full bg-[#d6e1e1] z-[999999] md:px-[40px] px-[10px] sticky-card-wrap">
+  {% if page.handle == 'black-friday-2024' %}
+  <link href="{{ 'tracking-bar.css' | asset_url }}" rel="stylesheet" type="text/css">
+  <div data-tracking-bar class="tracking-bar-container">
+      <div class="flex justify-between items-center flex-col-reverse md:flex-row gap-[10px] gap-0">
+        <div class="bar">
+          <div class="tracking-bar-message" data-tracking-bar-message>
+              Buy {{ section.blocks[0].settings.item_count }} items, save {{ section.blocks[0].settings.percentage_off }}%.
+          </div>
+          <div class="tracking-bar-progress">
+            <div class="progress-bar" data-progress-bar></div>
+          </div>
+          <ul class="tracking-bar-blocks" data-tracking-bar-blocks>
+            {% for block in section.blocks %}
+              <li data-item-count="{{ block.settings.item_count }}" data-percentage-off="{{ block.settings.percentage_off }}">
+                {{ block.settings.item_count }} items = {{ block.settings.percentage_off }}% off
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="kit-price">
+          <div class="savings">
+            <div class="icon-embed-xxsmall w-embed">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--iconoir" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2v4m0 12v4m10-10h-4M6 12H2m2.929-7.071l2.828 2.828m8.486 8.486l2.828 2.828m0-14.142l-2.828 2.828m-8.486 8.486L4.93 19.07"></path>
+                </svg>
+            </div>
+            <div>GIFTS UNLOCKED: <span class="js-gift-unlocked" data-bundle="js-gifts-unlocked">1</span>/<span data-bundle="total-gifts">4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+    <div class="sticky-card flex justify-between md:items-start items-center">
+
     <div class="flex md:gap-[16px] gap-[8px] py-[20px] js-output flex-wrap">
+        <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">+</div>
         <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">+</div>
         <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">+</div>
         <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">+</div>
@@ -7,7 +43,8 @@
         <div class="sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center placeholder relative">+</div>
     </div>
     <div class="">
-        <button class="js-rebuy hidden md:block text-center min-w-[200px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px]">
+
+        <button class="js-rebuy hidden md:block text-center min-w-[300px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px] mt-[10px]">
             CHECKOUT NOW
         </button>
         <button class="js-rebuy flex md:hidden items-center justify-center h-[50px] w-[50px] text-center bg-[#60c655] text-[16px] text-white font-semibold rounded-[10px]">
@@ -19,6 +56,7 @@
         </button>
     </div>
 </div>
+</div>
 
 {% schema %}
 {
@@ -29,6 +67,26 @@
         "id": "welcome_message",
         "label": "Welcome Message",
         "default": "Welcome to our store!"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "discount-block",
+        "name": "Discount Block",
+        "settings": [
+          {
+            "id": "item_count",
+            "type": "number",
+            "label": "Number of Items",
+            "default": 3
+          },
+          {
+            "id": "percentage_off",
+            "type": "number",
+            "label": "Percentage Off",
+            "default": 10
+          }
+        ]
       }
     ],
     "presets": [

@@ -342,6 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });
                     cartItemCount = cart.item_count - cartItemCountMinus;
+                    document.querySelector('.js-gift-unlocked').innerHTML = cartItemCountMinus + 1;
                     updateTrackingBar();
                   })
                   .catch(error => console.error('Error fetching cart data:', error));
@@ -357,7 +358,6 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('/cart.js')
               .then(response => response.json())
               .then(cart => {
-                const itemCount = cart.item_count; // Total number of items in the cart
                 let itemsCount = 0;
                 cart.items.forEach(item => {
                     if(item.properties._attribution) {

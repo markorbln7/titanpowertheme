@@ -7,10 +7,38 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "sticky_cart_7W3hCL": {
       "type": "sticky-cart",
+      "blocks": {
+        "discount_block_cFiJdB": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 4,
+            "percentage_off": 55
+          }
+        },
+        "discount_block_zzHkXL": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 6,
+            "percentage_off": 65
+          }
+        },
+        "discount_block_tFL3T6": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 10,
+            "percentage_off": 80
+          }
+        }
+      },
+      "block_order": [
+        "discount_block_cFiJdB",
+        "discount_block_zzHkXL",
+        "discount_block_tFL3T6"
+      ],
       "settings": {
         "welcome_message": "Welcome to our store!"
       }

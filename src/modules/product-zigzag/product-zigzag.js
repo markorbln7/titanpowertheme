@@ -254,6 +254,7 @@ addToCartsZigs.forEach((addToCartsZig) => {
     addToCartsZig.addEventListener("click", (e) => {
       let addItems = [];
       const _this = e.currentTarget;
+      _this.innerHTML = "Adding...";
       const parentDiv = _this.closest(".product-zigzag__content");
       const upsellProductSelectors = parentDiv.querySelectorAll(".js-upsell-selector.active");
       let productSelector = _this.getAttribute("data-product");
@@ -290,6 +291,10 @@ addToCartsZigs.forEach((addToCartsZig) => {
         .then((response) => {
           console.log(response.status, "ok");
           if(response.status === 200) {
+            _this.innerHTML = "Added";
+            setTimeout(() => {
+              _this.innerHTML = "Add to cart";
+            }, 1000);
             updatePlaceholders();
             getCartItemCount();
           }

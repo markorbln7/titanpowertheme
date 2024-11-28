@@ -1,7 +1,7 @@
 {{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+{% comment %} <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> {% endcomment %}
 
 {% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' %}
   <script src="https://cdn.tailwindcss.com"></script>
@@ -160,12 +160,12 @@
   </div>
 </section>
 
-<script>
+{% comment %} <script>
     AOS.init();
     document.addEventListener("shopify:section:load", () => {
       AOS.init();
     })
-  </script>
+  </script> {% endcomment %}
 <script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
 

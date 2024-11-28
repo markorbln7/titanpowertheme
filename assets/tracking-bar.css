@@ -96,4 +96,11 @@
 }
 .sticky-card-wrap {
   box-shadow: 0px -3px 6px #3131319e;
+  visibility: hidden;
+  opacity: 0;
+}
+.sticky-card-wrap.show-cart {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }

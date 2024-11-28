@@ -1,0 +1,48 @@
+{% schema %}
+{
+  "name": "Scroll Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "target_class",
+      "label": "Target Section Class",
+      "default": "target-section"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Scroll to Section"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll Button",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="scroll-button-section my-[20px]">
+  <button id="scroll-button" class="scroll-button block text-center min-w-[300px] h-[46px] bg-[#60c655]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px] mx-auto">
+    {{ section.settings.button_text }}
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('scroll-button');
+    const targetClass = "{{ section.settings.target_class }}";
+
+    button.addEventListener('click', function () {
+      const targetElement = document.querySelector('.' + targetClass);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>

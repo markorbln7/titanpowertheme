@@ -553,3 +553,32 @@ openRebuys.forEach(openRebuy => {
         Rebuy.SmartCart.show()
     })
 });
+
+
+const targetDiv = document.querySelector('.sticky-card-wrap'); // The div to which the class will be added
+const triggerDiv = document.querySelector('.section-collections-with-nav'); // The div being monitored
+const customClass = 'show-cart'; // The class to add to the target div
+
+if (targetDiv && triggerDiv) {
+    const triggerOffset = triggerDiv.offsetTop + triggerDiv.offsetHeight; // Calculate when the trigger has fully passed
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+
+      if (scrollPosition >= triggerOffset) {
+        // If the trigger div has fully passed
+        targetDiv.classList.add(customClass);
+      } else if (window.scrollY < triggerDiv.offsetTop) {
+        // If scrolling back above the trigger div
+        targetDiv.classList.remove(customClass);
+      }
+    };
+
+    // Listen for scroll events
+    window.addEventListener('scroll', handleScroll);
+
+    // Initial check in case the page is already scrolled
+    handleScroll();
+  } else {
+    console.warn('Target or trigger element not found.');
+  }

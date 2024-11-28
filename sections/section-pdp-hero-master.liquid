@@ -387,11 +387,11 @@
                   {% for block in giftRepeater %}
                       <div class="gift_card {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
                           <div class="gift-overlay {% if block.settings.product_number_unlocker == '1'  %}is-active{% else %}dagag{% endif %}"></div>
-                          {% comment %} {% if block.settings.product_number_unlocker == '3'  %}
+                          {% if block.settings.product_number_unlocker == '3'  %}
                             <div class="conf">
                               <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
                             </div>
-                          {% endif %} {% endcomment %}
+                          {% endif %}
                           <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
                           <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
                           <div class="gift-locker">

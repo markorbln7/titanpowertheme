@@ -1,7 +1,8 @@
 
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
- 
 {% if page.handle == 'test-sections' %}
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
@@ -299,7 +300,7 @@
         {% endif %}
       </div>
   </div>
-</section><script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
+</section>
 
 <script>
   AOS.init();
@@ -307,7 +308,7 @@
     AOS.init();
   })
 </script>
-
+<script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {

@@ -2,14 +2,14 @@
 {% if section.settings.show_banner %}
   <div class="bg-black py-[10px]">
   <div class="max-w-[700px] mx-auto px-[10px]">
-    <img class="w-full" width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/BLACK_FRIDAY_PAGE_TEXT.png?v=1732623147">
+    <img class="w-full" width="100%" height="auto" loading="lazy" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/BLACK_FRIDAY_PAGE_TEXT.png?v=1732623147">
   </div>
   </div>
   {% endif %}
 <div class="bg-[#60c655]">
   <div class="bf-top-bar bg-[#60c655] md:py-[10px] py-[3px] max-w-[1300px] mx-auto">
       {% if section.settings.image != blank %}
-        <img width="100" height="auto" src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
+        <img width="100" height="auto" loading="lazy"  src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
       {% endif %}
       <p class="text-center uppercase md:text-[20px] text-[14px] color-black">{{ section.settings.welcome_message }}</p>
   </div>

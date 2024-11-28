@@ -38,9 +38,9 @@
                 is-active
               {% endunless %}" data-gift="{{ block.settings.product_number_unlocker }}">
                <div class="gift-overlay {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}"></div>
-                 <div class="conf {% unless section.settings.set_inactive == true  %}is-active{% endunless %} {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">
+                 {% comment %} <div class="conf {% unless section.settings.set_inactive == true  %}is-active{% endunless %} {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">
                    <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
-                 </div>}
+                 </div> {% endcomment %}
                <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
                <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
                <div class="gift-locker">

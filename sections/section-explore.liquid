@@ -300,7 +300,8 @@
         {% endif %}
       </div>
   </div>
-</section>
+</section><script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
+
 <script>
   AOS.init();
   document.addEventListener("shopify:section:load", () => {
@@ -308,7 +309,6 @@
   })
 </script>
 
-<script src="{{ 'section-explore.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {

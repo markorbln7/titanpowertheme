@@ -123,6 +123,56 @@
         "padding_bottom": 44
       }
     },
+    "limited_offers_PKBbJX": {
+      "type": "limited-offers",
+      "blocks": {
+        "air_tabs_XJhxKe": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Black_Friday_Bundle_Builder_Offer_Icon_1.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/pages/black-friday-2024"
+          }
+        },
+        "air_tabs_VhynFr": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Icon_bogo_free_titan_cable_1.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/smartcablebogof"
+          }
+        },
+        "air_tabs_ihnXYJ": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/All_4_in_1_cables_mystery_gift_icon_1.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/4in1cables"
+          }
+        },
+        "air_tabs_CTLYjY": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Icon_PLUG_FREE_CABLE_1.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/pages/plugsgift"
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_XJhxKe",
+        "air_tabs_VhynFr",
+        "air_tabs_ihnXYJ",
+        "air_tabs_CTLYjY"
+      ],
+      "custom_css": [
+        ".top-image.mb-\\[20px\\] {display: none;}"
+      ],
+      "settings": {
+        "text_right": "BLACK FRIDAY ENDS SOON",
+        "countdown_to": "30 November 2024"
+      }
+    },
     "limited_offers_AQQTjq": {
       "type": "limited-offers",
       "blocks": {
@@ -964,60 +1014,11 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "limited_offers_PKBbJX": {
-      "type": "limited-offers",
-      "blocks": {
-        "air_tabs_XJhxKe": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Black_Friday_Bundle_Builder_Offer_Icon_1.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/pages/black-friday-2024"
-          }
-        },
-        "air_tabs_VhynFr": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Icon_bogo_free_titan_cable_1.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/smartcablebogof"
-          }
-        },
-        "air_tabs_ihnXYJ": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/All_4_in_1_cables_mystery_gift_icon_1.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/4in1cables"
-          }
-        },
-        "air_tabs_CTLYjY": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Icon_PLUG_FREE_CABLE_1.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/pages/plugsgift"
-          }
-        }
-      },
-      "block_order": [
-        "air_tabs_XJhxKe",
-        "air_tabs_VhynFr",
-        "air_tabs_ihnXYJ",
-        "air_tabs_CTLYjY"
-      ],
-      "custom_css": [
-        ".top-image.mb-\\[20px\\] {display: none;}"
-      ],
-      "settings": {
-        "text_right": "Black Friday Sale",
-        "countdown_to": "30 November 2024"
-      }
     }
   },
   "order": [
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
+    "limited_offers_PKBbJX",
     "limited_offers_AQQTjq",
     "image-with-text",
     "459b0cab-7c8e-40c7-b786-6ba18d5c1404",
@@ -1034,7 +1035,6 @@
     "linked_image_eQJihB",
     "b7926c37-dae0-4e14-8312-ab71a4ad7cec",
     "164542867806a76580",
-    "17326758848623644c",
-    "limited_offers_PKBbJX"
+    "17326758848623644c"
   ]
 }

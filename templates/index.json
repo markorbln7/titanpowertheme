@@ -123,6 +123,78 @@
         "padding_bottom": 44
       }
     },
+    "gift_display_section_bkq3jR": {
+      "type": "gift-display-section",
+      "blocks": {
+        "gift_images_dpjUew": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping_c4c109c0-5e0e-444d-abce-83a0d86d7e58.webp",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "FREE SHIPPING",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
+        "gift_images_hN8yWV": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_mystery_1.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "MYSTERY GIFT",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "mystery-gift-holder-do-not-delete",
+            "money_product": ""
+          }
+        },
+        "gift_images_rcyPWb": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble_1.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TITAN CABLE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "pd",
+            "money_product": ""
+          }
+        },
+        "gift_images_dz7mNP": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_case_1.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TRAVEL CASE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "turbo-dock-price-holder-do-not-delete",
+            "money_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_dpjUew",
+        "gift_images_hN8yWV",
+        "gift_images_rcyPWb",
+        "gift_images_dz7mNP"
+      ],
+      "custom_css": [
+        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 13px; text-align: CENTER;}",
+        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
+        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700 !important; color: #343434; text-align: center;}",
+        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
+        ".mt-\\[20px\\] {margin-top: 30px;}"
+      ],
+      "settings": {
+        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
+        "set_inactive": false
+      }
+    },
     "limited_offers_PKBbJX": {
       "type": "limited-offers",
       "blocks": {
@@ -1019,6 +1091,7 @@
   },
   "order": [
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
+    "gift_display_section_bkq3jR",
     "limited_offers_PKBbJX",
     "limited_offers_AQQTjq",
     "image-with-text",

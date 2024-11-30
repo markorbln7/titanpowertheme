@@ -237,65 +237,67 @@
         {% endif %}
 
         {% if second_collection != blank %}
-          <div class="w-full">
+          <div class="w-full lg:flex lg:flex-col">
             {% if second_collection_label != blank %}
-              <h3 class="section-explore__collection-label section-explore__collection-label-travel mb-[12px] text-center text-[21px] text-[#fff] font-medium">
-                {{ second_collection_label }}
+              <h3 class="section-explore__collection-label section-explore__collection-label-desktop mb-[12px] text-center text-[21px] text-[#fff] font-medium active">
+                  {{ second_collection_label }}
               </h3>
             {% endif %}
-              <div class="flex w-full justify-center flex-wrap gap-[10px]">
-              {% for product in collections[second_collection].products limit: 4 %}
-                {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
-                {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
-                {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+              <div class="section-explore__products flex w-full justify-center flex-wrap gap-[10px]">
+                {% for product in collections[second_collection].products limit: 4 %}
+                  {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+                  {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+                  {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
 
-                  <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-travel-{{ forloop.index }}">
-                    <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
-                      <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
-                        {% if product.metafields.custom.custom_product_image %}
-                          <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                        {% else %}
-                          <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
-                        {% endif %}
+                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%] w-[48%]" data-product-hover="for-desktop-{{ forloop.index }}">
+                      <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
+                        <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
+                          {% if product.metafields.custom.custom_product_image %}
+                            <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.metafields.custom.custom_product_image | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                          {% else %}
+                            <img class="object-cover w-full h-full absolute top-0 left-0" src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{product.featured_image.alt}}" height="130" width="160"/>
+                          {% endif %}
+                        </div>
+                        {% unless product.metafields.custom.hide_details  %}
+                          <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
+                            {{ product.title }}
+                          </h4>
+                          <div class="mb-[12px] price-wrapper">
+                            <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
+                            <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
+                          </div>
+                        {% endunless %}
                       </div>
-                      {% unless product.metafields.custom.hide_details  %}
-                        <h4 class="my-[10px] px-[5px] text-[12px] font-[600] line-clamp-2 min-h-[29px] text-[#000] text-center">
-                          {{ product.title }}
-                        </h4>
-                       <div class="mb-[12px] price-wrapper">
-                          <p class="product-price text-black font-[600] leading-[1] text-[16px] text-[18px] px-[5px]">{{ product.price | money }}</p>
-                          <span class="product-price--compared crossed text-[12px] font-[500] leading-[1] text-[#86868B]">{{ product.compare_at_price | money }}</span>
-                       </div>
-                      {% endunless %}
+                      {% if product.metafields.custom.custom_url %}
+                        <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white md:max-w-[100%] md:max-w-[70%] text-[14px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
+                      {% else %}
+                        <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">GET OFFER</button>
+                      {% endif %}
+                      {% if product.metafields.custom.custom_url != blank %}
+                        <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                      {% else %}
+                        <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
+                      {% endif %}
+                      {% if product.compare_at_price %}
+                        <div class="discount-label absolute top-[14px] left-[10px] bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
+                          {% assign productdifference = product.compare_at_price | minus: product.price %}
+                          {% assign divider = product.compare_at_price | times: 1.0 %}
+                          {% assign percentage = productdifference | divided_by:  divider %}
+                          {{ percentage | times: 100 | round }}% OFF
+                        </div>
+                      {% endif %}
                     </div>
-                    {% if product.metafields.custom.custom_url %}
-                      <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white md:max-w-[100%] md:max-w-[70%] text-[14px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
-                    {% else %}
-                      <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">GET OFFER</button>
-                    {% endif %}
-                    {% if product.metafields.custom.custom_url != blank %}
-                      <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
-                    {% else %}
-                      <a href="{{ product.url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
-                    {% endif %}
-                    {% if product.compare_at_price %}
-                      <div class="discount-label absolute top-[14px] left-[10px] bg-[#60c655] text-white text-[12px] font-bold px-[10px] py-[2px]">
-                        {% assign productdifference = product.compare_at_price | minus: product.price %}
-                        {% assign divider = product.compare_at_price | times: 1.0 %}
-                        {% assign percentage = productdifference | divided_by:  divider %}
-                        {{ percentage | times: 100 | round }}% OFF
-                      </div>
-                    {% endif %}
-                  </div>
-                  {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
-                    upsell_product_one: product.metafields.custom.first_upsell_product
-                    description: product_description upsell_product_one:
-                    upsell_product_one upsell_product_two: upsell_product_two
-                    product_id: product.selected_or_first_available_variant.id
-                    quantity: '1'
-                 %}
-              {% endfor %}
-            </div>
+
+                    {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
+                        upsell_product_one: product.metafields.custom.first_upsell_product
+                        description: product_description upsell_product_one:
+                        upsell_product_one upsell_product_two: upsell_product_two
+                        product_id: product.selected_or_first_available_variant.id
+                        quantity: '1'
+                    %}
+
+                {% endfor %}
+              </div>
           </div>
         {% endif %}
       </div>

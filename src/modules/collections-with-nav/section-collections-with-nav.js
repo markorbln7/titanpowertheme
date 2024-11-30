@@ -106,7 +106,7 @@ import './section-collections-with-nav.css';
       comparePriceContainer2.innerHTML = getComparePrice;
       const imageContainer = productElement.querySelector('.js-variant-image');
       imageContainer.src = getImage;
-      console.log(getImage, 'image')
+      console.log(selectedOptions, getImage, 'imagess')
       addToCartButtonS.forEach(addToCartButton => {
         addToCartButton.setAttribute('data-product-id', variantId);
       });

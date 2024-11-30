@@ -184,7 +184,7 @@
                   {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
                   {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
 
-                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] w-[24%] max-w-[24%]" data-product-hover="for-desktop-{{ forloop.index }}">
+                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] md:max-w-[48%] max-w-[24%]" data-product-hover="for-desktop-{{ forloop.index }}">
                       <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
                         <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
                           {% if product.metafields.custom.custom_product_image %}
@@ -206,7 +206,7 @@
                       {% if product.metafields.custom.custom_url %}
                         <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white md:max-w-[100%] md:max-w-[70%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
                       {% else %}
-                        <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">GET OFFER</button>
+                        <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">BUY NOW</button>
                       {% endif %}
                       {% if product.metafields.custom.custom_url != blank %}
                         <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>
@@ -249,7 +249,7 @@
                 {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
                 {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
 
-                  <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] w-[24%] max-w-[24%]" data-product-hover="for-travel-{{ forloop.index }}">
+                  <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%]" data-product-hover="for-travel-{{ forloop.index }}">
                     <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
                       <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
                         {% if product.metafields.custom.custom_product_image %}
@@ -271,7 +271,7 @@
                     {% if product.metafields.custom.custom_url %}
                       <a href="{{ product.metafields.custom.custom_url }}" class="flex items-center justify-center section-explore__buy-now z-[4] mx-auto min-w-0 px-[20px] h-[40px] w-full bg-[#60c655] text-white md:max-w-[100%] md:max-w-[70%] text-[16px] rounded-[10px] mt-[12px] text-bold">GET OFFER</a>
                     {% else %}
-                      <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">GET OFFER</button>
+                      <button class="section-explore__buy-now js-section-explore__buy-now relative z-[4] mx-auto min-w-0 px-[20px] h-[28px] w-full bg-[#60c655] text-white max-w-[80%] text-[14px] rounded-[10px] mt-[12px]">BUY NOW</button>
                     {% endif %}
                     {% if product.metafields.custom.custom_url != blank %}
                       <a href="{{ product.metafields.custom.custom_url }}" class="absolute !block w-full h-full top-0 left-0 z-[3]" aria-hidden="true"></a>

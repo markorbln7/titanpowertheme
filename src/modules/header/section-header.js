@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const isActive = headerNav.classList.contains('menu-active');
 
                 if (!isActive) {
+                    console.log('active')
                     const navHeight = calculateMenuHeight(menuItems);
-                    headerNav.style.height = `${navHeight}px`;
+                    console.log(navHeight, 'navHeight');
+                    headerNav.style.height = 'auto';
 
                     navWrapper.classList.add('active');
                     headerNav.classList.add('menu-active');
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         toggle.classList.add('active');
                     });
                 } else {
+                    console.log('passive')
                     headerNav.style.height = '0';
                     navWrapper.classList.remove('active');
                     headerNav.classList.remove('menu-active');
@@ -86,17 +89,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const megaMenuLinks = megaMenu.querySelectorAll('.mega-menu__links');
 
             navItem.addEventListener('click', function (e) {
+                console.log(megaMenuLinks, 'megaMenuLinks');
                 megaMenu.classList.add('active');
                 megaMenuItems.classList.add('active');
 
                 const navHeight = calculateMenuHeight(megaMenuLinks);
-                headerNav.style.height = `${navHeight}px`;
+                headerNav.style.height = 'auto';
 
                 if (e.target.classList.contains('mega-menu__links-title')) {
                     const childrenLinksParent = e.target.closest('.mega-menu__links').querySelector('.inner-children');
                     const childrenLinks = childrenLinksParent.querySelectorAll('li');
                     const navHeight = calculateMenuHeight(childrenLinks);
-                    headerNav.style.height = `${navHeight}px`;
+                    headerNav.style.height = 'auto';
                     childrenLinksParent.classList.add('active');
 
                     const childrenBackButton = childrenLinksParent.querySelector('.children-back-button');
@@ -105,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         childrenBackButton.addEventListener('click', function (event) {
                             event.stopPropagation();
                             const navHeight = calculateMenuHeight(megaMenuLinks);
-                            headerNav.style.height = `${navHeight}px`;
+                            headerNav.style.height = 'auto';
 
                             childrenLinksParent.classList.remove('active');
                         });

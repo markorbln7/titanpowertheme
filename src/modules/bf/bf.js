@@ -1,5 +1,6 @@
 /* eslint-disable */
 import './bf.css'
+console.log('bf.js loaded');
 
 document.addEventListener('DOMContentLoaded', function () {
     //Select parent section
@@ -516,11 +517,17 @@ function initializeStickyTrackingBar() {
       const viewportHeight = window.innerHeight; // Viewport height
 
       if (scrollPosition > 40 || viewportHeight < 40) {
-        trackingBar.classList.add(stickyClass);
-        headerBar.classList.add(stickyHeaderClass);
+        if(trackingBar) {
+            trackingBar.classList.add(stickyClass);
+            if(headerBar)
+            headerBar.classList.add(stickyHeaderClass);
+        }
       } else {
-        trackingBar.classList.remove(stickyClass);
-        headerBar.classList.remove(stickyHeaderClass);
+        if(trackingBar) {
+            trackingBar.classList.remove(stickyClass);
+            if(headerBar)
+            headerBar.classList.remove(stickyHeaderClass);
+        }
       }
     }
 
@@ -582,3 +589,4 @@ if (targetDiv && triggerDiv) {
   } else {
     console.warn('Target or trigger element not found.');
   }
+

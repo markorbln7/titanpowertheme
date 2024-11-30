@@ -126,6 +126,18 @@
     "gift_display_section_bkq3jR": {
       "type": "gift-display-section",
       "blocks": {
+        "gift_images_63pYnc": {
+          "type": "gift_images",
+          "disabled": true,
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
         "gift_images_dpjUew": {
           "type": "gift_images",
           "settings": {
@@ -176,6 +188,7 @@
         }
       },
       "block_order": [
+        "gift_images_63pYnc",
         "gift_images_dpjUew",
         "gift_images_hN8yWV",
         "gift_images_rcyPWb",
@@ -186,7 +199,7 @@
         ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
         ".bf-text {font-size: 17px !important; font-weight: 700 !important; color: #343434; text-align: center;}",
         "@media (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        "@media (min-width: 750px) {.gift-unlocker-wrapper.gift-blocks.bigger-spacing {margin: 0 auto; text-align: center; width: 75%; max-width: 1200px; }}"
+        "@media (min-width: 750px) {.gift-unlocker-wrapper.gift-blocks.bigger-spacing {margin: 0 auto; text-align: center; width: 70%; max-width: 1200px; }}"
       ],
       "settings": {
         "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",

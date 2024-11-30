@@ -249,7 +249,7 @@
                   {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
                   {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
 
-                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%] w-[48%]" data-product-hover="for-desktop-{{ forloop.index }}">
+                    <div class="section-explore__product relative pt-[14px] bg-[#fff] px-[10px] pb-[10px] max-w-[48%] w-[48%]" data-product-hover="for-travel-{{ forloop.index }}">
                       <div {% if section.settings.narrow_version %}class="lg:max-w-[70%] lg:ml-[15%]"{% endif %}>
                         <div class="product-image h-[150px] overflow-hidden pt-[100%] relative rounded-[10px]">
                           {% if product.metafields.custom.custom_product_image %}

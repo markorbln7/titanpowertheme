@@ -64,6 +64,65 @@
         "second_collection": "november-deals"
       }
     },
+    "bf_top_bar_rjbHwz": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; /* Converted color syntax */ margin-bottom: 0px; max-width: 1300px; padding-top: 10px; /* Assuming this is for md screens */ padding-bottom: 10px; /* Assuming this is for md screens */ margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + Save 80% By Adding more",
+        "show_banner": false
+      }
+    },
+    "bf_promo_discount_yjJhwN": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_QMGXLm": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_QyEYK3": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "6+ items",
+            "block_title": "65",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_bLKDjF": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_QMGXLm",
+        "block_item_QyEYK3",
+        "block_item_bLKDjF"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}"
+      ],
+      "settings": {
+        "show_banner": false,
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
     "section_collections_with_nav_Xpintm": {
       "type": "section-collections-with-nav",
       "blocks": {
@@ -178,6 +237,8 @@
     "vault_promo_7GbWMk",
     "bf_promo_discount_qW44Mb",
     "section_explore_7JQkGw",
+    "bf_top_bar_rjbHwz",
+    "bf_promo_discount_yjJhwN",
     "section_collections_with_nav_Xpintm",
     "titan_linked_image_A4GJp6",
     "section_explore_fXzahR",

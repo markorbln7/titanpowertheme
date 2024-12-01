@@ -54,7 +54,7 @@ import './section-collections-with-nav.css';
   document.querySelectorAll('.section-collections-with-nav__product').forEach(productElement => {
     const productId = productElement.getAttribute('data-product-id');
     const selectors = productElement.querySelectorAll('.variant-selectors select');
-    const addToCartButtonS = productElement.querySelectorAll('.js-atc');
+    const addToCartButtonS = productElement.querySelectorAll('.js-atc-bf');
 
     function getVariantId(selectedOptions) {
       const productVariants = window.productVariants[productId];

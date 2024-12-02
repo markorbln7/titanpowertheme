@@ -297,13 +297,14 @@
             </div>
           {% endif %}
           {% if section.settings.show_variant_picker == true %}
-            <div class="master-options">
+            <div>
               {% for option in mainProduct.options_with_values %}
+                {% assign numberSelector = forloop.index %}
+                <div class="master-options">
                 {% for value in option.values %}
-                  <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button">{{ value }}</div>
+                  <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
                 {% endfor %}
-                {% comment %} <div data-selector="Apple" class="js-var-select">APPLE</div>
-                <div data-selector="Samsung / Android" class="js-var-select">Samsung / Android</div> {% endcomment %}
+                </div>
               {% endfor %}
             </div>
           {% endif %}

@@ -154,21 +154,41 @@ overlayClsTT.forEach(overlayCl => {
   })
 })
 
+function getVariantId(selectedOptions, productId) {
+  // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
+  const matchingVariant = window.productVariants[productId].find(variant =>
+    selectedOptions.every((option, index) => variant.options[index] === option)
+  );
+  // Vraćanje ID-a ako varijanta postoji, inače null
+  return matchingVariant ? matchingVariant.id : null;
+}
+
 let varSelect = document.querySelectorAll('.js-var-select')
 if(varSelect) {
   varSelect.forEach(varS => {
     varS.addEventListener('click', (e) => {
+      let nameSecond
       let _this = e.target
       let productSelectors = document.querySelectorAll('.js-product-selector')
-      document.querySelector('.js-var-select.active')?.classList.remove('active');
+      e.target.parentNode.querySelector('.js-var-select.active')?.classList.remove('active');
       _this.classList.add('active')
       let variantName = _this.getAttribute('data-selector')
+      let nameFirst = document.querySelector('.option-1.active').getAttribute('data-selector')
+      if(document.querySelector('.option-2.active')) {
+        nameSecond = document.querySelector('.option-2.active').getAttribute('data-selector')
+      }
       productSelectors.forEach(productSelector => {
         let productId = productSelector.getAttribute('data-product-selector-id')
+        let id;
+        if(nameSecond) {
+          id = getVariantId([nameFirst, nameSecond], productId)
+        } else {
+          id = getVariantId([nameFirst], productId)
+        }
+
         const jsonData = window.productVariants[productId]
         const result = jsonData.find(item => item.options.includes(variantName));
-        productSelector.setAttribute('data-product-id', result.id)
-        console.log(result.id, 'result')
+        productSelector.setAttribute('data-product-id', id)
       })
       console.log(variantName, 'variantName')
     })

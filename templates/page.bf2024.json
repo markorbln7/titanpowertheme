@@ -555,9 +555,12 @@
           "plugs",
           "wireless-new"
         ],
-        "add_4_text": "",
-        "add_6_text": "",
-        "add_10_text": ""
+        "add_4": "shopify://shop_images/MULTIBUY_OFFER_aDD_4X_3b63f045-a350-4b10-b134-c1d41bdd80d6.jpg",
+        "add_4_text": "4",
+        "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
+        "add_6_text": "6",
+        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
+        "add_10_text": "10"
       }
     },
     "gift_display_section_HhwPbQ": {
@@ -565,6 +568,7 @@
       "blocks": {
         "gift_images_QyHg4g": {
           "type": "gift_images",
+          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
             "product_number_unlocker": "1",
@@ -578,9 +582,9 @@
         "gift_images_ytGNRy": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_mystery.png",
+            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_cable_case_e56d5bb6-c826-4b16-8b7b-4fbb0535dc78.png",
             "product_number_unlocker": "",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
+            "pdp_hero_icon_title": "Cable Kit",
             "pdp_hero_icon_title_top": "",
             "top_note": "Spend",
             "gift_price_product": "mystery-gift-holder-do-not-delete",
@@ -602,7 +606,7 @@
         "gift_images_c8dHNc": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_case.png",
+            "pdp_hero_icon": "shopify://shop_images/pngs_of_products_FREE_GIFTS_3_in1_cable_e_dfe2a0d3-8265-4e36-9f99-313a26d3d339.png",
             "product_number_unlocker": "",
             "pdp_hero_icon_title": "TRAVEL CASE",
             "pdp_hero_icon_title_top": "",
@@ -618,82 +622,19 @@
         "gift_images_aD6KWM",
         "gift_images_c8dHNc"
       ],
-      "disabled": true,
       "custom_css": [
         ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 13px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".crossed {text-decoration: none; color: #f2c054; font-size: 18px;}",
         ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
-        ".gift-title_text {font-size: 15px; margin-top: 7px;}",
-        ".bf-text {font-size: 15px !important; font-weight: 800 !important; color: #343434; text-align: center;}",
-        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}"
+        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
+        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
+        ".mt-\\[20px\\] {margin-top: 30px;}",
+        ".gift-overlay.is-active {background-color: #f2c054b3;}"
       ],
       "settings": {
         "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
         "set_inactive": false
-      }
-    },
-    "gift_display_section_ByWyKj": {
-      "type": "gift-display-section",
-      "blocks": {
-        "gift_images_RiHNQd": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "SHOP TODAY",
-            "top_note": "Free",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_PXgmz9": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_mystery_gift_icon_shop.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free",
-            "gift_price_product": "mystery-gift-holder-do-not-delete-copy",
-            "money_product": "mystery-gift-holder-do-not-delete"
-          }
-        },
-        "gift_images_H9QGU7": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_cable_gift.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TITAN CABLE",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free",
-            "gift_price_product": "mystery-gift-free-gift-price-do-not-delete-copy-copy",
-            "money_product": "pd"
-          }
-        },
-        "gift_images_yG7hHe": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/Free_case_gift.png",
-            "product_number_unlocker": "3",
-            "pdp_hero_icon_title": "TRAVEL CASE",
-            "pdp_hero_icon_title_top": "SPEND",
-            "top_note": "Free",
-            "gift_price_product": "case-free-gift-price-do-not-delete",
-            "money_product": "turbo-dock-holder-do-not-delete"
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_RiHNQd",
-        "gift_images_PXgmz9",
-        "gift_images_H9QGU7",
-        "gift_images_yG7hHe"
-      ],
-      "disabled": true,
-      "settings": {
-        "welcome_message": "",
-        "set_inactive": true
       }
     },
     "bf_promo_discount_AibFnrL": {
@@ -730,9 +671,13 @@
         "block_item_XTEFBY"
       ],
       "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
         ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-size: 18px; font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
-        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 50px; }}"
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}",
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #f2c054;}"
       ],
       "settings": {
         "show_banner": false,
@@ -976,7 +921,6 @@
     "bf_promo_discount_AibFnr",
     "section_collections_with_nav_Xpintm",
     "gift_display_section_HhwPbQ",
-    "gift_display_section_ByWyKj",
     "bf_promo_discount_AibFnrL",
     "bf_top_bar_hxgfNg",
     "titan_linked_image_A4GJp6",

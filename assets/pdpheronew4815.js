@@ -51,10 +51,10 @@ lengthSelectors.forEach(lengthSelector => {
       console.log(selectedType, 'phoneType');
       console.log(window.prices['8x' + selectedType],'testttt')
       console.log(window.prices)
-      discOne.innerHTML = window.prices['15x' + selectedType]
-      originalOne.innerHTML = window.comparePrices['15x' + selectedType]
-      discTwo.innerHTML = window.prices['8x' + selectedType]
-      originalTwo.innerHTML = window.comparePrices['8x' + selectedType]
+      discOne.innerHTML = window.prices['8x' + selectedType]
+      originalOne.innerHTML = window.comparePrices['8x' + selectedType]
+      discTwo.innerHTML = window.prices['7x' + selectedType]
+      originalTwo.innerHTML = window.comparePrices['7x' + selectedType]
       discThree.innerHTML = window.prices['4x' + selectedType]
       originalThree.innerHTML = window.comparePrices['4x' + selectedType]
       window.selectLogic.cableLength = lenght

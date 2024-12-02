@@ -344,7 +344,7 @@
                 >
                   <div class="gift-layout-image"><img width="100" height="auto" src="{{ upsell_product_image | img_url: 'master'  }}"></div>
                   <div class="qty_selector-title">{{ product_title }}</div>
-                  <div class="qty_selector-price">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}/each</div>
+                  <div class="qty_selector-price"><span class="js-each">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}</span>/each</div>
 
                   <div class="most-pouplar">{{upsell_product_discount }}</div>
                   <input
@@ -363,6 +363,7 @@
                     {% for variant in product_obj.variants %}
                     {
                       id: '{{ variant.id }}',
+                      price: '{{ variant.price | divided_by: upsell_message | money }}',
                       options: [
                         {% for option in variant.options %}
                         '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}

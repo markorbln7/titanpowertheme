@@ -162,6 +162,14 @@ function getVariantId(selectedOptions, productId) {
   // Vraćanje ID-a ako varijanta postoji, inače null
   return matchingVariant ? matchingVariant.id : null;
 }
+function getVariantPrice(selectedOptions, productId) {
+  // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
+  const matchingVariantPrice = window.productVariants[productId].find(variant =>
+    selectedOptions.every((option, index) => variant.options[index] === option)
+  );
+  // Vraćanje ID-a ako varijanta postoji, inače null
+  return matchingVariantPrice ? matchingVariantPrice.price : null;
+}
 
 let varSelect = document.querySelectorAll('.js-var-select')
 if(varSelect) {
@@ -180,11 +188,15 @@ if(varSelect) {
       productSelectors.forEach(productSelector => {
         let productId = productSelector.getAttribute('data-product-selector-id')
         let id;
+        let price;
         if(nameSecond) {
           id = getVariantId([nameFirst, nameSecond], productId)
+          price = getVariantPrice([nameFirst, nameSecond], productId)
         } else {
           id = getVariantId([nameFirst], productId)
+          price = getVariantPrice([nameFirst], productId)
         }
+        productSelector.querySelector('.js-each').innerHTML = price
 
         const jsonData = window.productVariants[productId]
         const result = jsonData.find(item => item.options.includes(variantName));

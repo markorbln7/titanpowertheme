@@ -166,6 +166,7 @@
       "blocks": {
         "gift_images_p8WriF": {
           "type": "gift_images",
+          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
             "product_number_unlocker": "1",
@@ -181,7 +182,7 @@
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_cable_case_e56d5bb6-c826-4b16-8b7b-4fbb0535dc78.png",
             "product_number_unlocker": "",
-            "pdp_hero_icon_title": "CABLE COMBO KIT",
+            "pdp_hero_icon_title": "CABLE KIT",
             "pdp_hero_icon_title_top": "",
             "top_note": "Spend",
             "gift_price_product": "9-in-1-cable-kit-do-not-delete",
@@ -221,12 +222,13 @@
       ],
       "custom_css": [
         ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 13px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".crossed {text-decoration: none; color: #f2c054; font-size: 18px;}",
         ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
         ".gift-title_text {font-size: 15px; margin-top: 9px;}",
-        ".bf-text {font-size: 17px !important; font-weight: 700 !important; color: #343434; text-align: center;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
         "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        ".mt-\\[20px\\] {margin-top: 30px;}"
+        ".mt-\\[20px\\] {margin-top: 30px;}",
+        ".gift-overlay.is-active {background-color: #f2c054b3;}"
       ],
       "settings": {
         "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",

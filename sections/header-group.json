@@ -36,6 +36,32 @@
         "enable_language_selector": false
       }
     },
+    "header": {
+      "type": "header",
+      "custom_css": [
+        "svg.modal__toggle-open.icon.icon-search {display: none;}",
+        ".header__icon,.header__icon--cart .icon {height: 4.4rem; width: 4rem; padding: 0;}",
+        ".header {background: linear-gradient(180deg, #fff 0%, #d6e1e1 80%);}",
+        ".header-wrapper {box-shadow: 0 2px 9px #bdbdbdd1;}",
+        ".list-menu {margin-left: 100px;}",
+        "sticky-header.header-wrapper.color-background-1.gradient.header-wrapper--border-bottom {background: linear-gradient(180deg, #fff 0%, #d6e1e1 80%); border-bottom: 0px;}"
+      ],
+      "settings": {
+        "logo_position": "middle-left",
+        "menu": "meta-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "background-1",
+        "menu_color_scheme": "background-2",
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "mobile_logo_position": "center",
+        "margin_bottom": 4,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
     "tracking_bar_deQARz": {
       "type": "tracking-bar",
       "blocks": {
@@ -69,32 +95,6 @@
       "disabled": true,
       "settings": {}
     },
-    "header": {
-      "type": "header",
-      "custom_css": [
-        "svg.modal__toggle-open.icon.icon-search {display: none;}",
-        ".header__icon,.header__icon--cart .icon {height: 4.4rem; width: 4rem; padding: 0;}",
-        ".header {background: linear-gradient(180deg, #fff 0%, #d6e1e1 80%);}",
-        ".header-wrapper {box-shadow: 0 2px 9px #bdbdbdd1;}",
-        ".list-menu {margin-left: 100px;}",
-        "sticky-header.header-wrapper.color-background-1.gradient.header-wrapper--border-bottom {background: linear-gradient(180deg, #fff 0%, #d6e1e1 80%); border-bottom: 0px;}"
-      ],
-      "settings": {
-        "logo_position": "middle-left",
-        "menu": "meta-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "always",
-        "show_line_separator": true,
-        "color_scheme": "background-1",
-        "menu_color_scheme": "background-2",
-        "enable_country_selector": false,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 4,
-        "padding_top": 8,
-        "padding_bottom": 8
-      }
-    },
     "header_new_kR4L84": {
       "type": "header-new",
       "disabled": true,
@@ -106,8 +106,8 @@
   },
   "order": [
     "announcement_bar_yzaPKk",
-    "tracking_bar_deQARz",
     "header",
+    "tracking_bar_deQARz",
     "header_new_kR4L84"
   ]
 }

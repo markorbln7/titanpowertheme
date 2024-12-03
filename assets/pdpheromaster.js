@@ -77,7 +77,7 @@ productSelectors.forEach(productSelector => {
     productSelector.addEventListener('click', async (e) => {
       const _this = productSelector
       const count = _this.getAttribute('data-count')
-      const imageSwitch = _this.getAttribute('data-image')
+      const imageSwitch = _this.getAttribute('data-variant-image')
       console.log(imageSwitch, 'imageSwitch')
       mainImageChange.src = imageSwitch
       window.selectLogic.productCount = count
@@ -88,6 +88,11 @@ productSelectors.forEach(productSelector => {
       setTimeout(() => {
         priceDisplay()
       }, '500')
+      let activeProduct = document.querySelector('.js-product-selector.active')
+      let activeProductId = activeProduct.getAttribute('data-product-id')
+      if(activeProductId == null) {
+        console.log('nullovani proizvod')
+      }
     })
 })
 let addonWrappers = document.querySelectorAll('.addon-wrapper')
@@ -170,12 +175,30 @@ function getVariantPrice(selectedOptions, productId) {
   // Vraćanje ID-a ako varijanta postoji, inače null
   return matchingVariantPrice ? matchingVariantPrice.price : null;
 }
+function getVariantImage(selectedOptions, productId) {
+  // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
+  const matchingVariantImage = window.productVariants[productId].find(variant =>
+    selectedOptions.every((option, index) => variant.options[index] === option)
+  );
+  // Vraćanje ID-a ako varijanta postoji, inače null
+  return matchingVariantImage ? matchingVariantImage.image : null;
+}
+function getVariantAvailable(selectedOptions, productId) {
+  // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
+  const matchingVariantAvailable = window.productVariants[productId].find(variant =>
+    selectedOptions.every((option, index) => variant.options[index] === option)
+  );
+  // Vraćanje ID-a ako varijanta postoji, inače null
+  return matchingVariantAvailable ? matchingVariantAvailable.available : null;
+}
+
 
 let varSelect = document.querySelectorAll('.js-var-select')
 if(varSelect) {
   varSelect.forEach(varS => {
     varS.addEventListener('click', (e) => {
       let nameSecond
+      let nameThird
       let _this = e.target
       let productSelectors = document.querySelectorAll('.js-product-selector')
       e.target.parentNode.querySelector('.js-var-select.active')?.classList.remove('active');
@@ -185,24 +208,52 @@ if(varSelect) {
       if(document.querySelector('.option-2.active')) {
         nameSecond = document.querySelector('.option-2.active').getAttribute('data-selector')
       }
+      if(document.querySelector('.option-3.active')) {
+        nameThird = document.querySelector('.option-3.active').getAttribute('data-selector')
+      }
       productSelectors.forEach(productSelector => {
         let productId = productSelector.getAttribute('data-product-selector-id')
         let id;
         let price;
-        if(nameSecond) {
+        let image;
+        let available;
+        if(nameThird) {
+          id = getVariantId([nameFirst, nameSecond, nameThird], productId)
+          price = getVariantPrice([nameFirst, nameSecond, nameThird], productId)
+          image = getVariantImage([nameFirst, nameSecond, nameThird], productId)
+          available = getVariantAvailable([nameFirst, nameSecond, nameThird], productId)
+        } else if(nameSecond) {
           id = getVariantId([nameFirst, nameSecond], productId)
           price = getVariantPrice([nameFirst, nameSecond], productId)
+          image = getVariantImage([nameFirst, nameSecond], productId)
+          available = getVariantAvailable([nameFirst, nameSecond], productId)
         } else {
           id = getVariantId([nameFirst], productId)
           price = getVariantPrice([nameFirst], productId)
+          image = getVariantImage([nameFirst], productId)
+          available = getVariantAvailable([nameFirst], productId)
         }
         productSelector.querySelector('.js-each').innerHTML = price
+        mainImageChange.src = image
 
         const jsonData = window.productVariants[productId]
         const result = jsonData.find(item => item.options.includes(variantName));
         productSelector.setAttribute('data-product-id', id)
+        productSelector.setAttribute('data-variant-image', image)
+        console.log(id, 'id')
+        console.log(available, 'available')
+        if(!available) {
+          console.log('nullovani proizvod')
+          document.querySelector('.js-add-to-cart-pd').classList.add('disabled')
+          document.querySelector('.js-add-to-cart-pd').innerHTML = 'OUT OF STOCK'
+        } else {
+          document.querySelector('.js-add-to-cart-pd').classList.remove('disabled')
+          document.querySelector('.js-add-to-cart-pd').innerHTML = 'ADD TO CART'
+        }
       })
-      console.log(variantName, 'variantName')
+      let mainImage = document.querySelector('.js-main-image-change')
+      let activeImage = document.querySelector('.js-product-selector.active').getAttribute('data-variant-image')
+      mainImage.src = activeImage
     })
   })
 }
@@ -210,6 +261,9 @@ if(varSelect) {
 console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {
     addToCart.addEventListener('click', (e) => {
+      if(addToCart.classList.contains('disabled')) {
+        return
+      }
       const productSelection = window.selectLogic.productCount
       const quantity = e.target.getAttribute('data-quantity')
       console.log(quantity, 'quantity')

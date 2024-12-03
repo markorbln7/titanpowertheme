@@ -16,6 +16,7 @@
       cursor: pointer !important;
       box-shadow: 0 7px 7px #0000001a !important;
       transition: opacity .3s ease !important;
+      border:none;
     }
     select {
       box-shadow: 0 1px 5px 3px #00000012;
@@ -300,11 +301,32 @@
             <div>
               {% for option in mainProduct.options_with_values %}
                 {% assign numberSelector = forloop.index %}
-                <div class="master-options">
-                {% for value in option.values %}
-                  <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
-                {% endfor %}
-                </div>
+                {% if option.name == 'Wall Port' %}
+                  <div class="pd-selector">
+                    <div class="pd-selector-title">WALL PORT</div>
+                    <div class="switch-holder">
+                      <div class="label-holder__image">
+                        <div class="label-holder__speed">SPEED</div>
+                        <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800" loading="lazy">
+                     </div>
+                      <div class="master-options">
+                        {% for value in option.values %}
+                          <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
+                        {% endfor %}
+                      </div>
+                      <div class="label-holder__image">
+                        <div class="label-holder__speed">SPEED</div>
+                         <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800" loading="lazy">
+                        </div>
+                    </div>
+                  </div>
+                  {% else %}
+                    <div class="master-options">
+                    {% for value in option.values %}
+                      <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
+                    {% endfor %}
+                    </div>
+                  {% endif %}
               {% endfor %}
             </div>
           {% endif %}
@@ -330,12 +352,18 @@
                   assign product_compare_at_price = product_obj.compare_at_price_max
                   assign upsell_product_discount = upsell_product.settings.upsell_product_discount
                   assign upsell_product_selector_number = upsell_product.settings.product_selector_number
+                  if product_obj.first_available_variant.featured_image.src
+                    assign variant_product_image = product_obj.first_available_variant.featured_image.src
+                  else
+                    assign variant_product_image = product_obj.featured_image.src
+                  endif
                 %}
 
                 <div
-                  data-image="{{ product_obj.featured_image.src | img_url: 'master'}}"
+                  data-image="{{ variant_product_image | img_url: 'master'}}"
                   data-product-selector-id= "{{ product_obj.id }}"
                   data-product-id="{{ product_obj.first_available_variant.id }}"
+                  data-variant-image = "{{ variant_product_image | img_url: 'master' }}"
                   data-product-price = "{{ product_obj.first_available_variant.price }}"
                   data-product-compare-price = "{{ product_obj.first_available_variant.compare_at_price }}"
                   data-count="{{ upsell_product_selector_number }}"
@@ -364,6 +392,8 @@
                     {
                       id: '{{ variant.id }}',
                       price: '{{ variant.price | divided_by: upsell_message | money }}',
+                      image: '{{ variant.featured_image.src | img_url: 'master' }}',
+                      available: {{ variant.available }},
                       options: [
                         {% for option in variant.options %}
                         '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
@@ -609,13 +639,13 @@
 
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper scroll-reveal">
-          <div
+          <button
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
-            class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc"
+            class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0"
           >
             ADD TO CART
-          </div>
+          </button>
           {% if accRepeater.size > 0 %}
             <h4 style="margin-top:20px;" class="pdp-hero__upsell-title text-center">
               ⚫  Cyber Monday Exclusive Add-Ons

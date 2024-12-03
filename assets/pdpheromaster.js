@@ -212,7 +212,7 @@ if(varSelect) {
         nameThird = document.querySelector('.option-3.active').getAttribute('data-selector')
       }
       productSelectors.forEach(productSelector => {
-        let productId = productSelector.getAttribute('data-product-selector-id')
+        let productId = document.querySelector('.js-product-selector.active').getAttribute('data-product-selector-id')
         let id;
         let price;
         let image;
@@ -241,6 +241,7 @@ if(varSelect) {
         productSelector.setAttribute('data-product-id', id)
         productSelector.setAttribute('data-variant-image', image)
         console.log(id, 'id')
+        console.log(productId, nameFirst,nameSecond,nameThird, 'nameFirst,nameSecond,nameThird')
         console.log(available, 'available')
         if(!available) {
           console.log('nullovani proizvod')

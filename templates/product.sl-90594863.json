@@ -11,8 +11,7 @@
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     },
     "slideshow_NnVUdC": {
       "type": "slideshow",
@@ -93,8 +92,7 @@
         "icons_q7yKYV",
         "icons_TRcXTq"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "section_text_with_icons_3b7KcJ": {
       "type": "section-text-with-icons",
@@ -151,9 +149,7 @@
         "text_with_icons_repeater_LnhFji"
       ],
       "disabled": true,
-      "custom_css": [
-
-      ],
+      "custom_css": [],
       "settings": {
         "section_title": "PROFESSIONAL FEATURES",
         "section_subtitle": "DESIGNED FOR EVERYONE"
@@ -476,8 +472,7 @@
         "zigzag_repeater_aBAyxa",
         "zigzag_repeater_hFwip6"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "slideshow_fwkE7q": {
       "type": "slideshow",
@@ -555,8 +550,7 @@
     "compare-table": {
       "type": "compare-table",
       "disabled": true,
-      "settings": {
-      }
+      "settings": {}
     },
     "section_pdp_hero_master_6AAaEm": {
       "type": "section-pdp-hero-master",
@@ -565,7 +559,8 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
-            "product_obj": "titan-4-in-1-smart-cable",
+            "product_number_unlocker": "",
+            "product_obj": "titan-100w-4-in-1-cable-1",
             "upsell_product_image": "shopify://shop_images/Titan_Accessories_-_4_in_1_cable.png",
             "product_title_custom": "4-in-1 Cable",
             "upsell_product_discount": "5ft(1.5M)",
@@ -576,7 +571,8 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
-            "product_obj": "1xkeychaincable",
+            "product_number_unlocker": "",
+            "product_obj": "4-in-1-keychain-cable-copy-1",
             "upsell_product_image": "shopify://shop_images/z2.png",
             "product_title_custom": "4-in-1 Keychain Cable",
             "upsell_product_discount": "",
@@ -587,6 +583,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "3-product",
+            "product_number_unlocker": "",
             "product_obj": "both-titan-4-in-1-cables",
             "upsell_product_image": "shopify://shop_images/Z123.png",
             "product_title_custom": "Both Cables",
@@ -754,14 +751,17 @@
         ".buy-more {color: #000; background: #ffffff; text-transform: uppercase; border: 0px; letter-spacing: 0;}"
       ],
       "settings": {
+        "show_variant_picker": false,
         "show_grid_images": true,
         "show_qty": true,
+        "show_gift_layout": false,
         "show_disc_box": true,
         "promo_line": "Black Friday Mystery Gift Included",
         "product_line_image": "shopify://shop_images/mystery_gift_41c4192b-e421-4631-9a55-0b13f830c28e.png",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "4in1cables",
         "product_image": "shopify://shop_images/hdversion.jpg",
-        "logo_image": "shopify://shop_images/download_1_6497a83e-0b15-4438-bdd7-0a6e2071a79d.jpg",
+        "logo_image": "shopify://shop_images/cyber_monday_long_version_PNG_8cda5a13-d8c2-4509-8139-26985591b44c.png",
         "product_subtitle": "\"One cable for all devices. All I need everywhere I go!\"",
         "discount_content": "MYSTERY GIFT",
         "atc_label": "In stock, limited availability",
@@ -1149,8 +1149,7 @@
     },
     "zp-product-footer-content": {
       "type": "product-footer-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     }
   },
   "order": [

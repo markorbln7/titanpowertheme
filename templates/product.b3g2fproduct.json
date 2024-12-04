@@ -11,8 +11,7 @@
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     },
     "section_text_with_icons_3b7KcJ": {
       "type": "section-text-with-icons",
@@ -232,6 +231,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
+            "product_number_unlocker": "",
             "product_obj": "titan-cable-buy-3-get-2-free",
             "upsell_product_image": "shopify://shop_images/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-15-pack_008e9e6a-6d1f-4414-b498-35c1e612be03.png",
             "product_title_custom": "5x Titan Cable",
@@ -243,6 +243,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
+            "product_number_unlocker": "",
             "product_obj": "1-x-titan-smart-cable™",
             "upsell_product_image": "shopify://shop_images/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-1pack_5f6b1d20-bb6a-4589-b4bf-ddeab1560eb6.png",
             "product_title_custom": "1x Titan Cable",
@@ -386,14 +387,17 @@
         ".pd-variant-selector-2.Length {border: 0px;}"
       ],
       "settings": {
+        "show_variant_picker": false,
         "show_grid_images": false,
         "show_qty": false,
+        "show_gift_layout": false,
         "show_disc_box": false,
         "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "titan-cable-buy-3-get-2-free",
         "product_subtitle": "",
         "discount_content": "+2 FREE",
-        "atc_label": "In stock, limited availability",
+        "atc_label": "Stock Limited - [1.8m, USB-C Sold Out]",
         "product_highlighted": "",
         "product_highlighted_title": "",
         "product_highlighted_message": ""
@@ -564,8 +568,7 @@
         "icons_zcQbPN",
         "icons_DekKY4"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "testimonial_slider_XJAQhD": {
       "type": "testimonial-slider",
@@ -704,8 +707,7 @@
     },
     "compare-table-cable": {
       "type": "compare-table-cable",
-      "settings": {
-      }
+      "settings": {}
     },
     "product_icons_Dc6GkK": {
       "type": "product-icons",
@@ -745,8 +747,7 @@
         "icons_G9NbNA",
         "icons_UwA8R3"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "section_image_tabs_zKw6gN": {
       "type": "section-image-tabs",
@@ -1055,8 +1056,7 @@
         "zigzag_repeater_DQtffr",
         "zigzag_repeater_aBAyxa"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "slideshow_fwkE7q": {
       "type": "slideshow",
@@ -1457,8 +1457,7 @@
     },
     "zp-product-footer-content": {
       "type": "product-footer-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     }
   },
   "order": [

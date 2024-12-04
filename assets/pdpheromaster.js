@@ -1,4 +1,3 @@
-console.log('window.selectLogicsssss');
 const typeSelectors = document.querySelectorAll('.js-type-selector')
 const lengthSelectors = document.querySelectorAll('.js-length-selector')
 const productSelectors = document.querySelectorAll('.js-product-selector')
@@ -17,7 +16,6 @@ const addUpsells = document.querySelectorAll('.js-addon')
 const priceDisplay = () => {
     let currency = document.querySelector(".js-currency").getAttribute("data-currency");
     const productSelection = window.selectLogic.productCount
-    console.log(productSelection, 'productSelection')
     let totalPrice = parseInt(window.pricesRaw[productSelection])
     let comparePrice = parseInt(window.comparePricesRaw[productSelection])
     addUpsells.forEach(addUpsell => {
@@ -41,7 +39,6 @@ typeSelectors.forEach(typeSelector => {
       const phoneType = _this.getAttribute('data-type')
       window.selectLogic.phoneType = phoneType
       const productSelection = window.selectLogic.productCount
-      console.log(productSelection, 'productSelection');
       // mainImageChange.src = window.mainImages[productSelection]
       setTimeout(() => {
         priceDisplay()
@@ -55,8 +52,6 @@ lengthSelectors.forEach(lengthSelector => {
       const lenght = _this.getAttribute('data-length')
       const phoneType = document.querySelector('.js-type-selector.active').getAttribute('data-type')
       const selectedType = phoneType + '/' + lenght
-      console.log(selectedType, 'phoneType');
-      console.log(window.prices)
       discOne.innerHTML = window.prices['4x' + selectedType]
       originalOne.innerHTML = window.comparePrices['4x' + selectedType]
       discTwo.innerHTML = window.prices['3x' + selectedType]
@@ -65,7 +60,6 @@ lengthSelectors.forEach(lengthSelector => {
       originalThree.innerHTML = window.comparePrices[selectedType]
       window.selectLogic.cableLength = lenght
       const productSelection = window.selectLogic.productCount
-      console.log(productSelection, 'productSelection');
       // mainImageChange.src = window.mainImages[productSelection]
       setTimeout(() => {
         priceDisplay()
@@ -82,17 +76,11 @@ productSelectors.forEach(productSelector => {
       mainImageChange.src = imageSwitch
       window.selectLogic.productCount = count
       const productSelection = window.selectLogic.productCount
-      console.log(productSelection, 'productSelection');
-      console.log(window.mainImages[productSelection], 'window.mainImages[productSelection]');
       // mainImageChange.src = window.mainImages[productSelection]
       setTimeout(() => {
         priceDisplay()
       }, '500')
       let activeProduct = document.querySelector('.js-product-selector.active')
-      let activeProductId = activeProduct.getAttribute('data-product-id')
-      if(activeProductId == null) {
-        console.log('nullovani proizvod')
-      }
     })
 })
 let addonWrappers = document.querySelectorAll('.addon-wrapper')
@@ -212,7 +200,7 @@ if(varSelect) {
         nameThird = document.querySelector('.option-3.active').getAttribute('data-selector')
       }
       productSelectors.forEach(productSelector => {
-        let productId = document.querySelector('.js-product-selector.active').getAttribute('data-product-selector-id')
+        let productId = productSelector.getAttribute('data-product-selector-id')
         let id;
         let price;
         let image;
@@ -238,13 +226,10 @@ if(varSelect) {
 
         const jsonData = window.productVariants[productId]
         const result = jsonData.find(item => item.options.includes(variantName));
+        console.log(id, 'uddd')
         productSelector.setAttribute('data-product-id', id)
         productSelector.setAttribute('data-variant-image', image)
-        console.log(id, 'id')
-        console.log(productId, nameFirst,nameSecond,nameThird, 'nameFirst,nameSecond,nameThird')
-        console.log(available, 'available')
         if(!available) {
-          console.log('nullovani proizvod')
           document.querySelector('.js-add-to-cart-pd').classList.add('disabled')
           document.querySelector('.js-add-to-cart-pd').innerHTML = 'OUT OF STOCK'
         } else {
@@ -259,7 +244,6 @@ if(varSelect) {
   })
 }
 
-console.log(addToCarts, 'window.selectLogic');
 addToCarts.forEach(addToCart => {
     addToCart.addEventListener('click', (e) => {
       if(addToCart.classList.contains('disabled')) {
@@ -267,8 +251,6 @@ addToCarts.forEach(addToCart => {
       }
       const productSelection = window.selectLogic.productCount
       const quantity = e.target.getAttribute('data-quantity')
-      console.log(quantity, 'quantity')
-      console.log(window.products, window.products[productSelection],productSelection, 'productSelection');
       let addItems = []
       addonWrappers.forEach(addonWrapper => {
         if(addonWrapper.classList.contains('added')) {
@@ -284,10 +266,8 @@ addToCarts.forEach(addToCart => {
         quantity: quantity
       })
       let accSelector = document.querySelectorAll('.selected')
-      console.log(accSelector, 'accSelector');
       accSelector.forEach(acc => {
           let product = acc.getAttribute('data-product-id')
-          console.log(product, 'productacc');
           addItems.push({
             id: product,
             quantity: 1
@@ -420,7 +400,6 @@ if(pdvariantSelectorSeconds) {
 }
 
 let mainVariantSelector = document.querySelector('.main-variant-selector');
-console.log(mainVariantSelector, 'mainVariantSelector')
 if(mainVariantSelector) {
   mainVariantSelector.addEventListener('change', function() {
     let variantId = mainVariantSelector.value;
@@ -428,7 +407,6 @@ if(mainVariantSelector) {
     let imageSwitch = document.querySelector("[data-title='" + variantId + "']").getAttribute('data-image');
     document.querySelector('.js-main-image-change').src = imageSwitch;
     window.products['1-product'] = productId;
-    console.log(window.products, 'win')
   });
 }
 
@@ -527,7 +505,6 @@ if(buyMore) {
     if (currentQtyS >= 8) {
       buyMore.classList.add('hidden')
     }
-    console.log(currentQty, 'currentQty')
   })
 }
 

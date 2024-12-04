@@ -7,12 +7,11 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     },
     "section_text_with_icons_3b7KcJ": {
       "type": "section-text-with-icons",
@@ -291,15 +290,15 @@
       "custom_css": [
         ".pdp-hero__upsell-message.active {font-size: 19px; line-height: 25px; border-radius: 25px 25px 0 0; background: linear-gradient(180deg, #35ff2e, #fff724);}",
         ".pdp-hero__product-subtitle.text-center.bold {margin: -15px 0 -20px 0;}",
-        ".qty-selector {width: 130px; border: 0; box-shadow: none;}",
-        ".tt-plus.single-button,.tt-minus.single-button {border: 1px solid #dfdfdf; border-radius: 16px; box-shadow: 0 4px 4px #00000015; background: #e4eaea; width: 45px !important;}",
-        ".buy-more {color: #000; background: #fff; text-transform: uppercase; border: 0;}"
+        ".buy-more {color: #000; background: #fff; text-transform: uppercase; border: 0;}",
+        ".product-template-new .label-holder {display: none;}",
+        ".pdp-hero__product-subtitle.text-center.bold {display: none;}"
       ],
       "settings": {
         "hide_first_variant": false,
         "show_grid_images": true,
         "show_qty": true,
-        "pd_first": true,
+        "pd_first": false,
         "product_main": "titan-smart-cable™-get-free-cables-1",
         "product_image": "shopify://shop_images/LightningtoTypeC_1.jpg",
         "logo_image": "shopify://shop_images/Cyber_week_buy_box_-_new.jpg",
@@ -351,8 +350,7 @@
         "icons_zcQbPN",
         "icons_DekKY4"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "testimonial_slider_XJAQhD": {
       "type": "testimonial-slider",
@@ -491,8 +489,7 @@
     },
     "compare-table-cable": {
       "type": "compare-table-cable",
-      "settings": {
-      }
+      "settings": {}
     },
     "product_icons_Dc6GkK": {
       "type": "product-icons",
@@ -532,8 +529,7 @@
         "icons_G9NbNA",
         "icons_UwA8R3"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "section_image_tabs_zKw6gN": {
       "type": "section-image-tabs",
@@ -842,8 +838,7 @@
         "zigzag_repeater_DQtffr",
         "zigzag_repeater_aBAyxa"
       ],
-      "settings": {
-      }
+      "settings": {}
     },
     "slideshow_fwkE7q": {
       "type": "slideshow",
@@ -1244,8 +1239,7 @@
     },
     "zp-product-footer-content": {
       "type": "product-footer-content-zipifypages",
-      "settings": {
-      }
+      "settings": {}
     }
   },
   "order": [

@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -559,7 +559,8 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
-            "product_obj": "titan-4-in-1-smart-cable",
+            "product_number_unlocker": "",
+            "product_obj": "titan-100w-4-in-1-cable-1",
             "upsell_product_image": "shopify://shop_images/Titan_Accessories_-_4_in_1_cable.png",
             "product_title_custom": "4-in-1 Cable",
             "upsell_product_discount": "5ft(1.5M)",
@@ -570,7 +571,8 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "2-product",
-            "product_obj": "1xkeychaincable",
+            "product_number_unlocker": "",
+            "product_obj": "4-in-1-keychain-cable-copy-1",
             "upsell_product_image": "shopify://shop_images/z2.png",
             "product_title_custom": "4-in-1 Keychain Cable",
             "upsell_product_discount": "",
@@ -581,10 +583,11 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "3-product",
+            "product_number_unlocker": "",
             "product_obj": "both-titan-4-in-1-cables",
             "upsell_product_image": "shopify://shop_images/Z123.png",
             "product_title_custom": "Both Cables",
-            "upsell_product_discount": "52% OFF",
+            "upsell_product_discount": "57% OFF",
             "upsell_message": ""
           }
         },
@@ -749,14 +752,17 @@
         ".pdp-hero__gallery-main-image img {box-shadow: none;}"
       ],
       "settings": {
+        "show_variant_picker": false,
         "show_grid_images": true,
         "show_qty": true,
+        "show_gift_layout": false,
         "show_disc_box": true,
-        "promo_line": "Black Friday Mystery Gift Included",
+        "promo_line": "Cyber Week Mystery Gift Included",
         "product_line_image": "shopify://shop_images/mystery_gift_41c4192b-e421-4631-9a55-0b13f830c28e.png",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "4in1cables",
-        "product_image": "shopify://shop_images/hdversion.jpg",
-        "logo_image": "shopify://shop_images/download_1_6497a83e-0b15-4438-bdd7-0a6e2071a79d.jpg",
+        "product_image": "shopify://shop_images/download_596c2697-2b71-47ae-90e9-b8b6dd30afd9.png",
+        "logo_image": "shopify://shop_images/Cyber_week_buy_box_-_new.jpg",
         "product_subtitle": "\"One cable for all devices. All I need everywhere I go!\"",
         "discount_content": "MYSTERY GIFT",
         "atc_label": "In stock, limited availability",

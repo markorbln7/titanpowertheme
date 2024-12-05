@@ -166,7 +166,6 @@
       "blocks": {
         "gift_images_p8WriF": {
           "type": "gift_images",
-          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
             "product_number_unlocker": "1",
@@ -235,6 +234,59 @@
         "set_inactive": false
       }
     },
+    "limited_offers_jKBGqn": {
+      "type": "limited-offers",
+      "blocks": {
+        "air_tabs_CqeHcU": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_TITAN_CABLE_80_off_4e_0cb8386c-f1b7-42d1-9bc3-1078e51745ac.jpg",
+            "text": "",
+            "url": ""
+          }
+        },
+        "air_tabs_p6GFEp": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_1_bogof_powerpack1.jpg",
+            "text": "",
+            "url": ""
+          }
+        },
+        "air_tabs_d63GCf": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_3_4_IN_1_CABLE_BOGOF3s.jpg",
+            "text": "",
+            "url": ""
+          }
+        },
+        "air_tabs_8NEtjJ": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_3_4_IN_1_CABLE_BOGOF3.jpg",
+            "text": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_CqeHcU",
+        "air_tabs_p6GFEp",
+        "air_tabs_d63GCf",
+        "air_tabs_8NEtjJ"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
+        ".timer {color: #f2c054;}",
+        "img.w-full.desktop {display: none !important;}"
+      ],
+      "settings": {
+        "text_right": "LIMITED TIME OFFERS",
+        "countdown_to": "09th December"
+      }
+    },
     "scroll_to_button_7LJcTQ": {
       "type": "scroll-to-button",
       "disabled": true,
@@ -248,7 +300,6 @@
     },
     "section_collections_with_nav_EzNML8": {
       "type": "section-collections-with-nav",
-      "disabled": true,
       "custom_css": [
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
         ".js-buy-more {color: #000; font-weight: 700;}",
@@ -329,7 +380,6 @@
         "icons_repeater_3YzibB",
         "icons_repeater_P3UrXM"
       ],
-      "disabled": true,
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
@@ -406,7 +456,6 @@
         "icons_repeater_kcbHpE",
         "icons_repeater_wQnWyM"
       ],
-      "disabled": true,
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         "@media (max-width: 768px) {.product-zigzag__icon {margin-bottom: 0px; } .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; } .product-zigzag__upsell-products {gap: 10px; }}"
@@ -915,6 +964,7 @@
     "bf_top_bar_YUNa4V",
     "bf_promo_discount_fjxfqV",
     "gift_display_section_PDXACj",
+    "limited_offers_jKBGqn",
     "scroll_to_button_7LJcTQ",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",

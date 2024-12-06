@@ -161,6 +161,19 @@
         "section_eyebrow": ""
       }
     },
+    "limited_offers_zbhK6h": {
+      "type": "limited-offers",
+      "custom_css": [
+        ".top-image.mb-\\[20px\\] {display: none;}",
+        ".offers-title {margin-top: 30px;}",
+        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
+        ".timer {color: #f2c054; margin-top: 30px;}"
+      ],
+      "settings": {
+        "text_right": "",
+        "countdown_to": "10 December 2024"
+      }
+    },
     "gift_display_section_PDXACj": {
       "type": "gift-display-section",
       "blocks": {
@@ -289,9 +302,9 @@
     },
     "scroll_to_button_7LJcTQ": {
       "type": "scroll-to-button",
-      "disabled": true,
       "custom_css": [
-        ".my-\\[20px\\] {margin-top: 50px; margin-bottom: 20px;}"
+        ".my-\\[20px\\] {margin-top: 30px; margin-bottom: 20px;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #f2c054; color: #000 !important;}"
       ],
       "settings": {
         "target_class": "section-collections-with-nav",
@@ -305,10 +318,10 @@
         ".js-buy-more {color: #000; font-weight: 700;}",
         ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box {background: #fbfbfb;}",
         ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
-        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; FONT-WEIGHT:800}",
+        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
         ".arrow {color: #000000; background: #f2c054;}",
         ".section-collections-with-nav__product-price {color: #000000;}",
-        ".md\\:top-\\[-15px\\] {DISPLAY: NONE; }"
+        ".md\\:top-\\[-15px\\] {display: NONE;}"
       ],
       "settings": {
         "use_popup": true,
@@ -974,6 +987,7 @@
     "bf_promo_discount_AibFnrK",
     "bf_top_bar_YUNa4V",
     "bf_promo_discount_fjxfqV",
+    "limited_offers_zbhK6h",
     "gift_display_section_PDXACj",
     "limited_offers_jKBGqn",
     "scroll_to_button_7LJcTQ",

@@ -124,6 +124,59 @@
         "padding_bottom": 44
       }
     },
+    "limited_offers_iNzNUX": {
+      "type": "limited-offers",
+      "blocks": {
+        "air_tabs_ET7Aky": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Gold_-_home_page_titan_cabl_bogof.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/smartcablebogof"
+          }
+        },
+        "air_tabs_xN7FE3": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Gold_-_home_page_powerpakc_bogof.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/powerpackbogof"
+          }
+        },
+        "air_tabs_EY4nBf": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Gold_-_home_page_100w_bogof_home.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/100wmulticablebogof"
+          }
+        },
+        "air_tabs_8Gc7Q6": {
+          "type": "air_tabs",
+          "settings": {
+            "product_image": "shopify://shop_images/Gold_-_home_page_1_bogof_4_in_1.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/4in1bogof"
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_ET7Aky",
+        "air_tabs_xN7FE3",
+        "air_tabs_EY4nBf",
+        "air_tabs_8Gc7Q6"
+      ],
+      "custom_css": [
+        ".top-image.mb-\\[20px\\] {display: none;}",
+        ".offers-title {margin-top: 30px;}",
+        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
+        ".timer {display: none;}"
+      ],
+      "settings": {
+        "text_right": "",
+        "countdown_to": "09 December 2024"
+      }
+    },
     "gift_display_section_bkq3jR": {
       "type": "gift-display-section",
       "blocks": {
@@ -205,59 +258,6 @@
       "settings": {
         "welcome_message": "Boost Cart Value to Unlock 4 NEW FREE GIFTS!",
         "set_inactive": false
-      }
-    },
-    "limited_offers_iNzNUX": {
-      "type": "limited-offers",
-      "blocks": {
-        "air_tabs_ET7Aky": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Gold_-_home_page_titan_cabl_bogof.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/smartcablebogof"
-          }
-        },
-        "air_tabs_xN7FE3": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Gold_-_home_page_powerpakc_bogof.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/powerpackbogof"
-          }
-        },
-        "air_tabs_EY4nBf": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Gold_-_home_page_100w_bogof_home.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/100wmulticablebogof"
-          }
-        },
-        "air_tabs_8Gc7Q6": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Gold_-_home_page_1_bogof_4_in_1.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/4in1bogof"
-          }
-        }
-      },
-      "block_order": [
-        "air_tabs_ET7Aky",
-        "air_tabs_xN7FE3",
-        "air_tabs_EY4nBf",
-        "air_tabs_8Gc7Q6"
-      ],
-      "custom_css": [
-        ".top-image.mb-\\[20px\\] {display: none;}",
-        ".offers-title {margin-top: 30px;}",
-        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
-        ".timer {display: none;}"
-      ],
-      "settings": {
-        "text_right": "",
-        "countdown_to": "09 December 2024"
       }
     },
     "limited_offers_AQQTjq": {
@@ -1159,8 +1159,8 @@
   },
   "order": [
     "e44672f0-bbb4-4c1d-be4e-80894b17dccc",
-    "gift_display_section_bkq3jR",
     "limited_offers_iNzNUX",
+    "gift_display_section_bkq3jR",
     "limited_offers_AQQTjq",
     "image-with-text",
     "459b0cab-7c8e-40c7-b786-6ba18d5c1404",

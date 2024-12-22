@@ -36,10 +36,10 @@
         ".max-w-\\[1000px\\] {max-width: 600px; margin-top: 20px;}",
         ".custom-pack-wrapper {padding: 1px 10px;}",
         ".bg-black {--tw-bg-opacity: 1; background-color: #141414; margin-bottom: -10px; padding-top: 20px;}",
-        "@media (min-width: 768px) {.md\\:text-\\[60px\\] {font-size: 40px; }}"
+        "@media (min-width: 768px) {.md\\:text-\\[60px\\] {font-size: 80px; }}"
       ],
       "settings": {
-        "show_banner": true,
+        "show_banner": false,
         "section_title": "TITAN SHOP",
         "section_eyebrow": ""
       }
@@ -52,8 +52,7 @@
         ".px-\\[20px\\] {width: 70%; font-weight: 800; letter-spacing: normal;}",
         ".bg-\\[\\#fff\\] {--tw-bg-opacity: 1; background-color: #141414;}",
         "text-\\[16px\\] {font-size: 14px; text-align: center; line-height: 1.2;}",
-        ".mb-\\[20px\\] {margin-bottom: 10px; margin-top: -20px;}",
-        ".narrow .section-explore__buy-now {background-color: #f2c054; color: #000000;}"
+        ".mb-\\[20px\\] {margin-bottom: 10px; margin-top: -20px;}"
       ],
       "settings": {
         "narrow_version": true,
@@ -69,9 +68,7 @@
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        ".bf-top-bar {background-color: #f2c054;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #f2c054;}"
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
       ],
       "settings": {
         "welcome_message": "Everything 50% OFF + Save 80% By Adding more",
@@ -117,8 +114,7 @@
         ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
         "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
         ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
-        ".max-w-\\[700px\\] {display: none;}",
-        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #f2c054;}"
+        ".max-w-\\[700px\\] {display: none;}"
       ],
       "settings": {
         "show_banner": false,
@@ -271,6 +267,7 @@
     },
     "titan_linked_image_A4GJp6": {
       "type": "titan-linked-image",
+      "disabled": true,
       "custom_css": [
         "section.bg-\\[\\#d6e1e1\\].pt-\\[20px\\].pb-0.md\\:pt-\\[40px\\].md\\:pb-\\[60px\\] {margin-top: 30px;}"
       ],

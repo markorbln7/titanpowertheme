@@ -7,17 +7,74 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "buds_package_content_AHbpiY": {
+      "type": "buds-package-content",
+      "blocks": {
+        "box_item_X3wJWP": {
+          "type": "box_item",
+          "settings": {
+            "icon": "shopify://shop_images/download.svg",
+            "alt_text": "Icon description",
+            "description": "2x SMART Earbuds"
+          }
+        },
+        "box_item_xmXnft": {
+          "type": "box_item",
+          "settings": {
+            "icon": "shopify://shop_images/download_1.svg",
+            "alt_text": "Icon description",
+            "description": "S, M, L Silicon Fitwings"
+          }
+        },
+        "box_item_wwzid9": {
+          "type": "box_item",
+          "settings": {
+            "icon": "shopify://shop_images/download_2.svg",
+            "alt_text": "Icon description",
+            "description": "Titan Smart Cable"
+          }
+        },
+        "box_item_LbWtgY": {
+          "type": "box_item",
+          "settings": {
+            "icon": "shopify://shop_images/download_3.svg",
+            "alt_text": "Icon description",
+            "description": "Charging Case"
+          }
+        },
+        "box_item_ec98ij": {
+          "type": "box_item",
+          "settings": {
+            "icon": "shopify://shop_images/download_4.svg",
+            "alt_text": "Icon description",
+            "description": "S, M, L Silicon Eartips"
+          }
+        }
+      },
+      "block_order": [
+        "box_item_X3wJWP",
+        "box_item_xmXnft",
+        "box_item_wwzid9",
+        "box_item_LbWtgY",
+        "box_item_ec98ij"
+      ],
+      "settings": {
+        "heading": "What's in the Box"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "buds_package_content_AHbpiY"
   ]
 }

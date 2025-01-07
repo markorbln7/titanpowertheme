@@ -435,3 +435,15 @@
         margin-right: 0;
     }
 }
+.air-tabs__nav-item.one_slide {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .air-tabs__nav-number {
+        display: none;
+    }
+}
+.air-tabs__wrapper.one_wrapper {
+    align-items: unset;
+}

@@ -23,7 +23,7 @@
       {% endif %}
     </div>
 
-    <div class="air-tabs__wrapper">
+    <div class="air-tabs__wrapper {% if section.settings.one_slide_only == true%} one_wrapper{% endif %}">
       {% if tabs %}
         <nav class="air-tabs__nav">
           {% for block in tabs %}
@@ -32,7 +32,7 @@
               assign tab_image = block.settings.tab_image
             %}
             <div
-              class="air-tabs__nav-item{% if tab_index == 1 %} active{% endif %}"
+              class="air-tabs__nav-item{% if tab_index == 1 %} active{% endif %} {% if section.settings.one_slide_only == true%} one_slide{% endif %}"
               data-tab="{{ tab_index }}"
             >
               <div class="air-tabs__nav-number">
@@ -98,6 +98,11 @@
 {
   "name": "Air tabs",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "one_slide_only",
+      "label": "Show One Slide Only"
+    },
     {
       "type": "text",
       "id": "section_title",

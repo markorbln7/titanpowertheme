@@ -892,6 +892,10 @@ summary::-webkit-details-marker {
 }
 
 /* component-grid */
+.image-with-text .grid {
+  margin-bottom: 0;
+  display: flex;
+}
 .grid {
   display: flex;
   flex-wrap: wrap;

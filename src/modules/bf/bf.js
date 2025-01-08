@@ -494,7 +494,7 @@ gridImages.forEach(gridImage => {
       buyMore.classList.remove('hidden')
     }
     if (imageQty >= 6 && buyMore) {
-      buyMore.textContent = 'Add 10 save 80%'
+      buyMore.textContent = 'Add 10 save 75%'
       buyMore.setAttribute('data-count', 10)
       buyMore.classList.remove('hidden')
     }

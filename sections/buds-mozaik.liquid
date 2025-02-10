@@ -1,0 +1,135 @@
+{% schema %}
+{
+  "name": "Feature Mosaic",
+  "tag": "section",
+  "class": "custom-feature-mosaic",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "What 3 Reasons makes Titan so special?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Compare Titan Vs Other Brands"
+    },
+    {
+        "type": "text",
+        "id": "feature_number",
+        "label": "Feature Number",
+        "default": "1"
+      },
+      {
+        "type": "text",
+        "id": "block_title",
+        "label": "Title",
+        "default": "Smart Built in Touch Screen"
+      },
+  ],
+  "blocks": [
+    {
+      "type": "feature_box",
+      "name": "Feature Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "second_image",
+            "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+            "type": "text",
+            "id": "title_second",
+            "label": "Title",
+            "default": "Feature Title Second"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_second",
+          "label": "Subtitle",
+          "default": "Feature Subtitle"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "Feature Subtitle Second"
+          },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Mosaic",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<div class="text-center my-[20px]">
+    <h2 class="text-[#4F805D] text-[24px] font-bold">{{ section.settings.title }}</h2>
+    <p class="text-[#4F805D] text-[18px] mb-[20px]">{{ section.settings.subtitle }}</p>
+</div>
+<section class="max-w-[1120px] mx-auto rounded-[8px] bg-white p-[20px] text-center mt-[20px]">
+    <div class="flex items-center justify-center mb-[20px]">
+        <span class="bg-[#4F805D] text-white text-[24px] font-bold px-[12px] py-[4px] rounded-full w-[40px] h-[40px] flex items-center justify-center">{{ section.settings.feature_number }}</span>
+        <h2 class="text-[#4F805D] text-[24px] font-bold ml-[10px]">{{ section.settings.block_title }}</h2>
+      </div>
+  <!-- Gornji deo sa 4 sekcije -->
+  <div class="flex flex-wrap gap-[10px]">
+    {% for block in section.blocks limit:4 %}
+      <div class="relative overflow-hidden rounded-[8px] w-full md:w-[24%] flex {% if forloop.index == 2 or forloop.index == 3 %}flex-col{% endif %}">
+            <div class="relative w-full">
+                <img src="{{ block.settings.image | img_url: '600x' }}" class="w-full h-full object-cover">
+                <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
+                    <p class="font-bold text-[18px]">{{ block.settings.title }}</p>
+                    <p class="text-[12px]">{{ block.settings.subtitle }}</p>
+                </div>
+            </div>
+            {% if block.settings.second_image %}
+                <div class="relative">
+                    <img src="{{ block.settings.second_image | img_url: '600x' }}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
+                        <p class="font-bold text-[18px]">{{ block.settings.title_second }}</p>
+                        <p class="text-[12px]">{{ block.settings.subtitle_second }}</p>
+                    </div>
+                </div>
+            {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Donji deo sa 3 sekcije -->
+  <div class="flex flex-wrap gap-[10px]">
+    {% for block in section.blocks offset:4 limit:3 %}
+      <div class="relative overflow-hidden rounded-[8px] w-full md:w-[32%]">
+        <div class="relative h-full rounded-[8px] w-full">
+            <img src="{{ block.settings.image | img_url: '600x' }}" class="w-full h-full object-cover rounded-[8px]">
+            <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
+                <p class="font-bold text-[18px]">{{ block.settings.title }}</p>
+                <p class="text-[16px]">{{ block.settings.subtitle }}</p>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

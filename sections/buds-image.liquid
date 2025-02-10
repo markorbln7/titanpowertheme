@@ -1,0 +1,35 @@
+{% schema %}
+{
+  "name": "Full Width Image",
+  "tag": "section",
+  "class": "custom-full-width-image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buds Full Width Image"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="w-full">
+  <picture>
+    {% if section.settings.mobile_image %}
+      <source media="(max-width: 768px)" srcset="{{ section.settings.mobile_image | img_url: '1500x' }}">
+    {% endif %}
+    {% if section.settings.desktop_image %}
+      <img class="w-full h-auto" src="{{ section.settings.desktop_image | img_url: '2000x' }}" alt="Full Width Image">
+    {% endif %}
+  </picture>
+</section>

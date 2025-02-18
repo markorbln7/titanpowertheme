@@ -1,6 +1,7 @@
 <!doctype html>
   <html class="no-js" lang="{{ request.locale.iso_code }}">
     <head>
+      {{ 'special-buds.css' | asset_url | stylesheet_tag }}
 
 
 
@@ -44,6 +45,7 @@
       <style>  body.no-scroll {  overflow: hidden;  }  </style>
 
       {{ 'main.css' | asset_url | stylesheet_tag }}
+
       {{ 'main.js' | asset_url | script_tag }}
       {{ 'section-product-template.css' | asset_url | stylesheet_tag }}
       {{ 'section-product-template.js' | asset_url | script_tag }}

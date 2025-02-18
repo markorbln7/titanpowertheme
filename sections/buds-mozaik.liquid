@@ -1,135 +1,159 @@
+<div class="shopify-section media-grid-wrapper as-media-grid mt-[20px]">
+  <div>
+    <div class="max-w-[1440px] px-[20px] py-[30px] bg-white rounded-[8px] mx-auto">
+      <div class="flex items-center justify-center mb-[20px]">
+        <span class="bg-[#4F805D] text-white text-[24px] font-bold px-[12px] py-[4px] rounded-full w-[40px] h-[40px] flex items-center justify-center">{{ section.settings.number | default: '1' }}</span>
+        <h2 class="text-[#4F805D] text-[24px] font-bold ml-[10px]">{{ section.settings.title | default: 'Packed With Epic Features' }}</h2>
+      </div>
+      <div class="grid-parent">
+        <!-- Block 1 -->
+        <div class="grid-item order-mob-1 overflow-hidden position-relative grid-columns-1 grid-rows-2 grid-columns-lg-3 grid-rows-lg-2">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:160.3896103896104%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image1 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-dark color-white">
+            <h3 class="text-[24px] color-white">{{ section.settings.title1 | default: 'Open Sound Technology' }}</h3>
+            <div class="text-[16px] color-white">{{ section.settings.subtitle1 | default: 'Hear it all' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 2 -->
+        <div class="grid-item order-mob-1 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.17041800643086%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image2 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-white">
+            <h3 class="text-[24px] color-white">{{ section.settings.title2 | default: 'New level of comfort' }}</h3>
+          </div>
+        </div>
+
+        <!-- Block 3 -->
+        <div class="grid-item order-mob-7 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:78.94736842105263%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image3 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-dark">
+            <h3 class="text-[24px] text-[#4F805D]">{{ section.settings.title3 | default: 'Sound Seal System' }}</h3>
+            <div class="text-[16px] text-[#4F805D]">{{ section.settings.subtitle3 | default: 'Keeps your audio yours' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 4 -->
+        <div class="grid-item order-mob-6 overflow-hidden position-relative grid-columns-1 grid-rows-2 grid-columns-lg-3 grid-rows-lg-2">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:160.3896103896104%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image4 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-start justify-content-lg-start text-dark">
+            <h3 class="text-[24px] text-[#4F805D]">{{ section.settings.title4 | default: 'Clear Voice Technology' }}</h3>
+            <div class="text-[16px] text-[#4F805D]">{{ section.settings.subtitle4 | default: 'AI-enhanced for the clearest calls' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 5 -->
+        <div class="grid-item order-mob-8 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.9220779220779%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image5 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-white">
+            <h3 class="text-[24px] color-white">{{ section.settings.title5 | default: '30 hours' }}</h3>
+            <div class="text-[16px] color-white">{{ section.settings.subtitle5 | default: 'of playback' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 6 -->
+        <div class="grid-item order-mob-5 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.9220779220779%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image6 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[24px] color-white">{{ section.settings.title6 | default: 'Immersive sound' }}</h3>
+            <div class="text-[16px] color-white">{{ section.settings.subtitle6 | default: 'With auto Bass Enhance and our Advanced EQ' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 7 -->
+        <div class="grid-item order-mob-3 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-5 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image7 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[24px] color-white">{{ section.settings.title7 | default: 'Custom diaphragm' }}</h3>
+            <div class="text-[16px] color-white">{{ section.settings.subtitle7 | default: 'Less distortion, deeper lows' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 8 -->
+        <div class="grid-item order-mob-4 overflow-hidden position-relative grid-columns-2 grid-rows-1 grid-columns-lg-4 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image8 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-dark">
+            <h3 class="text-[24px] text-[#4F805D]">{{ section.settings.title8 | default: 'Ultra compact' }}</h3>
+            <div class="text-[16px] text-[#4F805D]">{{ section.settings.subtitle8 | default: 'Just 19 mm thin' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 9 -->
+        <div class="grid-item order-mob-9 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image9 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] px-[20px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[24px] text-white">{{ section.settings.title9 | default: 'IP54' }}</h3>
+            <div class="text-[16px] text-white">{{ section.settings.subtitle9 | default: 'Dust & water resistance rated' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% schema %}
 {
-  "name": "Feature Mosaic",
-  "tag": "section",
-  "class": "custom-feature-mosaic",
+  "name": "Media Grid",
   "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "What 3 Reasons makes Titan so special?"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Compare Titan Vs Other Brands"
-    },
-    {
-        "type": "text",
-        "id": "feature_number",
-        "label": "Feature Number",
-        "default": "1"
-      },
-      {
-        "type": "text",
-        "id": "block_title",
-        "label": "Title",
-        "default": "Smart Built in Touch Screen"
-      },
-  ],
-  "blocks": [
-    {
-      "type": "feature_box",
-      "name": "Feature Box",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-            "type": "image_picker",
-            "id": "second_image",
-            "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Feature Title"
-        },
-        {
-            "type": "text",
-            "id": "title_second",
-            "label": "Title",
-            "default": "Feature Title Second"
-        },
-        {
-          "type": "text",
-          "id": "subtitle_second",
-          "label": "Subtitle",
-          "default": "Feature Subtitle"
-        },
-        {
-            "type": "text",
-            "id": "subtitle",
-            "label": "Subtitle",
-            "default": "Feature Subtitle Second"
-          },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text Color",
-          "default": "#ffffff"
-        }
-      ]
-    }
+    { "type": "text", "id": "number", "label": "Number" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "image_picker", "id": "image1", "label": "Image 1" },
+    { "type": "text", "id": "title1", "label": "Title 1" },
+    { "type": "text", "id": "subtitle1", "label": "Subtitle 1" },
+
+    { "type": "image_picker", "id": "image2", "label": "Image 2" },
+    { "type": "text", "id": "title2", "label": "Title 2" },
+    { "type": "text", "id": "subtitle2", "label": "Subtitle 2" },
+
+    { "type": "image_picker", "id": "image3", "label": "Image 3" },
+    { "type": "text", "id": "title3", "label": "Title 3" },
+    { "type": "text", "id": "subtitle3", "label": "Subtitle 3" },
+
+    { "type": "image_picker", "id": "image4", "label": "Image 4" },
+    { "type": "text", "id": "title4", "label": "Title 4" },
+    { "type": "text", "id": "subtitle4", "label": "Subtitle 4" },
+
+    { "type": "image_picker", "id": "image5", "label": "Image 5" },
+    { "type": "text", "id": "title5", "label": "Title 5" },
+    { "type": "text", "id": "subtitle5", "label": "Subtitle 5" },
+
+    { "type": "image_picker", "id": "image6", "label": "Image 6" },
+    { "type": "text", "id": "title6", "label": "Title 6" },
+    { "type": "text", "id": "subtitle6", "label": "Subtitle 6" },
+
+    { "type": "image_picker", "id": "image7", "label": "Image 7" },
+    { "type": "text", "id": "title7", "label": "Title 7" },
+    { "type": "text", "id": "subtitle7", "label": "Subtitle 7" },
+
+    { "type": "image_picker", "id": "image8", "label": "Image 8" },
+    { "type": "text", "id": "title8", "label": "Title 8" },
+    { "type": "text", "id": "subtitle8", "label": "Subtitle 8" },
+
+    { "type": "image_picker", "id": "image9", "label": "Image 9" },
+    { "type": "text", "id": "title9", "label": "Title 9" },
+    { "type": "text", "id": "subtitle9", "label": "Subtitle 9" }
   ],
   "presets": [
     {
-      "name": "Feature Mosaic",
-      "category": "Custom"
+      "name": "Media Grid"
     }
   ]
 }
 {% endschema %}
-<div class="text-center my-[20px]">
-    <h2 class="text-[#4F805D] text-[24px] font-bold">{{ section.settings.title }}</h2>
-    <p class="text-[#4F805D] text-[18px] mb-[20px]">{{ section.settings.subtitle }}</p>
-</div>
-<section class="max-w-[1120px] mx-auto rounded-[8px] bg-white p-[20px] text-center mt-[20px]">
-    <div class="flex items-center justify-center mb-[20px]">
-        <span class="bg-[#4F805D] text-white text-[24px] font-bold px-[12px] py-[4px] rounded-full w-[40px] h-[40px] flex items-center justify-center">{{ section.settings.feature_number }}</span>
-        <h2 class="text-[#4F805D] text-[24px] font-bold ml-[10px]">{{ section.settings.block_title }}</h2>
-      </div>
-  <!-- Gornji deo sa 4 sekcije -->
-  <div class="flex flex-wrap gap-[10px]">
-    {% for block in section.blocks limit:4 %}
-      <div class="relative overflow-hidden rounded-[8px] w-full md:w-[24%] flex {% if forloop.index == 2 or forloop.index == 3 %}flex-col{% endif %}">
-            <div class="relative w-full">
-                <img src="{{ block.settings.image | img_url: '600x' }}" class="w-full h-full object-cover">
-                <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
-                    <p class="font-bold text-[18px]">{{ block.settings.title }}</p>
-                    <p class="text-[12px]">{{ block.settings.subtitle }}</p>
-                </div>
-            </div>
-            {% if block.settings.second_image %}
-                <div class="relative">
-                    <img src="{{ block.settings.second_image | img_url: '600x' }}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
-                        <p class="font-bold text-[18px]">{{ block.settings.title_second }}</p>
-                        <p class="text-[12px]">{{ block.settings.subtitle_second }}</p>
-                    </div>
-                </div>
-            {% endif %}
-      </div>
-    {% endfor %}
-  </div>
-
-  <!-- Donji deo sa 3 sekcije -->
-  <div class="flex flex-wrap gap-[10px]">
-    {% for block in section.blocks offset:4 limit:3 %}
-      <div class="relative overflow-hidden rounded-[8px] w-full md:w-[32%]">
-        <div class="relative h-full rounded-[8px] w-full">
-            <img src="{{ block.settings.image | img_url: '600x' }}" class="w-full h-full object-cover rounded-[8px]">
-            <div class="absolute bottom-[20px] left-[20px] text-[{{ block.settings.text_color }}] text-left">
-                <p class="font-bold text-[18px]">{{ block.settings.title }}</p>
-                <p class="text-[16px]">{{ block.settings.subtitle }}</p>
-            </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-</section>

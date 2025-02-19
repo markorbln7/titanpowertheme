@@ -16,9 +16,9 @@
     "buds_hero_U3JTQ8": {
       "type": "buds-hero",
       "settings": {
-        "image": "shopify://shop_images/status_model-1_image-1.webp",
+        "image": "shopify://shop_images/Titan_smart_buds_titan_power_plus_man_wearing_buds_top_a720c7e2-5851-48c1-ae09-5a07062674b3.png",
         "headline": "THE ONLY OVER EAR EAR BUDS WITH A SCREEN",
-        "content_image": "shopify://shop_images/Screenshot_2025-02-10_at_10_19_06_bg_removed_png.png",
+        "content_image": "shopify://shop_images/Titan_Smart_Buds_-_PNG.png",
         "button_link": "",
         "button_text": "SHOP NOW"
       }
@@ -214,13 +214,12 @@
       "settings": {
         "section_title": "Redesigned for Comfort. How fitting",
         "section_number": 3,
-        "background_color": "#4f805d",
+        "background_color": "#2f4534",
         "inner_background_color": "#2f4534"
       }
     },
     "compare-table": {
       "type": "compare-table",
-      "disabled": true,
       "settings": {}
     },
     "buds_image_MphiwP": {
@@ -296,12 +295,15 @@
         "air_tabs_g9JMXw",
         "air_tabs_EQVJKk"
       ],
+      "custom_css": [
+        ".air-tabs__nav-item:nth-child(5) {left: 0%; bottom: 20%;}"
+      ],
       "settings": {
         "main_image": "shopify://shop_images/Titan_smart_buds_titan_power_plus_exploded_bud_1000x_d54251bc-a428-4bed-bbb7-e5a960162453.webp",
         "one_slide_only": false,
         "section_title": "",
         "section_subtitle": "",
-        "section_background": "linear-gradient(180deg, #60c655, transparent);"
+        "section_background": "linear-gradient(180deg, #60c655, black);"
       }
     },
     "slideshow_NBHM9R": {
@@ -535,7 +537,7 @@
       "custom_css": [
         ".image-with-text {padding: 0; width: 100%; max-width: 100%; background: white;}",
         ".image-with-text .grid {max-width: 1440px; margin: 0 auto;}",
-        ".image-with-text:not(.image-with-text--overlap) .image-with-text__media-item:after {box-shadow:none;}"
+        ".image-with-text:not(.image-with-text--overlap) .image-with-text__media-item:after {box-shadow: none;}"
       ],
       "settings": {
         "image": "shopify://shop_images/Q1_12.jpg",
@@ -558,41 +560,65 @@
         "feature_RfPp8Q": {
           "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Packs_ce51d93c-1e69-463b-8521-2204d40c71dd.png",
+            "icon": "shopify://shop_images/telephone-call.png",
             "feature_title": "ANSWER/END CALL",
-            "feature_description": "Tap L/R"
+            "feature_description": "Double Tap R/L"
           }
         },
         "feature_K93cQc": {
           "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Product_Packs_-_EXTENDED3.png",
-            "feature_title": "ANSWER/END CALL",
-            "feature_description": "Tap L/R"
+            "icon": "shopify://shop_images/Voice_Assistant.png",
+            "feature_title": "VOICE ASSISTANT",
+            "feature_description": "Quick Triple Tap R/L"
           }
         },
         "feature_XjjKmx": {
           "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Product_Packs_-_EXTENDED.png",
-            "feature_title": "ANSWER/END CALL",
-            "feature_description": "Tap L/R"
+            "icon": "shopify://shop_images/Reject_call.png",
+            "feature_title": "REJECT CALL",
+            "feature_description": "Long Tap 2s R/L"
           }
         },
         "feature_xYVDQE": {
           "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Product_Packs_-_EXTENDED3.png",
-            "feature_title": "ANSWER/END CALL",
-            "feature_description": "Tap L/R"
+            "icon": "shopify://shop_images/Play_Pause.png",
+            "feature_title": "PLAY/PAUSE",
+            "feature_description": "One Tap R/L"
           }
         },
         "feature_9J3FHa": {
           "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Product_Packs_-_EXTENDED.png",
-            "feature_title": "ANSWER/END CALL",
-            "feature_description": "Tap L/R"
+            "icon": "shopify://shop_images/Prev_Track.png",
+            "feature_title": "PREVIOUS TRACK",
+            "feature_description": "Double Tap L"
+          }
+        },
+        "feature_JkrDiz": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Vol_up.png",
+            "feature_title": "VOLUME +",
+            "feature_description": "Long Tap R"
+          }
+        },
+        "feature_fLiyGp": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Next_Track.png",
+            "feature_title": "NEXT TRACK",
+            "feature_description": "Double Tap R"
+          }
+        },
+        "feature_BXYGc7": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Vol_down.png",
+            "feature_title": "VOLUME -",
+            "feature_description": "Long Tap L"
           }
         }
       },
@@ -601,7 +627,10 @@
         "feature_K93cQc",
         "feature_XjjKmx",
         "feature_xYVDQE",
-        "feature_9J3FHa"
+        "feature_9J3FHa",
+        "feature_JkrDiz",
+        "feature_fLiyGp",
+        "feature_BXYGc7"
       ],
       "settings": {
         "title": "Perfect control at your fingertips",

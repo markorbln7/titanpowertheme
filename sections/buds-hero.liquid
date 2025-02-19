@@ -39,22 +39,22 @@
   }
 {% endschema %}
 
-<div class="relative bg-gradient-to-b from-green-900 to-white pt-12 md:pt-24">
-  <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center">
+<div class="relative bg-gradient-to-b from-[#014115] to-white">
+  <div class="mx-auto max-w-[1800px] flex flex-col md:flex-row md:items-center">
     <div class="w-full md:w-1/2 order-1 md:order-none">
       {% if section.settings.image %}
         <img src="{{ section.settings.image | img_url: 'master' }}" alt="Hero Image" class="rounded max-w-full h-auto" />
       {% endif %}
     </div>
     <div class="w-full md:w-1/2 mt-6 md:mt-0 md:pl-12 text-center md:text-left order-2 md:order-none">
-      <h1 class="text-[30px] md:text-[40px] font-bold text-white">{{ section.settings.headline }}</h1>
+      <h1 class="text-[30px] md:text-[36px] font-bold text-white max-w-[550px] mx-auto">{{ section.settings.headline }}</h1>
       {% if section.settings.content_image %}
-        <div class="my-4">
+        <div class="my-4 max-w-[250px] mx-auto">
           <img src="{{ section.settings.content_image | img_url: 'master' }}" alt="Content Image" class="mx-auto md:mx-0 max-w-full h-auto" />
         </div>
       {% endif %}
       <div class="mt-4">
-        <a href="{{ section.settings.button_link }}" class="bg-green-900 text-white font-semibold py-3 px-6 rounded-full hover:bg-green-800 text-[18px] bold max-w-[320px] block mx-auto">
+        <a href="{{ section.settings.button_link }}" class="bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold max-w-[320px] block mx-auto">
           {{ section.settings.button_text }}
         </a>
       </div>

@@ -38,15 +38,18 @@
     ]
   }
 {% endschema %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+</style>
 
-<div class="relative bg-gradient-to-b from-[#014115] to-white">
+<div class="relative bg-gradient-to-b from-[#014115] to-white overflow-hidden">
   <div class="mx-auto max-w-[1800px] flex flex-col md:flex-row md:items-center">
     <div class="w-full md:w-1/2 order-1 md:order-none">
       {% if section.settings.image %}
-        <img src="{{ section.settings.image | img_url: 'master' }}" alt="Hero Image" class="rounded max-w-full h-auto" />
+        <img src="{{ section.settings.image | img_url: 'master' }}" alt="Hero Image" class="rounded max-w-full h-auto transform scale-[1.5] md:scale-[1]" />
       {% endif %}
     </div>
-    <div class="w-full md:w-1/2 mt-6 md:mt-0 md:pl-12 text-center md:text-left order-2 md:order-none">
+    <div class="w-full md:w-1/2 mt-[-20px] md:mt-0 md:mb-0 mb-[20px] md:pl-12 text-center md:text-left order-2 md:order-none">
       <h1 class="text-[30px] md:text-[36px] font-bold text-white max-w-[550px] mx-auto">{{ section.settings.headline }}</h1>
       {% if section.settings.content_image %}
         <div class="my-4 max-w-[250px] mx-auto">

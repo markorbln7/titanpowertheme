@@ -135,7 +135,7 @@
     border-radius: 8px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
   .buds-outer {
     border-radius: 8px;
@@ -210,13 +210,13 @@
   }
 </style>
 {% endstylesheet %}
-<div class="bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-200%]">
+<div class="bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-200%] px-[10px]">
 
   <section
     class="buds-third-section pt-[20px] pb-[40px]"
     style="--section-background-color: {{ section.settings.background_color }};"
   >
-    <div class="max-w-[1240px] mx-auto text-center buds-outer pt-[30px] pb-[30px] rounded-[24px]"
+    <div class="max-w-[1240px] mx-auto text-center buds-outer pt-[30px] pb-[30px] rounded-[24px] shadow-[0_0_10px_#b5b5b5]"
       style="--inner-background-color: {{ section.settings.inner_background_color }};">
       {% comment %} <div class="buds-main-title bold ">
         <span class="text-[{{ section.settings.inner_background_color }}] bg-white rounded-[50%] inline-block w-[40px] h-[40px] bold">
@@ -224,9 +224,9 @@
         </span>
           {{ section.settings.section_title }}
       </div> {% endcomment %}
-      <div class="flex items-center justify-center mb-[20px]">
+      <div class="flex items-center justify-center mb-[20px] flex-col md:flex-row gap-[10px] md:gap-[0px]">
         <span class="bg-white text-[#2f4534] md:text-[50px] text-[32px] font-bold px-[12px] py-[4px] rounded-full w-[60px] h-[60px] flex items-center justify-center">{{ section.settings.section_number }}</span>
-        <h2 class="text-white md:text-[50px] text-[32px] font-bold ml-[10px]">{{ section.settings.section_title }}</h2>
+        <h2 class="text-white md:text-[50px] text-[32px] font-bold ml-[10px] text-center">{{ section.settings.section_title }}</h2>
       </div>
       <div
         class="buds-inner"

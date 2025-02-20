@@ -78,13 +78,13 @@
   ]
 }
 {% endschema %}
-<div class="bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-100%] py-[30px]">
+<div class="bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-100%] py-[30px] px-[10px]">
 
 
-  <section class="max-w-[1240px] mx-auto rounded-[24px] bg-white p-[20px] text-center">
-    <div class="flex items-center justify-center mb-[20px]">
+  <section class="max-w-[1240px] mx-auto rounded-[24px] bg-white p-[20px] text-center shadow-[0_0_10px_#b5b5b5]">
+    <div class="flex items-center justify-center mb-[20px] flex-col md:flex-row gap-[10px] md:gap-[0px]">
       <span class="bg-[#2f4534] text-white md:text-[50px] text-[32px] font-bold px-[12px] py-[4px] rounded-full w-[60px] h-[60px] flex items-center justify-center">{{ section.settings.feature_number }}</span>
-      <h2 class="text-[#2f4534] md:text-[50px] text-[32px] font-bold ml-[10px]">{{ section.settings.title }}</h2>
+      <h2 class="text-[#2f4534] md:text-[50px] text-[32px] font-bold ml-[10px] text-center">{{ section.settings.title }}</h2>
     </div>
     <div class="flex flex-col md:flex-row items-stretch justify-between gap-[20px]">
       <div class="hidden flex-col justify-between w-full md:w-[25%] md:items-center items-baseline md:flex">
@@ -107,7 +107,7 @@
       </div>
       <div class="w-full md:w-[50%] flex items-center">
         <div
-          class="grid grid-cols-4 grid-rows-4 gap-[30px] relative"
+          class="grid grid-cols-4 grid-rows-4 md:gap-[30px] gap-[10px] relative"
         >
           {% for block in section.blocks %}
             {% if block.type == 'left_block' and forloop.index < 6 %}

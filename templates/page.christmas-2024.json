@@ -96,6 +96,7 @@
       ],
       "settings": {
         "show_banner": true,
+        "banner_image": "shopify://shop_images/V_day_sale_badge_5286d420-7d43-4d76-bc77-4bf6e9a8487a.png",
         "section_title": "",
         "section_eyebrow": ""
       }
@@ -142,10 +143,11 @@
         "air_tabs_AJdyMP",
         "air_tabs_3FRUfh"
       ],
+      "disabled": true,
       "custom_css": [
         ".offers-title {font-size: 40px; font-weight: 900; margin-bottom: 10px; color: #2d2d2d; font-family: \"Raleway\";}",
         ".offers-list {margin-bottom: 50px;}",
-        ".timer{display:none}"
+        ".timer {display: none;}"
       ],
       "settings": {
         "image": "shopify://shop_images/desktop_banner.jpg",
@@ -166,7 +168,8 @@
       ],
       "settings": {
         "welcome_message": "Everything 50% OFF + Save 80%  By Adding more",
-        "show_banner": false
+        "show_banner": false,
+        "image": "shopify://shop_images/V_day_sale_badge_5286d420-7d43-4d76-bc77-4bf6e9a8487a.png"
       }
     },
     "bf_promo_discount_fjxfqV": {
@@ -216,79 +219,6 @@
         "show_banner": true,
         "section_title": "",
         "section_eyebrow": ""
-      }
-    },
-    "gift_display_section_PDXACj": {
-      "type": "gift-display-section",
-      "blocks": {
-        "gift_images_p8WriF": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "SHOP TODAY",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_rKPd7B": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_cable_case_e56d5bb6-c826-4b16-8b7b-4fbb0535dc78.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "CABLE KIT",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
-            "money_product": ""
-          }
-        },
-        "gift_images_4DTz49": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TITAN CABLE",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "pd",
-            "money_product": ""
-          }
-        },
-        "gift_images_yWcNKm": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/pngs_of_products_FREE_GIFTS_3_in1_cable_e_dfe2a0d3-8265-4e36-9f99-313a26d3d339.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "3-IN-1 CABLE",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
-            "money_product": ""
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_p8WriF",
-        "gift_images_rKPd7B",
-        "gift_images_4DTz49",
-        "gift_images_yWcNKm"
-      ],
-      "custom_css": [
-        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
-        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
-        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
-        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
-        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        ".mt-\\[20px\\] {margin-top: 30px;}",
-        ".gift-overlay.is-active {background-color: #60c655;}"
-      ],
-      "settings": {
-        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
-        "set_inactive": false
       }
     },
     "limited_offers_jKBGqn": {
@@ -550,21 +480,6 @@
         "reverse_layout": true
       }
     },
-    "bf_top_bar_8RrMkH": {
-      "type": "bf-top-bar",
-      "custom_css": [
-        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
-        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        ".bf-top-bar {background-color: #60c655;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}",
-        ".bg-\\[\\#60c655\\] {margin-top: 40px;}"
-      ],
-      "settings": {
-        "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",
-        "show_banner": false
-      }
-    },
     "bf_promo_discount_AibFnr": {
       "type": "bf-promo-discount",
       "blocks": {
@@ -588,7 +503,7 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "10+ items",
-            "block_title": "80",
+            "block_title": "75",
             "eyebrow_position": true
           }
         }
@@ -608,9 +523,97 @@
         ".text-\\[\\#60C655\\] {--tw-text-opacity: 1; color: #60c655;}"
       ],
       "settings": {
-        "show_banner": false,
-        "section_title": "Customize Your Pack",
+        "show_banner": true,
+        "section_title": "Build Your Bundle",
         "section_eyebrow": "The More You Add, More You Save"
+      }
+    },
+    "gift_display_section_PDXACj": {
+      "type": "gift-display-section",
+      "blocks": {
+        "gift_images_p8WriF": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "FREE SHIPPING",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "SHOP TODAY",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
+        "gift_images_rKPd7B": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_cable_case_e56d5bb6-c826-4b16-8b7b-4fbb0535dc78.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "CABLE KIT",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
+            "money_product": ""
+          }
+        },
+        "gift_images_4DTz49": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TITAN CABLE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "pd",
+            "money_product": ""
+          }
+        },
+        "gift_images_yWcNKm": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/pngs_of_products_FREE_GIFTS_3_in1_cable_e_dfe2a0d3-8265-4e36-9f99-313a26d3d339.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "3-IN-1 CABLE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
+            "money_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_p8WriF",
+        "gift_images_rKPd7B",
+        "gift_images_4DTz49",
+        "gift_images_yWcNKm"
+      ],
+      "custom_css": [
+        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
+        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
+        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
+        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
+        ".mt-\\[20px\\] {margin-top: 20px;}",
+        ".gift-overlay.is-active {background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
+        "set_inactive": false
+      }
+    },
+    "bf_top_bar_8RrMkH": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #60c655;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}",
+        ".bg-\\[\\#60c655\\] {margin-top: 25px;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE 75%  BY BUNDLING",
+        "show_banner": false
       }
     },
     "section_collections_with_nav_Xpintm": {
@@ -679,7 +682,8 @@
         ".section-collections-with-nav__navigation li {box-shadow: 0 0 10px #b5b5b5;}",
         ".tp-sticky.sticky {padding: 10px 0; background-color: #d6e1e1f5; box-shadow: 0 4px 13px -2px #808080bd; padding-bottom: 5px; z-index: 999999;}",
         ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
-        ".js-buy-more {color: #000; font-weight: 700;}"
+        ".js-buy-more {color: #000; font-weight: 700;}",
+        ".js-buy-more {display: none;}"
       ],
       "settings": {
         "use_popup": true,
@@ -694,7 +698,7 @@
         "add_4_text": "4",
         "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
         "add_6_text": "6",
-        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
+        "add_10": "shopify://shop_images/10X_75_3e7da62b-8369-4959-ba35-cdc9139c0f9a.jpg",
         "add_10_text": "10"
       }
     },
@@ -796,7 +800,7 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "10+ items",
-            "block_title": "80",
+            "block_title": "75",
             "eyebrow_position": true
           }
         }
@@ -831,7 +835,7 @@
         ".bg-\\[\\#60C655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
       ],
       "settings": {
-        "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",
+        "welcome_message": "Everything 50% OFF + SAVE 75%  BY BUNDLING",
         "show_banner": false
       }
     },
@@ -1049,15 +1053,15 @@
     "limited_offers_CiefUe",
     "bf_top_bar_YUNa4V",
     "bf_promo_discount_fjxfqV",
-    "gift_display_section_PDXACj",
     "limited_offers_jKBGqn",
     "limited_offers_zbhK6h",
     "scroll_to_button_7LJcTQ",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",
-    "bf_top_bar_8RrMkH",
     "bf_promo_discount_AibFnr",
+    "gift_display_section_PDXACj",
+    "bf_top_bar_8RrMkH",
     "section_collections_with_nav_Xpintm",
     "gift_display_section_HhwPbQ",
     "bf_promo_discount_AibFnrL",

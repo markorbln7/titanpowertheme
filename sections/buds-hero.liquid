@@ -64,10 +64,27 @@
         </div>
       {% endif %}
       <div class="mt-4">
-        <a href="{{ section.settings.button_link }}" class="bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold max-w-[320px] block mx-auto">
+        <button data-scroll-to="section-pdp-hero" href="{{ section.settings.button_link }}" class="bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold w-[320px] block mx-auto max-w-full">
           {{ section.settings.button_text }}
-        </a>
+        </button>
       </div>
     </div>
   </div>
 </div>
+<script>
+  function scrollToDiv(divId) {
+    const targetElement = document.getElementById(divId);
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        console.error(`Element with ID '${divId}' not found.`);
+    }
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target.matches('[data-scroll-to]')) {
+        const targetId = event.target.getAttribute('data-scroll-to');
+        scrollToDiv(targetId);
+    }
+});
+</script>

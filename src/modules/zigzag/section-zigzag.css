@@ -176,6 +176,7 @@
     .zigzag__wrapper {
         padding-right: 0;
         padding-bottom: 0;
+        flex-wrap: wrap;
     }
 
     .zigzag__wrapper--reverse {
@@ -184,7 +185,7 @@
 
     .zigzag__wrapper--1 .zigzag__image-wrapper,
     .zigzag__wrapper--2 .zigzag__image-wrapper {
-        width: 40%;
+        width: 100%;
     }
 
     .zigzag__heading {
@@ -207,6 +208,7 @@
         text-transform: inherit !important;
         line-height: 17px !important;
         margin-top: 0;
+        margin-top:40px;
     }
 
     .zigzag__progress-box.first-bar {

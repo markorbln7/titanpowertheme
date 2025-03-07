@@ -48,7 +48,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
 
-<div id="prod" class="relative bg-gradient-to-b from-[#014115] to-white overflow-hidden">
+<div class="relative bg-gradient-to-b from-[#014115] to-white overflow-hidden">
   <div class="mx-auto max-w-[1800px] flex flex-col md:flex-row md:items-center">
     <div class="w-full md:w-1/2 order-1 md:order-none">
       {% if section.settings.image %}
@@ -71,42 +71,7 @@
     </div>
   </div>
 </div>
-<div id="bottomBar" class="fixed bottom-0 left-0 w-full hidden justify-between items-center p-4 bg-white border-t shadow-lg z-50">
-  <button data-scroll-to="prod" class="px-4 py-2 text-white bg-blue-500 rounded">Buy Now</button>
-  <span class="text-lg font-bold">$99.99</span>
-</div>
-
 <script>
-  function scrollToDiv(divId) {
-      const targetElement = document.getElementById(divId);
-      if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-  }
-
-  document.addEventListener('click', function(event) {
-      if (event.target.matches('[data-scroll-to]')) {
-          const targetId = event.target.getAttribute('data-scroll-to');
-          scrollToDiv(targetId);
-      }
-  });
-
-  window.addEventListener('scroll', function() {
-      const productSection = document.getElementById('prod');
-      const bottomBar = document.getElementById('bottomBar');
-      if (productSection && bottomBar) {
-          const rect = productSection.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-              bottomBar.classList.remove('hidden');
-              bottomBar.classList.add('flex');
-          } else {
-              bottomBar.classList.add('hidden');
-              bottomBar.classList.remove('flex');
-          }
-      }
-  });
-</script>
-{% comment %} <script>
   function scrollToDiv(divId) {
     const targetElement = document.getElementById(divId);
     if (targetElement) {
@@ -122,4 +87,4 @@ document.addEventListener('click', function(event) {
         scrollToDiv(targetId);
     }
 });
-</script> {% endcomment %}
+</script>

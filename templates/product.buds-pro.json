@@ -509,7 +509,8 @@
         "slide_nfkWNf"
       ],
       "custom_css": [
-        ".slideshow__text.banner__box {display: none;}"
+        ".slideshow__text.banner__box {display: none;}",
+        "@media (min-width: 768px) {.slider-mobile-gutter {display: none; }}"
       ],
       "settings": {
         "layout": "full_bleed",

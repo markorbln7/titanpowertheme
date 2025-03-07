@@ -60,7 +60,6 @@
   {% if section.settings.image != blank %}
     <div class="absolute inset-0">
       <img class="w-full h-full object-cover desktop" src="{{ section.settings.image | img_url: 'master' }}" alt="Main Image">
-      <img class="w-full h-full object-cover mobile" src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="Main Image">
     </div>
   {% endif %}
   <div class="max-w-[1300px] mx-auto relative z-10">

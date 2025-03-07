@@ -38,7 +38,7 @@
       <h2 class="text-[32px] font-bold mt-2 text-[#2f4534] mb-[20px]">{{ product.title }}</h2>
 
       <!-- Description -->
-      <p class="text-[#2f4534] text-[18px] mb-[20px]">{{ product.description | strip_html | truncate: 120 }}</p>
+      <p class="text-[#2f4534] text-[18px] mb-[20px] md:max-w-[80%]">{{ product.description | strip_html }}</p>
 
       <!-- Add to Cart Button -->
       {% assign first_variant = product.variants.first %}

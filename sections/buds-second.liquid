@@ -160,6 +160,10 @@
         {% endfor %}
       </div>
     </div>
+    <div id="display-div" class="mt-[20px] p-[10px] rounded-lg text-center block md:hidden">
+      <p class="font-bold text-[#2f453]">Camera</p>
+      <p class="text-[#2f453]">Keep your audio yours</p>
+    </div>
   </section>
 </div>
 
@@ -181,6 +185,16 @@
       const targetDiv = document.querySelector(`div[data-text="${value}"]`);
       if (targetDiv) {
         targetDiv.classList.remove('active');
+      }
+    });
+    img.addEventListener('click', function() {
+      const value = this.getAttribute('data-image');
+      const targetDiv = document.querySelector(`div[data-text="${value}"]`);
+      const displayDiv = document.getElementById('display-div');
+
+      if (targetDiv) {
+        displayDiv.innerHTML = targetDiv.innerHTML;
+        displayDiv.classList.remove('hidden');
       }
     });
   });

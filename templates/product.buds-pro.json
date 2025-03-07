@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -603,8 +603,7 @@
       "settings": {
         "title": "Perfect control at your fingertips",
         "subtitle": "Leave your phone in your pocket and conveniently control your ear buds with simple gestures",
-        "image": "shopify://shop_images/Touch-Control-at-your-fingertips---desktop1.jpg",
-        "image_mobile": "shopify://shop_images/Touch-Control-at-your-fingertips---mobile.jpg"
+        "image": "shopify://shop_images/Touch-Control-at-your-fingertips---desktop1.jpg"
       }
     },
     "slideshow_fwkE7q": {
@@ -633,6 +632,9 @@
       },
       "block_order": [
         "slide_n4mW9R"
+      ],
+      "custom_css": [
+        ".slideshow__text banner__box {display: none;}"
       ],
       "settings": {
         "layout": "full_bleed",

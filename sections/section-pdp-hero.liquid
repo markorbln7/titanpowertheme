@@ -17,10 +17,11 @@
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
 %}
+{% assign product = all_products[section.settings.product] %}
 
 <section id="section-pdp-hero" class="section-pdp-hero">
   <div class="content-wrapper">
-    <div class="pdp-hero__container">
+    <div class="pdp-hero__container items-center">
       {% comment %} Gallery {% endcomment %}
       <div class="pdp-hero__gallery">
         {% if logoImage %}
@@ -72,7 +73,7 @@
       {% comment %} Product info {% endcomment %}
       <div class="pdp-hero__product-info">
         <div class="pdp-hero__heading">
-          <h2 class="pdp-hero__product-title">{{ product.title }}</h2>
+          <h2 class="pdp-hero__product-title !text-[#2f4534]">{{ product.title }}</h2>
 
           {% if productSubtitle != blank %}
             <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
@@ -81,21 +82,21 @@
 
         <div class="pdp-hero__pricing-wrapper">
           <div class="pdp-hero__pricing product__list--single--price color-white">
-            <span class="pdp-hero__pricing-price">{{ product.price | money_with_currency }}</span>
+            <span class="pdp-hero__pricing-price !text-[#2f4534]">{{ product.price | money_with_currency }}</span>
             <span class="crossed">{{ product.compare_at_price | money_with_currency }}</span>
 
             {% if discountContent != blank %}
-              <div class="pdp-hero__discount">{{ discountContent }}</div>
+              <div class="pdp-hero__discount out-of-stock">{{ discountContent }}</div>
             {% endif %}
           </div>
 
-          <div class="pdp-hero__price-diff">
+          <div class="pdp-hero__price-diff out-of-stock">
             {% assign difference = product.compare_at_price | minus: product.price %}
             {{ difference | money_with_currency }} SAVED
           </div>
         </div>
 
-        <div class="pdp-hero__extra-add">
+        <div class="pdp-hero__extra-add out-of-stock">
           <input type="checkbox" id="pdp-hero__checkbox">
           <div class="pdp-hero__extra-checkbox">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
@@ -114,7 +115,7 @@
             <div class="pdp-hero__product-description-wrapper">
               {{ product.description }}
             </div>
-            <p class="pdp-hero__description-collapse">Learn More</p>
+            <p class="pdp-hero__description-collapse !text-[#2f4534]">Learn More</p>
           </div>
         {% endif %}
 
@@ -123,7 +124,7 @@
           <div
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
-            class="js-atc product__list--single--atc pdp-hero__atc"
+            class="mt-[20px] js-atc product__list--single--atc pdp-hero__atc !bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold"
           >
             ADD TO CART
           </div>
@@ -166,11 +167,30 @@
   </div>
 </section>
 <script src="{{ 'section-pdp-hero.js' | asset_url }}" defer="defer"></script>
-
+<style>
+  .out-of-stock {
+    position:absolute;
+    left:-10000px;
+  }
+  .pdp-hero__heading {
+    margin-bottom: 0;
+  }
+  .pdp-hero__pricing-wrapper {
+    margin-bottom: 10px;
+  }
+  .section-pdp-hero {
+    background:white;
+  }
+</style>
 {% schema %}
 {
   "name": "PDP Hero",
   "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
     {
       "type": "image_picker",
       "id": "logo_image",
@@ -245,7 +265,7 @@
   ],
   "presets": [
     {
-      "name": "PDP Hero"
+      "name": "PDP Hero STARI"
     }
   ]
 }

@@ -31,9 +31,11 @@
 {% endschema %}
 
 <section class="flex md:flex-col flex-col-reverse items-center text-center bg-[#e3e7e5] py-[80px] px-[20px]">
-  <h2 class="text-[36px] md:text-[54px] font-bold mb-[20px]">{{ section.settings.heading }}</h2>
+  <h2 class="text-[36px] md:text-[54px] font-bold mb-[20px] desktop">{{ section.settings.heading }}</h2>
   <p class="text-[18px] max-w-[600px] mb-[30px]">{{ section.settings.text }}</p>
   {% if section.settings.image %}
+    <h2 class="text-[36px] md:text-[54px] font-bold mb-[20px] mobile">{{ section.settings.heading }}</h2>
     <img class="w-[600px] w-max-[100%] h-auto" src="{{ section.settings.image | img_url: '800x' }}" alt="Hero Image">
+
   {% endif %}
 </section>

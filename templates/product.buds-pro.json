@@ -226,10 +226,7 @@
       }
     },
     "compare-table": {
-      "type": "compare-table",
-      "custom_css": [
-        "@media only screen and (max-width: 749px) {.columns-table ul li.icon-table p {font-size: 13px !important; line-height: 16px; }}"
-      ],
+      "type": "compare-table-buds",
       "settings": {}
     },
     "buds_image_MphiwP": {
@@ -686,6 +683,13 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
+    "buds_buybox_LBKnK3": {
+      "type": "buds-buybox",
+      "settings": {
+        "product": "titan-buds-pro",
+        "product_image": "shopify://shop_images/b3.jpg"
+      }
+    },
     "section_pdp_hero_master_3cMAi3": {
       "type": "section-pdp-hero-master",
       "blocks": {
@@ -776,6 +780,7 @@
         "accesories_kA6PyB",
         "accesories_aFzwF8"
       ],
+      "disabled": true,
       "settings": {
         "show_variant_picker": false,
         "show_grid_images": false,
@@ -999,6 +1004,7 @@
     "image_with_text_nA7mg9",
     "buds_features_JxAFbX",
     "slideshow_fwkE7q",
+    "buds_buybox_LBKnK3",
     "section_pdp_hero_master_3cMAi3",
     "buds_faq_LqFz36",
     "buds_package_content_AHbpiY",

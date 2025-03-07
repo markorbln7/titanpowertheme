@@ -49,10 +49,10 @@
         <img src="{{ section.settings.image | img_url: 'master' }}" alt="Hero Image" class="rounded max-w-full h-auto transform scale-[1.5] md:scale-[1]" />
       {% endif %}
     </div>
-    <div class="w-full md:w-1/2 mt-[-20px] md:mt-0 md:mb-0 mb-[20px] md:pl-12 text-center md:text-left order-2 md:order-none">
+    <div class="w-full md:w-1/2 mt-[-50px] md:mt-0 md:mb-0 mb-[20px] md:pl-12 text-center md:text-left order-2 md:order-none">
       <h1 class="text-[30px] md:text-[36px] font-bold text-white max-w-[550px] mx-auto">{{ section.settings.headline }}</h1>
       {% if section.settings.content_image %}
-        <div class="my-4 max-w-[250px] mx-auto">
+        <div class="my-4 max-w-[150px] md:max-w-[250px] mx-auto">
           <img src="{{ section.settings.content_image | img_url: 'master' }}" alt="Content Image" class="mx-auto md:mx-0 max-w-full h-auto" />
         </div>
       {% endif %}

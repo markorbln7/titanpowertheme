@@ -60,14 +60,14 @@
   <div class="max-w-[1240px] mx-auto relative z-10">
     <h2 class="text-[24px] font-bold text-left mb-[8px] text-white">{{ section.settings.title }}</h2>
     <p class="text-[16px] text-left mb-[24px]">{{ section.settings.subtitle }}</p>
-    <div class="grid gap-[16px] md:grid-cols-2 max-w-[100%] md:max-w-[50%] mt-[40px]">
+    <div class="grid gap-[16px] grid-cols-2 max-w-[100%] md:max-w-[50%] mt-[40px]">
       {% for block in section.blocks %}
         <div class="flex flex-col items-left gap-[16px]">
           {% if block.settings.icon != blank %}
             <img class="w-[32px] h-[32px]" src="{{ block.settings.icon | img_url: '32x32' }}" alt="{{ block.settings.feature_title }}">
           {% endif %}
           <div>
-            <h3 class="font-bold text-[18px] text-white">{{ block.settings.feature_title }}</h3>
+            <h3 class="font-bold md:text-[18px] text-[16px] text-white">{{ block.settings.feature_title }}</h3>
             <p class="text-[14px]">{{ block.settings.feature_description }}</p>
           </div>
         </div>

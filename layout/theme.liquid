@@ -93,25 +93,46 @@
       </body>
   </html>
 
+  
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Specifically target buttons with the js-atc-scroll class
     const scrollButtons = document.querySelectorAll('.js-atc-scroll');
+    
     if (scrollButtons.length > 0) {
+      console.log('Found ' + scrollButtons.length + ' scroll buttons');
+      
       scrollButtons.forEach(button => {
         button.addEventListener('click', function(event) {
+          // Prevent default button behavior
           event.preventDefault();
-          console.log('Button clicked - attempting to scroll');
+          console.log('Scroll button clicked');
           
-          const scrollTarget = document.querySelector('.js-scroll');
+          // Try to find the buy box or product form section
+          // Try multiple potential targets in order of preference
+          const targets = [
+            document.querySelector('.js-scroll'),
+            document.querySelector('#product-rev'),
+            document.querySelector('.product-form'),
+            document.querySelector('.product__info-container'),
+            document.querySelector('[data-product-form]')
+          ];
+          
+          // Find the first target that exists
+          const scrollTarget = targets.find(target => target !== null);
+          
           if (scrollTarget) {
+            console.log('Found target to scroll to');
             scrollTarget.scrollIntoView({
               behavior: 'smooth'
             });
           } else {
-            console.log('Target element not found');
+            console.log('No scroll target found');
           }
         });
       });
+    } else {
+      console.log('No scroll buttons found');
     }
   });
 </script>

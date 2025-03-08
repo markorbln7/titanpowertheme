@@ -17,7 +17,7 @@
       "type": "buds-hero",
       "custom_css": [
         ".w-full.md\\:w-1\\/2.mt-\\[-50px\\].md\\:mt-0.md\\:mb-0.mb-\\[20px\\].md\\:pl-12.text-center.md\\:text-left.order-2.md\\:order-none {margin-bottom: 100px;}",
-        ".md\\:text-\\[32px\\] {font-size: 32px; FONT-FAMILY: 'WORK SANS'; FONT-WEIGHT: 600; }"
+        ".md\\:text-\\[32px\\] {font-size: 32px; font-family: \"WORK SANS\"; font-weight: 600;}"
       ],
       "settings": {
         "image": "shopify://shop_images/Titan_smart_buds_titan_power_plus_man_wearing_buds_top_a720c7e2-5851-48c1-ae09-5a07062674b3.png",
@@ -907,12 +907,23 @@
             "multi_columns_block_subtitle": "Warranty",
             "multi_columns_block_copy": "Rest assured, your product is backed by our 1-year warranty. In the rare event your Titan product encounters any faults or breaks through no fault of yours, we'll provide a free replacement."
           }
+        },
+        "multi_columns_repeater_wQfNCM": {
+          "type": "multi_columns_repeater",
+          "disabled": true,
+          "settings": {
+            "multi_columns_number": "",
+            "multi_columns_block_title": "",
+            "multi_columns_block_subtitle": "",
+            "multi_columns_block_copy": ""
+          }
         }
       },
       "block_order": [
         "multi_columns_repeater_WXWDQg",
         "multi_columns_repeater_BRdrrM",
-        "multi_columns_repeater_Y4FDNF"
+        "multi_columns_repeater_Y4FDNF",
+        "multi_columns_repeater_wQfNCM"
       ],
       "settings": {
         "multi_columns_section_title": "BUY WITH PEACE OF MIND"
@@ -946,7 +957,8 @@
         "slide_d4pVy8"
       ],
       "custom_css": [
-        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}"
+        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}",
+        ".button, .shopify-challenge__button, .customer button {background-color: rgb(47 69 52); font-size: 20px !important; font-weight: 700; padding: 15px 30px 15px 30px;}"
       ],
       "settings": {
         "layout": "full_bleed",

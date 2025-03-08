@@ -92,3 +92,12 @@
       {% render 'footer-scripts' %}
       </body>
   </html>
+
+  const scrollTarget = document.querySelector('.js-scroll');
+if (scrollTarget) {
+  scrollTarget.scrollIntoView({
+    behavior: 'smooth'
+  });
+} else {
+  console.log('Target element not found');
+}

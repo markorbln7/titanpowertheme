@@ -93,11 +93,25 @@
       </body>
   </html>
 
-  const scrollTarget = document.querySelector('.js-scroll');
-if (scrollTarget) {
-  scrollTarget.scrollIntoView({
-    behavior: 'smooth'
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollButtons = document.querySelectorAll('.js-atc-scroll');
+    if (scrollButtons.length > 0) {
+      scrollButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          console.log('Button clicked - attempting to scroll');
+          
+          const scrollTarget = document.querySelector('.js-scroll');
+          if (scrollTarget) {
+            scrollTarget.scrollIntoView({
+              behavior: 'smooth'
+            });
+          } else {
+            console.log('Target element not found');
+          }
+        });
+      });
+    }
   });
-} else {
-  console.log('Target element not found');
-}
+</script>

@@ -405,47 +405,6 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
-    "slideshow_m9FtGJ": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_nfkWNf": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Touch-Control-at-your-fingertips---mobile_76605a3b-c27f-44a2-b8c4-d7981a08c694.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "button_custom_class": "js-atc-scroll",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_nfkWNf"
-      ],
-      "custom_css": [
-        ".slideshow__text.banner__box {display: none;}",
-        "@media (min-width: 768px) {.slider-mobile-gutter {display: none; }}"
-      ],
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
-      }
-    },
     "buds_3up_QkBzdE": {
       "type": "buds-3up",
       "blocks": {
@@ -574,6 +533,47 @@
         "mobile_content_alignment": "left",
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "slideshow_m9FtGJ": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_nfkWNf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Touch-Control-at-your-fingertips---mobile_76605a3b-c27f-44a2-b8c4-d7981a08c694.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "button_custom_class": "js-atc-scroll",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_nfkWNf"
+      ],
+      "custom_css": [
+        ".slideshow__text.banner__box {display: none;}",
+        "@media (min-width: 768px) {.slider-mobile-gutter {display: none; }}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
     "buds_features_JxAFbX": {
@@ -979,7 +979,6 @@
       "blocks": {
         "slide_d4pVy8": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/desktop_banner_massage_gun-2_9b87c818-9953-4949-bbcf-66010dfae05c.jpg",
             "mobile_image": "shopify://shop_images/All_edited_buds_images-buds.png",

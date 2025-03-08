@@ -90,49 +90,24 @@
       {% render 'rebuy-smartcart-extensions' %}
       <script async data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=HXhrVm"></script>
       {% render 'footer-scripts' %}
-      </body>
-  </html>
 
-  
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Specifically target buttons with the js-atc-scroll class
-    const scrollButtons = document.querySelectorAll('.js-atc-scroll');
+    // Find product-rev element and add js-scroll class to make it a valid target
+    const productRev = document.querySelector('#product-rev');
+    if (productRev) {
+      productRev.classList.add('js-scroll');
+      console.log('Added js-scroll class to #product-rev');
+    }
     
-    if (scrollButtons.length > 0) {
-      console.log('Found ' + scrollButtons.length + ' scroll buttons');
-      
-      scrollButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-          // Prevent default button behavior
-          event.preventDefault();
-          console.log('Scroll button clicked');
-          
-          // Try to find the buy box or product form section
-          // Try multiple potential targets in order of preference
-          const targets = [
-            document.querySelector('.js-scroll'),
-            document.querySelector('#product-rev'),
-            document.querySelector('.product-form'),
-            document.querySelector('.product__info-container'),
-            document.querySelector('[data-product-form]')
-          ];
-          
-          // Find the first target that exists
-          const scrollTarget = targets.find(target => target !== null);
-          
-          if (scrollTarget) {
-            console.log('Found target to scroll to');
-            scrollTarget.scrollIntoView({
-              behavior: 'smooth'
-            });
-          } else {
-            console.log('No scroll target found');
-          }
-        });
-      });
-    } else {
-      console.log('No scroll buttons found');
+    // Also try section-pdp-hero as a fallback since button links there
+    const pdpHero = document.querySelector('#section-pdp-hero');
+    if (pdpHero) {
+      pdpHero.classList.add('js-scroll');
+      console.log('Added js-scroll class to #section-pdp-hero');
     }
   });
 </script>
+      
+      </body>
+  </html>

@@ -153,7 +153,7 @@
           "type": "right_block",
           "settings": {
             "block_number": "image-8",
-            "block_title": "Langage Switching",
+            "block_title": "Swith Language",
             "block_subtitle": "Supports every language",
             "block_image": "shopify://shop_images/Mobile_Music.png"
           }
@@ -260,49 +260,6 @@
         "image": "shopify://shop_images/Screenshot_2025-02-10_at_10_19_06_bg_removed_png.png"
       }
     },
-    "slideshow_z3dtim": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_y3zxUR": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/desktop_banner_massage_gun-2_9b87c818-9953-4949-bbcf-66010dfae05c.jpg",
-            "mobile_image": "shopify://shop_images/All_edited_buds_images-buds.png",
-            "heading": "TITAN SMART BUDS",
-            "heading_size": "h1",
-            "subheading": "Only available here. Limited Stock",
-            "button_label": "GET YOURS",
-            "button_custom_class": "js-atc-scroll",
-            "link": "#section-pdp-hero",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": true,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "background-1",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_y3zxUR"
-      ],
-      "custom_css": [
-        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}",
-        ".button,.shopify-challenge__button,.customer button {background-color: rgb(47 69 52); font-size: 20px !important; font-weight: 700; padding: 15px 30px 15px 30px;}",
-        ".banner__box > * + .banner__buttons {margin-top: 2rem; margin-bottom: 60px;}"
-      ],
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
-      }
-    },
     "section_air_tabs_zqiQRr": {
       "type": "section-air-tabs",
       "blocks": {
@@ -362,6 +319,49 @@
         "section_background": "linear-gradient(180deg, #60c655, #e4eaea);"
       }
     },
+    "slideshow_z3dtim": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_y3zxUR": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/desktop_banner_massage_gun-2_9b87c818-9953-4949-bbcf-66010dfae05c.jpg",
+            "mobile_image": "shopify://shop_images/All_edited_buds_images-buds.png",
+            "heading": "TITAN SMART BUDS",
+            "heading_size": "h1",
+            "subheading": "Only available here. Limited Stock",
+            "button_label": "GET YOURS",
+            "button_custom_class": "js-atc-scroll",
+            "link": "#section-pdp-hero",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_y3zxUR"
+      ],
+      "custom_css": [
+        "@media (min-width: 750px) {.banner__content.banner__content--middle-center {align-items: flex-end; justify-content: flex-start; } .slideshow__text-wrapper.banner__content {padding-left: 2rem; } .slideshow__text.banner__box {max-width: 100%; }}",
+        ".button,.shopify-challenge__button,.customer button {background-color: rgb(47 69 52); font-size: 20px !important; font-weight: 700; padding: 15px 30px 15px 30px;}",
+        ".banner__box > * + .banner__buttons {margin-top: 2rem; margin-bottom: 60px;}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "slideshow_NBHM9R": {
       "type": "slideshow",
       "blocks": {
@@ -391,6 +391,47 @@
       ],
       "custom_css": [
         ".slideshow__text.banner__box {display: none;}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_m9FtGJ": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_nfkWNf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Q1_14.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "button_custom_class": "js-atc-scroll",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_nfkWNf"
+      ],
+      "custom_css": [
+        ".slideshow__text.banner__box {display: none;}",
+        "@media (min-width: 768px) {.slider-mobile-gutter {display: none; }}"
       ],
       "settings": {
         "layout": "full_bleed",
@@ -531,47 +572,6 @@
         "mobile_content_alignment": "left",
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "slideshow_m9FtGJ": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_nfkWNf": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Q1_14.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "button_custom_class": "js-atc-scroll",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_nfkWNf"
-      ],
-      "custom_css": [
-        ".slideshow__text.banner__box {display: none;}",
-        "@media (min-width: 768px) {.slider-mobile-gutter {display: none; }}"
-      ],
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
       }
     },
     "buds_features_JxAFbX": {

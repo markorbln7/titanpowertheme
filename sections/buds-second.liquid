@@ -95,7 +95,7 @@
       <div class="hidden flex-col justify-between w-full md:w-[25%] md:items-baseline items-baseline md:flex">
         {% for block in section.blocks %}
           {% if block.type == 'left_block' %}
-            <div data-text="{{ block.settings.block_number }}" class="text-left flex-1 flex flex-col justify-center text-block">
+            <div data-text="{{ block.settings.block_number }}" class="text-left flex-1 flex flex-col justify-center text-block {% if forloop.index == 1 %}active{% endif %}">
               <p class="font-bold text-[#2f4534]">{{ block.settings.block_title }}</p>
               <p class="text-[#2f4534]">{{ block.settings.block_subtitle }}</p>
             </div>
@@ -116,7 +116,7 @@
         >
           {% for block in section.blocks %}
             {% if block.type == 'left_block' and forloop.index < 6 %}
-                <div data-image="image-{{ forloop.index }}" class="col-span-1 row-span-1 left-block">
+                <div data-image="image-{{ forloop.index }}" class="col-span-1 row-span-1 left-block {% if forloop.index == 2 %}active-image{% endif %}">
                   <img width="100%" height="auto" src="{{block.settings.block_image | img_url:'master' }}" alt="Placeholder" class="w-full h-full object-contain rounded-lg" />
                 </div>
             {% endif %}
@@ -161,8 +161,8 @@
       </div>
     </div>
     <div id="display-div" class="mt-[20px] p-[10px] rounded-lg text-center block md:hidden">
-      <p class="font-bold text-[#2f453]">Screen Brightness</p>
-      <p class="text-[#2f453]">Adjust for any lighting</p>
+      <p class="font-bold text-[#2f453]">Camera Control</p>
+      <p class="text-[#2f453]">Hands-free photo capture</p>
     </div>
   </section>
 </div>
@@ -171,9 +171,16 @@
   document.querySelectorAll('div[data-image]').forEach(img => {
     console.log(img, 'img');
     img.addEventListener('mouseover', function() {
+      document.querySelectorAll('div[data-image]').forEach(imgfull => {
+        imgfull.classList.remove('active-image');
+      });
       img.classList.add('active-image');
       const value = this.getAttribute('data-image');
+      document.querySelectorAll('div[data-text]').forEach(textfull => {
+        textfull.classList.remove('active');
+      });
       const targetDiv = document.querySelector(`div[data-text="${value}"]`);
+
       if (targetDiv) {
         targetDiv.classList.add('active');
       }

@@ -543,6 +543,7 @@
         ".section-air-tabs {background: linear-gradient(180deg, #60c655, black) !important;}"
       ],
       "settings": {
+        "one_slide_only": false,
         "section_title": "4 PREMIUM ATTACHMENT HEADS",
         "section_subtitle": "TARGET MUSCLES WITH PRECISION",
         "section_background": "linear-gradient(180deg, #60c655, transparent);"
@@ -560,6 +561,7 @@
           "type": "product_repeater",
           "settings": {
             "product_selector_number": "1-product",
+            "product_number_unlocker": "",
             "product_obj": "100wmulticablebogof",
             "upsell_product_image": "shopify://shop_images/PNG_3.png",
             "product_title_custom": "2x Multi Cable™",
@@ -665,11 +667,17 @@
         "accesories_kFemNz",
         "accesories_6AmBp9"
       ],
+      "custom_css": [
+        "h4.pdp-hero__upsell-title.text-center {display: none;}"
+      ],
       "settings": {
+        "show_variant_picker": false,
         "show_grid_images": false,
         "show_qty": true,
+        "show_gift_layout": false,
         "show_disc_box": true,
         "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
         "product_main": "100wmulticablebogof",
         "product_image": "shopify://shop_images/BOGOF_DEALS_-_3_in_1_multi_cable_product_image.jpg",
         "logo_image": "shopify://shop_images/massage_gun_Titan_logo_a3edc17c-3d5b-46fa-a07e-50baaf1f603a.png",

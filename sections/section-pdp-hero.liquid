@@ -122,6 +122,7 @@
         {% comment %} ADD TO CART BUTTON {% endcomment %}
         <div class="pdp-hero__atc-wrapper">
           <div
+            id="btn1"
             data-product="{{ product.selected_or_first_available_variant.id }}"
             data-quantity="1"
             class="mt-[20px] js-atc product__list--single--atc pdp-hero__atc !bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold"
@@ -166,8 +167,47 @@
     </div>
   </div>
 </section>
+<div class="atc-fixed">
+  <div class="atc-fixed__container">
+      <div class="buds-product__inner--content__subtitle">
+        Titan Smart Buds™  - {{product.price | money }}
+      </div>
+      <div
+        id="btn2"
+        class="max-content mt-[20px] js-atc product__list--single--atc pdp-hero__atc !bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold">
+              ADD TO CART
+      </div>
+  </div>
+</div>
 <script src="{{ 'section-pdp-hero.js' | asset_url }}" defer="defer"></script>
 <style>
+
+.atc-fixed .buds-product__inner--content__subtitle {
+  font-weight: 400;
+  font-family: Work Sans, sans-serif;
+  color: black;
+  letter-spacing: 2px;
+  line-height: 30px;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.atc-fixed {
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  z-index: 9999999;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .3s ease-in;
+  border-top: 1px solid rgb(229, 229, 229);
+  background-color: #fafafa;
+}
+.atc-fixed.show {
+  visibility: visible;
+  opacity: 1;
+  transition: all .3s ease-in;
+}
   .out-of-stock {
     position:absolute;
     left:-10000px;
@@ -181,7 +221,54 @@
   .section-pdp-hero {
     background:white;
   }
+  .max-content {
+    width:40%;
+    height: 70px !important;
+  }
+  .atc-fixed__container {
+    margin: 0 auto;
+    padding: 20px 36px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 9px #474747;
+    background-color: #fff;
+    background-image: linear-gradient(to right, #d6e1e1, #fff);
+}
+@media screen and (max-width: 768px) {
+  .atc-fixed__container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .atc-fixed .buds-product__inner--content__subtitle {
+    width:100%;
+    text-align:center;
+  }
+  .max-content {
+    width: 100%;
+    font-size: 18px;
+    height: 40px !important;
+  }
+}
 </style>
+<script>
+  const distance = $('.scroll-reveal').offset().top
+  $(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+      $('.atc-fixed').addClass('show')
+    } else {
+      $('.atc-fixed').removeClass('show')
+    }
+  })
+  document.getElementById("btn2").addEventListener("click", function() {
+    document.getElementById("btn1").click();
+  });
+</script>
 {% schema %}
 {
   "name": "PDP Hero",

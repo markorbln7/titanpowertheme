@@ -114,6 +114,7 @@
         },
         "gift_images_ANqTme": {
           "type": "gift_images",
+          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
             "product_number_unlocker": "1",
@@ -124,26 +125,18 @@
         },
         "gift_images_hV4JDg": {
           "type": "gift_images",
+          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble_1.png",
             "product_number_unlocker": "2",
-            "pdp_hero_icon_title": "Free Cable",
+            "pdp_hero_icon_title": "FREE CABLE",
             "top_note": "Free",
             "gift_price_product": "titan-smart-cable-dummy"
           }
         },
-        "gift_images_MrAidw": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/download_2_82ffc684-3158-4802-84e5-df3f60265ce7.png",
-            "product_number_unlocker": "3",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
-            "top_note": "Free",
-            "gift_price_product": "mystery-gift-dummy"
-          }
-        },
         "gift_images_C3FyNm": {
           "type": "gift_images",
+          "disabled": true,
           "settings": {
             "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble.png",
             "product_number_unlocker": "3",
@@ -219,7 +212,6 @@
         "accesories_tUMkMp",
         "gift_images_ANqTme",
         "gift_images_hV4JDg",
-        "gift_images_MrAidw",
         "gift_images_C3FyNm",
         "icons_FUkpHj",
         "icons_8YKJKV",
@@ -235,8 +227,8 @@
       ],
       "settings": {
         "show_variant_picker": true,
-        "show_grid_images": false,
-        "show_qty": false,
+        "show_grid_images": true,
+        "show_qty": true,
         "show_gift_layout": true,
         "show_disc_box": true,
         "promo_line": "",

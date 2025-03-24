@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (headerNav) {
         const navWrapper = document.querySelector('.section-header__wrapper');
+        window.onscroll = function () {
+            if (window.scrollY > 0) {
+                navWrapper.classList.add('scrolled');
+            } else {
+                navWrapper.classList.remove('scrolled');
+            }
+        };
         headerTogglers.forEach(function (toggler) {
             toggler.addEventListener('click', function () {
                 const isActive = headerNav.classList.contains('menu-active');
@@ -48,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                     const activeChildren = headerNav.querySelector('.inner-children.active');
+                    activeChildren.parentNode.classList.remove('active-children');
                     if (activeChildren) activeChildren.classList.remove('active');
                 }
             });
@@ -102,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const navHeight = calculateMenuHeight(childrenLinks);
                     headerNav.style.height = 'auto';
                     childrenLinksParent.classList.add('active');
+                    childrenLinksParent.parentNode.classList.add('active-children');
 
                     const childrenBackButton = childrenLinksParent.querySelector('.children-back-button');
 
@@ -112,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             headerNav.style.height = 'auto';
 
                             childrenLinksParent.classList.remove('active');
+                            childrenLinksParent.parentNode.classList.remove('active-children');
                         });
                     }
                 }

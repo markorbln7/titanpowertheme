@@ -1,6 +1,6 @@
 .section-header {
     bottom: unset;
-    padding: 15px;
+    padding: 0;
     position: sticky;
     top: 0;
     z-index: 99999999;
@@ -12,7 +12,7 @@
     }
 
     &__wrapper {
-        border-radius: 25px;
+        /* border-radius: 25px; */
         display: flex;
         height: 70px;
         align-items: center;
@@ -23,6 +23,10 @@
         transition: background-color .15s ease-out;
         width: 100%;
         z-index: 101;
+        background: transparent;
+        &.scrolled {
+            background-color: #fff;
+        }
     }
 
     &__content {
@@ -456,6 +460,7 @@
                     padding: 10px;
 
                     &.active {
+                        z-index: 99 !important;
                         opacity: 1;
                         visibility: visible;
                         z-index: 100;
@@ -480,7 +485,7 @@
                 width: 100%;
                 margin-top: 0;
                 justify-content: center;
-                z-index: 99999999999999;
+                z-index: 1;
 
                 h3,
                 a {
@@ -524,7 +529,9 @@
         }
     }
 }
-
+.active-children {
+    z-index: 99 !important;
+}
 @media(min-width: 1024px) {
     .section-header__nav:hover>.section-header__nav-item:not(:hover) {
         opacity: 0.5;

@@ -1,0 +1,185 @@
+<section class="bg-gray-100 py-[40px] px-[10px]">
+    <div class="max-w-[940px] mx-auto">
+      <h2 class="text-center text-[32px] font-bold text-gray-800 mb-[40px]">{{ section.settings.section_title }}</h2>
+
+      <div class="space-y-[16px]">
+        {% for block in section.blocks %}
+        <div class="faq-item">
+          <div class="cursor-pointer font-bold text-[18px] py-[16px] px-[10px] toggle-faq bg-[#2f4534] text-white rounded-t-[10px] rounded-b-[10px] bold uppercase">
+            {{ block.settings.question }}
+          </div>
+          <div class="faq-content hidden">
+            <div class="relative bg-white rounded-lg shadow-lg">
+              <!-- Desktop Image -->
+              {% if block.settings.desktop_image %}
+              <img
+                width="100"
+                height="auto"
+                src="{{ block.settings.desktop_image | img_url: 'master' }}"
+                alt=""
+                class="hidden md:block w-full object-cover mb-[16px] rounded-b-[10px]">
+              {% endif %}
+              <!-- Mobile Image -->
+              {% if block.settings.mobile_image %}
+              <img
+                width="100"
+                height="auto"
+                src="{{ block.settings.mobile_image | img_url: 'master' }}"
+                alt=""
+                class="md:hidden w-full object-cover mb-[16px] rounded-b-[10px]">
+              {% endif %}
+
+              {% if block.settings.layout == "layout1" %}
+              <div class="layout1-content absolute left-[30px] bottom-[30px] bg-white rounded-[10px] px-[10px] py-[20px]">
+                <h3 class="font-bold text-[18px] mb-[8px]">{{ block.settings.title }}</h3>
+                <p class="text-gray-600 text-[14px]">{{ block.settings.subtitle }}</p>
+              </div>
+              {% else %}
+              <div class="layout2-content max-w-[600px]">
+                <h3 class="font-bold text-[18px] mb-[8px]">{{ block.settings.title }}</h3>
+                <div class="space-y-[8px]">
+                  {% if block.settings.field1 != blank %}
+                  <div>{{ block.settings.field1 }}</div>
+                  {% endif %}
+                  {% if block.settings.field2 != blank %}
+                  <div>{{ block.settings.field2 }}</div>
+                  {% endif %}
+                  {% if block.settings.field3 != blank %}
+                  <div>{{ block.settings.field3 }}</div>
+                  {% endif %}
+                  {% if block.settings.field4 != blank %}
+                  <div>{{ block.settings.field4 }}</div>
+                  {% endif %}
+                  {% if block.settings.field5 != blank %}
+                  <div>{{ block.settings.field5 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      faqItems.forEach(item => {
+        const toggle = item.querySelector('.toggle-faq');
+        const content = item.querySelector('.faq-content');
+
+        toggle.addEventListener('click', () => {
+          faqItems.forEach(otherItem => {
+            const otherContent = otherItem.querySelector('.faq-content');
+            const otherToggle = otherItem.querySelector('.toggle-faq');
+            if (otherItem !== item) {
+              otherContent.classList.add('hidden');
+              otherToggle.classList.add('rounded-b-[10px]');
+            }
+          });
+
+          content.classList.toggle('hidden');
+          toggle.classList.toggle('rounded-b-[10px]');
+        });
+      });
+    });
+  </script>
+
+  {% schema %}
+  {
+    "name": "FAQ Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title",
+        "default": "FAQ Section"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "faq_item",
+        "name": "FAQ Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "Question",
+            "default": "Sample Question"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Sample Title"
+          },
+          {
+            "type": "textarea",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "Sample Subtitle"
+          },
+          {
+            "type": "image_picker",
+            "id": "desktop_image",
+            "label": "Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image"
+          },
+          {
+            "type": "radio",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+              { "value": "layout1", "label": "Layout 1" },
+              { "value": "layout2", "label": "Layout 2" }
+            ],
+            "default": "layout1"
+          },
+          {
+            "type": "text",
+            "id": "field1",
+            "label": "Field 1",
+            "default": "Sample Field 1"
+          },
+          {
+            "type": "text",
+            "id": "field2",
+            "label": "Field 2",
+            "default": "Sample Field 2"
+          },
+          {
+            "type": "text",
+            "id": "field3",
+            "label": "Field 3",
+            "default": "Sample Field 3"
+          },
+          {
+            "type": "text",
+            "id": "field4",
+            "label": "Field 4",
+            "default": "Sample Field 4"
+          },
+          {
+            "type": "text",
+            "id": "field5",
+            "label": "Field 5",
+            "default": "Sample Field 5"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Buds FAQ"
+      }
+    ]
+  }
+  {% endschema %}

@@ -1,0 +1,73 @@
+{% schema %}
+{
+  "name": "Info Section",
+  "tag": "section",
+  "class": "custom-info",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "The Titan Smart Buds' advanced charging case is engineered to be ultra-compact without compromising on performance. Enjoy lightning-fast charging and up to 30 hours of combined battery life, so you stay powered all day. The smart touchscreen case doesn’t just keep your earbuds charged – it’s equipped with a convenient 'Find My Earphone' feature, so you can track them instantly. With intuitive touch controls and a streamlined design, the Titan Smart Buds case sets a new standard in functionality and portability."
+    },
+    {
+      "type": "text",
+      "id": "stat1_title",
+      "label": "Stat 1 Title",
+      "default": "Up to"
+    },
+    {
+      "type": "text",
+      "id": "stat1_value",
+      "label": "Stat 1 Value",
+      "default": "30 hours"
+    },
+    {
+      "type": "text",
+      "id": "stat1_description",
+      "label": "Stat 1 Description",
+      "default": "of listening time with the case"
+    },
+    {
+      "type": "text",
+      "id": "stat2_title",
+      "label": "Stat 2 Title",
+      "default": "Up to"
+    },
+    {
+      "type": "text",
+      "id": "stat2_value",
+      "label": "Stat 2 Value",
+      "default": "5 hours"
+    },
+    {
+      "type": "text",
+      "id": "stat2_description",
+      "label": "Stat 2 Description",
+      "default": "of listening time on a single charge"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Info Section"
+    }
+  ]
+}
+{% endschema %}
+<section class="bg-white">
+    <div class="flex flex-col items-center text-center px-[20px] py-[60px] max-w-[1200px] mx-auto">
+        <p class="text-[18px] mb-[30px]">{{ section.settings.text }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px] w-full text-left mt-[20px] max-w-[800px]">
+            <div class="md:text-left text-center">
+                <p class="text-[24px] font-bold">{{ section.settings.stat1_title }}</p>
+                <p class="text-[55px] font-bold text-[#60c655]">{{ section.settings.stat1_value }}</p>
+                <p class="text-[24px]">{{ section.settings.stat1_description }}</p>
+            </div>
+            <div class="md:text-left text-center">
+                <p class="text-[24px] font-bold">{{ section.settings.stat2_title }}</p>
+                <p class="text-[55px] font-bold text-[#60c655]">{{ section.settings.stat2_value }}</p>
+                <p class="text-[24px]">{{ section.settings.stat2_description }}</p>
+            </div>
+        </div>
+    </div>
+</section>

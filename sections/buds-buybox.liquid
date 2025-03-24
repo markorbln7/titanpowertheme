@@ -1,0 +1,74 @@
+{% schema %}
+{
+  "name": "Product Card",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Product"
+    },
+    {
+        "type": "image_picker",
+        "id": "product_image",
+        "label": "Select Image"
+      }
+  ],
+  "presets": [
+    {
+      "name": "Product Card",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign product = section.settings.product %}
+
+{% if product %}
+<div class="bg-white">
+  <div class="max-w-[1440px] bg-white mx-auto p-6 flex flex-col md:flex-row gap-[20px] items-center justify-between">
+    <!-- Product Image -->
+    <div class="flex-1">
+      <img src="{{ section.settings.product_image | img_url: '800x' }}" alt="{{ product.title }}" class="w-full">
+    </div>
+
+    <!-- Product Details -->
+    <div class="flex-1 flex flex-col">
+      <!-- Product Title -->
+      <h2 class="text-[32px] font-bold mt-2 text-[#2f4534] mb-[20px]">{{ product.title }}</h2>
+
+      <!-- Description -->
+      <p class="text-[#2f4534] text-[18px] mb-[20px] md:max-w-[80%]">{{ product.description | strip_html }}</p>
+
+      <!-- Add to Cart Button -->
+      {% assign first_variant = product.variants.first %}
+      <button
+        style="max-width:max-content;"
+        class="bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[18px] bold max-w-[100%] block"
+        onclick="addToCart({{ first_variant.id }})">
+        ADD TO CART – {{ product.price | money }}
+      </button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    function addToCart(variantId) {
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: 1
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Added to cart!');
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+{% else %}
+  <p class="text-center text-gray-500">No product selected.</p>
+{% endif %}

@@ -1,0 +1,82 @@
+{% schema %}
+{
+  "name": "Buds Features Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Perfect control at your fingertips"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Leave your phone in your pocket and conveniently control your ear buds with simple gestures"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Main Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "feature_title",
+          "label": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "feature_description",
+          "label": "Feature Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buds Features Section"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="relative bg-black text-white py-[40px] min-h-[60vh] px-[20px]">
+  {% if section.settings.image != blank %}
+    <div class="absolute inset-0">
+      <img class="w-full h-full object-cover desktop" src="{{ section.settings.image | img_url: 'master' }}" alt="Main Image">
+    </div>
+  {% endif %}
+  <div class="max-w-[1300px] mx-auto relative z-10">
+    <h2 class="md:text-[50px] text-[32px] font-bold text-left mb-[8px] text-white max-w-full md:max-w-[50%]">{{ section.settings.title }}</h2>
+    <p class="text-[16px] text-left mb-[24px] max-w-full md:max-w-[50%]">{{ section.settings.subtitle }}</p>
+    <div class="grid gap-[16px] grid-cols-2 max-w-[100%] md:max-w-[50%] mt-[40px]">
+      {% for block in section.blocks %}
+        <div class="flex flex-col items-left gap-[16px]">
+          {% if block.settings.icon != blank %}
+            <img class="md:w-[32px] md:h-[32px] w-[22px] h-[22px]" src="{{ block.settings.icon | img_url: '32x32' }}" alt="{{ block.settings.feature_title }}">
+          {% endif %}
+          <div>
+            <h3 class="font-bold md:text-[18px] text-[14px] text-white">{{ block.settings.feature_title }}</h3>
+            <p class="text-[12px]">{{ block.settings.feature_description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

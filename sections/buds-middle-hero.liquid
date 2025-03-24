@@ -1,0 +1,41 @@
+{% schema %}
+{
+  "name": "Hero Section",
+  "tag": "section",
+  "class": "custom-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Listen to your music wherever you go!"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "With the TF card you can listen without limits. Whether in the gym or out for a run no longer do you need your phone tied to your waist. Simply load up the TF card and slot it neatly into the back of your buds. Take your favourite music wherever you go without the need of your phone."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buds Hero Section"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="flex md:flex-col flex-col-reverse items-center text-center bg-[#e3e7e5] py-[80px] px-[20px]">
+  <h2 class="text-[36px] md:text-[54px] font-bold mb-[20px] desktop">{{ section.settings.heading }}</h2>
+  <p class="text-[18px] max-w-[600px] mb-[30px]">{{ section.settings.text }}</p>
+  {% if section.settings.image %}
+    <h2 class="text-[36px] md:text-[54px] font-bold mb-[20px] mobile">{{ section.settings.heading }}</h2>
+    <img class="w-[600px] w-max-[100%] h-auto" src="{{ section.settings.image | img_url: '800x' }}" alt="Hero Image">
+
+  {% endif %}
+</section>

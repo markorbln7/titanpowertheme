@@ -543,6 +543,7 @@
         ".section-air-tabs {background: linear-gradient(180deg, #60c655, black) !important;}"
       ],
       "settings": {
+        "one_slide_only": false,
         "section_title": "4 PREMIUM ATTACHMENT HEADS",
         "section_subtitle": "TARGET MUSCLES WITH PRECISION",
         "section_background": "linear-gradient(180deg, #60c655, transparent);"
@@ -762,7 +763,8 @@
         ".promo_line.new-promo-line {border: 1.65px dashed #ffeb58 !important;}",
         ".top-note {padding: 1px 5px; font-size: 10px; letter-spacing: 0;}",
         ".bf-text,.promo_line {font-size: 14px; letter-spacing: 0; text-align: center;}",
-        "@media (max-width: 760px) {.bf-text, .promo_line {font-size: 11px; }}"
+        "@media (max-width: 760px) {.bf-text, .promo_line {font-size: 11px; }}",
+        "h4.pdp-hero__upsell-title.text-center {display: none;}"
       ],
       "settings": {
         "show_variant_picker": false,
@@ -987,6 +989,7 @@
       ],
       "disabled": true,
       "settings": {
+        "product": "",
         "logo_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
         "product_subtitle": "Powerful, Whisper Quiet & Pocket Sized",
         "discount_content": "46% OFF",

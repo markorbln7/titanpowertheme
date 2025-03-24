@@ -1,0 +1,163 @@
+<div class="shopify-section media-grid-wrapper as-media-grid bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_0] bg-[position:0_0]">
+  <div class="text-[#2f4534] text-center">
+    <p class="text-[30px] mb-[20px]">What 3 Reasons make<br> Titan <strong>so special?</strong></p>
+    <p class="text-[16px] md:text-[18px] ">Compare <strong>Titan</strong> Vs Other Brands</p>
+  </div>
+  <div class="pt-[20px] pb-[20px] px-[10px]">
+    <div class="max-w-[1090px] md:px-[20px] px-[10px] py-[30px] bg-white rounded-[24px] mx-auto shadow-[0_0_10px_#b5b5b5]">
+      <div class="flex items-center justify-center mb-[20px] flex-col md:flex-row gap-[10px] md:gap-[0px]">
+        <span class="bg-[#2f4534] text-white md:text-[50px] text-[32px] font-bold px-[12px] py-[4px] rounded-full w-[60px] h-[60px] flex items-center justify-center">{{ section.settings.number | default: '1' }}</span>
+        <h2 class="text-[#2f4534] md:text-[50px] text-[32px] font-bold ml-[10px] text-center">{{ section.settings.title | default: 'Packed With Epic Features' }}</h2>
+      </div>
+      <div class="grid-parent">
+        <!-- Block 1 -->
+        <div class="grid-item order-mob-1 overflow-hidden position-relative grid-columns-1 grid-rows-2 grid-columns-lg-3 grid-rows-lg-2">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:160.3896103896104%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image1 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-dark color-white">
+            <h3 class="text-[16px] md:text-[18px]  color-white">{{ section.settings.title1 | default: 'Open Sound Technology' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] color-white">{{ section.settings.subtitle1 | default: 'Hear it all' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 2 -->
+        <div class="grid-item order-mob-1 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.17041800643086%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image2 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-white">
+            <h3 class="text-[16px] md:text-[18px]  color-white">{{ section.settings.title2 | default: 'New level of comfort' }}</h3>
+          </div>
+        </div>
+
+        <!-- Block 3 -->
+        <div class="grid-item order-mob-7 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:78.94736842105263%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image3 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-dark">
+            <h3 class="text-[16px] md:text-[18px]  text-[#2f4534]">{{ section.settings.title3 | default: 'Sound Seal System' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] text-[#2f4534]">{{ section.settings.subtitle3 | default: 'Keeps your audio yours' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 4 -->
+        <div class="grid-item order-mob-6 overflow-hidden position-relative grid-columns-1 grid-rows-2 grid-columns-lg-3 grid-rows-lg-2">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:160.3896103896104%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image4 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-start justify-content-lg-start text-dark">
+            <h3 class="text-[16px] md:text-[18px]  text-[#2f4534]">{{ section.settings.title4 | default: 'Clear Voice Technology' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] text-[#2f4534]">{{ section.settings.subtitle4 | default: 'AI-enhanced for the clearest calls' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 5 -->
+        <div class="grid-item order-mob-8 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.9220779220779%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image5 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end justify-content-lg-end text-white">
+            <h3 class="text-[16px] md:text-[18px]  color-white">{{ section.settings.title5 | default: '30 hours' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] color-white">{{ section.settings.subtitle5 | default: 'of playback' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 6 -->
+        <div class="grid-item order-mob-5 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100" style="--bs-aspect-ratio:77.9220779220779%;">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image6 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[16px] md:text-[18px]  color-white">{{ section.settings.title6 | default: 'Immersive sound' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] color-white">{{ section.settings.subtitle6 | default: 'With auto Bass Enhance and our Advanced EQ' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 7 -->
+        <div class="grid-item order-mob-3 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-5 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image7 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[16px] md:text-[18px]  color-white">{{ section.settings.title7 | default: 'Custom diaphragm' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] color-white">{{ section.settings.subtitle7 | default: 'Less distortion, deeper lows' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 8 -->
+        <div class="grid-item order-mob-4 overflow-hidden position-relative grid-columns-2 grid-rows-1 grid-columns-lg-4 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image8 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-dark">
+            <h3 class="text-[16px] md:text-[18px]  text-[#2f4534]">{{ section.settings.title8 | default: 'Ultra compact' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] text-[#2f4534]">{{ section.settings.subtitle8 | default: 'Just 19 mm thin' }}</div>
+          </div>
+        </div>
+
+        <!-- Block 9 -->
+        <div class="grid-item order-mob-9 overflow-hidden position-relative grid-columns-1 grid-rows-1 grid-columns-lg-3 grid-rows-lg-1">
+          <div class="item-image ratio h-100 w-100">
+            <img class="w-100 h-100 object-fit-cover" src="{{ section.settings.image9 | img_url: '700x' }}" alt="">
+          </div>
+          <div class="item-content py-[20px] md:px-[20px] px-[10px] position-absolute w-100 h-100 top-0 start-0 d-flex flex-column justify-content-end text-white">
+            <h3 class="text-[16px] md:text-[18px]  text-white">{{ section.settings.title9 | default: 'IP54' }}</h3>
+            <div class="text-[14px] md:text-[16px] leading-[1.2] text-white">{{ section.settings.subtitle9 | default: 'Dust & water resistance rated' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Media Grid",
+  "settings": [
+    { "type": "text", "id": "number", "label": "Number" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "image_picker", "id": "image1", "label": "Image 1" },
+    { "type": "text", "id": "title1", "label": "Title 1" },
+    { "type": "text", "id": "subtitle1", "label": "Subtitle 1" },
+
+    { "type": "image_picker", "id": "image2", "label": "Image 2" },
+    { "type": "text", "id": "title2", "label": "Title 2" },
+    { "type": "text", "id": "subtitle2", "label": "Subtitle 2" },
+
+    { "type": "image_picker", "id": "image3", "label": "Image 3" },
+    { "type": "text", "id": "title3", "label": "Title 3" },
+    { "type": "text", "id": "subtitle3", "label": "Subtitle 3" },
+
+    { "type": "image_picker", "id": "image4", "label": "Image 4" },
+    { "type": "text", "id": "title4", "label": "Title 4" },
+    { "type": "text", "id": "subtitle4", "label": "Subtitle 4" },
+
+    { "type": "image_picker", "id": "image5", "label": "Image 5" },
+    { "type": "text", "id": "title5", "label": "Title 5" },
+    { "type": "text", "id": "subtitle5", "label": "Subtitle 5" },
+
+    { "type": "image_picker", "id": "image6", "label": "Image 6" },
+    { "type": "text", "id": "title6", "label": "Title 6" },
+    { "type": "text", "id": "subtitle6", "label": "Subtitle 6" },
+
+    { "type": "image_picker", "id": "image7", "label": "Image 7" },
+    { "type": "text", "id": "title7", "label": "Title 7" },
+    { "type": "text", "id": "subtitle7", "label": "Subtitle 7" },
+
+    { "type": "image_picker", "id": "image8", "label": "Image 8" },
+    { "type": "text", "id": "title8", "label": "Title 8" },
+    { "type": "text", "id": "subtitle8", "label": "Subtitle 8" },
+
+    { "type": "image_picker", "id": "image9", "label": "Image 9" },
+    { "type": "text", "id": "title9", "label": "Title 9" },
+    { "type": "text", "id": "subtitle9", "label": "Subtitle 9" }
+  ],
+  "presets": [
+    {
+      "name": "Media Grid"
+    }
+  ]
+}
+{% endschema %}

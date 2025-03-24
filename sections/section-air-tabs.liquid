@@ -23,25 +23,35 @@
       {% endif %}
     </div>
 
-    <div class="air-tabs__wrapper">
+    <div class="air-tabs__wrapper {% if section.settings.one_slide_only == true%} one_wrapper{% endif %}">
       {% if tabs %}
         <nav class="air-tabs__nav">
+
+            {% if section.settings.main_image != blank %}
+              <div class="air_tabs_nav_main-image">
+                <figure class="air-tabs__nav-image">
+                  {% render 'titan-image', image: section.settings.main_image %}
+                </figure>
+              </div>
+            {% endif %}
+
           {% for block in tabs %}
             {% liquid
               assign tab_index = forloop.index
               assign tab_image = block.settings.tab_image
             %}
             <div
-              class="air-tabs__nav-item{% if tab_index == 1 %} active{% endif %}"
+              class="air-tabs__nav-item{% if tab_index == 1 %} active{% endif %} {% if section.settings.one_slide_only == true%} one_slide{% endif %}"
               data-tab="{{ tab_index }}"
             >
               <div class="air-tabs__nav-number">
                 {{ tab_index }}
               </div>
-
-              <figure class="air-tabs__nav-image">
-                {% render 'titan-image', image: tab_image %}
-              </figure>
+              {% if tab_image != blank %}
+                <figure class="air-tabs__nav-image">
+                  {% render 'titan-image', image: tab_image %}
+                </figure>
+              {% endif %}
             </div>
           {% endfor %}
         </nav>
@@ -98,6 +108,16 @@
 {
   "name": "Air tabs",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "one_slide_only",
+      "label": "Show One Slide Only"
+    },
     {
       "type": "text",
       "id": "section_title",

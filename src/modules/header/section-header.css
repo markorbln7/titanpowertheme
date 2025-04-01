@@ -3,10 +3,10 @@
     padding: 0;
     position: sticky;
     top: 0;
-    z-index: 99999999;
+    z-index: 999;
 
     &__holder {
-        z-index: 999999999;
+        z-index: 9;
         position: sticky;
         top: 0;
     }
@@ -25,7 +25,7 @@
         z-index: 101;
         background: transparent;
         &.scrolled {
-            background-color: #fff;
+            background-color: #e4eaea;
         }
     }
 
@@ -262,7 +262,7 @@
         margin: auto;
         max-width: 100%;
         padding: 10px;
-        position: fixed;
+        position: sticky;
         width: 100%;
 
         &__container {
@@ -291,7 +291,7 @@
             padding: 16px 22px;
             position: relative;
             transition: width .3s cubic-bezier(.4, 0, .22, 1);
-            width: 85%;
+            width: 95%;
 
             &.active {
                 width: 100%;

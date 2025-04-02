@@ -1,0 +1,91 @@
+<script src="https://cdn.tailwindcss.com"></script>
+{% schema %}
+  {
+    "name": "Cable Hero Section",
+    "class": "shopify-section hero-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Hero Image"
+      },
+      {
+        "type": "text",
+        "id": "big_headline",
+        "label": "Headline",
+        "default": "TITAN BUDS"
+      },
+      {
+        "type": "text",
+        "id": "headline",
+        "label": "Headline",
+        "default": "THE ONLY OVER EAR EAR BUDS WITH A SCREEN"
+      },
+      {
+        "type": "image_picker",
+        "id": "content_image",
+        "label": "Content Image"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button Link"
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+        "default": "SHOP NOW"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Cable Hero Section"
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+</style>
+
+<div class="relative bg-gradient-to-b from-[#014115] to-white overflow-hidden">
+  <div class="mx-auto max-w-[1800px] flex flex-col md:flex-row md:items-center scroll-reveal">
+    <div class="w-full md:w-1/2 order-1 md:order-none">
+      {% if section.settings.image %}
+        <img src="{{ section.settings.image | img_url: 'master' }}" alt="Hero Image" class="rounded max-w-full h-auto transform scale-[1.5] md:scale-[1]" />
+      {% endif %}
+    </div>
+    <div class="w-full md:w-1/2 mt-[-50px] md:mt-0 md:mb-0 mb-[20px] md:pl-12 text-center md:text-left order-2 md:order-none">
+      <h1 class="text-[40px] md:text-[76px] font-bold text-white max-w-[750px] mx-auto italic">{{ section.settings.big_headline }}</h1>
+      <h1 class="text-[20px] md:text-[28px] font-bold text-white max-w-[550px] mx-auto italic uppercase">{{ section.settings.headline }}</h1>
+      {% if section.settings.content_image %}
+        <div class="my-4 max-w-[250px] md:max-w-[350px] mx-auto">
+          <img src="{{ section.settings.content_image | img_url: 'master' }}" alt="Content Image" class="mx-auto md:mx-0 max-w-full h-auto" />
+        </div>
+      {% endif %}
+      <div class="mt-4">
+        <button data-scroll-to="section-pdp-hero" href="{{ section.settings.button_link }}" class="bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold w-[320px] block mx-auto max-w-full">
+          {{ section.settings.button_text }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function scrollToDiv(divId) {
+    const targetElement = document.getElementById(divId);
+    if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        console.error(`Element with ID '${divId}' not found.`);
+    }
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target.matches('[data-scroll-to]')) {
+        const targetId = event.target.getAttribute('data-scroll-to');
+        scrollToDiv(targetId);
+    }
+});
+</script>

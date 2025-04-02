@@ -1,0 +1,299 @@
+<script src="https://cdn.tailwindcss.com"></script>
+{% schema %}
+{
+  "name": "Titan Buybox",
+  "settings": [
+    {
+      "type": "product",
+      "id": "main_product",
+      "label": "Main Product"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "100w made with Aramind Fibre Braid"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accesories",
+      "name": "Accessories",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "acc_image",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "product",
+          "id": "acc_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "acc_title",
+          "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "acc_discount_pill",
+          "label": "Custom discount pill",
+          "default": "50% OFF"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Titan Buybox"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign product = all_products[section.settings.main_product] %}
+<div class="buybox py-[40px] max-w-[1440px] mx-auto px-[10px]">
+  <div class="flex flex-wrap md:flex-nowrap">
+    <div class="w-full md:w-1/2">
+      <img width="100%" height="auto" src="{{ product.featured_image | img_url: 'master' }}">
+    </div>
+    <div class="w-full md:w-1/2">
+      <div class="bg-white rounded-[20px] p-[20px]">
+        <div class="eyebrow !text-[#2f4534] text-[14px]">{{ section.settings.eyebrow }}</div>
+        <h2 class="eyebrow flex justify-between">
+          <span class="!text-[#2f4534] text-[36px] uppercase font-bold italic">{{ product.title }}</span>
+          <span id="product-price" class="!text-[#2f4534] text-[26px] uppercase font-semibold">{{ product.price | money_with_currency }}</span>
+        </h2>
+        <div id="options-wrapper" class="mb-[40px] mt-[20px]">
+          {% for option in product.options_with_values %}
+          <div class="mb-[20px]">
+            <label class="block mb-[10px] !text-[#2f4534] text-[16px] font-bold">{{ option.name }}</label>
+            <div class="flex gap-[10px]" data-option-index="{{ forloop.index0 }}">
+              {% for value in option.values %}
+              <button type="button" class="{% if forloop.index == 1 %}!bg-[#2f4534] text-white{%else%}bg-[#f5f5f5]{%endif%} option-button border py-[5px] px-[10px] rounded text-14 " data-value="{{ value }}">{{ value }}</button>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button id="add-to-cart" class="w-full mt-[20px] !bg-[#2f4534] text-white font-bold py-3 px-6 rounded-full hover:bg-green-800 text-[24px] bold block italic" data-variant-id="{{ product.first_available_variant.id }}">ADD TO CART</button>
+      </div>
+      <div class="bg-white rounded-[20px] p-[20px] mt-[20px]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+          {% for block in section.blocks %}
+            {% if block.type == 'accesories' %}
+              {% assign acc_product = all_products[block.settings.acc_product] %}
+              <div class="flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                <div class="!block absolute top-0 left-0 w-full bg-transparent h-full"></div>
+                <div class="flex items-center gap-[16px]">
+                  <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[48px] h-[48px] object-contain" />
+                  <div>
+                    <div class="text-[14px] text-black">{{block.settings.acc_discount_pill}}</div>
+                    <div class="text-[18px] font-bold text-black">{{block.settings.acc_title}}</div>
+                  </div>
+                </div>
+                <div class="flex items-end gap-[12px] flex-col">
+                  <div class="text-[15px] font-medium text-black">{{acc_product.price | money }}</div>
+                  <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 256 256">
+                      <path d="M41.9,8.6c-0.7,0-1.3,0.4-1.6,0.9L21.5,38.3L9.3,27.8c-0.5-0.5-1.3-0.7-2-0.5c-0.7,0.2-1.3,0.8-1.4,1.6c-0.1,0.7,0.2,1.5,0.8,1.9l13.9,12.1c0.4,0.4,1,0.5,1.6,0.5c0.6-0.1,1.1-0.4,1.4-0.9L51,12.6c0.4-0.6,0.5-1.4,0.1-2.1C50.8,9.0,50.1,8.6,49.3,8.6H41.9z" fill="black"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCORDION SECTION -->
+<div class="max-w-[1440px] mx-auto px-[10px] mt-[40px]">
+  <div id="accordion-wrapper" class="space-y-[20px]">
+    {% for block in section.blocks %}
+      {% if block.type == 'accordion' %}
+        <div class="bg-white rounded-[12px] overflow-hidden shadow-sm border">
+          <button class="accordion-toggle w-full text-left px-[20px] py-[16px] flex justify-between items-center font-bold text-[24px] text-[#2f4534]">
+            <span>{{ block.settings.title }}</span>
+            <span class="icon text-[20px] text-[#2f4534]">+</span>
+          </button>
+          <div class="accordion-content px-[20px] pb-[20px] pt-[0px] hidden text-[15px] leading-[1.6]">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .js-acc-trigger svg {
+    display: none;
+  }
+  .js-acc-trigger.active {
+    border: 1px solid black;
+  }
+  .js-acc-trigger.active svg {
+    display: block;
+  }
+</style>
+
+<script>
+  function formatMoney(cents, format) {
+    if (typeof cents === "string") {
+      cents = cents.replace(".", "");
+    }
+    var value = "";
+    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+
+    function defaultOption(opt, def) {
+      return typeof opt === "undefined" ? def : opt;
+    }
+
+    function formatWithDelimiters(number, precision, thousands, decimal) {
+      thousands = defaultOption(thousands, ",");
+      decimal = defaultOption(decimal, ".");
+
+      if (isNaN(number) || number == null) return 0;
+
+      number = (number / 100.0).toFixed(precision);
+      var parts = number.split(".");
+      var dollars = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
+      var cents = parts[1] ? decimal + parts[1] : "";
+
+      return dollars + cents;
+    }
+
+    var formatString = format || "${{amount}}";
+    switch (formatString.match(placeholderRegex)[1]) {
+      case "amount":
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case "amount_no_decimals":
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case "amount_with_comma_separator":
+        value = formatWithDelimiters(cents, 2, ".", ",");
+        break;
+      case "amount_no_decimals_with_comma_separator":
+        value = formatWithDelimiters(cents, 0, ".", ",");
+        break;
+    }
+    return formatString.replace(placeholderRegex, value);
+  }
+
+  const productVariants = {{ product.variants | json }};
+  const addToCartButton = document.querySelector('#add-to-cart');
+  const priceEl = document.querySelector('#product-price');
+  const accTriggers = document.querySelectorAll('.js-acc-trigger');
+
+  accTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      trigger.classList.toggle('active');
+    });
+  });
+
+  document.querySelectorAll('[data-option-index]').forEach((group, index) => {
+    const buttons = group.querySelectorAll('.option-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active', '!bg-[#2f4534]', 'text-white'));
+        button.classList.add('active', '!bg-[#2f4534]', 'text-white');
+        updateSelectedVariant();
+      });
+    });
+  });
+
+  function updateSelectedVariant() {
+    const selected = [];
+    document.querySelectorAll('[data-option-index]').forEach((group, index) => {
+      const active = group.querySelector('.option-button.active');
+      if (active) {
+        selected[index] = active.dataset.value;
+      }
+    });
+
+    const matchedVariant = productVariants.find(v => {
+      return selected.every((opt, i) => v.options[i] === opt);
+    });
+
+    if (matchedVariant) {
+      addToCartButton.dataset.variantId = matchedVariant.id;
+      priceEl.textContent = formatMoney(matchedVariant.price, "{{ shop.money_format }}");
+      if (!matchedVariant.available) {
+        addToCartButton.textContent = "SOLD OUT";
+        addToCartButton.disabled = true;
+        addToCartButton.classList.add("opacity-50", "cursor-not-allowed");
+      } else {
+        addToCartButton.textContent = "ADD TO CART";
+        addToCartButton.disabled = false;
+        addToCartButton.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+    }
+  }
+
+  addToCartButton.addEventListener('click', () => {
+    const mainVariantId = addToCartButton.dataset.variantId;
+    const items = [
+      {
+        id: mainVariantId,
+        quantity: 1
+      }
+    ];
+
+    document.querySelectorAll('.js-acc-trigger.active').forEach(acc => {
+      const variantId = acc.dataset.variantId;
+      if (variantId) {
+        items.push({
+          id: variantId,
+          quantity: 1
+        });
+      }
+    });
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ items })
+    })
+    .then(res => res.json())
+    .catch(err => console.error(err));
+  });
+
+  document.querySelectorAll('.accordion-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const content = toggle.nextElementSibling;
+      const icon = toggle.querySelector('.icon');
+      const isOpen = !content.classList.contains('hidden');
+
+      document.querySelectorAll('.accordion-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.accordion-toggle .icon').forEach(i => i.textContent = '+');
+
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        icon.textContent = '−';
+      }
+    });
+  });
+</script>

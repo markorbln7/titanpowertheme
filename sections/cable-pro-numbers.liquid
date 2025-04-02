@@ -1,0 +1,295 @@
+{% schema %}
+{
+  "name": "Cable Pro Numbers",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "light",
+      "label": "Light Background",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "gradient_field",
+      "label": "Gradient field"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Redesigned for Comfort. How fitting"
+    },
+    {
+      "type": "number",
+      "id": "section_number",
+      "label": "Section Number",
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#2f4534"
+    },
+    {
+      "type": "color",
+      "id": "inner_background_color",
+      "label": "Inner Background Color",
+      "default": "#2f4534"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_box",
+      "name": "Left Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "title_image",
+          "label": "Title Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "bottom_image",
+          "label": "Bottom Image"
+        },
+        {
+          "type": "color",
+          "id": "box_background_color",
+          "label": "Box Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "box_font_color",
+          "label": "Box Font Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "TitanPower+"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sits on top of the ear without wedging inside your head"
+        }
+      ]
+    },
+    {
+      "type": "right_box",
+      "name": "Right Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "title_image",
+          "label": "Title Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "bottom_image",
+          "label": "Bottom Image"
+        },
+        {
+          "type": "color",
+          "id": "box_background_color",
+          "label": "Box Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "box_font_color",
+          "label": "Box Font Color",
+          "default": "#000000"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Other Brands"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "In-ear headphones unavoidably cause pressure and pain over time"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cable Pro Numbers"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+<style>
+  .buds-third-section {
+    padding: 24px;
+    background-color: var(--section-background-color);
+  }
+  .buds-main-title {
+    margin-bottom: 16px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .buds-inner {
+    padding: 24px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .buds-outer {
+    border-radius: 8px;
+    background-color: var(--inner-background-color);
+  }
+  .buds-box {
+    padding: 16px;
+    padding-bottom: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border:1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--box-background-color);
+    position: relative;
+    color: var(--box-font-color);
+  }
+  .buds-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--box-font-color);
+    width: 100%;
+    text-align: center;
+  }
+  .buds-description {
+    font-size: 16px;
+    text-align: center;
+  }
+  .buds-box img {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+  }
+  .buds-title-image {
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    border-radius: 8px;
+  }
+  .buds-bottom-image {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    border-radius: 8px;
+  }
+  .icon-circle {
+    min-width:24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .left-icon {
+    background-color: #28a745;
+  }
+  .right-icon {
+    background-color: #dc3545;
+  }
+  @media (max-width: 768px) {
+    .buds-inner {
+      grid-template-columns: 1fr;
+    }
+    .buds-box img {
+      margin-top: 16px;
+      width: 100%;
+      max-width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .buds-box {
+      padding:0;
+    }
+  }
+</style>
+{% endstylesheet %}
+<div class="{{ section.settings.gradient_field }} px-[10px]">
+
+  <section
+    class="buds-third-section pt-[20px] pb-[40px]"
+    style="--section-background-color: {{ section.settings.background_color }};"
+  >
+    <div class="max-w-[1090px] mx-auto text-center buds-outer pt-[30px] pb-[30px] rounded-[24px] shadow-[0_0_10px_#b5b5b5]"
+      style="--inner-background-color: {{ section.settings.inner_background_color }};">
+      {% comment %} <div class="buds-main-title bold ">
+        <span class="text-[{{ section.settings.inner_background_color }}] bg-white rounded-[50%] inline-block w-[40px] h-[40px] bold">
+          {{ section.settings.section_number }}
+        </span>
+          {{ section.settings.section_title }}
+      </div> {% endcomment %}
+      <div class="flex items-center justify-center mb-[20px] flex-col md:flex-row gap-[10px] md:gap-[0px]">
+        <span class="{%  if section.settings.light%}bg-[#2f4534] text-white{% else %}text-[#2f4534] bg-white{% endif %} md:text-[50px] text-[32px] font-bold px-[12px] py-[4px] rounded-full w-[60px] h-[60px] flex items-center justify-center">{{ section.settings.section_number }}</span>
+        <h2 class="{%  if section.settings.light%}text-[#2f4534]{% else %}text-white{% endif %} md:text-[44px] text-[28px] font-bold ml-[10px] text-center uppercase italic">{{ section.settings.section_title }}</h2>
+      </div>
+      <div
+        class="buds-inner"
+
+      >
+        {% for block in section.blocks %}
+          <div
+            class="buds-box"
+            style="--box-background-color: {{ block.settings.box_background_color }}; --box-font-color: {{ block.settings.box_font_color }};"
+          >
+            <div class="flex items-center gap-[10px] min-h-[80px]">
+              {% if forloop.index == 1 %}
+                  <div class="icon-circle left-icon">✓</div>
+              {% elsif forloop.index == 2 %}
+                  <div class="icon-circle right-icon">✕</div>
+              {% endif %}
+              {% if block.settings.title_image != blank %}
+                  <img
+                  src="{{ block.settings.title_image | img_url: 'medium' }}"
+                  alt="{{ block.settings.title }}"
+                  class="buds-title-image"
+                  />
+              {% else %}
+                  <div class="buds-title">
+                  {{ block.settings.title }}
+                  </div>
+              {% endif %}
+            </div>
+            {% if block.settings.description != blank %}
+              <p class="buds-description max-w-[80%]">{{ block.settings.description }}</p>
+            {% endif %}
+            {% if block.settings.bottom_image != blank %}
+              <img
+                src="{{ block.settings.bottom_image | img_url: 'medium' }}"
+                alt="Bottom Image"
+                class="buds-bottom-image"
+              />
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,95 @@
+{% schema %}
+{
+  "name": "Ultimate Versatility",
+  "settings": [
+    {
+        "type": "text",
+        "id": "title_content",
+        "label": "TItle",
+        "default": "Ultimate Versatility"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "<p>With up to 240W of power, USB-C Universal Cable delivers lightning-fast charging for your MacBook, smartphone, tablet, and more. Its built-in adapters for USB-A and Micro USB ensure you're ready to charge nearly any device—future-proofing your setup for years to come.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ultimate Versatility",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<section class="bg-black">
+    <div class="flex flex-col-reverse md:flex-row gap-[40px] max-w-[1440px] mx-auto px-[10px]">
+        <div class="w-full md:w-[40%] prose max-w-none text-white md:py-[100px] pb-[40px]">
+            <h2 class="md:text-[90px] text-[40px] text-white mb-[20px]">{{ section.settings.title_content }}</h2>
+            <div class="text-[20px] text-white">{{ section.settings.text_content }}</div>
+
+        </div>
+
+        <div class="w-full md:w-[60%] relative">
+            <div class="relative w-full aspect-[16/9] overflow-hidden slideshow-js h-full">
+            {% for block in section.blocks %}
+                {% if block.settings.image != blank %}
+                <img
+                    src="{{ block.settings.image | image_url }}"
+                    loading="lazy"
+                    class="absolute inset-0 w-full h-full object-cover slideshow-fade {% unless forloop.first %}opacity-0{% endunless %}"
+                >
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.slideshow-js img');
+    let current = 0;
+
+    setInterval(() => {
+      images[current].classList.remove('opacity-100');
+      images[current].classList.add('opacity-0');
+
+      current = (current + 1) % images.length;
+
+      images[current].classList.remove('opacity-0');
+      images[current].classList.add('opacity-100');
+    }, 2000);
+  });
+</script>
+
+<style>
+  .slideshow-fade {
+    transition: opacity 0.6s ease-in-out;
+    position: absolute;
+  }
+
+  .opacity-0 {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .opacity-100 {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>

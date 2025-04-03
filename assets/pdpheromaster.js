@@ -266,8 +266,10 @@ addToCarts.forEach(addToCart => {
         quantity: quantity
       })
       let accSelector = document.querySelectorAll('.selected')
+
       accSelector.forEach(acc => {
-          let product = acc.getAttribute('data-product-id')
+          let product = acc.getAttribute('data-variant-id')
+          console.log(acc, product, 'product selected')
           addItems.push({
             id: product,
             quantity: 1

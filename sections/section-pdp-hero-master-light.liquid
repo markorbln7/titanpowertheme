@@ -1,0 +1,1350 @@
+{{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
+{{ 'lightdesign.css' | asset_url | stylesheet_tag }}
+{{ 'section-pdp-hero-master.css' | asset_url | stylesheet_tag }}
+{{ 'cableoverride.css' | asset_url | stylesheet_tag }}
+<style>
+    .pdp-hero__atc {
+      height: 55px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100% !important;
+      background-color: #60c655 !important;
+      color: #fff !important;
+      border-radius: 20px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      box-shadow: 0 7px 7px #0000001a !important;
+      transition: opacity .3s ease !important;
+      border:none;
+    }
+    select {
+      box-shadow: 0 1px 5px 3px #00000012;
+      -webkit-appearance: none;
+      background-color: white;
+      border-radius: 1.875rem;
+      font-weight: 400;
+      letter-spacing: .07em;
+      line-height: 1.42;
+      /* outline: 0.125rem solid transparent; */
+      /* outline-offset: 0.125rem; */
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+      border: 2px solid #60c655;
+      padding: 5px;
+      width:130px;
+    }
+    select:focus-visible {
+      outline: none;
+      outline-offset: 0.3rem;
+      box-shadow: none;
+    }
+    .video-trigger {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      border-radius: 50%;
+      left: 10px;
+      top: 10px;
+      font-weight: 700;
+      z-index: 999;
+      cursor: pointer;
+  }
+  .pdp-hero__container .Header_linePart__1tpw_ {
+    bottom:36% !important;
+  }
+  .w-53 {
+    width: 65%;
+    height:auto;
+  }
+  .mx-auto {
+    margin:0 auto
+  }
+  .product-play-overlay {
+    position: fixed;
+    z-index: 9999999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.product-play-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+.close, .close-play {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 20px;
+  cursor: pointer;
+}
+</style>
+
+{% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
+
+{% liquid
+  comment
+    Section Variables
+  endcomment
+  assign mainProduct = all_products[section.settings.product_main]
+  assign productImage = section.settings.product_image
+
+  if productImage == blank
+    assign productImage = mainProduct.featured_image
+  else
+    assign productImage = section.settings.product_image
+  endif
+
+  assign logoImage = section.settings.logo_image
+  assign productSubtitle = section.settings.product_subtitle
+  assign atcLabel = section.settings.atc_label
+  assign discountContent = section.settings.discount_content
+  assign product_highlighted = all_products[section.settings.product_highlighted]
+  assign product_highlighted_message = section.settings.product_highlighted_message
+
+  comment
+    Blocks
+  endcomment
+  assign product_repeater = section.blocks | where: 'type', 'product_repeater'
+  assign highlighted_product_repeater = section.blocks | where: 'type', 'highlighted_repeater'
+  assign iconsRepeater = section.blocks | where: 'type', 'icons'
+  assign propsRepeater = section.blocks | where: 'type', 'props'
+  assign accRepeater = section.blocks | where: 'type', 'accesories'
+  assign imgRepeater = section.blocks | where: 'type', 'gridImages'
+  assign giftRepeater = section.blocks | where: 'type', 'gift_images'
+  assign currency = cart.currency.iso_code
+%}
+<div class="product-play-overlay">
+  <div class="close-play">
+      {% render 'icon-close' %}
+  </div>
+  <div class="product-overlay-video">
+    <video class="info-video lg:max-w-[75%] mx-auto rounded-[20px]" width="100%" height="100%" controls>
+      <source src="" type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+<section data-currency="{{ currency }}" class="js-currency section-pdp-hero section-pdp-hero-secondary js-scroll">
+  <div class="content-wrapper">
+    <div class="pdp-hero__container">
+      {% comment %} Gallery {% endcomment %}
+      <div class="pdp-hero__gallery relative light-gallery">
+          {% if section.settings.video %}
+          <div data-video="{{section.settings.video.sources[1].url }}" class="video-trigger relative cursor-pointer">
+            <div style="display:block !important;z-index:999999" data-video="{{section.settings.video.sources[1].url }}" class="overlay absolute top-0 left-0 w-full h-full video-trigger"></div>
+              {% render 'video-animated' %}
+          </div>
+          {% endif %}
+        {% if logoImage %}
+          <figure class="pdp-hero__gallery-logo">{% render 'titan-image', image: logoImage %}</figure>
+        {% endif %}
+        <figure class="pdp-hero__gallery-main-image relative">
+          <img
+            width="100"
+            height="auto"
+            class="js-main-image-change w-100"
+            src="{{ productImage | img_url: 'master' }}"
+            alt="{{ featured_image.alt }}"
+          >
+        </figure>
+        {% comment %} {% if iconsRepeater.size > 0 %}
+          <div class="pdp-hero__icons swiper">
+            <div class="swiper-wrapper">
+              {% for block in iconsRepeater %}
+                {% assign iconImage = block.settings.pdp_hero_icon %}
+                {% assign iconTitle = block.settings.pdp_hero_icon_title %}
+                {% assign iconText = block.settings.pdp_hero_icon_text %}
+
+                <div class="swiper-slide">
+                  <div class="pdp-hero__icon-container">
+                    {% render 'titan-image', image: iconImage %}
+                    {% if iconTitle != blank %}
+                      <span class="pdp-hero__icon-title">{{ iconTitle }}</span>
+                    {% endif %}
+                    {% if iconText != blank %}
+                      <span class="pdp-hero__icon-text">{{ iconText }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-prev">
+              <svg
+                id="chevron-left"
+                viewBox="0 0 32 32"
+                width="9px"
+                height="12px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"/>
+              </svg>
+            </div>
+
+            <div class="pdp-hero__arrow pdp-hero__arrow-next">
+              <svg
+                height="12px"
+                version="1.1"
+                viewBox="0 0 9 12"
+                width="9px"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#000000" id="Core" transform="translate(-260.000000, -90.000000)"><g id="chevron-right" transform="translate(260.500000, 90.000000)"><path d="M1,0 L-0.4,1.4 L4.2,6 L-0.4,10.6 L1,12 L7,6 L1,0 Z" id="Shape"/></g></g></g>
+              </svg>
+            </div>
+          </div>
+        {% endif %} {% endcomment %}
+      </div>
+
+      {% comment %} Product info {% endcomment %}
+      <div class="pdp-hero__product-info">
+        <div class="pdp-hero__product-infos">
+          <div class="product-template-new__wrapper--content__review js-stars-scroll">
+            <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★★★★★ </span>
+            <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7</span>
+            <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,131)</span>
+          </div>
+          <div class="pdp-hero__heading">
+            {% if section.settings.promo_line != blank %}
+              <div class="promo_line">
+                <div>
+                  <span class="green-dot"></span>
+                  <span>{{ section.settings.promo_line }}</span>
+                </div>
+                <span class="promo_line_image"><img width="100%" height="auto" src="{{ section.settings.product_line_image | img_url:'master' }}"></span>
+              </div>
+            {% endif %}
+            <h2 class="pdp-hero__product-title">{{ mainProduct.title }}</h2>
+            {% if productSubtitle != blank %}
+              <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
+            {% endif %}
+          </div>
+          <div class="pdp-hero__pricing-wrapper" {% if section.settings.show_gift_layout == true %} style="position:absolute;left:-4000px;"{% endif %}>
+            <div class="pdp-hero__pricing product__list--single--price color-white">
+              <span class="pdp-hero__pricing-price js-price">{{ mainProduct.price_max | money_with_currency }}</span>
+              <span class="crossed js-crossed-price">{{ mainProduct.compare_at_price_max | money_with_currency }}</span>
+
+              {% if discountContent != blank %}
+                <div class="pdp-hero__discount">{{ discountContent }}</div>
+              {% endif %}
+            </div>
+
+            <div class="pdp-hero__price-diff js-saving">
+              {% assign difference = mainProduct.compare_at_price_max | minus: mainProduct.price_max %}
+              {{ difference | money_with_currency }} SAVED
+            </div>
+          </div>
+
+
+          {% comment %} PRODUCT OPTIONS {% endcomment %}
+          <div style="position:absolute;left:-30000px;" class="pdp-hero__selection">
+            <div class="pdp-hero__types">
+              <div data-type="iPhone" class="pdp-hero__option active js-type-selector">
+                <span>IPhone</span>
+              </div>
+
+              <div data-type="Type-C" class="pdp-hero__option js-type-selector">
+                <span>USB-C</span>
+              </div>
+            </div>
+
+            <div class="pdp-hero__sizes">
+              <div data-length="4ft(1.2m)" class="pdp-hero__option js-length-selector">
+                <span>1.2m</span>
+              </div>
+              <div data-length="6ft(1.8m)" class="pdp-hero__option js-length-selector">
+                <span>1.8m</span>
+              </div>
+              <div data-length="10ft(3.0m)" class="pdp-hero__option active js-length-selector">
+                <span>3.0m</span>
+              </div>
+            </div>
+          </div>
+
+          {% comment %} UPSELL PRODUCTS {% endcomment %}
+          {% if section.settings.show_gift_layout %}
+            {% if section.settings.gift_promo_line %}
+              <div style="margin-bottom:20px;border:2px dashed #a2e59b;" class="promo_line new-promo-line">
+                <div>
+                  <span class="green-dot"></span>
+                  <span><span>Order by
+                    {% assign day = "now" | date: "%d" %}
+                    {% assign day_suffix = day | plus: 0 %}
+                    {% case day_suffix %}
+                      {% when 1 or 21 or 31 %}{{ "now" | date: "%b. " }}{{ day }}st
+                      {% when 2 or 22 %}{{ "now" | date: "%b. " }}{{ day }}nd
+                      {% when 3 or 23 %}{{ "now" | date: "%b. " }}{{ day }}rd
+                      {% else %}{{ "now" | date: "%b. " }}{{ day }}th
+                    {% endcase %} to secure our best ever price</span></span>
+                </div>
+              </div>
+            {% endif %}
+            {% if section.settings.show_variant_picker == true %}
+              <div>
+                {% for option in mainProduct.options_with_values %}
+                  {% assign numberSelector = forloop.index %}
+                  {% if option.name == 'Wall Port' %}
+                    <div class="pd-selector">
+                      <div class="pd-selector-title">WALL PORT</div>
+                      <div class="switch-holder">
+                        <div class="label-holder__image">
+                          <div class="label-holder__speed">SPEED</div>
+                          <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800" loading="lazy">
+                      </div>
+                        <div class="master-options">
+                          {% for value in option.values %}
+                            <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
+                          {% endfor %}
+                        </div>
+                        <div class="label-holder__image">
+                          <div class="label-holder__speed">SPEED</div>
+                          <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800" loading="lazy">
+                          </div>
+                      </div>
+
+                    </div>
+                    {% comment %} <div style="margin:0;" class="pd-selector-title">PHONE PORT</div> {% endcomment %}
+                    {% elsif option.name == 'Cable Type' %}
+                      <div class="phone-selector mt-[20px]">
+                        <div class="pd-selector-title">PHONE PORT</div>
+                        <div class="switch-holder">
+                          <div class="label-holder__image">
+                            <div class="label-holder__speed">SPEED</div>
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800" loading="lazy">
+                        </div>
+                          <div class="master-options">
+                            {% for value in option.values %}
+                              <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
+                            {% endfor %}
+                          </div>
+                          <div class="label-holder__image">
+                            <div class="label-holder__speed">SPEED</div>
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800" loading="lazy">
+                            </div>
+                        </div>
+
+                      </div>
+                    {% else %}
+                      <div style="margin:0;" class="pd-selector-title">LENGTH</div>
+                      <div class="master-options">
+                      {% for value in option.values %}
+                        <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
+                      {% endfor %}
+                      </div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            <div class="pd-selector-title !my-[30px]">PICK YOUR PACK</div>
+            <div class="pdp-hero__upsell gift-upsell">
+              {% if product_repeater.size > 0 %}
+                {% for upsell_product in product_repeater %}
+                  {% liquid
+                    assign product_obj = all_products[upsell_product.settings.product_obj]
+
+                    assign product_title = upsell_product.settings.product_title_custom
+                    if product_title == blank
+                      assign product_title = product_obj.title
+
+                    else
+                      assign product_title = upsell_product.settings.product_title_custom
+                    endif
+                    assign upsell_message = upsell_product.settings.upsell_message
+
+                    assign upsell_product_image = upsell_product.settings.upsell_product_image
+
+                    assign product_price = product_obj.price_max
+                    assign product_compare_at_price = product_obj.compare_at_price_max
+                    assign upsell_product_discount = upsell_product.settings.upsell_product_discount
+                    assign upsell_product_selector_number = upsell_product.settings.product_selector_number
+                    if product_obj.first_available_variant.featured_image.src
+                      assign variant_product_image = product_obj.first_available_variant.featured_image.src
+                    else
+                      assign variant_product_image = product_obj.featured_image.src
+                    endif
+                  %}
+
+                  <div
+                    data-image="{{ variant_product_image | img_url: 'master'}}"
+                    data-product-selector-id= "{{ product_obj.id }}"
+                    data-product-id="{{ product_obj.first_available_variant.id }}"
+                    data-variant-image = "{{ variant_product_image | img_url: 'master' }}"
+                    data-product-price = "{{ product_obj.first_available_variant.price }}"
+                    data-product-compare-price = "{{ product_obj.first_available_variant.compare_at_price }}"
+                    data-count="{{ upsell_product_selector_number }}"
+                    data-gift="{{ upsell_product.settings.product_number_unlocker }}"
+                    class="!pt-[30px] relative fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %}promo active{% endif %}"
+                  >
+                    <div class="gift-layout-image absolute top-[-32px]"><img width="100" height="auto" src="{{ upsell_product_image | img_url: 'master'  }}"></div>
+                    <div class="qty_selector-title">{{ product_title }}</div>
+                    <div class="qty_selector-price"><span class="js-each">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}</span>/each</div>
+
+                    {% comment %} <div class="most-pouplar">{{upsell_product_discount }}</div> {% endcomment %}
+                    <input
+                      type="checkbox"
+                      id="pdp-hero__checkbox"
+                      class="js-upsell-checkbox"
+                      style="z-index:99;"
+                      {% if forloop.index == 1 %}
+                        checked
+                      {% endif %}
+                    >
+                  </div>
+                  <script>
+                    window.productVariants = window.productVariants || {};
+                    window.productVariants[{{ product_obj.id }}] = [
+                      {% for variant in product_obj.variants %}
+                      {
+                        id: '{{ variant.id }}',
+                        price: '{{ variant.price | divided_by: upsell_message | money }}',
+                        image: '{{ variant.featured_image.src | img_url: 'master' }}',
+                        available: {{ variant.available }},
+                        options: [
+                          {% for option in variant.options %}
+                          '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
+                          {% endfor %}
+                        ]
+                      }{% unless forloop.last %}, {% endunless %}
+                      {% endfor %}
+                    ];
+                    console.log( window.productVariants[{{ product_obj.id }}], 'aa');
+                  </script>
+
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div>
+              <div class="bf-special-block">
+                {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
+                <p class="pd-selector-title !my-[10px]">
+                Grab Multiple Packs & Save Even More
+                </p>
+              </div>
+              <div class="gift-unlocker">
+                <div class="gift-unlocker-wrapper gift-blocks bigger-spacing">
+                    {% for block in giftRepeater %}
+                        <div class="gift_card {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
+                            <div class="gift-overlay {% if block.settings.product_number_unlocker == '1'  %}is-active{% else %}dagag{% endif %}"></div>
+                            {% comment %} {% if block.settings.product_number_unlocker == '3'  %}
+                              <div class="conf">
+                                <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
+                              </div>
+                            {% endif %} {% endcomment %}
+                            <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
+                            <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
+                            <div class="gift-locker">
+                              <div class="gift-lockings w-embed">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 18.6 18.6" style="enable-background:new 0 0 18.6 18.6;" xml:space="preserve" width="100%" height="100%">
+                                <path fill="CurrentColor" d="M14.6,11c0,0.8,0,1.6,0,2.4c0,0.8-0.3,1.4-0.8,2c-0.8,0.9-1.9,1.4-3.1,1.6c-1.1,0.2-2.3,0.2-3.4-0.1
+                                c-0.9-0.3-1.8-0.7-2.5-1.4c-0.6-0.6-1-1.4-0.9-2.3c0-1.5,0-3,0-4.4c0-0.9,0.4-1.5,1.2-1.9c0.1,0,0.1-0.1,0.1-0.2c0-1,0.2-2,0.7-2.9
+                                c0.5-0.9,1.1-1.6,2-2c1.2-0.6,2.4-0.4,3.5,0.5c0.8,0.6,1.2,1.4,1.6,2.3c0.3,0.7,0.4,1.4,0.4,2.2c0,0.1,0,0.1,0.1,0.2
+                                c0.8,0.4,1.2,1,1.2,1.8C14.6,9.5,14.6,10.3,14.6,11C14.6,11,14.6,11,14.6,11z M9.3,6.7C9.3,6.7,9.3,6.7,9.3,6.7c0.7,0,1.4,0,2,0
+                                c0.4,0,0.4,0,0.3-0.4c-0.1-0.8-0.3-1.6-0.8-2.2c-0.5-0.7-1.2-0.9-2-0.8c-0.6,0.1-1,0.5-1.3,1C7.1,5,6.9,5.8,6.9,6.6
+                                c0,0.1,0,0.2,0.1,0.2C7.8,6.7,8.5,6.7,9.3,6.7z M9.3,13.8C9.3,13.8,9.3,13.8,9.3,13.8c0.2,0,0.4,0,0.7,0c0.1,0,0.2,0,0.2-0.2
+                                c0-0.3,0-0.7,0-1c0-0.1,0-0.2,0.1-0.3c0.9-0.7,0.7-2.2-0.4-2.6c-0.7-0.3-1.5,0-1.9,0.6c-0.4,0.6-0.2,1.5,0.4,1.9
+                                c0.1,0.1,0.1,0.1,0.1,0.2c0,0.4,0,0.7,0,1.1c0,0.1,0,0.2,0.1,0.1C8.8,13.8,9,13.8,9.3,13.8z"></path>
+                                </svg>
+                              </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div data-gift="titles" class="gift-titles">
+                  {% for block in giftRepeater %}
+                      <div class="gift_title {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
+                        <div class="gift-title_text">{{block.settings.pdp_hero_icon_title}}</div>
+                      </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="pdp-hero__upsell">
+              {% if product_repeater.size > 0 %}
+                {% for upsell_product in product_repeater %}
+                  {% liquid
+                    assign product_obj = all_products[upsell_product.settings.product_obj]
+
+                    assign product_title = upsell_product.settings.product_title_custom
+                    if product_title == blank
+                      assign product_title = product_obj.title
+
+                    else
+                      assign product_title = upsell_product.settings.product_title_custom
+                    endif
+                    assign upsell_message = upsell_product.settings.upsell_message
+
+                    assign upsell_product_image = upsell_product.settings.upsell_product_image
+
+                    assign product_price = product_obj.price_max
+                    assign product_compare_at_price = product_obj.compare_at_price_max
+                    assign upsell_product_discount = upsell_product.settings.upsell_product_discount
+                    assign upsell_product_selector_number = upsell_product.settings.product_selector_number
+                  %}
+                  <div class="{%  if upsell_message == blank%}blank-item{% endif %} pdp-hero__upsell-message{% if forloop.index == 1 %} active {% endif %}">
+                    {{ upsell_message }}
+                  </div>
+                  <div
+                    data-image="{{ product_obj.featured_image.src | img_url: 'master'}}"
+                    data-variant-image="{{ product_obj.featured_image.src | img_url: 'master'}}"
+                    data-product-id="{{ product_obj.first_available_variant.id }}"
+                    data-product-price = "{{ product_obj.first_available_variant.price }}"
+                    data-product-compare-price = "{{ product_obj.first_available_variant.compare_at_price }}"
+                    data-count="{{ upsell_product_selector_number }}"
+                    class="fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %} promo active{% endif %}"
+                  >
+                    <input
+                      type="checkbox"
+                      id="pdp-hero__checkbox"
+                      class="js-upsell-checkbox"
+                      style="z-index:99;"
+                      {% if forloop.index == 1 %}
+                        checked
+                      {% endif %}
+                    >
+                    <div class="pdp-hero__extra-checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+
+                    <div class="pdp-hero__upsell-content">
+                      <div class="pdp-hero__pricing product__list--single--price color-white">
+                        <h4 class="pdp-hero__upsell-title">
+                          {{ product_title }}
+                        </h4>
+                        {% if upsell_product_discount != blank %}
+                          <div class="pdp-hero__discount">{{ upsell_product_discount }}</div>
+                        {% endif %}
+                      </div>
+
+                      <div class="pdp-hero__upsell-price">
+                        <span class="pdp-hero__pricing-price js-price-original-{{ forloop.index }}">
+                          {{- product_price | money -}}
+                        </span>
+                        <span class="crossed js-price-discount-{{ forloop.index }}">
+                          {{- product_compare_at_price | money -}}
+                        </span>
+                      </div>
+                    </div>
+                    {% render 'titan-image', image: upsell_product_image %}
+                    {% if product_obj.options_with_values.size  > 0 %}
+                      <div style="z-index:999;" class="f jcc aic gap-10 mx-20 fw w-100">
+                      {% for option in product_obj.options_with_values %}
+                        {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
+                        <select  class="pd-variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                          {% for values in option.values %}
+                              <option value="{{values}}">{{values}}</option>
+                          {% endfor %}
+                        </select>
+                        {% endif %}
+                      {% endfor %}
+                      <div style="position:absolute;left:-4000px;">
+                        {% for variant in product_obj.variants %}
+                          <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+                  </div>
+
+                {% endfor %}
+              {% endif %}
+
+              {% comment %} HIGHLIGHTED UPSELL PRODUCT {% endcomment %}
+              {% if highlighted_product_repeater.size > 0 %}
+                {% for highlighted_product in highlighted_product_repeater %}
+                  {% liquid
+                      assign highlighted_product_obj = all_products[highlighted_product.settings.highlighted_product_obj]
+                      assign product_highlighted_message = highlighted_product.settings.product_highlighted_message
+                      assign product_highlighted_image = highlighted_product.settings.highlighted_product_image
+                      assign product_highlighted_price = highlighted_product_obj.price
+                      assign product_highlighted_compare_at_price = highlighted_product_obj.compare_at_price
+
+                      assign product_highlighted_title = highlighted_product.settings.highlighted_product_title_custom
+                      if product_highlighted_title == blank
+                          assign product_highlighted_title = highlighted_product_obj.title
+
+                      else
+                          assign product_highlighted_title = highlighted_product.settings.highlighted_product_title_custom
+                      endif
+                  %}
+                <div
+                  data-addon-price = "{{ highlighted_product_obj.first_available_variant.price }}"
+                  data-addon-compare-price = "{{ highlighted_product_obj.first_available_variant.compare_at_price }}"
+                  data-addon-id="{{ highlighted_product_obj.first_available_variant.id }}"
+                  class="pdp-hero__upsell-highlighted js-addon"
+                >
+                  <div class="pdp-hero__upsell-message">{{ product_highlighted_message }}</div>
+                  <div class="pdp-hero__extra-add pdp-hero__upsell-wrapper addon-wrapper">
+                    <input style="z-index:99;" type="checkbox" id="pdp-hero__checkbox">
+                    <div class="pdp-hero__extra-checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="#60c655" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+
+                    <div class="pdp-hero__upsell-content">
+                      <h4 class="pdp-hero__upsell-title">{{ product_highlighted_title }}</h4>
+
+                      <div class="pdp-hero__upsell-price">
+                        <span class="pdp-hero__pricing-price">{{ product_highlighted_price | money }}</span>
+                        <span class="crossed">{{ product_highlighted_compare_at_price | money }}</span>
+                      </div>
+                    </div>
+                    {% render 'titan-image', image: product_highlighted_image %}
+                  </div>
+                  {% if highlighted_product_obj.options_with_values.size  > 1 %}
+                  <div style="z-index:9999;" class="f jcc aic gap-10 mx-20 fw">
+                      {% for option in highlighted_product_obj.options_with_values %}
+                        <select  class="variant-selector-{{forloop.index}} {{option.name}}" data-var="{{forloop.index}}">
+                          {% for values in option.values %}
+                              <option value="{{values}}">{{values}}</option>
+                          {% endfor %}
+                        </select>
+                      {% endfor %}
+                      <div style="position:absolute;left:-4000px;">
+                        {% for variant in highlighted_product_obj.variants %}
+                          <div data-compare-price-cur="{{ variant.compare_at_price | money }}" data-price-cur="{{variant.price | money }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{variant.price }}" data-title="{{variant.title}}" data-variant="{{variant.id}}" class="pv color-white h2 mb-4">{{variant.title}}</div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+          {% endif %}
+          {% if section.settings.show_grid_images %}
+              <div class="grid-images">
+                {% for block in imgRepeater %}
+                  <div data-image-qty="{{ block.settings.image_qty }}" class="grid-images__single js-grid-image">
+                      <img width="100" height="auto" src="{{ block.settings.grid_image | img_url: 'master' }}" alt="">
+                  </div>
+                {% endfor %}
+              </div>
+          {% endif %}
+          {% if section.settings.show_qty %}
+          <div class="qty">
+              <div class="qty-selector">
+                <div class="tt-minus single-button">-</div>
+                <div data-count="1" class="tt-quantity single-button">1</div>
+                <div class="tt-plus single-button">+</div>
+              </div>
+            {% if section.settings.show_disc_box %}
+              <div data-count="2" class="buy-more js-buy-more">
+                Add 2 Save 10%
+              </div>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if atcLabel != blank %}
+            <p class="pdp-hero__atc-label">
+              {{ atcLabel }}
+            </p>
+          {% endif %}
+
+          {% comment %} ADD TO CART BUTTON {% endcomment %}
+          <div class="pdp-hero__atc-wrapper scroll-reveal">
+            <button
+              data-product="{{ product.selected_or_first_available_variant.id }}"
+              data-quantity="1"
+              class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0"
+            >
+              ADD TO CART
+            </button>
+
+          </div>
+
+          {% comment %} {% if propsRepeater.size > 0 %}
+            <div class="pdp-hero__props">
+              {% for block in propsRepeater %}
+                {% assign propText = block.settings.prop_text %}
+                {% assign propIcon = block.settings.prop_icon %}
+                {% assign propDescription = block.settings.prop_description %}
+
+                <div class="pdp-hero__prop">
+                  <div
+                    class="pdp-hero__prop-header"
+                    {% if propDescription != blank %}
+                      style="cursor: pointer;"
+                    {% endif %}
+                  >
+                    <div class="pdp-hero__prop-text">{{ propText }}</div>
+                    <div class="pdp-hero__prop-icon">{{ propIcon }}</div>
+                  </div>
+                  {% if propDescription != blank %}
+                    <div class="pdp-hero__prop-description">{{ propDescription }}</div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %} {% endcomment %}
+        </div>
+        <div class="pdp-hero__product-infos mt-[20px]">
+          {% if accRepeater.size > 0 %}
+            <h4 class="pd-selector-title !my-[10px] !text-left" style="margin-top: 20px;">
+              Compatible Gear
+            </h4>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+              {% for block in accRepeater %}
+                {% assign acc_product = all_products[block.settings.acc_product] %}
+                <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                  <div class="acc_single_overlay"></div>
+                  <div class="flex items-center gap-[16px]">
+                    <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[48px] h-[48px] object-contain" />
+                    <div>
+                      <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div>
+                      <div class="text-[16px] leading-[1.2] font-bold text-black">{{block.settings.acc_title}}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-end gap-[12px] flex-col">
+                    <div class="text-[14px] leading-[1.2] font-medium text-black">{{acc_product.price | money }}</div>
+                    <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="atc-fixed">
+  <div class="atc-fixed__container">
+    <div class="buds-product__inner--content__subtitle">
+      {{ mainProduct.title }}
+    </div>
+    <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
+      ORDER NOW ☝
+    </button>
+  </div>
+</div>
+<style>
+  .acc_single svg {
+    display: none;
+  }
+  .acc_single.selected {
+    border: 1px solid black;
+    background:#f5f5f5 !important;
+  }
+  .acc_single.selected svg {
+    display: block;
+  }
+  .pdp-hero__product-info {
+    box-shadow:none;
+    background:transparent;
+    padding:0 !important;
+    border-radius: 0px;
+  }
+  .pdp-hero__product-infos {
+    flex: 1;
+    border-radius: 30px;
+    padding: 30px 35px;
+    background-color: #fff;
+    height: fit-content;
+    box-shadow: 0 1px 5px 3px #00000008
+  }
+  .pdp-hero__upsell-highlighted {
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
+    border-radius: 0 0 22px 22px;
+    border-radius: 22px;
+  }
+</style>
+
+<script src="{{ 'section-pdp-hero-master.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'pdpheromaster.js' | asset_url }}" defer="defer"></script>
+
+<script>
+    window.selectLogic = {
+      productCount: '1-product',
+      productHandle: '',
+      productId: '',
+      phoneType: 'iPhone',
+      cableLength: '10ft(3.0m)',
+      addon: ''
+    }
+
+    window.products = {
+      {% for upsell_product in product_repeater %}
+        {% assign index = forloop.index | append:'-'  %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+          '{{ index | append: 'product' | remove:" "}}' : '{{ variant.id }}',
+        {% endfor %}
+      {% endfor %}
+    }
+
+    console.log(window.products, 'window.productsssss')
+    window.mainImages = {
+      "3xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone3.jpg?v=1708350036",
+      "3xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc3.jpg?v=1708350036",
+      "3xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "3xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro3.jpg?v=1708350036",
+      "iPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "iPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone1.jpg?v=1708350036",
+      "Type-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Type-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc1.jpg?v=1708350036",
+      "Micro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "Micro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro1.jpg?v=1708350036",
+      "4xiPhone/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xiPhone/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone4.jpg?v=1708350036",
+      "4xType-C/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xType-C/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usbc4.jpg?v=1708350036",
+      "4xMicro-USB/4ft(1.2m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/6ft(1.8m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+      "4xMicro-USB/10ft(3.0m)":"https://cdn.shopify.com/s/files/1/0071/1727/5191/files/micro4.jpg?v=1708350036",
+    }
+    window.pricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign index = forloop.index | append:'-'  %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+         '{{ index | append: 'product' | remove:" "}}' : '{{ variant.price }}',
+       {% endfor %}
+      {% endfor %}
+    }
+    window.comparePricesRaw = {
+      {% for upsell_product in product_repeater %}
+        {% assign index = forloop.index | append:'-'  %}
+        {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+        {% for variant in product_obj.variants %}
+         '{{ index | append: 'product' | remove:" "}}' : '{{ variant.compare_at_price }}',
+       {% endfor %}
+      {% endfor %}
+    }
+  window.prices = {
+    {% for upsell_product in product_repeater %}
+      {% assign index = forloop.index | append:'-'  %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+       '{{ index | append: 'product' | remove:" "}}' : '{{ variant.price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  console.log(window.prices, 'window.prices')
+  console.log(window.pricesRaw, 'window.pricesRaw')
+  window.comparePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign index = forloop.index | append:'-'  %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+       '{{ index | append: 'product' | remove:" "}}' : '{{ variant.compare_at_price | money_with_currency }}',
+     {% endfor %}
+    {% endfor %}
+  }
+  window.savePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign index = forloop.index | append:'-'  %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ index | append: 'product' | remove:" "}}' : '{{ variant.compare_at_price | minus:  variant.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+
+  window.jointPrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.price | plus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointComparePrice = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+  window.jointSavePrices = {
+    {% for upsell_product in product_repeater %}
+      {% assign product_obj = all_products[upsell_product.settings.product_obj] %}
+      {% for variant in product_obj.variants %}
+        '{{ variant.title | remove:" "}}' : '{{ variant.compare_at_price | plus: plug.compare_at_price | minus: variant.price | minus: plug.price | money_with_currency }}',
+      {% endfor %}
+    {% endfor %}
+  }
+
+
+
+  console.log(window.products, 'window.products')
+  console.log(window.prices, 'window.prices')
+  const distance = $('.scroll-reveal').offset().top
+  $(window).scroll(function () {
+    const top_of_element = $('#shopify-section-footer').offset().top
+    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
+    const top_of_screen = $(window).scrollTop()
+    if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {
+      $('.atc-fixed').addClass('show')
+    } else {
+      $('.atc-fixed').removeClass('show')
+    }
+  })
+  let infoPlayTrigers = document.querySelectorAll('.video-trigger');
+  let closePlayBtn = document.querySelector('.close-play');
+  infoPlayTrigers.forEach((infoTriger) => {
+    infoTriger.addEventListener('click', (e) => {
+        console.log(e.currentTarget, 'this')
+        let infoVideo = e.target.getAttribute('data-video');
+        console.log(e.target, infoVideo, 'infoVideo')
+        document.querySelector('.info-video').src = infoVideo;
+        document.querySelector('.product-play-overlay').classList.add('show');
+        document.querySelector('body').classList.add('no-scroll')
+        document.querySelector('html').classList.add('no-scroll')
+        setTimeout(() => {
+            document.querySelector('.info-video').play();
+        }, 300)
+    })
+})
+console.log(closePlayBtn, 'close')
+closePlayBtn.addEventListener('click', (e) => {
+  console.log('close')
+    document.querySelector('.product-play-overlay').classList.remove('show');
+    document.querySelector('body').classList.remove('no-scroll')
+    document.querySelector('html').classList.remove('no-scroll')
+    document.querySelector('.info-video').pause();
+})
+let overlayCls = document.querySelector('.product-play-overlay');
+overlayCls.addEventListener('click', (e) => {
+    if(e.target.classList.contains('product-play-overlay')) {
+        document.querySelector('.product-play-overlay').classList.remove('show');
+        document.querySelector('body').classList.remove('no-scroll')
+        document.querySelector('html').classList.remove('no-scroll')
+        document.querySelector('.info-video').pause();
+    }
+})
+</script>
+<style>
+  .gift-upsell .pdp-hero__extra-add.active {
+    background: #60c6556e !important;
+    border: none;
+    border-radius: 15px !important;
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.fw.pdp-hero__extra-add.pdp-hero__upsell-wrapper.js-product-selector {
+    background-color: #E9E9E9;
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 8%) !important;
+    border-radius: 15px !important;
+}
+
+.master-options {
+    background: #E9E9E9;
+}
+
+.master-options .select-button {
+    background: #E9E9E9;
+}
+
+.master-options .select-button.active {
+    color: #fff;
+    background-color: #60c65596;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.pdp-hero__gallery-main-image img {
+    box-shadow: none;
+}
+
+.grid-images {
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pdp-hero__container {
+    gap: 0px;
+}
+
+@media (min-width: 768px) {
+    .pdp-hero__product-info {
+        padding: 30px 35px;
+    }
+
+    .pdp-hero__gallery {
+        width: 650px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdp-hero__product-info {
+        padding: 20px 15px;
+    }
+}
+
+.promo_line.new-promo-line {
+    background: #a6eaa347 !important;
+    margin-bottom: 30px;
+}
+
+.section-pdp-hero .switch-holder {
+    max-width: 90%;
+}
+
+.color-titan-yellow {
+    color: #000000;
+    font-size: 20px;
+}
+
+.gift-upsell {
+    gap: 12px;
+}
+
+.pdp-hero__product-title {
+    display: none;
+}
+
+.pdp-hero__product-subtitle {
+    color: #000000;
+    font-size: 25px;
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "PDP Hero Master",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_variant_picker",
+      "label": "Show Variant Picker",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_grid_images",
+      "label": "Show Grid Images",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_qty",
+      "label": "Show qty",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gift_layout",
+      "label": "Show gift layout",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disc_box",
+      "label": "Show discount box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "promo_line",
+      "label": "Promo Line"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_line_image",
+      "label": "Promo Line Image"
+    },
+    {
+      "type": "text",
+      "id": "gift_promo_line",
+      "label": "Promo Line",
+      "default": "Order by Nov. 14th to secure our best pricing ever."
+    },
+    {
+      "type": "product",
+      "id": "product_main",
+      "label": "Select main product"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Product video"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo upload"
+    },
+    {
+      "type": "text",
+      "id": "product_subtitle",
+      "label": "Product subtitle"
+    },
+    {
+      "type": "text",
+      "id": "discount_content",
+      "label": "Discount content",
+      "default": "36% OFF"
+    },
+    {
+      "type": "text",
+      "id": "atc_label",
+      "label": "ATC button label",
+      "default": "96% OF the reviews for this item are positive"
+    },
+    {
+      "type": "product",
+      "id": "product_highlighted",
+      "label": "Highlighted upsell product"
+    },
+    {
+      "type": "text",
+      "id": "product_highlighted_title",
+      "label": "Highlighted upsell product title"
+    },
+    {
+      "type": "textarea",
+      "id": "product_highlighted_message",
+      "label": "Highlighted upsell message",
+      "default": "50% OFF WHEN YOU GET WITH CABLE"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_repeater",
+      "name": "Product upsell",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_selector_number",
+          "label": "Product selector number"
+        },
+        {
+          "type": "text",
+          "id": "product_number_unlocker",
+          "label": "Product number unlocker"
+        },
+        {
+          "type": "product",
+          "id": "product_obj",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "upsell_product_image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "product_title_custom",
+          "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "upsell_product_discount",
+          "label": "Discount text"
+        },
+        {
+          "type": "textarea",
+          "id": "upsell_message",
+          "label": "Upsell message",
+          "default": "LIMITED STOCK OFFER  GET +1 FREE"
+        }
+      ]
+    },
+    {
+      "type": "highlighted_repeater",
+      "name": "Highlighted Repeater",
+      "settings": [
+        {
+          "type": "product",
+          "id": "highlighted_product_obj",
+          "label": "Highlighted Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "highlighted_product_image",
+          "label": "Highlighted Product Image"
+        },
+        {
+          "type": "text",
+          "id": "highlighted_product_title_custom",
+          "label": "Highlighted Product Title"
+        },
+        {
+          "type": "text",
+          "id": "highlighted_product_discount",
+          "label": "Highlighted Product Discount"
+        },
+        {
+          "type": "textarea",
+          "id": "product_highlighted_message",
+          "label": "Highlighted Upsell Message",
+          "default": "50% OFF WHEN YOU GET WITH CABLE"
+        }
+      ]
+    },
+    {
+      "type": "props",
+      "name": "Prop",
+      "settings": [
+        {
+          "type": "text",
+          "id": "prop_text",
+          "label": "Prop text"
+        },
+        {
+          "type": "textarea",
+          "id": "prop_icon",
+          "label": "Prop icon"
+        },
+        {
+          "type": "richtext",
+          "id": "prop_description",
+          "label": "Prop description"
+        }
+      ]
+    },
+    {
+      "type": "gridImages",
+      "name": "Grid Images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "grid_image",
+          "label": "Grid image"
+        },
+        {
+          "type": "text",
+          "id": "image_qty",
+          "label": "Grid image"
+        }
+      ]
+    },
+    {
+      "type": "accesories",
+      "name": "Accessories",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "acc_image",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "product",
+          "id": "acc_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "acc_title",
+          "label": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "acc_discount_pill",
+          "label": "Custom discount pill",
+          "default": "50% OFF"
+        }
+      ]
+    },
+    {
+      "type": "icons",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pdp_hero_icon",
+          "label": "Gallery icon"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_title",
+          "label": "Gallery icon title"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_text",
+          "label": "Gallery icon text"
+        }
+      ]
+    },
+    {
+      "type": "gift_images",
+      "name": "Gift Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "pdp_hero_icon",
+          "label": "Gift icon"
+        },
+        {
+          "type": "text",
+          "id": "product_number_unlocker",
+          "label": "Product number unlocker"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_title",
+          "label": "Gallery icon title"
+        },
+        {
+          "type": "text",
+          "id": "top_note",
+          "label": "Top Note",
+          "default": "Free $9.95"
+        },
+        {
+          "type": "product",
+          "id": "gift_price_product",
+          "label": "Gift Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Hero Secondary LIGHT"
+    }
+  ]
+}
+{% endschema %}

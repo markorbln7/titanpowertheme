@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -185,6 +185,14 @@
         "text_content": "<p>With up to 240W of power, USB-C Universal Cable delivers lightning-fast charging for your MacBook, smartphone, tablet, and more. Its built-in adapters for USB-A and Micro USB ensure you're ready to charge nearly any device—future-proofing your setup for years to come.</p>"
       }
     },
+    "one_cable_xGPbb6": {
+      "type": "one-cable",
+      "settings": {
+        "title": "One Cable for All",
+        "description": "Note: This cable does not support screen mirroring and offers limited charging speed for the 16-inch MacBook Pro (2021 / 2022).",
+        "right_image": "shopify://shop_images/Screenshot_2025-04-05_at_14.36.45.png"
+      }
+    },
     "buds_image_MphiwP": {
       "type": "buds-image",
       "settings": {
@@ -293,7 +301,7 @@
           "settings": {
             "product_selector_number": "3-product",
             "product_number_unlocker": "3",
-            "product_obj": "4-x-titan-smart-cable™-copy-1",
+            "product_obj": "titan-smart-cable™-pro",
             "upsell_product_image": "shopify://shop_images/titan-power-plus-titan-smart-cable-titan-cable-type-c-iphone-usb-c-4-pack_5c236faa-9e60-4930-94ad-f750b65358e7.png",
             "product_title_custom": "BUY 3 GET 1  FREE",
             "upsell_product_discount": "BEST DEAL",
@@ -382,6 +390,15 @@
             "acc_product": "titan-xl-travel-case",
             "acc_title": "XL Travel Case",
             "acc_discount_pill": "50% OFF"
+          }
+        },
+        "accesories_GHGTRh": {
+          "type": "accesories",
+          "settings": {
+            "acc_image": "shopify://shop_images/All_edited_buds_images-budss_13ada521-413f-4ad0-b1fd-c3d4e34a84a6.png",
+            "acc_product": "titan-buds-pro",
+            "acc_title": "Smart Buds",
+            "acc_discount_pill": "Smart Buds text"
           }
         },
         "gift_images_ANqTme": {
@@ -482,6 +499,7 @@
         "accesories_g3rrHU",
         "accesories_JjKrqY",
         "accesories_tUMkMp",
+        "accesories_GHGTRh",
         "gift_images_ANqTme",
         "gift_images_hV4JDg",
         "gift_images_C3FyNm",
@@ -507,9 +525,10 @@
         "show_qty": true,
         "show_gift_layout": true,
         "show_disc_box": true,
+        "section_title": "Titan Smart Cable Pro",
         "promo_line": "",
         "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
-        "product_main": "1-x-titan-smart-cable™-offer-copy",
+        "product_main": "titan-smart-cable™-pro",
         "product_subtitle": "\"Finally! A charger that's doesn't break.\"",
         "discount_content": "50% OFF",
         "atc_label": "",
@@ -586,18 +605,68 @@
         "eyebrow": "100w made with Aramind Fibre Braid"
       }
     },
+    "compare-table": {
+      "type": "compare-table-cable-pro",
+      "custom_css": [],
+      "settings": {}
+    },
     "titan_impact_banner_Bqbg6D": {
       "type": "titan-impact-banner",
       "settings": {
+        "background_image": "shopify://shop_images/Smart-cable_Image-1-min_4a17cb0e-5b40-4c01-a3ba-344ca390f48a.png",
         "subtitle": "Based on 3000+ Reviews",
         "heading": "2.2+ MLN PRODUCTS SOLD",
         "body": "For over a decade, we've delivered millions of products worldwide and won the best awards in technology and design, all made possible by the support of over 800,000 lifehackers like us, fueling our success with crucial feedback and support."
       }
     },
-    "compare-table": {
-      "type": "compare-table-buds",
-      "custom_css": [],
-      "settings": {}
+    "you_may_also_like_pro_Lactj4": {
+      "type": "you-may-also-like-pro",
+      "blocks": {
+        "product_card_BqXjpX": {
+          "type": "product_card",
+          "settings": {
+            "product": "titan-buds-pro",
+            "image": "shopify://shop_images/All_edited_buds_images-budss_13ada521-413f-4ad0-b1fd-c3d4e34a84a6.png",
+            "title": "BUDS PRO",
+            "description": "Description goes here",
+            "label_1": "",
+            "label_2": "",
+            "is_new": true
+          }
+        },
+        "product_card_FfUmdp": {
+          "type": "product_card",
+          "settings": {
+            "product": "120w-magtech-cable™-1",
+            "image": "shopify://shop_images/Magtech_USB-A_-_USB_C_cable_214a2269-02fd-4015-898d-d3233be6d61c.png",
+            "title": "MAGTECH CABLE",
+            "description": "Description goes here",
+            "label_1": "",
+            "label_2": "",
+            "is_new": false
+          }
+        },
+        "product_card_Whj7UQ": {
+          "type": "product_card",
+          "settings": {
+            "product": "titan-3-in-1-mothership-dock™-bundle-offer",
+            "image": "shopify://shop_images/3_in_1_mothership_dock.png",
+            "title": "MOTHERSHIP DOCK",
+            "description": "Description goes here",
+            "label_1": "",
+            "label_2": "",
+            "is_new": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_BqXjpX",
+        "product_card_FfUmdp",
+        "product_card_Whj7UQ"
+      ],
+      "settings": {
+        "title": "You may also like"
+      }
     },
     "section_multi_columns_iU6pxd": {
       "type": "section-multi-columns",
@@ -648,6 +717,28 @@
       ],
       "settings": {
         "multi_columns_section_title": "BUY WITH PEACE OF MIND"
+      }
+    },
+    "1707579564616101b2": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_dEptDN": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": true,
+            "limit": 15,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_dEptDN"
+      ],
+      "settings": {
+        "include_margins": true
       }
     },
     "slideshow_Ri7zaj": {
@@ -707,14 +798,17 @@
     "buds_third_anhGpi1",
     "buds_third_anhGpi2",
     "versatile_amfF9D",
+    "one_cable_xGPbb6",
     "buds_image_MphiwP",
     "buds_3up_QkBzdE",
     "section_zigzag_zn78GD",
     "buds_image_ekEBiX",
     "section_pdp_hero_master_qKbXMY",
     "buybox_v2_XHddbq",
-    "titan_impact_banner_Bqbg6D",
     "compare-table",
+    "titan_impact_banner_Bqbg6D",
+    "1707579564616101b2",
+    "you_may_also_like_pro_Lactj4",
     "section_multi_columns_iU6pxd",
     "slideshow_Ri7zaj",
     "zp-product-footer-content"

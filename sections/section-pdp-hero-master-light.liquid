@@ -2,6 +2,7 @@
 {{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 {{ 'section-pdp-hero-master.css' | asset_url | stylesheet_tag }}
 {{ 'cableoverride.css' | asset_url | stylesheet_tag }}
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <style>
     .pdp-hero__atc {
       height: 55px !important;
@@ -166,7 +167,7 @@
             alt="{{ featured_image.alt }}"
           >
         </figure>
-        {% comment %} {% if iconsRepeater.size > 0 %}
+        {% if iconsRepeater.size > 0 %}
           <div class="pdp-hero__icons swiper">
             <div class="swiper-wrapper">
               {% for block in iconsRepeater %}
@@ -214,12 +215,13 @@
               </svg>
             </div>
           </div>
-        {% endif %} {% endcomment %}
+        {% endif %}
       </div>
 
       {% comment %} Product info {% endcomment %}
-      <div class="pdp-hero__product-info">
+      <div class="pdp-hero__product-info mt-[20px] md:mt-0">
         <div class="pdp-hero__product-infos">
+          <h2 class="pdp-hero__product-title uppercase italic">{{ section.settings.section_title }}</h2>
           <div class="product-template-new__wrapper--content__review js-stars-scroll">
             <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★★★★★ </span>
             <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7</span>
@@ -235,9 +237,45 @@
                 <span class="promo_line_image"><img width="100%" height="auto" src="{{ section.settings.product_line_image | img_url:'master' }}"></span>
               </div>
             {% endif %}
-            <h2 class="pdp-hero__product-title">{{ mainProduct.title }}</h2>
+
             {% if productSubtitle != blank %}
               <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
+
+              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-black transition-all duration-300 ease-in-out overflow-hidden">
+                {% assign description_text = mainProduct.description %}
+                {% assign truncated_description = description_text | truncate: 300, '' %}
+
+                <div class="relative">
+                  <div
+                    x-show="!expanded"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:leave="transition ease-in duration-200"
+                    class="inline"
+                  >
+                    <span>{{ truncated_description }}</span>
+                  </div>
+
+                  <div
+                    x-show="expanded"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:leave="transition ease-in duration-200"
+                    class="inline"
+                    x-cloak
+                  >
+                    <span>{{ description_text }}</span>
+                  </div>
+                </div>
+
+                {% if description_text.size > 200 %}
+                  <div class="mt-2">
+                    <button
+                      @click="expanded = !expanded"
+                      class="text-black font-bold text-[13px] underline cursor-pointer transition-opacity duration-200"
+                      x-text="expanded ? 'Show less' : 'Show more...'"
+                    ></button>
+                  </div>
+                {% endif %}
+              </div>
             {% endif %}
           </div>
           <div class="pdp-hero__pricing-wrapper" {% if section.settings.show_gift_layout == true %} style="position:absolute;left:-4000px;"{% endif %}>
@@ -285,7 +323,7 @@
           {% comment %} UPSELL PRODUCTS {% endcomment %}
           {% if section.settings.show_gift_layout %}
             {% if section.settings.gift_promo_line %}
-              <div style="margin-bottom:20px;border:2px dashed #a2e59b;" class="promo_line new-promo-line">
+              <div style="border:2px dashed #a2e59b;" class="promo_line new-promo-line">
                 <div>
                   <span class="green-dot"></span>
                   <span><span>Order by
@@ -299,6 +337,7 @@
                     {% endcase %} to secure our best ever price</span></span>
                 </div>
               </div>
+              <div class="text-[#60c655] italic text-[16px] mt-[10px] mb-[20px] underline font-bold uppercase">In stock, limited availablity</div>
             {% endif %}
             {% if section.settings.show_variant_picker == true %}
               <div>
@@ -329,18 +368,16 @@
                       <div class="phone-selector mt-[20px]">
                         <div class="pd-selector-title">PHONE PORT</div>
                         <div class="switch-holder">
-                          <div class="label-holder__image">
-                            <div class="label-holder__speed">SPEED</div>
-                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-3_1.png?v=1718093800" loading="lazy">
+                          <div class="label-holder__image !max-w-[35px]">
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone_green.png?v=1743856110" loading="lazy">
                         </div>
                           <div class="master-options">
                             {% for value in option.values %}
                               <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
                             {% endfor %}
                           </div>
-                          <div class="label-holder__image">
-                            <div class="label-holder__speed">SPEED</div>
-                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning-bolt-titan-smart-cable-2_1.png?v=1718093800" loading="lazy">
+                          <div class="label-holder__image !max-w-[35px]">
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb-c_green.png?v=1743856110" loading="lazy">
                             </div>
                         </div>
 
@@ -437,7 +474,7 @@
             <div>
               <div class="bf-special-block">
                 {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
-                <p class="pd-selector-title !my-[10px]">
+                <p class="pd-selector-title !my-[10px] uppercase">
                 Grab Multiple Packs & Save Even More
                 </p>
               </div>
@@ -670,10 +707,36 @@
             <button
               data-product="{{ product.selected_or_first_available_variant.id }}"
               data-quantity="1"
-              class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0"
+              class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0 !mb-[20px]"
             >
               ADD TO CART
             </button>
+            <p class="pd-selector-title !my-[10px] uppercase">
+              ADD PD plug for fastest charge
+              </p>
+            {% for block in accRepeater %}
+              {% assign acc_product = all_products[block.settings.acc_product] %}
+              {% if forloop.index == 1 %}
+              <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                <div class="acc_single_overlay"></div>
+                <div class="flex items-center gap-[16px]">
+                  <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[48px] h-[48px] object-contain" />
+                  <div>
+                    <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div>
+                    <div class="text-[20px] leading-[1.2] font-bold text-black italic">{{block.settings.acc_title}}</div>
+                  </div>
+                </div>
+                <div class="flex items-end gap-[12px] flex-col">
+                  <div class="text-[14px] leading-[1.2] font-medium text-black">{{acc_product.price | money }}</div>
+                  <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                      <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endfor %}
 
           </div>
 
@@ -711,6 +774,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
               {% for block in accRepeater %}
                 {% assign acc_product = all_products[block.settings.acc_product] %}
+                {% unless forloop.index == 1 %}
                 <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
                   <div class="acc_single_overlay"></div>
                   <div class="flex items-center gap-[16px]">
@@ -729,6 +793,7 @@
                     </div>
                   </div>
                 </div>
+                {% endunless %}
             {% endfor %}
             </div>
           {% endif %}
@@ -777,6 +842,16 @@
     background: radial-gradient(#d8e1e2 50%, #a2e59b);
     border-radius: 0 0 22px 22px;
     border-radius: 22px;
+  }
+  @media (max-width: 768px) {
+    .pdp-hero__product-infos {
+      flex: 1;
+      border-radius: 30px;
+      padding: 20px 10px;
+      background-color: #fff;
+      height: fit-content;
+      box-shadow: 0 1px 5px 3px #00000008
+    }
   }
 </style>
 
@@ -1033,10 +1108,6 @@ overlayCls.addEventListener('click', (e) => {
     gap: 12px;
 }
 
-.pdp-hero__product-title {
-    display: none;
-}
-
 .pdp-hero__product-subtitle {
     color: #000000;
     font-size: 25px;
@@ -1077,6 +1148,12 @@ overlayCls.addEventListener('click', (e) => {
       "id": "show_disc_box",
       "label": "Show discount box",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Titan Smart Cable Pro"
     },
     {
       "type": "text",

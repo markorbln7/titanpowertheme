@@ -1088,8 +1088,8 @@
   console.log(window.prices, 'window.prices')
   const distance = $('.scroll-reveal').offset().top
   $(window).scroll(function () {
-    const top_of_element = $('#shopify-section-footer').offset().top
-    const bottom_of_element = $('#shopify-section-footer').offset().top + $('#shopify-section-footer').outerHeight()
+    const top_of_element = $('.section-pdp-hero-secondary').offset().top
+    const bottom_of_element = $('.section-pdp-hero-secondary').offset().top + $('.section-pdp-hero-secondary').outerHeight()
     const bottom_of_screen = $(window).scrollTop() + $(window).innerHeight()
     const top_of_screen = $(window).scrollTop()
     if (!(bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && $(this).scrollTop() >= distance) {

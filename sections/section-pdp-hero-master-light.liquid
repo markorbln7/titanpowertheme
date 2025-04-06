@@ -731,9 +731,9 @@
                      <div class="product-popup__content--title">
                       {{ acc_text }}
                      </div>
-                     <div class="product-popup__content--prices">
+                     <div class="product-popup__content--prices mt-[10px]">
                          <div>
-                           <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                           <span class="price !text-[16px]">{{ acc_product.first_available_variant.price | money }}</span>
                            <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
                          </div>
                          <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
@@ -821,7 +821,7 @@
                        <div class="product-popup__content--title">
                         {{ acc_text }}
                        </div>
-                       <div class="product-popup__content--prices">
+                       <div class="product-popup__content--prices mt-[10px]">
                            <div>
                              <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
                              <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
@@ -869,6 +869,24 @@
     </div>
   </div>
 </section>
+<!-- ACCORDION SECTION -->
+<div class="max-w-[1440px] mx-auto px-[10px] mt-[40px]">
+  <div id="accordion-wrapper" class="space-y-[20px]">
+    {% for block in section.blocks %}
+      {% if block.type == 'accordion' %}
+        <div class="bg-white rounded-[12px] overflow-hidden shadow-sm border">
+          <button class="accordion-toggle w-full text-left px-[20px] py-[16px] flex justify-between items-center font-bold text-[24px] text-[#2f4534]">
+            <span>{{ block.settings.title }}</span>
+            <span class="icon text-[20px] text-[#2f4534]">+</span>
+          </button>
+          <div class="accordion-content px-[20px] pb-[20px] pt-[0px] hidden text-[15px] leading-[1.6]">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
 <div class="atc-fixed">
   <div class="atc-fixed__container">
     <div class="buds-product__inner--content__subtitle !text-black !font-semibold">
@@ -930,7 +948,7 @@
     .pdp-hero__product-infos {
       flex: 1;
       border-radius: 30px;
-      padding: 20px 10px;
+      padding: 50px 10px 20px;
       background-color: #fff;
       height: fit-content;
       box-shadow: 0 1px 5px 3px #00000008
@@ -1113,6 +1131,21 @@ overlayCls.addEventListener('click', (e) => {
         document.querySelector('.info-video').pause();
     }
 })
+document.querySelectorAll('.accordion-toggle').forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const content = toggle.nextElementSibling;
+    const icon = toggle.querySelector('.icon');
+    const isOpen = !content.classList.contains('hidden');
+
+    document.querySelectorAll('.accordion-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.accordion-toggle .icon').forEach(i => i.textContent = '+');
+
+    if (!isOpen) {
+      content.classList.remove('hidden');
+      icon.textContent = '−';
+    }
+  });
+});
 </script>
 <style>
   .gift-upsell .pdp-hero__extra-add.active {
@@ -1497,6 +1530,22 @@ overlayCls.addEventListener('click', (e) => {
           "type": "product",
           "id": "gift_price_product",
           "label": "Gift Product"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion Content"
         }
       ]
     }

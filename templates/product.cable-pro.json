@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "zp-product-header-content": {
       "type": "product-header-content-zipifypages",
@@ -55,6 +55,7 @@
         "left_box_tBgQeR"
       ],
       "settings": {
+        "show_title": false,
         "light": false,
         "gradient_field": "bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_0] bg-[position:0_0]",
         "section_title": "Built to never break",
@@ -93,6 +94,7 @@
         "left_box_tBgQeR"
       ],
       "settings": {
+        "show_title": false,
         "light": true,
         "gradient_field": "bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-100%]",
         "section_title": "Charge 100% in minutes",
@@ -131,6 +133,7 @@
         "left_box_tBgQeR"
       ],
       "settings": {
+        "show_title": false,
         "light": false,
         "gradient_field": "bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-200%]",
         "section_title": "Convenience redefined",
@@ -619,6 +622,28 @@
         "body": "For over a decade, we've delivered millions of products worldwide and won the best awards in technology and design, all made possible by the support of over 800,000 lifehackers like us, fueling our success with crucial feedback and support."
       }
     },
+    "1707579564616101b2": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_dEptDN": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "aggregated": true,
+            "limit": 15,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_dEptDN"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "you_may_also_like_pro_Lactj4": {
       "type": "you-may-also-like-pro",
       "blocks": {
@@ -719,28 +744,6 @@
         "multi_columns_section_title": "BUY WITH PEACE OF MIND"
       }
     },
-    "1707579564616101b2": {
-      "type": "apps",
-      "blocks": {
-        "loox_reviews_loox_dynamic_section_dEptDN": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "only_photos": false,
-            "aggregated": true,
-            "limit": 15,
-            "hide_thumbnails": false,
-            "maxwidth": 1080,
-            "is_sample": true
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_dynamic_section_dEptDN"
-      ],
-      "settings": {
-        "include_margins": true
-      }
-    },
     "slideshow_Ri7zaj": {
       "type": "slideshow",
       "blocks": {
@@ -749,9 +752,9 @@
           "settings": {
             "image": "shopify://shop_images/desktop_banner_massage_gun-2_9b87c818-9953-4949-bbcf-66010dfae05c.jpg",
             "mobile_image": "shopify://shop_images/All_edited_buds_images-buds.png",
-            "heading": "TITAN SMART BUDS",
+            "heading": "TITAN SMART CABLE PRO",
             "heading_size": "h1",
-            "subheading": "True wireless over-ear buds",
+            "subheading": "Th ultimate cable",
             "button_label": "GET YOURS",
             "button_custom_class": "js-atc-scroll",
             "link": "#section-pdp-hero",

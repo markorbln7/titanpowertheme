@@ -220,7 +220,8 @@
 
       {% comment %} Product info {% endcomment %}
       <div class="pdp-hero__product-info mt-[20px] md:mt-0">
-        <div class="pdp-hero__product-infos">
+        <div class="pdp-hero__product-infos relative">
+          <div class="badge-new !text-[18px] px-[10px]">NEW</div>
           <h2 class="pdp-hero__product-title uppercase italic">{{ section.settings.section_title }}</h2>
           <div class="product-template-new__wrapper--content__review js-stars-scroll">
             <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★★★★★ </span>
@@ -241,7 +242,7 @@
             {% if productSubtitle != blank %}
               <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
 
-              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-black transition-all duration-300 ease-in-out overflow-hidden">
+              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-[#7d7d7d] transition-all duration-300 ease-in-out overflow-hidden">
                 {% assign description_text = mainProduct.description %}
                 {% assign truncated_description = description_text | truncate: 300, '' %}
 
@@ -337,7 +338,7 @@
                     {% endcase %} to secure our best ever price</span></span>
                 </div>
               </div>
-              <div class="text-[#60c655] italic text-[16px] mt-[10px] mb-[20px] underline font-bold uppercase">In stock, limited availablity</div>
+              <div class="text-[#60c655] italic text-[12px] mt-[10px] mb-[20px] underline font-bold uppercase">In stock, limited availablity</div>
             {% endif %}
             {% if section.settings.show_variant_picker == true %}
               <div>
@@ -369,7 +370,7 @@
                         <div class="pd-selector-title">PHONE PORT</div>
                         <div class="switch-holder">
                           <div class="label-holder__image !max-w-[35px]">
-                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone_green.png?v=1743856110" loading="lazy">
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb-c_green.png?v=1743856110" loading="lazy">
                         </div>
                           <div class="master-options">
                             {% for value in option.values %}
@@ -377,7 +378,8 @@
                             {% endfor %}
                           </div>
                           <div class="label-holder__image !max-w-[35px]">
-                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/usb-c_green.png?v=1743856110" loading="lazy">
+                            <img width="100%" height="auto" class="w-100" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/iphone_green.png?v=1743856110" loading="lazy">
+
                             </div>
                         </div>
 
@@ -474,7 +476,7 @@
             <div>
               <div class="bf-special-block">
                 {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
-                <p class="pd-selector-title !my-[10px] uppercase">
+                <p class="pd-selector-title !my-[5px] uppercase">
                 Grab Multiple Packs & Save Even More
                 </p>
               </div>
@@ -711,24 +713,56 @@
             >
               ADD TO CART
             </button>
-            <p class="pd-selector-title !my-[10px] uppercase">
+            <p class="pd-selector-title !my-[5px] uppercase">
               ADD PD plug for fastest charge
               </p>
             {% for block in accRepeater %}
               {% assign acc_product = all_products[block.settings.acc_product] %}
               {% if forloop.index == 1 %}
-              <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+              <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                <div class="product-popup">
+                  <div class="close">
+                    {% render 'icon-close' %}
+                  </div>
+                  <div class="product-popup__content">
+                      <div class="product-popup__content--image">
+                         <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                     </div>
+                     <div class="product-popup__content--title">
+                      {{ acc_text }}
+                     </div>
+                     <div class="product-popup__content--prices">
+                         <div>
+                           <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                           <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                         </div>
+                         <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
+                     </div>
+                     {% if acc_product.metafields.custom.ticks %}
+                       {{acc_product.metafields.custom.ticks | metafield_tag }}
+                     {% endif %}
+                     <div class="product-popup__content--buttons">
+                        <button class="js-return">Return To Order</button>
+                        <button class="js-add">+ Add To Order</button>
+                     </div>
+                 </div>
+               </div>
                 <div class="acc_single_overlay"></div>
+                <div class="accinfo-icon-trigger js-info-trigger">i</div>
                 <div class="flex items-center gap-[16px]">
-                  <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[48px] h-[48px] object-contain" />
+                  <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
                   <div>
                     <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div>
                     <div class="text-[20px] leading-[1.2] font-bold text-black italic">{{block.settings.acc_title}}</div>
                   </div>
                 </div>
                 <div class="flex items-end gap-[12px] flex-col">
-                  <div class="text-[14px] leading-[1.2] font-medium text-black">{{acc_product.price | money }}</div>
-                  <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox">
+                  <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
+                    <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
+                    <span class="text-black">{{acc_product.price | money }}</span>
+                    {% comment %} {{acc_product.price | money }} {% endcomment %}
+                  </div>
+                  <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
                       <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
                     </svg>
@@ -767,26 +801,58 @@
         </div>
         <div class="pdp-hero__product-infos mt-[20px]">
           {% if accRepeater.size > 0 %}
-            <h4 class="pd-selector-title !my-[10px] !text-left" style="margin-top: 20px;">
-              Compatible Gear
+            <h4 class="pd-selector-title !my-[10px] !text-center md:text-left" style="margin-top: 20px;">
+              BUILD A BUNDLE - ADD MORE AT HALF PRICE
             </h4>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
               {% for block in accRepeater %}
                 {% assign acc_product = all_products[block.settings.acc_product] %}
                 {% unless forloop.index == 1 %}
-                <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[12px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                  <div class="product-popup">
+                    <div class="close">
+                      {% render 'icon-close' %}
+                    </div>
+                    <div class="product-popup__content">
+                        <div class="product-popup__content--image">
+                           <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                       </div>
+                       <div class="product-popup__content--title">
+                        {{ acc_text }}
+                       </div>
+                       <div class="product-popup__content--prices">
+                           <div>
+                             <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                             <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                           </div>
+                           <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
+                       </div>
+                       {% if acc_product.metafields.custom.ticks %}
+                         {{acc_product.metafields.custom.ticks | metafield_tag }}
+                       {% endif %}
+                       <div class="product-popup__content--buttons">
+                          <button class="js-return">Return To Order</button>
+                          <button class="js-add">+ Add To Order</button>
+                       </div>
+                   </div>
+                 </div>
                   <div class="acc_single_overlay"></div>
+                  <div class="accinfo-icon-trigger js-info-trigger">i</div>
                   <div class="flex items-center gap-[16px]">
-                    <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[48px] h-[48px] object-contain" />
+                    <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
                     <div>
                       <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div>
                       <div class="text-[16px] leading-[1.2] font-bold text-black">{{block.settings.acc_title}}</div>
                     </div>
                   </div>
                   <div class="flex items-end gap-[12px] flex-col">
-                    <div class="text-[14px] leading-[1.2] font-medium text-black">{{acc_product.price | money }}</div>
-                    <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox">
+                    <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
+                      <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
+                      <span class="text-black">{{acc_product.price | money }}</span>
+                      {% comment %} {{acc_product.price | money }} {% endcomment %}
+                    </div>
+                    <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
                       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
                         <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
                       </svg>
@@ -805,15 +871,25 @@
 </section>
 <div class="atc-fixed">
   <div class="atc-fixed__container">
-    <div class="buds-product__inner--content__subtitle">
+    <div class="buds-product__inner--content__subtitle !text-black !font-semibold">
       {{ mainProduct.title }}
     </div>
-    <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button">
-      ORDER NOW ☝
+    <button class="js-atc-scroll f aic jcc w100 bg-titan-green font-sans btn--add-to-cart color-white sticky-button !bg-[#2f4534]">
+      ORDER NOW 👇
     </button>
   </div>
 </div>
 <style>
+  .accinfo-icon-trigger {
+    top:-15px;
+    right:-15px;
+  }
+  .pdp-hero__product-title {
+    background: linear-gradient(180deg, #35FF2E, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 150%;
+  }
   .acc_single svg {
     display: none;
   }
@@ -823,6 +899,13 @@
   }
   .acc_single.selected svg {
     display: block;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: -2px;
+  }
+  .acc_single {
+    border-color:transparent;
+    box-shadow: 0 1px 5px 3px #00000008;
   }
   .pdp-hero__product-info {
     box-shadow:none;

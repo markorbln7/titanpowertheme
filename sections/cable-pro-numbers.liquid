@@ -4,6 +4,12 @@
   "settings": [
     {
       "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Title",
+      "default": false
+    },
+    {
+      "type": "checkbox",
       "id": "light",
       "label": "Light Background",
       "default": false
@@ -179,7 +185,7 @@
   .buds-box img {
     margin-top: 16px;
     width: 100%;
-    max-width: 200px;
+    max-width: 300px;
     height: auto;
     border-radius: 8px;
   }
@@ -222,7 +228,7 @@
     .buds-box img {
       margin-top: 16px;
       width: 100%;
-      max-width: 100px;
+      max-width: 200px;
       height: auto;
       border-radius: 8px;
     }
@@ -233,6 +239,12 @@
 </style>
 {% endstylesheet %}
 <div class="{{ section.settings.gradient_field }} px-[10px]">
+  {% if section.settings.show_title %}
+  <div class="text-[#2f4534] text-center">
+    <p class="text-[30px] mb-[20px]">What 3 Reasons make<br> Titan <strong>so special?</strong></p>
+    <p class="text-[16px] md:text-[18px] ">Compare <strong>Titan</strong> Vs Other Brands</p>
+  </div>
+  {% endif %}
 
   <section
     class="buds-third-section pt-[20px] pb-[40px]"

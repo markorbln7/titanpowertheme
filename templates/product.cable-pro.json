@@ -356,30 +356,6 @@
             "upsell_message": "1"
           }
         },
-        "props_WayraP": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FLEXIBLE 30 DAY RETURNS",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        },
-        "props_fgdHVB": {
-          "type": "props",
-          "settings": {
-            "prop_text": "FREE TRACKED SHIPPING",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        },
-        "props_3w7HQU": {
-          "type": "props",
-          "settings": {
-            "prop_text": "JOIN 1,000,000 CUSTOMERS",
-            "prop_icon": "",
-            "prop_description": ""
-          }
-        },
         "accesories_PRnzLN": {
           "type": "accesories",
           "settings": {
@@ -510,15 +486,26 @@
             "grid_image": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box8.jpg",
             "image_qty": "8"
           }
+        },
+        "accordion_zBGHUq": {
+          "type": "accordion",
+          "settings": {
+            "title": "FAQ",
+            "content": ""
+          }
+        },
+        "accordion_WkxVG7": {
+          "type": "accordion",
+          "settings": {
+            "title": "Tech Specs",
+            "content": ""
+          }
         }
       },
       "block_order": [
         "product_repeater_NBbp7L",
         "product_repeater_t7LLMB",
         "product_repeater_QHfxbb",
-        "props_WayraP",
-        "props_fgdHVB",
-        "props_3w7HQU",
         "accesories_PRnzLN",
         "accesories_g3rrHU",
         "accesories_JjKrqY",
@@ -533,7 +520,9 @@
         "icons_Y7ip4d",
         "grid_images_DeRfnz",
         "grid_images_4mJrnj",
-        "grid_images_6KXPaH"
+        "grid_images_6KXPaH",
+        "accordion_zBGHUq",
+        "accordion_WkxVG7"
       ],
       "custom_css": [
         ".pdp-hero__upsell-title {display: none;}",

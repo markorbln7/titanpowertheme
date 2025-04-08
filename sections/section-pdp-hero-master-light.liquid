@@ -243,7 +243,7 @@
             {% if productSubtitle != blank %}
               <h3 class="pdp-hero__product-subtitle">{{ productSubtitle }}</h3>
 
-              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-[#7d7d7d] transition-all duration-300 ease-in-out overflow-hidden">
+              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-[#7d7d7d] transition-all duration-300 ease-in-out overflow-hidden block md:hidden">
                 {% assign description_text = mainProduct.description %}
                 {% assign truncated_description = description_text | truncate: 152, '' %}
 
@@ -255,6 +255,41 @@
                     class="inline"
                   >
                     <span>{{ truncated_description }}</span>
+                  </div>
+
+                  <div
+                    x-show="expanded"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:leave="transition ease-in duration-200"
+                    class="inline"
+                    x-cloak
+                  >
+                    <span>{{ description_text }}</span>
+                  </div>
+                </div>
+
+                {% if description_text.size > 200 %}
+                  <div class="mt-2">
+                    <button
+                      @click="expanded = !expanded"
+                      class="text-black font-bold text-[13px] underline cursor-pointer transition-opacity duration-200"
+                      x-text="expanded ? 'Show less' : 'Show more...'"
+                    ></button>
+                  </div>
+                {% endif %}
+              </div>
+              <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-[#7d7d7d] transition-all duration-300 ease-in-out overflow-hidden hidden md:block">
+                {% assign description_text = mainProduct.description %}
+                {% assign truncated_description_mobile = description_text | truncate: 300, '' %}
+
+                <div class="relative">
+                  <div
+                    x-show="!expanded"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:leave="transition ease-in duration-200"
+                    class="inline"
+                  >
+                    <span>{{ truncated_description_mobile }}</span>
                   </div>
 
                   <div

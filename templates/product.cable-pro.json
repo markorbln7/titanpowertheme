@@ -205,8 +205,9 @@
       ],
       "custom_css": [
         ".text-\\[20px\\] {font-size: 16px; padding: 10px;}",
-        "mb-\\[20px\\] {margin-bottom: 20px; padding: 10px;}",
-        "@media (min-width: 768px) {.md\\:text-\\[90px\\] {font-size: 70px; }}"
+        "mb-\\[20px\\] {margin-bottom: 20px; padding: 15px;}",
+        "@media (min-width: 768px) {.md\\:text-\\[90px\\] {font-size: 70px; }}",
+        "@media (max-width: 768px) {.text-\\[40px\\] {text-align: center;}.text-\\[20px\\].text-white {text-align: center;}"
       ],
       "settings": {
         "title_content": "Ultimate Versatility",

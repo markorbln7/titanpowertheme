@@ -60,7 +60,8 @@
       ],
       "custom_css": [
         "p.text-\\[30px\\].mb-\\[20px\\] {padding-top: 50px;}",
-        ".buds-inner {padding: 18px;}"
+        ".buds-inner {padding: 18px;}",
+        "buds-box {box-shadow: 0px 0px 6px rgb(255 255 255 / 89%); border: 0px;}"
       ],
       "settings": {
         "show_title": true,
@@ -193,7 +194,8 @@
       ],
       "custom_css": [
         ".text-\\[20px\\] {font-size: 16px; padding: 10px;}",
-        "mb-\\[20px\\] {margin-bottom: 20px; padding: 10px;}"
+        "mb-\\[20px\\] {margin-bottom: 20px; padding: 10px;}",
+        "@media (min-width: 768px) {.md\\:text-\\[90px\\] {font-size: 70px; }}"
       ],
       "settings": {
         "title_content": "Ultimate Versatility",

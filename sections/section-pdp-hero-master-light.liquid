@@ -229,6 +229,23 @@
             <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7</span>
             <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,131)</span>
           </div>
+          {% if section.settings.gift_promo_line %}
+            <div style="border:2px dashed #a2e59b;marging-bottom:10px;" class="promo_line new-promo-line">
+              <div>
+                <span class="green-dot"></span>
+                <span><span>Order by
+                  {% assign day = "now" | date: "%d" %}
+                  {% assign day_suffix = day | plus: 0 %}
+                  {% case day_suffix %}
+                    {% when 1 or 21 or 31 %}{{ "now" | date: "%b. " }}{{ day }}st
+                    {% when 2 or 22 %}{{ "now" | date: "%b. " }}{{ day }}nd
+                    {% when 3 or 23 %}{{ "now" | date: "%b. " }}{{ day }}rd
+                    {% else %}{{ "now" | date: "%b. " }}{{ day }}th
+                  {% endcase %} to secure our best ever price</span></span>
+              </div>
+            </div>
+            <div class="text-[#60c655] italic text-[12px] mt-[10px] mb-[20px] underline font-bold uppercase">In stock, limited availablity</div>
+          {% endif %}
           <div class="pdp-hero__heading">
             {% if section.settings.promo_line != blank %}
               <div class="promo_line">
@@ -359,23 +376,6 @@
 
           {% comment %} UPSELL PRODUCTS {% endcomment %}
           {% if section.settings.show_gift_layout %}
-            {% if section.settings.gift_promo_line %}
-              <div style="border:2px dashed #a2e59b;" class="promo_line new-promo-line">
-                <div>
-                  <span class="green-dot"></span>
-                  <span><span>Order by
-                    {% assign day = "now" | date: "%d" %}
-                    {% assign day_suffix = day | plus: 0 %}
-                    {% case day_suffix %}
-                      {% when 1 or 21 or 31 %}{{ "now" | date: "%b. " }}{{ day }}st
-                      {% when 2 or 22 %}{{ "now" | date: "%b. " }}{{ day }}nd
-                      {% when 3 or 23 %}{{ "now" | date: "%b. " }}{{ day }}rd
-                      {% else %}{{ "now" | date: "%b. " }}{{ day }}th
-                    {% endcase %} to secure our best ever price</span></span>
-                </div>
-              </div>
-              <div class="text-[#60c655] italic text-[12px] mt-[10px] mb-[20px] underline font-bold uppercase">In stock, limited availablity</div>
-            {% endif %}
             {% if section.settings.show_variant_picker == true %}
               <div>
                 {% for option in mainProduct.options_with_values %}

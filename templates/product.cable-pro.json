@@ -217,7 +217,8 @@
     "one_cable_xGPbb6": {
       "type": "one-cable",
       "custom_css": [
-        ".text-\\[28px\\] {font-size: 40px;}"
+        ".text-\\[28px\\] {font-size: 40px;}",
+        "@media (min-width: 768px) {.text-\\[28px\\] {font-size: 70px; text-align: left; }.text-\\[16px\\] {font-size: 16px; text-align: left;}}"
       ],
       "settings": {
         "title": "One Cable. Every Device.",
@@ -566,7 +567,7 @@
         ".pdp-hero__product-title {margin-bottom: -10px; background: linear-gradient(270deg, #35ff2e 15%, #000000); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}",
         ".text-\\[\\#60c655\\] {display: none;}",
         ".inline {font-weight: 400; line-height: 1.6;}",
-        ".accordion-content{font-weight: 400;}",
+        ".accordion-content {font-weight: 400;}",
         ".text-\\[20px\\] {font-size: 16px;}"
       ],
       "settings": {

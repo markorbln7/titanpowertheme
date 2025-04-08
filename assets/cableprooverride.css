@@ -107,6 +107,15 @@
   .mt-\[20px\] {
     margin-bottom: 5px;
   }
+  @media screen and (min-width: 1024px) {
+    .atc-fixed__container {
+      padding: 10px 36px;
+    }
+    .sticky-button {
+      padding: 10px 32px;
+      width: 35%;
+    }
+  }
 
   @media (min-width: 768px) {
     .gift-upsell {
@@ -148,12 +157,24 @@
       font-size: 11px;
     }
   }
-  @media screen and (min-width: 1024px) {
-    .atc-fixed__container {
-      padding: 10px 36px;
+
+  @media (max-width: 767px) {
+    .pdp-hero__product-title {
+      margin-top: -20px;
     }
-    .sticky-button {
-      padding: 10px 32px;
-      width: 35%;
+    .section-pdp-hero .pd-selector-title {
+      font-size: 15px;
+    }
+    .pd-selector {
+      margin-top: 30px;
+    }
+    .pd-selector-title.\!my-\[30px\] {
+      margin-top: 20px !important;
+    }
+  .pdp-hero__product-subtitle {
+  font-size: 18px;
+  }
+    .master-options .select-button {
+      font-size: 16px;
     }
   }

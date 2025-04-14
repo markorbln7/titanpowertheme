@@ -298,7 +298,8 @@
         ".timer {color: #f2c054; display: none;}",
         "img.w-full.desktop {display: none !important;}",
         ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\"; text-transform: capitalize;}",
-        ".offers-list {display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;}"
+        ".offers-list {display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;}",
+        "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }"
       ],
       "settings": {
         "text_right": "New Product Discount",

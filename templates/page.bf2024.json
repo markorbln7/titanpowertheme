@@ -272,7 +272,9 @@
       "type": "titan-linked-image",
       "custom_css": [
         ".shadow {box-shadow: none !important; max-width: 200px; align-items: center; margin-left: auto; margin-right: auto; margin-top: -90px; margin-bottom: 0px; background-color: #e4eaea;}",
-        ".max-w-screen-xl {background-color: #e4eaea;}"
+        ".max-w-screen-xl {background-color: #e4eaea;}",
+        "section.bg-\\[\\#d6e1e1\\].pt-\\[20px\\].pb-0.md\\:pt-\\[40px\\].md\\:pb-\\[60px\\] {background-color: #e4eaea;}",
+        "@media only screen and (max-width: 768px) {.mobile {display: block; max-width: 50%; }.pt-\\[20px\\] {margin-top: -80px;}}"
       ],
       "settings": {
         "title": "",

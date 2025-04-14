@@ -274,7 +274,7 @@
         ".shadow {box-shadow: none !important; max-width: 200px; align-items: center; margin-left: auto; margin-right: auto; margin-top: -90px; margin-bottom: 0px; background-color: #e4eaea;}",
         ".max-w-screen-xl {background-color: #e4eaea;}",
         "section.bg-\\[\\#d6e1e1\\].pt-\\[20px\\].pb-0.md\\:pt-\\[40px\\].md\\:pb-\\[60px\\] {background-color: #e4eaea;}",
-        "@media only screen and (max-width: 768px) {.mobile {display: block; max-width: 50%; }.pt-\\[20px\\] {margin-top: -80px;}}"
+        "@media only screen and (max-width: 768px) {.mobile {display: block; max-width: 50%; } .pt-\\[20px\\] {margin-top: -80px; }}"
       ],
       "settings": {
         "title": "",
@@ -385,12 +385,13 @@
       "custom_css": [
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
         ".js-buy-more {color: #000; font-weight: 700;}",
-        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box {background: #fbfbfb;}",
         ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
         ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
         ".arrow {color: #000000; background: #f2c054;}",
         ".section-collections-with-nav__product-price {color: #000000;}",
-        ".md\\:top-\\[-15px\\] {display: NONE;}"
+        ".md\\:top-\\[-15px\\] {display: NONE;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}"
       ],
       "settings": {
         "use_popup": true,

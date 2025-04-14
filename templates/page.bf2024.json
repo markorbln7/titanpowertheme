@@ -95,7 +95,7 @@
       ],
       "settings": {
         "show_banner": true,
-        "banner_image": "shopify://shop_images/Anniversary_Sale_badge_2025_PNG_-_condensed.png",
+        "banner_image": "shopify://shop_images/ANNIVERSARY_SALE_-_placeholder.png",
         "section_title": "",
         "section_eyebrow": ""
       }
@@ -302,13 +302,12 @@
         "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }"
       ],
       "settings": {
-        "text_right": "New Product Discount",
+        "text_right": "LIMITED TIME OFFERS",
         "countdown_to": "09th December"
       }
     },
     "scroll_to_button_7LJcTQ": {
       "type": "scroll-to-button",
-      "disabled": true,
       "custom_css": [
         ".my-\\[20px\\] {margin-top: 30px; margin-bottom: 20px;}",
         ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #f2c054; color: #000 !important;}"
@@ -813,6 +812,15 @@
     "testimonial_slider_XJAQhD": {
       "type": "testimonial-slider",
       "blocks": {
+        "slider_Dx3V9k": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN SMART CABLE PRO",
+            "text": "“I’ve used Titan cables for years, but this new one is on another level. The Pro version feels heavier, tougher, and way smarter. The magnetic wind-up is genius, I just toss it in my bag and it stays clean. Already ordered a second set for my work desk.”",
+            "name": "Emily R.",
+            "image": "shopify://shop_images/IMG_20250414_170426.jpg"
+          }
+        },
         "slider_YMgba7": {
           "type": "slider",
           "settings": {
@@ -820,6 +828,14 @@
             "text": "I bought a Titan Power+ cable as a result of solid research and out of desperation. I have an autistic son who has managed to damage every cable he’s ever had. I decided to buy a Titan cable due to my research and I am absolutely delighted with it! It has been subjected to harsh treatment by him and has come out unscathed. Would I buy another? Undoubtedly!",
             "name": "Jennie A.",
             "image": "shopify://shop_images/titan_cable_16b85c04-206e-45d7-9184-850c95c0e15c.jpg"
+          }
+        },
+        "slider_Kpdhid": {
+          "type": "slider",
+          "settings": {
+            "title": "",
+            "text": "",
+            "name": ""
           }
         },
         "slider_xUbtrM": {
@@ -950,7 +966,9 @@
         }
       },
       "block_order": [
+        "slider_Dx3V9k",
         "slider_YMgba7",
+        "slider_Kpdhid",
         "slider_xUbtrM",
         "slider_6JER9k",
         "slider_cYNm8G",

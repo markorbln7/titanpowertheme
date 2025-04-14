@@ -278,8 +278,8 @@
             "image_height": 5,
             "image_width": 11,
             "mobile_image": "shopify://shop_images/TECH_15_CODE_GOILD.png",
-            "mobile_image_width": 5,
-            "mobile_image_height": 11,
+            "mobile_image_width": 66,
+            "mobile_image_height": 45,
             "aspect_ratio": "none",
             "position": "contain",
             "mobile_fit": "contain"
@@ -343,9 +343,9 @@
         ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
         ".timer {color: #f2c054; display: none;}",
         "img.w-full.desktop {display: none !important;}",
-        ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\"; text-transform: capitalize;}",
-        ".offers-list {display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;}",
-        "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }"
+        ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\", sans-serif; text-transform: capitalize;}",
+        "@media only screen and (min-width: 768px) {.offers-list {display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;}}",
+        "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }}"
       ],
       "settings": {
         "text_right": "",

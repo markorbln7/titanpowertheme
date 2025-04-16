@@ -395,7 +395,7 @@
           "settings": {
             "product_upsell": "titan-45w-nano-pd-plug™",
             "product_upsell_qty": "1",
-            "product_upsell_title": "45W PD Plug",
+            "product_upsell_title": "45W Travel Plug",
             "product_upsell_image": "shopify://shop_images/45Wplug-accessory.png"
           }
         },
@@ -441,8 +441,9 @@
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
-        "@media (max-width: 768px) {.product-zigzag__icon {margin-bottom: 0px; } .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; } .product-zigzag__upsell-products {gap: 10px; }}",
-        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}"
+        " .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; }",
+        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}",
+        "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}"
       ],
       "settings": {
         "top_title": "Party Packs",
@@ -517,7 +518,10 @@
       ],
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
-        "@media (max-width: 768px) {.product-zigzag__icon {margin-bottom: 0px; } .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; } .product-zigzag__upsell-products {gap: 10px; }}"
+        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
+        ".product-zigzag__upsell-products {gap: 10px;}",
+        "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}",
+        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}"
       ],
       "settings": {
         "top_title": "",

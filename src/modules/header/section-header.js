@@ -98,12 +98,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
             navItem.addEventListener('click', function (e) {
                 console.log(megaMenuLinks, 'megaMenuLinks');
+                console.log(e.target, 'e.target');
                 megaMenu.classList.add('active');
                 megaMenuItems.classList.add('active');
 
                 const navHeight = calculateMenuHeight(megaMenuLinks);
                 headerNav.style.height = 'auto';
 
+                let searchSvg = navItem.querySelector('.inner-children.active a');
+                if(searchSvg) {
+                    let searchSvgHref = searchSvg.href;
+                    console.log(searchSvgHref, 'searchSvgHref');
+                    window.location = searchSvgHref;
+                }
+                if (e.target.classList.contains('mega-menu__links')) {
+                    let url = e.target.querySelector('a').href;
+                    window.location = url;
+                    console.log(url, 'url');
+                }
                 if (e.target.classList.contains('mega-menu__links-title')) {
                     const childrenLinksParent = e.target.closest('.mega-menu__links').querySelector('.inner-children');
                     const childrenLinks = childrenLinksParent.querySelectorAll('li');
@@ -124,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             childrenLinksParent.parentNode.classList.remove('active-children');
                         });
                     }
+                } else {
+
                 }
             });
 

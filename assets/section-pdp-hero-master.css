@@ -487,12 +487,10 @@
 }
     .acc_single {
     position: relative;
-    flex: 1 1 45%; /* This allows each item to take approximately 48% of the container's width */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 5px; /* Optional: margin around each item */
     border:1px solid #d8e1e2;
     border-radius: 22px;
     padding: 10px
@@ -510,12 +508,6 @@
         width: 25px;
         height: 25px;
         border-radius: 5px;
-}
-    @media screen and (max-width: 768px) {
-    .acc_single {
-        flex: 1 1 100%;
-        /* This allows each item to take approximately 48% of the container's width */
-    }
 }
     .acc_single_overlay {
     position: absolute;

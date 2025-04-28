@@ -3,20 +3,20 @@
   \******************************************************************************************************************************************************************************************************************************/
 .section-header {
     bottom: unset;
-    padding: 15px;
+    padding: 0;
     position: sticky;
     top: 0;
-    z-index: 99999999;
+    z-index: 999;
 }
 
     .section-header__holder {
-        z-index: 999999999;
+        z-index: 9;
         position: sticky;
         top: 0;
     }
 
     .section-header__wrapper {
-        border-radius: 25px;
+        /* border-radius: 25px; */
         display: flex;
         height: 70px;
         align-items: center;
@@ -27,7 +27,12 @@
         transition: background-color 0.15s ease-out;
         width: 100%;
         z-index: 101;
+        background: transparent
     }
+
+    .section-header__wrapper.scrolled {
+    background-color: #e4eaea;
+}
 
     .section-header__content {
         max-width: 100%;
@@ -254,8 +259,8 @@
         top: auto;
         margin: auto;
         max-width: 100%;
-        padding: 10px;
-        position: fixed;
+        padding: 0px;
+        position: sticky;
         width: 100%;
     }
 
@@ -282,7 +287,8 @@
             padding: 16px 22px;
             position: relative;
             transition: width 0.3s cubic-bezier(0.4, 0, 0.22, 1);
-            width: 85%;
+            width: 100%;
+            border-radius: 0;
     }
     .section-header__wrapper.active {
         width: 100%;
@@ -436,6 +442,7 @@
                     padding: 10px;
     }
     .section-header .mega-menu__item .inner-children.active {
+        z-index: 99 !important;
         opacity: 1;
         visibility: visible;
         z-index: 100;
@@ -456,7 +463,7 @@
                 width: 100%;
                 margin-top: 0;
                 justify-content: center;
-                z-index: 99999999999999;
+                z-index: 1;
     }
 
                 .section-header .mega-menu__links h3, .section-header .mega-menu__links a {
@@ -496,6 +503,10 @@
                     transform: rotate(90deg);
                     pointer-events: none;
                 }
+}
+
+    .active-children {
+    z-index: 99 !important;
 }
 
     @media(min-width: 1024px) {

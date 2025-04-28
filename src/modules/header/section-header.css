@@ -1,18 +1,18 @@
 .section-header {
     bottom: unset;
-    padding: 15px;
+    padding: 0;
     position: sticky;
     top: 0;
-    z-index: 99999999;
+    z-index: 999;
 
     &__holder {
-        z-index: 999999999;
+        z-index: 9;
         position: sticky;
         top: 0;
     }
 
     &__wrapper {
-        border-radius: 25px;
+        /* border-radius: 25px; */
         display: flex;
         height: 70px;
         align-items: center;
@@ -23,6 +23,10 @@
         transition: background-color .15s ease-out;
         width: 100%;
         z-index: 101;
+        background: transparent;
+        &.scrolled {
+            background-color: #e4eaea;
+        }
     }
 
     &__content {
@@ -257,8 +261,8 @@
         top: auto;
         margin: auto;
         max-width: 100%;
-        padding: 10px;
-        position: fixed;
+        padding: 0px;
+        position: sticky;
         width: 100%;
 
         &__container {
@@ -287,7 +291,8 @@
             padding: 16px 22px;
             position: relative;
             transition: width .3s cubic-bezier(.4, 0, .22, 1);
-            width: 85%;
+            width: 100%;
+            border-radius: 0;
 
             &.active {
                 width: 100%;
@@ -456,6 +461,7 @@
                     padding: 10px;
 
                     &.active {
+                        z-index: 99 !important;
                         opacity: 1;
                         visibility: visible;
                         z-index: 100;
@@ -480,7 +486,7 @@
                 width: 100%;
                 margin-top: 0;
                 justify-content: center;
-                z-index: 99999999999999;
+                z-index: 1;
 
                 h3,
                 a {
@@ -524,7 +530,9 @@
         }
     }
 }
-
+.active-children {
+    z-index: 99 !important;
+}
 @media(min-width: 1024px) {
     .section-header__nav:hover>.section-header__nav-item:not(:hover) {
         opacity: 0.5;

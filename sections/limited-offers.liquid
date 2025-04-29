@@ -14,18 +14,30 @@
   </div>
   <div class="offers-list">
     {% for block in section.blocks %}
-      <div class="offers-list__single">
-        <a href="{{ block.settings.url }}" class="offers-list__single--image block">
-          <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
-        </a>
+      <div class="offers-list__single {%if block.settings.oos%}out-of-stock{% endif %}">
+        {%if block.settings.oos%}
+          <div class="offers-list__single--image block">
+            <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
+          </div>
+        {% else %}
+          <a href="{{ block.settings.url }}" class="offers-list__single--image block">
+            <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
+          </a>
+        {% endif %}
         {% if block.settings.text != blank %}
           <div class="offers-list__single--text">
               {{ block.settings.text }}
           </div>
         {% endif %}
-        <a href="{{ block.settings.url }}" class="offers-list__single--url">
+        {%if block.settings.oos%}
+        <button disabled class="offers-list__single--url">
+            Sold Out!
+        </button>
+        {% else %}
+          <a href="{{ block.settings.url }}" class="offers-list__single--url">
             Learn More
-        </a>
+          </a>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
@@ -92,6 +104,11 @@
       "type": "air_tabs",
       "name": "Tabs",
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "oos",
+          "label": "Out Of Stock"
+        },
         {
           "type": "image_picker",
           "id": "product_image",

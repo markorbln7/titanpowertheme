@@ -97,3 +97,14 @@
         align-items: center;
     }
 }
+
+.out-of-stock {
+    cursor: not-allowed;
+    .offers-list__single--image img {
+        opacity: 40%;
+    }
+    .offers-list__single--url {
+        color: #313131;
+        opacity: 40%;
+    }
+}

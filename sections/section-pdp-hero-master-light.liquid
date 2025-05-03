@@ -921,48 +921,48 @@
           {% endif %}
 
         </div> {% endcomment %}
-        <div class="pdp-hero__product-infos mt-[20px]">
+        <div class="pdp-hero__product-infos mt-[20px] slider-infos">
           {% if collectionRepeater.size > 0 %}
-            <h4 class="pd-selector-title !my-[10px] !text-center md:text-left italic" style="margin-top: 20px;">
+            <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
               Bulid a Bundle and save up to 80%
             </h4>
             <div class="flex flex-row max-w-[500px] mx-auto divide-x divide-black text-center">
 
               <div class="flex-1 px-4">
                 <div class="relative inline-block">
-                  <h3 class="text-black text-[30px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
                     <span>55</span>
                     <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
                   </h3>
                   <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
                 </div>
-                <div class="text-[#60c655c2] font-bold text-[16px] md:text-[20px] leading-[1] mt-2">
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2">
                   3+ items
                 </div>
               </div>
 
               <div class="flex-1 px-4">
                 <div class="relative inline-block">
-                  <h3 class="text-black text-[30px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
                     <span>70</span>
                     <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
                   </h3>
                   <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
                 </div>
-                <div class="text-[#60c655c2] font-bold text-[16px] md:text-[20px] leading-[1] mt-2">
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2">
                   7+ items
                 </div>
               </div>
 
               <div class="flex-1 px-4">
                 <div class="relative inline-block">
-                  <h3 class="text-black text-[30px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
                     <span>80</span>
                     <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
                   </h3>
                   <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
                 </div>
-                <div class="text-[#60c655c2] font-bold text-[16px] md:text-[20px] leading-[1] mt-2">
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2">
                   10+ items
                 </div>
               </div>
@@ -1219,6 +1219,15 @@
       height: fit-content;
       box-shadow: 0 1px 5px 3px #00000008
     }
+    .pdp-hero__product-infos.slider-infos {
+      flex: 1;
+      border-radius: 30px;
+      padding: 20px 10px 20px;
+      background-color: #fff;
+      height: fit-content;
+      box-shadow: 0 1px 5px 3px #00000008
+    }
+
   }
 </style>
 

@@ -140,9 +140,8 @@ function rebuildOutput() {
       <div class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer text-white rounded-[50%]">x</div>
     `;
 
-    // Dodaj event za uklanjanje
     imgDiv.querySelector('.js-remove-product').addEventListener('click', (e) => {
-      e.stopPropagation(); // spreči da se klik propagira do slike ili overlaya
+      e.stopPropagation();
       removeImageFromOutput(entry.panel);
       entry.panel.classList.remove('selected');
       rebuildOutput();
@@ -158,7 +157,32 @@ function rebuildOutput() {
     placeholder.textContent = '+';
     outputContainer.appendChild(placeholder);
   }
+
+  // === BONUS: Bundle poruka ===
+  const messageEl = document.querySelector('.js-bundle-message');
+  if (messageEl) {
+    const totalItems = state.length + 1; // +1 jer glavni proizvod uvek postoji
+
+    const thresholds = [
+      { count: 3, discount: '55%' },
+      { count: 7, discount: '70%' },
+      { count: 10, discount: '80%' }
+    ];
+
+    let nextTier = thresholds.find(t => totalItems < t.count);
+    let achievedTier = thresholds.findLast(t => totalItems >= t.count);
+
+    if (nextTier) {
+      const remaining = nextTier.count - totalItems;
+      messageEl.textContent = `Add ${remaining} more to get ${nextTier.discount} off`;
+    } else if (achievedTier) {
+      messageEl.textContent = `🎉 Congratulations! You got ${achievedTier.discount} off discount`;
+    } else {
+      messageEl.textContent = '';
+    }
+  }
 }
+
 
 let infoTriggers = document.querySelectorAll('.js-info-trigger')
 let closeBtns = document.querySelectorAll('.close');

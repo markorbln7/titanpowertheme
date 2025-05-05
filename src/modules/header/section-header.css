@@ -274,8 +274,9 @@
             bottom: auto;
 
             .section-header__nav {
-                top: 77px;
+                top: 105px;
                 bottom: unset;
+                background-color: rgb(243, 243, 243);
             }
         }
 
@@ -326,8 +327,8 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            gap: 24px;
-            padding: 32px 30px;
+            gap: 10px;
+            padding: 20px 20px;
 
             &.menu-active {
                 opacity: 1;
@@ -338,10 +339,16 @@
                 height: unset;
                 display: flex;
                 padding: 0;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 6px 6px -3px #0000000f, 0 3px 3px -1.5px #0000000f, 0 1px 1px -.5px #0000000f, 0 0 0 1px #0000000f;
+                overflow: hidden;
+                width: 100%;
+                padding: 15px 10px;
 
                 a {
                     font-family: var(--font-heading-family);
-                    font-size: 24px;
+                    font-size:18px;
                     font-weight: 400;
                     letter-spacing: -.02em;
                     line-height: 1.11;
@@ -395,6 +402,7 @@
                 gap: 20px;
                 padding: 10px;
                 transition: opacity .3s cubic-bezier(.4, 0, .22, 1), visibility .3s cubic-bezier(.4, 0, .22, 1);
+                background-color: #f3f3f3;
             }
 
             &.active {
@@ -459,6 +467,7 @@
                     gap: 20px;
                     transition: height .28s cubic-bezier(.4, 0, .22, 1), opacity .28s cubic-bezier(.4, 0, .22, 1), visibility .28s cubic-bezier(.4, 0, .22, 1);
                     padding: 10px;
+                    background-color: #f3f3f3;
 
                     &.active {
                         z-index: 99 !important;
@@ -468,10 +477,18 @@
                         pointer-events: all;
                         transition: height .28s cubic-bezier(.4, 0, .22, 1), opacity .28s cubic-bezier(.4, 0, .22, 1), visibility .28s cubic-bezier(.4, 0, .22, 1);
                     }
+                    li {
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 6px 6px -3px #0000000f, 0 3px 3px -1.5px #0000000f, 0 1px 1px -.5px #0000000f, 0 0 0 1px #0000000f;
+                        overflow: hidden;
+                        width: 100%;
+                        padding: 15px 10px;
+                    }
 
                     li a {
                         font-family: var(--font-heading-family);
-                        font-size: 24px;
+                        font-size: 18px;
                         font-weight: 400;
                         letter-spacing: -.02em;
                         line-height: 1.11;
@@ -487,10 +504,16 @@
                 margin-top: 0;
                 justify-content: center;
                 z-index: 1;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 6px 6px -3px #0000000f, 0 3px 3px -1.5px #0000000f, 0 1px 1px -.5px #0000000f, 0 0 0 1px #0000000f;
+                overflow: hidden;
+                width: 100%;
+                padding: 15px 10px;
 
                 h3,
                 a {
-                    font-size: 24px;
+                    font-size: 18px;
                     font-weight: 400;
                     letter-spacing: -.02em;
                     line-height: 1.11;
@@ -512,7 +535,7 @@
                 border-radius: 20px;
                 display: flex;
                 font-size: 14px;
-                font-weight: 400;
+                font-weight: 700;
                 gap: 8px;
                 justify-content: center;
                 letter-spacing: -.02em;
@@ -520,7 +543,9 @@
                 padding: 6px 10px;
                 width: fit-content;
                 margin-top: 10px;
-                color: #60C655;
+                color: black;
+                width: 100%;
+                justify-content: space-between;
 
                 svg {
                     transform: rotate(90deg);

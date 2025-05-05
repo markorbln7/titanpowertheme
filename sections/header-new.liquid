@@ -19,7 +19,7 @@
 
             <nav class="section-header__nav">
             {% for link in linklists[section.settings.main_linklist].links %}
-                <div class="section-header__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
+                <div class="gap-[10px] section-header__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
                     {%- assign collection_handle = link.url | split: '/' | last -%}
                     {%- assign collection = collections[collection_handle] -%}
                     {% if collection.metafields.custom.mega_menu_url %}
@@ -27,9 +27,22 @@
                     {% else %}
                         {% assign collection_url = link.url %}
                     {% endif %}
-                    <a href="{{ collection_url }}" title="{{ link.title}}">
-                        {{ link.title | escape | capitalize }}
-                    </a>
+                    {% assign matched_image = blank %}
+                    {% for block in section.blocks %}
+                      {% assign block_handle = block.settings.label | handleize %}
+                      {% assign link_handle = link.title | handleize %}
+                      {% if block_handle == link_handle %}
+                        {% assign matched_image = block.settings.image %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="flex gap-[10px] items-center">
+                        {% if matched_image != blank %}
+                            <img class="!h-auto !w-[60px] !block md:!hidden" src="{{ matched_image | image_url: width: 120 }}" loading="lazy" alt="{{ link.title }}">
+                          {% endif %}
+                        <a href="{{ collection_url }}" title="{{ link.title}}">
+                            {{ link.title | escape | capitalize }}
+                        </a>
+                    </div>
 
                     {% if link.links.size != 0 %}
                         <div
@@ -37,7 +50,11 @@
                                 <svg class="ml-[5px]" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g>
                                 </svg>
                         </div>
-                        {% render 'mega-menu' links: link.links title: link.title %}
+                        {% render 'mega-menu'
+                            links: link.links
+                            title: link.title
+                            image_blocks: section.blocks
+                         %}
                     {% endif %}
                 </div>
             {% endfor %}
@@ -93,6 +110,24 @@
       "label": "Mobile menu on top",
       "id": "mobile_menu_on_top",
       "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_image",
+      "name": "Menu Item Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Menu label (must match exactly)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image for this menu item"
+        }
+      ]
     }
   ],
   "presets": [

@@ -1,75 +1,115 @@
 <div class="mega-menu">
     <div class="mega-menu__wrapper">
-        {% comment %} Desktop layout {% endcomment %}
-        {%- for link in  links -%}
-            {%- assign collection_handle = link.url | split: '/' | last -%}
-            {%- assign collection = collections[collection_handle] -%}
-            {% assign megamenu_image = collection.metafields.custom.megamenu_image %}
-            {% assign megamenu_url =  collection.metafields.custom.mega_menu_url %}
 
+      {% comment %} Desktop layout {% endcomment %}
+      {% for link in links %}
+        {% assign collection_handle = link.url | split: '/' | last %}
+        {% assign collection = collections[collection_handle] %}
+        {% assign megamenu_image = collection.metafields.custom.megamenu_image %}
+        {% assign megamenu_url = collection.metafields.custom.mega_menu_url | default: link.url %}
 
-            <div class="mega-menu__item desktop-items">
-                {% if megamenu_image != blank %}
-                    <a href="{{ megamenu_url }}">
-                        <img src="{{ megamenu_image | image_url}}" width="245" height="118" class="object-cover">
-                    </a>
-                {% else %}
-                    <a href="{{ megamenu_url }}">
-                        <img src="{{ collection.image | image_url}}" width="245" height="118" class="object-cover">
-                    </a>
-                {% endif %}
-            <div class="mega-menu__links">
-                <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
-                    <a href="{{ megamenu_url }}">{{ link.title | escape  | capitalize }}</a>
-                </h3>
+        <div class="mega-menu__item desktop-items">
+          {% if megamenu_image != blank %}
+            <a href="{{ megamenu_url }}">
+              <img src="{{ megamenu_image | image_url }}" width="245" height="118" class="object-cover" loading="lazy">
+            </a>
+          {% else %}
+            <a href="{{ megamenu_url }}">
+              <img src="{{ collection.image | image_url }}" width="245" height="118" class="object-cover" loading="lazy">
+            </a>
+          {% endif %}
 
-                {% if link.links.size > 0 %}
-                <ul class="flex flex-col gap-[8px]">
-                    {% for childlink in link.links %}
-                    <li class="child-link">
-                        <a href="{{ childlink.url }}">{{ childlink.title | capitalize }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            </div>
+          <div class="mega-menu__links">
+            <h3 class="text-[24px] font-bold mb-[12px] tracking-[-.04em] leading-[29px] child-link">
+              <a href="{{ megamenu_url }}">{{ link.title | escape | capitalize }}</a>
+            </h3>
+
+            {% if link.links.size > 0 %}
+              <ul class="flex flex-col gap-[8px]">
+                {% for childlink in link.links %}
+                  <li class="child-link">
+                    <a href="{{ childlink.url }}">{{ childlink.title | capitalize }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
       {% endfor %}
 
       {% comment %} Mobile layout {% endcomment %}
       <div class="mega-menu__item mobile-items">
         <div class="mega-menu__item-inner">
-            <button class="back-button mega-menu__back-button spoljasnji">
-                <svg class="md:hidden" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g>
-                </svg>
-                {{ title}}
-            </button>
-            {% for link in links %}
-                <div class="mega-menu__links">
-                    {% if link.links.size > 0 %}
-                        <h3 class="mega-menu__links-title">
-                            {{ link.title | capitalize}}
-                           <div class="w-[25px] h-[25px] flex items-center justify-center pointer-events-none rounded-[50%] bg-[#f2f2f2]">
-                            <svg class="md:hidden rotate-[-90deg]" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g></svg>
-                           </div>
-                        </h3>
-                        {% else %}
-                            <a class="{% if link.links.size == 0 %}solo-url{% endif %}" href="{{ link.url}}">{{ link.title | capitalize }}</a>
+          <button class="back-button mega-menu__back-button spoljasnji">
+            <svg class="md:hidden" fill="#000000" height="12" width="12" viewBox="0 0 407.437 407.437">
+              <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815"></polygon>
+            </svg>
+            {{ title }}
+          </button>
+
+          {% for link in links %}
+            <div class="mega-menu__links">
+              {% assign matched_image = blank %}
+              {% for block in image_blocks %}
+                {% assign block_handle = block.settings.label | handleize %}
+                {% assign link_handle = link.title | handleize %}
+                {% if block_handle == link_handle %}
+                  {% assign matched_image = block.settings.image %}
+                {% endif %}
+              {% endfor %}
+
+              {% if link.links.size > 0 %}
+                <h3 class="mega-menu__links-title">
+                  <div class="flex gap-[10px] items-center">
+                    {% if matched_image != blank %}
+                      <img class="!h-auto !w-[60px] !block" src="{{ matched_image | image_url: width: 120 }}" loading="lazy" alt="{{ link.title }}">
                     {% endif %}
-                    <ul class="inner-children">
-                        <button class="children-back-button mega-menu__back-button unutrasnji">
-                            <svg class="md:hidden" fill="#000000" height="12" width="12" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 407.437 407.437" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 "></polygon> </g></svg>
-                            {{ link.title }}
-                        </button>
-                        {% for childlink in link.links %}
-                            <li>
-                                <a href="{{ childlink.url }}">{{ childlink.title | capitalize }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
+                    {{ link.title | capitalize }}
+                  </div>
+                  <div class="w-[25px] h-[25px] flex items-center justify-center pointer-events-none rounded-[50%] bg-[#f2f2f2]">
+                    <svg class="md:hidden rotate-[-90deg]" fill="#000000" height="12" width="12" viewBox="0 0 407.437 407.437">
+                      <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815"></polygon>
+                    </svg>
+                  </div>
+                </h3>
+              {% else %}
+                <a class="!flex gap-[10px] items-center" href="{{ link.url }}">
+                  {% if matched_image != blank %}
+                    <img class="!h-auto !w-[60px] !block" src="{{ matched_image | image_url: width: 120 }}" loading="lazy" alt="{{ link.title }}">
+                  {% endif %}
+                  {{ link.title | capitalize }}
+                </a>
+              {% endif %}
+
+              <ul class="inner-children">
+                <button class="children-back-button mega-menu__back-button unutrasnji">
+                  <svg class="md:hidden" fill="#000000" height="12" width="12" viewBox="0 0 407.437 407.437">
+                    <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815"></polygon>
+                  </svg>
+                  {{ link.title }}
+                </button>
+
+                {% for childlink in link.links %}
+                  {% assign child_image = blank %}
+                  {% for block in image_blocks %}
+                    {% if block.settings.label == childlink.title %}
+                      {% assign child_image = block.settings.image %}
+                    {% endif %}
+                  {% endfor %}
+                  <li>
+                    <a class="flex gap-[10px] items-center" href="{{ childlink.url }}">
+                      {% if child_image != blank %}
+                        <img class="!h-auto !w-[60px] !block" src="{{ child_image | image_url: width: 120 }}" loading="lazy" alt="{{ childlink.title }}">
+                      {% endif %}
+                      {{ childlink.title | capitalize }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
         </div>
       </div>
+
     </div>
-</div>
+  </div>

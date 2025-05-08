@@ -440,7 +440,9 @@
 
                       </div>
                     {% else %}
-                      <div style="margin:0;" class="pd-selector-title">LENGTH</div>
+                      {% unless section.settings.hide_length %}
+                        <div style="margin:0;" class="pd-selector-title">LENGTH</div>
+                      {% endunless %}
                       <div class="master-options">
                       {% for value in option.values %}
                         <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>
@@ -1290,6 +1292,12 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
 {
   "name": "PDP Hero Master",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_length",
+      "label": "Hide length",
+      "default": false
+    },
     {
       "type": "checkbox",
       "id": "show_variant_picker",

@@ -247,6 +247,14 @@ function getVariantPrice(selectedOptions, productId) {
   // Vraćanje ID-a ako varijanta postoji, inače null
   return matchingVariantPrice ? matchingVariantPrice.price : null;
 }
+function getVariantComparePrice(selectedOptions, productId) {
+  // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
+  const matchingVariantComparePrice = window.productVariants[productId].find(variant =>
+    selectedOptions.every((option, index) => variant.options[index] === option)
+  );
+  // Vraćanje ID-a ako varijanta postoji, inače null
+  return matchingVariantComparePrice ? matchingVariantComparePrice.comparePrice : null;
+}
 function getVariantImage(selectedOptions, productId) {
   // Filtriranje varijanti koje se poklapaju sa selektovanim opcijama
   const matchingVariantImage = window.productVariants[productId].find(variant =>
@@ -292,20 +300,26 @@ if(varSelect) {
         if(nameThird) {
           id = getVariantId([nameFirst, nameSecond, nameThird], productId)
           price = getVariantPrice([nameFirst, nameSecond, nameThird], productId)
+          comparePrice = getVariantComparePrice([nameFirst, nameSecond, nameThird], productId)
           image = getVariantImage([nameFirst, nameSecond, nameThird], productId)
           available = getVariantAvailable([nameFirst, nameSecond, nameThird], productId)
         } else if(nameSecond) {
           id = getVariantId([nameFirst, nameSecond], productId)
           price = getVariantPrice([nameFirst, nameSecond], productId)
+          comparePrice = getVariantComparePrice([nameFirst, nameSecond], productId)
           image = getVariantImage([nameFirst, nameSecond], productId)
           available = getVariantAvailable([nameFirst, nameSecond], productId)
         } else {
           id = getVariantId([nameFirst], productId)
           price = getVariantPrice([nameFirst], productId)
+          comparePrice = getVariantComparePrice([nameFirst], productId)
           image = getVariantImage([nameFirst], productId)
           available = getVariantAvailable([nameFirst], productId)
         }
         productSelector.querySelector('.js-each').innerHTML = price
+        if(productSelector.querySelector('.js-each-compare')) {
+          productSelector.querySelector('.js-each-compare').innerHTML = comparePrice
+        }
         mainImageChange.src = image
 
         const jsonData = window.productVariants[productId]

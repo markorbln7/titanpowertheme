@@ -495,7 +495,14 @@
                   >
                     <div class="gift-layout-image absolute top-[-32px]"><img width="100" height="auto" src="{{ upsell_product_image | img_url: 'master'  }}"></div>
                     <div class="qty_selector-title">{{ product_title }}</div>
-                    <div class="qty_selector-price"><span class="js-each">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}</span>/each</div>
+                    {% if section.settings.show_each %}
+                      <div class="qty_selector-price"><span class="js-each">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}</span>/each</div>
+                    {% else %}
+                      <div class="qty_selector-price">
+                        <span class="js-each">{{- product_obj.first_available_variant.price | money -}}</span>
+                        <span class="js-each-compare">{{- product_obj.first_available_variant.compare_at_price | money -}}</span>
+                      </div>
+                    {% endif %}
 
                     {% comment %} <div class="most-pouplar">{{upsell_product_discount }}</div> {% endcomment %}
                     <input
@@ -508,6 +515,7 @@
                       {% endif %}
                     >
                   </div>
+                  {% if section.settings.show_each %}
                   <script>
                     window.productVariants = window.productVariants || {};
                     window.productVariants[{{ product_obj.id }}] = [
@@ -527,6 +535,28 @@
                     ];
                     console.log( window.productVariants[{{ product_obj.id }}], 'aa');
                   </script>
+                {% else %}
+                  <script>
+                    window.productVariants = window.productVariants || {};
+                    window.productVariants[{{ product_obj.id }}] = [
+                      {% for variant in product_obj.variants %}
+                      {
+                        id: '{{ variant.id }}',
+                        price: '{{ variant.price | money }}',
+                        compare_price: '{{ variant.compare_at_price | money }}',
+                        image: '{{ variant.featured_image.src | img_url: 'master' }}',
+                        available: {{ variant.available }},
+                        options: [
+                          {% for option in variant.options %}
+                          '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
+                          {% endfor %}
+                        ]
+                      }{% unless forloop.last %}, {% endunless %}
+                      {% endfor %}
+                    ];
+                    console.log( window.productVariants[{{ product_obj.id }}], 'aa');
+                  </script>
+                {% endif %}
 
                 {% endfor %}
               {% endif %}
@@ -832,6 +862,75 @@
 
           </div>
         </div>
+        {% unless section.settings.hide_grid %}
+        <div class="pdp-hero__product-infos mt-[20px]">
+          {% if accRepeater.size > 0 %}
+            <h4 class="pd-selector-title !my-[10px] !text-center md:text-left" style="margin-top: 20px;">
+              BUILD A BUNDLE - ADD MORE AT HALF PRICE
+            </h4>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+              {% for block in accRepeater %}
+                {% assign acc_product = all_products[block.settings.acc_product] %}
+                {% unless forloop.index == 1 %}
+                <div class="acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                  <div class="product-popup">
+                    <div class="close">
+                      {% render 'icon-close' %}
+                    </div>
+                    <div class="product-popup__content">
+                        <div class="product-popup__content--image">
+                           <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                       </div>
+                       <div class="product-popup__content--title">
+                        {{ acc_text }}
+                       </div>
+                       <div class="product-popup__content--prices mt-[10px]">
+                           <div>
+                             <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                             <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                           </div>
+                           <span class="pdp-hero__discount">{{ block.settings.acc_discount_pill }}</span>
+                       </div>
+                       {% if acc_product.metafields.custom.ticks %}
+                         {{acc_product.metafields.custom.ticks | metafield_tag }}
+                       {% endif %}
+                       <div class="product-popup__content--buttons">
+                          <button class="js-return">Return To Order</button>
+                          <button class="js-add">+ Add To Order</button>
+                       </div>
+                   </div>
+                 </div>
+                  <div class="acc_single_overlay"></div>
+                  <div class="accinfo-icon-trigger js-info-trigger">i</div>
+                  <div class="flex items-center gap-[16px]">
+                    <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
+                    <div>
+                      <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div>
+                      <div class="text-[16px] leading-[1.2] font-bold text-black">{{block.settings.acc_title}}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-end gap-[12px] flex-col">
+                    <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
+                      <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
+                      <span class="text-black">{{acc_product.price | money }}</span>
+                      {% comment %} {{acc_product.price | money }} {% endcomment %}
+                    </div>
+                    <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                        <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                {% endunless %}
+            {% endfor %}
+            </div>
+          {% endif %}
+
+        </div>
+        {% endunless %}
+        {% unless section.settings.hide_slider %}
         <div class="pdp-hero__product-infos mt-[20px] slider-infos">
           {% if collectionRepeater.size > 0 %}
             <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
@@ -980,6 +1079,7 @@
             {% endfor %}
           {% endif %}
         </div>
+        {% endunless %}
       </div>
     </div>
   </div>
@@ -1427,6 +1527,24 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
 {
   "name": "PDP Hero Master",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_each",
+      "label": "Show price per each",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_slider",
+      "label": "Hide Product Bundle Slider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_grid",
+      "label": "Hide Product Bundle Grid",
+      "default": false
+    },
     {
       "type": "checkbox",
       "id": "hide_length",

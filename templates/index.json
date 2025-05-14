@@ -14,10 +14,11 @@
       "blocks": {
         "button_TkYDrr": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Home_page_banner_-_desktop.jpg",
             "mobile_image": "shopify://shop_images/Home_page_banner_-_mobile_1.jpg",
-            "heading": "🎉 ANNIVERSARY SALE IS ON!",
+            "heading": "🎉 ANNIVERSARY SALE ENDS SOON!",
             "caption": "",
             "heading_size": "h1",
             "button_label": "Shop Sale",
@@ -27,6 +28,7 @@
         },
         "button_RqtmpY": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/home_paghe_banner_-_smart_cable_pro_-_desktop.psd.jpg",
             "mobile_image": "shopify://shop_images/home_paghe_banner_-_smart_cable_pro_-_mobile.jpg",
@@ -117,8 +119,7 @@
         ".image-with-text__content {box-shadow: 4px 4px 5px 4px #bdbdbd38 !important;}",
         ".color-background-2 {--gradient-background: linear-gradient( 131deg, #c4d3d3, rgba(255, 255, 255, 1) 98% );}",
         "a.button.button--primary.video-button {font-weight: 700; padding-top: 8px; padding-bottom: 8px; text-transform: uppercase;}",
-        ".button.button--primary.video-button:hover {color: #e4eaea;}",
-        "a.button.button--primary.video-button {color: #000; background-color: #f6b62b;}"
+        ".button.button--primary.video-button:hover {color: #e4eaea;}"
       ],
       "settings": {
         "height": "large",
@@ -140,52 +141,57 @@
         "air_tabs_ET7Aky": {
           "type": "air_tabs",
           "settings": {
-            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website2E_5fb2f6ff-4054-40b9-8546-fbcee0cfdaab.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO.jpg",
             "text": "",
-            "url": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro"
+            "url": "https://titanpowerplus.com/products/smartcablebogof"
           }
         },
         "air_tabs_xN7FE3": {
           "type": "air_tabs",
           "settings": {
-            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website2_fbdf6fba-d605-42c0-8d23-6d7bf6f28abd.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO2.jpg",
             "text": "",
-            "url": "https://titanpowerplus.com/products/buds-pro"
-          }
-        },
-        "air_tabs_EY4nBf": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website4.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/pages/anniversary"
+            "url": "https://titanpowerplus.com/products/100wmulticablebogof"
           }
         },
         "air_tabs_8Gc7Q6": {
           "type": "air_tabs",
           "settings": {
-            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website3.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO3.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/4in1bogof"
+          }
+        },
+        "air_tabs_EY4nBf": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website4.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/pages/anniversary"
           }
         }
       },
       "block_order": [
         "air_tabs_ET7Aky",
         "air_tabs_xN7FE3",
-        "air_tabs_EY4nBf",
-        "air_tabs_8Gc7Q6"
+        "air_tabs_8Gc7Q6",
+        "air_tabs_EY4nBf"
       ],
+      "disabled": true,
       "custom_css": [
         ".top-image.mb-\\[20px\\] {display: none;}",
         ".offers-title {margin-top: 30px;}",
-        ".timer {font-weight: bold; color: #ffa500; background: #ffffff; padding: 8px 20px; border-radius: 8px; border: 2px solid #ffa500; margin: 20px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; max-width: 270px; margin-bottom: 30px; display: none;}",
+        ".timer {font-weight: bold; color: #ffa500; background: #ffffff; padding: 8px 20px; border-radius: 8px; border: 2px solid #ffa500; margin: 20px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; max-width: 270px; margin-bottom: 30px;}",
         ".offers-list {margin-bottom: 40px;}",
         ".offers-list__single--url {background-color: #f6b62b; color: #000; margin-bottom: 40px;}"
       ],
       "settings": {
         "text_right": "",
-        "countdown_to": "30 April 2025"
+        "countdown_to": "2025-05-05T00:00:00-07:00"
       }
     },
     "gift_display_section_bkq3jR": {
@@ -242,7 +248,7 @@
         "gift_images_dz7mNP": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/titan_cable_pro_free_gift.png",
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble.png",
             "product_number_unlocker": "",
             "pdp_hero_icon_title": "",
             "pdp_hero_icon_title_top": "",
@@ -261,10 +267,9 @@
       ],
       "custom_css": [
         ".top-note.is-active,.top-note {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 13px; padding: 2px 0; width: 87%; line-height: 1.4; text-align: center;}",
-        ".crossed {text-decoration: none; color: #f2c054; font-size: 15px;}",
+        ".crossed {text-decoration: none; color: #35ff2e; font-size: 15px;}",
         ".bf-text {font-size: 17px !important; font-weight: 700 !important; color: #343434; text-align: center;}",
-        "@media (min-width: 750px) {.gift-unlocker-wrapper.gift-blocks.bigger-spacing {margin: 0 auto; text-align: center; width: 70%; max-width: 800px; }}",
-        ".gift-overlay.is-active {background-color: #f2c054b3;}"
+        "@media (min-width: 750px) {.gift-unlocker-wrapper.gift-blocks.bigger-spacing {margin: 0 auto; text-align: center; width: 70%; max-width: 800px; }}"
       ],
       "settings": {
         "welcome_message": "Stack Deals to Unlock 4 FREE GIFTS!",
@@ -277,14 +282,26 @@
         "air_tabs_CfJ9Ty": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/titan_cable_upscaled_decoy.psd.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/upscaled-sale"
           }
         },
+        "air_tabs_rW9PNi": {
+          "type": "air_tabs",
+          "disabled": true,
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/freedom_kit.psd.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/4th-july#shopify-section-template--17282237300914__section_bundle_MkAH3X"
+          }
+        },
         "air_tabs_nxJwBW": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/titan_cable_upscaled_decoy_buy_3_get_2_free.psd.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/magtechb3g2f"
@@ -293,25 +310,18 @@
         "air_tabs_Twxpxd": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/plugs_free_cable.psd.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/pages/plugsgift"
-          }
-        },
-        "air_tabs_rW9PNi": {
-          "type": "air_tabs",
-          "settings": {
-            "product_image": "shopify://shop_images/freedom_kit.psd.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/4th-july#shopify-section-template--17282237300914__section_bundle_MkAH3X"
           }
         }
       },
       "block_order": [
         "air_tabs_CfJ9Ty",
+        "air_tabs_rW9PNi",
         "air_tabs_nxJwBW",
-        "air_tabs_Twxpxd",
-        "air_tabs_rW9PNi"
+        "air_tabs_Twxpxd"
       ],
       "disabled": true,
       "custom_css": [
@@ -600,9 +610,9 @@
         "button_hover_text_color": "#fafafa",
         "button_hover_border_color": "#faf7f2",
         "fp1": "titan-4-in-1-smart-cable",
-        "first_btn": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro",
-        "fp1_image": "shopify://shop_images/titan-smart-cable-pro-titan-power-plus-usb-c-usb-c-TOP-main-product-image-r.png",
-        "fp1_title": "Titan Cable Pro",
+        "first_btn": "https://titanpowerplus.com/products/dockpro",
+        "fp1_image": "shopify://shop_images/4_in_1_dock_pro3_LARGER_800_5e05cadc-d75c-464b-b2a8-7a64cf95fa65.png",
+        "fp1_title": "4-in-1 Dock Pro",
         "fp2": "4-in-1-dock-pro",
         "second_btn": "https://titanpowerplus.com/products/buds-pro",
         "fp2_image": "shopify://shop_images/All_edited_buds_images-buds.png",
@@ -682,6 +692,7 @@
         "air_tabs_XJhxKe": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/Black_Friday_Bundle_Builder_Offer_Icon_1.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/pages/black-friday-2024"
@@ -690,6 +701,7 @@
         "air_tabs_VhynFr": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/titan_cable_upscaled_packs_80_OFF.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/cable-upscaled"
@@ -698,6 +710,7 @@
         "air_tabs_ihnXYJ": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/All_4_in_1_cables_mystery_gift_icon_1.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/4in1cables"
@@ -706,6 +719,7 @@
         "air_tabs_CTLYjY": {
           "type": "air_tabs",
           "settings": {
+            "oos": false,
             "product_image": "shopify://shop_images/Icon_PLUG_FREE_CABLE_1.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/pages/plugsgift"

@@ -204,9 +204,9 @@
         "gift_images_yWcNKm": {
           "type": "gift_images",
           "settings": {
-            "pdp_hero_icon": "shopify://shop_images/titan_cable_pro_free_gift.png",
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble_1.png",
             "product_number_unlocker": "",
-            "pdp_hero_icon_title": "SMART CABLE PRO",
+            "pdp_hero_icon_title": "SMART CABLE",
             "pdp_hero_icon_title_top": "",
             "top_note": "Spend",
             "gift_price_product": "3-in-1-multi-cable-do-not-delete",
@@ -257,7 +257,7 @@
       ],
       "settings": {
         "text_right": "",
-        "countdown_to": "30 April 2025"
+        "countdown_to": "2025-05-05T00:00:00-07:00"
       }
     },
     "section_collections_with_nav_7prVeC": {
@@ -300,6 +300,7 @@
         "air_tabs_CqeHcU": {
           "type": "air_tabs",
           "settings": {
+            "oos": true,
             "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website2E_f237b454-f37b-476c-990c-02e0345144d1.jpg",
             "text": "",
             "url": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro-1"
@@ -308,27 +309,28 @@
         "air_tabs_p6GFEp": {
           "type": "air_tabs",
           "settings": {
-            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website2_586ff489-fa82-4fd5-9f09-954d12eb85d8.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO2.jpg",
             "text": "",
-            "url": "https://titanpowerplus.com/products/buds-pro"
+            "url": "https://titanpowerplus.com/products/100wmulticablebogof"
           }
         },
         "air_tabs_d63GCf": {
           "type": "air_tabs",
-          "disabled": true,
           "settings": {
-            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_3_4_IN_1_CABLE_BOGOF3s.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO.jpg",
             "text": "",
-            "url": ""
+            "url": "https://titanpowerplus.com/products/smartcablebogof"
           }
         },
         "air_tabs_8NEtjJ": {
           "type": "air_tabs",
-          "disabled": true,
           "settings": {
-            "product_image": "shopify://shop_images/CYBER_WEEK_SHOP_OFFERS_-_3_4_IN_1_CABLE_BOGOF3.jpg",
+            "oos": false,
+            "product_image": "shopify://shop_images/Anniversary_sale_product_tiles_website_BOGO3.jpg",
             "text": "",
-            "url": ""
+            "url": "https://titanpowerplus.com/products/4IN1BOGOF"
           }
         }
       },
@@ -343,7 +345,6 @@
         ".timer {color: #f2c054; display: none;}",
         "img.w-full.desktop {display: none !important;}",
         ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\", sans-serif; text-transform: capitalize;}",
-        "@media only screen and (min-width: 768px) {.offers-list {display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }}",
         "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }}",
         ".offers-list {margin-bottom: 30px;}"
       ],
@@ -385,27 +386,27 @@
         "upsell_product_repeater_edgdyc": {
           "type": "upsell_product_repeater",
           "settings": {
-            "product_upsell": "titan-smart-cable™-pro-1",
+            "product_upsell": "4-in-1cable",
             "product_upsell_qty": "1",
-            "product_upsell_title": "Smart Cable PRO"
+            "product_upsell_title": "4-in-1 Cable"
           }
         },
         "upsell_product_repeater_YgHARB": {
           "type": "upsell_product_repeater",
           "settings": {
-            "product_upsell": "titan-45w-nano-pd-plug™",
+            "product_upsell": "titan-cube™",
             "product_upsell_qty": "1",
-            "product_upsell_title": "45W Travel Plug",
-            "product_upsell_image": "shopify://shop_images/45Wplug-accessory.png"
+            "product_upsell_title": "Travel Cube",
+            "product_upsell_image": "shopify://shop_images/cube_45026eb8-5d21-4f0f-8cbe-20d8cb073bdd.png"
           }
         },
         "upsell_product_repeater_jDfpt9": {
           "type": "upsell_product_repeater",
           "settings": {
-            "product_upsell": "1xkeychaincable",
+            "product_upsell": "titan-m-travel-case™-1",
             "product_upsell_qty": "1",
-            "product_upsell_title": "4-in-1 Keychain Cable",
-            "product_upsell_image": "shopify://shop_images/keychain_cable_-_power_pairs.png"
+            "product_upsell_title": "Tech Travel Case",
+            "product_upsell_image": "shopify://shop_images/Free_case_gift.png"
           }
         },
         "icons_repeater_3YzibB": {
@@ -441,7 +442,7 @@
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
-        " .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; }",
+        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
         ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}",
         "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}"
       ],
@@ -449,8 +450,8 @@
         "top_title": "Party Packs",
         "section_subtitle": "These hand picked staff favourites count as multiple items towards your discount-shop smarter!",
         "product": "",
-        "section_title": "The Jetsetter Kit",
-        "product_image": "shopify://shop_images/Power_pairs_2.png",
+        "section_title": "The Adventurer Kit",
+        "product_image": "shopify://shop_images/Power_pairs_-_travel_kit.png",
         "product_label": "Power anywhere. Charge everything. Fly stress-free.",
         "discount_text": "3 Items 55% OFF",
         "reverse_layout": true

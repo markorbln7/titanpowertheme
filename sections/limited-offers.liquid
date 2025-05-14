@@ -1,5 +1,5 @@
 {{ 'section-limited-offers.css' | asset_url | stylesheet_tag }}
-{{ 'section-limited-offers.js' | asset_url | stylesheet_tag }}
+{{ 'section-limited-offers.js' | asset_url | script_tag }}
 <div class="top-image mb-[20px]">
   <img class="w-full desktop" width="100%" height="auto" src="{{ section.settings.image | img_url:'master' }}">
   <img class="w-full mobile" width="100%" height="auto" src="{{ section.settings.image_mobile | img_url:'master' }}">
@@ -14,50 +14,68 @@
   </div>
   <div class="offers-list">
     {% for block in section.blocks %}
-      <div class="offers-list__single">
-        <a href="{{ block.settings.url }}" class="offers-list__single--image block">
-          <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
-        </a>
+      <div class="offers-list__single {%if block.settings.oos%}out-of-stock{% endif %}">
+        {%if block.settings.oos%}
+          <div class="offers-list__single--image block">
+            <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
+          </div>
+        {% else %}
+          <a href="{{ block.settings.url }}" class="offers-list__single--image block">
+            <img class="w-100" width="100" height="auto" src="{{ block.settings.product_image | img_url:'master' }}">
+          </a>
+        {% endif %}
         {% if block.settings.text != blank %}
           <div class="offers-list__single--text">
               {{ block.settings.text }}
           </div>
         {% endif %}
-        <a href="{{ block.settings.url }}" class="offers-list__single--url">
+        {%if block.settings.oos%}
+        <button disabled class="offers-list__single--url">
+            Sold Out!
+        </button>
+        {% else %}
+          <a href="{{ block.settings.url }}" class="offers-list__single--url">
             Learn More
-        </a>
+          </a>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
 </section>
 <script>
-    function makeTimer(className, dateTo) {
-        var endTime = new Date(dateTo);
-        endTime = (Date.parse(endTime) / 1000);
+    // Dobavi samo jednom vrednost sa servera
+const countdownTo = "{{ section.settings.countdown_to | date: "%Y-%m-%dT%H:%M:%S" }}"; // ISO format
 
-        var now = new Date();
-        now = (Date.parse(now) / 1000);
-
-        var timeLeft = endTime - now;
-
-        var days = Math.floor(timeLeft / 86400);
-        var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-        var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-        var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-
-        if (days < "10") { days = "0" + days;}
-        if (hours < "10") { hours = "0" + hours;}
-        if (minutes < "10") { minutes = "0" + minutes;}
-        if (seconds < "10") { seconds = "0" + seconds;}
-
-        $(className + " #days").html(days + '<div class="small-text">Days</div>');
-        $(className + " #hours").html(hours + '<div class="small-text">Hours</div>');
-        $(className + " #minutes").html(minutes + '<div class="small-text">Min</div>');
-        $(className + " #seconds").html(seconds + '<div class="small-text">Sec</div>');
+function makeTimer(className, dateTo) {
+    const endTime = new Date(dateTo);
+    if (isNaN(endTime.getTime())) {
+        console.error("Invalid date: ", dateTo);
+        return;
     }
-    setInterval(function() {
-      makeTimer('.timer',"{{section.settings.countdown_to}}");
-    }, 1000);
+
+    const now = new Date();
+    const timeLeft = (endTime - now) / 1000;
+
+    if (timeLeft <= 0) {
+        $(className).html('<div class="expired">Offer expired</div>');
+        return;
+    }
+
+    const days = String(Math.floor(timeLeft / 86400)).padStart(2, "0");
+    const hours = String(Math.floor((timeLeft % 86400) / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, "0");
+    const seconds = String(Math.floor(timeLeft % 60)).padStart(2, "0");
+
+    $(className + " #days").html(days + '<div class="small-text">Days</div>');
+    $(className + " #hours").html(hours + '<div class="small-text">Hours</div>');
+    $(className + " #minutes").html(minutes + '<div class="small-text">Min</div>');
+    $(className + " #seconds").html(seconds + '<div class="small-text">Sec</div>');
+}
+
+setInterval(function () {
+    makeTimer('.timer', countdownTo);
+}, 1000);
+
 </script>
 
 
@@ -92,6 +110,11 @@
       "type": "air_tabs",
       "name": "Tabs",
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "oos",
+          "label": "Out Of Stock"
+        },
         {
           "type": "image_picker",
           "id": "product_image",

@@ -987,35 +987,7 @@
 
             {% for block in collectionRepeater %}
                {% assign collectionHandle = block.settings.collection %}
-               {% for product in collectionHandle.products %}
-                {% assign acc_product = all_products[product.handle] %}
-                <div data-popup="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="product-popup js-popup-outer">
-                  <div class="close">
-                    {% render 'icon-close' %}
-                  </div>
-                  <div class="product-popup__content">
-                      <div class="product-popup__content--image">
-                        <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
-                    </div>
-                    <div class="product-popup__content--title">
-                      {{ acc_product.title }}
-                    </div>
-                    <div class="product-popup__content--prices mt-[10px]">
-                        <div>
-                          <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
-                          <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
-                        </div>
-                    </div>
-                    {% if acc_product.metafields.custom.ticks %}
-                      {{acc_product.metafields.custom.ticks | metafield_tag }}
-                    {% endif %}
-                    <div class="product-popup__content--buttons">
-                        <button class="js-return">Return To Order</button>
-                        <button class="js-add">+ Add To Order</button>
-                    </div>
-                </div>
-                </div>
-               {% endfor %}
+               
                <div class="my-[20px] relative">
                 <div class="text-[#7d7d7d] bold italic mb-[-15px]">{{collectionHandle.title}}</div>
                 <div class="relative omotac">

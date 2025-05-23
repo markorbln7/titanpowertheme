@@ -1,0 +1,164 @@
+{% schema %}
+{
+  "name": "As Seen On",
+  "tag": "section",
+  "class": "as-seen-on-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "As Seen On"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "default": "Logo"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "As Seen On",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .as-seen-on-section {
+    background-color: #ffffff;
+    padding: 10px 10px;
+  }
+
+  .as-seen-on-wrapper {
+    max-width: 1000px;
+    margin: 0px auto;
+    text-align: center;
+  }
+
+  .as-seen-on-header {
+    gap: 20px;
+    width:25%;
+    border-right: 1px solid black;
+  }
+
+  .as-seen-on-line {
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+  }
+
+  @media(min-width: 1010px) {
+    .as-seen-on-header {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .as-seen-on-line {
+      width: 1px;
+      height: 40px;
+      margin-right: 20px;
+    }
+  }
+
+  .as-seen-on-title {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .as-seen-on-logos {
+    display:flex;
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+    width:75%;
+  }
+  .as-seen-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  .as-seen-on-logo {
+    max-width: 25%;
+}
+
+  @media(max-width: 1010px) {
+    .as-seen-on-logos {
+      display: flex;
+    }
+    .as-seen-flex {
+        flex-direction:column;
+    }
+    .as-seen-on-header {
+        border:none;
+        width:100%;
+    }
+    .as-seen-on-logos {
+      width: 100%;
+    }
+  }
+  @media(max-width: 768px) {
+    .as-seen-on-logos {
+        flex-wrap:wrap;
+        gap:10px;
+      }
+    .as-seen-on-logo {
+        max-width: 45%;
+      }
+}
+
+  .as-seen-on-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+</style>
+
+<section class="as-seen-on-section">
+  <div class="as-seen-on-wrapper">
+    <div class="as-seen-flex">
+        <div class="as-seen-on-header">
+            <p class="as-seen-on-title">{{ section.settings.title }}</p>
+            <div class="as-seen-on-line"></div>
+        </div>
+
+        <div class="as-seen-on-logos">
+        {% for block in section.blocks %}
+            {% if block.settings.logo_image != blank %}
+            <div class="as-seen-on-logo">
+                <img
+                src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                alt="{{ block.settings.alt_text | escape }}"
+                loading="lazy"
+                >
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+  </div>
+</section>

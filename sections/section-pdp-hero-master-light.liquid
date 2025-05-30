@@ -395,9 +395,175 @@
           </div>
 
           {% comment %} UPSELL PRODUCTS {% endcomment %}
+          <div class="flex gap-1 bg-[#e4e4e4] p-[4px] rounded-full w-fit !mb-[30px] mx-auto">
+            <div
+              class="js-toggle-product active-tab text-[14px] font-medium px-[14px] py-[6px] rounded-full cursor-pointer bg-white text-black transition-all"
+              data-hide="product-hide-this"
+            >
+              Curated Packs
+            </div>
+            <div
+              class="js-toggle-bundle text-[14px] font-medium px-[14px] py-[6px] rounded-full cursor-pointer text-black transition-all"
+              data-hide="bundle-hide-this"
+            >
+              Build a Pack
+            </div>
+          </div>
+          <div class="pdp-hero__product-infossss mt-[20px] marko-bundle bundle-hide-this hidden !mb-[20px]">
+            {% if collectionRepeater.size > 0 %}
+              <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+                {{section.settings.bundle_title}}
+              </h4>
+              {% if section.settings.bundle_subtitle %}
+                <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+                  {{section.settings.bundle_subtitle}}
+                </h5>
+              {% endif %}
+              <div class="flex flex-row max-w-[500px] mx-auto divide-x divide-black text-center">
+
+                <div class="flex-1 px-4">
+                  <div class="relative inline-block">
+                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                      <span>55</span>
+                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                    </h3>
+                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                  </div>
+                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                    3+ items
+                  </div>
+                </div>
+
+                <div class="flex-1 px-4">
+                  <div class="relative inline-block">
+                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                      <span>70</span>
+                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                    </h3>
+                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                  </div>
+                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                    7+ items
+                  </div>
+                </div>
+
+                <div class="flex-1 px-4">
+                  <div class="relative inline-block">
+                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                      <span>80</span>
+                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                    </h3>
+                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                  </div>
+                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                    10+ items
+                  </div>
+                </div>
+
+              </div>
+
+
+              {% for block in collectionRepeater %}
+                 {% assign collectionHandle = block.settings.collection %}
+                 {% for product in collectionHandle.products %}
+                  {% assign acc_product = all_products[product.handle] %}
+                  <div data-popup="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="product-popup js-popup-outer">
+                    <div class="close">
+                      {% render 'icon-close' %}
+                    </div>
+                    <div class="product-popup__content">
+                        <div class="product-popup__content--image">
+                          <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                      </div>
+                      <div class="product-popup__content--title">
+                        {{ acc_product.title }}
+                      </div>
+                      <div class="product-popup__content--prices mt-[10px]">
+                          <div>
+                            <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                            <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                          </div>
+                      </div>
+                      {% if acc_product.metafields.custom.ticks %}
+                        {{acc_product.metafields.custom.ticks | metafield_tag }}
+                      {% endif %}
+                      <div class="product-popup__content--buttons">
+                          <button class="js-return">Return To Order</button>
+                          <button class="js-add">+ Add To Order</button>
+                      </div>
+                  </div>
+                  </div>
+                 {% endfor %}
+                 <div class="my-[20px] relative">
+                  <div class="text-[#7d7d7d] bold italic mb-[-15px]">{{collectionHandle.title}}</div>
+                  <div class="relative omotac">
+                    <div class="swiper collSwiper-{{ forloop.index }}">
+                      <div class="swiper-wrapper pt-[20px] px-0">
+                        {% for product in collectionHandle.products %}
+                          {% assign acc_product = all_products[product.handle] %}
+                          <div class="collection-slider swiper-slide acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                            <div data-popup-id="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="acc_single_overlay"></div>
+                          <div data-popup-open="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="accinfo-icon-trigger js-info-trigger-outer">i</div>
+                            <div class="flex items-center gap-[16px]">
+                              <img width="100%" height="auto" src="{{acc_product.images[0].src | img_url:'master'}}" alt="Adapter" class="w-[90px] h-[90px] md:w-[60px] md:h-[60px] object-contain" />
+                              <div>
+                                {% comment %} <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div> {% endcomment %}
+                                <div class="text-[16px] leading-[1.2] font-bold text-black">{{acc_product.title}}</div>
+                              </div>
+                            </div>
+                            <div class="flex items-end gap-[12px] flex-col">
+                              <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
+                                <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
+                                <span class="text-black">{{acc_product.price | money }}</span>
+                                {% comment %} {{acc_product.price | money }} {% endcomment %}
+                              </div>
+                              <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                                  <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+
+
+                    </div>
+                    <div class="swiper-button-prev swiper-button-prev-{{ forloop.index }} absolute top-[50%] left-[-25px]">
+
+                    </div>
+
+                    <div class="swiper-button-next swiper-button-next-{{ forloop.index }} absolute top-[50%] right-[-25px]">
+
+                    </div>
+                    </div>
+                </div>
+                <script>
+                  var swiper{{ forloop.index }} = new Swiper(".collSwiper-{{ forloop.index }}", {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    navigation: {
+                      nextEl: ".swiper-button-next-{{ forloop.index }}",
+                      prevEl: ".swiper-button-prev-{{ forloop.index }}",
+                    },
+                    breakpoints: {
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                      }
+                    },
+                  });
+                </script>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+
+
+          <div class="marko-nonbundle product-hide-this">
           {% if section.settings.show_gift_layout %}
             {% if section.settings.show_variant_picker == true %}
-              <div>
+              <div class="product-hide-this">
                 {% for option in mainProduct.options_with_values %}
                   {% assign numberSelector = forloop.index %}
                   {% if option.name == 'Wall Port' %}
@@ -791,6 +957,7 @@
               {{ atcLabel }}
             </p>
           {% endif %}
+          </div>
 
           {% comment %} ADD TO CART BUTTON {% endcomment %}
           <div class="pdp-hero__atc-wrapper scroll-reveal">
@@ -862,7 +1029,7 @@
 
           </div>
         </div>
-        {% unless section.settings.hide_grid %}
+        {% comment %} {% unless section.settings.hide_grid %}
         <div class="pdp-hero__product-infos mt-[20px]">
           {% if accRepeater.size > 0 %}
             <h4 class="pd-selector-title !my-[10px] !text-center md:text-left" style="margin-top: 20px;">
@@ -929,7 +1096,7 @@
           {% endif %}
 
         </div>
-        {% endunless %}
+        {% endunless %} {% endcomment %}
         {% unless section.settings.hide_slider %}
         <div class="pdp-hero__product-infos mt-[20px] slider-infos">
           {% if collectionRepeater.size > 0 %}

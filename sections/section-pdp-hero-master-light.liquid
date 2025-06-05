@@ -570,7 +570,7 @@
                 </p>
               </div>
               {% endif %}
-              <div class="gift-unlocker mt-[25px]">
+              <div class="gift-unlocker mt-[30px]">
                 <div class="gift-unlocker-wrapper gift-blocks bigger-spacing">
                     {% for block in giftRepeater %}
                         <div class="gift_card {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
@@ -767,7 +767,7 @@
           {% endif %}
           {% if section.settings.show_grid_images %}
             {% if  section.settings.grid_images_title%}
-              <div class="bf-special-block">
+              <div class="bf-special-block" style="margin-top:0;">
                 {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
                 <p class="pd-selector-title !my-[5px] uppercase">
                   {{section.settings.grid_images_title}}

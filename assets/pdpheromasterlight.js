@@ -728,20 +728,28 @@ let toggleBundle = document.querySelector('.js-toggle-bundle');
 let toggleProduct = document.querySelector('.js-toggle-product');
 
 toggleBundle.addEventListener('click', (e) => {
-  let _this = e.target;
-  let klasa = _this.getAttribute('data-hide');
-  document.querySelector('.' + klasa).classList.remove('hidden');
-  document.querySelector('.product-hide-this').classList.add('hidden');
+  let allBundles = document.querySelectorAll('.bundle-display');
+  let allProducts = document.querySelectorAll('.product-display');
+  allBundles.forEach(bundle => {
+    bundle.classList.remove('hidden');
+  });
+  allProducts.forEach(product => {
+    product.classList.add('hidden');
+  });
 
   toggleBundle.classList.add('bg-white', 'active-tab');
   toggleProduct.classList.remove('bg-white', 'active-tab');
 });
 
 toggleProduct.addEventListener('click', (e) => {
-  let _this = e.target;
-  let klasa = _this.getAttribute('data-hide');
-  document.querySelector('.' + klasa).classList.remove('hidden');
-  document.querySelector('.bundle-hide-this').classList.add('hidden');
+  let allBundles = document.querySelectorAll('.bundle-display');
+  let allProducts = document.querySelectorAll('.product-display');
+  allBundles.forEach(bundle => {
+    bundle.classList.add('hidden');
+  });
+  allProducts.forEach(product => {
+    product.classList.remove('hidden');
+  });
 
   toggleProduct.classList.add('bg-white', 'active-tab');
   toggleBundle.classList.remove('bg-white', 'active-tab');

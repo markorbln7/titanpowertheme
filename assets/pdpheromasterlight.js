@@ -739,6 +739,14 @@ toggleBundle.addEventListener('click', (e) => {
 
   toggleBundle.classList.add('bg-white', 'active-tab');
   toggleProduct.classList.remove('bg-white', 'active-tab');
+  let extraAdds = document.querySelectorAll('.pdp-hero__extra-add');
+  extraAdds.forEach(extraAdd => {
+    extraAdd.classList.remove('active');
+  });
+  let target = document.querySelector('.pdp-hero__extra-add[data-count="1-product"]');
+  if (target) {
+    target.classList.add('active');
+  }
 });
 
 toggleProduct.addEventListener('click', (e) => {

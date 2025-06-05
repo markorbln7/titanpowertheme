@@ -453,7 +453,7 @@
                 {% endfor %}
               </div>
             {% endif %}
-            <div class="pd-selector-title !my-[30px]">PICK YOUR PACK OFFER</div>
+            <div class="pd-selector-title !my-[30px]">{{section.settings.pack_title}}</div>
             <div class="pdp-hero__upsell gift-upsell">
               {% if product_repeater.size > 0 %}
                 {% for upsell_product in product_repeater %}
@@ -1607,6 +1607,12 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
       "type": "text",
       "id": "bundle_subtitle",
       "label": "Bundle Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "pack_title",
+      "label": "Pack Title",
+      "default": "PICK YOUR PACK OFFER"
     },
     {
       "type": "text",

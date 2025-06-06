@@ -1,0 +1,76 @@
+.selectors_holder {
+    background: #feeef5;
+}
+.selectors_holder {
+    display: flex;
+    background: #E9E9E9;
+    border-radius: 15px 15px 0 0;
+    border-bottom: 1px solid #E9E9E9;
+    margin-bottom:40px;
+    padding-top: 5px;
+}
+.s_selector[for="subs"].selected {
+    background-image: url('https://spacegoods.com/cdn/shop/t/400/assets/radial_bg.png?v=53841012155975655591736326574') !important;
+    background-position: right;
+}
+.s_selector.selected {
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+.s_selector[for="subs"] {
+    padding-left: 18px;
+    padding-right: 90px;
+    position: relative;
+    border-radius: 15px 0 0 0;
+}
+.s_selector {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    width: calc(50% + 90px);
+    cursor: pointer;
+}
+.s_selector[for="one_time"] {
+    margin-left: -100px;
+    padding-left: 90px;
+    padding-right: 10px;
+    border-radius: 0 15px 0 0;
+}
+.s_selector[for="one_time"].selected {
+    background-image: url('https://spacegoods.com/cdn/shop/t/400/assets/radial_bg_right.png?v=114780604746303512971736326575');
+    background-position: left;
+}
+.s_selector[for="one_time"] {
+    margin-left: -100px;
+    padding-left: 80px;
+    padding-right: 10px;
+    border-radius: 0 15px 0 0;
+}
+.selected_mark {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+.circle {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    border-radius: 100px;
+    display:block !important;
+}
+.s_selector.selected .circle {
+    background: #60c655;
+}
+.bundle-product-title {
+
+}
+.bundle-product-title-wrapper {
+
+}

@@ -727,7 +727,10 @@ document.addEventListener('click', (e) => {
 let toggleBundle = document.querySelector('.js-toggle-bundle');
 let toggleProduct = document.querySelector('.js-toggle-product');
 
+console.log('toggleBundle', toggleBundle);
+
 toggleBundle.addEventListener('click', (e) => {
+  console.log('toggleBundle clicked');
   let allBundles = document.querySelectorAll('.bundle-display');
   let allProducts = document.querySelectorAll('.product-display');
   allBundles.forEach(bundle => {
@@ -737,8 +740,8 @@ toggleBundle.addEventListener('click', (e) => {
     product.classList.add('hidden');
   });
 
-  toggleBundle.classList.add('bg-white', 'active-tab');
-  toggleProduct.classList.remove('bg-white', 'active-tab');
+  toggleBundle.classList.add('selected');
+  toggleProduct.classList.remove('selected');
   let extraAdds = document.querySelectorAll('.pdp-hero__extra-add');
   extraAdds.forEach(extraAdd => {
     extraAdd.classList.remove('active');
@@ -759,6 +762,6 @@ toggleProduct.addEventListener('click', (e) => {
     product.classList.remove('hidden');
   });
 
-  toggleProduct.classList.add('bg-white', 'active-tab');
-  toggleBundle.classList.remove('bg-white', 'active-tab');
+  toggleProduct.classList.add('selected');
+  toggleBundle.classList.remove('selected');
 });

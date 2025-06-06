@@ -376,6 +376,12 @@ Import all other libs using this markup
 }
 /* Common */
 .hidden {
+  display: none;
+}
+.product-display.hidden {
+  display: none !important;
+}
+.bundle-display.hidden {
   display: none !important;
 }
 .d-block {

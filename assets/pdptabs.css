@@ -13,6 +13,24 @@
     background-image: url('https://spacegoods.com/cdn/shop/t/400/assets/radial_bg.png?v=53841012155975655591736326574') !important;
     background-position: right;
 }
+.s_selector[for="subs"]::before {
+    content: 'most popular';
+    position: absolute;
+    left: 55%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    padding: 4px 7px;
+    border-radius: 6px 0px;
+    background: #D6D6D6;
+    font-size: 13px;
+    color: #6E6E6E;
+    font-weight: bold;
+}
+.s_selector[for="subs"].selected-tab::before {
+    background: transparent linear-gradient(270deg, #60c655 15%, #35ff2e);
+    color: white;
+}
 .s_selector.selected-tab {
     background-repeat: no-repeat;
     background-size: auto 100%;
@@ -80,3 +98,6 @@
 .bundle-product-title-wrapper {
 
 }
+ #PBarNextFrame {
+    display: none !important;
+ }

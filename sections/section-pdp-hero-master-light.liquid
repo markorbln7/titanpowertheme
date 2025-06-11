@@ -308,9 +308,9 @@
           </div>
           <div class="pdp-hero__product-infossss mt-[20px] marko-bundle !mb-[20px] bundle-display hidden">
             {% if collectionRepeater.size > 0 %}
-              <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+              {% comment %} <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
                 {{section.settings.bundle_title}}
-              </h4>
+              </h4> {% endcomment %}
               {% if section.settings.bundle_subtitle %}
                 <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
                   {{section.settings.bundle_subtitle}}
@@ -886,6 +886,7 @@
                 {% endif %}
               </div>
             </div>
+            <div style="width:max-content !important;" class="mx-auto px-[20px] add-bundle-cables bundle-display hidden !my-[15px] product__list--single--atc pdp-hero__atc border-0">ADD CABLE TO BUNDLE</div>
             <p class="pd-selector-title !my-[5px] uppercase product-display">
               ADD PD plug for fastest charge
               </p>
@@ -924,7 +925,7 @@
                      </div>
                  </div>
                </div>
-                <div class="acc_single_overlay"></div>
+                <div class="acc_single_overlay" data-bundle-variant-id="{{ acc_product.first_available_variant.id }}"></div>
                 <div class="accinfo-icon-trigger js-info-trigger">i</div>
                 <div class="flex items-center gap-[16px]">
                   <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
@@ -994,7 +995,7 @@
                         {% for product in collectionHandle.products %}
                           {% assign acc_product = all_products[product.handle] %}
                           <div class="collection-slider swiper-slide acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative collection-trigger" data-variant-id="{{ acc_product.first_available_variant.id }}">
-                            <div data-popup-id="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="acc_single_overlay"></div>
+                            <div data-popup-id="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="acc_single_overlay" data-bundle-variant-id="{{ acc_product.first_available_variant.id }}"></div>
                           <div data-popup-open="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="accinfo-icon-trigger js-info-trigger-outer">i</div>
                             <div class="flex items-center gap-[16px]">
                               <img width="100%" height="auto" src="{{acc_product.images[0].src | img_url:'master'}}" alt="Adapter" class="w-[90px] h-[90px] md:w-[60px] md:h-[60px] object-contain" />
@@ -1051,15 +1052,15 @@
               <button
                 data-product="{{ product.selected_or_first_available_variant.id }}"
                 data-quantity="1"
-                class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0 !mb-[20px] bundle-display add-to-cart-bundle hidden"
+                class="product__list--single--atc pdp-hero__atc border-0 !mb-[20px] bundle-display add-to-cart-bundle hidden"
               >
                 ADD TO CART
               </button>
               <div class="pdp-hero__product-infossss mt-[20px] marko-bundle !mb-[20px] bundle-display hidden">
                 {% if collectionRepeater.size > 0 %}
-                  <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+                  {% comment %} <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
                     {{section.settings.bundle_title}}
-                  </h4>
+                  </h4> {% endcomment %}
                   {% if section.settings.bundle_subtitle %}
                     <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
                       {{section.settings.bundle_subtitle}}
@@ -1226,7 +1227,7 @@
         <div class="hidden md:flex sticky-card-product w-[50px] h-[50px] bg-white items-center justify-center placeholder relative">+</div>
     </div>
     <div class="atc-bundle-button">
-      <div class="text-center js-bundle-message">Add 2 more to get 55% off</div>
+      <div class="text-center js-bundle-message">Add 3 more to get 55% off</div>
       <button class="js-simulate js-rebuy text-center min-w-[300px] h-[46px] bg-[#2f4534]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px] mt-[10px]">
           ADD TO CART
       </button>

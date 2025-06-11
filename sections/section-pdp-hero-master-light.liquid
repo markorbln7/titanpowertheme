@@ -290,7 +290,7 @@
             >
               <div class="selected_mark"><div class="circle"></div></div>
               <div class="selector_desc flex flex-col items-baseline justify-center">
-                <span class="bold text-[22px] text-black leading-none">Cable Packs</span>
+                <span class="bold md:text-[22px] text-[16px] text-black leading-none">Cable Packs</span>
                 <span class="text-[#60c655] text-[12px] !block bold">Get +1 Free</span>
               </div>
             </div>
@@ -301,7 +301,7 @@
             >
               <div class="selected_mark"><div class="circle"></div></div>
               <div class="selector_desc flex flex-col items-baseline justify-center">
-                <span class="bold text-[22px] text-black leading-none">Build a Bundle</span>
+                <span class="bold md:text-[22px] text-[16px] text-black leading-none">Build a Bundle</span>
                 <span class="text-[#60c655] text-[12px] !block bold">Up to 80% off</span>
               </div>
             </div>
@@ -360,8 +360,11 @@
               </div>
             {% endif %}
           </div>
-        <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[20px]">
-          <div class="flex gap-[20px] max-w-[90%] mx-auto">
+        <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
+          <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
+            <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
+              <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
+            </div>
             <div class="text-[#60c65596] bold">STEP 1</div>
             <div class="bundle-product-title bold">ADD TITAN CABLES</div>
           </div>
@@ -776,7 +779,7 @@
             >
               ADD TO CART
             </button>
-            <div class="text-[20px] bundle-display hidden mt-[30px]">
+            <div class="text-[20px] bundle-display hidden mt-[40px]">
               <div class="pdp-hero__upsell gift-upsell">
                 {% if count_repeater.size > 0 %}
                   {% for upsell_product in count_repeater %}
@@ -890,9 +893,14 @@
             <p class="pd-selector-title !my-[5px] uppercase product-display">
               ADD PD plug for fastest charge
               </p>
-              <div class="flex gap-[20px] mx-auto !text-[20px] bundle-display hidden">
-                <div class="text-[#60c65596] bold">STEP 2</div>
-                <div class="bundle-product-title bold">ADD PD plug for fastest charge</div>
+              <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
+                <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
+                  <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
+                  </div>
+                  <div class="text-[#60c65596] bold">STEP 2</div>
+                  <div class="bundle-product-title bold uppercase">ADD plug for fastest charge</div>
+                </div>
               </div>
             {% for block in accRepeater %}
               {% assign acc_product = all_products[block.settings.acc_product] %}
@@ -950,10 +958,13 @@
               {% endif %}
             {% endfor %}
             {% if collectionRepeater.size > 0 %}
-              <div class="bundle-display hidden">
-                <div class="flex gap-[20px] mx-auto !text-[20px]">
+              <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
+                <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
+                  <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
+                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
+                  </div>
                   <div class="text-[#60c65596] bold">STEP 3</div>
-                  <div class="bundle-product-title bold">COMPLETE YOUR BUNDLE</div>
+                  <div class="bundle-product-title bold uppercase">COMPLETE YOUR BUNDLE</div>
                 </div>
               </div>
               {% for block in collectionRepeater %}
@@ -1114,7 +1125,7 @@
 
           </div>
         </div>
-        {% comment %} {% unless section.settings.hide_grid %}
+      {% unless section.settings.hide_grid %}
         <div class="pdp-hero__product-infos mt-[20px]">
           {% if accRepeater.size > 0 %}
             <h4 class="pd-selector-title !my-[10px] !text-center md:text-left" style="margin-top: 20px;">
@@ -1153,7 +1164,7 @@
                        </div>
                    </div>
                  </div>
-                  <div class="acc_single_overlay"></div>
+                  <div data-bundle-variant-id="{{acc_product.first_available_variant.id}}" class="acc_single_overlay"></div>
                   <div class="accinfo-icon-trigger js-info-trigger">i</div>
                   <div class="flex items-center gap-[16px]">
                     <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
@@ -1181,7 +1192,7 @@
           {% endif %}
 
         </div>
-        {% endunless %} {% endcomment %}
+        {% endunless %}
       </div>
     </div>
   </div>

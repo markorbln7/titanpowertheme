@@ -14,7 +14,7 @@
     background-position: right;
 }
 .s_selector[for="subs"]::before {
-    content: 'most popular';
+    content: 'MOST POPULAR';
     position: absolute;
     left: 55%;
     top: 0;
@@ -44,7 +44,7 @@
 .s_selector {
     display: flex;
     align-items: center;
-    height: 80px;
+    height: 70px;
     width: calc(50% + 90px);
     cursor: pointer;
 }

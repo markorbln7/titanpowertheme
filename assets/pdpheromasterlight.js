@@ -478,9 +478,18 @@ addToCartBtnBundle?.addEventListener('click', async () => {
     });
 
     if (!res.ok) throw new Error('Failed to add to cart');
-
     const data = await res.json();
     console.log('✅ Added to cart:', data);
+    let accTriggers = document.querySelectorAll('.acc_single_overlay');
+    accTriggers.forEach(acc => {
+      acc.parentNode.classList.remove('selected');
+    });
+
+    // 🧹 OČISTI STATE
+    state.length = 0;
+
+    // 🔁 REBUILD OUTPUT
+    rebuildOutput();
 
     // Opcionalno: redirect na cart
     // window.location.href = '/cart';
@@ -833,6 +842,8 @@ console.log('toggleBundle', toggleBundle);
 
 toggleBundle.addEventListener('click', (e) => {
   console.log('toggleBundle clicked');
+
+  // Prikaz bundle-a, sakrij single proizvode
   let allBundles = document.querySelectorAll('.bundle-display');
   let allProducts = document.querySelectorAll('.product-display');
   allBundles.forEach(bundle => {
@@ -844,15 +855,31 @@ toggleBundle.addEventListener('click', (e) => {
 
   toggleBundle.classList.add('selected-tab');
   toggleProduct.classList.remove('selected-tab');
+
+  // Resetuj qty selekciju
   let extraAdds = document.querySelectorAll('.pdp-hero__extra-add');
   extraAdds.forEach(extraAdd => {
     extraAdd.classList.remove('active');
   });
+
   let target = document.querySelector('.qty-1');
   if (target) {
     target.classList.add('active');
   }
+
+  // 🧼 SKLONI SVE SELECTED sa acc triggera
+  let accTriggers = document.querySelectorAll('.acc_single_overlay');
+  accTriggers.forEach(acc => {
+    acc.parentNode.classList.remove('selected');
+  });
+
+  // 🧹 OČISTI STATE
+  state.length = 0;
+
+  // 🔁 REBUILD OUTPUT
+  rebuildOutput();
 });
+
 
 toggleProduct.addEventListener('click', (e) => {
   let allBundles = document.querySelectorAll('.bundle-display');
@@ -878,4 +905,15 @@ toggleProduct.addEventListener('click', (e) => {
   if (target) {
     target.classList.add('active');
   }
+  // 🧼 SKLONI SVE SELECTED sa acc triggera
+  let accTriggers = document.querySelectorAll('.acc_single_overlay');
+  accTriggers.forEach(acc => {
+    acc.parentNode.classList.remove('selected');
+  });
+
+  // 🧹 OČISTI STATE
+  state.length = 0;
+
+  // 🔁 REBUILD OUTPUT
+  rebuildOutput();
 });

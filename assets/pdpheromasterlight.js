@@ -71,12 +71,6 @@ productSelectors.forEach(productSelector => {
     productSelector.addEventListener('click', async (e) => {
       const _this = productSelector
       const count = _this.getAttribute('data-count')
-      const qty = _this.getAttribute('data-qty')
-      if(_this.classList.contains('bundle-qty-selector')) {
-        document.querySelector('.add-to-cart-bundle').setAttribute('data-quantity', qty)
-        let imageUrl = _this.querySelector('.bundle-qty-image').src;
-        console.log(imageUrl, 'imageUrl')
-      }
       const imageSwitch = _this.getAttribute('data-variant-image')
       console.log(imageSwitch, 'imageSwitch')
       mainImageChange.src = imageSwitch
@@ -101,107 +95,61 @@ addonWrappers.forEach(addonWrapper => {
 
 let accTriggers = document.querySelectorAll('.acc_single_overlay');
 let outputContainer = document.querySelector('.js-output');
-let addBundleButton = document.querySelector('.add-bundle-cables');
 
-const state = [];
-
-// === Klik na .acc_single_overlay ===
 accTriggers.forEach(acc => {
   acc.addEventListener('click', () => {
     const panel = acc.parentNode;
     const imageUrl = panel.querySelector('img')?.getAttribute('src');
-    const bundleId = acc.getAttribute('data-bundle-variant-id');
 
-    // Toggle selected klasu
-    const isNowSelected = panel.classList.toggle('selected');
+    panel.classList.toggle('selected');
 
-    if (isNowSelected) {
-      // Dodaj novu stavku iz acc (uvek qty 1)
-      state.push({
-        url: imageUrl,
-        bundleId,
-        qty: 1,
-        panel // da znamo da je acc, ne qty picker
-      });
+    if (panel.classList.contains('selected')) {
+      if (imageUrl) {
+        addImageToOutput(imageUrl, panel);
+      }
     } else {
-      // Ukloni samo taj acc (po referenci panela)
-      const index = state.findIndex(entry => entry.panel === panel);
-      if (index !== -1) state.splice(index, 1);
+      removeImageFromOutput(panel);
     }
 
-    rebuildOutput();
+    rebuildOutput(); // uvek složi sve lepo redom
   });
 });
 
-// === Klik na dugme .add-bundle-cables ===
-addBundleButton?.addEventListener('click', () => {
-  const qtyHolder = document.querySelector('.bundle-qty-selector.qty-1');
-  const activeQtyEl = document.querySelector('.bundle-qty-selector.active');
+const state = [];
 
-  const imageUrl = activeQtyEl?.querySelector('.bundle-qty-image')?.getAttribute('src');
-  const bundleId = qtyHolder?.getAttribute('data-product-id');
-  const qty = parseInt(activeQtyEl?.getAttribute('data-qty') || '1', 10);
+function addImageToOutput(url, sourcePanel) {
+  // Ne dodaj ako već postoji
+  if (state.find(entry => entry.panel === sourcePanel)) return;
+  state.push({ url, panel: sourcePanel });
+}
 
-  if (!bundleId || !imageUrl) return;
+function removeImageFromOutput(sourcePanel) {
+  const index = state.findIndex(entry => entry.panel === sourcePanel);
+  if (index !== -1) state.splice(index, 1);
+}
 
-  // Pronađi stavku u state-u sa istim bundleId, ali iz dugmeta (panel = null)
-  const existing = state.find(entry => entry.bundleId === bundleId && entry.panel === null);
-
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    state.push({
-      url: imageUrl,
-      bundleId,
-      qty,
-      panel: null
-    });
-  }
-
-  rebuildOutput();
-  addBundleButton.textContent = 'ADDING...';
-  addBundleButton.disabled = true;
-
-  setTimeout(() => {
-    addBundleButton.textContent = 'ADD MORE CABLES';
-    addBundleButton.disabled = false;
-  }, 500);
-});
-
-// === Rebuild Output Grid ===
 function rebuildOutput() {
   outputContainer.innerHTML = '';
 
   state.forEach(entry => {
     const imgDiv = document.createElement('div');
     imgDiv.className = 'sticky-card-product w-[50px] h-[50px] bg-white flex items-center justify-center relative';
-    imgDiv.setAttribute('data-bundle-id', entry.bundleId);
-    imgDiv.setAttribute('data-qty', entry.qty);
 
     imgDiv.innerHTML = `
       <img src="${entry.url}" class="w-full h-full object-contain" />
       <div class="absolute bg-[#c14444] flex items-center justify-center w-[16px] h-[16px] top-[-8px] right-[-8px] js-remove-product cursor-pointer text-white rounded-[50%]">x</div>
-      <div class="absolute bg-[#444] text-white text-[10px] w-[16px] h-[16px] bottom-[-8px] right-[-8px] rounded-full flex items-center justify-center">${entry.qty}</div>
     `;
 
-    // X dugme za ručno brisanje
     imgDiv.querySelector('.js-remove-product').addEventListener('click', (e) => {
       e.stopPropagation();
-      const index = state.findIndex(s => s.bundleId === entry.bundleId && s.panel === entry.panel);
-      if (index !== -1) state.splice(index, 1);
-
-      // Ako je acc bio selektovan, skloni klasu
-      if (entry.panel) {
-        entry.panel.classList.remove('selected');
-      }
-
+      removeImageFromOutput(entry.panel);
+      entry.panel.classList.remove('selected');
       rebuildOutput();
     });
 
     outputContainer.appendChild(imgDiv);
   });
 
-  // Placeholders
   const placeholdersToAdd = Math.max(6 - state.length, 0);
   for (let i = 0; i < placeholdersToAdd; i++) {
     const placeholder = document.createElement('div');
@@ -210,10 +158,10 @@ function rebuildOutput() {
     outputContainer.appendChild(placeholder);
   }
 
-  // Poruka za bundle
+  // === BONUS: Bundle poruka ===
   const messageEl = document.querySelector('.js-bundle-message');
   if (messageEl) {
-    const totalItems = state.reduce((acc, curr) => acc + curr.qty, 0); // +1 jer glavni proizvod
+    const totalItems = state.length + 1; // +1 jer glavni proizvod uvek postoji
 
     const thresholds = [
       { count: 3, discount: '55%' },
@@ -233,9 +181,7 @@ function rebuildOutput() {
       messageEl.textContent = '';
     }
   }
-
 }
-
 
 
 let infoTriggers = document.querySelectorAll('.js-info-trigger')
@@ -413,15 +359,8 @@ addToCarts.forEach(addToCart => {
           })
         }
       })
-      let productId;
-      let productSelectore = document.querySelector('.js-product-selector.active');
-      if(productSelectore.classList.contains('bundle-qty-selector')) {
-        productId = document.querySelector('.qty-1').getAttribute('data-product-id');
-      } else {
-        productId = productSelectore.getAttribute('data-product-id')
-      }
       addItems.push({
-        id: productId,
+        id: document.querySelector('.js-product-selector.active').getAttribute('data-product-id'),
         quantity: quantity
       })
       let accSelector = document.querySelectorAll('.selected')
@@ -453,56 +392,6 @@ addToCarts.forEach(addToCart => {
         })
     })
 })
-
-const addToCartBtnBundle = document.querySelector('.add-to-cart-bundle');
-
-addToCartBtnBundle?.addEventListener('click', async () => {
-  if (state.length === 0) return;
-
-  const items = state.map(entry => ({
-    id: entry.bundleId,
-    quantity: entry.qty,
-    properties: {
-      _bundle: 'true'
-    }
-  }));
-
-  try {
-    const res = await fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ items })
-    });
-
-    if (!res.ok) throw new Error('Failed to add to cart');
-    const data = await res.json();
-    console.log('✅ Added to cart:', data);
-    let accTriggers = document.querySelectorAll('.acc_single_overlay');
-    accTriggers.forEach(acc => {
-      acc.parentNode.classList.remove('selected');
-    });
-
-    // 🧹 OČISTI STATE
-    state.length = 0;
-
-    // 🔁 REBUILD OUTPUT
-    rebuildOutput();
-
-    // Opcionalno: redirect na cart
-    // window.location.href = '/cart';
-
-    // Ili otvori cart drawer ako postoji
-    // document.querySelector('cart-drawer')?.open(); (ako koristiš Shopify 2.0 drawer)
-
-  } catch (err) {
-    console.error('❌ Error adding to cart:', err);
-    alert('There was a problem adding items to cart.');
-  }
-});
-
 
 
 var variantSelectorFirsts = document.querySelectorAll('.variant-selector-1');
@@ -793,7 +682,7 @@ if (bottomTrigger) bottomObserver.observe(bottomTrigger);
 
 document.querySelector('.js-output-outer')?.addEventListener('click', (e) => {
   if (e.target.closest('.js-simulate')) {
-    const addToCartBtn = document.querySelector('.add-to-cart-bundle');
+    const addToCartBtn = document.querySelector('.js-add-to-cart-pd');
     if (addToCartBtn) {
       addToCartBtn.click();
     } else {
@@ -833,87 +722,4 @@ document.addEventListener('click', (e) => {
   } else {
     console.warn('Nema acc_single_overlay sa odgovarajućim data-popup-id:', popupId);
   }
-});
-
-let toggleBundle = document.querySelector('.js-toggle-bundle');
-let toggleProduct = document.querySelector('.js-toggle-product');
-
-console.log('toggleBundle', toggleBundle);
-
-toggleBundle.addEventListener('click', (e) => {
-  console.log('toggleBundle clicked');
-
-  // Prikaz bundle-a, sakrij single proizvode
-  let allBundles = document.querySelectorAll('.bundle-display');
-  let allProducts = document.querySelectorAll('.product-display');
-  allBundles.forEach(bundle => {
-    bundle.classList.remove('hidden');
-  });
-  allProducts.forEach(product => {
-    product.classList.add('hidden');
-  });
-
-  toggleBundle.classList.add('selected-tab');
-  toggleProduct.classList.remove('selected-tab');
-
-  // Resetuj qty selekciju
-  let extraAdds = document.querySelectorAll('.pdp-hero__extra-add');
-  extraAdds.forEach(extraAdd => {
-    extraAdd.classList.remove('active');
-  });
-
-  let target = document.querySelector('.qty-1');
-  if (target) {
-    target.classList.add('active');
-  }
-
-  // 🧼 SKLONI SVE SELECTED sa acc triggera
-  let accTriggers = document.querySelectorAll('.acc_single_overlay');
-  accTriggers.forEach(acc => {
-    acc.parentNode.classList.remove('selected');
-  });
-
-  // 🧹 OČISTI STATE
-  state.length = 0;
-
-  // 🔁 REBUILD OUTPUT
-  rebuildOutput();
-});
-
-
-toggleProduct.addEventListener('click', (e) => {
-  let allBundles = document.querySelectorAll('.bundle-display');
-  let allProducts = document.querySelectorAll('.product-display');
-  let allCollections =  document.querySelectorAll('.collection-trigger');
-  allBundles.forEach(bundle => {
-    bundle.classList.add('hidden');
-  });
-  allProducts.forEach(product => {
-    product.classList.remove('hidden');
-  });
-
-  toggleProduct.classList.add('selected-tab');
-  toggleBundle.classList.remove('selected-tab');
-  let extraAdds = document.querySelectorAll('.pdp-hero__extra-add');
-  extraAdds.forEach(extraAdd => {
-    extraAdd.classList.remove('active');
-  });
-  allCollections.forEach(allCollections => {
-    allCollections.classList.remove('selected');
-  });
-  let target = document.querySelector('.pdp-hero__extra-add[data-count="3-product"]');
-  if (target) {
-    target.classList.add('active');
-  }
-  // 🧼 SKLONI SVE SELECTED sa acc triggera
-  let accTriggers = document.querySelectorAll('.acc_single_overlay');
-  accTriggers.forEach(acc => {
-    acc.parentNode.classList.remove('selected');
-  });
-
-  // 🧹 OČISTI STATE
-  state.length = 0;
-
-  // 🔁 REBUILD OUTPUT
-  rebuildOutput();
 });

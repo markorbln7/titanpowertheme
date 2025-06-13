@@ -4,6 +4,120 @@
 {{ 'cableoverride.css' | asset_url | stylesheet_tag }}
 {{ 'cableprooverride.css' | asset_url | stylesheet_tag }}
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<style>
+    .pdp-hero__atc {
+      height: 55px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100% !important;
+      background-color: #60c655 !important;
+      color: #fff !important;
+      border-radius: 20px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      box-shadow: 0 7px 7px #0000001a !important;
+      transition: opacity .3s ease !important;
+      border:none;
+    }
+    select {
+      box-shadow: 0 1px 5px 3px #00000012;
+      -webkit-appearance: none;
+      background-color: white;
+      border-radius: 1.875rem;
+      font-weight: 400;
+      letter-spacing: .07em;
+      line-height: 1.42;
+      /* outline: 0.125rem solid transparent; */
+      /* outline-offset: 0.125rem; */
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+      border: 2px solid #60c655;
+      padding: 5px;
+      width:130px;
+    }
+    select:focus-visible {
+      outline: none;
+      outline-offset: 0.3rem;
+      box-shadow: none;
+    }
+    .video-trigger {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      border-radius: 50%;
+      left: 10px;
+      top: 10px;
+      font-weight: 700;
+      z-index: 999;
+      cursor: pointer;
+  }
+  .pdp-hero__container .Header_linePart__1tpw_ {
+    bottom:36% !important;
+  }
+  .w-53 {
+    width: 65%;
+    height:auto;
+  }
+  .mx-auto {
+    margin:0 auto
+  }
+  .product-play-overlay {
+    position: fixed;
+    z-index: 9999999999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.product-play-overlay.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+}
+.close, .close-play {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.grid-images__single.js-grid-image:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.grid-images__single.js-grid-image {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+  .pd-selector-title.\!my-\[5px\].uppercase {
+    margin-bottom: 10px !important;
+}
+
+.master-options {
+    margin-top: 5px;
+}
+</style>
 
 {% assign plug = all_products['titan-45w-turbo-charge-plug™-50-off'] %}
 
@@ -31,7 +145,6 @@
     Blocks
   endcomment
   assign product_repeater = section.blocks | where: 'type', 'product_repeater'
-  assign count_repeater = section.blocks | where: 'type', 'count_repeater'
   assign highlighted_product_repeater = section.blocks | where: 'type', 'highlighted_repeater'
   assign iconsRepeater = section.blocks | where: 'type', 'icons'
   assign propsRepeater = section.blocks | where: 'type', 'props'
@@ -282,98 +395,9 @@
           </div>
 
           {% comment %} UPSELL PRODUCTS {% endcomment %}
-          <div class="selectors_holder">
-            <div
-              class="selected-tab s_selector js-toggle-product transition-all"
-              data-hide="product-hide-this"
-              for="subs"
-            >
-              <div class="selected_mark"><div class="circle"></div></div>
-              <div class="selector_desc flex flex-col items-baseline justify-center">
-                <span class="bold md:text-[22px] text-[16px] text-black leading-none">Cable Packs</span>
-                <span class="text-[#60c655] text-[12px] !block bold">Get +1 Free</span>
-              </div>
-            </div>
-            <div
-              class="s_selector js-toggle-bundle transition-all bold text-[20px]"
-              data-hide="bundle-hide-this"
-              for="one_time"
-            >
-              <div class="selected_mark"><div class="circle"></div></div>
-              <div class="selector_desc flex flex-col items-baseline justify-center">
-                <span class="bold md:text-[22px] text-[16px] text-black leading-none">Build a Bundle</span>
-                <span class="text-[#60c655] text-[12px] !block bold">Up to 80% off</span>
-              </div>
-            </div>
-          </div>
-          <div class="pdp-hero__product-infossss mt-[20px] marko-bundle !mb-[20px] bundle-display hidden">
-            {% if collectionRepeater.size > 0 %}
-              {% comment %} <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
-                {{section.settings.bundle_title}}
-              </h4> {% endcomment %}
-              {% if section.settings.bundle_subtitle %}
-                <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
-                  {{section.settings.bundle_subtitle}}
-                </h5>
-              {% endif %}
-              <div class="flex flex-row max-w-[500px] mx-auto divide-x divide-black text-center">
-
-                <div class="flex-1 px-4">
-                  <div class="relative inline-block">
-                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                      <span>55</span>
-                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                    </h3>
-                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                  </div>
-                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                    3+ items
-                  </div>
-                </div>
-
-                <div class="flex-1 px-4">
-                  <div class="relative inline-block">
-                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                      <span>70</span>
-                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                    </h3>
-                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                  </div>
-                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                    7+ items
-                  </div>
-                </div>
-
-                <div class="flex-1 px-4">
-                  <div class="relative inline-block">
-                    <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                      <span>80</span>
-                      <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                    </h3>
-                    <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                  </div>
-                  <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                    10+ items
-                  </div>
-                </div>
-
-              </div>
-            {% endif %}
-          </div>
-        <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
-          <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
-            <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
-              <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
-            </div>
-            <div class="text-[#60c65596] bold">STEP 1</div>
-            <div class="bundle-product-title bold">ADD TITAN CABLES</div>
-          </div>
-        </div>
-
-          <div class="marko-nonbundle">
           {% if section.settings.show_gift_layout %}
             {% if section.settings.show_variant_picker == true %}
-              <div class="product-hide-this-legacy always-stay">
+              <div>
                 {% for option in mainProduct.options_with_values %}
                   {% assign numberSelector = forloop.index %}
                   {% if option.name == 'Wall Port' %}
@@ -429,8 +453,8 @@
                 {% endfor %}
               </div>
             {% endif %}
-            <div class="pd-selector-title !my-[30px] product-display">PICK YOUR PACK OFFER</div>
-            <div class="pdp-hero__upsell gift-upsell product-display">
+            <div class="pd-selector-title !my-[30px]">{{section.settings.pack_title}}</div>
+            <div class="pdp-hero__upsell gift-upsell">
               {% if product_repeater.size > 0 %}
                 {% for upsell_product in product_repeater %}
                   {% liquid
@@ -537,15 +561,16 @@
                 {% endfor %}
               {% endif %}
             </div>
-
             <div>
-              <div class="bf-special-block product-display">
+              {% if  section.settings.gift_title %}
+              <div class="bf-special-block">
                 {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
-                <p class="pd-selector-title !my-[5px] uppercase">
-                Grab Multiple Packs & Save More
+                <p class="pd-selector-title !mt-[5px] uppercase">
+                {{section.settings.gift_title }}
                 </p>
               </div>
-              <div class="gift-unlocker">
+              {% endif %}
+              <div class="gift-unlocker mt-[30px]">
                 <div class="gift-unlocker-wrapper gift-blocks bigger-spacing">
                     {% for block in giftRepeater %}
                         <div class="gift_card {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
@@ -741,7 +766,15 @@
             </div>
           {% endif %}
           {% if section.settings.show_grid_images %}
-              <div class="grid-images product-display">
+            {% if  section.settings.grid_images_title%}
+              <div class="bf-special-block" style="margin-top:0;">
+                {% comment %} <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon"> {% endcomment %}
+                <p class="pd-selector-title !my-[5px] uppercase">
+                  {{section.settings.grid_images_title}}
+                </p>
+              </div>
+            {% endif %}
+              <div class="grid-images">
                 {% for block in imgRepeater %}
                   <div data-image-qty="{{ block.settings.image_qty }}" class="grid-images__single js-grid-image">
                       <img width="100" height="auto" src="{{ block.settings.grid_image | img_url: 'master' }}" alt="">
@@ -750,7 +783,7 @@
               </div>
           {% endif %}
           {% if section.settings.show_qty %}
-          <div class="qty product-display">
+          <div class="qty">
               <div class="qty-selector">
                 <div class="tt-minus single-button">-</div>
                 <div data-count="1" class="tt-quantity single-button">1</div>
@@ -768,144 +801,23 @@
               {{ atcLabel }}
             </p>
           {% endif %}
-          </div>
 
           {% comment %} ADD TO CART BUTTON {% endcomment %}
           <div class="pdp-hero__atc-wrapper scroll-reveal">
             <button
               data-product="{{ product.selected_or_first_available_variant.id }}"
               data-quantity="1"
-              class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0 !mb-[20px] product-display"
+              class="js-add-to-cart-pd product__list--single--atc pdp-hero__atc border-0 !mb-[20px]"
             >
               ADD TO CART
             </button>
-            <div class="text-[20px] bundle-display hidden mt-[40px]">
-              <div class="pdp-hero__upsell gift-upsell">
-                {% if count_repeater.size > 0 %}
-                  {% for upsell_product in count_repeater %}
-                    {% liquid
-                      assign product_obj = all_products[upsell_product.settings.product_obj]
-
-                      assign product_title = upsell_product.settings.product_title_custom
-                      if product_title == blank
-                        assign product_title = product_obj.title
-
-                      else
-                        assign product_title = upsell_product.settings.product_title_custom
-                      endif
-                      assign upsell_message = upsell_product.settings.upsell_message
-
-                      assign upsell_product_image = upsell_product.settings.upsell_product_image
-
-                      assign product_price = product_obj.price_max
-                      assign product_compare_at_price = product_obj.compare_at_price_max
-                      assign upsell_product_discount = upsell_product.settings.upsell_product_discount
-                      assign upsell_product_selector_number = upsell_product.settings.product_selector_number
-                      if product_obj.first_available_variant.featured_image.src
-                        assign variant_product_image = product_obj.first_available_variant.featured_image.src
-                      else
-                        assign variant_product_image = product_obj.featured_image.src
-                      endif
-                    %}
-
-                    <div
-                      data-qty="{{ upsell_message }}"
-                      data-image="{{ variant_product_image | img_url: 'master'}}"
-                      data-product-selector-id= "{{ product_obj.id }}"
-                      data-product-id="{{ product_obj.first_available_variant.id }}"
-                      data-variant-image = "{{ variant_product_image | img_url: 'master' }}"
-                      data-product-price = "{{ product_obj.first_available_variant.price }}"
-                      data-product-compare-price = "{{ product_obj.first_available_variant.compare_at_price }}"
-                      data-count="{{ upsell_product_selector_number }}"
-                      data-gift="{{ upsell_product.settings.product_number_unlocker }}"
-                      class="qty-{{upsell_message}} bundle-qty-selector !pt-[30px] relative fw pdp-hero__extra-add pdp-hero__upsell-wrapper js-product-selector {% if forloop.index == 1 %}promo active{% endif %}"
-                    >
-                      <div class="gift-layout-image absolute top-[-32px]"><img class="bundle-qty-image" width="100" height="auto" src="{{ upsell_product_image | img_url: 'master'  }}"></div>
-                      <div class="qty_selector-title">{{ product_title }}</div>
-                      {% if section.settings.show_each %}
-                        <div class="qty_selector-price"><span class="js-each">{{- product_obj.first_available_variant.price | divided_by: upsell_message | money -}}</span>/each</div>
-                      {% else %}
-                        <div class="qty_selector-price">
-                          <span class="js-each">{{- product_obj.first_available_variant.price | money -}}</span>
-                          <span class="js-each-compare">{{- product_obj.first_available_variant.compare_at_price | money -}}</span>
-                        </div>
-                      {% endif %}
-
-                      {% comment %} <div class="most-pouplar">{{upsell_product_discount }}</div> {% endcomment %}
-                      <input
-                        type="checkbox"
-                        id="pdp-hero__checkbox"
-                        class="js-upsell-checkbox"
-                        style="z-index:99;"
-                        {% if forloop.index == 1 %}
-                          checked
-                        {% endif %}
-                      >
-                    </div>
-                    {% if section.settings.show_each %}
-                    <script>
-                      window.productVariants = window.productVariants || {};
-                      window.productVariants[{{ product_obj.id }}] = [
-                        {% for variant in product_obj.variants %}
-                        {
-                          id: '{{ variant.id }}',
-                          price: '{{ variant.price | divided_by: upsell_message | money }}',
-                          image: '{{ variant.featured_image.src | img_url: 'master' }}',
-                          available: {{ variant.available }},
-                          options: [
-                            {% for option in variant.options %}
-                            '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
-                            {% endfor %}
-                          ]
-                        }{% unless forloop.last %}, {% endunless %}
-                        {% endfor %}
-                      ];
-                      console.log( window.productVariants[{{ product_obj.id }}], 'aa');
-                    </script>
-                  {% else %}
-                    <script>
-                      window.productVariants = window.productVariants || {};
-                      window.productVariants[{{ product_obj.id }}] = [
-                        {% for variant in product_obj.variants %}
-                        {
-                          id: '{{ variant.id }}',
-                          price: '{{ variant.price | money }}',
-                          compare_price: '{{ variant.compare_at_price | money }}',
-                          image: '{{ variant.featured_image.src | img_url: 'master' }}',
-                          available: {{ variant.available }},
-                          options: [
-                            {% for option in variant.options %}
-                            '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
-                            {% endfor %}
-                          ]
-                        }{% unless forloop.last %}, {% endunless %}
-                        {% endfor %}
-                      ];
-                      console.log( window.productVariants[{{ product_obj.id }}], 'aa');
-                    </script>
-                  {% endif %}
-
-                  {% endfor %}
-                {% endif %}
-              </div>
-            </div>
-            <div style="width:max-content !important;" class="mx-auto px-[20px] add-bundle-cables bundle-display hidden !my-[15px] product__list--single--atc pdp-hero__atc border-0">ADD CABLE TO BUNDLE</div>
-            <p class="pd-selector-title !my-[5px] uppercase product-display">
+            <p class="pd-selector-title !my-[5px] uppercase">
               ADD PD plug for fastest charge
               </p>
-              <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
-                <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
-                  <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
-                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
-                  </div>
-                  <div class="text-[#60c65596] bold">STEP 2</div>
-                  <div class="bundle-product-title bold uppercase">ADD plug for fastest charge</div>
-                </div>
-              </div>
             {% for block in accRepeater %}
               {% assign acc_product = all_products[block.settings.acc_product] %}
               {% if forloop.index == 1 %}
-              <div class="md:mt-0 mt-[20px] acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative always-stay" data-variant-id="{{ acc_product.first_available_variant.id }}">
+              <div class="md:mt-0 mt-[20px] acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
                 <div class="product-popup">
                   <div class="close">
                     {% render 'icon-close' %}
@@ -933,7 +845,7 @@
                      </div>
                  </div>
                </div>
-                <div class="acc_single_overlay" data-bundle-variant-id="{{ acc_product.first_available_variant.id }}"></div>
+                <div class="acc_single_overlay"></div>
                 <div class="accinfo-icon-trigger js-info-trigger">i</div>
                 <div class="flex items-center gap-[16px]">
                   <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
@@ -957,176 +869,11 @@
               </div>
               {% endif %}
             {% endfor %}
-            {% if collectionRepeater.size > 0 %}
-              <div class="bundle-product-title-wrapper bundle-display hidden my-[20px] !text-[16px] md:!text-[20px]">
-                <div class="flex gap-[45px] md:max-w-[90%] max-w-[100%] mx-auto relative md:h-[55px] h-[42px] items-center">
-                  <div class="line absolute top-0 left-[-3%] md:left-[-8%]">
-                    <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Product_title_tab_line_2.png?v=1749681088">
-                  </div>
-                  <div class="text-[#60c65596] bold">STEP 3</div>
-                  <div class="bundle-product-title bold uppercase">COMPLETE YOUR BUNDLE</div>
-                </div>
-              </div>
-              {% for block in collectionRepeater %}
-                 {% assign collectionHandle = block.settings.collection %}
-                 {% for product in collectionHandle.products %}
-                  {% assign acc_product = all_products[product.handle] %}
-                  <div data-popup="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="product-popup js-popup-outer">
-                    <div class="close">
-                      {% render 'icon-close' %}
-                    </div>
-                    <div class="product-popup__content">
-                        <div class="product-popup__content--image">
-                          <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
-                      </div>
-                      <div class="product-popup__content--title">
-                        {{ acc_product.title }}
-                      </div>
-                      <div class="product-popup__content--prices mt-[10px]">
-                          <div>
-                            <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
-                            <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
-                          </div>
-                      </div>
-                      {% if acc_product.metafields.custom.ticks %}
-                        {{acc_product.metafields.custom.ticks | metafield_tag }}
-                      {% endif %}
-                      <div class="product-popup__content--buttons">
-                          <button class="js-return">Return To Order</button>
-                          <button class="js-add">+ Add To Order</button>
-                      </div>
-                  </div>
-                  </div>
-                 {% endfor %}
-                 <div class="my-[20px] relative bundle-display hidden">
-                  <div class="text-[#7d7d7d] bold italic mb-[-15px]">{{collectionHandle.title}}</div>
-                  <div class="relative omotac">
-                    <div class="swiper collSwiper-{{ forloop.index }}">
-                      <div class="swiper-wrapper pt-[20px] px-0">
-                        {% for product in collectionHandle.products %}
-                          {% assign acc_product = all_products[product.handle] %}
-                          <div class="collection-slider swiper-slide acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative collection-trigger" data-variant-id="{{ acc_product.first_available_variant.id }}">
-                            <div data-popup-id="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="acc_single_overlay" data-bundle-variant-id="{{ acc_product.first_available_variant.id }}"></div>
-                          <div data-popup-open="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="accinfo-icon-trigger js-info-trigger-outer">i</div>
-                            <div class="flex items-center gap-[16px]">
-                              <img width="100%" height="auto" src="{{acc_product.images[0].src | img_url:'master'}}" alt="Adapter" class="w-[90px] h-[90px] md:w-[60px] md:h-[60px] object-contain" />
-                              <div>
-                                {% comment %} <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div> {% endcomment %}
-                                <div class="text-[16px] leading-[1.2] font-bold text-black">{{acc_product.title}}</div>
-                              </div>
-                            </div>
-                            <div class="flex items-end gap-[12px] flex-col">
-                              <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
-                                <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
-                                <span class="text-black">{{acc_product.price | money }}</span>
-                                {% comment %} {{acc_product.price | money }} {% endcomment %}
-                              </div>
-                              <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
-                                  <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                        {% endfor %}
-                      </div>
-
-
-                    </div>
-                    <div class="swiper-button-prev swiper-button-prev-{{ forloop.index }} absolute top-[50%] left-[-25px]">
-
-                    </div>
-
-                    <div class="swiper-button-next swiper-button-next-{{ forloop.index }} absolute top-[50%] right-[-25px]">
-
-                    </div>
-                    </div>
-                </div>
-                <script>
-                  var swiper{{ forloop.index }} = new Swiper(".collSwiper-{{ forloop.index }}", {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                    navigation: {
-                      nextEl: ".swiper-button-next-{{ forloop.index }}",
-                      prevEl: ".swiper-button-prev-{{ forloop.index }}",
-                    },
-                    breakpoints: {
-                      768: {
-                        slidesPerView: 2,
-                        spaceBetween: 10,
-                      }
-                    },
-                  });
-                </script>
-
-              {% endfor %}
-              <button
-                data-product="{{ product.selected_or_first_available_variant.id }}"
-                data-quantity="1"
-                class="product__list--single--atc pdp-hero__atc border-0 !mb-[20px] bundle-display add-to-cart-bundle hidden"
-              >
-                ADD TO CART
-              </button>
-              <div class="pdp-hero__product-infossss mt-[20px] marko-bundle !mb-[20px] bundle-display hidden">
-                {% if collectionRepeater.size > 0 %}
-                  {% comment %} <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
-                    {{section.settings.bundle_title}}
-                  </h4> {% endcomment %}
-                  {% if section.settings.bundle_subtitle %}
-                    <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
-                      {{section.settings.bundle_subtitle}}
-                    </h5>
-                  {% endif %}
-                  <div class="flex flex-row max-w-[500px] mx-auto divide-x divide-black text-center">
-
-                    <div class="flex-1 px-4">
-                      <div class="relative inline-block">
-                        <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                          <span>55</span>
-                          <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                        </h3>
-                        <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                      </div>
-                      <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                        3+ items
-                      </div>
-                    </div>
-
-                    <div class="flex-1 px-4">
-                      <div class="relative inline-block">
-                        <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                          <span>70</span>
-                          <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                        </h3>
-                        <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                      </div>
-                      <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                        7+ items
-                      </div>
-                    </div>
-
-                    <div class="flex-1 px-4">
-                      <div class="relative inline-block">
-                        <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
-                          <span>80</span>
-                          <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
-                        </h3>
-                        <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
-                      </div>
-                      <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
-                        10+ items
-                      </div>
-                    </div>
-
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
 
           </div>
         </div>
-      {% unless section.settings.hide_grid %}
-        <div class="pdp-hero__product-infos mt-[20px] product-display">
+        {% unless section.settings.hide_grid %}
+        <div class="pdp-hero__product-infos mt-[20px]">
           {% if accRepeater.size > 0 %}
             <h4 class="pd-selector-title !my-[10px] !text-center md:text-left" style="margin-top: 20px;">
               BUILD A BUNDLE - ADD MORE AT HALF PRICE
@@ -1164,7 +911,7 @@
                        </div>
                    </div>
                  </div>
-                  <div data-bundle-variant-id="{{acc_product.first_available_variant.id}}" class="acc_single_overlay"></div>
+                  <div class="acc_single_overlay"></div>
                   <div class="accinfo-icon-trigger js-info-trigger">i</div>
                   <div class="flex items-center gap-[16px]">
                     <img width="100%" height="auto" src="{{block.settings.acc_image | img_url:'master'}}" alt="Adapter" class="w-[60px] h-[60px] object-contain" />
@@ -1191,6 +938,156 @@
             </div>
           {% endif %}
 
+        </div>
+        {% endunless %}
+        {% unless section.settings.hide_slider %}
+        <div class="pdp-hero__product-infos mt-[20px] slider-infos">
+          {% if collectionRepeater.size > 0 %}
+            <h4 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+              {{section.settings.bundle_title}}
+            </h4>
+            {% if section.settings.bundle_subtitle %}
+              <h5 class="pd-selector-title !my-[10px] !text-center md:text-left uppercase" style="margin-top: 20px;">
+                {{section.settings.bundle_subtitle}}
+              </h5>
+            {% endif %}
+            <div class="flex flex-row max-w-[500px] mx-auto divide-x divide-black text-center">
+
+              <div class="flex-1 px-4">
+                <div class="relative inline-block">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                    <span>55</span>
+                    <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                  </h3>
+                  <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                </div>
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                  3+ items
+                </div>
+              </div>
+
+              <div class="flex-1 px-4">
+                <div class="relative inline-block">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                    <span>70</span>
+                    <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                  </h3>
+                  <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                </div>
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                  7+ items
+                </div>
+              </div>
+
+              <div class="flex-1 px-4">
+                <div class="relative inline-block">
+                  <h3 class="bold text-black text-[37px] md:text-[50px] font-sans leading-[1] inline-flex items-baseline">
+                    <span>80</span>
+                    <span class="text-[11px] md:text-[16px] ml-1">OFF</span>
+                  </h3>
+                  <div class="absolute -top-[10px] right-[0px] text-[27px] md:text-[30px] text-black">%</div>
+                </div>
+                <div class="text-[#60c655c2] font-bold text-[15px] md:text-[20px] leading-[1] mt-2 max-w-[80%] mx-auto md:max-w-full">
+                  10+ items
+                </div>
+              </div>
+
+            </div>
+
+
+            {% for block in collectionRepeater %}
+               {% assign collectionHandle = block.settings.collection %}
+               {% for product in collectionHandle.products %}
+                {% assign acc_product = all_products[product.handle] %}
+                <div data-popup="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="product-popup js-popup-outer">
+                  <div class="close">
+                    {% render 'icon-close' %}
+                  </div>
+                  <div class="product-popup__content">
+                      <div class="product-popup__content--image">
+                        <img width="100%" height="auto" src="{{ acc_product.images[0].src | img_url:'master'}}">
+                    </div>
+                    <div class="product-popup__content--title">
+                      {{ acc_product.title }}
+                    </div>
+                    <div class="product-popup__content--prices mt-[10px]">
+                        <div>
+                          <span class="price">{{ acc_product.first_available_variant.price | money }}</span>
+                          <span class="compare">{{ acc_product.first_available_variant.compare_at_price | money }}</span>
+                        </div>
+                    </div>
+                    {% if acc_product.metafields.custom.ticks %}
+                      {{acc_product.metafields.custom.ticks | metafield_tag }}
+                    {% endif %}
+                    <div class="product-popup__content--buttons">
+                        <button class="js-return">Return To Order</button>
+                        <button class="js-add">+ Add To Order</button>
+                    </div>
+                </div>
+                </div>
+               {% endfor %}
+               <div class="my-[20px] relative">
+                <div class="text-[#7d7d7d] bold italic mb-[-15px]">{{collectionHandle.title}}</div>
+                <div class="relative omotac">
+                  <div class="swiper collSwiper-{{ forloop.index }}">
+                    <div class="swiper-wrapper pt-[20px] px-0">
+                      {% for product in collectionHandle.products %}
+                        {% assign acc_product = all_products[product.handle] %}
+                        <div class="collection-slider swiper-slide acc_single flex items-center justify-between bg-[#f5f5f5] rounded-[8px] p-[16px] w-full js-acc-trigger relative" data-variant-id="{{ acc_product.first_available_variant.id }}">
+                          <div data-popup-id="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="acc_single_overlay"></div>
+                        <div data-popup-open="{{collectionHandle.handle}}-open-{{ forloop.index }}" class="accinfo-icon-trigger js-info-trigger-outer">i</div>
+                          <div class="flex items-center gap-[16px]">
+                            <img width="100%" height="auto" src="{{acc_product.images[0].src | img_url:'master'}}" alt="Adapter" class="w-[90px] h-[90px] md:w-[60px] md:h-[60px] object-contain" />
+                            <div>
+                              {% comment %} <div class="text-[13px] text-black leading-[1.2]">{{block.settings.acc_discount_pill}}</div> {% endcomment %}
+                              <div class="text-[16px] leading-[1.2] font-bold text-black">{{acc_product.title}}</div>
+                            </div>
+                          </div>
+                          <div class="flex items-end gap-[12px] flex-col">
+                            <div class="text-[14px] leading-[1.2] font-medium flex flex-col gap-[5px]">
+                              <span class="text-gray line-through">{{acc_product.compare_at_price | money }}</span>
+                              <span class="text-black">{{acc_product.price | money }}</span>
+                              {% comment %} {{acc_product.price | money }} {% endcomment %}
+                            </div>
+                            <div class="w-[24px] h-[24px] border border-[#ccc] rounded-[4px] !block acc_checkbox bg-white">
+                              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                                <g fill="black" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M41.9375,8.625c-0.66406,0.02344 -1.27344,0.375 -1.625,0.9375l-18.8125,28.78125l-12.1875,-10.53125c-0.52344,-0.54297 -1.30859,-0.74609 -2.03125,-0.51953c-0.71875,0.22266 -1.25391,0.83203 -1.37891,1.57422c-0.125,0.74609 0.17578,1.49609 0.78516,1.94531l13.9375,12.0625c0.4375,0.37109 1.01563,0.53516 1.58203,0.45313c0.57031,-0.08594 1.07422,-0.41016 1.38672,-0.89062l20.09375,-30.6875c0.42969,-0.62891 0.46484,-1.44141 0.09375,-2.10547c-0.37109,-0.66016 -1.08594,-1.05469 -1.84375,-1.01953z"></path></g></g>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+
+
+                  </div>
+                  <div class="swiper-button-prev swiper-button-prev-{{ forloop.index }} absolute top-[50%] left-[-25px]">
+
+                  </div>
+
+                  <div class="swiper-button-next swiper-button-next-{{ forloop.index }} absolute top-[50%] right-[-25px]">
+
+                  </div>
+                  </div>
+              </div>
+              <script>
+                var swiper{{ forloop.index }} = new Swiper(".collSwiper-{{ forloop.index }}", {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                  navigation: {
+                    nextEl: ".swiper-button-next-{{ forloop.index }}",
+                    prevEl: ".swiper-button-prev-{{ forloop.index }}",
+                  },
+                  breakpoints: {
+                    768: {
+                      slidesPerView: 2,
+                      spaceBetween: 10,
+                    }
+                  },
+                });
+              </script>
+            {% endfor %}
+          {% endif %}
         </div>
         {% endunless %}
       </div>
@@ -1238,13 +1135,128 @@
         <div class="hidden md:flex sticky-card-product w-[50px] h-[50px] bg-white items-center justify-center placeholder relative">+</div>
     </div>
     <div class="atc-bundle-button">
-      <div class="text-center js-bundle-message">Add 3 more to get 55% off</div>
+      <div class="text-center js-bundle-message">Add 2 more to get 55% off</div>
       <button class="js-simulate js-rebuy text-center min-w-[300px] h-[46px] bg-[#2f4534]  text-[16px] text-white font-semibold rounded-[20px] leading-[46px] mt-[10px]">
           ADD TO CART
       </button>
     </div>
   </div>
 </div>
+<style>
+  .swiper-button-prev:after, .swiper-button-next:after {
+    color: black !important;
+    opacity: .5 !important;
+    font-size: 25px;
+}
+  .section-pdp-hero-secondary .swiper-initialized {
+    padding-inline:0;
+  }
+  {% comment %} .accinfo-icon-trigger {
+    top: -20px;
+    right: 0px;
+  } {% endcomment %}
+  .acc_single.collection-slider {
+    flex:1 1 1;
+  }
+  .pdp-hero__container {
+    display: flex;
+    min-width: 0;
+  }
+
+  .pdp-hero__gallery,
+  .pdp-hero__product-info {
+    min-width: 0;
+  }
+  .swiper-vertical>.swiper-wrapper-new {
+    flex-direction: column
+}
+  .swiper-wrapper-new {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    transition-timing-function: var(--swiper-wrapper-transition-timing-function,initial);
+    box-sizing: content-box
+  }
+  .swiper-android .swiper-slide,.swiper-ios .swiper-slide,.swiper-wrapper-new {
+    transform: translate3d(0px,0,0)
+}
+.swiper-grid>.swiper-wrapper-new {
+  flex-wrap: wrap
+}
+
+.swiper-grid-column>.swiper-wrapper-new {
+  flex-wrap: wrap;
+  flex-direction: column
+}
+  .accinfo-icon-trigger {
+    top: -20px;
+    right: 0px;
+  }
+  .pdp-hero__product-title {
+    background: linear-gradient(180deg, #35FF2E, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 150%;
+  }
+  .acc_single svg {
+    display: none;
+  }
+  .acc_single.selected {
+    border: 1px solid black;
+    background:#f5f5f5 !important;
+  }
+  .acc_single.selected svg {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: -2px;
+  }
+  .acc_single {
+    border-color:transparent;
+    box-shadow: 0 1px 5px 3px #00000008;
+  }
+  .pdp-hero__product-info {
+    box-shadow:none;
+    background:transparent;
+    padding:0 !important;
+    border-radius: 0px;
+  }
+  .pdp-hero__product-infos {
+    flex: 1;
+    border-radius: 30px;
+    padding: 30px 35px;
+    background-color: #fff;
+    height: fit-content;
+    box-shadow: 0 1px 5px 3px #00000008
+  }
+  .pdp-hero__upsell-highlighted {
+    background: radial-gradient(#d8e1e2 50%, #a2e59b);
+    border-radius: 0 0 22px 22px;
+    border-radius: 22px;
+  }
+  @media (max-width: 768px) {
+    .pdp-hero__product-infos {
+      flex: 1;
+      border-radius: 30px;
+      padding: 50px 10px 20px;
+      background-color: #fff;
+      height: fit-content;
+      box-shadow: 0 1px 5px 3px #00000008
+    }
+    .pdp-hero__product-infos.slider-infos {
+      flex: 1;
+      border-radius: 30px;
+      padding: 20px 10px 20px;
+      background-color: #fff;
+      height: fit-content;
+      box-shadow: 0 1px 5px 3px #00000008
+    }
+
+  }
+</style>
 
 <script src="{{ 'section-pdp-hero-master.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'pdpheromasterlight.js' | asset_url }}" defer="defer"></script>
@@ -1437,8 +1449,89 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
   });
 });
 </script>
-{{ 'pdplight.css' | asset_url | stylesheet_tag }}
-{{ 'pdptabs.css' | asset_url | stylesheet_tag }}
+<style>
+  .gift-upsell .pdp-hero__extra-add.active {
+    background: #60c6556e !important;
+    border: none;
+    border-radius: 15px !important;
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.fw.pdp-hero__extra-add.pdp-hero__upsell-wrapper.js-product-selector {
+    background-color: #E9E9E9;
+    box-shadow: 0px 2px 8px rgb(0 0 0 / 8%) !important;
+    border-radius: 15px !important;
+}
+
+.master-options {
+    background: #E9E9E9;
+}
+
+.master-options .select-button {
+    background: #E9E9E9;
+}
+
+.master-options .select-button.active {
+    color: #fff;
+    background-color: #60c65596;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.pdp-hero__gallery-main-image img {
+    box-shadow: none;
+}
+
+.grid-images {
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pdp-hero__container {
+    gap: 0px;
+}
+
+@media (min-width: 768px) {
+    .pdp-hero__product-info {
+        padding: 30px 35px;
+    }
+
+    .pdp-hero__gallery {
+        width: 650px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdp-hero__product-info {
+        padding: 20px 15px;
+    }
+}
+
+.promo_line.new-promo-line {
+    background: #a6eaa347 !important;
+    margin-bottom: 30px;
+}
+
+.section-pdp-hero .switch-holder {
+    max-width: 90%;
+}
+
+.color-titan-yellow {
+    color: #000000;
+    font-size: 20px;
+}
+
+.gift-upsell {
+    gap: 12px;
+}
+
+.pdp-hero__product-subtitle {
+    color: #000000;
+    font-size: 25px;
+}
+
+</style>
 
 {% schema %}
 {
@@ -1517,6 +1610,24 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
     },
     {
       "type": "text",
+      "id": "pack_title",
+      "label": "Pack Title",
+      "default": "PICK YOUR PACK OFFER"
+    },
+    {
+      "type": "text",
+      "id": "grid_images_title",
+      "label": "Grid Images Title",
+      "default": "Grab Multiple Packs & Save More"
+    },
+    {
+      "type": "text",
+      "id": "gift_title",
+      "label": "Gift Block Title",
+      "default": "Get free gifts"
+    },
+    {
+      "type": "text",
       "id": "promo_line",
       "label": "Promo Line"
     },
@@ -1586,48 +1697,6 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
     }
   ],
   "blocks": [
-    {
-      "type": "count_repeater",
-      "name": "Count upsell",
-      "settings": [
-        {
-          "type": "text",
-          "id": "product_selector_number",
-          "label": "Product selector number"
-        },
-        {
-          "type": "text",
-          "id": "product_number_unlocker",
-          "label": "Product number unlocker"
-        },
-        {
-          "type": "product",
-          "id": "product_obj",
-          "label": "Product"
-        },
-        {
-          "type": "image_picker",
-          "id": "upsell_product_image",
-          "label": "Product image"
-        },
-        {
-          "type": "text",
-          "id": "product_title_custom",
-          "label": "Product title"
-        },
-        {
-          "type": "text",
-          "id": "upsell_product_discount",
-          "label": "Discount text"
-        },
-        {
-          "type": "textarea",
-          "id": "upsell_message",
-          "label": "Upsell message",
-          "default": "LIMITED STOCK OFFER  GET +1 FREE"
-        }
-      ]
-    },
     {
       "type": "product_repeater",
       "name": "Product upsell",

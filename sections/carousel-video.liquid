@@ -1,0 +1,139 @@
+{% stylesheet %}
+.swiper {
+  overflow: visible;
+}
+{% endstylesheet %}
+
+<div class="video-carousel-section px-[20px] max-w-[1440px] mx-auto py-[40px]">
+  <div class="swiper video-swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide group relative rounded-[16px] overflow-hidden">
+          <video
+            class="pointer-events-none transition-all duration-300 group-hover:opacity-100"
+            loop
+            preload="none"
+            playsinline
+            data-video
+            poster="{{ block.settings.thumbnail | image_url: width: 800 }}"
+          >
+            <source src="{{ block.settings.video_url }}" type="video/mp4">
+          </video>
+
+          <button
+            class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-[24px] opacity-0 group-hover:opacity-100 transition-opacity"
+            data-play
+          >
+            ▶️
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Modal Overlay -->
+    <div id="videoModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden">
+    <div class="relative max-w-[90%] max-h-[90%] w-full">
+      <video
+        id="modalVideo"
+        class="w-full h-full object-contain"
+        controls
+        playsinline
+      ></video>
+      <button id="closeModal" class="absolute top-[-16px] right-[-16px] text-white text-[24px]">✖</button>
+    </div>
+  </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const swiper = new Swiper('.video-swiper', {
+        slidesPerView: 1.2,
+        spaceBetween: 16,
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          }
+        }
+      });
+
+      const modal = document.getElementById('videoModal');
+      const modalVideo = document.getElementById('modalVideo');
+      const closeModal = document.getElementById('closeModal');
+
+      document.querySelectorAll('[data-video]').forEach(video => {
+        const container = video.closest('.group');
+
+        // Hover preview (muted autoplay)
+        container.addEventListener('mouseenter', () => {
+          video.muted = true;
+          video.controls = false;
+          video.play().catch(() => {});
+        });
+
+        container.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+
+        // On click, show modal and play with sound
+        container.addEventListener('click', e => {
+          e.preventDefault();
+
+          modal.classList.remove('hidden');
+          modalVideo.src = video.querySelector('source').src;
+          modalVideo.currentTime = 0;
+          modalVideo.muted = false;
+          modalVideo.controls = true;
+          modalVideo.play().catch(err => {
+            console.warn("Modal video error:", err);
+          });
+        });
+      });
+
+      // Close modal on click outside or ✖
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === closeModal) {
+          modal.classList.add('hidden');
+          modalVideo.pause();
+          modalVideo.src = '';
+        }
+      });
+    });
+</script>
+
+
+
+
+
+{% schema %}
+{
+  "name": "Video Carousel",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video Slide",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (mp4)"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail Image"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Video Carousel",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

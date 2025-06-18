@@ -762,11 +762,11 @@ let isAboveTop = false;
 let isBelowFooter = false;
 
 function updateStickyVisibility() {
-  if (!isAboveTop && !isBelowFooter) {
-    stickySection.classList.remove('hidden');
-  } else {
-    stickySection.classList.add('hidden');
-  }
+  // if (!isAboveTop && !isBelowFooter) {
+  //   stickySection.classList.remove('hidden');
+  // } else {
+  //   stickySection.classList.add('hidden');
+  // }
 }
 
 const observerOptions = {

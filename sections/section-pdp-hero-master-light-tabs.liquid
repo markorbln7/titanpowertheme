@@ -998,7 +998,7 @@
                   </div>
                   </div>
                  {% endfor %}
-                 <div class="my-[20px] relative">
+                 <div class="my-[20px] relative bundle-display hidden">
                   <div class="text-[#7d7d7d] bold italic mb-[-15px]">{{collectionHandle.title}}</div>
                   <div class="relative omotac">
                     <div class="swiper collSwiper-{{ forloop.index }}">
@@ -1226,7 +1226,7 @@
   </div>
 </div>
 
-<div class="fixed bottom-[0px] w-full bg-[#d6e1e1] z-[999999] md:px-[40px] px-[10px] sticky-card-wrap hidden js-output-outer">
+<div class="bundle-display hidden fixed bottom-[0px] w-full bg-[#d6e1e1] z-[999999] md:px-[40px] px-[10px] sticky-card-wrap js-output-outer">
   <div class="sticky-card flex justify-between md:items-start !items-center flex-col md:flex-row pb-[20px] md:pb-0 pt-[0] md:pt-[10px]">
 
     <div class="flex md:gap-[16px] gap-[8px] py-[20px] js-output flex-wrap">
@@ -1442,7 +1442,7 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
 
 {% schema %}
 {
-  "name": "PDP Hero Master",
+  "name": "PDP Hero Secondary TABS",
   "settings": [
     {
       "type": "checkbox",
@@ -1849,7 +1849,7 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
   ],
   "presets": [
     {
-      "name": "PDP Hero Secondary LIGHT"
+      "name": "PDP Hero Secondary TABS"
     }
   ]
 }

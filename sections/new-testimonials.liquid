@@ -1,0 +1,130 @@
+{% schema %}
+{
+  "name": "New Testimonials Slider",
+  "tag": "section",
+  "class": "ryze-testimonials-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "200K+ FIVE STAR REVIEWS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "Join The RYZE Revolution"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Hear from RYZErs everywhere that are experiencing the life-enhancing benefits of mushrooms."
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": "254,139 Reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Testimonial text"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Quote title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Testimonials Sliders",
+      "blocks": [
+        {"type": "testimonial"},
+        {"type": "testimonial"},
+        {"type": "testimonial"}
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="w-full px-[20px] py-[40px]">
+  <div class="max-w-[1200px] mx-auto text-center">
+    <p class="text-[14px] font-bold uppercase tracking-wider text-[#2f4534]">{{ section.settings.subtitle }}</p>
+    <h2 class="text-[32px] md:text-[40px] font-bold mb-[8px]">{{ section.settings.title }}</h2>
+    <p class="text-[16px] text-[#444] mb-[16px]">{{ section.settings.description }}</p>
+    <p class="text-[16px] font-bold text-[#000]">{{ section.settings.review_count }}</p>
+  </div>
+
+  <div class="mt-[40px] swiper testimonials-swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide px-[10px] !h-full">
+          <div class="border border-[#e6d8cd] rounded-[10px] bg-white h-full flex flex-col md:flex-row justify-between">
+            {% if block.settings.image %}
+              <div class="md:w-[40%] w-full">
+                <img src="{{ block.settings.image | image_url }}" class="mb-[16px] mx-auto h-full w-full object-cover" alt="{{ block.settings.name }}">
+              </div>
+            {% endif %}
+                <div class="text-left p-[20px] md:w-[60%] w-full">
+                    <div class="text-[#2f4534] text-[20px] font-bold leading-tight mb-[4px]">{{ block.settings.title }}</div>
+                    <div class="text-[16px] text-[#444] mb-[8px]">{{ block.settings.quote }}</div>
+                    <p class="text-[14px] font-semibold text-[#000]">{{ block.settings.name }}</p>
+                    <div class="mt-[8px] inline-flex items-center gap-[4px] text-[12px] text-[#777]">
+                        <span class="w-[16px] h-[16px] bg-[#2f4534] rounded-full"></span>
+                        Verified Buyer
+                    </div>
+                </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-between mt-[20px] px-[20px]">
+      <div class="swiper-button-prev text-[#2f4534] cursor-pointer !block"></div>
+      <div class="swiper-button-next text-[#2f4534] cursor-pointer !block"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".testimonials-swiper", {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      loop: true,
+      autoHeight: true,
+      breakpoints: {
+        768: {
+          slidesPerView: 3,
+        },
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  });
+</script>

@@ -243,12 +243,12 @@
       <div class="pdp-hero__product-info mt-[20px] md:mt-0">
         <div class="pdp-hero__product-infos relative">
           <div class="badge-new !text-[18px] px-[10px]">NEW</div>
-          <h2 class="pdp-hero__product-title uppercase italic">{{ section.settings.section_title }}</h2>
           <div class="product-template-new__wrapper--content__review js-stars-scroll">
             <span class="product-template-new__wrapper--content__review--stars color-titan-yellow font-sans">★★★★★ </span>
             <span class="product-template-new__wrapper--content__review--mark font-sans color-black">4.7</span>
             <span class="product-template-new__wrapper--content__review--number color-black font-lato">(22,599)</span>
           </div>
+          <h2 class="pdp-hero__product-title uppercase italic !mb-[0px]">{{ section.settings.section_title }}</h2>
           <div class="pdp-hero__heading">
             {% if section.settings.promo_line != blank %}
               <div class="promo_line">
@@ -265,7 +265,7 @@
 
               <div x-data="{ expanded: false }" class="pdp-hero__product-description mt-[10px] text-[14px] leading-[1.5] text-[#7d7d7d] transition-all duration-300 ease-in-out overflow-hidden block md:hidden">
                 {% assign description_text = mainProduct.description %}
-                {% assign truncated_description = description_text | truncate: 152, '' %}
+                {% assign truncated_description = description_text | truncate: 115, '...' %}
 
                 <div class="relative">
                   <div
@@ -786,7 +786,7 @@
           {% endif %}
 
           {% if section.settings.gift_promo_line %}
-            <div style="background: #ffffe0 !important;marging-bottom:10px;font-size:12px;" class="promo_line new-promo-line">
+            <div style="" class="promo_line new-promo-line">
               <div>
                 <span class="green-dot"></span>
                 <span><span>Order by
@@ -1238,7 +1238,35 @@
     border-radius: 0 0 22px 22px;
     border-radius: 22px;
   }
+  .js-stars-scroll {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .product-template-new__wrapper--content__review--stars {
+    padding-top:0;
+  }
+  .pdp-hero__container {
+    gap:20px !important;
+  }
+  .pdp-hero__container .promo_line.new-promo-line {
+    background: #ffffe0 !important;
+    font-size:14px !important;
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+  }
+  .pdp-hero__container .pdp-hero__atc {
+    height: 60px !important;
+    }
+    .pdp-hero__extra-add img {
+      max-width: 95px;
+      height: 95px !important;
+  }
   @media (max-width: 768px) {
+    .pdp-hero__container .promo_line.new-promo-line {
+      background: #ffffe0 !important;
+      font-size:12px !important;
+      margin-bottom: 10px !important;
+    }
     .pdp-hero__product-infos {
       flex: 1;
       border-radius: 30px;

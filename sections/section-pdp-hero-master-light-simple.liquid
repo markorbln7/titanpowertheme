@@ -483,7 +483,11 @@
                     {% else %}
                       <div class="qty_selector-price">
                         <span class="js-each">{{- product_obj.first_available_variant.price | money -}}</span>
-                        <span class="js-each-compare">{{- product_obj.first_available_variant.compare_at_price | money -}}</span>
+                        {% if product_obj.first_available_variant.compare_at_price > product_obj.first_available_variant.price %}
+                         <div class="text-[12px] ">
+                          Save <span class="js-each-compares">{{- product_obj.first_available_variant.compare_at_price | minus: product_obj.first_available_variant.price | money -}}</span>
+                        </div>
+                        {% endif %}
                       </div>
                     {% endif %}
 
@@ -506,6 +510,7 @@
                       {
                         id: '{{ variant.id }}',
                         price: '{{ variant.price | divided_by: upsell_message | money }}',
+                        compare_price: '{{ variant.compare_at_price | money }}',
                         image: '{{ variant.featured_image.src | img_url: 'master' }}',
                         available: {{ variant.available }},
                         options: [

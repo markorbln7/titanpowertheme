@@ -1,0 +1,156 @@
+{% stylesheet %}
+.swiper {
+  overflow: visible;
+}
+{% endstylesheet %}
+
+<div class="video-carousel-section px-[20px] max-w-[1440px] mx-auto py-[40px]">
+  <h2 class="text-black md:text-[44px] text-[28px] font-bold ml-[10px] text-center uppercase italic mb-[20px]">{{section.settings.title}}</h2>
+  <div class="swiper video-swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide group relative rounded-[16px] overflow-hidden">
+          <video
+            class="pointer-events-none transition-all duration-300 group-hover:opacity-100"
+            loop
+            preload="none"
+            playsinline
+            data-video
+            poster="{{ block.settings.thumbnail | image_url: width: 800 }}"
+          >
+            <source src="{{ block.settings.video_url }}" type="video/mp4">
+          </video>
+
+          <button
+            class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-[24px] opacity-0 group-hover:opacity-100 transition-opacity"
+            data-play
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+              class="icon icon-play w-[14px] mx-auto"
+              fill="none"
+              viewBox="0 0 10 14"
+            >
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M1.48177 0.814643C0.81532 0.448245 0 0.930414 0 1.69094V12.2081C0 12.991 0.858787 13.4702 1.52503 13.0592L10.5398 7.49813C11.1918 7.09588 11.1679 6.13985 10.4965 5.77075L1.48177 0.814643Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Modal Overlay -->
+    <div id="videoModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden">
+    <div class="max-w-[90%] max-h-[90%] w-full">
+      <video
+        id="modalVideo"
+        class="max-w-full w-[500px] mx-auto"
+        controls
+        playsinline
+      ></video>
+      <button id="closeModal" class="absolute top-[20px] right-[20px] text-white text-[24px]">X</button>
+    </div>
+  </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const swiper = new Swiper('.video-swiper', {
+        slidesPerView: 1.2,
+        spaceBetween: 16,
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          }
+        }
+      });
+
+      const modal = document.getElementById('videoModal');
+      const modalVideo = document.getElementById('modalVideo');
+      const closeModal = document.getElementById('closeModal');
+
+      document.querySelectorAll('[data-video]').forEach(video => {
+        const container = video.closest('.group');
+
+        // Hover preview (muted autoplay)
+        container.addEventListener('mouseenter', () => {
+          video.muted = true;
+          video.controls = false;
+          video.play().catch(() => {});
+        });
+
+        container.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+
+        // On click, show modal and play with sound
+        container.addEventListener('click', e => {
+          e.preventDefault();
+
+          modal.classList.remove('hidden');
+          modalVideo.src = video.querySelector('source').src;
+          modalVideo.currentTime = 0;
+          modalVideo.muted = false;
+          modalVideo.controls = true;
+          modalVideo.play().catch(err => {
+            console.warn("Modal video error:", err);
+          });
+        });
+      });
+
+      // Close modal on click outside or ✖
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === closeModal) {
+          modal.classList.add('hidden');
+          modalVideo.pause();
+          modalVideo.src = '';
+        }
+      });
+    });
+</script>
+
+
+
+
+
+{% schema %}
+{
+  "name": "Video Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Video Showcase"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video Slide",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (mp4)"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail Image"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Video Carousel",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

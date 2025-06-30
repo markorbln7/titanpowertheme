@@ -543,6 +543,7 @@
         ".section-air-tabs {background: linear-gradient(180deg, #60c655, black) !important;}"
       ],
       "settings": {
+        "one_slide_only": false,
         "section_title": "4 PREMIUM ATTACHMENT HEADS",
         "section_subtitle": "TARGET MUSCLES WITH PRECISION",
         "section_background": "linear-gradient(180deg, #60c655, transparent);"
@@ -552,6 +553,181 @@
       "type": "compare-table",
       "disabled": true,
       "settings": {}
+    },
+    "section_pdp_hero_master_light_k3Efc8": {
+      "type": "section-pdp-hero-master-light",
+      "blocks": {
+        "product_repeater_JLMWUm": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "1-product",
+            "product_number_unlocker": "1",
+            "product_obj": "magtech-powerpack™-buy-1-get-1-free",
+            "upsell_product_image": "shopify://shop_images/magtech_powerpack.png",
+            "product_title_custom": "2 x PowerBank",
+            "upsell_product_discount": "1 FREE",
+            "upsell_message": "2"
+          }
+        },
+        "product_repeater_jq7Ww3": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "2-product",
+            "product_number_unlocker": "2",
+            "product_obj": "magtech-powerpack™-buy-2-get-2-free",
+            "upsell_product_image": "shopify://shop_images/magtech_powerpack.png",
+            "product_title_custom": "4 x PowerBank",
+            "upsell_product_discount": "2 FREE",
+            "upsell_message": "4"
+          }
+        },
+        "product_repeater_JbcDck": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "3-product",
+            "product_number_unlocker": "3",
+            "product_obj": "magtech-powerpack™-buy-2-get-free",
+            "upsell_product_image": "shopify://shop_images/magtech_powerpack.png",
+            "product_title_custom": "6 x PowerBank",
+            "upsell_product_discount": "3 FREE",
+            "upsell_message": "6"
+          }
+        },
+        "accesories_46dGFm": {
+          "type": "accesories",
+          "settings": {
+            "acc_product": "",
+            "acc_title": "",
+            "acc_discount_pill": "50% OFF"
+          }
+        },
+        "gift_images_NbLVhK": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "gift_images_CCJGUL": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "gift_images_i8yWqL": {
+          "type": "gift_images",
+          "settings": {
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "",
+            "top_note": "Free $9.95",
+            "gift_price_product": ""
+          }
+        },
+        "icons_BMHhbK": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon_title": "",
+            "pdp_hero_icon_text": ""
+          }
+        },
+        "icons_d7en3n": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon_title": "",
+            "pdp_hero_icon_text": ""
+          }
+        },
+        "icons_7wK8Jf": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon_title": "",
+            "pdp_hero_icon_text": ""
+          }
+        },
+        "icons_tfDpCy": {
+          "type": "icons",
+          "settings": {
+            "pdp_hero_icon_title": "",
+            "pdp_hero_icon_text": ""
+          }
+        },
+        "grid_images_4Kt6L9": {
+          "type": "gridImages",
+          "settings": {
+            "image_qty": ""
+          }
+        },
+        "grid_images_XY8HTD": {
+          "type": "gridImages",
+          "settings": {
+            "image_qty": ""
+          }
+        },
+        "grid_images_bHc7Rd": {
+          "type": "gridImages",
+          "settings": {
+            "image_qty": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_JLMWUm",
+        "product_repeater_jq7Ww3",
+        "product_repeater_JbcDck",
+        "accesories_46dGFm",
+        "gift_images_NbLVhK",
+        "gift_images_CCJGUL",
+        "gift_images_i8yWqL",
+        "icons_BMHhbK",
+        "icons_d7en3n",
+        "icons_7wK8Jf",
+        "icons_tfDpCy",
+        "grid_images_4Kt6L9",
+        "grid_images_XY8HTD",
+        "grid_images_bHc7Rd"
+      ],
+      "custom_css": [
+        ".gift-upsell .qty_selector-title {font-family: \"Work Sans\"; font-size: 15px; letter-spacing: normal;}",
+        ".pdp-hero__product-title {margin-bottom: -10px; background: linear-gradient(270deg, #35ff2e 15%, #000000); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}",
+        ".text-\\[\\#60c655\\] {display: none;}",
+        ".inline {font-weight: 400; line-height: 1.6;}",
+        ".accordion-content {font-weight: 400;}",
+        ".text-\\[20px\\] {font-size: 16px;}",
+        ".badge-new {display: none;}",
+        ".master-options {background: #e9e9e9; display: none;}"
+      ],
+      "name": "PDP Hero Secondary LIGHT",
+      "settings": {
+        "show_each": true,
+        "hide_slider": true,
+        "hide_grid": false,
+        "hide_length": true,
+        "show_variant_picker": true,
+        "show_grid_images": true,
+        "show_qty": true,
+        "show_gift_layout": true,
+        "show_disc_box": true,
+        "section_title": "Titan Smart Cable Pro",
+        "bundle_title": "Build a Bundle and save up to 80%",
+        "bundle_subtitle": "",
+        "pack_title": "PICK YOUR PACK OFFER",
+        "grid_images_title": "Grab Multiple Packs & Save More",
+        "gift_title": "Get free gifts",
+        "promo_line": "",
+        "gift_promo_line": "Order by Nov. 14th to secure our best pricing ever.",
+        "product_main": "",
+        "product_subtitle": "",
+        "discount_content": "36% OFF",
+        "atc_label": "96% OF the reviews for this item are positive",
+        "product_highlighted": "",
+        "product_highlighted_title": "",
+        "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+      }
     },
     "section_pdp_hero_case_iktAWH": {
       "type": "section-pdp-hero-master",
@@ -663,6 +839,7 @@
         ".buy-more {box-shadow: 2px 2px 9px 1px #0000003b;}"
       ],
       "settings": {
+        "show_variant_picker": false,
         "show_grid_images": false,
         "show_qty": false,
         "show_gift_layout": false,
@@ -751,6 +928,7 @@
       ],
       "disabled": true,
       "settings": {
+        "product": "",
         "logo_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
         "product_subtitle": "Powerful, Whisper Quiet & Pocket Sized",
         "discount_content": "46% OFF",
@@ -933,6 +1111,7 @@
     "slideshow_fwkE7q",
     "section_air_tabs_4tKUCL",
     "compare-table",
+    "section_pdp_hero_master_light_k3Efc8",
     "section_pdp_hero_case_iktAWH",
     "section-pdp-hero",
     "1707579564616101b2",

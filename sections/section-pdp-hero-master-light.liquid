@@ -1,3 +1,4 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {{ 'section-product-template-new.css' | asset_url | stylesheet_tag }}
 {{ 'lightdesign.css' | asset_url | stylesheet_tag }}
 {{ 'section-pdp-hero-master.css' | asset_url | stylesheet_tag }}
@@ -1450,6 +1451,9 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
 });
 </script>
 <style>
+  .acc_single {
+    width:100%;
+  }
   .gift-upsell .pdp-hero__extra-add.active {
     background: #60c6556e !important;
     border: none;
@@ -1489,7 +1493,7 @@ document.querySelectorAll('.accordion-toggle').forEach(toggle => {
 }
 
 .pdp-hero__container {
-    gap: 0px;
+    gap: 10px;
 }
 
 @media (min-width: 768px) {

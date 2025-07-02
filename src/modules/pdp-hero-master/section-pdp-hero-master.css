@@ -544,6 +544,7 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     width: 100%; /* Adjust based on your needs */
     margin-bottom: 20px;
     margin-top: 10px;
+    gap:2%;
 }
 .acc_single {
     position: relative;
@@ -554,8 +555,11 @@ input[type="checkbox"]:checked+.pdp-hero__extra-checkbox svg {
     border:1px solid #d8e1e2;
     border-radius: 22px;
     padding: 10px;
-    width:100%;
+    width:48%;
     margin-bottom:20px;
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
     &.selected {
         box-shadow: 0 2px 9px #00000025 !important;
         background: radial-gradient(rgba(216, 225, 226, 1) 30%, rgba(162, 229, 155, 0.62) 79%, rgba(53, 255, 46, 0.23) 95%) !important;

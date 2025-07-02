@@ -484,6 +484,7 @@
     width: 100%; /* Adjust based on your needs */
     margin-bottom: 20px;
     margin-top: 10px;
+    gap:2%;
 }
     .acc_single {
     position: relative;
@@ -494,8 +495,13 @@
     border:1px solid #d8e1e2;
     border-radius: 22px;
     padding: 10px;
-    width:100%;
-    margin-bottom:20px
+    width:48%;
+    margin-bottom:20px;
+}
+    @media screen and (max-width: 768px) {
+    .acc_single {
+        width: 100%;
+    }
 }
     .acc_single.selected {
     box-shadow: 0 2px 9px #00000025 !important;

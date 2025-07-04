@@ -466,34 +466,36 @@
         "product_repeater_jwnpa4": {
           "type": "product_repeater",
           "settings": {
-            "product_selector_number": "",
-            "product_number_unlocker": "",
+            "product_selector_number": "1-product",
+            "product_number_unlocker": "1",
             "product_obj": "prismcore",
-            "product_title_custom": "",
+            "upsell_product_image": "shopify://shop_images/Hero-smart-cable-image_2.png",
+            "product_title_custom": "1 x Cable",
             "upsell_product_discount": "",
-            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+            "upsell_message": "1"
           }
         },
         "product_repeater_VCxMyM": {
           "type": "product_repeater",
           "settings": {
-            "product_selector_number": "",
-            "product_number_unlocker": "",
+            "product_selector_number": "2-product",
+            "product_number_unlocker": "2",
             "product_obj": "3x-240w-prismcore-cable™",
-            "product_title_custom": "",
+            "upsell_product_image": "shopify://shop_images/Hero-smart-cable-image_1.png",
+            "product_title_custom": "3 x Cable",
             "upsell_product_discount": "",
-            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+            "upsell_message": "3"
           }
         },
         "product_repeater_yAAPrE": {
           "type": "product_repeater",
           "settings": {
-            "product_selector_number": "",
-            "product_number_unlocker": "",
+            "product_selector_number": "3-product",
+            "product_number_unlocker": "3",
             "product_obj": "4x-240w-prismcore-cable™",
-            "product_title_custom": "",
+            "product_title_custom": "4 x Cable",
             "upsell_product_discount": "",
-            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+            "upsell_message": "4"
           }
         },
         "accesories_UcLxRm": {
@@ -520,7 +522,6 @@
         "accesories_UcLxRm",
         "accesories_fEi9tf"
       ],
-      "disabled": true,
       "name": "PDP Hero Secondary SIMPLE",
       "settings": {
         "show_each": true,
@@ -530,7 +531,7 @@
         "show_variant_picker": true,
         "show_grid_images": false,
         "show_qty": true,
-        "show_gift_layout": false,
+        "show_gift_layout": true,
         "show_disc_box": true,
         "section_title": "Titan Smart Cable Pro",
         "bundle_title": "Build a Bundle and save up to 80%",

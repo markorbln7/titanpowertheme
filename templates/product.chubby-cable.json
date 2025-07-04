@@ -225,7 +225,7 @@
         "images_repeater_4xGdYn": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify://shop_images/main-image-3_a1d03707-4372-47d8-86fc-a52d2b153ed9.jpg"
+            "tab_image": "shopify://shop_images/Compatible-prisomcore-cable.jpg"
           }
         },
         "images_repeater_iURg9g": {
@@ -237,7 +237,7 @@
         "images_repeater_wd4xi7": {
           "type": "images_repeater",
           "settings": {
-            "tab_image": "shopify://shop_images/6.0-ultra-thick-silicone-wire.png"
+            "tab_image": "shopify://shop_images/image_218.png"
           }
         },
         "content_repeater_iqcfbc": {
@@ -463,13 +463,72 @@
     },
     "section_pdp_hero_master_light_simple_VUhznE": {
       "type": "section-pdp-hero-master-light-simple",
+      "blocks": {
+        "product_repeater_jwnpa4": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_number_unlocker": "",
+            "product_obj": "prismcore",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_VCxMyM": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_number_unlocker": "",
+            "product_obj": "3x-240w-prismcore-cable™",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "product_repeater_yAAPrE": {
+          "type": "product_repeater",
+          "settings": {
+            "product_selector_number": "",
+            "product_number_unlocker": "",
+            "product_obj": "4x-240w-prismcore-cable™",
+            "product_title_custom": "",
+            "upsell_product_discount": "",
+            "upsell_message": "LIMITED STOCK OFFER  GET +1 FREE"
+          }
+        },
+        "accesories_UcLxRm": {
+          "type": "accesories",
+          "settings": {
+            "acc_product": "",
+            "acc_title": "",
+            "acc_discount_pill": "50% OFF"
+          }
+        },
+        "accesories_fEi9tf": {
+          "type": "accesories",
+          "settings": {
+            "acc_product": "",
+            "acc_title": "",
+            "acc_discount_pill": "50% OFF"
+          }
+        }
+      },
+      "block_order": [
+        "product_repeater_jwnpa4",
+        "product_repeater_VCxMyM",
+        "product_repeater_yAAPrE",
+        "accesories_UcLxRm",
+        "accesories_fEi9tf"
+      ],
+      "disabled": true,
       "name": "PDP Hero Secondary SIMPLE",
       "settings": {
         "show_each": true,
-        "hide_slider": false,
-        "hide_grid": false,
-        "hide_length": false,
-        "show_variant_picker": false,
+        "hide_slider": true,
+        "hide_grid": true,
+        "hide_length": true,
+        "show_variant_picker": true,
         "show_grid_images": false,
         "show_qty": true,
         "show_gift_layout": false,
@@ -489,6 +548,14 @@
         "product_highlighted": "",
         "product_highlighted_title": "",
         "product_highlighted_message": "50% OFF WHEN YOU GET WITH CABLE"
+      }
+    },
+    "section_media_banner_4Y9aNa": {
+      "type": "section-media-banner",
+      "name": "Media banner",
+      "settings": {
+        "media_title": "",
+        "media_url": ""
       }
     },
     "section_pdp_hero_master_qKbXMY": {
@@ -1026,6 +1093,7 @@
     "buds_image_ekEBiX",
     "one_cable_jEH4tF",
     "section_pdp_hero_master_light_simple_VUhznE",
+    "section_media_banner_4Y9aNa",
     "section_pdp_hero_master_qKbXMY",
     "buybox_v2_XHddbq",
     "compare-table",

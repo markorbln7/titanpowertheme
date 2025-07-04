@@ -53,7 +53,8 @@
         ".px-\\[20px\\] {width: 70%; font-weight: 800; letter-spacing: normal;}",
         ".bg-\\[\\#fff\\] {--tw-bg-opacity: 1; background-color: #141414;}",
         "text-\\[16px\\] {font-size: 14px; text-align: center; line-height: 1.2;}",
-        ".mb-\\[20px\\] {margin-bottom: 10px; margin-top: -20px;}"
+        ".mb-\\[20px\\] {margin-bottom: 10px; margin-top: -20px;}",
+        ".narrow .section-explore__buy-now {background-color: #feca2f; color: #000!important;}"
       ],
       "settings": {
         "narrow_version": true,
@@ -69,7 +70,8 @@
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #feca2f; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}"
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bg-\\[\\#60c655\\] {background-color: #feca2f;}"
       ],
       "settings": {
         "welcome_message": "Everything 50% OFF + Save 80% By Adding more",
@@ -112,7 +114,7 @@
       "custom_css": [
         ".max-w-\\[1000px\\].mx-auto {display: none;}",
         ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px; color: #feca2f;}",
         "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
         ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
         ".max-w-\\[700px\\] {display: none;}"
@@ -249,7 +251,8 @@
         ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
         ".js-buy-more {display: none;}",
         ".variant-selector {color: #313131;}",
-        ".quantity__input {font-size: 20px; margin-top: 10px;}"
+        ".quantity__input {font-size: 20px; margin-top: 10px;}",
+        ".section-collections-with-nav__navigation li.active {color: #fff !important; background-color: #feca2f;}"
       ],
       "settings": {
         "use_popup": true,

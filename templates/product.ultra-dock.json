@@ -151,6 +151,7 @@
         "right_box_8HqMX6",
         "left_box_tBgQeR"
       ],
+      "disabled": true,
       "custom_css": [
         "p.text-\\[30px\\].mb-\\[20px\\] {padding-top: 50px;}",
         ".buds-inner {padding: 18px;}",
@@ -165,6 +166,83 @@
         "section_number": 1,
         "background_color": "#2f4534",
         "inner_background_color": "#2f4534"
+      }
+    },
+    "section_zigzag_xjzdHb": {
+      "type": "section-zigzag",
+      "blocks": {
+        "zigzag_repeater_3LFKX9": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify://shop_images/3_15.jpg",
+            "zigzag_first_title": "",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "",
+            "zigzag_mob_copy": "",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 0,
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 0,
+            "zigzag_second_progress_text": "",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "",
+            "count_animation_end_second": ""
+          }
+        }
+      },
+      "block_order": [
+        "zigzag_repeater_3LFKX9"
+      ],
+      "name": "Zigzag section",
+      "settings": {}
+    },
+    "image_with_text_gTaRgR": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_EMQafa": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text",
+            "heading_size": "h1"
+          }
+        },
+        "text_adwMyy": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_HaPBJq": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_EMQafa",
+        "text_adwMyy",
+        "button_HaPBJq"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ezgif-4fb415978a07a3.gif",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "buds_third_anhGpi1": {
@@ -196,6 +274,7 @@
         "right_box_8HqMX6",
         "left_box_tBgQeR"
       ],
+      "disabled": true,
       "custom_css": [
         ".ml-\\[10px\\] {margin-left: 0px; padding: 10px 0px 0px 0px;}",
         ".buds-inner {padding: 18px;}",
@@ -240,6 +319,7 @@
         "right_box_8HqMX6",
         "left_box_tBgQeR"
       ],
+      "disabled": true,
       "custom_css": [
         ".ml-\\[10px\\] {margin-left: 0px; padding: 10px 0px 0px 0px;}",
         ".buds-inner {padding: 18px;}",
@@ -535,6 +615,7 @@
     },
     "one_cable_jEH4tF": {
       "type": "one-cable",
+      "disabled": true,
       "custom_css": [
         ".text-\\[28px\\] {font-size: 40px;}",
         "@media (min-width: 768px) {.text-\\[28px\\] {font-size: 60px; text-align: left; } .text-\\[16px\\] {font-size: 16px; text-align: left; }}",
@@ -549,6 +630,7 @@
     },
     "buds_image_ekEBiX": {
       "type": "buds-image",
+      "disabled": true,
       "settings": {
         "desktop_image": "shopify://shop_images/Banner_dekstop_04237edf-9646-4532-9fac-a0649f4b3e1f.jpg",
         "mobile_image": "shopify://shop_images/Banner_mobile_7ecfdb66-5207-42db-8bfe-faeee4f5a727.jpg"
@@ -909,6 +991,8 @@
     "image_with_text_JUCfy7",
     "image_with_text_ntzmmT",
     "buds_third_anhGpi",
+    "image_with_text_gTaRgR",
+    "section_zigzag_xjzdHb",
     "buds_third_anhGpi1",
     "buds_third_anhGpi2",
     "versatile_amfF9D",

@@ -28,6 +28,51 @@
         "button_text": "ORDER NOW"
       }
     },
+    "rich_text_EQFAmj": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_UWYG3a": {
+          "type": "heading",
+          "settings": {
+            "heading": "What 3 Reasons Make Titan Special",
+            "heading_size": "h1"
+          }
+        },
+        "text_gjKKUd": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+          }
+        },
+        "button_pKmaTg": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_UWYG3a",
+        "text_gjKKUd",
+        "button_pKmaTg"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "image_with_text_JUCfy7": {
       "type": "image-with-text",
       "blocks": {
@@ -168,36 +213,6 @@
         "inner_background_color": "#2f4534"
       }
     },
-    "section_zigzag_xjzdHb": {
-      "type": "section-zigzag",
-      "blocks": {
-        "zigzag_repeater_3LFKX9": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_image": "shopify://shop_images/3_15.jpg",
-            "zigzag_first_title": "",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "",
-            "zigzag_mob_copy": "",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "",
-            "count_animation_end_second": ""
-          }
-        }
-      },
-      "block_order": [
-        "zigzag_repeater_3LFKX9"
-      ],
-      "name": "Zigzag section",
-      "settings": {}
-    },
     "image_with_text_gTaRgR": {
       "type": "image-with-text",
       "blocks": {
@@ -244,6 +259,117 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "section_image_tabs_7CQ4kc": {
+      "type": "section-image-tabs",
+      "blocks": {
+        "images_repeater_4xGdYn": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify://shop_images/Compatible-prisomcore-cable.jpg"
+          }
+        },
+        "images_repeater_iURg9g": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify://shop_images/3_1.jpg"
+          }
+        },
+        "images_repeater_wd4xi7": {
+          "type": "images_repeater",
+          "settings": {
+            "tab_image": "shopify://shop_images/image_218.png"
+          }
+        },
+        "content_repeater_iqcfbc": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Charges Everything",
+            "content_text": "iPhones. Androids. Laptops. iPads. Game controllers. AirPods.\nOne PrismCore Cable = Total Device Freedom."
+          }
+        },
+        "content_repeater_73yi8c": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Visual Power",
+            "content_text": "The subtle color-shifting PrismCore cable lets you see it’s working. Style meets signal. Powered by PrismCore."
+          }
+        },
+        "content_repeater_PmrGX4": {
+          "type": "content_repeater",
+          "settings": {
+            "content_title": "Ultra-Thick for Ultra-Safe Charging",
+            "content_text": "That signature thick cable body isn’t just for looks - it’s high-grade silicone built to reduce heat and boost safety. No frays. No sparks. No worries."
+          }
+        },
+        "tabs_repeater_XUmMNK": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify://shop_images/12.png",
+            "tab_text": "UNIVERSAL"
+          }
+        },
+        "tabs_repeater_Wctjef": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify://shop_images/icons8-glow-100.png",
+            "tab_text": "PRISM GLOW"
+          }
+        },
+        "tabs_repeater_GFF6wD": {
+          "type": "tabs_repeater",
+          "settings": {
+            "tab_icon": "shopify://shop_images/2352.png",
+            "tab_text": "Tangle Free"
+          }
+        }
+      },
+      "block_order": [
+        "images_repeater_4xGdYn",
+        "images_repeater_iURg9g",
+        "images_repeater_wd4xi7",
+        "content_repeater_iqcfbc",
+        "content_repeater_73yi8c",
+        "content_repeater_PmrGX4",
+        "tabs_repeater_XUmMNK",
+        "tabs_repeater_Wctjef",
+        "tabs_repeater_GFF6wD"
+      ],
+      "name": "Images with tabs",
+      "settings": {
+        "reverse_layout": false,
+        "section_title": ""
+      }
+    },
+    "section_zigzag_xjzdHb": {
+      "type": "section-zigzag",
+      "blocks": {
+        "zigzag_repeater_3LFKX9": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": false,
+            "zigzag_image": "shopify://shop_images/3_15.jpg",
+            "zigzag_first_title": "",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "",
+            "zigzag_mob_copy": "",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 0,
+            "zigzag_first_progress_text": "",
+            "zigzag_first_progress_info": "",
+            "zigzag_second_progress": 0,
+            "zigzag_second_progress_text": "",
+            "zigzag_second_progress_info": "",
+            "count_animation_end": "",
+            "count_animation_end_second": ""
+          }
+        }
+      },
+      "block_order": [
+        "zigzag_repeater_3LFKX9"
+      ],
+      "name": "Zigzag section",
+      "settings": {}
     },
     "buds_third_anhGpi1": {
       "type": "cable-pro-numbers",
@@ -391,87 +517,6 @@
       "settings": {
         "title_content": "Power Everything With One Cable",
         "text_content": "<p>The Titan Smart Cable charges all your essentials, phones, tablets, earbuds, controllers, even laptops, with one tough, high-speed cable. No juggling cords. No slowing down. Just one reliable, all-in-one charging solution built for every device.</p>"
-      }
-    },
-    "section_image_tabs_7CQ4kc": {
-      "type": "section-image-tabs",
-      "blocks": {
-        "images_repeater_4xGdYn": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify://shop_images/Compatible-prisomcore-cable.jpg"
-          }
-        },
-        "images_repeater_iURg9g": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify://shop_images/3_1.jpg"
-          }
-        },
-        "images_repeater_wd4xi7": {
-          "type": "images_repeater",
-          "settings": {
-            "tab_image": "shopify://shop_images/image_218.png"
-          }
-        },
-        "content_repeater_iqcfbc": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Charges Everything",
-            "content_text": "iPhones. Androids. Laptops. iPads. Game controllers. AirPods.\nOne PrismCore Cable = Total Device Freedom."
-          }
-        },
-        "content_repeater_73yi8c": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Visual Power",
-            "content_text": "The subtle color-shifting PrismCore cable lets you see it’s working. Style meets signal. Powered by PrismCore."
-          }
-        },
-        "content_repeater_PmrGX4": {
-          "type": "content_repeater",
-          "settings": {
-            "content_title": "Ultra-Thick for Ultra-Safe Charging",
-            "content_text": "That signature thick cable body isn’t just for looks - it’s high-grade silicone built to reduce heat and boost safety. No frays. No sparks. No worries."
-          }
-        },
-        "tabs_repeater_XUmMNK": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_icon": "shopify://shop_images/12.png",
-            "tab_text": "UNIVERSAL"
-          }
-        },
-        "tabs_repeater_Wctjef": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_icon": "shopify://shop_images/icons8-glow-100.png",
-            "tab_text": "PRISM GLOW"
-          }
-        },
-        "tabs_repeater_GFF6wD": {
-          "type": "tabs_repeater",
-          "settings": {
-            "tab_icon": "shopify://shop_images/2352.png",
-            "tab_text": "Tangle Free"
-          }
-        }
-      },
-      "block_order": [
-        "images_repeater_4xGdYn",
-        "images_repeater_iURg9g",
-        "images_repeater_wd4xi7",
-        "content_repeater_iqcfbc",
-        "content_repeater_73yi8c",
-        "content_repeater_PmrGX4",
-        "tabs_repeater_XUmMNK",
-        "tabs_repeater_Wctjef",
-        "tabs_repeater_GFF6wD"
-      ],
-      "name": "Images with tabs",
-      "settings": {
-        "reverse_layout": false,
-        "section_title": ""
       }
     },
     "one_cable_xGPbb6": {
@@ -988,15 +1033,16 @@
   "order": [
     "zp-product-header-content",
     "buds_hero_U3JTQ8",
+    "rich_text_EQFAmj",
     "image_with_text_JUCfy7",
     "image_with_text_ntzmmT",
     "buds_third_anhGpi",
     "image_with_text_gTaRgR",
+    "section_image_tabs_7CQ4kc",
     "section_zigzag_xjzdHb",
     "buds_third_anhGpi1",
     "buds_third_anhGpi2",
     "versatile_amfF9D",
-    "section_image_tabs_7CQ4kc",
     "one_cable_xGPbb6",
     "buds_image_MphiwP",
     "buds_3up_QkBzdE",

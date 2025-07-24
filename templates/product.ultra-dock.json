@@ -269,42 +269,47 @@
             "zigzag_reverse": false,
             "zigzag_image": "shopify://shop_images/3_15.jpg",
             "zigzag_first_title": "W GaN Output",
-            "zigzag_second_title": "Devices. 1 Dock.",
+            "zigzag_second_title": "",
             "zigzag_first_copy": "Blazing-fast GaN charging power to fuel laptops, tablets, and phones without breaking a sweat.",
             "zigzag_mob_copy": "Blazing-fast GaN charging power to fuel laptops, tablets, and phones without breaking a sweat.",
-            "zigzag_second_copy": "Wirelessly, magnetically, or with retractable cables—charge your whole setup at once.",
+            "zigzag_second_copy": "",
+            "zigzag_first_progress": 100,
+            "zigzag_first_progress_text": "TitanX Tower Output",
+            "zigzag_first_progress_info": "105W",
+            "zigzag_second_progress": 60,
+            "zigzag_second_progress_text": "Other Docks",
+            "zigzag_second_progress_info": "64W",
+            "count_animation_end": "105",
+            "count_animation_end_second": ""
+          }
+        },
+        "zigzag_repeater_6AteNx": {
+          "type": "zigzag_repeater",
+          "settings": {
+            "zigzag_reverse": true,
+            "zigzag_image": "shopify://shop_images/2_7.png",
+            "zigzag_first_title": "Devices. 1 Dock.",
+            "zigzag_second_title": "",
+            "zigzag_first_copy": "Wirelessly, magnetically, or with retractable cables—charge your whole setup at once.",
+            "zigzag_mob_copy": "Wirelessly, magnetically, or with retractable cables—charge your whole setup at once.",
+            "zigzag_second_copy": "",
             "zigzag_first_progress": 0,
             "zigzag_first_progress_text": "",
             "zigzag_first_progress_info": "",
             "zigzag_second_progress": 0,
             "zigzag_second_progress_text": "",
             "zigzag_second_progress_info": "",
-            "count_animation_end": "105",
-            "count_animation_end_second": "6"
+            "count_animation_end": "",
+            "count_animation_end_second": ""
           }
         }
       },
       "block_order": [
-        "zigzag_repeater_3LFKX9"
+        "zigzag_repeater_3LFKX9",
+        "zigzag_repeater_6AteNx"
       ],
       "name": "Zigzag section",
       "settings": {}
-    },
-    "video_qMrfER": {
-      "type": "video",
-      "name": "t:sections.video.presets.name",
-      "settings": {
-        "heading": "Video",
-        "heading_size": "h1",
-        "enable_video_looping": false,
-        "mobile_video_url": "https://cdn.shopify.com/videos/c/o/v/3b65b41842e140589613a6b80a5de00c.mp4",
-        "video_url": "https://vimeo.com/645302591",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     },
     "section_image_tabs_7CQ4kc": {
       "type": "section-image-tabs",
@@ -387,154 +392,6 @@
         "section_title": ""
       }
     },
-    "buds_third_anhGpi1": {
-      "type": "cable-pro-numbers",
-      "blocks": {
-        "right_box_8HqMX6": {
-          "type": "right_box",
-          "settings": {
-            "title_image": "shopify://shop_images/titan-power-plus-full-logo-green-white_9e0b58f4-7b89-4e59-a180-1a58a61eb564.png",
-            "bottom_image": "shopify://shop_images/100W-Smart-charging.png",
-            "box_background_color": "#2f4534",
-            "box_font_color": "#ffffff",
-            "title": "",
-            "description": "Charge your laptop at full throttle or top off your phone in record time. PrismCore tech ensures power is delivered fast, clean, and safe - with support up to 240W."
-          }
-        },
-        "left_box_tBgQeR": {
-          "type": "left_box",
-          "settings": {
-            "bottom_image": "shopify://shop_images/cHARGE_SPEED_THE_OLD_WAY.png",
-            "box_background_color": "#e4eaea",
-            "box_font_color": "#000000",
-            "title": "THEM",
-            "description": "Weak wattage, bad regulation, and slow, overheating charge speeds that kill batteries."
-          }
-        }
-      },
-      "block_order": [
-        "right_box_8HqMX6",
-        "left_box_tBgQeR"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".ml-\\[10px\\] {margin-left: 0px; padding: 10px 0px 0px 0px;}",
-        ".buds-inner {padding: 18px;}",
-        ".buds-box {box-shadow: 0px 0px 6px rgb(255 255 255 / 89%); border: 0px;}"
-      ],
-      "settings": {
-        "show_title": false,
-        "light": true,
-        "gradient_field": "bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-100%]",
-        "section_title": "240W Power MAX.",
-        "section_number": 2,
-        "background_color": "#fdfbf7",
-        "inner_background_color": "#ffffff"
-      }
-    },
-    "buds_third_anhGpi2": {
-      "type": "cable-pro-numbers",
-      "blocks": {
-        "right_box_8HqMX6": {
-          "type": "right_box",
-          "settings": {
-            "title_image": "shopify://shop_images/titan-power-plus-full-logo-green-white_9e0b58f4-7b89-4e59-a180-1a58a61eb564.png",
-            "bottom_image": "shopify://shop_images/Outlast-every-other-cable-sec.png",
-            "box_background_color": "rgba(0,0,0,0)",
-            "box_font_color": "#ffffff",
-            "title": "THEM",
-            "description": "Premium silicone shell. Reinforced zinc alloy ends. Ultra-durable internal wiring. This cable doesn’t just look sturdy - it actually is."
-          }
-        },
-        "left_box_tBgQeR": {
-          "type": "left_box",
-          "settings": {
-            "bottom_image": "shopify://shop_images/titan-smart-cable-pro-titan-power-plus-usb-c-usb-a-damaged-cable_d58d9503-bff4-4ff0-882c-825f6660c92f.png",
-            "box_background_color": "#e4eaea",
-            "box_font_color": "#000000",
-            "title": "THEM",
-            "description": "Flimsy plastic cords that snap, fray, and need replacing every other month."
-          }
-        }
-      },
-      "block_order": [
-        "right_box_8HqMX6",
-        "left_box_tBgQeR"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".ml-\\[10px\\] {margin-left: 0px; padding: 10px 0px 0px 0px;}",
-        ".buds-inner {padding: 18px;}",
-        ".buds-box {box-shadow: 0px 0px 6px rgb(255 255 255 / 89%); border: 0px;}",
-        "@media (max-width: 768px) {.ml-\\[10px\\] {margin-left: 5px; margin-right: 15px; padding: 10px 0px 0px 0px; }}"
-      ],
-      "settings": {
-        "show_title": false,
-        "light": false,
-        "gradient_field": "bg-[linear-gradient(to_bottom,_rgb(255,255,255),_#014115)] bg-[length:100%_300%] bg-[position:0_-200%]",
-        "section_title": "Built Thick. Built to Last.",
-        "section_number": 3,
-        "background_color": "#2f4534",
-        "inner_background_color": "#2f4534"
-      }
-    },
-    "versatile_amfF9D": {
-      "type": "versatile",
-      "blocks": {
-        "image_EgiaQ8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/TPP_cable_transparent_C_v1.png"
-          }
-        },
-        "image_UXcxmR": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Ultimate-versatility_Image-4-min.png"
-          }
-        },
-        "image_NfiAid": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Ultimate-versatility_Image-5-min.png"
-          }
-        },
-        "image_qhUAPH": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Ultimate-versatility_Image-3-min.png"
-          }
-        },
-        "image_8Hd3gM": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Ultimate-versatility_Image-2-min.png"
-          }
-        }
-      },
-      "block_order": [
-        "image_EgiaQ8",
-        "image_UXcxmR",
-        "image_NfiAid",
-        "image_qhUAPH",
-        "image_8Hd3gM"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".text-\\[20px\\] {font-size: 16px; padding: 10px;}",
-        "mb-\\[20px\\] {margin-bottom: 20px; padding: 15px;}",
-        "@media (min-width: 768px) {.md\\:text-\\[90px\\] {font-size: 60px; }}",
-        "@media (max-width: 768px) {.text-\\[40px\\] {text-align: center;}.text-\\[20px\\].text-white {text-align: center;}"
-      ],
-      "settings": {
-        "title_content": "Power Everything With One Cable",
-        "text_content": "<p>The Titan Smart Cable charges all your essentials, phones, tablets, earbuds, controllers, even laptops, with one tough, high-speed cable. No juggling cords. No slowing down. Just one reliable, all-in-one charging solution built for every device.</p>"
-      }
-    },
     "one_cable_xGPbb6": {
       "type": "one-cable",
       "disabled": true,
@@ -557,129 +414,28 @@
         "mobile_image": "shopify://shop_images/titan-smart-cable-pro-titan-power-plus-usb-c-usb-c-mobile.jpg"
       }
     },
-    "buds_3up_QkBzdE": {
-      "type": "buds-3up",
-      "blocks": {
-        "bud_item_NgRr6V": {
-          "type": "bud_item",
-          "settings": {
-            "image": "shopify://shop_images/cable_tie.png",
-            "title": "BUILT-IN CABLE TIE",
-            "description": "No more tangled mess. The included cable tie keeps your Titan Smart Cable organized and secure, wherever you take it. Simple, clean, and always ready."
-          }
-        },
-        "bud_item_rziKMU": {
-          "type": "bud_item",
-          "settings": {
-            "image": "shopify://shop_images/Different_caqble_lengths_jpg_png.jpg",
-            "title": "JUST-RIGHT LENGTH",
-            "description": "Designed for real life. Long enough for flexibility, short enough to stay out of the way. No bulk, no hassle, just the reach you need."
-          }
-        },
-        "bud_item_twp4N6": {
-          "type": "bud_item",
-          "settings": {
-            "image": "shopify://shop_images/3_sections_3co.jpg",
-            "title": "MADE TO LAST. MADE RESPONSIBLY.",
-            "description": "Engineered for durability, so you replace less and waste less. Ships in eco-conscious packaging because strength shouldn’t come at the planet’s expense."
-          }
-        }
-      },
-      "block_order": [
-        "bud_item_NgRr6V",
-        "bud_item_rziKMU",
-        "bud_item_twp4N6"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".text-\\[14px\\] {font-size: 16px; padding: 15px;}"
-      ],
-      "settings": {}
-    },
-    "section_zigzag_zn78GD": {
-      "type": "section-zigzag",
-      "blocks": {
-        "zigzag_repeater_JWceJP": {
-          "type": "zigzag_repeater",
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_image": "shopify://shop_images/Meters_section_-_wide.jpg",
-            "zigzag_first_title": "W",
-            "zigzag_second_title": "Cable Heads",
-            "zigzag_first_copy": "Power up your devices at lightning speed with 100W fast charging. From phones to tablets, this cable ensures rapid, efficient charging to keep your devices running strong without the wait.",
-            "zigzag_mob_copy": "Power up your devices at lightning speed with 100W fast charging. From phones to tablets, this cable ensures rapid, efficient charging to keep your devices running strong without the wait.",
-            "zigzag_second_copy": "Charge all your devices with one cable. Featuring USB-C, Lightning, and Micro-USB heads, this versatile solution keeps your gadgets powered up, no matter the brand or model.",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "Generic Chargers",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "100",
-            "count_animation_end_second": "3"
-          }
-        },
-        "zigzag_repeater_UbHxqC": {
-          "type": "zigzag_repeater",
-          "disabled": true,
-          "settings": {
-            "zigzag_reverse": false,
-            "zigzag_first_title": "",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "",
-            "zigzag_mob_copy": "",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 0,
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 0,
-            "zigzag_second_progress_text": "",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "",
-            "count_animation_end_second": ""
-          }
-        },
-        "zigzag_repeater_hFwip6": {
-          "type": "zigzag_repeater",
-          "disabled": true,
-          "settings": {
-            "zigzag_reverse": true,
-            "zigzag_image": "shopify://shop_images/3535_7beb176c-a673-42d0-b088-66458cbefa77.jpg",
-            "zigzag_first_title": "x Stronger",
-            "zigzag_second_title": "",
-            "zigzag_first_copy": "Built to withstand the rigors of daily use, our cables are engineered with advanced materials, providing unparalleled durability that's 15 times greater than standard cables, ensuring long-lasting performance you can rely on.",
-            "zigzag_mob_copy": "Built to withstand the rigors of daily use, our cables are engineered with advanced materials, providing unparalleled durability that's 15 times greater than standard cables, ensuring long-lasting performance you can rely on.",
-            "zigzag_second_copy": "",
-            "zigzag_first_progress": 100,
-            "zigzag_first_progress_image": "shopify://shop_images/massage_gun_Titan_logo_d5b7eee5-50e4-4f47-8bfb-6bde82ea137a.png",
-            "zigzag_first_progress_text": "",
-            "zigzag_first_progress_info": "",
-            "zigzag_second_progress": 10,
-            "zigzag_second_progress_text": "Generic Chargers",
-            "zigzag_second_progress_info": "",
-            "count_animation_end": "15",
-            "count_animation_end_second": "8"
-          }
-        }
-      },
-      "block_order": [
-        "zigzag_repeater_JWceJP",
-        "zigzag_repeater_UbHxqC",
-        "zigzag_repeater_hFwip6"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".zigzag__mob-copy {font-size: 16px !important; line-height: 21px !important; margin-top: 0px !important;}"
-      ],
-      "settings": {}
-    },
     "buds_image_ekEBiX": {
       "type": "buds-image",
       "disabled": true,
       "settings": {
         "desktop_image": "shopify://shop_images/Banner_dekstop_04237edf-9646-4532-9fac-a0649f4b3e1f.jpg",
         "mobile_image": "shopify://shop_images/Banner_mobile_7ecfdb66-5207-42db-8bfe-faeee4f5a727.jpg"
+      }
+    },
+    "video_qMrfER": {
+      "type": "video",
+      "name": "t:sections.video.presets.name",
+      "settings": {
+        "heading": "Video",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "mobile_video_url": "https://cdn.shopify.com/videos/c/o/v/3b65b41842e140589613a6b80a5de00c.mp4",
+        "video_url": "https://vimeo.com/645302591",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "section_pdp_hero_master_light_simple_VUhznE": {
@@ -1040,16 +796,11 @@
     "buds_third_anhGpi",
     "image_with_text_gTaRgR",
     "section_zigzag_xjzdHb",
-    "video_qMrfER",
     "section_image_tabs_7CQ4kc",
-    "buds_third_anhGpi1",
-    "buds_third_anhGpi2",
-    "versatile_amfF9D",
     "one_cable_xGPbb6",
     "buds_image_MphiwP",
-    "buds_3up_QkBzdE",
-    "section_zigzag_zn78GD",
     "buds_image_ekEBiX",
+    "video_qMrfER",
     "section_pdp_hero_master_light_simple_VUhznE",
     "compare-table",
     "1707579564616101b2",

@@ -13,6 +13,64 @@
       "type": "product-header-content-zipifypages",
       "settings": {}
     },
+    "titan_tower_replacement_DKtxAD": {
+      "type": "titan-tower-replacement",
+      "blocks": {
+        "replacement_product_pP9GUa": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "newdecoy"
+          }
+        },
+        "replacement_product_tDExCm": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "120w-magtech-cable™-1"
+          }
+        },
+        "replacement_product_nDWnJL": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "120w-magtech-pd-cable-copy"
+          }
+        },
+        "replacement_product_jMXeLL": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "240w-prismcore-cable™-byob"
+          }
+        },
+        "replacement_product_A4Dd4T": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "100wmulticablebogof"
+          }
+        },
+        "replacement_product_iDnzDf": {
+          "type": "replacement_product",
+          "settings": {
+            "product": "titan-3-in-1-mothership-dock™-bundle-offer"
+          }
+        }
+      },
+      "block_order": [
+        "replacement_product_pP9GUa",
+        "replacement_product_tDExCm",
+        "replacement_product_nDWnJL",
+        "replacement_product_jMXeLL",
+        "replacement_product_A4Dd4T",
+        "replacement_product_iDnzDf"
+      ],
+      "name": "Titan Tower",
+      "settings": {
+        "title": "One Product Replaces Everything",
+        "subtitle": "Save money and simplify your setup with the Titan Tower - the all-in-one solution that replaces 6 different products.",
+        "main_product": "titanx-tower",
+        "normal_text_1": "Replaces all these for one low price",
+        "normal_text_2": "All-in-one solution",
+        "mobile_items_text": "Replaces These 6 Items:"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -62,6 +120,7 @@
         "buy_buttons",
         "description"
       ],
+      "disabled": true,
       "settings": {
         "enable_sticky_info": true,
         "media_size": "medium",
@@ -79,6 +138,7 @@
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
@@ -97,11 +157,13 @@
     },
     "zp-product-footer-content": {
       "type": "product-footer-content-zipifypages",
+      "disabled": true,
       "settings": {}
     }
   },
   "order": [
     "zp-product-header-content",
+    "titan_tower_replacement_DKtxAD",
     "main",
     "related-products",
     "zp-product-footer-content"

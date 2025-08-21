@@ -427,6 +427,9 @@
                       {% unless section.settings.hide_length %}
                         <div style="margin:0;" class="pd-selector-title">LENGTH</div>
                       {% endunless %}
+                      {% if option.name == 'Outlet Type' %}
+                        <div style="margin:0;" class="pd-selector-title">Outlet Type</div>
+                      {% endif %}
                       <div class="master-options">
                       {% for value in option.values %}
                         <div data-selector="{{ value }}" class="{% if forloop.index == 1%}active{%endif%} js-var-select select-button option-{{ numberSelector  }}">{{ value  }}</div>

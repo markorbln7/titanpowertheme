@@ -705,12 +705,11 @@
     "section_pdp_hero_dNKGx9": {
       "type": "section-pdp-hero",
       "custom_css": [
-        ".section-pdp-hero .content-wrapper {padding-inline: 5px;}",
-        ".pdp-hero__atc {height: 70px; border-radius: 40px; margin-bottom: 0px;}",
-        ".pdp-hero__product-info {flex: 1; border-radius: 30px; padding: 0px 20px; background-color: #ffffff; margin-top: -30px;}"
+        "figure.pdp-hero__gallery-logoSpecificity: (0,1,1) {background-color: #00000000;}"
       ],
       "settings": {
         "product": "titan-buds-pro",
+        "logo_image": "shopify://shop_images/Black_Friday_Power_up_sale_badge33.png",
         "product_subtitle": "BLACK FRIDAY POWER UP SALE: 25% OFF!",
         "discount_content": "",
         "extra_attachment": "",

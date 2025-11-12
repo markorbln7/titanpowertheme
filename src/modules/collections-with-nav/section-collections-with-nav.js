@@ -154,24 +154,29 @@ import './section-collections-with-nav.css';
     });
   });
 });
-window.onscroll = function() {
-  makeSticky();
-};
 
 // Get the navigation element
 var navbar = document.querySelector(".tp-sticky");
 let track = document.querySelector('.tracking-bar-container');
 
-// Get the offset position of the navbar
-var stickyOffset = navbar.offsetTop;
-console.log(window.pageYOffset, stickyOffset, 'offset')
-// Add or remove the sticky class based on scroll position
-function makeSticky() {
-  if (window.pageYOffset >= stickyOffset) {
-    navbar.classList.add("sticky");
-    track.classList.add('double-sticky');
-  } else {
-    navbar.classList.remove("sticky");
-    track.classList.remove('double-sticky');
+// Only setup sticky functionality if elements exist
+if (navbar && track) {
+  // Get the offset position of the navbar
+  var stickyOffset = navbar.offsetTop;
+  console.log(window.pageYOffset, stickyOffset, 'offset');
+
+  // Add or remove the sticky class based on scroll position
+  function makeSticky() {
+    if (window.pageYOffset >= stickyOffset) {
+      navbar.classList.add("sticky");
+      track.classList.add('double-sticky');
+    } else {
+      navbar.classList.remove("sticky");
+      track.classList.remove('double-sticky');
+    }
   }
+
+  window.onscroll = function() {
+    makeSticky();
+  };
 }

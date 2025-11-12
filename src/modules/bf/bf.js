@@ -296,6 +296,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             function updateTrackingBar() {
+              // Check if blocks exist and message container exists
+              if (!messageContainer || blocks.length === 0) {
+                return;
+              }
+
               let currentBlock = null;
               let nextBlock = null;
 
@@ -310,26 +315,28 @@ document.addEventListener('DOMContentLoaded', function () {
               }
 
               // Update message and progress bar
-              if (!currentBlock) {
+              if (!currentBlock && blocks[0]) {
                 // Before the first block
                 const itemsLeft = blocks[0].itemCount - cartItemCount;
                 messageContainer.textContent = `Add ${itemsLeft} more items to save ${blocks[0].percentageOff}%.`;
                 // const progress = (cartItemCount / blocks[0].itemCount) * 100;
                 // progressBar.style.width = `${progress}%`;
-              } else if (!nextBlock) {
+              } else if (!nextBlock && currentBlock) {
                 // Maximum discount reached
                 messageContainer.textContent = `You are at your maximum discount of ${currentBlock.percentageOff}%.`;
                 // progressBar.style.width = '100%';
-              } else {
+              } else if (currentBlock && nextBlock) {
                 // Between blocks
                 const itemsLeft = nextBlock.itemCount - cartItemCount;
                 messageContainer.textContent = `You get ${currentBlock.percentageOff}% off. Add ${itemsLeft} more items to get ${nextBlock.percentageOff}% off.`;
                 const progress = ((cartItemCount - currentBlock.itemCount) / (nextBlock.itemCount - currentBlock.itemCount)) * 100;
                 // progressBar.style.width = `${progress}%`;
               }
-              const maxItems = blocks[blocks.length - 1].itemCount;
-              const progress = Math.min((cartItemCount / maxItems) * 100, 100); // Cap at 100%
-              progressBar.style.width = `${progress}%`;
+              if (progressBar && blocks.length > 0) {
+                const maxItems = blocks[blocks.length - 1].itemCount;
+                const progress = Math.min((cartItemCount / maxItems) * 100, 100); // Cap at 100%
+                progressBar.style.width = `${progress}%`;
+              }
             }
             function fetchCartCount() {
                 fetch('/cart.js')
@@ -343,7 +350,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });
                     cartItemCount = cart.item_count - cartItemCountMinus;
-                    document.querySelector('.js-gift-unlocked').innerHTML = cartItemCountMinus + 1;
+
+                    // Add null check before setting innerHTML
+                    const giftElement = document.querySelector('.js-gift-unlocked');
+                    if (giftElement) {
+                        giftElement.innerHTML = cartItemCountMinus + 1;
+                    }
                     updateTrackingBar();
                   })
                   .catch(error => console.error('Error fetching cart data:', error));

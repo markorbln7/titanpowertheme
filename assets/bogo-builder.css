@@ -675,13 +675,47 @@
     opacity: 1;
   }
 
-  /* Tier 2 - Most Popular (DECOY) */
+  /* ========================================
+     TIER CARD VISUAL HIERARCHY
+     BOGO-TIER-002
+     Per CKL-114 Asymmetric Dominance Effect
+     ======================================== */
+
+  /* Tier 1 - Anchor (Slight De-emphasis) */
+  .tier-card[data-tier="1"] {
+    opacity: 0.95;
+  }
+
+  .tier-card[data-tier="1"]:hover {
+    opacity: 1;
+  }
+
+  /* Tier 2 - Most Popular (TARGET - Maximum Emphasis) */
   .tier-card.most-popular {
     border-color: rgba(96, 198, 85, 0.6);
     border-width: 3px;
-    transform: scale(1.03);
+    transform: scale(1.08); /* ✅ BOGO-TIER-002: Increased from 1.03 to 1.08 */
     z-index: 2;
     padding-top: 28px; /* ✅ Extra space for badge */
+    box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
+    animation: tier-pulse 3s ease-in-out infinite; /* ✅ BOGO-TIER-002: Pulse animation */
+  }
+
+  /* Pulse animation for Tier 2 */
+  @keyframes tier-pulse {
+    0%, 100% {
+      box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
+    }
+    50% {
+      box-shadow: 0 16px 48px rgba(96, 198, 85, 0.6);
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .tier-card.most-popular {
+      animation: none;
+    }
   }
 
   .popular-badge {
@@ -703,11 +737,19 @@
     z-index: 10;
   }
 
-  /* Tier 3 - Best Value (TARGET) */
+  /* Tier 3 - Best Value (Prestige Anchor - Premium Feel) */
   .tier-card.best-value {
-    border-color: rgba(255, 215, 0, 0.6);
-    background: linear-gradient(135deg, rgba(96, 198, 85, 0.08) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-color: rgba(243, 156, 18, 0.6); /* ✅ BOGO-TIER-002: Orange/gold border */
+    border-width: 2px;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(42, 42, 42, 0.95) 100%); /* ✅ Darker gradient */
     padding-top: 28px; /* ✅ Extra space for badge */
+    box-shadow: 0 8px 24px rgba(243, 156, 18, 0.3); /* ✅ Gold shadow */
+    position: relative;
+  }
+
+  .tier-card.best-value:hover {
+    box-shadow: 0 12px 32px rgba(243, 156, 18, 0.5);
+    border-color: rgba(243, 156, 18, 0.8);
   }
 
   .best-badge {
@@ -1074,8 +1116,9 @@
       flex: 0 0 7.5%;
     }
 
+    /* ✅ BOGO-TIER-002: Tier 2 still prominent on mobile (reduced from 1.08 to 1.03) */
     .tier-card.most-popular {
-      transform: scale(1);
+      transform: scale(1.03);
     }
 
     .tier-carousel-dots {

@@ -62,7 +62,7 @@
             <div class="tier-features">
               <div class="tier-feature included">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 1 Get 1 Free</span>
+                <span class="feature-text">50% OFF Cheaper Item</span>
               </div>
               <div class="tier-feature included">
                 <span class="feature-icon">🚚</span>
@@ -80,7 +80,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">You Save</div>
-              <div class="savings-amount">~€30</div>
+              <div class="savings-amount">€23+</div>
             </div>
           </div>
 
@@ -97,7 +97,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 2 get 2 Free <span class="discount-badge-inline green">+5% OFF</span></span>
+                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline green">+5% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -110,8 +110,8 @@
             </div>
 
             <div class="tier-savings">
-              <div class="savings-label">You Save</div>
-              <div class="savings-amount highlight">~€60</div>
+              <div class="savings-label">Total Savings</div>
+              <div class="savings-amount highlight">€52+</div>
             </div>
 
             <div class="tier-upgrade-hint">
@@ -132,7 +132,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 3+ get 3+ Free <span class="discount-badge-inline gold">+10% OFF</span></span>
+                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline gold">+10% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -145,8 +145,8 @@
             </div>
 
             <div class="tier-savings">
-              <div class="savings-label">You Save</div>
-              <div class="savings-amount best">~€105</div>
+              <div class="savings-label">Total Savings</div>
+              <div class="savings-amount best">€90+</div>
             </div>
 
             <div class="tier-value-prop">
@@ -196,7 +196,7 @@
   {%- comment -%} Product Filter Dropdown {%- endcomment -%}
   <div class="filter-container">
     <div class="filter-wrapper">
-      <label for="category-filter" class="filter-label">Filter Products:</label>
+      <label for="category-filter" class="filter-label">⚠️ Limited stock available for this offer</label>
       <select id="category-filter" class="filter-select">
         <option value="all">All Products</option>
         {% for collection in section.settings.collections %}
@@ -404,10 +404,50 @@
         </div>
       </div>
 
-      {%- comment -%} Center: Pair Count {%- endcomment -%}
+      {%- comment -%} Center: Pair Count + Progress Bar {%- endcomment -%}
       <div class="bogo-sticky-cart__center">
         <div class="bogo-sticky-cart__pairs" id="sticky-cart-pair-count">
           0 Pairs
+        </div>
+
+{%- comment -%} Enhanced Progress Bar (BOGO-PROGRESS-008) {%- endcomment -%}
+        <div class="bogo-progress-container">
+          <div class="bogo-progress-next-reward" id="progress-next-reward">
+            <span class="reward-icon">🎁</span>
+            <span class="reward-text">Add 1 pair for 5% OFF + Shipping</span>
+          </div>
+
+          <div class="bogo-progress-bar-enhanced">
+            <div class="bogo-progress-track">
+              <div class="bogo-progress-fill" id="bogo-progress-fill"></div>
+            </div>
+
+            <div class="bogo-progress-milestones">
+              {%- comment -%} Tier 1 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="1">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">1️⃣</span>
+                </div>
+                <span class="milestone-label">BOGO<br>50% OFF</span>
+              </div>
+
+              {%- comment -%} Tier 2 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="2">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🚚</span>
+                </div>
+                <span class="milestone-label">+5% OFF<br>+ SHIP</span>
+              </div>
+
+              {%- comment -%} Tier 3 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="3">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🎁</span>
+                </div>
+                <span class="milestone-label">+10% OFF<br>+ CABLE</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -586,6 +626,10 @@
               <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
             Compare Tiers
+          </button>
+          {%- comment -%} Clear All Pairs Button (BOGO-REVIEW-MODAL-UX-024) {%- endcomment -%}
+          <button class="clear-all-pairs-header-btn" onclick="clearAllPairs()">
+            🗑️ Clear All
           </button>
           <button class="pair-modal__close" onclick="closePairModal()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -4470,3 +4470,75 @@ console.log('%c✅ MODAL-VARIANT-AUTOSELECT-CLOSE-076: Variant auto-selection in
   
   console.log('✅ Live activity scroll trigger initialized');
 })();
+
+// ========================================
+// VARIANT SWATCHES & BUTTONS
+// BOGO-VARIANT-SWATCHES-020
+// Visual variant selection functions
+// ========================================
+
+/**
+ * Select Color Swatch
+ * @param {HTMLElement} swatchEl - Clicked swatch element
+ * @param {number} optionIndex - Option index (1, 2, or 3)
+ */
+function selectVariantSwatch(swatchEl, optionIndex) {
+  // Remove selected from siblings
+  const container = swatchEl.parentElement;
+  container.querySelectorAll('.variant-swatch').forEach(s => {
+    s.classList.remove('selected');
+  });
+
+  // Add selected to clicked swatch
+  swatchEl.classList.add('selected');
+
+  // Update hidden fallback select
+  const value = swatchEl.dataset.value;
+  updateFallbackSelect(optionIndex, value);
+
+  console.log('Swatch selected:', value);
+}
+
+/**
+ * Select Size/Length Button
+ * @param {HTMLElement} buttonEl - Clicked button element
+ * @param {number} optionIndex - Option index (1, 2, or 3)
+ */
+function selectVariantButton(buttonEl, optionIndex) {
+  // Don't select if out of stock
+  if (buttonEl.classList.contains('out-of-stock') || buttonEl.disabled) {
+    return;
+  }
+
+  // Remove selected from siblings
+  const container = buttonEl.parentElement;
+  container.querySelectorAll('.variant-button').forEach(b => {
+    b.classList.remove('selected');
+  });
+
+  // Add selected to clicked button
+  buttonEl.classList.add('selected');
+
+  // Update hidden fallback select
+  const value = buttonEl.dataset.value;
+  updateFallbackSelect(optionIndex, value);
+
+  console.log('Button selected:', value);
+}
+
+/**
+ * Update Fallback Select (for existing logic compatibility)
+ * @param {number} optionIndex - Option index
+ * @param {string} value - Selected value
+ */
+function updateFallbackSelect(optionIndex, value) {
+  const select = document.querySelector(`.variant-selector[data-option-index="${optionIndex}"]`);
+
+  if (select) {
+    select.value = value;
+
+    // Trigger change event for existing listeners
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
+  }
+}

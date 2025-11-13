@@ -5626,3 +5626,163 @@ body.modal-open .bogo-sticky-cart {
   margin-top: 0 !important;
   padding-top: 32px;
 }
+
+/* ========================================
+   VARIANT SWATCHES & BUTTONS
+   BOGO-VARIANT-SWATCHES-020
+   Visual selectors for instant choice
+   ======================================== */
+
+/* Variant Selectors Container */
+.variant-selectors-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.variant-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.variant-option-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+/* Color Swatches */
+.variant-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variant-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 300ms ease;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.variant-swatch:hover {
+  border-color: rgba(96, 198, 85, 0.5);
+  transform: scale(1.05);
+}
+
+.variant-swatch.selected {
+  border-color: #60c655;
+  box-shadow: 0 0 12px rgba(96, 198, 85, 0.6);
+  transform: scale(1.1);
+}
+
+/* Checkmark for selected swatch */
+.variant-swatch.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Color swatch colors */
+.variant-swatch[data-color="black"] { background: #000000; }
+.variant-swatch[data-color="white"] { background: #ffffff; border-color: #333; }
+.variant-swatch[data-color="gray"],
+.variant-swatch[data-color="grey"] { background: #808080; }
+.variant-swatch[data-color="blue"] { background: #3b82f6; }
+.variant-swatch[data-color="red"] { background: #ef4444; }
+.variant-swatch[data-color="green"] { background: #60c655; }
+.variant-swatch[data-color="yellow"] { background: #fbbf24; }
+.variant-swatch[data-color="orange"] { background: #f97316; }
+.variant-swatch[data-color="purple"] { background: #a855f7; }
+.variant-swatch[data-color="pink"] { background: #ec4899; }
+
+/* Size/Length Buttons */
+.variant-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.variant-button {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 300ms ease;
+  min-width: 60px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.variant-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(96, 198, 85, 0.5);
+}
+
+.variant-button.selected {
+  background: rgba(96, 198, 85, 0.2);
+  border-color: #60c655;
+  color: #60c655;
+  box-shadow: 0 0 8px rgba(96, 198, 85, 0.4);
+}
+
+.variant-button.out-of-stock {
+  opacity: 0.3;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.variant-button.out-of-stock::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: rgba(239, 68, 68, 0.8);
+  transform: translateY(-50%) rotate(-15deg);
+}
+
+/* Hide fallback selects */
+.variant-selectors-fallback {
+  display: none !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .variant-swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .variant-button {
+    padding: 8px 14px;
+    font-size: 13px;
+    min-width: 55px;
+  }
+
+  .variant-option-label {
+    font-size: 12px;
+  }
+}

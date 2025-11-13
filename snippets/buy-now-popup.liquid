@@ -37,11 +37,52 @@
                     </div>
                 {% endif %}
                 {% if product.variants.size > 1 %}
-                  <div class="variant-selectors text-center myb-[5px] mt-[10px] flex gap-[20px] mb-[20px]">
+                  <!-- Visual Variant Selectors (BOGO-VARIANT-SWATCHES-020) -->
+                  <div class="variant-selectors-visual">
                     {% for option in product.options_with_values %}
                       {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
-                        <select class="variant-selector h-[46px] bg-transparent text-[16px] font-semibold rounded-[20px] leading-[46px] border border-solid border-[1px] border-[#000] min-w-[120px] p-[10px]" data-option-index="{{ forloop.index }}">
-                          {% comment %} <option value="" disabled selected>Select {{ option.name }}</option> {% endcomment %}
+                        <div class="variant-option-group">
+                          <label class="variant-option-label">{{ option.name }}:</label>
+
+                          {% assign option_lower = option.name | downcase %}
+                          {% if option_lower contains 'color' or option_lower contains 'colour' %}
+                            <!-- Color Swatches -->
+                            <div class="variant-swatches" data-option-index="{{ forloop.index }}">
+                              {% for value in option.values %}
+                                {% assign color_slug = value | downcase | replace: ' ', '' %}
+                                <div class="variant-swatch {% if forloop.first %}selected{% endif %}"
+                                     data-value="{{ value }}"
+                                     data-color="{{ color_slug }}"
+                                     title="{{ value }}"
+                                     onclick="selectVariantSwatch(this, {{ forloop.index }})">
+                                </div>
+                              {% endfor %}
+                            </div>
+
+                          {% else %}
+                            <!-- Size/Length Buttons -->
+                            <div class="variant-buttons" data-option-index="{{ forloop.index }}">
+                              {% for value in option.values %}
+                                <button class="variant-button {% if forloop.first %}selected{% endif %}"
+                                        data-value="{{ value }}"
+                                        type="button"
+                                        onclick="selectVariantButton(this, {{ forloop.index }})">
+                                  {{ value }}
+                                </button>
+                              {% endfor %}
+                            </div>
+
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+
+                  <!-- Hidden fallback selects for compatibility -->
+                  <div class="variant-selectors-fallback">
+                    {% for option in product.options_with_values %}
+                      {% if option.name != 'Title' or option.values[0] != 'Default Title' %}
+                        <select class="variant-selector" data-option-index="{{ forloop.index }}">
                           {% for value in option.values %}
                             <option value="{{ value }}">{{ value }}</option>
                           {% endfor %}

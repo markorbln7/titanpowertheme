@@ -853,22 +853,32 @@ function updateStickyCart() {
     });
   }
 
-  // Update status message with quantified benefits (BOGO-SAVINGS-003)
+  // ========================================
+  // UPDATE STATUS MESSAGES (BOGO-MESSAGING-005)
+  // Quantified benefits + loss aversion + color coding
+  // ========================================
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {
     if (hasIncompleteProduct) {
-      statusEl.textContent = 'Select 1 more product to complete pair';
+      // User has 1 product - urgency to complete pair
+      statusEl.textContent = '🔥 Complete your pair! Select 1 more product.';
+      statusEl.style.color = '#fbbf24'; // Yellow urgency
     } else if (pairCount === 0) {
-      statusEl.textContent = 'Select 2 products to start';
+      // No pairs yet - clear starting point
+      statusEl.textContent = '🎁 Start your BOGO! Select any 2 products.';
+      statusEl.style.color = 'rgba(255, 255, 255, 0.8)';
     } else if (pairCount === 1) {
-      // Tier 1 → Tier 2 upsell
+      // Tier 1 → Tier 2 upsell (quantified)
       statusEl.textContent = 'Add 1 more pair: Unlock 5% OFF + FREE Premium Shipping (€4.99 value)!';
+      statusEl.style.color = '#60c655'; // Green opportunity
     } else if (pairCount === 2) {
-      // Tier 2 → Tier 3 upsell
+      // Tier 2 → Tier 3 upsell (quantified)
       statusEl.textContent = 'Add 1 more pair: Get 10% OFF + FREE Titan Cable (€18.95 value)!';
+      statusEl.style.color = '#f39c12'; // Gold premium
     } else {
-      // Tier 3 achieved
-      statusEl.textContent = '🏆 Maximum savings unlocked! FREE cable included.';
+      // Tier 3 achieved - celebration
+      statusEl.textContent = '🏆 Ultimate Unlocked! €72+ in savings + FREE Cable included.';
+      statusEl.style.color = '#60c655'; // Green success
     }
   }
 

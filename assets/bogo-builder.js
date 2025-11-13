@@ -1213,8 +1213,9 @@ function openPairModal() {
     return;
   }
 
-  // Prevent body scroll
+  // Prevent body scroll and hide sticky cart (BOGO-REVIEW-MODAL-MOBILE-019)
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
 
   // Show modal
   modal.classList.add('active');
@@ -1253,8 +1254,9 @@ function closePairModal() {
     modal.classList.remove('active');
   }
 
-  // Restore body scroll
+  // Restore body scroll and show sticky cart (BOGO-REVIEW-MODAL-MOBILE-019)
   document.body.style.overflow = '';
+  document.body.classList.remove('modal-open');
 
   // Remove ESC listener
   document.removeEventListener('keydown', handleModalEscape);
@@ -3477,6 +3479,52 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 // CHECKOUT INTEGRATION - FINAL VERSION
 // ========================================
+
+// ========================================
+// CLEAR ALL PAIRS FUNCTION
+// BOGO-REVIEW-MODAL-MOBILE-019
+// Resets BOGO builder state completely
+// ========================================
+
+function clearAllPairs() {
+  // Confirm action
+  const confirmed = confirm('Clear all pairs? This cannot be undone.');
+
+  if (!confirmed) return;
+
+  console.log('🗑️ Clearing all pairs...');
+
+  // Reset state
+  window.bogoState = {
+    pairs: [],
+    currentPair: { slot1: null, slot2: null },
+    activePairNumber: 1
+  };
+
+  // Clear localStorage
+  if (typeof clearBOGOState === 'function') {
+    clearBOGOState();
+  } else {
+    localStorage.removeItem('titan-bogo-state');
+  }
+
+  // Update UI
+  if (typeof updateStickyCart === 'function') {
+    updateStickyCart();
+  }
+
+  // Close modal if open
+  const modal = document.querySelector('.pair-modal');
+  if (modal && modal.classList.contains('active')) {
+    modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  }
+
+  console.log('✅ All pairs cleared successfully');
+
+  // Scroll to top of product selection
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // Main checkout function
 // ========================================

@@ -128,8 +128,9 @@
 
         {% comment %} Footer - Absolute at Bottom {% endcomment %}
         <div class="buy-now-popup__footer">
-            <div class="buy-now-popup__price">
+            <div class="buy-now-popup__price-container">
                 <span class="modal-price js-variant-price-2">{{ price | money }}</span>
+                <span class="get-for-free-badge">GET FOR FREE</span>
                 {% if compare_at_price > price %}
                 <span class="modal-compare-price js-variant-compare-price-2">{{ compare_at_price | money }}</span>
                 {% endif %}

@@ -2020,19 +2020,19 @@
       Circular badges with high contrast, animate only on change
       ======================================== {%- endcomment -%}
 
-  /* ✅ Minimal circular stock badges - top-left */
-  /* ✅ Stock badge - 35px, closer to corner, more transparent */
+  /* ✅ Minimal circular stock badges - top-left (BOGO-PRODUCT-CARD-ICONS-015) */
+  /* ✅ Stock badge - 30px, 15% smaller, symmetrical with info button */
   .stock-badge-circle {
     position: absolute;
     top: 8px; /* ✅ Closer to corner */
     left: 8px; /* ✅ Closer to corner */
-    width: 35px; /* ✅ Smaller: 35px */
-    height: 35px; /* ✅ Smaller: 35px */
+    width: 30px; /* ✅ 15% smaller: 30px */
+    height: 30px; /* ✅ 15% smaller: 30px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px; /* ✅ Slightly smaller font */
+    font-size: 11px; /* ✅ Proportionally smaller font */
     font-weight: 900;
     z-index: 5;
     transition: all 300ms ease;
@@ -2093,24 +2093,24 @@
     transform: scale(1.05);
   }
 
-  /* Mobile - keep 35px size */
+  /* Mobile - keep 30px size (BOGO-PRODUCT-CARD-ICONS-015) */
   @media (max-width: 768px) {
     .stock-badge-circle {
-      width: 35px; /* ✅ Same size on mobile */
-      height: 35px;
-      font-size: 11px;
-      top: 8px;
-      left: 8px;
+      width: 28px; /* ✅ Slightly smaller on mobile */
+      height: 28px;
+      font-size: 10px;
+      top: 6px; /* ✅ Tighter to corner */
+      left: 6px;
     }
   }
 
-  {%- comment -%} Product Info Icon - 35px to match stock badge {%- endcomment -%}
+  {%- comment -%} Product Info Icon - 30px to match stock badge (BOGO-PRODUCT-CARD-ICONS-015) {%- endcomment -%}
   .product-info-icon {
     position: absolute;
-    top: 8px; /* ✅ Closer to corner, matches stock badge */
-    right: 8px; /* ✅ Closer to corner */
-    width: 35px; /* ✅ 35px to match stock badge */
-    height: 35px; /* ✅ 35px to match stock badge */
+    top: 8px; /* ✅ Matches stock badge */
+    right: 8px; /* ✅ Symmetrical positioning */
+    width: 30px; /* ✅ 15% smaller: 30px to match stock badge */
+    height: 30px; /* ✅ 15% smaller: 30px to match stock badge */
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid rgba(96, 198, 85, 0.6);
     border-radius: 50%;
@@ -2126,12 +2126,12 @@
   .product-info-icon:hover {
     background: rgba(96, 198, 85, 0.3);
     border-color: rgba(96, 198, 85, 1.0);
-    transform: scale(1.15);
+    transform: scale(1.05); /* ✅ Reduced hover scale to match stock badge */
   }
 
   .product-info-icon svg {
-    width: 18px; /* ✅ Slightly smaller to fit 35px container */
-    height: 18px;
+    width: 15px; /* ✅ Proportionally smaller to fit 30px container */
+    height: 15px;
   }
 
   @keyframes pulse-info {
@@ -2143,18 +2143,18 @@
     }
   }
 
-  /* Mobile - keep 35px size for info icon */
+  /* Mobile - 28px to match stock badge (BOGO-PRODUCT-CARD-ICONS-015) */
   @media (max-width: 768px) {
     .product-info-icon {
-      width: 35px;
-      height: 35px;
-      top: 8px;
-      right: 8px;
+      width: 28px; /* ✅ Matches stock badge mobile size */
+      height: 28px;
+      top: 6px; /* ✅ Tighter to corner */
+      right: 6px;
     }
 
     .product-info-icon svg {
-      width: 16px;
-      height: 16px;
+      width: 14px; /* ✅ Proportional to 28px container */
+      height: 14px;
     }
   }
 

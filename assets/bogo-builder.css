@@ -714,6 +714,103 @@
     border-bottom: none;
   }
 
+  /* ========================================
+     HERO RESTRUCTURE - COMPACT TIMER & FLOW
+     ======================================== */
+
+  /* Main headline - Large and prominent */
+  .hero-headline--main {
+    font-size: var(--text-4xl); /* 36-52px fluid */
+    margin-bottom: 20px; /* Space before timer */
+    line-height: 1.1;
+  }
+
+  /* ✅ COMPACT TIMER - 50px height */
+  .battery-timer--compact {
+    max-width: 450px;
+    margin: 0 auto 32px;
+  }
+
+  .battery-timer--compact .battery-body {
+    width: 350px;
+    height: 50px; /* Reduced from 70px */
+  }
+
+  .battery-timer--compact .battery-head {
+    width: 12px;
+    height: 28px;
+  }
+
+  .battery-timer--compact .battery-countdown-text {
+    font-size: 20px; /* Reduced from 24px */
+    line-height: 50px;
+  }
+
+  /* Secondary headline - Offer explanation */
+  .hero-headline-secondary {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    font-size: var(--text-3xl); /* 28-36px fluid */
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  /* Subheadline - Savings messaging */
+  .hero-subheadline--savings {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: #60c655;
+    line-height: 1.4;
+    margin-bottom: 0;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Spacer between hero and tier section */
+  .tier-section-spacer {
+    height: 48px;
+  }
+
+  /* Tier section header */
+  .tier-section-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 0 20px;
+  }
+
+  /* Tier section title */
+  .tier-section-title {
+    font-size: var(--text-2xl); /* 30px */
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  /* Tier section subtitle */
+  .tier-section-subtitle {
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Adjust tier showcase spacing */
+  .bogo-tier-showcase {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Remove old tier showcase title */
+  .tier-showcase-title {
+    display: none;
+  }
+
   {%- comment -%} ========================================
       TIER SHOWCASE - CRO OPTIMIZED VISUAL CARDS
       3-tier Goldilocks with Premium Shipping
@@ -4046,6 +4143,58 @@
 
     .countdown-number {
       font-size: 28px;
+    }
+
+    /* Mobile hero restructure styles */
+    .hero-headline--main {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .battery-timer--compact {
+      max-width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .battery-timer--compact .battery-body {
+      width: 280px;
+      height: 45px;
+    }
+
+    .battery-timer--compact .battery-head {
+      width: 10px;
+      height: 24px;
+    }
+
+    .battery-timer--compact .battery-countdown-text {
+      font-size: 16px;
+      line-height: 45px;
+    }
+
+    .hero-headline-secondary {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .hero-subheadline--savings {
+      font-size: 18px;
+      padding: 0 16px;
+    }
+
+    .tier-section-spacer {
+      height: 32px;
+    }
+
+    .tier-section-header {
+      margin-bottom: 24px;
+    }
+
+    .tier-section-title {
+      font-size: 24px;
+    }
+
+    .tier-section-subtitle {
+      font-size: 14px;
     }
 
     .tier-offer-box {

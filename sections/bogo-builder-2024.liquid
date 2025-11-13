@@ -17,6 +17,7 @@
     {%- comment -%} Black Friday Hero Section - PREMIUM REDESIGN {%- endcomment -%}
     <div class="bogo-hero-2024">
     <div class="bogo-hero-content">
+      {%- comment -%} Black Friday Badge {%- endcomment -%}
       <img
         src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/black_friday_power_up_sale_badge.png?v=1762814546"
         alt="Black Friday Power Up Sale"
@@ -26,11 +27,13 @@
         height="auto"
       >
 
-      <h1 class="hero-headline"><span class="free-gradient">FREE</span> FRIDAY SALE IS LIVE! 🔥</h1>
-      <p class="hero-subheadline">Build Your Perfect BOGO Bundle</p>
+      {%- comment -%} Main Headline {%- endcomment -%}
+      <h1 class="hero-headline hero-headline--main">
+        <span class="free-gradient">FREE</span> FRIDAY SALE IS LIVE! 🔥
+      </h1>
 
-      {%- comment -%} ✅ BOGO-HERO-POLISH-039: Battery-shaped countdown timer {%- endcomment -%}
-      <div class="battery-timer">
+      {%- comment -%} ✅ MOVED: Countdown Timer (Now directly under headline) {%- endcomment -%}
+      <div class="battery-timer battery-timer--compact">
         <div class="battery-progress-container">
           <div class="battery-body">
             <div class="battery-fill-bar" id="battery-fill" style="width: 100%;"></div>
@@ -40,20 +43,28 @@
         </div>
       </div>
 
-      {%- comment -%} NEW: Visual Tier Cards - CRO Optimized {%- endcomment -%}
-      <div class="bogo-tier-showcase">
-        <h3 class="tier-showcase-title">Choose Your Savings Level</h3>
-        {%- comment -%} ✅ BOGO-HERO-POLISH-039: Removed subtitle to reduce clutter {%- endcomment -%}
+      {%- comment -%} Offer Explanation {%- endcomment -%}
+      <h2 class="hero-headline-secondary">
+        Add Any Product, Get <span class="free-gradient">ANY</span> Product FREE
+      </h2>
 
-        {%- comment -%} Product flexibility callout {%- endcomment -%}
-        <div class="product-flexibility-note">
-          <span class="flex-icon">🎯</span>
-          <span class="flex-text">
-            <strong>Total Flexibility:</strong> Mix & match any products to create your perfect bundle
-          </span>
-        </div>
+      <p class="hero-subheadline hero-subheadline--savings">
+        Mix & Match Any 2 - The More Pairs, The More You Save
+      </p>
 
-        <div class="tier-cards-container">
+      {%- comment -%} Spacer {%- endcomment -%}
+      <div class="tier-section-spacer"></div>
+
+      {%- comment -%} Tier Section Header {%- endcomment -%}
+      <div class="tier-section-header">
+        <h3 class="tier-section-title">Choose Your Savings Level</h3>
+        <p class="tier-section-subtitle">Select a tier below to start building your bundle</p>
+      </div>
+    </div>
+
+    {%- comment -%} Tier Cards Grid {%- endcomment -%}
+    <div class="bogo-tier-showcase">
+      <div class="tier-cards-container">
           {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 1: Starter {%- endcomment -%}
           <div class="tier-card tier-1" data-tier="1">
             <div class="tier-header">

@@ -920,255 +920,238 @@ function getTierDiscount(pairCount) {
 // SIMPLE WORKING STICKY CART UPDATE
 // STICKY-CART-SHOW-FIRST-PRODUCT-077
 // ========================================
+// ========================================
+// STICKY CART V2 UPDATE LOGIC (BOGO-V2-FOUNDATION)
+// Accurate Calculations + Segmented Progress + Clean Messaging
+// ========================================
 function updateStickyCart() {
   const state = window.bogoState;
-  const stickyCart = document.querySelector('.bogo-sticky-cart');
+  const stickyCartV2 = document.getElementById('bogo-sticky-cart-v2');
 
-  if (!stickyCart) return;
+  // Force hide old cart
+  const oldStickyCart = document.querySelector('.bogo-sticky-cart');
+  if (oldStickyCart) oldStickyCart.style.display = 'none';
 
-  // Count total products added (including incomplete pairs)
-  const pairCount = state?.pairs?.length || 0;
-  const currentPair = state?.currentPair;
+  if (!stickyCartV2 || !state) return;
 
-  // BOGO-STICKY-CART-STATUS-025: Check BOTH slots for incomplete products
-  const hasIncompleteProduct = (currentPair?.slot1 && !currentPair?.slot2) ||
-                                 (currentPair?.slot2 && !currentPair?.slot1);
+  console.log('=== STICKY CART V2 UPDATE START ===');
 
-  console.log('Updating sticky cart:', {
+  // --- DATA COLLECTION ---
+  const pairCount = state.pairs?.length || 0;
+  const currentPair = state.currentPair;
+
+  // Check for incomplete pair (exactly one slot filled using XOR)
+  const hasIncompleteProduct = !!(currentPair?.slot1) !== !!(currentPair?.slot2);
+
+  // Determine current tier
+  let currentTier = 0;
+  if (pairCount >= 3) currentTier = 3;
+  else if (pairCount >= 2) currentTier = 2;
+  else if (pairCount >= 1) currentTier = 1;
+
+  console.log('Cart State:', {
     completePairs: pairCount,
-    hasIncompleteProduct: hasIncompleteProduct,
+    hasIncomplete: hasIncompleteProduct,
+    currentTier: currentTier,
     slot1: !!currentPair?.slot1,
     slot2: !!currentPair?.slot2
   });
 
-  // Update pair count display
-  const pairCountEl = document.getElementById('sticky-cart-pair-count');
-  if (pairCountEl) {
-    if (hasIncompleteProduct) {
-      // Show "Building Pair 1..." when first product added
-      pairCountEl.textContent = `Building Pair ${pairCount + 1}...`;
-    } else {
-      pairCountEl.textContent = `${pairCount} Pair${pairCount !== 1 ? 's' : ''}`;
-    }
-  }
+  // --- 1. ACCURATE SAVINGS CALCULATION ---
+  let totalSavings = 0;
+  let orderSubtotal = 0;
 
-  // ========================================
-  // PROGRESS BAR UPDATE (BOGO-PROGRESS-BAR-FIX-014)
-  // Fixed: Fill per product, not per pair
-  // ========================================
-  const progressFill = document.getElementById('bogo-progress-fill');
-  const milestones = document.querySelectorAll('.bogo-milestone');
+  // Helper: Parse price strings safely
+  const parsePrice = (priceString) => {
+    if (!priceString) return 0;
+    // Remove currency symbols, spaces, handle both comma and dot decimals
+    const cleaned = priceString.replace(/[^0-9.,]/g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
+  };
 
-  if (progressFill && milestones.length > 0) {
-    // Count ALL products across all pairs (BOGO-STICKY-CART-STATUS-025)
-    let totalProducts = 0;
+  if (pairCount > 0) {
+    // 1.1 Calculate BOGO Savings (50% off cheaper item per pair)
+    state.pairs.forEach(pair => {
+      const price1 = parsePrice(pair.slot1?.price);
+      const price2 = parsePrice(pair.slot2?.price);
 
-    if (state?.pairs && state.pairs.length > 0) {
-      state.pairs.forEach(pair => {
-        if (pair.slot1?.variantId) totalProducts++;
-        if (pair.slot2?.variantId) totalProducts++;
-      });
-    }
+      // Add both items to order subtotal
+      orderSubtotal += price1 + price2;
 
-    // BOGO-STICKY-CART-STATUS-025: Include incomplete pair products
-    if (state?.currentPair) {
-      if (state.currentPair.slot1?.variantId) totalProducts++;
-      if (state.currentPair.slot2?.variantId) totalProducts++;
-    }
-
-    // Calculate progress: Each product = 16.67% (6 products = 100%)
-    let progressPercent = Math.min((totalProducts / 6) * 100, 100);
-
-    // Apply fill width
-    progressFill.style.width = progressPercent + '%';
-
-    // Add glow animation when products added
-    if (totalProducts > 0) {
-      progressFill.classList.add('animating');
-      setTimeout(() => progressFill.classList.remove('animating'), 600);
-    }
-
-    // Update milestones based on COMPLETE PAIRS
-    const completePairs = state?.pairs?.length || 0;
-
-    milestones.forEach((milestone, index) => {
-      const tierNumber = index + 1;
-
-      if (completePairs >= tierNumber) {
-        if (!milestone.classList.contains('active')) {
-          milestone.classList.add('active');
-          milestone.classList.add('unlocked');
-          setTimeout(() => milestone.classList.remove('unlocked'), 600);
-        }
-      } else {
-        milestone.classList.remove('active');
-      }
-    });
-
-    console.log('Progress bar:', {
-      products: totalProducts,
-      pairs: completePairs,
-      fillPercent: progressPercent.toFixed(1) + '%'
-    });
-  }
-
-  // ========================================
-  // UPDATE NEXT REWARD TEXT (BOGO-PROGRESS-FIX-010)
-  // ========================================
-  const nextRewardEl = document.getElementById('progress-next-reward');
-
-  if (nextRewardEl) {
-    const completePairs = state?.pairs ? state.pairs.length : 0;
-
-    if (hasIncompleteProduct || completePairs === 0) {
-      nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Build your first BOGO pair!</span>';
-      nextRewardEl.style.display = 'flex';
-    } else if (completePairs === 1) {
-      nextRewardEl.innerHTML = '<span class="reward-icon">🚚</span><span class="reward-text">Add 1 pair: 5% OFF + FREE Shipping (€4.99)</span>';
-      nextRewardEl.style.display = 'flex';
-    } else if (completePairs === 2) {
-      nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Add 1 pair: 10% OFF + FREE Cable (€18.95)</span>';
-      nextRewardEl.style.display = 'flex';
-    } else {
-      nextRewardEl.style.display = 'none';
-    }
-  }
-
-  // ========================================
-  // STICKY CART STATUS MESSAGES (BOGO-STICKY-CART-STATUS-025)
-  // Dynamic messaging based on complete pairs + incomplete products
-  // ========================================
-  const statusEl = document.getElementById('sticky-cart-status');
-  if (statusEl) {
-    const nextPairNumber = pairCount + 1;
-
-    if (hasIncompleteProduct) {
-      // Incomplete pair - urgent call to action
-      statusEl.innerHTML = `🔥 Complete pair ${nextPairNumber}: <strong>Select 1 more product!</strong>`;
-      statusEl.style.color = '#fbbf24';
-    } else if (pairCount === 0) {
-      // No pairs built yet
-      statusEl.innerHTML = '🎁 <strong>Build your first BOGO pair!</strong> Select 2 products';
-      statusEl.style.color = 'rgba(255, 255, 255, 0.9)';
-    } else if (pairCount === 1) {
-      // Tier 1 achieved - upsell to Tier 2
-      statusEl.innerHTML = '💚 <strong>Add 1 more pair</strong> for 5% OFF + Free Shipping!';
-      statusEl.style.color = '#60c655';
-    } else if (pairCount === 2) {
-      // Tier 2 achieved - upsell to Tier 3
-      statusEl.innerHTML = '🎁 <strong>Add 1 more pair</strong> for 10% OFF + FREE Cable (€18.95)!';
-      statusEl.style.color = '#f39c12';
-    } else if (pairCount >= 3 && pairCount < 10) {
-      // Tier 3 achieved - encouragement
-      statusEl.innerHTML = `🏆 <strong>${pairCount} pairs built!</strong> Amazing savings unlocked 🎉`;
-      statusEl.style.color = '#60c655';
-    } else {
-      // 10+ pairs - celebration
-      statusEl.innerHTML = `🔥 <strong>${pairCount} pairs!</strong> You're a BOGO champion! 👑`;
-      statusEl.style.color = '#60c655';
-    }
-
-    console.log('Status updated:', {
-      completePairs: pairCount,
-      hasIncompleteProduct,
-      message: statusEl.textContent
-    });
-  }
-
-  // ========================================
-  // CALCULATE TOTAL SAVINGS (BOGO-SAVINGS-003)
-  // Includes: BOGO + Tier Discounts + Shipping + Bonus
-  // ========================================
-  const savingsEl = document.getElementById('sticky-cart-savings');
-  if (savingsEl && state?.pairs) {
-    let totalSavings = 0;
-    let orderSubtotal = 0;
-
-    if (state.pairs.length > 0) {
-      // Step 1: Calculate BOGO savings and order subtotal
-      state.pairs.forEach(pair => {
-        const price1 = parseFloat(pair.slot1?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
-        const price2 = parseFloat(pair.slot2?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
-
-        // Add both items to subtotal
-        orderSubtotal += price1 + price2;
-
-        // BOGO savings: 50% off cheaper item
-        const lowerPrice = Math.min(price1, price2);
+      // BOGO: 50% off the cheaper item
+      const lowerPrice = Math.min(price1, price2);
+      if (lowerPrice > 0) {
         totalSavings += lowerPrice * 0.5;
+      }
+
+      console.log(`Pair ${state.pairs.indexOf(pair) + 1}:`, {
+        price1: price1.toFixed(2),
+        price2: price2.toFixed(2),
+        bogoSavings: (lowerPrice * 0.5).toFixed(2)
       });
+    });
 
-      // Step 2: Add tier discount savings
-      if (pairCount >= 3) {
-        // Tier 3: 10% off total order
-        totalSavings += orderSubtotal * 0.10;
-      } else if (pairCount >= 2) {
-        // Tier 2: 5% off total order
-        totalSavings += orderSubtotal * 0.05;
-      }
+    // 1.2 Apply Tier Discounts (on already-discounted total)
+    const discountedSubtotal = orderSubtotal - totalSavings;
+    let tierDiscount = 0;
 
-      // Step 3: Add premium shipping value (2+ pairs)
-      if (pairCount >= 2) {
-        totalSavings += 4.99; // Premium shipping value
-      }
-
-      // Step 4: Add bonus cable value (3+ pairs)
-      if (pairCount >= 3) {
-        totalSavings += 18.95; // Titan Smart Cable value
-      }
+    if (currentTier === 3) {
+      tierDiscount = discountedSubtotal * 0.10; // 10% off
+      totalSavings += tierDiscount;
+      console.log('Tier 3 Discount (10%):', tierDiscount.toFixed(2));
+    } else if (currentTier === 2) {
+      tierDiscount = discountedSubtotal * 0.05; // 5% off
+      totalSavings += tierDiscount;
+      console.log('Tier 2 Discount (5%):', tierDiscount.toFixed(2));
     }
 
-    savingsEl.textContent = `€${totalSavings.toFixed(2)}`;
+    // 1.3 Add Value-Add Bonuses
+    if (currentTier >= 2) {
+      totalSavings += 4.99; // Premium shipping value
+      console.log('Added Shipping Value: €4.99');
+    }
+    if (currentTier >= 3) {
+      totalSavings += 18.95; // Titan Smart Cable value
+      console.log('Added Cable Value: €18.95');
+    }
   }
 
-  // Show/hide buttons
-  const reviewBtn = document.getElementById('sticky-cart-review');
-  const checkoutBtn = document.getElementById('sticky-cart-checkout');
+  console.log('TOTAL SAVINGS:', totalSavings.toFixed(2));
 
-  // ========================================
-  // KEY FIX: Show cart if ANY products exist
-  // ========================================
-  const hasAnyProducts = pairCount > 0 || hasIncompleteProduct;
+  // Update Savings Display (Euro format with comma decimal)
+  const savingsEl = document.getElementById('v2-total-savings');
+  if (savingsEl) {
+    const formattedSavings = `€${totalSavings.toFixed(2).replace('.', ',')}`;
 
-  if (hasAnyProducts) {
-    // Show cart
-    stickyCart.style.display = 'block';
-
-    // Only show buttons if at least one complete pair exists
-    if (reviewBtn) {
-      reviewBtn.style.display = pairCount > 0 ? 'block' : 'none';
-    }
-    if (checkoutBtn) {
-      checkoutBtn.style.display = pairCount > 0 ? 'block' : 'none';
+    // Animate if value changed
+    if (savingsEl.textContent !== formattedSavings) {
+      savingsEl.classList.add('updating');
+      setTimeout(() => savingsEl.classList.remove('updating'), 500);
     }
 
-    // Add checkout click handler
-    if (checkoutBtn && pairCount > 0) {
-      checkoutBtn.onclick = function() {
-        console.log('Checkout clicked with pairs:', state.pairs);
-        proceedToCheckout();
-      };
-    }
+    savingsEl.textContent = formattedSavings;
+  }
 
-    // Add review click handler
-    if (reviewBtn && pairCount > 0) {
-      reviewBtn.onclick = function() {
-        openPairModal();
-      };
+  // --- 2. UPDATE STATUS & MESSAGING ---
+  const pairCountEl = document.getElementById('v2-pair-count');
+  const incentiveMsgEl = document.getElementById('v2-incentive-message');
+  const primaryBtn = document.getElementById('v2-btn-primary');
+  const reviewBtn = document.getElementById('v2-btn-review');
+
+  // Define button actions
+  const scrollToProducts = () => {
+    // Close modal if open
+    const modal = document.getElementById('pair-management-modal');
+    if (modal && modal.classList.contains('active')) {
+      if (typeof closePairModal === 'function') closePairModal();
     }
+    // Scroll to products
+    const productGrid = document.querySelector('.section-collections-with-nav__wrapper');
+    if (productGrid) {
+      productGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const checkoutAction = () => {
+    if (typeof proceedToCheckout === 'function') {
+      console.log('Proceeding to checkout with pairs:', state.pairs);
+      proceedToCheckout();
+    }
+  };
+
+  const reviewAction = () => {
+    if (typeof openPairModal === 'function') {
+      openPairModal();
+    }
+  };
+
+  // Update UI based on cart state
+  if (hasIncompleteProduct) {
+    // STATE: Incomplete Pair
+    const nextPairNum = pairCount + 1;
+    pairCountEl.textContent = `Building Pair ${nextPairNum}...`;
+    incentiveMsgEl.innerHTML = '🔥 <strong>Select 1 more item</strong> to complete your pair!';
+    primaryBtn.textContent = 'Continue Shopping';
+    primaryBtn.onclick = scrollToProducts;
+    reviewBtn.style.display = pairCount > 0 ? 'block' : 'none';
+    reviewBtn.onclick = reviewAction;
+
+  } else if (pairCount === 0) {
+    // STATE: Empty Cart
+    pairCountEl.textContent = 'Start Building';
+    incentiveMsgEl.innerHTML = 'Select 2 items to activate <strong>Buy 1 Get 1 50% OFF!</strong>';
+    primaryBtn.textContent = 'Start Building';
+    primaryBtn.onclick = scrollToProducts;
+    reviewBtn.style.display = 'none';
+
   } else {
-    // Hide cart if no products at all
-    stickyCart.style.display = 'none';
+    // STATE: Complete Pairs Exist
+    pairCountEl.textContent = `${pairCount} Pair${pairCount !== 1 ? 's' : ''}`;
+    primaryBtn.textContent = 'Checkout →';
+    primaryBtn.onclick = checkoutAction;
+    reviewBtn.style.display = 'block';
+    reviewBtn.onclick = reviewAction;
+
+    // Update Incentive Message Based on Tier
+    if (currentTier === 1) {
+      incentiveMsgEl.innerHTML = '🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!';
+    } else if (currentTier === 2) {
+      incentiveMsgEl.innerHTML = '🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (€18.95)!';
+    } else if (currentTier >= 3) {
+      incentiveMsgEl.innerHTML = '👑 <strong>Max Savings Unlocked!</strong> Ready to checkout?';
+    }
   }
 
-  console.log('Sticky cart visibility:', hasAnyProducts ? 'visible' : 'hidden');
-  console.log('Sticky cart updated successfully');
+  console.log('UI Updated:', {
+    pairCount: pairCountEl.textContent,
+    primaryBtn: primaryBtn.textContent
+  });
 
-  // ========================================
-  // SAVE STATE TO LOCALSTORAGE (BOGO-PERSIST-006)
-  // ========================================
-  saveBOGOState();
+  // --- 3. UPDATE SEGMENTED PROGRESS BAR ---
+  const segments = document.querySelectorAll('.bogo-sticky-cart-v2 .progress-segment');
+
+  segments.forEach((segment, index) => {
+    const tier = index + 1;
+
+    if (pairCount >= tier) {
+      if (!segment.classList.contains('active')) {
+        // Sequential activation with delay for visual effect
+        setTimeout(() => {
+          segment.classList.add('active');
+          console.log(`Segment ${tier} activated`);
+        }, index * 150);
+      }
+    } else {
+      segment.classList.remove('active');
+    }
+  });
+
+  // --- 4. VISIBILITY CONTROL ---
+  // Show V2 cart whenever there are products OR we want to incentivize
+  const shouldShow = pairCount > 0 || hasIncompleteProduct || true; // Always show for incentive
+  stickyCartV2.style.display = shouldShow ? 'block' : 'none';
+
+  console.log('=== STICKY CART V2 UPDATE COMPLETE ===\n');
+
+  // --- 5. SAVE STATE TO LOCALSTORAGE ---
+  if (typeof saveBOGOState === 'function') {
+    saveBOGOState();
+  }
 }
+
+// Ensure function is globally accessible
+window.updateStickyCart = updateStickyCart;
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    console.log('Initializing Sticky Cart V2 on page load');
+    updateStickyCart();
+  }, 100);
+});
+
+// OLD V1 STICKY CART LOGIC REMOVED (Lines 1153-1368)
+// Now using V2 logic with accurate calculations and segmented progress
 
 // ✅ BOGO-STICKY-COMPACT-047: No fade edges needed in compact design
 

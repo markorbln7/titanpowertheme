@@ -479,6 +479,70 @@
   </div>
 
   {%- comment -%} ========================================
+      STICKY CART V2 - CRO OPTIMIZED (BOGO-V2-FOUNDATION)
+      Structure + Calculations + Segmented Progress
+      ======================================== {%- endcomment -%}
+  <div class="bogo-sticky-cart-v2" id="bogo-sticky-cart-v2" style="display: none;">
+    <div class="sticky-cart-container">
+
+      {%- comment -%} 1. LEFT: Status & Pair Count {%- endcomment -%}
+      <div class="sticky-cart-status">
+        <div class="status-pair-count" id="v2-pair-count">Start Building</div>
+      </div>
+
+      {%- comment -%} 2. CENTER: Progress & Incentive Message {%- endcomment -%}
+      <div class="sticky-cart-progress">
+        {%- comment -%} Incentive message (replaces redundant text) {%- endcomment -%}
+        <div class="progress-incentive" id="v2-incentive-message">
+          Select 2 items to activate Buy 1 Get 1 50% OFF!
+        </div>
+
+        {%- comment -%} Segmented 3-step progress bar {%- endcomment -%}
+        <div class="progress-bar-segmented">
+          <div class="progress-segment" data-tier="1">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">1 Pair</span>
+              <span class="segment-benefit">BOGO 50%</span>
+            </div>
+          </div>
+          <div class="progress-segment" data-tier="2">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">2 Pairs</span>
+              <span class="segment-benefit">+5% & Ship</span>
+            </div>
+          </div>
+          <div class="progress-segment" data-tier="3">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">3 Pairs</span>
+              <span class="segment-benefit">+10% & Cable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} 3. RIGHT: Total Savings {%- endcomment -%}
+      <div class="sticky-cart-value">
+        <div class="value-label">You Save</div>
+        <div class="value-amount" id="v2-total-savings">€0,00</div>
+      </div>
+
+      {%- comment -%} 4. FAR RIGHT: Action Buttons {%- endcomment -%}
+      <div class="sticky-cart-actions">
+        <button class="btn-sticky-secondary" id="v2-btn-review" style="display: none;">
+          Review
+        </button>
+        <button class="btn-sticky-primary" id="v2-btn-primary">
+          Start Building
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {%- comment -%} ========================================
       TIER COMPARISON MODAL - CRO OPTIMIZATION
       ======================================== {%- endcomment -%}
   <div id="tier-comparison-modal" class="tier-comparison-modal">

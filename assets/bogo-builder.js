@@ -992,31 +992,35 @@ function updateStickyCart() {
   }
 
   // ========================================
-  // UPDATE STATUS MESSAGES (BOGO-MESSAGING-005)
-  // Quantified benefits + loss aversion + color coding
+  // STICKY CART STATUS MESSAGES (BOGO-STICKY-CART-MOBILE-016)
+  // Clear, action-oriented, motivating
   // ========================================
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {
     if (hasIncompleteProduct) {
-      // User has 1 product - urgency to complete pair
-      statusEl.textContent = '🔥 Complete your pair! Select 1 more product.';
-      statusEl.style.color = '#fbbf24'; // Yellow urgency
+      // Incomplete pair - urgency
+      statusEl.textContent = '🔥 Complete pair: Select 1 more product!';
+      statusEl.style.color = '#fbbf24';
     } else if (pairCount === 0) {
-      // No pairs yet - clear starting point
-      statusEl.textContent = '🎁 Start your BOGO! Select any 2 products.';
-      statusEl.style.color = 'rgba(255, 255, 255, 0.8)';
+      // No pairs - clear starting point
+      statusEl.textContent = '🎁 Build your first pair: Select 2 products';
+      statusEl.style.color = 'rgba(255, 255, 255, 0.9)';
     } else if (pairCount === 1) {
-      // Tier 1 → Tier 2 upsell (quantified)
-      statusEl.textContent = 'Add 1 more pair: Unlock 5% OFF + FREE Premium Shipping (€4.99 value)!';
-      statusEl.style.color = '#60c655'; // Green opportunity
+      // Tier 1 → 2 upsell with specific value
+      statusEl.textContent = 'Add 1 pair: Save €10+ more (5% OFF + Shipping)';
+      statusEl.style.color = '#60c655';
     } else if (pairCount === 2) {
-      // Tier 2 → Tier 3 upsell (quantified)
-      statusEl.textContent = 'Add 1 more pair: Get 10% OFF + FREE Titan Cable (€18.95 value)!';
-      statusEl.style.color = '#f39c12'; // Gold premium
+      // Tier 2 → 3 upsell with cable value
+      statusEl.textContent = 'Add 1 pair: Get FREE €18.95 Cable + 10% OFF!';
+      statusEl.style.color = '#f39c12';
+    } else if (pairCount >= 3 && pairCount < 10) {
+      // Tier 3 achieved but can add more
+      statusEl.textContent = `🏆 ${pairCount} pairs! Keep building for more savings`;
+      statusEl.style.color = '#60c655';
     } else {
-      // Tier 3 achieved - celebration
-      statusEl.textContent = '🏆 Ultimate Unlocked! €72+ in savings + FREE Cable included.';
-      statusEl.style.color = '#60c655'; // Green success
+      // 10+ pairs - celebration
+      statusEl.textContent = `🔥 Amazing! ${pairCount} pairs built!`;
+      statusEl.style.color = '#60c655';
     }
   }
 

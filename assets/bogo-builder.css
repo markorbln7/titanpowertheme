@@ -4201,24 +4201,27 @@
     opacity: 1;
   }
 
-  /* Milestone Labels - Below Track */
+  /* Milestone Labels - Below Track (BOGO-STICKY-CART-MOBILE-016) */
   .milestone-label {
     position: absolute;
     top: 32px;
-    font-size: 9px;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 8px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.6);
     text-align: center;
-    white-space: nowrap;
+    white-space: normal; /* Allow wrapping for line breaks */
+    max-width: 60px;
+    line-height: 1.2;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
     transition: color 400ms ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
   }
 
   .bogo-milestone.active .milestone-label {
     color: #60c655;
-    text-shadow: 0 0 6px rgba(96, 198, 85, 0.5);
+    text-shadow: 0 0 6px rgba(96, 198, 85, 0.6);
+    font-weight: 900;
   }
 
   /* Unlocked Effect */
@@ -4233,8 +4236,12 @@
     100% { transform: scale(1.1); }
   }
 
-  /* Mobile Adjustments */
+  /* Mobile Adjustments (BOGO-STICKY-CART-MOBILE-016) */
   @media (max-width: 767px) {
+    .bogo-sticky-cart {
+      height: 88px; /* Taller for better spacing */
+    }
+
     .bogo-progress-container {
       max-width: 240px;
     }
@@ -4257,19 +4264,62 @@
     }
 
     .milestone-label {
-      font-size: 8px;
+      font-size: 7px;
       top: 28px;
+      max-width: 50px;
+      line-height: 1.1;
+    }
+
+    /* Increase spacing between milestones */
+    .bogo-progress-milestones {
+      padding: 0 8px;
+      justify-content: space-between;
+    }
+
+    /* Larger checkout button text */
+    .bogo-sticky-cart__btn {
+      height: 48px;
+      padding: 0 20px;
+      font-size: 14px; /* Increased from 13px */
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    /* Clearer pair count */
+    .bogo-sticky-cart__pairs {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    /* Savings amount more prominent */
+    .bogo-sticky-cart__savings-amount {
+      font-size: 24px;
+      font-weight: 900;
     }
   }
 
   /* Hide reward text on very small screens */
   @media (max-width: 480px) {
+    .bogo-sticky-cart {
+      height: 80px;
+    }
+
     .reward-text {
       display: none;
     }
 
     .reward-icon {
       font-size: 14px;
+    }
+
+    .milestone-label {
+      font-size: 6px;
+      max-width: 45px;
+    }
+
+    /* Hide "next reward" text on very small screens */
+    .bogo-progress-next-reward {
+      display: none;
     }
   }
 

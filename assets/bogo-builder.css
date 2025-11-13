@@ -5201,10 +5201,10 @@
     border-left: 4px solid #60c655;
   }
 
-  /* Pairs Grid */
+  /* Pairs Grid - BOGO-MODAL-SCROLL-FIX-022: NO separate scroll */
   .pair-modal__pairs-grid {
-    flex: 1;
-    overflow-y: auto;
+    flex-shrink: 0; /* Stack naturally */
+    overflow: visible; /* Single scroll container only */
     padding: 32px 48px;
     display: flex;
     flex-direction: column;

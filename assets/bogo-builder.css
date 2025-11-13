@@ -3992,14 +3992,17 @@
   }
 
   /* ========================================
-     ENHANCED PROGRESS BAR (BOGO-PROGRESS-008)
-     Bold, exciting, motivating visual
+     ENHANCED PROGRESS BAR (BOGO-PROGRESS-FIX-010)
+     Centered, compact, clear layout
      ======================================== */
 
   .bogo-progress-container {
     width: 100%;
-    max-width: 320px;
-    margin-top: 12px;
+    max-width: 280px;
+    margin: 12px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Next Reward Indicator */
@@ -4009,18 +4012,18 @@
     gap: 6px;
     justify-content: center;
     margin-bottom: 8px;
-    padding: 4px 12px;
+    padding: 4px 10px;
     background: rgba(251, 191, 36, 0.15);
     border-radius: 12px;
     border: 1px solid rgba(251, 191, 36, 0.3);
   }
 
   .reward-icon {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .reward-text {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     color: #fbbf24;
     letter-spacing: 0.02em;
@@ -4030,55 +4033,57 @@
   .bogo-progress-bar-enhanced {
     position: relative;
     width: 100%;
+    padding-top: 28px;
+    padding-bottom: 20px;
   }
 
   /* Progress Track */
   .bogo-progress-track {
     position: relative;
     width: 100%;
-    height: 12px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
-  /* Progress Fill - Bold Gradient */
+  /* Progress Fill - Smooth Gradient */
   .bogo-progress-fill {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     background: linear-gradient(90deg, #60c655 0%, #50b645 50%, #40a635 100%);
-    border-radius: 6px;
+    border-radius: 4px;
     width: 0%;
-    transition: width 800ms cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 12px rgba(96, 198, 85, 0.6);
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.5);
   }
 
   /* Glow effect when progressing */
   .bogo-progress-fill.animating {
-    animation: progress-glow 1s ease-out;
+    animation: progress-glow 800ms ease-out;
   }
 
   @keyframes progress-glow {
-    0% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.6); }
-    50% { box-shadow: 0 0 24px rgba(96, 198, 85, 1); }
-    100% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.6); }
+    0% { box-shadow: 0 0 8px rgba(96, 198, 85, 0.5); }
+    50% { box-shadow: 0 0 16px rgba(96, 198, 85, 0.9); }
+    100% { box-shadow: 0 0 8px rgba(96, 198, 85, 0.5); }
   }
 
-  /* Milestones Container */
+  /* Milestones Container - Above Track */
   .bogo-progress-milestones {
     position: absolute;
-    top: -24px;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 48px;
+    height: 24px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     pointer-events: none;
-    padding: 0 4px;
+    padding: 0 2px;
   }
 
   .bogo-milestone {
@@ -4086,116 +4091,114 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     flex: 0 0 auto;
   }
 
-  /* Milestone Marker - Much Larger */
+  /* Milestone Marker - Compact Size */
   .milestone-marker {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     z-index: 2;
   }
 
   .milestone-icon {
-    font-size: 16px;
-    opacity: 0.5;
-    transition: opacity 500ms ease;
+    font-size: 11px;
+    opacity: 0.4;
+    transition: opacity 400ms ease;
   }
 
-  /* Active State - Dramatic */
+  /* Active State - Clear but Not Overwhelming */
   .bogo-milestone.active .milestone-marker {
     background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
     border-color: #60c655;
     box-shadow:
-      0 0 20px rgba(96, 198, 85, 0.8),
-      0 4px 12px rgba(0, 0, 0, 0.3);
-    transform: scale(1.15);
+      0 0 12px rgba(96, 198, 85, 0.7),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
   }
 
   .bogo-milestone.active .milestone-icon {
     opacity: 1;
-    animation: icon-pop 600ms ease-out;
   }
 
-  @keyframes icon-pop {
-    0% { transform: scale(0.8); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-
-  /* Milestone Labels - Clearer Text */
+  /* Milestone Labels - Below Track */
   .milestone-label {
-    font-size: 10px;
+    position: absolute;
+    top: 32px;
+    font-size: 9px;
     font-weight: 800;
     color: rgba(255, 255, 255, 0.5);
     text-align: center;
-    margin-top: 32px;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    transition: color 500ms ease;
+    transition: color 400ms ease;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .bogo-milestone.active .milestone-label {
     color: #60c655;
-    text-shadow: 0 0 8px rgba(96, 198, 85, 0.6);
+    text-shadow: 0 0 6px rgba(96, 198, 85, 0.5);
   }
 
-  /* Unlocked Effect - Celebration */
+  /* Unlocked Effect */
   .bogo-milestone.unlocked .milestone-marker {
-    animation: milestone-unlock 800ms ease-out;
+    animation: milestone-unlock 600ms ease-out;
   }
 
   @keyframes milestone-unlock {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.3) rotate(10deg); }
-    50% { transform: scale(1.25) rotate(-10deg); }
-    70% { transform: scale(1.3) rotate(5deg); }
-    100% { transform: scale(1.15); }
+    0% { transform: scale(1.1); }
+    40% { transform: scale(1.3) rotate(8deg); }
+    60% { transform: scale(1.25) rotate(-8deg); }
+    100% { transform: scale(1.1); }
   }
 
   /* Mobile Adjustments */
   @media (max-width: 767px) {
     .bogo-progress-container {
-      max-width: 260px;
+      max-width: 240px;
     }
 
     .reward-text {
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .bogo-progress-track {
-      height: 10px;
+      height: 6px;
     }
 
     .milestone-marker {
-      width: 28px;
-      height: 28px;
+      width: 18px;
+      height: 18px;
     }
 
     .milestone-icon {
-      font-size: 14px;
+      font-size: 10px;
     }
 
     .milestone-label {
-      font-size: 9px;
+      font-size: 8px;
+      top: 28px;
     }
   }
 
-  /* Hide on very small screens to prevent clutter */
+  /* Hide reward text on very small screens */
   @media (max-width: 480px) {
-    .bogo-progress-next-reward {
+    .reward-text {
       display: none;
+    }
+
+    .reward-icon {
+      font-size: 14px;
     }
   }
 

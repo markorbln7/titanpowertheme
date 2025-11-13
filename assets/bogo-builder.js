@@ -918,76 +918,83 @@ function updateStickyCart() {
   }
 
   // ========================================
-  // UPDATE ENHANCED PROGRESS BAR (BOGO-PROGRESS-008)
+  // UPDATE PROGRESS BAR (BOGO-PROGRESS-FIX-010)
+  // Fill per product, activate milestones per pair
   // ========================================
   const progressFill = document.getElementById('bogo-progress-fill');
   const milestones = document.querySelectorAll('.bogo-milestone');
 
   if (progressFill && milestones.length > 0) {
-    // Calculate progress percentage
-    let progressPercent = 0;
-
-    if (pairCount >= 3) {
-      progressPercent = 100; // Tier 3: Complete
-    } else if (pairCount === 2) {
-      progressPercent = 66; // Tier 2: 2/3 progress
-    } else if (pairCount === 1) {
-      progressPercent = 33; // Tier 1: 1/3 progress
-    } else {
-      progressPercent = 0; // No pairs
+    // Count total products (not pairs)
+    let totalProducts = 0;
+    if (state?.pairs) {
+      state.pairs.forEach(pair => {
+        if (pair.slot1?.variantId) totalProducts++;
+        if (pair.slot2?.variantId) totalProducts++;
+      });
     }
+
+    // Calculate progress based on products (6 products = 100%)
+    // Each product = 16.67% (100/6)
+    let progressPercent = (totalProducts / 6) * 100;
+
+    // Cap at 100%
+    if (progressPercent > 100) progressPercent = 100;
 
     // Update progress fill width
     progressFill.style.width = progressPercent + '%';
 
-    // Update milestone active states with unlock animations
-    milestones.forEach((milestone, index) => {
-      const tier = index + 1;
+    // Add animation class
+    if (totalProducts > 0) {
+      progressFill.classList.add('animating');
+      setTimeout(() => progressFill.classList.remove('animating'), 800);
+    }
 
-      if (pairCount >= tier) {
+    // Update milestone active states (based on complete pairs)
+    const completePairs = state?.pairs ? state.pairs.length : 0;
+
+    milestones.forEach((milestone, index) => {
+      const tier = index + 1; // Tier 1, 2, 3
+
+      if (completePairs >= tier) {
+        const wasActive = milestone.classList.contains('active');
         milestone.classList.add('active');
 
-        // Add "unlocked" class for celebration animation (once)
-        if (pairCount === tier && !milestone.classList.contains('unlocked')) {
+        // Add unlock animation only on first activation
+        if (!wasActive && completePairs === tier) {
           milestone.classList.add('unlocked');
-
-          // Add glow to progress fill
-          if (progressFill) {
-            progressFill.classList.add('animating');
-            setTimeout(() => progressFill.classList.remove('animating'), 1000);
-          }
+          setTimeout(() => milestone.classList.remove('unlocked'), 600);
         }
       } else {
         milestone.classList.remove('active');
       }
     });
 
-    console.log('Progress bar updated:', {
-      pairCount: pairCount,
-      progress: progressPercent + '%'
+    console.log('Progress updated:', {
+      totalProducts: totalProducts,
+      progressPercent: progressPercent.toFixed(1) + '%',
+      completePairs: completePairs
     });
   }
 
   // ========================================
-  // UPDATE NEXT REWARD TEXT (BOGO-PROGRESS-008)
+  // UPDATE NEXT REWARD TEXT (BOGO-PROGRESS-FIX-010)
   // ========================================
   const nextRewardEl = document.getElementById('progress-next-reward');
 
   if (nextRewardEl) {
-    if (pairCount === 0 || hasIncompleteProduct) {
-      // Show starting message
+    const completePairs = state?.pairs ? state.pairs.length : 0;
+
+    if (hasIncompleteProduct || completePairs === 0) {
       nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Build your first BOGO pair!</span>';
       nextRewardEl.style.display = 'flex';
-    } else if (pairCount === 1) {
-      // Show Tier 2 reward
+    } else if (completePairs === 1) {
       nextRewardEl.innerHTML = '<span class="reward-icon">🚚</span><span class="reward-text">Add 1 pair: 5% OFF + FREE Shipping (€4.99)</span>';
       nextRewardEl.style.display = 'flex';
-    } else if (pairCount === 2) {
-      // Show Tier 3 reward
+    } else if (completePairs === 2) {
       nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Add 1 pair: 10% OFF + FREE Cable (€18.95)</span>';
       nextRewardEl.style.display = 'flex';
     } else {
-      // Tier 3 complete - hide next reward
       nextRewardEl.style.display = 'none';
     }
   }

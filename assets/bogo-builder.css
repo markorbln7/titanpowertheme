@@ -4565,80 +4565,78 @@
   }
 
   /* ========================================
-     MODAL SCROLLABLE SECTIONS (BOGO-MODAL-FIX-011)
-     All content scrolls together smoothly
+     UNIFIED MODAL SCROLL (BOGO-MODAL-SCROLL-FIX-013)
+     Single scroll container for all content
      ======================================== */
+
+  /* Modal container - enable scrolling */
+  .pair-modal__container {
+    height: 85vh; /* Fixed viewport-based height */
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   /* Header - sticky at top */
   .pair-modal__header {
-    flex-shrink: 0; /* Fixed height */
+    flex-shrink: 0;
     position: sticky;
     top: 0;
     z-index: 10;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); /* Match container */
   }
 
-  /* Scrollable content sections */
+  /* Content sections - NO individual scrolling */
   .pair-modal__tier-progress {
     flex-shrink: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible; /* Remove scroll */
   }
 
   .partitioned-pricing {
     flex-shrink: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible; /* Remove scroll */
   }
 
   .pair-modal__pairs-grid {
-    flex: 1; /* Takes remaining space */
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 0; /* Critical for flex scrolling */
+    flex-shrink: 0; /* Don't flex, just stack */
+    overflow: visible; /* Remove scroll */
+    padding-bottom: 24px; /* Space at bottom */
   }
 
   /* Footer - sticky at bottom */
   .pair-modal__footer {
-    flex-shrink: 0; /* Fixed height */
+    flex-shrink: 0;
     position: sticky;
     bottom: 0;
     z-index: 10;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); /* Match container */
   }
 
-  /* Custom Scrollbar - Slim, Branded (BOGO-MODAL-FIX-011) */
-  .pair-modal__tier-progress::-webkit-scrollbar,
-  .partitioned-pricing::-webkit-scrollbar,
-  .pair-modal__pairs-grid::-webkit-scrollbar {
+  /* Custom Scrollbar - Unified (BOGO-MODAL-SCROLL-FIX-013) */
+  .pair-modal__container::-webkit-scrollbar {
     width: 8px;
   }
 
-  .pair-modal__tier-progress::-webkit-scrollbar-track,
-  .partitioned-pricing::-webkit-scrollbar-track,
-  .pair-modal__pairs-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
+  .pair-modal__container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 4px;
+    margin: 4px 0;
   }
 
-  .pair-modal__tier-progress::-webkit-scrollbar-thumb,
-  .partitioned-pricing::-webkit-scrollbar-thumb,
-  .pair-modal__pairs-grid::-webkit-scrollbar-thumb {
+  .pair-modal__container::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #60c655 0%, #50b645 100%);
     border-radius: 4px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.4);
   }
 
-  .pair-modal__tier-progress::-webkit-scrollbar-thumb:hover,
-  .partitioned-pricing::-webkit-scrollbar-thumb:hover,
-  .pair-modal__pairs-grid::-webkit-scrollbar-thumb:hover {
+  .pair-modal__container::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #70d665 0%, #60c655 100%);
   }
 
   /* Firefox scrollbar */
-  .pair-modal__tier-progress,
-  .partitioned-pricing,
-  .pair-modal__pairs-grid {
+  .pair-modal__container {
     scrollbar-width: thin;
-    scrollbar-color: #60c655 rgba(0, 0, 0, 0.3);
+    scrollbar-color: #60c655 rgba(0, 0, 0, 0.4);
   }
 
   /* ========================================

@@ -1437,21 +1437,31 @@
       BOGO-CELEBRATION-CLOSE-046: CLICKABLE OVERLAY
       Celebration modal dismissible by background click
       ======================================== {%- endcomment -%}
+  /* ========================================
+     CELEBRATION MODAL - RESPONSIVE SIZING
+     BOGO-CELEBRATION-MODAL-026
+     Always fits viewport with proper margins
+     ======================================== */
+
   /* Overlay container - clickable to close */
   .tier-celebration-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 10002;
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.5); /* ✅ 50% transparent black overlay */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     opacity: 0;
     transition: opacity 500ms ease;
-    cursor: pointer; /* ✅ Shows it's clickable */
-    padding: 20px; /* ✅ Space for hint text */
+    cursor: pointer;
+    padding: 80px 20px 120px 20px; /* Top 80px, bottom 120px for sticky cart */
+    overflow: hidden;
   }
 
   .tier-celebration-overlay.show {
@@ -1462,64 +1472,208 @@
   /* Canvas for confetti - still non-interactive */
   .celebration-canvas {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
   }
 
-  /* Content box - prevents click-through */
+  /* Content box - Fits Available Space */
   .celebration-content {
     position: relative;
     text-align: center;
+    width: 90%;
     max-width: 600px;
-    width: 100%;
-    padding: 48px 32px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 4vh, 40px);
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
     border: 3px solid #60c655;
-    border-radius: 20px;
-    box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4);
+    border-radius: 24px;
+    box-shadow:
+      0 0 40px rgba(96, 198, 85, 0.6),
+      0 20px 60px rgba(0, 0, 0, 0.8);
     animation: celebrationPop 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    cursor: default; /* ✅ Prevent parent cursor from applying */
-    pointer-events: auto; /* ✅ Stop click propagation to overlay */
+    cursor: default;
+    pointer-events: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   @keyframes celebrationPop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
-  .celebration-badge { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px; background: linear-gradient(135deg, #60c655 0%, #50b645 100%); border-radius: 50%; width: 140px; height: 140px; margin-bottom: 24px; box-shadow: 0 12px 48px rgba(96, 198, 85, 0.6); animation: badgeFloat 2000ms ease-in-out infinite; }
+
+  /* Celebration Badge - Scaled Appropriately (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: clamp(80px, 15vw, 120px);
+    height: clamp(80px, 15vw, 120px);
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    border-radius: 50%;
+    margin-bottom: clamp(16px, 3vh, 24px);
+    box-shadow: 0 8px 24px rgba(96, 198, 85, 0.5);
+    border: 4px solid rgba(96, 198, 85, 0.3);
+    animation: badgeFloat 2000ms ease-in-out infinite;
+  }
+
   @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-  .tier-celebration-overlay.tier-3 .celebration-badge { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); box-shadow: 0 12px 48px rgba(255, 215, 0, 0.6); }
-  .badge-icon { font-size: 48px; line-height: 1; }
-  .badge-tier { font-size: 16px; font-weight: 900; color: #000; text-transform: uppercase; letter-spacing: 0.05em; }
-  .celebration-message { font-size: clamp(32px, 5vw, 48px); font-weight: 900; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.02em; animation: messageGlow 2000ms ease-in-out infinite; }
+
+  .tier-celebration-overlay.tier-3 .celebration-badge {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.6);
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+
+  .badge-icon {
+    font-size: clamp(32px, 6vw, 48px);
+    line-height: 1;
+  }
+
+  .badge-tier {
+    font-size: clamp(10px, 2vw, 14px);
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Celebration Messages - Responsive (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-message {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: clamp(12px, 2vh, 20px);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    animation: messageGlow 2000ms ease-in-out infinite;
+  }
+
   @keyframes messageGlow { 0%, 100% { text-shadow: 0 0 20px rgba(96, 198, 85, 0.6); } 50% { text-shadow: 0 0 40px rgba(96, 198, 85, 1); } }
-  .celebration-submessage { font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: #60c655; margin-bottom: 32px; line-height: 1.4; }
-  .celebration-savings { background: rgba(96, 198, 85, 0.1); border: 2px solid rgba(96, 198, 85, 0.3); border-radius: 16px; padding: 24px; margin-bottom: 32px; }
-  .savings-breakdown { font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 12px; line-height: 1.6; }
-  .savings-total { font-size: 48px; font-weight: 900; color: #FFD700; line-height: 1; }
 
-  /* ✅ Two-button layout in celebration modal */
-  .celebration-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  .celebration-submessage {
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 700;
+    color: #60c655;
+    margin-bottom: clamp(20px, 4vh, 32px);
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
 
-  .btn-celebration-continue { border: none; padding: 16px 40px; border-radius: 12px; font-size: 16px; font-weight: 900; cursor: pointer; transition: all 300ms ease; text-transform: uppercase; letter-spacing: 0.05em; flex: 1; min-width: 180px; max-width: 240px; }
+  /* Savings Box - Compact (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-savings {
+    background: rgba(96, 198, 85, 0.15);
+    border: 2px solid rgba(96, 198, 85, 0.4);
+    border-radius: 16px;
+    padding: clamp(16px, 3vh, 24px);
+    margin-bottom: clamp(20px, 4vh, 32px);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .savings-breakdown {
+    font-size: clamp(11px, 2vw, 14px);
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .savings-total {
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 900;
+    color: #fbbf24;
+    line-height: 1;
+    text-align: center;
+    text-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);
+  }
+
+  /* Action Buttons - Responsive Stacking (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: clamp(16px, 3vh, 24px);
+  }
+
+  .btn-celebration-continue {
+    width: 100%;
+    height: clamp(48px, 8vh, 56px);
+    border: none;
+    border-radius: 12px;
+    font-size: clamp(13px, 2.5vw, 16px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: all 300ms ease;
+  }
 
   /* Primary button (Checkout) */
-  .btn-celebration-continue.primary { background: linear-gradient(135deg, #60c655 0%, #50b645 100%); color: #000; box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4); }
-  .btn-celebration-continue.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(96, 198, 85, 0.6); }
+  .btn-celebration-continue.primary {
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    color: #000;
+    box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+  }
+
+  .btn-celebration-continue.primary:hover {
+    background: linear-gradient(135deg, #70d665 0%, #60c655 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(96, 198, 85, 0.6);
+  }
 
   /* Secondary button (Review Pairs) */
-  .btn-celebration-continue.secondary { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 2px solid rgba(96, 198, 85, 0.5); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
-  .btn-celebration-continue.secondary:hover { background: rgba(255, 255, 255, 0.15); border-color: #60c655; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(96, 198, 85, 0.3); }
+  .btn-celebration-continue.secondary {
+    height: clamp(44px, 7vh, 52px);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: clamp(12px, 2.5vw, 15px);
+    font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-celebration-continue.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #60c655;
+    transform: translateY(-2px);
+  }
 
   /* Tier 3 - Gold primary button */
-  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4); }
-  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary:hover { box-shadow: 0 12px 32px rgba(255, 215, 0, 0.6); }
+  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
+  }
 
-  /* ✅ BOGO-CELEBRATION-CLOSE-046: Hint text for overlay dismissal */
+  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+  }
+
+  /* Dismiss/Hint Text (BOGO-CELEBRATION-MODAL-026) */
   .celebration-hint {
-    margin-top: 24px;
-    font-size: 14px;
+    margin-top: clamp(16px, 3vh, 24px);
+    font-size: clamp(11px, 2vw, 13px);
     color: rgba(255, 255, 255, 0.6);
     font-weight: 500;
     text-align: center;
     letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 300ms ease;
     animation: hintPulse 2000ms ease-in-out infinite;
+  }
+
+  .celebration-hint:hover {
+    color: rgba(255, 255, 255, 0.9);
   }
 
   @keyframes hintPulse {
@@ -1527,10 +1681,90 @@
     50% { opacity: 1; }
   }
 
-  /* Mobile: Stack buttons vertically */
+  /* Ensure content is above particles */
+  .celebration-content > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Mobile Specific Adjustments (BOGO-CELEBRATION-MODAL-026) */
   @media (max-width: 768px) {
-    .celebration-buttons { flex-direction: column; gap: 12px; }
-    .btn-celebration-continue { min-width: 100%; max-width: 100%; }
+    .tier-celebration-overlay {
+      padding: 60px 16px 100px 16px;
+    }
+
+    .celebration-content {
+      width: 95%;
+      padding: 20px 16px;
+      border-radius: 16px;
+    }
+
+    .celebration-buttons {
+      gap: 10px;
+    }
+  }
+
+  /* Very Small Screens (BOGO-CELEBRATION-MODAL-026) */
+  @media (max-width: 480px) {
+    .tier-celebration-overlay {
+      padding: 40px 12px 90px 12px;
+    }
+
+    .celebration-badge {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  /* Landscape Orientation - More Compact (BOGO-CELEBRATION-MODAL-026) */
+  @media (max-height: 600px) and (orientation: landscape) {
+    .tier-celebration-overlay {
+      padding: 20px 20px 80px 20px;
+    }
+
+    .celebration-content {
+      padding: 16px;
+    }
+
+    .celebration-badge {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 12px;
+    }
+
+    .celebration-message {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .celebration-submessage {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .celebration-savings {
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .savings-total {
+      font-size: 32px;
+    }
+
+    .celebration-buttons {
+      margin-top: 12px;
+      gap: 8px;
+    }
+
+    .btn-celebration-continue {
+      height: 40px;
+      font-size: 13px;
+    }
+
+    .btn-celebration-continue.secondary {
+      height: 36px;
+      font-size: 12px;
+    }
   }
   .bogo-sticky-cart.celebration-pulse { animation: cartCelebratePulse 1200ms ease-out; }
   @keyframes cartCelebratePulse { 0%, 100% { transform: translateY(0); box-shadow: 0 -4px 20px rgba(96, 198, 85, 0.3); } 25% { transform: translateY(-8px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } 50% { transform: translateY(0); box-shadow: 0 -12px 60px rgba(96, 198, 85, 0.8); } 75% { transform: translateY(-4px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } }

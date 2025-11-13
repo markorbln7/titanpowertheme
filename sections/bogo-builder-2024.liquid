@@ -410,21 +410,42 @@
           0 Pairs
         </div>
 
-        {%- comment -%} Progress Bar (BOGO-PROGRESS-004) {%- endcomment -%}
-        <div class="bogo-progress-bar">
-          <div class="bogo-progress-fill" id="bogo-progress-fill"></div>
-          <div class="bogo-progress-milestones">
-            <div class="bogo-milestone" data-tier="1">
-              <div class="milestone-dot"></div>
-              <span class="milestone-label">1</span>
+{%- comment -%} Enhanced Progress Bar (BOGO-PROGRESS-008) {%- endcomment -%}
+        <div class="bogo-progress-container">
+          <div class="bogo-progress-next-reward" id="progress-next-reward">
+            <span class="reward-icon">🎁</span>
+            <span class="reward-text">Add 1 pair for 5% OFF + Shipping</span>
+          </div>
+
+          <div class="bogo-progress-bar-enhanced">
+            <div class="bogo-progress-track">
+              <div class="bogo-progress-fill" id="bogo-progress-fill"></div>
             </div>
-            <div class="bogo-milestone" data-tier="2">
-              <div class="milestone-dot"></div>
-              <span class="milestone-label">2</span>
-            </div>
-            <div class="bogo-milestone" data-tier="3">
-              <div class="milestone-dot"></div>
-              <span class="milestone-label">3+</span>
+
+            <div class="bogo-progress-milestones">
+              {%- comment -%} Tier 1 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="1">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">1️⃣</span>
+                </div>
+                <span class="milestone-label">BOGO</span>
+              </div>
+
+              {%- comment -%} Tier 2 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="2">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🚚</span>
+                </div>
+                <span class="milestone-label">+5% + Ship</span>
+              </div>
+
+              {%- comment -%} Tier 3 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="3">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🎁</span>
+                </div>
+                <span class="milestone-label">+10% + Cable</span>
+              </div>
             </div>
           </div>
         </div>

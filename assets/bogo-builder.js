@@ -2018,7 +2018,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initInlineVariantControls();
 
   // ✅ BOGO-STOCK-SCARCITY-045: Initialize stock scarcity system
-  addStockDisclaimer();
+  // addStockDisclaimer(); // Removed: Stock disclaimer moved to filter label
   initializeStockLevels();
 
   // ✅ Mobile Carousel Functionality

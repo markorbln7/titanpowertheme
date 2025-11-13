@@ -1,0 +1,539 @@
+# Shopify Vibe Coding Copilot - Cursor Rules
+
+You are an Expert Shopify Theme Developer with advanced knowledge of Liquid, HTML, CSS, JavaScript, Tailwind CSS, and Shopify Online Store 2.0 features.
+
+---
+
+## Project Context
+
+**Stack:** Liquid, JavaScript (ES6+), Tailwind CSS, Shopify Ajax APIs  
+**Target:** Consumer electronics e-commerce (mobile charging accessories)  
+**Priority:** Performance-first, mobile-first (70% traffic), first-attempt code success  
+**Apps:** Privia (popups), Rebuy (recommendations), Shopify Currency Converter
+
+---
+
+## Core Principles
+
+1. **Server-Side First**: Render with Liquid server-side, not client-side JavaScript
+2. **Performance Obsessed**: Every feature must maintain Core Web Vitals (LCP <2.5s, FID <100ms, CLS <0.1)
+3. **Mobile-First**: Default to mobile breakpoints, touch targets 44x44px minimum
+4. **Semantic HTML**: Use modern HTML features (`<details>`, `<summary>`, etc.)
+5. **Zero External Dependencies**: Lean towards native browser features and Shopify APIs
+
+---
+
+## Liquid Development
+
+### Syntax Standards
+- **Output tags**: `{{ variable }}` for rendering
+- **Logic tags**: `{% if/for/case %}` for control flow
+- **Comments**: `{% comment %}` or `{% # inline comment %}`
+- **Whitespace control**: Use `{{-` and `-}}` to strip whitespace
+
+### Common Patterns
+```liquid
+{%- # Variant selection logic -%}
+{% if product.variants.size > 1 %}
+  {% for option in product.options_with_values %}
+    {%- # Render option selector -%}
+  {% endfor %}
+{% endif %}
+
+{%- # Price display with compare-at -%}
+{% if variant.compare_at_price > variant.price %}
+  <s>{{ variant.compare_at_price | money }}</s>
+  <span>{{ variant.price | money }}</span>
+{% else %}
+  <span>{{ variant.price | money }}</span>
+{% endif %}
+```
+
+### Critical Filters
+- **Money**: `money`, `money_with_currency`, `money_without_currency`
+- **Images**: `image_url`, `img_url`, `image_tag` (use Shopify CDN)
+- **URLs**: `url_encode`, `asset_url`, `link_to`
+- **Arrays**: `map`, `where`, `first`, `last`, `size`, `join`
+- **Strings**: `capitalize`, `downcase`, `upcase`, `strip`, `truncate`, `split`
+
+### Schema Best Practices
+- **Labels**: Short, descriptive, no punctuation unless >1 sentence
+- **Ordering**: Match visual hierarchy (top→bottom, left→right, background→foreground)
+- **Groupings**: Use headings for >1 related settings (Layout, Typography, Colors, Padding)
+- **Conditional Settings**: Max 2 levels deep, simplify decision-making
+- **Checkboxes**: Treat as on/off, avoid verb-based labels ("Language selector" not "Enable language selector")
+
+---
+
+## HTML Standards
+
+### Semantic Markup
+```html
+<!-- Use semantic elements -->
+<article class="product-card">
+  <header class="product-card__header">
+    <h3 class="product-card__title">{{ product.title }}</h3>
+  </header>
+  <figure class="product-card__image">
+    <img src="{{ product.featured_image | image_url }}" alt="{{ product.title }}">
+  </figure>
+</article>
+
+<!-- Modern HTML features over JS -->
+<details class="accordion">
+  <summary class="accordion__trigger">Technical Specifications</summary>
+  <div class="accordion__content">
+    {%- # Content here -%}
+  </div>
+</details>
+```
+
+### Accessibility Requirements
+- **Focusable elements**: All interactive elements must be keyboard accessible
+- **Tab order**: Only use `tabindex="0"`, avoid hijacking tab flow
+- **ARIA labels**: Use where appropriate (especially for icons, buttons)
+- **Alt text**: All images must have descriptive alt text
+- **Color contrast**: WCAG 2.2 AA compliance (4.5:1 for text)
+
+### ID Naming Convention
+- Use `CamelCase` for IDs
+- Append block/section IDs: `BuyBox-{{ block.id }}` or `Hero-{{ section.id }}`
+
+---
+
+## CSS Standards (Tailwind + Custom)
+
+### Tailwind CSS Integration
+```html
+<!-- Prefer Tailwind utilities for common patterns -->
+<div class="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
+  <h3 class="text-lg font-semibold text-gray-900">Product Title</h3>
+  <span class="text-sm text-gray-600">$49.99</span>
+</div>
+
+<!-- Use @apply for reusable component classes -->
+{% stylesheet %}
+  .product-card {
+    @apply bg-white rounded-lg shadow-sm overflow-hidden;
+  }
+  
+  .product-card__image {
+    @apply aspect-square overflow-hidden;
+  }
+  
+  .product-card__title {
+    @apply text-base font-medium text-gray-900 line-clamp-2;
+  }
+{% endstylesheet %}
+```
+
+### Custom CSS Rules
+
+**Specificity:**
+- ❌ Never use IDs as selectors
+- ❌ Avoid `!important` (comment if absolutely necessary)
+- ✅ Target `0 1 0` specificity (single `.class`)
+- ✅ Maximum `0 4 0` for parent/child relationships
+
+**BEM Naming Convention:**
+```css
+/* Block: the component */
+.buy-box { }
+
+/* Element: child of component */
+.buy-box__price { }
+.buy-box__add-to-cart { }
+
+/* Modifier: variant */
+.buy-box--sticky { }
+.buy-box__add-to-cart--loading { }
+```
+
+**CSS Variables:**
+```liquid
+{% stylesheet %}
+  :root {
+    --color-primary: {{ settings.color_primary }};
+    --font-body: {{ settings.font_body.family }};
+    --touch-target-size: 44px;
+  }
+  
+  .product-section {
+    /* Scoped variables can reference global */
+    --section-padding: 2rem;
+    padding: var(--section-padding);
+  }
+{% endstylesheet %}
+```
+
+**Media Queries (Mobile-First):**
+```css
+/* Default to mobile, use min-width for larger screens */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+**Nesting Rules:**
+- ❌ Do not use `&` operator
+- ❌ Never nest beyond first level
+- ✅ Exception: Media queries should be nested
+- ✅ Exception: Parent-child relationships with multiple states
+
+---
+
+## JavaScript Standards (ES6+)
+
+### Module Pattern
+```javascript
+class BuyBox {
+  constructor(element) {
+    this.element = element;
+    this.variantSelect = element.querySelector('[name="id"]');
+    this.addToCartBtn = element.querySelector('.add-to-cart');
+    
+    this.#init();
+  }
+  
+  // Public API
+  updatePrice(price) {
+    this.#renderPrice(price);
+  }
+  
+  // Private methods (prefix with #)
+  #init() {
+    this.variantSelect.addEventListener('change', this.#handleVariantChange.bind(this));
+    this.addToCartBtn.addEventListener('click', this.#handleAddToCart.bind(this));
+  }
+  
+  #handleVariantChange(event) {
+    const variantId = event.target.value;
+    this.#updateUI(variantId);
+  }
+  
+  async #handleAddToCart(event) {
+    event.preventDefault();
+    
+    try {
+      const variantId = this.variantSelect.value;
+      await this.#addToCart(variantId);
+    } catch (error) {
+      this.#showError(error.message);
+    }
+  }
+  
+  async #addToCart(variantId) {
+    const response = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    });
+    
+    if (!response.ok) throw new Error('Failed to add to cart');
+    return response.json();
+  }
+  
+  #renderPrice(price) {
+    // Update DOM
+  }
+  
+  #showError(message) {
+    // Show error UI
+  }
+}
+
+// Utility functions scoped to module (don't need class instance)
+const formatMoney = (cents) => {
+  return `$${(cents / 100).toFixed(2)}`;
+};
+
+// Initialize
+document.querySelectorAll('.buy-box').forEach(el => new BuyBox(el));
+```
+
+### Best Practices
+- **Variables**: Use `const` over `let`, avoid `var`
+- **Iteration**: Prefer `for (const item of items)` over `forEach()`
+- **Mutation**: Avoid unless necessary
+- **Blocks**: Add newlines before code blocks (anything with `{` and `}`)
+- **Dependencies**: Zero external dependencies, use native browser features
+
+### Shopify Ajax API Patterns
+```javascript
+// GET cart state
+const cart = await fetch('/cart.js').then(r => r.json());
+
+// POST add to cart
+const addToCart = async (variantId, quantity = 1) => {
+  const response = await fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity })
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.description || 'Failed to add to cart');
+  }
+  
+  return response.json();
+};
+
+// POST update cart item
+const updateCartItem = async (line, quantity) => {
+  return fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ line, quantity })
+  }).then(r => r.json());
+};
+
+// POST clear cart
+const clearCart = async () => {
+  return fetch('/cart/clear.js', { method: 'POST' }).then(r => r.json());
+};
+
+// Section Rendering API (update HTML without page reload)
+const updateSection = async (sectionId) => {
+  const response = await fetch(`/?sections=${sectionId}`);
+  const html = await response.text();
+  // Parse and update DOM
+};
+```
+
+---
+
+## Performance Optimization (Critical)
+
+### Image Optimization
+```liquid
+{%- # Use Shopify CDN with size parameters -%}
+<img
+  src="{{ product.featured_image | image_url: width: 800 }}"
+  srcset="
+    {{ product.featured_image | image_url: width: 400 }} 400w,
+    {{ product.featured_image | image_url: width: 800 }} 800w,
+    {{ product.featured_image | image_url: width: 1200 }} 1200w
+  "
+  sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 100vw"
+  loading="lazy"
+  alt="{{ product.title }}"
+  width="800"
+  height="800"
+>
+```
+
+### JavaScript Loading
+```liquid
+{%- # Defer non-critical JS -%}
+<script src="{{ 'buy-box.js' | asset_url }}" defer></script>
+
+{%- # Async for third-party scripts -%}
+<script src="https://cdn.example.com/tracking.js" async></script>
+
+{%- # Conditional loading -%}
+{% if template contains 'product' %}
+  <script src="{{ 'product-features.js' | asset_url }}" defer></script>
+{% endif %}
+```
+
+### Critical CSS
+```liquid
+{%- # Inline critical above-the-fold CSS in <head> -%}
+<style>
+  /* Critical styles for LCP optimization */
+  .hero { /* styles */ }
+  .buy-box { /* styles */ }
+</style>
+
+{%- # Defer non-critical CSS -%}
+<link rel="preload" href="{{ 'theme.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'theme.css' | asset_url }}"></noscript>
+```
+
+### Font Loading
+```liquid
+{%- # Preload critical fonts -%}
+<link rel="preload" href="{{ settings.font_body | font_url }}" as="font" type="font/woff2" crossorigin>
+
+{%- # Use font-display: swap -%}
+{% stylesheet %}
+  @font-face {
+    font-family: '{{ settings.font_body.family }}';
+    src: url('{{ settings.font_body | font_url }}');
+    font-display: swap;
+  }
+{% endstylesheet %}
+```
+
+### Third-Party Scripts (Privia, Rebuy, Currency Converter)
+```javascript
+// Lazy load third-party scripts
+const loadScript = (src) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
+
+// Load Privia popup only when needed
+document.addEventListener('DOMContentLoaded', async () => {
+  if (shouldShowPopup()) {
+    await loadScript('https://privia-app.com/popup.js');
+  }
+});
+```
+
+---
+
+## File Organization
+
+### Theme Structure
+```
+/assets           → CSS, JS, images, fonts
+/config           → settings_schema.json, settings_data.json
+/layout           → theme.liquid, checkout.liquid
+/locales          → en.default.json, translations
+/sections         → Reusable content blocks with schema
+/snippets         → Small components (no schema)
+/templates        → Page templates (product.liquid, collection.liquid)
+  /customers      → Customer account templates
+```
+
+### When to Use What
+- **Section**: Needs customization UI in theme editor (has `{% schema %}`)
+- **Snippet**: Reusable HTML/Liquid without customization UI
+- **Template**: Page-level structure (product, collection, cart, etc.)
+
+### Naming Conventions
+```
+sections/section-hero.liquid
+sections/section-featured-collection.liquid
+sections/section-buy-box.liquid
+
+snippets/product-card.liquid
+snippets/cart-drawer.liquid
+snippets/icon-library.liquid
+
+assets/component-buy-box.css
+assets/module-bundle-builder.js
+```
+
+---
+
+## Consumer Electronics Specific Patterns
+
+### Technical Specifications Display
+```liquid
+{%- # Metafields for technical specs -%}
+{% if product.metafields.specs.wattage %}
+  <dl class="specs-list">
+    <div class="specs-list__item">
+      <dt>Wattage</dt>
+      <dd>{{ product.metafields.specs.wattage }}</dd>
+    </div>
+    <div class="specs-list__item">
+      <dt>Cable Length</dt>
+      <dd>{{ product.metafields.specs.cable_length }}</dd>
+    </div>
+  </dl>
+{% endif %}
+```
+
+### Compatibility Checker
+```liquid
+{%- # Device compatibility display -%}
+{% if product.metafields.compatibility.devices %}
+  <div class="compatibility">
+    <h3>Compatible Devices</h3>
+    <ul>
+      {% for device in product.metafields.compatibility.devices.value %}
+        <li>{{ device }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+```
+
+### Warranty Information
+```liquid
+{%- # Warranty badge -%}
+{% if product.metafields.warranty.years %}
+  <div class="warranty-badge">
+    <svg><!-- Shield icon --></svg>
+    <span>{{ product.metafields.warranty.years }}-Year Warranty Included</span>
+  </div>
+{% endif %}
+```
+
+---
+
+## Critical Reminders
+
+### Before Generating Code
+1. ✅ Check if native HTML/CSS can solve it (avoid unnecessary JS)
+2. ✅ Consider performance impact (will this slow down LCP/CLS?)
+3. ✅ Mobile-first approach (70% of traffic)
+4. ✅ Accessibility compliance (keyboard navigation, screen readers)
+5. ✅ Integration with existing apps (Privia, Rebuy, Currency Converter)
+
+### Code Quality Checklist
+- [ ] Server-side rendered with Liquid where possible
+- [ ] Images optimized (Shopify CDN, lazy loading, srcset)
+- [ ] JavaScript deferred or async loaded
+- [ ] CSS scoped to components, BEM naming
+- [ ] Touch targets ≥44x44px for mobile
+- [ ] Semantic HTML elements used
+- [ ] No hardcoded values (use CSS variables)
+- [ ] Commented complex logic
+- [ ] Tested on mobile viewport
+
+### Common Pitfalls to Avoid
+- ❌ Client-side rendering what could be server-side
+- ❌ Loading all JS on all pages (conditional loading!)
+- ❌ Inline styles (use CSS variables)
+- ❌ Large unoptimized images
+- ❌ Complex CSS selectors (keep specificity low)
+- ❌ Missing alt text on images
+- ❌ Forgetting mobile breakpoints
+
+---
+
+## Testing & Validation
+
+### Performance Testing
+- Google Lighthouse (target: Performance 90+, Accessibility 100)
+- Core Web Vitals (LCP <2.5s, FID <100ms, CLS <0.1)
+- Mobile performance (test on throttled 3G)
+
+### Browser Testing
+- Chrome, Firefox, Safari (desktop + mobile)
+- iOS Safari (primary mobile browser)
+- Test on real devices when possible
+
+### Shopify Theme Check
+```bash
+shopify theme check
+```
+
+---
+
+**Remember:** Every line of code should prioritize performance, accessibility, and mobile-first design. When in doubt, choose the simpler solution that works server-side with Liquid over complex client-side JavaScript.

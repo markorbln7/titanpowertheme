@@ -112,7 +112,9 @@ class CartDrawer extends HTMLElement {
 
 customElements.define('cart-drawer', CartDrawer);
 
-class CartDrawerItems extends CartItems {
+// Check if CartItems is defined before extending it
+if (typeof CartItems !== 'undefined') {
+  class CartDrawerItems extends CartItems {
   getSectionsToRender() {
     return [
       {
@@ -129,4 +131,7 @@ class CartDrawerItems extends CartItems {
   }
 }
 
-customElements.define('cart-drawer-items', CartDrawerItems);
+  customElements.define('cart-drawer-items', CartDrawerItems);
+} else {
+  console.warn('CartItems not defined - cart-drawer-items not registered');
+}

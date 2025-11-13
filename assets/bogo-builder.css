@@ -6597,34 +6597,70 @@ body.bogo-checkout-mode .rebuy-modal {
    ======================================== */
 
 /* Main Container */
+/* ✅ BOGO-V2-POLISH: Main Container with Premium Gradient */
 .bogo-sticky-cart-v2 {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: #000000;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
   z-index: 9000;
-  transition: transform 400ms ease;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
   min-height: 120px;
+  backdrop-filter: blur(8px);
+  animation: cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Enhanced Top Glow/Fade Effect (Per user request) */
+/* Entrance animation */
+@keyframes cartSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ✅ BOGO-V2-POLISH: Enhanced Premium Glow/Fade Effect */
 .bogo-sticky-cart-v2::before {
   content: '';
   position: absolute;
-  top: -50px; /* Taller glow */
+  top: -60px;
   left: 0;
   right: 0;
-  height: 50px;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.7) 40%,
+  height: 60px;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 100%,
+    rgba(96, 198, 85, 0.15) 0%,
+    rgba(0, 0, 0, 0.9) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
     rgba(0, 0, 0, 0) 100%
   );
-  filter: blur(8px); /* Blur for glow effect */
+  filter: blur(12px);
   pointer-events: none;
+  z-index: -1;
+  opacity: 0.8;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced glow when cart has pairs */
+.bogo-sticky-cart-v2.has-pairs::before {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 100%,
+    rgba(96, 198, 85, 0.25) 0%,
+    rgba(96, 198, 85, 0.12) 20%,
+    rgba(0, 0, 0, 0.9) 35%,
+    rgba(0, 0, 0, 0.6) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 /* Inner Container - Desktop Horizontal Layout */
@@ -6670,18 +6706,54 @@ body.bogo-checkout-mode .rebuy-modal {
   gap: 12px;
 }
 
-/* Incentive Message (Gold for high visibility) */
+/* ✅ BOGO-V2-POLISH: Premium Incentive Message with Gold Shine */
 .progress-incentive {
   font-size: 15px;
   font-weight: 700;
-  color: #fbbf24; /* Gold */
+  color: #fbbf24;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
   line-height: 1.3;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.08) 0%,
+    rgba(251, 191, 36, 0.12) 50%,
+    rgba(251, 191, 36, 0.08) 100%
+  );
+  background-size: 200% 100%;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms ease;
+}
+
+.progress-incentive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  animation: incentiveShine 3s ease-in-out infinite;
+}
+
+@keyframes incentiveShine {
+  0%, 100% { left: -100%; }
+  50% { left: 100%; }
 }
 
 .progress-incentive strong {
   font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
 }
 
 /* Segmented Progress Bar Container */
@@ -6691,41 +6763,90 @@ body.bogo-checkout-mode .rebuy-modal {
   height: 48px; /* Taller for better visibility */
 }
 
-/* Individual Segment */
+/* ✅ BOGO-V2-POLISH: Individual Segment with Hover & Grid Pattern */
 .progress-segment {
   flex: 1;
   position: relative;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   overflow: hidden;
-  transition: all 400ms ease;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-/* Segment Fill Animation (Green - NOT gold) */
+/* Subtle grid pattern overlay */
+.progress-segment::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+/* Hover effects */
+.progress-segment:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Active segment enhancements */
+.progress-segment.active {
+  border-color: rgba(96, 198, 85, 0.5);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.2);
+}
+
+.progress-segment.active:hover {
+  border-color: rgba(96, 198, 85, 0.7);
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+}
+
+/* ✅ BOGO-V2-POLISH: Enhanced Segment Fill with Bounce Animation */
 .segment-fill {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #60c655 0%, #70d665 100%); /* Brand green */
+  background: linear-gradient(135deg, #60c655 0%, #70d665 100%);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
 }
 
-/* Active state fills the segment */
+/* Active state with bouncy unlock animation */
 .progress-segment.active .segment-fill {
   transform: scaleX(1);
-  animation: segmentPulse 800ms ease-out;
+  animation: segmentUnlock 1000ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes segmentPulse {
-  0% { box-shadow: 0 0 15px rgba(96, 198, 85, 0.6); }
-  50% { box-shadow: 0 0 25px rgba(96, 198, 85, 1); }
-  100% { box-shadow: 0 0 15px rgba(96, 198, 85, 0.6); }
+@keyframes segmentUnlock {
+  0% {
+    transform: scaleX(0);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+  50% {
+    transform: scaleX(1.05);
+    box-shadow: 0 0 30px rgba(96, 198, 85, 1);
+  }
+  70% {
+    transform: scaleX(0.98);
+  }
+  85% {
+    transform: scaleX(1.02);
+  }
+  100% {
+    transform: scaleX(1);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
 }
 
 /* Segment Label (Text overlay) */
@@ -6786,22 +6907,73 @@ body.bogo-checkout-mode .rebuy-modal {
   letter-spacing: 0.05em;
 }
 
+/* ✅ BOGO-V2-POLISH: Savings Amount with Enhanced Animations */
 .value-amount {
-  font-size: 32px; /* Prominent */
+  font-size: 32px;
   font-weight: 900;
   color: #60c655;
   line-height: 1.1;
-  transition: all 300ms ease;
+  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
 }
 
-/* Animate savings when updated */
+/* Pop-in animation when savings update */
 .value-amount.updating {
-  animation: savingsUpdate 500ms ease-out;
+  animation: savingsPopIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes savingsUpdate {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+@keyframes savingsPopIn {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+  40% {
+    transform: scale(1.15);
+    text-shadow: 0 4px 16px rgba(96, 198, 85, 0.8);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+}
+
+/* Milestone celebration for tier 3 unlock */
+.value-amount.milestone {
+  animation: milestoneCelebration 1200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes milestoneCelebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    color: #60c655;
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+  15% {
+    transform: scale(1.2) rotate(-5deg);
+    color: #fbbf24;
+    text-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+  }
+  30% {
+    transform: scale(1.3) rotate(5deg);
+    color: #60c655;
+  }
+  45% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  60% {
+    transform: scale(1.25) rotate(3deg);
+    color: #fbbf24;
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+    color: #60c655;
+  }
 }
 
 /* ========================================
@@ -6831,34 +7003,279 @@ body.bogo-checkout-mode .rebuy-modal {
   white-space: nowrap;
 }
 
-/* Primary CTA (Checkout / Start Building) */
+/* ✅ BOGO-V2-POLISH: Primary CTA with Shimmer Effect */
 .btn-sticky-primary {
-  background: #60c655;
+  background: linear-gradient(
+    135deg,
+    #60c655 0%,
+    #70d665 50%,
+    #60c655 100%
+  );
+  background-size: 200% 100%;
   color: #000000;
-  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sticky-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-sticky-primary:hover {
-  background: #70d665;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(96, 198, 85, 0.6);
+  background-position: 100% 0;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(96, 198, 85, 0.6);
+}
+
+.btn-sticky-primary:hover::before {
+  left: 100%;
 }
 
 .btn-sticky-primary:active {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(0.98);
 }
 
-/* Secondary CTA (Review) */
+/* ✅ BOGO-V2-POLISH: Secondary CTA with Enhanced States */
 .btn-sticky-secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sticky-secondary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 400ms ease, height 400ms ease;
 }
 
 .btn-sticky-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.btn-sticky-secondary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* ========================================
+   SAVINGS BREAKDOWN TOOLTIP (BOGO-V2-ADVANCED)
+   Interactive hover/tap tooltip showing savings details
+   ======================================== */
+
+/* Wrapper for amount + info button */
+.value-amount-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* Info Button */
+.savings-info-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(96, 198, 85, 0.15);
+  border: 1px solid rgba(96, 198, 85, 0.3);
+  color: #60c655;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.savings-info-btn:hover {
+  background: rgba(96, 198, 85, 0.25);
+  border-color: rgba(96, 198, 85, 0.5);
+  transform: scale(1.1);
+}
+
+.savings-info-btn:active {
+  transform: scale(0.95);
+}
+
+.savings-info-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tooltip Container */
+.savings-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 280px;
+  background: #1a1a1a;
+  border: 2px solid #60c655;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Show tooltip */
+.savings-tooltip.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Tooltip Arrow */
+.savings-tooltip-arrow {
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  width: 14px;
+  height: 14px;
+  background: #1a1a1a;
+  border-right: 2px solid #60c655;
+  border-bottom: 2px solid #60c655;
+  transform: rotate(45deg);
+}
+
+/* Tooltip Content */
+.savings-tooltip-content {
+  position: relative;
+  z-index: 1;
+}
+
+.tooltip-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #60c655;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Tooltip Items */
+.tooltip-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+}
+
+.tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.tooltip-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.tooltip-value {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Total Row - Prominent */
+.tooltip-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  padding-top: 8px;
+}
+
+.tooltip-total .tooltip-label {
+  color: #ffffff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tooltip-total .tooltip-value {
+  color: #60c655;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+/* ========================================
+   CONFETTI CELEBRATION CANVAS
+   ======================================== */
+.sticky-cart-confetti-canvas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 400px; /* Confetti rises from cart */
+  pointer-events: none;
+  z-index: 9001; /* Above cart */
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.sticky-cart-confetti-canvas.active {
+  opacity: 1;
+}
+
+/* ========================================
+   ENHANCED EMPTY STATE
+   ======================================== */
+.sticky-cart-empty-visual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
+  animation: emptyStatePulse 2s infinite;
+}
+
+@keyframes emptyStatePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+.empty-state-icon {
+  font-size: 20px;
+  animation: emptyStateFloat 3s ease-in-out infinite;
+}
+
+@keyframes emptyStateFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
 /* ========================================
@@ -6933,8 +7350,71 @@ body.bogo-checkout-mode .rebuy-modal {
    STACKED 2-ROW LAYOUT
    Row 1: Status | Progress | Savings
    Row 2: Buttons (Full Width)
+   ✅ BOGO-V2-POLISH: All animations preserved on mobile
    ======================================== */
 @media (max-width: 767px) {
+  /* Enhanced glow effect - adjusted for mobile */
+  .bogo-sticky-cart-v2::before {
+    top: -50px;
+    height: 50px;
+    filter: blur(10px);
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Mobile Tooltip Adjustments */
+  .savings-tooltip {
+    width: 260px;
+    right: -20px; /* Extend beyond value section */
+  }
+
+  .tooltip-title {
+    font-size: 13px;
+  }
+
+  .tooltip-item {
+    font-size: 12px;
+  }
+
+  .tooltip-total {
+    font-size: 14px;
+  }
+
+  .tooltip-total .tooltip-value {
+    font-size: 16px;
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Touch Feedback for Progress Bar */
+  .progress-segment {
+    position: relative;
+    overflow: visible; /* Allow ripple to show */
+  }
+
+  .progress-segment::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 10px;
+    background: rgba(96, 198, 85, 0.3);
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .progress-segment.tapped::after {
+    animation: tapRipple 600ms ease-out;
+  }
+
+  @keyframes tapRipple {
+    0% {
+      opacity: 1;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+  }
+
   /* Enable flexbox wrapping for stacked layout */
   .sticky-cart-container {
     flex-wrap: wrap; /* KEY: Allows elements to wrap to new row */
@@ -7019,6 +7499,7 @@ body.bogo-checkout-mode .rebuy-modal {
     gap: 12px;
   }
 
+  /* ✅ BOGO-V2-POLISH: Buttons retain shimmer/ripple on mobile */
   .btn-sticky-primary,
   .btn-sticky-secondary {
     flex: 1; /* Both buttons share space equally */
@@ -7028,6 +7509,15 @@ body.bogo-checkout-mode .rebuy-modal {
     font-size: 16px; /* Readable button text */
     font-weight: 800;
     letter-spacing: 0.03em;
+  }
+
+  /* Reduce transform on mobile for performance */
+  .btn-sticky-primary:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .btn-sticky-secondary:hover {
+    transform: translateY(-1px);
   }
 
   /* When only primary button visible, it takes full width */
@@ -7077,6 +7567,11 @@ body.bogo-checkout-mode .rebuy-modal {
 
   .value-label {
     font-size: 9px;
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Hide info button on very small screens */
+  .savings-info-btn {
+    display: none; /* Too cramped */
   }
 
   /* Buttons - Maintain touch targets */

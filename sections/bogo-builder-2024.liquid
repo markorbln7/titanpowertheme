@@ -523,10 +523,48 @@
         </div>
       </div>
 
-      {%- comment -%} 3. RIGHT: Total Savings {%- endcomment -%}
+      {%- comment -%} 3. RIGHT: Total Savings with Breakdown Tooltip {%- endcomment -%}
       <div class="sticky-cart-value">
         <div class="value-label">You Save</div>
-        <div class="value-amount" id="v2-total-savings">€0,00</div>
+        <div class="value-amount-wrapper">
+          <div class="value-amount" id="v2-total-savings">€0,00</div>
+          <button class="savings-info-btn" id="v2-savings-info" aria-label="View savings breakdown">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 7V11M8 5V5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {%- comment -%} Savings Breakdown Tooltip {%- endcomment -%}
+        <div class="savings-tooltip" id="v2-savings-tooltip" role="tooltip" aria-hidden="true">
+          <div class="savings-tooltip-arrow"></div>
+          <div class="savings-tooltip-content">
+            <div class="tooltip-title">Your Savings Breakdown</div>
+            <div class="tooltip-items" id="v2-tooltip-breakdown">
+              <div class="tooltip-item">
+                <span class="tooltip-label">BOGO Discount:</span>
+                <span class="tooltip-value" id="tooltip-bogo">€0,00</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-tier-item" style="display: none;">
+                <span class="tooltip-label" id="tooltip-tier-label">Tier Discount:</span>
+                <span class="tooltip-value" id="tooltip-tier">€0,00</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-shipping-item" style="display: none;">
+                <span class="tooltip-label">FREE Shipping:</span>
+                <span class="tooltip-value">€4,99</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-cable-item" style="display: none;">
+                <span class="tooltip-label">FREE Cable:</span>
+                <span class="tooltip-value">€18,95</span>
+              </div>
+            </div>
+            <div class="tooltip-total">
+              <span class="tooltip-label">Total Saved:</span>
+              <span class="tooltip-value" id="tooltip-total">€0,00</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {%- comment -%} 4. FAR RIGHT: Action Buttons {%- endcomment -%}
@@ -541,6 +579,9 @@
 
     </div>
   </div>
+
+  {%- comment -%} Confetti Canvas for Tier 3 Celebration {%- endcomment -%}
+  <canvas id="sticky-cart-confetti" class="sticky-cart-confetti-canvas"></canvas>
 
   {%- comment -%} ========================================
       TIER COMPARISON MODAL - CRO OPTIMIZATION

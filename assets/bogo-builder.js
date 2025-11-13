@@ -917,12 +917,263 @@ function getTierDiscount(pairCount) {
 }
 
 // ========================================
+// SAVINGS BREAKDOWN TOOLTIP (BOGO-V2-ADVANCED)
+// ========================================
+function initSavingsTooltip() {
+  const infoBtn = document.getElementById('v2-savings-info');
+  const tooltip = document.getElementById('v2-savings-tooltip');
+
+  if (!infoBtn || !tooltip) return;
+
+  let isTooltipOpen = false;
+
+  // Toggle tooltip on click/tap
+  infoBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isTooltipOpen = !isTooltipOpen;
+
+    if (isTooltipOpen) {
+      tooltip.classList.add('active');
+      tooltip.setAttribute('aria-hidden', 'false');
+      updateTooltipBreakdown(); // Populate with current data
+    } else {
+      tooltip.classList.remove('active');
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  // Close tooltip when clicking outside
+  document.addEventListener('click', (e) => {
+    if (isTooltipOpen && !tooltip.contains(e.target) && e.target !== infoBtn) {
+      tooltip.classList.remove('active');
+      tooltip.setAttribute('aria-hidden', 'true');
+      isTooltipOpen = false;
+    }
+  });
+
+  // Also show on hover (desktop)
+  if (window.innerWidth >= 768) {
+    infoBtn.addEventListener('mouseenter', () => {
+      tooltip.classList.add('active');
+      tooltip.setAttribute('aria-hidden', 'false');
+      updateTooltipBreakdown();
+    });
+
+    const valueWrapper = infoBtn.closest('.value-amount-wrapper');
+    if (valueWrapper) {
+      valueWrapper.addEventListener('mouseleave', () => {
+        if (!isTooltipOpen) {
+          tooltip.classList.remove('active');
+          tooltip.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+  }
+}
+
+// Update tooltip breakdown with current savings data
+function updateTooltipBreakdown() {
+  const state = window.bogoState;
+  if (!state) return;
+
+  const pairCount = state.pairs?.length || 0;
+  let currentTier = 0;
+  if (pairCount >= 3) currentTier = 3;
+  else if (pairCount >= 2) currentTier = 2;
+  else if (pairCount >= 1) currentTier = 1;
+
+  // Calculate individual savings components
+  let bogoSavings = 0;
+  let tierDiscount = 0;
+  let orderSubtotal = 0;
+
+  const parsePrice = (priceString) => {
+    if (!priceString) return 0;
+    const cleaned = priceString.replace(/[^0-9.,]/g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
+  };
+
+  if (pairCount > 0) {
+    // BOGO savings
+    state.pairs.forEach(pair => {
+      const price1 = parsePrice(pair.slot1?.price);
+      const price2 = parsePrice(pair.slot2?.price);
+      orderSubtotal += price1 + price2;
+      const lowerPrice = Math.min(price1, price2);
+      if (lowerPrice > 0) bogoSavings += lowerPrice * 0.5;
+    });
+
+    // Tier discount
+    const discountedSubtotal = orderSubtotal - bogoSavings;
+    if (currentTier === 3) {
+      tierDiscount = discountedSubtotal * 0.10;
+    } else if (currentTier === 2) {
+      tierDiscount = discountedSubtotal * 0.05;
+    }
+  }
+
+  // Update tooltip elements
+  const formatEuro = (amount) => `€${amount.toFixed(2).replace('.', ',')}`;
+
+  document.getElementById('tooltip-bogo').textContent = formatEuro(bogoSavings);
+
+  // Tier discount (show only if applicable)
+  const tierItem = document.getElementById('tooltip-tier-item');
+  if (tierDiscount > 0) {
+    const tierLabel = document.getElementById('tooltip-tier-label');
+    tierLabel.textContent = currentTier === 3 ? 'Tier 3 (10%):' : 'Tier 2 (5%):';
+    document.getElementById('tooltip-tier').textContent = formatEuro(tierDiscount);
+    tierItem.style.display = 'flex';
+  } else {
+    tierItem.style.display = 'none';
+  }
+
+  // Shipping (show if tier 2+)
+  const shippingItem = document.getElementById('tooltip-shipping-item');
+  shippingItem.style.display = currentTier >= 2 ? 'flex' : 'none';
+
+  // Cable (show if tier 3)
+  const cableItem = document.getElementById('tooltip-cable-item');
+  cableItem.style.display = currentTier >= 3 ? 'flex' : 'none';
+
+  // Total
+  let totalSavings = bogoSavings + tierDiscount;
+  if (currentTier >= 2) totalSavings += 4.99;
+  if (currentTier >= 3) totalSavings += 18.95;
+
+  document.getElementById('tooltip-total').textContent = formatEuro(totalSavings);
+}
+
+// ========================================
+// HAPTIC FEEDBACK (Mobile) (BOGO-V2-ADVANCED)
+// ========================================
+function triggerHapticFeedback(type = 'light') {
+  // Check if device supports haptics
+  if ('vibrate' in navigator) {
+    switch(type) {
+      case 'light':
+        navigator.vibrate(50);
+        break;
+      case 'medium':
+        navigator.vibrate(100);
+        break;
+      case 'heavy':
+        navigator.vibrate([50, 30, 50]);
+        break;
+      case 'success':
+        navigator.vibrate([50, 50, 100]);
+        break;
+    }
+  }
+}
+
+// ========================================
+// CONFETTI CELEBRATION (BOGO-V2-ADVANCED)
+// Triggered on Tier 3 unlock
+// ========================================
+function triggerStickyCartConfetti() {
+  const canvas = document.getElementById('sticky-cart-confetti');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  canvas.classList.add('active');
+
+  // Set canvas size
+  canvas.width = window.innerWidth;
+  canvas.height = 400;
+
+  // Confetti particles
+  const particles = [];
+  const particleCount = 80;
+  const colors = ['#60c655', '#70d665', '#FFD700', '#ffffff', '#fbbf24'];
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + 20;
+      this.size = Math.random() * 8 + 4;
+      this.speedY = -(Math.random() * 6 + 4);
+      this.speedX = (Math.random() - 0.5) * 4;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.rotation = Math.random() * 360;
+      this.rotationSpeed = (Math.random() - 0.5) * 10;
+      this.gravity = 0.15;
+    }
+
+    update() {
+      this.speedY += this.gravity;
+      this.y += this.speedY;
+      this.x += this.speedX;
+      this.rotation += this.rotationSpeed;
+
+      // Fade out as it rises
+      this.alpha = Math.max(0, 1 - (canvas.height - this.y) / canvas.height);
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.translate(this.x, this.y);
+      ctx.rotate((this.rotation * Math.PI) / 180);
+      ctx.fillStyle = this.color;
+      ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+      ctx.restore();
+    }
+  }
+
+  // Create particles
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  // Animation loop
+  let animationId;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((particle, index) => {
+      particle.update();
+      particle.draw();
+
+      // Remove if off screen
+      if (particle.y < -20 || particle.alpha <= 0) {
+        particles.splice(index, 1);
+      }
+    });
+
+    if (particles.length > 0) {
+      animationId = requestAnimationFrame(animate);
+    } else {
+      canvas.classList.remove('active');
+      cancelAnimationFrame(animationId);
+    }
+  }
+
+  animate();
+}
+
+// ========================================
+// TOUCH FEEDBACK FOR PROGRESS SEGMENTS (BOGO-V2-ADVANCED)
+// ========================================
+function initProgressTouchFeedback() {
+  if (window.innerWidth >= 768) return; // Mobile only
+
+  const segments = document.querySelectorAll('.progress-segment');
+  segments.forEach(segment => {
+    segment.addEventListener('touchstart', () => {
+      segment.classList.add('tapped');
+      setTimeout(() => segment.classList.remove('tapped'), 600);
+    });
+  });
+}
+
+// ========================================
 // SIMPLE WORKING STICKY CART UPDATE
 // STICKY-CART-SHOW-FIRST-PRODUCT-077
 // ========================================
 // ========================================
-// STICKY CART V2 UPDATE LOGIC (BOGO-V2-FOUNDATION)
-// Accurate Calculations + Segmented Progress + Clean Messaging
+// STICKY CART V2 UPDATE LOGIC (BOGO-V2-ADVANCED)
+// ✅ Calculations + Progress + Animations + Tooltip + Haptics + Confetti
 // ========================================
 function updateStickyCart() {
   const state = window.bogoState;
@@ -935,6 +1186,12 @@ function updateStickyCart() {
   if (!stickyCartV2 || !state) return;
 
   console.log('=== STICKY CART V2 UPDATE START ===');
+
+  // --- TRACK PREVIOUS STATE FOR ANIMATIONS ---
+  if (!window.bogoCartPrevState) {
+    window.bogoCartPrevState = { pairCount: 0, currentTier: 0, totalSavings: 0 };
+  }
+  const prevState = window.bogoCartPrevState;
 
   // --- DATA COLLECTION ---
   const pairCount = state.pairs?.length || 0;
@@ -1018,15 +1275,27 @@ function updateStickyCart() {
 
   console.log('TOTAL SAVINGS:', totalSavings.toFixed(2));
 
-  // Update Savings Display (Euro format with comma decimal)
+  // ✅ BOGO-V2-POLISH: Enhanced Savings Display with Animations
   const savingsEl = document.getElementById('v2-total-savings');
   if (savingsEl) {
     const formattedSavings = `€${totalSavings.toFixed(2).replace('.', ',')}`;
 
+    // Detect tier 3 milestone unlock
+    const isMilestone = (currentTier === 3 && prevState.currentTier < 3);
+
     // Animate if value changed
     if (savingsEl.textContent !== formattedSavings) {
-      savingsEl.classList.add('updating');
-      setTimeout(() => savingsEl.classList.remove('updating'), 500);
+      // Remove any existing animation classes
+      savingsEl.classList.remove('updating', 'milestone');
+
+      // Add appropriate animation
+      if (isMilestone) {
+        savingsEl.classList.add('milestone');
+        setTimeout(() => savingsEl.classList.remove('milestone'), 1200);
+      } else {
+        savingsEl.classList.add('updating');
+        setTimeout(() => savingsEl.classList.remove('updating'), 600);
+      }
     }
 
     savingsEl.textContent = formattedSavings;
@@ -1037,6 +1306,14 @@ function updateStickyCart() {
   const incentiveMsgEl = document.getElementById('v2-incentive-message');
   const primaryBtn = document.getElementById('v2-btn-primary');
   const reviewBtn = document.getElementById('v2-btn-review');
+
+  // ✅ BOGO-V2-POLISH: Animate pair count changes
+  if (pairCountEl && pairCount !== prevState.pairCount && pairCount > 0) {
+    pairCountEl.style.animation = 'none';
+    setTimeout(() => {
+      pairCountEl.style.animation = 'savingsPopIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+    }, 10);
+  }
 
   // Define button actions
   const scrollToProducts = () => {
@@ -1102,6 +1379,25 @@ function updateStickyCart() {
     }
   }
 
+  // ✅ BOGO-V2-ADVANCED: Update ARIA labels for accessibility
+  if (primaryBtn) {
+    primaryBtn.setAttribute('aria-label',
+      pairCount === 0 ? 'Start building your BOGO bundle' :
+      hasIncompleteProduct ? 'Continue shopping to complete pair' :
+      'Proceed to checkout with ' + pairCount + ' pair' + (pairCount !== 1 ? 's' : '')
+    );
+  }
+
+  if (reviewBtn && reviewBtn.style.display === 'block') {
+    reviewBtn.setAttribute('aria-label', 'Review your ' + pairCount + ' BOGO pair' + (pairCount !== 1 ? 's' : ''));
+  }
+
+  // Update savings ARIA live region
+  if (savingsEl) {
+    savingsEl.setAttribute('aria-live', 'polite');
+    savingsEl.setAttribute('aria-atomic', 'true');
+  }
+
   console.log('UI Updated:', {
     pairCount: pairCountEl.textContent,
     primaryBtn: primaryBtn.textContent
@@ -1126,6 +1422,35 @@ function updateStickyCart() {
     }
   });
 
+  // ✅ BOGO-V2-POLISH: Add .has-pairs class for enhanced glow
+  if (pairCount > 0) {
+    stickyCartV2.classList.add('has-pairs');
+  } else {
+    stickyCartV2.classList.remove('has-pairs');
+  }
+
+  // ✅ BOGO-V2-ADVANCED: Pulse cart + haptics + confetti on tier unlock
+  if (currentTier > prevState.currentTier && currentTier > 0) {
+    // Visual pulse animation
+    stickyCartV2.style.animation = 'none';
+    setTimeout(() => {
+      stickyCartV2.style.animation = 'cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards';
+    }, 10);
+
+    // Haptic feedback on mobile
+    if (currentTier === 1) {
+      triggerHapticFeedback('medium');
+    } else if (currentTier === 2) {
+      triggerHapticFeedback('heavy');
+    } else if (currentTier === 3) {
+      triggerHapticFeedback('success');
+      // Confetti celebration for tier 3!
+      setTimeout(() => triggerStickyCartConfetti(), 300);
+    }
+
+    console.log(`🎉 Tier ${currentTier} unlocked! Haptic: ${currentTier === 3 ? 'success' : currentTier === 2 ? 'heavy' : 'medium'}`);
+  }
+
   // --- 4. VISIBILITY CONTROL ---
   // Show V2 cart whenever there are products OR we want to incentivize
   const shouldShow = pairCount > 0 || hasIncompleteProduct || true; // Always show for incentive
@@ -1133,7 +1458,14 @@ function updateStickyCart() {
 
   console.log('=== STICKY CART V2 UPDATE COMPLETE ===\n');
 
-  // --- 5. SAVE STATE TO LOCALSTORAGE ---
+  // --- 5. UPDATE PREVIOUS STATE ---
+  window.bogoCartPrevState = {
+    pairCount: pairCount,
+    currentTier: currentTier,
+    totalSavings: totalSavings
+  };
+
+  // --- 6. SAVE STATE TO LOCALSTORAGE ---
   if (typeof saveBOGOState === 'function') {
     saveBOGOState();
   }
@@ -4714,3 +5046,39 @@ function updateFallbackSelect(optionIndex, value) {
     select.dispatchEvent(event);
   }
 }
+
+// ========================================
+// INITIALIZE STICKY CART V2 ADVANCED FEATURES (BOGO-V2-ADVANCED)
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    console.log('🚀 Initializing Sticky Cart V2 Advanced Features');
+
+    // Initialize savings tooltip
+    if (typeof initSavingsTooltip === 'function') {
+      initSavingsTooltip();
+      console.log('✅ Savings tooltip initialized');
+    }
+
+    // Initialize touch feedback (mobile)
+    if (typeof initProgressTouchFeedback === 'function') {
+      initProgressTouchFeedback();
+      console.log('✅ Touch feedback initialized');
+    }
+
+    // Update cart to show initial state
+    if (typeof updateStickyCart === 'function') {
+      updateStickyCart();
+      console.log('✅ Sticky cart updated');
+    }
+
+    console.log('🎉 All advanced features ready!');
+  }, 100);
+});
+
+// Re-initialize touch feedback on resize (orientation change)
+window.addEventListener('resize', () => {
+  if (typeof initProgressTouchFeedback === 'function') {
+    initProgressTouchFeedback();
+  }
+});

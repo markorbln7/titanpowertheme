@@ -3743,11 +3743,11 @@ async function proceedToCheckout() {
     let checkoutUrl;
 
     if (isDev) {
-      // Development: Go to cart page (checkout may not work)
+      // Development: Go to cart page with BOGO flag (BOGO-CART-PAGE-REBUY-SUPPRESS-029)
       console.log('⚠️ Development mode detected - redirecting to /cart');
       checkoutUrl = discountCodes
-        ? `/cart?discount=${encodeURIComponent(discountCodes)}`
-        : '/cart';
+        ? `/cart?discount=${encodeURIComponent(discountCodes)}&bogo=true`
+        : '/cart?bogo=true';
     } else {
       // Production: Go directly to checkout
       console.log('✅ Production mode - redirecting to /checkout');

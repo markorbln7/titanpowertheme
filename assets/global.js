@@ -1,3 +1,124 @@
+/**
+ * BOGO Checkout - Cart Page Rebuy Suppressor (BOGO-CART-PAGE-REBUY-SUPPRESS-029)
+ * Detects ?bogo=true parameter and suppresses Rebuy on cart page
+ */
+(function() {
+  'use strict';
+
+  // Check for BOGO checkout parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const isBogoCheckout = urlParams.get('bogo') === 'true';
+
+  if (!isBogoCheckout) {
+    console.log('Not a BOGO checkout, Rebuy allowed');
+    return;
+  }
+
+  console.log('🎯 BOGO checkout detected - suppressing Rebuy on cart page');
+
+  // Method 1: Set flags BEFORE Rebuy loads
+  window.bogoDirectCheckout = true;
+  window.rebuyDisabled = true;
+  sessionStorage.setItem('bogo-direct-checkout', 'true');
+
+  // Method 2: Block Rebuy from loading
+  Object.defineProperty(window, 'Rebuy', {
+    get: function() {
+      console.log('🚫 Rebuy access blocked (BOGO checkout mode)');
+      return {
+        SmartCart: { show: () => {}, hide: () => {} },
+        Cart: { get: () => ({}) }
+      };
+    },
+    set: function(value) {
+      console.log('🚫 Rebuy initialization blocked');
+      return true;
+    },
+    configurable: true
+  });
+
+  // Method 3: Hide Rebuy elements on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const rebuyElements = document.querySelectorAll(
+      'rebuy-cart, [data-rebuy-cart], .rebuy-cart, .rebuy-smart-cart, #rebuy-cart'
+    );
+
+    rebuyElements.forEach(el => {
+      el.style.display = 'none';
+      el.style.visibility = 'hidden';
+      el.remove(); // Completely remove from DOM
+    });
+
+    console.log(`🗑️ Removed ${rebuyElements.length} Rebuy elements from cart page`);
+
+    // Optional: Show "Redirecting to checkout..." message
+    const cartContainer = document.querySelector('.cart-items, .cart, [data-cart]');
+    if (cartContainer) {
+      const notice = document.createElement('div');
+      notice.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.95);
+        color: #60c655;
+        padding: 32px 48px;
+        border-radius: 16px;
+        border: 2px solid #60c655;
+        font-size: 20px;
+        font-weight: 700;
+        z-index: 999999;
+        text-align: center;
+      `;
+      notice.innerHTML = `
+        <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+        <div>BOGO Pairs Added!</div>
+        <div style="font-size: 16px; margin-top: 12px; opacity: 0.8;">Redirecting to checkout...</div>
+      `;
+      document.body.appendChild(notice);
+    }
+  });
+
+  // Method 4: Block Rebuy events
+  const rebuyEvents = [
+    'rebuy:cart-open',
+    'rebuy:cart-update',
+    'rebuy:checkout',
+    'rebuy:drawer-open'
+  ];
+
+  rebuyEvents.forEach(eventName => {
+    document.addEventListener(eventName, function(e) {
+      console.log(`🚫 Blocked Rebuy event: ${eventName}`);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }, true);
+  });
+
+  // Method 5: Add body class for CSS targeting
+  document.documentElement.classList.add('bogo-checkout-mode');
+  document.body.classList.add('bogo-checkout-mode');
+
+  // Method 6: Auto-proceed to checkout after 1 second
+  setTimeout(function() {
+    // Get discount codes from URL
+    const discountParam = urlParams.get('discount');
+
+    // Check if still on cart page (Rebuy might have redirected)
+    if (window.location.pathname.includes('/cart')) {
+      console.log('🚀 Auto-proceeding to checkout...');
+
+      const checkoutUrl = discountParam
+        ? `/checkout?discount=${encodeURIComponent(discountParam)}`
+        : '/checkout';
+
+      window.location.href = checkoutUrl;
+    }
+  }, 1000);
+
+  console.log('✅ BOGO cart page protection active');
+})();
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(

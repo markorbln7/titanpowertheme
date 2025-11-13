@@ -43,6 +43,99 @@
   }
 })();
 
+// ========================================
+// LOCALSTORAGE PERSISTENCE (BOGO-PERSIST-006)
+// Save/restore BOGO state across sessions
+// ========================================
+
+const BOGO_STORAGE_KEY = 'titan-bogo-state';
+const BOGO_EXPIRY_HOURS = 24;
+
+/**
+ * Save BOGO state to localStorage
+ */
+function saveBOGOState() {
+  try {
+    const stateToSave = {
+      pairs: window.bogoState.pairs || [],
+      currentPair: window.bogoState.currentPair || {},
+      timestamp: Date.now()
+    };
+    localStorage.setItem(BOGO_STORAGE_KEY, JSON.stringify(stateToSave));
+    console.log('💾 BOGO state saved to localStorage');
+  } catch (error) {
+    console.warn('Failed to save BOGO state:', error);
+  }
+}
+
+/**
+ * Load BOGO state from localStorage
+ * @returns {Object|null} Saved state or null if expired/invalid
+ */
+function loadBOGOState() {
+  try {
+    const saved = localStorage.getItem(BOGO_STORAGE_KEY);
+    if (!saved) return null;
+
+    const parsed = JSON.parse(saved);
+
+    // Check expiry (24 hours)
+    const age = Date.now() - (parsed.timestamp || 0);
+    const maxAge = BOGO_EXPIRY_HOURS * 60 * 60 * 1000;
+
+    if (age > maxAge) {
+      console.log('⏰ BOGO state expired, clearing');
+      localStorage.removeItem(BOGO_STORAGE_KEY);
+      return null;
+    }
+
+    console.log('📂 BOGO state loaded from localStorage');
+    return parsed;
+  } catch (error) {
+    console.warn('Failed to load BOGO state:', error);
+    localStorage.removeItem(BOGO_STORAGE_KEY);
+    return null;
+  }
+}
+
+/**
+ * Clear BOGO state from localStorage
+ */
+function clearBOGOState() {
+  localStorage.removeItem(BOGO_STORAGE_KEY);
+  console.log('🗑️ BOGO state cleared');
+}
+
+/**
+ * Show Toast Notification (BOGO-REVIEW-MODAL-UX-024)
+ * @param {string} message - Notification text
+ * @param {string} type - 'success' or 'error'
+ * @param {number} duration - Display duration in ms (default 3000)
+ */
+function showBogoToast(message, type = 'success', duration = 3000) {
+  // Remove any existing toasts
+  document.querySelectorAll('.bogo-toast').forEach(t => t.remove());
+
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `bogo-toast ${type}`;
+
+  const icon = type === 'success' ? '✓' : '⚠️';
+
+  toast.innerHTML = `
+    <span class="toast-icon">${icon}</span>
+    <span class="toast-message">${message}</span>
+  `;
+
+  document.body.appendChild(toast);
+
+  // Auto-remove after duration
+  setTimeout(() => {
+    toast.classList.add('hiding');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
 // ===========================================
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
@@ -241,15 +334,56 @@
 // ===========================================
 // BOGO PAIR SELECTION SYSTEM - Phase 2
 // ===========================================
-// Global state for BOGO pairs
-window.bogoState = {
-  pairs: [],
-  currentPair: {
-    slot1: null,
-    slot2: null
-  },
-  activePairNumber: 1
-};
+
+/**
+ * Initialize BOGO state (BOGO-PERSIST-006)
+ * Restores from localStorage if available
+ */
+(function initBOGOState() {
+  // Try to restore saved state
+  const savedState = loadBOGOState();
+
+  if (savedState && savedState.pairs && savedState.pairs.length > 0) {
+    // Restore saved state
+    window.bogoState = {
+      pairs: savedState.pairs,
+      currentPair: savedState.currentPair || {
+        slot1: null,
+        slot2: null
+      },
+      activePairNumber: (savedState.pairs.length || 0) + 1
+    };
+    console.log('✅ BOGO state restored from localStorage:', window.bogoState.pairs.length, 'pairs');
+
+    // Update sticky cart to show restored pairs
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof updateStickyCart === 'function') {
+          updateStickyCart();
+        }
+      });
+    } else {
+      // DOM already loaded, update immediately
+      setTimeout(() => {
+        if (typeof updateStickyCart === 'function') {
+          updateStickyCart();
+        }
+      }, 100);
+    }
+  } else {
+    // Initialize fresh state
+    window.bogoState = {
+      pairs: [],
+      currentPair: {
+        slot1: null,
+        slot2: null
+      },
+      activePairNumber: 1
+    };
+    console.log('✅ BOGO state initialized (fresh)');
+  }
+})();
 
 // ✅ BOGO-INLINE-VARIANTS-044: Enhanced product click handler
 function handleProductClick(event, element) {
@@ -795,11 +929,16 @@ function updateStickyCart() {
   // Count total products added (including incomplete pairs)
   const pairCount = state?.pairs?.length || 0;
   const currentPair = state?.currentPair;
-  const hasIncompleteProduct = currentPair?.slot1 && !currentPair?.slot2;
+
+  // BOGO-STICKY-CART-STATUS-025: Check BOTH slots for incomplete products
+  const hasIncompleteProduct = (currentPair?.slot1 && !currentPair?.slot2) ||
+                                 (currentPair?.slot2 && !currentPair?.slot1);
 
   console.log('Updating sticky cart:', {
     completePairs: pairCount,
-    hasIncompleteProduct: hasIncompleteProduct
+    hasIncompleteProduct: hasIncompleteProduct,
+    slot1: !!currentPair?.slot1,
+    slot2: !!currentPair?.slot2
   });
 
   // Update pair count display
@@ -813,27 +952,173 @@ function updateStickyCart() {
     }
   }
 
-  // Update status message
-  const statusEl = document.getElementById('sticky-cart-status');
-  if (statusEl) {
-    if (hasIncompleteProduct) {
-      statusEl.textContent = 'Select 1 more product to complete pair';
-    } else if (pairCount === 0) {
-      statusEl.textContent = 'Select 2 products to start';
-    } else if (pairCount === 1) {
-      statusEl.textContent = 'Add 1 more for Tier 2 (5% OFF)';
-    } else if (pairCount === 2) {
-      statusEl.textContent = 'Add 1 more for Tier 3 (10% OFF + FREE Cable)';
+  // ========================================
+  // PROGRESS BAR UPDATE (BOGO-PROGRESS-BAR-FIX-014)
+  // Fixed: Fill per product, not per pair
+  // ========================================
+  const progressFill = document.getElementById('bogo-progress-fill');
+  const milestones = document.querySelectorAll('.bogo-milestone');
+
+  if (progressFill && milestones.length > 0) {
+    // Count ALL products across all pairs (BOGO-STICKY-CART-STATUS-025)
+    let totalProducts = 0;
+
+    if (state?.pairs && state.pairs.length > 0) {
+      state.pairs.forEach(pair => {
+        if (pair.slot1?.variantId) totalProducts++;
+        if (pair.slot2?.variantId) totalProducts++;
+      });
+    }
+
+    // BOGO-STICKY-CART-STATUS-025: Include incomplete pair products
+    if (state?.currentPair) {
+      if (state.currentPair.slot1?.variantId) totalProducts++;
+      if (state.currentPair.slot2?.variantId) totalProducts++;
+    }
+
+    // Calculate progress: Each product = 16.67% (6 products = 100%)
+    let progressPercent = Math.min((totalProducts / 6) * 100, 100);
+
+    // Apply fill width
+    progressFill.style.width = progressPercent + '%';
+
+    // Add glow animation when products added
+    if (totalProducts > 0) {
+      progressFill.classList.add('animating');
+      setTimeout(() => progressFill.classList.remove('animating'), 600);
+    }
+
+    // Update milestones based on COMPLETE PAIRS
+    const completePairs = state?.pairs?.length || 0;
+
+    milestones.forEach((milestone, index) => {
+      const tierNumber = index + 1;
+
+      if (completePairs >= tierNumber) {
+        if (!milestone.classList.contains('active')) {
+          milestone.classList.add('active');
+          milestone.classList.add('unlocked');
+          setTimeout(() => milestone.classList.remove('unlocked'), 600);
+        }
+      } else {
+        milestone.classList.remove('active');
+      }
+    });
+
+    console.log('Progress bar:', {
+      products: totalProducts,
+      pairs: completePairs,
+      fillPercent: progressPercent.toFixed(1) + '%'
+    });
+  }
+
+  // ========================================
+  // UPDATE NEXT REWARD TEXT (BOGO-PROGRESS-FIX-010)
+  // ========================================
+  const nextRewardEl = document.getElementById('progress-next-reward');
+
+  if (nextRewardEl) {
+    const completePairs = state?.pairs ? state.pairs.length : 0;
+
+    if (hasIncompleteProduct || completePairs === 0) {
+      nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Build your first BOGO pair!</span>';
+      nextRewardEl.style.display = 'flex';
+    } else if (completePairs === 1) {
+      nextRewardEl.innerHTML = '<span class="reward-icon">🚚</span><span class="reward-text">Add 1 pair: 5% OFF + FREE Shipping (€4.99)</span>';
+      nextRewardEl.style.display = 'flex';
+    } else if (completePairs === 2) {
+      nextRewardEl.innerHTML = '<span class="reward-icon">🎁</span><span class="reward-text">Add 1 pair: 10% OFF + FREE Cable (€18.95)</span>';
+      nextRewardEl.style.display = 'flex';
     } else {
-      statusEl.textContent = '🎉 Tier 3 Unlocked!';
+      nextRewardEl.style.display = 'none';
     }
   }
 
-  // Update savings
+  // ========================================
+  // STICKY CART STATUS MESSAGES (BOGO-STICKY-CART-STATUS-025)
+  // Dynamic messaging based on complete pairs + incomplete products
+  // ========================================
+  const statusEl = document.getElementById('sticky-cart-status');
+  if (statusEl) {
+    const nextPairNumber = pairCount + 1;
+
+    if (hasIncompleteProduct) {
+      // Incomplete pair - urgent call to action
+      statusEl.innerHTML = `🔥 Complete pair ${nextPairNumber}: <strong>Select 1 more product!</strong>`;
+      statusEl.style.color = '#fbbf24';
+    } else if (pairCount === 0) {
+      // No pairs built yet
+      statusEl.innerHTML = '🎁 <strong>Build your first BOGO pair!</strong> Select 2 products';
+      statusEl.style.color = 'rgba(255, 255, 255, 0.9)';
+    } else if (pairCount === 1) {
+      // Tier 1 achieved - upsell to Tier 2
+      statusEl.innerHTML = '💚 <strong>Add 1 more pair</strong> for 5% OFF + Free Shipping!';
+      statusEl.style.color = '#60c655';
+    } else if (pairCount === 2) {
+      // Tier 2 achieved - upsell to Tier 3
+      statusEl.innerHTML = '🎁 <strong>Add 1 more pair</strong> for 10% OFF + FREE Cable (€18.95)!';
+      statusEl.style.color = '#f39c12';
+    } else if (pairCount >= 3 && pairCount < 10) {
+      // Tier 3 achieved - encouragement
+      statusEl.innerHTML = `🏆 <strong>${pairCount} pairs built!</strong> Amazing savings unlocked 🎉`;
+      statusEl.style.color = '#60c655';
+    } else {
+      // 10+ pairs - celebration
+      statusEl.innerHTML = `🔥 <strong>${pairCount} pairs!</strong> You're a BOGO champion! 👑`;
+      statusEl.style.color = '#60c655';
+    }
+
+    console.log('Status updated:', {
+      completePairs: pairCount,
+      hasIncompleteProduct,
+      message: statusEl.textContent
+    });
+  }
+
+  // ========================================
+  // CALCULATE TOTAL SAVINGS (BOGO-SAVINGS-003)
+  // Includes: BOGO + Tier Discounts + Shipping + Bonus
+  // ========================================
   const savingsEl = document.getElementById('sticky-cart-savings');
-  if (savingsEl) {
-    const totalSavings = state.pairs.reduce((sum, pair) => sum + (pair.savings || 0), 0);
-    savingsEl.textContent = `€${(totalSavings / 100).toFixed(2)}`;
+  if (savingsEl && state?.pairs) {
+    let totalSavings = 0;
+    let orderSubtotal = 0;
+
+    if (state.pairs.length > 0) {
+      // Step 1: Calculate BOGO savings and order subtotal
+      state.pairs.forEach(pair => {
+        const price1 = parseFloat(pair.slot1?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
+        const price2 = parseFloat(pair.slot2?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
+
+        // Add both items to subtotal
+        orderSubtotal += price1 + price2;
+
+        // BOGO savings: 50% off cheaper item
+        const lowerPrice = Math.min(price1, price2);
+        totalSavings += lowerPrice * 0.5;
+      });
+
+      // Step 2: Add tier discount savings
+      if (pairCount >= 3) {
+        // Tier 3: 10% off total order
+        totalSavings += orderSubtotal * 0.10;
+      } else if (pairCount >= 2) {
+        // Tier 2: 5% off total order
+        totalSavings += orderSubtotal * 0.05;
+      }
+
+      // Step 3: Add premium shipping value (2+ pairs)
+      if (pairCount >= 2) {
+        totalSavings += 4.99; // Premium shipping value
+      }
+
+      // Step 4: Add bonus cable value (3+ pairs)
+      if (pairCount >= 3) {
+        totalSavings += 18.95; // Titan Smart Cable value
+      }
+    }
+
+    savingsEl.textContent = `€${totalSavings.toFixed(2)}`;
   }
 
   // Show/hide buttons
@@ -878,6 +1163,11 @@ function updateStickyCart() {
 
   console.log('Sticky cart visibility:', hasAnyProducts ? 'visible' : 'hidden');
   console.log('Sticky cart updated successfully');
+
+  // ========================================
+  // SAVE STATE TO LOCALSTORAGE (BOGO-PERSIST-006)
+  // ========================================
+  saveBOGOState();
 }
 
 // ✅ BOGO-STICKY-COMPACT-047: No fade edges needed in compact design
@@ -974,8 +1264,9 @@ function openPairModal() {
     return;
   }
 
-  // Prevent body scroll
+  // Prevent body scroll and hide sticky cart (BOGO-REVIEW-MODAL-MOBILE-019)
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
 
   // Show modal
   modal.classList.add('active');
@@ -1014,8 +1305,9 @@ function closePairModal() {
     modal.classList.remove('active');
   }
 
-  // Restore body scroll
+  // Restore body scroll and show sticky cart (BOGO-REVIEW-MODAL-MOBILE-019)
   document.body.style.overflow = '';
+  document.body.classList.remove('modal-open');
 
   // Remove ESC listener
   document.removeEventListener('keydown', handleModalEscape);
@@ -1567,6 +1859,11 @@ function updatePairBadgeNumber(element, oldNumber, newNumber) {
   }
 }
 
+/**
+ * Delete Single Pair (BOGO-REVIEW-MODAL-UX-024)
+ * No confirmation dialog - instant deletion with toast notification
+ * @param {number} pairIndex - Index of pair to delete
+ */
 function deletePair(pairIndex) {
   console.log('🗑️ Deleting pair:', pairIndex);
 
@@ -1575,13 +1872,11 @@ function deletePair(pairIndex) {
 
   if (!pair) {
     console.error('Pair not found');
+    showBogoToast('Error removing pair', 'error');
     return;
   }
 
-  // Confirm deletion
-  if (!confirm(`Delete Pair ${pair.pairNumber}? This will remove both products from this pair.`)) {
-    return;
-  }
+  const pairNumber = pairIndex + 1;
 
   // ✅ FIX 6: Unhighlight both products using dedicated function
   unhighlightProduct(pair.product1?.element, pair.pairNumber);
@@ -1590,11 +1885,17 @@ function deletePair(pairIndex) {
   // Remove from state
   state.pairs.splice(pairIndex, 1);
 
+  // Save state
+  saveBOGOState(state);
+
   // Re-render
   renderPairModal();
   updateStickyCart();
 
-  showNotification(`Pair ${pair.pairNumber} deleted`, 'info');
+  // Show success notification (BOGO-REVIEW-MODAL-UX-024)
+  showBogoToast(`Pair ${pairNumber} removed`, 'success', 2500);
+
+  console.log('✅ Pair deleted:', pairIndex);
 }
 
 // ✅ BOGO-INLINE-VARIANTS-044: Initialize inline variant controls
@@ -1717,7 +2018,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initInlineVariantControls();
 
   // ✅ BOGO-STOCK-SCARCITY-045: Initialize stock scarcity system
-  addStockDisclaimer();
+  // addStockDisclaimer(); // Removed: Stock disclaimer moved to filter label
   initializeStockLevels();
 
   // ✅ Mobile Carousel Functionality
@@ -3239,67 +3540,142 @@ document.addEventListener('DOMContentLoaded', function() {
 // CHECKOUT INTEGRATION - FINAL VERSION
 // ========================================
 
-// Main checkout function
 // ========================================
-// BOGO CHECKOUT - BYPASS CART DRAWER
-// Goes directly to Shopify checkout URL
-// BOGO-BYPASS-CART-DRAWER-078
+// CLEAR ALL PAIRS FUNCTION
+// BOGO-REVIEW-MODAL-MOBILE-019
+// Resets BOGO builder state completely
 // ========================================
 
+/**
+ * Clear All Pairs (BOGO-REVIEW-MODAL-UX-024)
+ * Removes all pairs with single confirmation and toast notification
+ */
+function clearAllPairs() {
+  const state = window.bogoState;
+
+  if (!state || !state.pairs || state.pairs.length === 0) {
+    showBogoToast('No pairs to clear', 'error', 2000);
+    return;
+  }
+
+  const pairCount = state.pairs.length;
+
+  // Show confirmation (only for clear all, not single delete)
+  const confirmed = confirm(`Remove all ${pairCount} pairs? This cannot be undone.`);
+
+  if (!confirmed) return;
+
+  console.log('🗑️ Clearing all pairs...');
+
+  // Reset state
+  window.bogoState = {
+    pairs: [],
+    currentPair: { slot1: null, slot2: null },
+    activePairNumber: 1
+  };
+
+  // Clear localStorage
+  if (typeof clearBOGOState === 'function') {
+    clearBOGOState();
+  } else {
+    localStorage.removeItem('titan-bogo-state');
+  }
+
+  // Update UI
+  if (typeof updateStickyCart === 'function') {
+    updateStickyCart();
+  }
+
+  // Close modal if open
+  const modal = document.querySelector('.pair-modal');
+  if (modal && modal.classList.contains('active')) {
+    modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  }
+
+  // Show success notification (BOGO-REVIEW-MODAL-UX-024)
+  showBogoToast(`All ${pairCount} pairs cleared`, 'success', 3000);
+
+  console.log('✅ All pairs cleared successfully');
+
+  // Scroll to top of product selection
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========================================
+// BOGO CHECKOUT - CART API METHOD
+// BOGO-CHECKOUT-FIX-027
+// Uses Cart API (/cart/add.js) to add items with properties
+// ========================================
+
+/**
+ * Proceed to Checkout - Cart API Method (BOGO-CHECKOUT-FIX-027)
+ * Adds items via AJAX, then redirects to checkout with discount codes
+ *
+ * Flow:
+ * 1. Validate state
+ * 2. Show loading overlay
+ * 3. Clear existing cart
+ * 4. Add all BOGO items via Cart API
+ * 5. Add bonus cable (Tier 3)
+ * 6. Redirect to checkout with discount codes
+ */
 async function proceedToCheckout() {
   const state = window.bogoState;
 
-  console.log('=== BOGO CHECKOUT START ===');
+  console.log('=== BOGO CHECKOUT START (Optimized Flow BOGO-DEV-VERIFY-030) ===');
   console.log('State:', state);
 
   // Validation
   if (!state || !state.pairs || state.pairs.length === 0) {
-    alert('Please add at least one pair to continue');
+    showBogoToast('Please add at least one pair to continue', 'error');
     return;
   }
 
-  // Check for incomplete pairs (flexible property checking)
+  // Check for incomplete pairs
   const incompletePairs = state.pairs.filter(pair => {
-    const hasFirstProduct = pair.slot1 || pair.product1 || pair.item1 || pair[0];
-    const hasSecondProduct = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+    const hasFirstProduct = pair.slot1 || pair.product1;
+    const hasSecondProduct = pair.slot2 || pair.product2;
     return !hasFirstProduct || !hasSecondProduct;
   });
 
   if (incompletePairs.length > 0) {
-    alert('Please complete all pairs before checkout');
+    showBogoToast('Please complete all pairs before checkout', 'error');
     return;
   }
-
-  console.log('Validation passed, building checkout URL...');
 
   // Show loading
   showCheckoutLoading();
 
+  // NEW Step 0: Suppress Rebuy Immediately (BOGO-DEV-VERIFY-030)
+  // Suppress before Cart API calls to prevent interference during cart updates and the final redirect.
+  suppressRebuy();
+
   try {
-    // ========================================
-    // BUILD DIRECT CHECKOUT URL
-    // ========================================
+    // Step 1: Clear existing cart
+    await clearCart();
 
-    const checkoutItems = [];
+    // Step 2: Build items array
+    const items = [];
+    const pairCount = state.pairs.length;
 
-    // Add all BOGO pairs
+    // Add all BOGO pairs (Preserving existing logic)
     state.pairs.forEach((pair, pairIndex) => {
       const pairNumber = pairIndex + 1;
-
-      // Get products with flexible property names
-      const product1 = pair.slot1 || pair.product1 || pair.item1 || pair[0];
-      const product2 = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+      const product1 = pair.slot1 || pair.product1;
+      const product2 = pair.slot2 || pair.product2;
 
       // Add first product
       if (product1) {
         const variantId = product1.variantId || product1.variant_id || product1.id;
         if (variantId) {
-          checkoutItems.push({
+          items.push({
             id: variantId,
             quantity: 1,
             properties: {
               '_pair_number': pairNumber,
-              '_bogo_offer': 'Black Friday BOGO 2025'
+              '_bogo_offer': 'Black Friday BOGO 2025',
+              '_product_name': product1.title || 'Product 1'
             }
           });
         }
@@ -3309,91 +3685,110 @@ async function proceedToCheckout() {
       if (product2) {
         const variantId = product2.variantId || product2.variant_id || product2.id;
         if (variantId) {
-          checkoutItems.push({
+          items.push({
             id: variantId,
             quantity: 1,
             properties: {
               '_pair_number': pairNumber,
-              '_bogo_offer': 'Black Friday BOGO 2025'
+              '_bogo_offer': 'Black Friday BOGO 2025',
+              '_product_name': product2.title || 'Product 2'
             }
           });
         }
       }
     });
 
-    // Add bonus cable for Tier 3 (if applicable)
-    if (state.pairs.length >= 3) {
-      const bonusCableVariantId = '43480190943410'; // Titan Smart Cable variant ID
-      checkoutItems.push({
+    // Step 3: Add bonus cable for Tier 3 (Preserving existing logic)
+    if (pairCount >= 3) {
+      const bonusCableVariantId = window.bogoConfig?.tier3BonusVariantId || '43480190943410';
+      items.push({
         id: bonusCableVariantId,
         quantity: 1,
         properties: {
           '_bonus_item': 'FREE Tier 3 Bonus',
-          '_tier_3_bonus': 'Titan Smart Cable'
+          '_tier_3_bonus': 'Titan Smart Cable',
+          '_free_gift': 'true'
         }
       });
     }
 
-    console.log('Checkout items:', checkoutItems);
+    console.log('Adding items to cart via Cart API:', items);
 
-    // ========================================
-    // BUILD CHECKOUT URL WITH LINE ITEMS
-    // ========================================
+    // Step 4: Add all items to cart via Cart API
+    const addResponse = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: items })
+    });
 
-    // Build line items string for URL
-    const lineItems = checkoutItems.map(item => {
-      const properties = item.properties ?
-        Object.entries(item.properties)
-          .map(([key, val]) => `${encodeURIComponent(key)}:${encodeURIComponent(val)}`)
-          .join(',') : '';
-
-      return properties ?
-        `${item.id}:${item.quantity}[${properties}]` :
-        `${item.id}:${item.quantity}`;
-    }).join(',');
-
-    // Get discount codes
-    const discountCodes = getBOGODiscountCodes(state.pairs.length);
-    const discountParam = discountCodes ? `&discount=${encodeURIComponent(discountCodes)}` : '';
-
-    // Build final checkout URL
-    const checkoutUrl = `/cart/${lineItems}?checkout=true${discountParam}`;
-
-    console.log('Direct checkout URL:', checkoutUrl);
-
-    // ========================================
-    // PREVENT REBUY INTERFERENCE
-    // ========================================
-
-    // Flag to tell Rebuy/cart drawer to ignore this navigation
-    window.bogoDirectCheckout = true;
-    sessionStorage.setItem('bogo-direct-checkout', 'true');
-
-    // Disable any cart drawer listeners temporarily
-    if (window.Rebuy) {
-      console.log('Temporarily disabling Rebuy...');
-      const rebuyOriginal = window.Rebuy;
-      window.Rebuy = null;
-      setTimeout(() => {
-        window.Rebuy = rebuyOriginal;
-      }, 1000);
+    if (!addResponse.ok) {
+      const errorText = await addResponse.text();
+      throw new Error(`Cart API error: ${addResponse.status} - ${errorText}`);
     }
 
-    // ========================================
-    // REDIRECT TO CHECKOUT
-    // ========================================
+    const cartData = await addResponse.json();
+    console.log('Items added to cart successfully:', cartData);
 
-    console.log('Redirecting to checkout...');
+    // Step 5 & 6: Determine Destination and Build URL (BOGO-DEV-VERIFY-030)
+    // Note: Old Step 5 (suppressRebuy) was moved to Step 0.
 
-    // Small delay to ensure flags are set
+    const discountCodes = getBOGODiscountCodes(pairCount);
+    const encodedDiscounts = discountCodes ? encodeURIComponent(discountCodes) : null;
+
+    // Step 6.5: Detect if in development environment
+    const isDev = window.location.hostname === '127.0.0.1' ||
+                  window.location.hostname === 'localhost' ||
+                  window.location.port === '9292';
+
+    let destinationUrl;
+
+    if (isDev) {
+      // Development: Go to cart page for verification.
+      console.log('⚠️ Development mode: Redirecting to /cart for verification.');
+      // Use the new flag for the verification handler
+      destinationUrl = '/cart?bogo_verify=true';
+      if (encodedDiscounts) {
+        // Use '&' because we already have '?'
+        destinationUrl += `&discount=${encodedDiscounts}`;
+      }
+    } else {
+      // Production: Go directly to checkout (Streamlined Flow).
+      console.log('✅ Production mode: Redirecting directly to /checkout.');
+      destinationUrl = '/checkout';
+      if (encodedDiscounts) {
+        // Checkout uses '?' for the first parameter
+        destinationUrl += `?discount=${encodedDiscounts}`;
+      }
+    }
+
+    console.log('Redirecting to:', destinationUrl);
+
+    // Step 7: Clear BOGO state
+    clearBOGOState();
+
+    // Step 8: Navigate to checkout with fallback
     setTimeout(() => {
-      window.location.href = checkoutUrl;
-    }, 100);
+      // Method 1: Standard navigation
+      window.location.href = destinationUrl;
+
+      // Method 2: Fallback if Method 1 blocked (Preserving existing logic)
+      setTimeout(() => {
+        if (window.location.href.includes('bogo-bf-2025')) {
+          console.warn('Primary navigation blocked, using fallback...');
+          // Ensure window.top is accessible before using it
+          if (window.top) {
+            window.top.location.href = destinationUrl;
+          }
+        }
+      }, 1000);
+    }, 500);
 
   } catch (error) {
     console.error('Checkout error:', error);
     hideCheckoutLoading();
-    alert('Error processing your order. Please try again or contact support.');
+    showBogoToast('Checkout failed. Please try again or contact support.', 'error', 5000);
 
     // Clean up flags
     window.bogoDirectCheckout = false;
@@ -3406,17 +3801,100 @@ function getBOGODiscountCodes(pairCount) {
   if (pairCount === 1) {
     return 'BOGO2025';
   } else if (pairCount === 2) {
-    return 'BOGO2025,TIER2-5OFF';
+    return 'BOGO2025,TIER2-5OFF,FREE-SHIPPING-TIER2';
   } else if (pairCount >= 3) {
-    return 'BOGO2025,TIER3-10OFF';
+    return 'BOGO2025,TIER3-10OFF,FREE-SHIPPING-TIER3';
   }
   return '';
 }
 
-// Show loading overlay
+/**
+ * Suppress Rebuy Smart Cart (BOGO-CHECKOUT-REBUY-FIX-028)
+ * Multiple suppression methods for maximum effectiveness
+ */
+function suppressRebuy() {
+  console.log('🚫 Suppressing Rebuy Smart Cart...');
+
+  // Method 1: Set global flags
+  window.bogoDirectCheckout = true;
+  window.rebuyDisabled = true;
+  sessionStorage.setItem('bogo-direct-checkout', 'true');
+  sessionStorage.setItem('rebuy-disabled', 'true');
+
+  // Method 2: Disable Rebuy object
+  if (window.Rebuy) {
+    console.log('Found Rebuy object, nullifying...');
+    window._rebuyOriginalBackup = window.Rebuy;
+
+    // Replace with no-op proxy
+    window.Rebuy = new Proxy({}, {
+      get: (target, prop) => {
+        console.log(`Rebuy.${prop} blocked`);
+        return () => {};
+      },
+      set: () => true
+    });
+  }
+
+  // Method 3: Prevent Rebuy cart events
+  const rebuyEvents = ['rebuy:cart-open', 'rebuy:cart-update', 'rebuy:checkout'];
+  rebuyEvents.forEach(eventName => {
+    document.addEventListener(eventName, (e) => {
+      console.log(`Blocked Rebuy event: ${eventName}`);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }, true);
+  });
+
+  // Method 4: Disable Rebuy Smart Cart widget
+  const rebuyWidget = document.querySelector('rebuy-cart, [data-rebuy-cart], .rebuy-cart');
+  if (rebuyWidget) {
+    console.log('Found Rebuy widget, hiding...');
+    rebuyWidget.style.display = 'none';
+    rebuyWidget.style.pointerEvents = 'none';
+  }
+
+  // Method 5: Add body class to signal checkout mode
+  document.body.classList.add('bogo-checkout-mode');
+
+  // Restore after 5 seconds (increased from 3)
+  setTimeout(() => {
+    console.log('Restoring Rebuy...');
+    if (window._rebuyOriginalBackup) {
+      window.Rebuy = window._rebuyOriginalBackup;
+      delete window._rebuyOriginalBackup;
+    }
+    sessionStorage.removeItem('bogo-direct-checkout');
+    sessionStorage.removeItem('rebuy-disabled');
+    document.body.classList.remove('bogo-checkout-mode');
+    window.bogoDirectCheckout = false;
+    window.rebuyDisabled = false;
+  }, 5000);
+}
+
+// Show loading overlay (BOGO-CHECKOUT-REBUY-FIX-028)
 function showCheckoutLoading() {
   const overlay = document.createElement('div');
   overlay.id = 'checkout-loading';
+
+  // Detect dev environment
+  const isDev = window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '9292';
+
+  const devNotice = isDev
+    ? `<p class="dev-notice" style="
+        margin-top: 12px;
+        padding: 8px 16px;
+        background: rgba(251, 191, 36, 0.2);
+        border: 1px solid rgba(251, 191, 36, 0.5);
+        border-radius: 8px;
+        color: #fbbf24;
+        font-size: 13px;
+        font-weight: 600;
+      ">⚠️ Development mode: Redirecting to cart page</p>`
+    : '';
+
   overlay.innerHTML = `
     <div style="
       position: fixed;
@@ -3451,12 +3929,13 @@ function showCheckoutLoading() {
           font-weight: 900;
           color: #ffffff;
           margin: 0 0 12px 0;
-        ">Building Your Order...</h3>
+        ">Preparing Your Checkout...</h3>
         <p style="
           font-size: 16px;
           color: rgba(255, 255, 255, 0.8);
           margin: 0;
-        ">Applying BOGO discounts</p>
+        ">Adding ${window.bogoState?.pairs?.length || 0} BOGO pairs to cart</p>
+        ${devNotice}
       </div>
     </div>
   `;
@@ -4180,3 +4659,75 @@ console.log('%c✅ MODAL-VARIANT-AUTOSELECT-CLOSE-076: Variant auto-selection in
   
   console.log('✅ Live activity scroll trigger initialized');
 })();
+
+// ========================================
+// VARIANT SWATCHES & BUTTONS
+// BOGO-VARIANT-SWATCHES-020
+// Visual variant selection functions
+// ========================================
+
+/**
+ * Select Color Swatch
+ * @param {HTMLElement} swatchEl - Clicked swatch element
+ * @param {number} optionIndex - Option index (1, 2, or 3)
+ */
+function selectVariantSwatch(swatchEl, optionIndex) {
+  // Remove selected from siblings
+  const container = swatchEl.parentElement;
+  container.querySelectorAll('.variant-swatch').forEach(s => {
+    s.classList.remove('selected');
+  });
+
+  // Add selected to clicked swatch
+  swatchEl.classList.add('selected');
+
+  // Update hidden fallback select
+  const value = swatchEl.dataset.value;
+  updateFallbackSelect(optionIndex, value);
+
+  console.log('Swatch selected:', value);
+}
+
+/**
+ * Select Size/Length Button
+ * @param {HTMLElement} buttonEl - Clicked button element
+ * @param {number} optionIndex - Option index (1, 2, or 3)
+ */
+function selectVariantButton(buttonEl, optionIndex) {
+  // Don't select if out of stock
+  if (buttonEl.classList.contains('out-of-stock') || buttonEl.disabled) {
+    return;
+  }
+
+  // Remove selected from siblings
+  const container = buttonEl.parentElement;
+  container.querySelectorAll('.variant-button').forEach(b => {
+    b.classList.remove('selected');
+  });
+
+  // Add selected to clicked button
+  buttonEl.classList.add('selected');
+
+  // Update hidden fallback select
+  const value = buttonEl.dataset.value;
+  updateFallbackSelect(optionIndex, value);
+
+  console.log('Button selected:', value);
+}
+
+/**
+ * Update Fallback Select (for existing logic compatibility)
+ * @param {number} optionIndex - Option index
+ * @param {string} value - Selected value
+ */
+function updateFallbackSelect(optionIndex, value) {
+  const select = document.querySelector(`.variant-selector[data-option-index="${optionIndex}"]`);
+
+  if (select) {
+    select.value = value;
+
+    // Trigger change event for existing listeners
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
+  }
+}

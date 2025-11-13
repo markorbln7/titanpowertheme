@@ -1,3 +1,128 @@
+/**
+ * BOGO Checkout - Development Verification Handler (BOGO-DEV-VERIFY-030)
+ * Replaces BOGO-CART-PAGE-REBUY-SUPPRESS-029.
+ * Detects ?bogo_verify=true parameter on the cart page.
+ * Handles environment-specific actions: verification message in Dev, redirect in Prod/Preview.
+ */
+(function() {
+  'use strict';
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const isBogoVerification = urlParams.get('bogo_verify') === 'true';
+
+  // Check if we are in the specific BOGO verification flow.
+  // This script no longer handles the legacy ?bogo=true parameter.
+  if (!isBogoVerification) {
+    return;
+  }
+
+  console.log('🎯 BOGO Verification Flow detected on cart page.');
+
+  // Check if we are in a local development environment
+  const isDev = window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '9292';
+
+  if (!isDev) {
+    // Fallback: If this parameter is used in Production or a Preview Link, proceed to checkout immediately.
+    console.log('✅ Production/Preview environment detected. Redirecting to checkout.');
+    const discountParam = urlParams.get('discount');
+    const checkoutUrl = discountParam
+      ? `/checkout?discount=${encodeURIComponent(discountParam)}`
+      : '/checkout';
+    window.location.href = checkoutUrl;
+    return; // Stop execution here
+  }
+
+  // If we reach here, it's development mode.
+  console.log('⚠️ Development mode confirmed. Suppressing Rebuy and showing verification.');
+
+  // --- Rebuy Suppression (Aggressive) ---
+  // We must suppress Rebuy so the developer can inspect the cart undisturbed.
+  // These methods are preserved from the robust implementation in the original code.
+
+  // Method 1: Set flags
+  window.bogoDirectCheckout = true;
+  window.rebuyDisabled = true;
+  sessionStorage.setItem('bogo-direct-checkout', 'true');
+
+  // Method 2: Block Rebuy object access
+  try {
+    Object.defineProperty(window, 'Rebuy', {
+      get: function() {
+        console.log('🚫 Rebuy access blocked (BOGO Verification)');
+        return { SmartCart: { show: () => {}, hide: () => {} }, Cart: { get: () => ({}) }};
+      },
+      set: function() {
+        console.log('🚫 Rebuy initialization blocked');
+        return true;
+      },
+      configurable: true
+    });
+  } catch (e) {
+    console.warn('Could not redefine window.Rebuy', e);
+  }
+
+  // Method 4: Block Rebuy events
+  const rebuyEvents = ['rebuy:cart-open', 'rebuy:cart-update', 'rebuy:checkout', 'rebuy:drawer-open'];
+  rebuyEvents.forEach(eventName => {
+    document.addEventListener(eventName, function(e) {
+      console.log(`🚫 Blocked Rebuy event: ${eventName}`);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }, true);
+  });
+
+  // Method 5: Add CSS classes
+  document.documentElement.classList.add('bogo-checkout-mode');
+  document.body.classList.add('bogo-checkout-mode');
+
+  // --- UI Updates and Verification Overlay ---
+  document.addEventListener('DOMContentLoaded', function() {
+    // Method 3: Remove Rebuy elements from DOM
+    const rebuyElements = document.querySelectorAll('rebuy-cart, [data-rebuy-cart], .rebuy-cart, .rebuy-smart-cart, #rebuy-cart');
+    rebuyElements.forEach(el => {
+      el.remove();
+    });
+    console.log(`🗑️ Removed ${rebuyElements.length} Rebuy elements from cart page`);
+
+    // Display Verification Overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'bogo-dev-verification-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: sans-serif;
+    `;
+    overlay.innerHTML = `
+      <div style="max-width: 550px; padding: 30px; background: #1a1a1a; border: 2px solid #60c655; border-radius: 15px; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+        <div style="font-size: 48px; color: #60c655; margin-bottom: 15px;">✅</div>
+        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 15px; color: white;">BOGO Development Verification</h2>
+        <p style="font-size: 16px; opacity: 0.9; margin-bottom: 25px; color: #ccc;">
+          Cart successfully populated with BOGO items, line item properties, and discounts.
+        </p>
+        <div style="padding: 15px; background: rgba(251, 191, 36, 0.2); border: 1px solid #fbbf24; border-radius: 8px; color: #fbbf24; font-size: 14px; text-align: left;">
+          ⚠️ <strong>Checkout Disabled:</strong> You cannot proceed to <code>/checkout</code> when running locally (127.0.0.1). To test the final checkout, use a shareable theme preview link.
+        </div>
+        <button onclick="document.getElementById('bogo-dev-verification-overlay').remove();" style="margin-top: 30px; padding: 12px 24px; background: #60c655; color: black; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">
+          Close and Inspect Cart
+        </button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  });
+
+  // CRITICAL: We do NOT redirect to /checkout. The flow stops here in development.
+  console.log('✅ BOGO verification active. Auto-redirect to checkout blocked.');
+})();
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(

@@ -813,7 +813,7 @@ function updateStickyCart() {
     }
   }
 
-  // Update status message
+  // Update status message with quantified benefits (BOGO-SAVINGS-003)
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {
     if (hasIncompleteProduct) {
@@ -821,19 +821,61 @@ function updateStickyCart() {
     } else if (pairCount === 0) {
       statusEl.textContent = 'Select 2 products to start';
     } else if (pairCount === 1) {
-      statusEl.textContent = 'Add 1 more for Tier 2 (5% OFF)';
+      // Tier 1 → Tier 2 upsell
+      statusEl.textContent = 'Add 1 more pair: Unlock 5% OFF + FREE Premium Shipping (€4.99 value)!';
     } else if (pairCount === 2) {
-      statusEl.textContent = 'Add 1 more for Tier 3 (10% OFF + FREE Cable)';
+      // Tier 2 → Tier 3 upsell
+      statusEl.textContent = 'Add 1 more pair: Get 10% OFF + FREE Titan Cable (€18.95 value)!';
     } else {
-      statusEl.textContent = '🎉 Tier 3 Unlocked!';
+      // Tier 3 achieved
+      statusEl.textContent = '🏆 Maximum savings unlocked! FREE cable included.';
     }
   }
 
-  // Update savings
+  // ========================================
+  // CALCULATE TOTAL SAVINGS (BOGO-SAVINGS-003)
+  // Includes: BOGO + Tier Discounts + Shipping + Bonus
+  // ========================================
   const savingsEl = document.getElementById('sticky-cart-savings');
-  if (savingsEl) {
-    const totalSavings = state.pairs.reduce((sum, pair) => sum + (pair.savings || 0), 0);
-    savingsEl.textContent = `€${(totalSavings / 100).toFixed(2)}`;
+  if (savingsEl && state?.pairs) {
+    let totalSavings = 0;
+    let orderSubtotal = 0;
+
+    if (state.pairs.length > 0) {
+      // Step 1: Calculate BOGO savings and order subtotal
+      state.pairs.forEach(pair => {
+        const price1 = parseFloat(pair.slot1?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
+        const price2 = parseFloat(pair.slot2?.price?.replace(/[^0-9.,]/g, '').replace(',', '.') || 0);
+
+        // Add both items to subtotal
+        orderSubtotal += price1 + price2;
+
+        // BOGO savings: 50% off cheaper item
+        const lowerPrice = Math.min(price1, price2);
+        totalSavings += lowerPrice * 0.5;
+      });
+
+      // Step 2: Add tier discount savings
+      if (pairCount >= 3) {
+        // Tier 3: 10% off total order
+        totalSavings += orderSubtotal * 0.10;
+      } else if (pairCount >= 2) {
+        // Tier 2: 5% off total order
+        totalSavings += orderSubtotal * 0.05;
+      }
+
+      // Step 3: Add premium shipping value (2+ pairs)
+      if (pairCount >= 2) {
+        totalSavings += 4.99; // Premium shipping value
+      }
+
+      // Step 4: Add bonus cable value (3+ pairs)
+      if (pairCount >= 3) {
+        totalSavings += 18.95; // Titan Smart Cable value
+      }
+    }
+
+    savingsEl.textContent = `€${totalSavings.toFixed(2)}`;
   }
 
   // Show/hide buttons

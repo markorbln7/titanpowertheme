@@ -867,6 +867,7 @@
     background: radial-gradient(circle, rgba(96, 198, 85, 0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 400ms ease;
+    pointer-events: none !important; /* ✅ BOGO-COMPARE-BTN-FIX: Prevent blocking clicks */
   }
 
   .tier-card:hover {
@@ -1238,8 +1239,41 @@
     border-radius: 8px;
   }
 
+  /* ========================================
+     BOGO-COMPARE-BTN-FIX - Ensure Button Clickability
+     Prevent pseudo-elements from blocking clicks
+     ======================================== */
+
+  /* Global fix: All decorative pseudo-elements in tier showcase */
+  .bogo-tier-showcase *::before,
+  .bogo-tier-showcase *::after {
+    pointer-events: none !important;
+  }
+
+  /* Ensure tier showcase has proper stacking */
+  .bogo-tier-showcase {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tier-cards-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Exception: Keep pointer events on interactive elements */
+  .bogo-tier-showcase button,
+  .bogo-tier-showcase a,
+  .tier-card {
+    pointer-events: auto !important;
+  }
+
   /* Compare button */
   .btn-compare-tiers {
+    position: relative !important;
+    z-index: 10 !important; /* Above decorative elements */
+    pointer-events: auto !important; /* Explicitly clickable */
+    cursor: pointer !important;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(96, 198, 85, 0.3);
     color: #ffffff;
@@ -1424,6 +1458,7 @@
     align-items: center;
     justify-content: center;
     height: 100dvh;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
 
     /* ✅ Reserve space for header/sticky cart */
     padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
@@ -1432,7 +1467,10 @@
     padding-right: var(--modal-vertical-margin);
   }
 
-  .tier-comparison-modal.active { display: flex; }
+  .tier-comparison-modal.active {
+    display: flex;
+    pointer-events: auto; /* ✅ Block clicks when visible */
+  }
 
   .comparison-overlay {
     position: absolute;
@@ -1647,6 +1685,7 @@
     opacity: 0;
     transition: opacity 500ms ease;
     cursor: pointer;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
 
     /* ✅ Reserve space for header/sticky cart */
     padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
@@ -1657,6 +1696,7 @@
   }
 
   .tier-celebration-overlay.show {
+    pointer-events: auto; /* ✅ Block clicks when visible */
     display: flex;
     opacity: 1;
   }
@@ -5153,10 +5193,12 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
   }
 
   .pair-modal.active {
     display: flex;
+    pointer-events: auto; /* ✅ Block clicks when visible */
   }
 
   /* ✅ BOGO-REVIEW-FIXES-040: Enhanced dark overlay */

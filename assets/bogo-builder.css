@@ -1152,73 +1152,113 @@
     font-weight: 700;
   }
 
-  /* ✅ Mobile carousel for tier cards */
-  @media (max-width: 968px) {
+  /* ========================================
+     TIER CARDS - MOBILE OPTIMIZATION
+     BOGO-MOBILE-TIERS-018
+     Full width usage, clean badges, proper fit
+     ======================================== */
+  @media (max-width: 768px) {
     .tier-cards-container {
-      display: flex;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scroll-padding: 20px;
-      gap: 16px;
-      padding: 0 20px 20px;
-      margin-bottom: 16px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .tier-cards-container::-webkit-scrollbar {
-      display: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 32px 16px;
+      max-width: 100%;
+      margin: 0;
+      overflow: visible;
     }
 
     .tier-card {
-      flex: 0 0 85%;
-      max-width: 340px;
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
+      width: 100%;
+      max-width: 100%;
+      padding: 24px 16px;
+      min-height: 380px;
       margin: 0;
-    }
-
-    .tier-cards-container::before,
-    .tier-cards-container::after {
-      content: '';
-      flex: 0 0 7.5%;
-    }
-
-    /* ✅ BOGO-TIER-002: Tier 2 still prominent on mobile (reduced from 1.08 to 1.03) */
-    .tier-card.most-popular {
-      transform: scale(1.03);
-    }
-
-    .tier-carousel-dots {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* No scaling on mobile - all cards same size */
+    .tier-card.most-popular,
+    .tier-card.best-value,
+    .tier-card[data-tier="2"] {
+      transform: scale(1.0) !important;
+    }
+
+    /* Badges - No Cutoff */
+    .popular-badge,
+    .best-badge,
+    .tier-badge {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-title {
+      font-size: 24px;
+      margin: 8px 0;
+    }
+
+    .tier-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 16px;
+    }
+
+    .tier-benefits {
+      width: 100%;
+      text-align: left;
+      padding: 0 16px;
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .tier-benefits li {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
       gap: 8px;
-      margin: 12px 0 16px;
+      flex-wrap: wrap;
     }
 
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: all 300ms ease;
+    .tier-discount {
+      font-size: 18px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      width: fit-content;
     }
 
-    .carousel-dot.active {
+    /* Discount Badges - Better Mobile Display */
+    .tier-discount-badge {
+      display: inline-block;
+      padding: 4px 10px;
       background: #60c655;
-      width: 24px;
-      border-radius: 4px;
+      color: #000000;
+      font-size: 11px;
+      font-weight: 900;
+      border-radius: 8px;
+      margin-left: 8px;
+      white-space: nowrap;
     }
+  }
 
-    .carousel-dot:focus {
-      outline: 2px solid #60c655;
-      outline-offset: 2px;
-    }
+  /* Remove tier carousel dots (BOGO-MOBILE-TIERS-018) */
+  .tier-carousel-dots {
+    display: none !important;
+  }
 
     .product-flexibility-note {
       padding: 8px 16px;
@@ -1280,6 +1320,118 @@
   .comparison-cta p { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 16px; }
   .btn-start-building { background: linear-gradient(135deg, #60c655 0%, #50b645 100%); color: #000; border: none; padding: 16px 48px; border-radius: 12px; font-size: 18px; font-weight: 900; cursor: pointer; transition: all 300ms ease; box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4); }
   .btn-start-building:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(96, 198, 85, 0.6); }
+
+  /* ========================================
+     COMPARE TIERS MODAL - MOBILE FIT
+     BOGO-MOBILE-TIERS-018
+     Fits viewport, no scroll to CTA needed
+     ======================================== */
+  @media (max-width: 768px) {
+    .tier-comparison-modal {
+      padding: 0;
+    }
+
+    .comparison-content {
+      width: 100%;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .comparison-header {
+      flex-shrink: 0;
+      padding: 16px;
+      background: #1a1a1a;
+      border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    }
+
+    .comparison-header h2 {
+      font-size: 18px;
+      margin: 0;
+      padding-right: 40px;
+    }
+
+    .comparison-header p {
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .comparison-table-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      min-height: 0;
+    }
+
+    .comparison-table thead th {
+      padding: 12px 8px;
+    }
+
+    .col-icon {
+      font-size: 24px;
+    }
+
+    .col-name {
+      font-size: 14px;
+    }
+
+    .col-req {
+      font-size: 10px;
+    }
+
+    /* Badges Don't Overlap on Mobile */
+    .col-badge {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      display: block;
+      width: fit-content;
+      margin: 0 auto 8px;
+      font-size: 9px;
+      padding: 3px 8px;
+    }
+
+    .comparison-table tbody td {
+      padding: 12px 8px;
+      font-size: 12px;
+    }
+
+    .feature-name {
+      font-size: 12px;
+    }
+
+    .feature-val {
+      font-size: 12px;
+    }
+
+    .comparison-cta {
+      flex-shrink: 0;
+      padding: 16px;
+      background: #1a1a1a;
+      border-top: 1px solid rgba(96, 198, 85, 0.2);
+    }
+
+    .comparison-cta p {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .btn-start-building {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+
+    .comparison-close {
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+    }
+  }
 
   {%- comment -%} ========================================
       BOGO-CELEBRATION-CLOSE-046: CLICKABLE OVERLAY
@@ -5374,3 +5526,49 @@
       flex-direction: column;
     }
   }
+
+/* ========================================
+   Z-INDEX HIERARCHY FIX
+   BOGO-MOBILE-TIERS-018
+   Ensure modals always above everything
+   ======================================== */
+
+/* Footer elements - Low z-index */
+footer,
+.site-footer,
+.footer-container,
+.footer-logo,
+header.site-header,
+.header-wrapper {
+  position: relative;
+  z-index: 100 !important;
+}
+
+/* Sticky Cart - Above footer */
+.bogo-sticky-cart {
+  z-index: 999 !important;
+}
+
+/* Modals - Highest priority */
+.buy-now-popup-overlay,
+.tier-comparison-modal,
+.compare-tiers-overlay,
+.modal-overlay,
+.tier-celebration-overlay {
+  z-index: 10000 !important;
+}
+
+/* Modal close buttons */
+.close-buy-now-popup,
+.modal-close,
+.comparison-close,
+.compare-tiers-close {
+  z-index: 10001 !important;
+}
+
+/* Remove gap below tiers (BOGO-MOBILE-TIERS-018) */
+.tier-cards-container + *,
+.bogo-tiers + * {
+  margin-top: 0 !important;
+  padding-top: 32px;
+}

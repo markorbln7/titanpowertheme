@@ -4944,8 +4944,9 @@
   .pair-modal__container {
     position: relative;
     width: 90%;
-    max-width: 1000px;
-    max-height: 90vh; /* Fit viewport */
+    max-width: 900px; /* Reduced from 1000px for better fit */
+    height: 80vh; /* Fixed height for better control */
+    max-height: 80vh;
     background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
     border-radius: 16px;
     border: 2px solid #60c655;
@@ -4953,7 +4954,8 @@
     display: flex;
     flex-direction: column;
     animation: slideUpScale 400ms cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden; /* Contain scrolling */
+    overflow-y: auto; /* Single scroll on container */
+    overflow-x: hidden;
     z-index: 2;
   }
 
@@ -5127,14 +5129,6 @@
      Single scroll container for all content
      ======================================== */
 
-  /* Modal container - enable scrolling */
-  .pair-modal__container {
-    height: 85vh; /* Fixed viewport-based height */
-    max-height: 85vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
   /* Header - sticky at top */
   .pair-modal__header {
     flex-shrink: 0;
@@ -5147,12 +5141,12 @@
   /* Content sections - NO individual scrolling */
   .pair-modal__tier-progress {
     flex-shrink: 0;
-    overflow: visible; /* Remove scroll */
+    overflow: visible;
   }
 
   .partitioned-pricing {
     flex-shrink: 0;
-    overflow: visible; /* Remove scroll */
+    overflow: visible;
   }
 
   .pair-modal__pairs-grid {

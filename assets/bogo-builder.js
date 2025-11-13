@@ -813,6 +813,46 @@ function updateStickyCart() {
     }
   }
 
+  // ========================================
+  // UPDATE PROGRESS BAR (BOGO-PROGRESS-004)
+  // ========================================
+  const progressFill = document.getElementById('bogo-progress-fill');
+  const milestones = document.querySelectorAll('.bogo-milestone');
+
+  if (progressFill && milestones.length > 0) {
+    // Calculate progress percentage
+    let progressPercent = 0;
+
+    if (pairCount >= 3) {
+      progressPercent = 100; // Tier 3: Complete
+    } else if (pairCount === 2) {
+      progressPercent = 66; // Tier 2: 2/3 progress
+    } else if (pairCount === 1) {
+      progressPercent = 33; // Tier 1: 1/3 progress
+    } else {
+      progressPercent = 0; // No pairs
+    }
+
+    // Update progress fill width
+    progressFill.style.width = progressPercent + '%';
+
+    // Update milestone active states
+    milestones.forEach((milestone, index) => {
+      const tier = index + 1; // Tier 1, 2, 3
+
+      if (pairCount >= tier) {
+        milestone.classList.add('active');
+      } else {
+        milestone.classList.remove('active');
+      }
+    });
+
+    console.log('Progress bar updated:', {
+      pairCount: pairCount,
+      progress: progressPercent + '%'
+    });
+  }
+
   // Update status message with quantified benefits (BOGO-SAVINGS-003)
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {

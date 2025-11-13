@@ -3992,6 +3992,98 @@
   }
 
   /* ========================================
+     BOGO PROGRESS BAR (BOGO-PROGRESS-004)
+     Goal Gradient Effect - Tier Milestones
+     ======================================== */
+
+  .bogo-progress-bar {
+    position: relative;
+    width: 100%;
+    max-width: 240px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin: 8px auto 0;
+    overflow: visible;
+  }
+
+  .bogo-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #60c655 0%, #50b645 100%);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bogo-progress-milestones {
+    position: absolute;
+    top: -8px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .bogo-milestone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .milestone-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid #000000;
+    transition: all 400ms ease;
+  }
+
+  .bogo-milestone.active .milestone-dot {
+    background: #60c655;
+    border-color: #60c655;
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.6);
+    transform: scale(1.2);
+  }
+
+  .milestone-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+    transition: color 400ms ease;
+  }
+
+  .bogo-milestone.active .milestone-label {
+    color: #60c655;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 767px) {
+    .bogo-progress-bar {
+      max-width: 180px;
+      height: 4px;
+    }
+
+    .milestone-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .milestone-label {
+      font-size: 9px;
+    }
+  }
+
+  /* ========================================
      FIX OVERLAP ISSUES
      ======================================== */
 

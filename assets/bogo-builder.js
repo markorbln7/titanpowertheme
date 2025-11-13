@@ -3623,7 +3623,7 @@ function clearAllPairs() {
 async function proceedToCheckout() {
   const state = window.bogoState;
 
-  console.log('=== BOGO CHECKOUT START (Cart API) ===');
+  console.log('=== BOGO CHECKOUT START (Optimized Flow BOGO-DEV-VERIFY-030) ===');
   console.log('State:', state);
 
   // Validation
@@ -3647,6 +3647,10 @@ async function proceedToCheckout() {
   // Show loading
   showCheckoutLoading();
 
+  // NEW Step 0: Suppress Rebuy Immediately (BOGO-DEV-VERIFY-030)
+  // Suppress before Cart API calls to prevent interference during cart updates and the final redirect.
+  suppressRebuy();
+
   try {
     // Step 1: Clear existing cart
     await clearCart();
@@ -3655,11 +3659,9 @@ async function proceedToCheckout() {
     const items = [];
     const pairCount = state.pairs.length;
 
-    // Add all BOGO pairs
+    // Add all BOGO pairs (Preserving existing logic)
     state.pairs.forEach((pair, pairIndex) => {
       const pairNumber = pairIndex + 1;
-
-      // Get products with flexible property names
       const product1 = pair.slot1 || pair.product1;
       const product2 = pair.slot2 || pair.product2;
 
@@ -3696,7 +3698,7 @@ async function proceedToCheckout() {
       }
     });
 
-    // Step 3: Add bonus cable for Tier 3
+    // Step 3: Add bonus cable for Tier 3 (Preserving existing logic)
     if (pairCount >= 3) {
       const bonusCableVariantId = window.bogoConfig?.tier3BonusVariantId || '43480190943410';
       items.push({
@@ -3729,49 +3731,56 @@ async function proceedToCheckout() {
     const cartData = await addResponse.json();
     console.log('Items added to cart successfully:', cartData);
 
-    // Step 5: Suppress Rebuy (BOGO-CHECKOUT-REBUY-FIX-028)
-    suppressRebuy();
+    // Step 5 & 6: Determine Destination and Build URL (BOGO-DEV-VERIFY-030)
+    // Note: Old Step 5 (suppressRebuy) was moved to Step 0.
 
-    // Step 6: Build checkout URL with discount codes
     const discountCodes = getBOGODiscountCodes(pairCount);
+    const encodedDiscounts = discountCodes ? encodeURIComponent(discountCodes) : null;
 
-    // Step 6.5: Detect if in development environment (BOGO-CHECKOUT-REBUY-FIX-028)
+    // Step 6.5: Detect if in development environment
     const isDev = window.location.hostname === '127.0.0.1' ||
                   window.location.hostname === 'localhost' ||
                   window.location.port === '9292';
 
-    let checkoutUrl;
+    let destinationUrl;
 
     if (isDev) {
-      // Development: Go to cart page with BOGO flag (BOGO-CART-PAGE-REBUY-SUPPRESS-029)
-      console.log('⚠️ Development mode detected - redirecting to /cart');
-      checkoutUrl = discountCodes
-        ? `/cart?discount=${encodeURIComponent(discountCodes)}&bogo=true`
-        : '/cart?bogo=true';
+      // Development: Go to cart page for verification.
+      console.log('⚠️ Development mode: Redirecting to /cart for verification.');
+      // Use the new flag for the verification handler
+      destinationUrl = '/cart?bogo_verify=true';
+      if (encodedDiscounts) {
+        // Use '&' because we already have '?'
+        destinationUrl += `&discount=${encodedDiscounts}`;
+      }
     } else {
-      // Production: Go directly to checkout
-      console.log('✅ Production mode - redirecting to /checkout');
-      checkoutUrl = discountCodes
-        ? `/checkout?discount=${encodeURIComponent(discountCodes)}`
-        : '/checkout';
+      // Production: Go directly to checkout (Streamlined Flow).
+      console.log('✅ Production mode: Redirecting directly to /checkout.');
+      destinationUrl = '/checkout';
+      if (encodedDiscounts) {
+        // Checkout uses '?' for the first parameter
+        destinationUrl += `?discount=${encodedDiscounts}`;
+      }
     }
 
-    console.log('Redirecting to:', checkoutUrl);
-    console.log('Discount codes:', discountCodes);
+    console.log('Redirecting to:', destinationUrl);
 
     // Step 7: Clear BOGO state
     clearBOGOState();
 
-    // Step 8: Navigate to checkout with fallback (BOGO-CHECKOUT-REBUY-FIX-028)
+    // Step 8: Navigate to checkout with fallback
     setTimeout(() => {
       // Method 1: Standard navigation
-      window.location.href = checkoutUrl;
+      window.location.href = destinationUrl;
 
-      // Method 2: Fallback if Method 1 blocked
+      // Method 2: Fallback if Method 1 blocked (Preserving existing logic)
       setTimeout(() => {
         if (window.location.href.includes('bogo-bf-2025')) {
           console.warn('Primary navigation blocked, using fallback...');
-          window.top.location.href = checkoutUrl;
+          // Ensure window.top is accessible before using it
+          if (window.top) {
+            window.top.location.href = destinationUrl;
+          }
         }
       }, 1000);
     }, 500);

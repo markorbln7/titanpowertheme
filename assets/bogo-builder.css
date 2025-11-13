@@ -6197,3 +6197,70 @@ body.modal-open .bogo-sticky-cart {
     padding: 6px 12px;
   }
 }
+
+/* ========================================
+   CHECKOUT LOADING OVERLAY
+   BOGO-CHECKOUT-FIX-027
+   ======================================== */
+
+.bogo-checkout-loading,
+#checkout-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10003;
+  animation: fadeIn 300ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loading-content {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(96, 198, 85, 0.5);
+  border-radius: 20px;
+  max-width: 400px;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(96, 198, 85, 0.2);
+  border-top-color: #60c655;
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-content h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.loading-content p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Prevent interaction while loading */
+body.checkout-loading {
+  overflow: hidden;
+}

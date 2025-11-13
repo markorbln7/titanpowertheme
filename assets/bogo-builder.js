@@ -3602,67 +3602,78 @@ function clearAllPairs() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Main checkout function
 // ========================================
-// BOGO CHECKOUT - BYPASS CART DRAWER
-// Goes directly to Shopify checkout URL
-// BOGO-BYPASS-CART-DRAWER-078
+// BOGO CHECKOUT - CART API METHOD
+// BOGO-CHECKOUT-FIX-027
+// Uses Cart API (/cart/add.js) to add items with properties
 // ========================================
 
+/**
+ * Proceed to Checkout - Cart API Method (BOGO-CHECKOUT-FIX-027)
+ * Adds items via AJAX, then redirects to checkout with discount codes
+ *
+ * Flow:
+ * 1. Validate state
+ * 2. Show loading overlay
+ * 3. Clear existing cart
+ * 4. Add all BOGO items via Cart API
+ * 5. Add bonus cable (Tier 3)
+ * 6. Redirect to checkout with discount codes
+ */
 async function proceedToCheckout() {
   const state = window.bogoState;
 
-  console.log('=== BOGO CHECKOUT START ===');
+  console.log('=== BOGO CHECKOUT START (Cart API) ===');
   console.log('State:', state);
 
   // Validation
   if (!state || !state.pairs || state.pairs.length === 0) {
-    alert('Please add at least one pair to continue');
+    showBogoToast('Please add at least one pair to continue', 'error');
     return;
   }
 
-  // Check for incomplete pairs (flexible property checking)
+  // Check for incomplete pairs
   const incompletePairs = state.pairs.filter(pair => {
-    const hasFirstProduct = pair.slot1 || pair.product1 || pair.item1 || pair[0];
-    const hasSecondProduct = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+    const hasFirstProduct = pair.slot1 || pair.product1;
+    const hasSecondProduct = pair.slot2 || pair.product2;
     return !hasFirstProduct || !hasSecondProduct;
   });
 
   if (incompletePairs.length > 0) {
-    alert('Please complete all pairs before checkout');
+    showBogoToast('Please complete all pairs before checkout', 'error');
     return;
   }
-
-  console.log('Validation passed, building checkout URL...');
 
   // Show loading
   showCheckoutLoading();
 
   try {
-    // ========================================
-    // BUILD DIRECT CHECKOUT URL
-    // ========================================
+    // Step 1: Clear existing cart
+    await clearCart();
 
-    const checkoutItems = [];
+    // Step 2: Build items array
+    const items = [];
+    const pairCount = state.pairs.length;
 
     // Add all BOGO pairs
     state.pairs.forEach((pair, pairIndex) => {
       const pairNumber = pairIndex + 1;
 
       // Get products with flexible property names
-      const product1 = pair.slot1 || pair.product1 || pair.item1 || pair[0];
-      const product2 = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+      const product1 = pair.slot1 || pair.product1;
+      const product2 = pair.slot2 || pair.product2;
 
       // Add first product
       if (product1) {
         const variantId = product1.variantId || product1.variant_id || product1.id;
         if (variantId) {
-          checkoutItems.push({
+          items.push({
             id: variantId,
             quantity: 1,
             properties: {
               '_pair_number': pairNumber,
-              '_bogo_offer': 'Black Friday BOGO 2025'
+              '_bogo_offer': 'Black Friday BOGO 2025',
+              '_product_name': product1.title || 'Product 1'
             }
           });
         }
@@ -3672,94 +3683,76 @@ async function proceedToCheckout() {
       if (product2) {
         const variantId = product2.variantId || product2.variant_id || product2.id;
         if (variantId) {
-          checkoutItems.push({
+          items.push({
             id: variantId,
             quantity: 1,
             properties: {
               '_pair_number': pairNumber,
-              '_bogo_offer': 'Black Friday BOGO 2025'
+              '_bogo_offer': 'Black Friday BOGO 2025',
+              '_product_name': product2.title || 'Product 2'
             }
           });
         }
       }
     });
 
-    // Add bonus cable for Tier 3 (if applicable)
-    if (state.pairs.length >= 3) {
-      const bonusCableVariantId = '43480190943410'; // Titan Smart Cable variant ID
-      checkoutItems.push({
+    // Step 3: Add bonus cable for Tier 3
+    if (pairCount >= 3) {
+      const bonusCableVariantId = window.bogoConfig?.tier3BonusVariantId || '43480190943410';
+      items.push({
         id: bonusCableVariantId,
         quantity: 1,
         properties: {
           '_bonus_item': 'FREE Tier 3 Bonus',
-          '_tier_3_bonus': 'Titan Smart Cable'
+          '_tier_3_bonus': 'Titan Smart Cable',
+          '_free_gift': 'true'
         }
       });
     }
 
-    console.log('Checkout items:', checkoutItems);
+    console.log('Adding items to cart via Cart API:', items);
 
-    // ========================================
-    // BUILD CHECKOUT URL WITH LINE ITEMS
-    // ========================================
+    // Step 4: Add all items to cart via Cart API
+    const addResponse = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: items })
+    });
 
-    // Build line items string for URL
-    const lineItems = checkoutItems.map(item => {
-      const properties = item.properties ?
-        Object.entries(item.properties)
-          .map(([key, val]) => `${encodeURIComponent(key)}:${encodeURIComponent(val)}`)
-          .join(',') : '';
-
-      return properties ?
-        `${item.id}:${item.quantity}[${properties}]` :
-        `${item.id}:${item.quantity}`;
-    }).join(',');
-
-    // Get discount codes
-    const discountCodes = getBOGODiscountCodes(state.pairs.length);
-    const discountParam = discountCodes ? `&discount=${encodeURIComponent(discountCodes)}` : '';
-
-    // Build final checkout URL
-    const checkoutUrl = `/cart/${lineItems}?checkout=true${discountParam}`;
-
-    console.log('Direct checkout URL:', checkoutUrl);
-
-    // ========================================
-    // PREVENT REBUY INTERFERENCE
-    // ========================================
-
-    // Flag to tell Rebuy/cart drawer to ignore this navigation
-    window.bogoDirectCheckout = true;
-    sessionStorage.setItem('bogo-direct-checkout', 'true');
-
-    // Disable any cart drawer listeners temporarily
-    if (window.Rebuy) {
-      console.log('Temporarily disabling Rebuy...');
-      const rebuyOriginal = window.Rebuy;
-      window.Rebuy = null;
-      setTimeout(() => {
-        window.Rebuy = rebuyOriginal;
-      }, 1000);
+    if (!addResponse.ok) {
+      const errorText = await addResponse.text();
+      throw new Error(`Cart API error: ${addResponse.status} - ${errorText}`);
     }
 
-    // ========================================
-    // REDIRECT TO CHECKOUT
-    // ========================================
+    const cartData = await addResponse.json();
+    console.log('Items added to cart successfully:', cartData);
 
-    console.log('Redirecting to checkout...');
+    // Step 5: Suppress Rebuy
+    suppressRebuy();
 
-    // Clear localStorage state before navigation (BOGO-PERSIST-006)
+    // Step 6: Build checkout URL with discount codes
+    const discountCodes = getBOGODiscountCodes(pairCount);
+    const checkoutUrl = discountCodes
+      ? `/checkout?discount=${encodeURIComponent(discountCodes)}`
+      : '/checkout';
+
+    console.log('Redirecting to:', checkoutUrl);
+    console.log('Discount codes:', discountCodes);
+
+    // Step 7: Clear BOGO state
     clearBOGOState();
 
-    // Small delay to ensure flags are set
+    // Step 8: Navigate to checkout
     setTimeout(() => {
       window.location.href = checkoutUrl;
-    }, 100);
+    }, 500);
 
   } catch (error) {
     console.error('Checkout error:', error);
     hideCheckoutLoading();
-    alert('Error processing your order. Please try again or contact support.');
+    showBogoToast('Checkout failed. Please try again or contact support.', 'error', 5000);
 
     // Clean up flags
     window.bogoDirectCheckout = false;
@@ -3772,11 +3765,40 @@ function getBOGODiscountCodes(pairCount) {
   if (pairCount === 1) {
     return 'BOGO2025';
   } else if (pairCount === 2) {
-    return 'BOGO2025,TIER2-5OFF';
+    return 'BOGO2025,TIER2-5OFF,FREE-SHIPPING-TIER2';
   } else if (pairCount >= 3) {
-    return 'BOGO2025,TIER3-10OFF';
+    return 'BOGO2025,TIER3-10OFF,FREE-SHIPPING-TIER3';
   }
   return '';
+}
+
+/**
+ * Suppress Rebuy (BOGO-CHECKOUT-FIX-027)
+ * Temporarily disable Rebuy Smart Cart
+ */
+function suppressRebuy() {
+  window.bogoDirectCheckout = true;
+  sessionStorage.setItem('bogo-direct-checkout', 'true');
+
+  if (window.Rebuy) {
+    console.log('Suppressing Rebuy Smart Cart...');
+    window._rebuyOriginal = window.Rebuy;
+
+    // Replace with no-op proxy
+    window.Rebuy = new Proxy({}, {
+      get: () => () => {},
+      set: () => true
+    });
+
+    // Restore after 3 seconds
+    setTimeout(() => {
+      if (window._rebuyOriginal) {
+        window.Rebuy = window._rebuyOriginal;
+        delete window._rebuyOriginal;
+      }
+      sessionStorage.removeItem('bogo-direct-checkout');
+    }, 3000);
+  }
 }
 
 // Show loading overlay

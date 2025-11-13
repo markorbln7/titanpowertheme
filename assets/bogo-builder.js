@@ -43,6 +43,69 @@
   }
 })();
 
+// ========================================
+// LOCALSTORAGE PERSISTENCE (BOGO-PERSIST-006)
+// Save/restore BOGO state across sessions
+// ========================================
+
+const BOGO_STORAGE_KEY = 'titan-bogo-state';
+const BOGO_EXPIRY_HOURS = 24;
+
+/**
+ * Save BOGO state to localStorage
+ */
+function saveBOGOState() {
+  try {
+    const stateToSave = {
+      pairs: window.bogoState.pairs || [],
+      currentPair: window.bogoState.currentPair || {},
+      timestamp: Date.now()
+    };
+    localStorage.setItem(BOGO_STORAGE_KEY, JSON.stringify(stateToSave));
+    console.log('💾 BOGO state saved to localStorage');
+  } catch (error) {
+    console.warn('Failed to save BOGO state:', error);
+  }
+}
+
+/**
+ * Load BOGO state from localStorage
+ * @returns {Object|null} Saved state or null if expired/invalid
+ */
+function loadBOGOState() {
+  try {
+    const saved = localStorage.getItem(BOGO_STORAGE_KEY);
+    if (!saved) return null;
+
+    const parsed = JSON.parse(saved);
+
+    // Check expiry (24 hours)
+    const age = Date.now() - (parsed.timestamp || 0);
+    const maxAge = BOGO_EXPIRY_HOURS * 60 * 60 * 1000;
+
+    if (age > maxAge) {
+      console.log('⏰ BOGO state expired, clearing');
+      localStorage.removeItem(BOGO_STORAGE_KEY);
+      return null;
+    }
+
+    console.log('📂 BOGO state loaded from localStorage');
+    return parsed;
+  } catch (error) {
+    console.warn('Failed to load BOGO state:', error);
+    localStorage.removeItem(BOGO_STORAGE_KEY);
+    return null;
+  }
+}
+
+/**
+ * Clear BOGO state from localStorage
+ */
+function clearBOGOState() {
+  localStorage.removeItem(BOGO_STORAGE_KEY);
+  console.log('🗑️ BOGO state cleared');
+}
+
 // ===========================================
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
@@ -241,15 +304,56 @@
 // ===========================================
 // BOGO PAIR SELECTION SYSTEM - Phase 2
 // ===========================================
-// Global state for BOGO pairs
-window.bogoState = {
-  pairs: [],
-  currentPair: {
-    slot1: null,
-    slot2: null
-  },
-  activePairNumber: 1
-};
+
+/**
+ * Initialize BOGO state (BOGO-PERSIST-006)
+ * Restores from localStorage if available
+ */
+(function initBOGOState() {
+  // Try to restore saved state
+  const savedState = loadBOGOState();
+
+  if (savedState && savedState.pairs && savedState.pairs.length > 0) {
+    // Restore saved state
+    window.bogoState = {
+      pairs: savedState.pairs,
+      currentPair: savedState.currentPair || {
+        slot1: null,
+        slot2: null
+      },
+      activePairNumber: (savedState.pairs.length || 0) + 1
+    };
+    console.log('✅ BOGO state restored from localStorage:', window.bogoState.pairs.length, 'pairs');
+
+    // Update sticky cart to show restored pairs
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof updateStickyCart === 'function') {
+          updateStickyCart();
+        }
+      });
+    } else {
+      // DOM already loaded, update immediately
+      setTimeout(() => {
+        if (typeof updateStickyCart === 'function') {
+          updateStickyCart();
+        }
+      }, 100);
+    }
+  } else {
+    // Initialize fresh state
+    window.bogoState = {
+      pairs: [],
+      currentPair: {
+        slot1: null,
+        slot2: null
+      },
+      activePairNumber: 1
+    };
+    console.log('✅ BOGO state initialized (fresh)');
+  }
+})();
 
 // ✅ BOGO-INLINE-VARIANTS-044: Enhanced product click handler
 function handleProductClick(event, element) {
@@ -970,6 +1074,11 @@ function updateStickyCart() {
 
   console.log('Sticky cart visibility:', hasAnyProducts ? 'visible' : 'hidden');
   console.log('Sticky cart updated successfully');
+
+  // ========================================
+  // SAVE STATE TO LOCALSTORAGE (BOGO-PERSIST-006)
+  // ========================================
+  saveBOGOState();
 }
 
 // ✅ BOGO-STICKY-COMPACT-047: No fade edges needed in compact design
@@ -3476,6 +3585,9 @@ async function proceedToCheckout() {
     // ========================================
 
     console.log('Redirecting to checkout...');
+
+    // Clear localStorage state before navigation (BOGO-PERSIST-006)
+    clearBOGOState();
 
     // Small delay to ensure flags are set
     setTimeout(() => {

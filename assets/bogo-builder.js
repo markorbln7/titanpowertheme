@@ -106,6 +106,36 @@ function clearBOGOState() {
   console.log('🗑️ BOGO state cleared');
 }
 
+/**
+ * Show Toast Notification (BOGO-REVIEW-MODAL-UX-024)
+ * @param {string} message - Notification text
+ * @param {string} type - 'success' or 'error'
+ * @param {number} duration - Display duration in ms (default 3000)
+ */
+function showBogoToast(message, type = 'success', duration = 3000) {
+  // Remove any existing toasts
+  document.querySelectorAll('.bogo-toast').forEach(t => t.remove());
+
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = `bogo-toast ${type}`;
+
+  const icon = type === 'success' ? '✓' : '⚠️';
+
+  toast.innerHTML = `
+    <span class="toast-icon">${icon}</span>
+    <span class="toast-message">${message}</span>
+  `;
+
+  document.body.appendChild(toast);
+
+  // Auto-remove after duration
+  setTimeout(() => {
+    toast.classList.add('hiding');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
 // ===========================================
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
@@ -1808,6 +1838,11 @@ function updatePairBadgeNumber(element, oldNumber, newNumber) {
   }
 }
 
+/**
+ * Delete Single Pair (BOGO-REVIEW-MODAL-UX-024)
+ * No confirmation dialog - instant deletion with toast notification
+ * @param {number} pairIndex - Index of pair to delete
+ */
 function deletePair(pairIndex) {
   console.log('🗑️ Deleting pair:', pairIndex);
 
@@ -1816,13 +1851,11 @@ function deletePair(pairIndex) {
 
   if (!pair) {
     console.error('Pair not found');
+    showBogoToast('Error removing pair', 'error');
     return;
   }
 
-  // Confirm deletion
-  if (!confirm(`Delete Pair ${pair.pairNumber}? This will remove both products from this pair.`)) {
-    return;
-  }
+  const pairNumber = pairIndex + 1;
 
   // ✅ FIX 6: Unhighlight both products using dedicated function
   unhighlightProduct(pair.product1?.element, pair.pairNumber);
@@ -1831,11 +1864,17 @@ function deletePair(pairIndex) {
   // Remove from state
   state.pairs.splice(pairIndex, 1);
 
+  // Save state
+  saveBOGOState(state);
+
   // Re-render
   renderPairModal();
   updateStickyCart();
 
-  showNotification(`Pair ${pair.pairNumber} deleted`, 'info');
+  // Show success notification (BOGO-REVIEW-MODAL-UX-024)
+  showBogoToast(`Pair ${pairNumber} removed`, 'success', 2500);
+
+  console.log('✅ Pair deleted:', pairIndex);
 }
 
 // ✅ BOGO-INLINE-VARIANTS-044: Initialize inline variant controls
@@ -3486,9 +3525,22 @@ document.addEventListener('DOMContentLoaded', function() {
 // Resets BOGO builder state completely
 // ========================================
 
+/**
+ * Clear All Pairs (BOGO-REVIEW-MODAL-UX-024)
+ * Removes all pairs with single confirmation and toast notification
+ */
 function clearAllPairs() {
-  // Confirm action
-  const confirmed = confirm('Clear all pairs? This cannot be undone.');
+  const state = window.bogoState;
+
+  if (!state || !state.pairs || state.pairs.length === 0) {
+    showBogoToast('No pairs to clear', 'error', 2000);
+    return;
+  }
+
+  const pairCount = state.pairs.length;
+
+  // Show confirmation (only for clear all, not single delete)
+  const confirmed = confirm(`Remove all ${pairCount} pairs? This cannot be undone.`);
 
   if (!confirmed) return;
 
@@ -3519,6 +3571,9 @@ function clearAllPairs() {
     modal.classList.remove('active');
     document.body.classList.remove('modal-open');
   }
+
+  // Show success notification (BOGO-REVIEW-MODAL-UX-024)
+  showBogoToast(`All ${pairCount} pairs cleared`, 'success', 3000);
 
   console.log('✅ All pairs cleared successfully');
 

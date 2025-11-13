@@ -5394,14 +5394,16 @@
     box-shadow: 0 6px 24px rgba(96, 198, 85, 0.6);
   }
 
+  /* Continue Shopping Button - Solid Background (BOGO-REVIEW-MODAL-UX-024) */
   .pair-modal__btn-secondary {
-    background: transparent;
-    color: #60c655;
-    border: 2px solid #60c655;
+    background: #000000; /* Solid black, not transparent */
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
   }
 
   .pair-modal__btn-secondary:hover {
-    background: rgba(96, 198, 85, 0.1);
+    background: #1a1a1a;
+    border-color: #60c655;
     transform: translateY(-2px);
   }
 
@@ -5547,18 +5549,18 @@
       border-top: 1px solid rgba(96, 198, 85, 0.3);
     }
 
-    /* Footer Buttons - Solid, Not Transparent */
+    /* Footer Buttons - Solid Black (BOGO-REVIEW-MODAL-UX-024) */
     .pair-modal__btn-secondary {
-      background: rgba(255, 255, 255, 0.1) !important; /* Solid, not see-through */
+      background: #000000 !important; /* Solid black */
       color: #ffffff !important;
       border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      backdrop-filter: none !important; /* No transparency effect */
+      backdrop-filter: none !important;
       height: 44px;
       font-size: 14px;
     }
 
     .pair-modal__btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15) !important;
+      background: #1a1a1a !important;
       border-color: #60c655 !important;
     }
 
@@ -5784,5 +5786,146 @@ body.modal-open .bogo-sticky-cart {
 
   .variant-option-label {
     font-size: 12px;
+  }
+}
+
+/* ========================================
+   TOAST NOTIFICATION SYSTEM
+   BOGO-REVIEW-MODAL-UX-024
+   ======================================== */
+
+.bogo-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(96, 198, 85, 0.5);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10002;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: toastSlideIn 300ms ease forwards;
+}
+
+.bogo-toast.success {
+  border-color: rgba(96, 198, 85, 0.7);
+}
+
+.bogo-toast.success .toast-icon {
+  color: #60c655;
+}
+
+.bogo-toast.error {
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+.bogo-toast.error .toast-icon {
+  color: #ef4444;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+.bogo-toast.hiding {
+  animation: toastSlideOut 300ms ease forwards;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .bogo-toast {
+    bottom: 80px; /* Above sticky cart */
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: auto;
+  }
+
+  @keyframes toastSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toastSlideOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+}
+
+/* ========================================
+   CLEAR ALL PAIRS BUTTON
+   BOGO-REVIEW-MODAL-UX-024
+   ======================================== */
+
+.pair-modal__header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.clear-all-pairs-header-btn {
+  padding: 8px 14px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 300ms ease;
+  white-space: nowrap;
+}
+
+.clear-all-pairs-header-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .clear-all-pairs-header-btn {
+    font-size: 11px;
+    padding: 6px 12px;
   }
 }

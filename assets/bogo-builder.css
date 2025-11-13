@@ -1318,16 +1318,69 @@
   {%- comment -%} ========================================
       COMPARISON MODAL - TIER TABLE
       ======================================== {%- endcomment -%}
-  .tier-comparison-modal { position: fixed; inset: 0; z-index: 10001; display: none; align-items: center; justify-content: center; padding: 20px; }
+  /* Comparison Modal - Overlay */
+  .tier-comparison-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin));
+    padding-left: var(--modal-vertical-margin);
+    padding-right: var(--modal-vertical-margin);
+  }
+
   .tier-comparison-modal.active { display: flex; }
-  .comparison-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); cursor: pointer; }
-  .comparison-content { position: relative; width: 100%; max-width: 1000px; max-height: 90vh; background: #1a1a1a; border-radius: 20px; border: 3px solid #60c655; box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4); overflow-y: auto; }
+
+  .comparison-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+
+  /* Comparison Modal - Content (Flexbox) */
+  .comparison-content {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 100%; /* Fill available space */
+    background: #1a1a1a;
+    border-radius: 20px;
+    border: 3px solid #60c655;
+    box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4);
+
+    /* ✅ Flexbox structure */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
   .comparison-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: none; border-radius: 50%; color: #fff; font-size: 24px; cursor: pointer; transition: all 300ms ease; z-index: 10; }
   .comparison-close:hover { background: rgba(255, 0, 0, 0.8); transform: rotate(90deg); }
-  .comparison-header { text-align: center; padding: 40px 24px 24px; border-bottom: 2px solid rgba(96, 198, 85, 0.3); }
+
+  /* Comparison header - fixed */
+  .comparison-header {
+    flex-shrink: 0;
+    padding: 24px;
+    background: #1a1a1a;
+    border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    text-align: center;
+  }
   .comparison-header h2 { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 8px; }
   .comparison-header p { font-size: 16px; color: rgba(255, 255, 255, 0.7); }
-  .comparison-table-wrapper { padding: 24px; overflow-x: auto; }
+
+  /* Comparison table - scrollable */
+  .comparison-table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
   .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; }
   .comparison-table thead th { padding: 20px 16px; vertical-align: top; }
   .comparison-table .feature-col { text-align: left; color: rgba(255, 255, 255, 0.6); font-weight: 600; font-size: 14px; text-transform: uppercase; }
@@ -1365,24 +1418,23 @@
      ======================================== */
   @media (max-width: 768px) {
     .tier-comparison-modal {
-      padding: 0;
+      padding: 0; /* Full screen on mobile */
     }
 
     .comparison-content {
       width: 100%;
-      height: 100vh;
-      max-height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
       border-radius: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      border: none;
     }
 
     .comparison-header {
-      flex-shrink: 0;
       padding: 16px;
-      background: #1a1a1a;
-      border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    }
+
+    .comparison-table-wrapper {
+      padding: 16px;
     }
 
     .comparison-header h2 {
@@ -1481,12 +1533,13 @@
      ======================================== */
 
   /* Overlay container - clickable to close */
+  /* Celebration Modal - Overlay */
   .tier-celebration-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     z-index: 10002;
     display: none;
     align-items: center;
@@ -1497,7 +1550,12 @@
     opacity: 0;
     transition: opacity 500ms ease;
     cursor: pointer;
-    padding: 80px 20px 120px 20px; /* Top 80px, bottom 120px for sticky cart */
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin));
+    padding-left: var(--modal-vertical-margin);
+    padding-right: var(--modal-vertical-margin);
     overflow: hidden;
   }
 
@@ -1517,29 +1575,31 @@
   }
 
   /* Content box - Fits Available Space */
+  /* Celebration Modal - Content Box */
   .celebration-content {
     position: relative;
     text-align: center;
-    width: 90%;
+    width: 100%;
     max-width: 600px;
-    height: 100%;
-    max-height: 100%;
+    height: auto; /* Changed from 100% */
+    max-height: 100%; /* Fill available space */
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 3px solid #60c655;
+    border-radius: 24px;
+    padding: 48px 32px;
+    box-shadow: 0 32px 96px rgba(96, 198, 85, 0.5);
+
+    /* ✅ Flexbox for proper sizing */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: clamp(20px, 4vh, 40px);
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(15, 15, 15, 0.98) 100%);
-    border: 3px solid #60c655;
-    border-radius: 24px;
-    box-shadow:
-      0 0 40px rgba(96, 198, 85, 0.6),
-      0 20px 60px rgba(0, 0, 0, 0.8);
+    gap: 24px;
+    overflow-y: auto; /* Scrollable if needed */
+    overflow-x: hidden;
     animation: celebrationPop 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
     cursor: default;
     pointer-events: auto;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
   @keyframes celebrationPop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
 
@@ -1727,13 +1787,12 @@
   /* Mobile Specific Adjustments (BOGO-CELEBRATION-MODAL-026) */
   @media (max-width: 768px) {
     .tier-celebration-overlay {
-      padding: 60px 16px 100px 16px;
+      padding: 10px; /* Minimal padding on mobile */
     }
 
     .celebration-content {
-      width: 95%;
-      padding: 20px 16px;
-      border-radius: 16px;
+      max-width: calc(100vw - 20px);
+      padding: 32px 24px;
     }
 
     .celebration-buttons {
@@ -2585,31 +2644,41 @@
      ======================================== */
 
   /* Overlay - Full screen flexbox */
+  /* Product Info Modal - Overlay */
   .buy-now-popup-overlay {
     position: fixed !important;
     inset: 0 !important;
+    height: 100dvh !important;
     background: rgba(0, 0, 0, 0.85) !important;
     backdrop-filter: blur(8px);
     z-index: 9999 !important;
     display: none !important;
     align-items: center !important;
     justify-content: center !important;
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin)) !important;
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin)) !important;
+    padding-left: var(--modal-vertical-margin) !important;
+    padding-right: var(--modal-vertical-margin) !important;
   }
 
   .buy-now-popup-overlay.active {
     display: flex !important;
   }
 
-  /* Modal Wrapper */
+  /* Product Info Modal - Wrapper (Flexbox) */
   .buy-now-popup__wrapper {
     position: relative !important;
-    width: 80vw !important;
-    max-width: 1280px !important;
-    height: 70vh !important;
-    max-height: 860px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    height: auto !important; /* Changed from 70vh */
+    max-height: 100% !important; /* Fill available space */
     background: #ffffff !important;
-    border-radius: 12px !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3) !important;
+
+    /* ✅ Flexbox structure */
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
@@ -2632,14 +2701,14 @@
     fill: #ff0000 !important;
   }
 
-  /* Product Body - TWO COLUMN LAYOUT */
+  /* Product Info Modal - Body (Scrollable) */
   .buy-now-popup__product-body {
     display: flex !important;
     flex-direction: row !important;
-    flex: 1 !important;
-    padding: 70px !important;
-    overflow-y: auto !important;
-    gap: 0 !important;
+    flex: 1 !important; /* Take remaining space */
+    padding: 32px !important;
+    overflow-y: auto !important; /* Scrollable */
+    gap: 32px !important;
     min-height: 0 !important;
   }
 
@@ -3073,15 +3142,17 @@
      FOOTER - ABSOLUTE AT BOTTOM
      ======================================== */
 
+  /* Product Info Modal - Footer (Fixed at bottom) */
   .buy-now-popup__footer {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
+    position: relative !important; /* Changed from absolute */
+    bottom: auto !important;
+    left: auto !important;
+    flex-shrink: 0; /* Don't shrink */
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 16px 72px !important;
+    padding: 16px 32px !important;
     background: #ffffff !important;
     border-top: 1px solid #e5e5e5 !important;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.08) !important;
@@ -3169,16 +3240,27 @@
      ======================================== */
 
   @media (max-width: 768px) {
+    /* Full screen on mobile */
+    .buy-now-popup-overlay {
+      padding: 0 !important;
+    }
+
     .buy-now-popup__wrapper {
-      width: 95vw !important;
-      height: auto !important;
-      max-height: 90vh !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      border-radius: 0 !important;
     }
 
     .buy-now-popup__product-body {
       flex-direction: column !important;
-      /* 32px top, 24px sides, 72px bottom (48px footer + 24px buffer) */
-      padding: var(--space-lg) var(--space-md) calc(var(--touch-min) + var(--space-md)) var(--space-md) !important;
+      padding: 24px !important;
+    }
+
+    .buy-now-popup__footer {
+      flex-direction: column !important;
+      padding: 24px !important;
+      gap: 16px !important;
     }
 
     .modal-product-figure {

@@ -1,5 +1,48 @@
   console.log('%c🚀 BOGO JavaScript Loading...', 'color: #60c655; font-size: 20px; font-weight: bold;');
 
+// ========================================
+// PREVENT REBUY CART DRAWER ON BOGO CHECKOUT
+// BOGO-BYPASS-CART-DRAWER-078
+// ========================================
+
+(function preventRebuyInterference() {
+  // Check if this is a BOGO checkout redirect
+  const isBOGOCheckout = sessionStorage.getItem('bogo-direct-checkout');
+
+  if (isBOGOCheckout === 'true') {
+    console.log('%c🛡️ BOGO direct checkout detected - preventing cart drawer', 'color: #60c655; font-weight: bold;');
+
+    // Clear the flag
+    sessionStorage.removeItem('bogo-direct-checkout');
+
+    // Prevent Rebuy cart drawer from opening
+    if (window.Rebuy) {
+      console.log('Disabling Rebuy cart drawer...');
+      if (window.Rebuy.SmartCart) {
+        window.Rebuy.SmartCart.close = function() {};
+        window.Rebuy.SmartCart.open = function() {};
+      }
+    }
+
+    // Prevent any cart drawer opens for next 2 seconds
+    let preventCartDrawer = true;
+
+    setTimeout(() => {
+      preventCartDrawer = false;
+    }, 2000);
+
+    // Intercept any drawer open attempts
+    document.addEventListener('rebuy:cart.open', function(e) {
+      if (preventCartDrawer) {
+        console.log('Prevented Rebuy cart drawer from opening');
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }, true);
+  }
+})();
+
 // ===========================================
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
@@ -741,7 +784,7 @@ function getTierDiscount(pairCount) {
 
 // ========================================
 // SIMPLE WORKING STICKY CART UPDATE
-// STICKY-CART-REVERT-WORKING-075
+// STICKY-CART-SHOW-FIRST-PRODUCT-077
 // ========================================
 function updateStickyCart() {
   const state = window.bogoState;
@@ -749,20 +792,33 @@ function updateStickyCart() {
 
   if (!stickyCart) return;
 
+  // Count total products added (including incomplete pairs)
   const pairCount = state?.pairs?.length || 0;
+  const currentPair = state?.currentPair;
+  const hasIncompleteProduct = currentPair?.slot1 && !currentPair?.slot2;
 
-  console.log('Updating sticky cart, pairs:', pairCount);
+  console.log('Updating sticky cart:', {
+    completePairs: pairCount,
+    hasIncompleteProduct: hasIncompleteProduct
+  });
 
-  // Update pair count
+  // Update pair count display
   const pairCountEl = document.getElementById('sticky-cart-pair-count');
   if (pairCountEl) {
-    pairCountEl.textContent = `${pairCount} Pair${pairCount !== 1 ? 's' : ''}`;
+    if (hasIncompleteProduct) {
+      // Show "Building Pair 1..." when first product added
+      pairCountEl.textContent = `Building Pair ${pairCount + 1}...`;
+    } else {
+      pairCountEl.textContent = `${pairCount} Pair${pairCount !== 1 ? 's' : ''}`;
+    }
   }
 
   // Update status message
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {
-    if (pairCount === 0) {
+    if (hasIncompleteProduct) {
+      statusEl.textContent = 'Select 1 more product to complete pair';
+    } else if (pairCount === 0) {
       statusEl.textContent = 'Select 2 products to start';
     } else if (pairCount === 1) {
       statusEl.textContent = 'Add 1 more for Tier 2 (5% OFF)';
@@ -784,13 +840,25 @@ function updateStickyCart() {
   const reviewBtn = document.getElementById('sticky-cart-review');
   const checkoutBtn = document.getElementById('sticky-cart-checkout');
 
-  if (pairCount > 0) {
-    if (reviewBtn) reviewBtn.style.display = 'block';
-    if (checkoutBtn) checkoutBtn.style.display = 'block';
+  // ========================================
+  // KEY FIX: Show cart if ANY products exist
+  // ========================================
+  const hasAnyProducts = pairCount > 0 || hasIncompleteProduct;
+
+  if (hasAnyProducts) {
+    // Show cart
     stickyCart.style.display = 'block';
 
-    // Add checkout click handler
+    // Only show buttons if at least one complete pair exists
+    if (reviewBtn) {
+      reviewBtn.style.display = pairCount > 0 ? 'block' : 'none';
+    }
     if (checkoutBtn) {
+      checkoutBtn.style.display = pairCount > 0 ? 'block' : 'none';
+    }
+
+    // Add checkout click handler
+    if (checkoutBtn && pairCount > 0) {
       checkoutBtn.onclick = function() {
         console.log('Checkout clicked with pairs:', state.pairs);
         proceedToCheckout();
@@ -798,15 +866,17 @@ function updateStickyCart() {
     }
 
     // Add review click handler
-    if (reviewBtn) {
+    if (reviewBtn && pairCount > 0) {
       reviewBtn.onclick = function() {
         openPairModal();
       };
     }
   } else {
+    // Hide cart if no products at all
     stickyCart.style.display = 'none';
   }
 
+  console.log('Sticky cart visibility:', hasAnyProducts ? 'visible' : 'hidden');
   console.log('Sticky cart updated successfully');
 }
 
@@ -3170,82 +3240,177 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 
 // Main checkout function
+// ========================================
+// BOGO CHECKOUT - BYPASS CART DRAWER
+// Goes directly to Shopify checkout URL
+// BOGO-BYPASS-CART-DRAWER-078
+// ========================================
+
 async function proceedToCheckout() {
   const state = window.bogoState;
 
-  // ============ DEBUG LOGGING ============
-  console.log('=== CHECKOUT DEBUG START ===');
-  console.log('Full state:', state);
-  console.log('Pairs array:', state?.pairs);
-  console.log('Pairs count:', state?.pairs?.length);
-
-  if (state?.pairs) {
-    state.pairs.forEach((pair, index) => {
-      console.log(`Pair ${index + 1}:`, pair);
-      console.log(`  - Has slot1?`, !!pair.slot1);
-      console.log(`  - Has slot2?`, !!pair.slot2);
-      console.log(`  - Has product1?`, !!pair.product1);
-      console.log(`  - Has product2?`, !!pair.product2);
-      console.log(`  - Has item1?`, !!pair.item1);
-      console.log(`  - Has item2?`, !!pair.item2);
-      console.log(`  - slot1 data:`, pair.slot1);
-      console.log(`  - slot2 data:`, pair.slot2);
-      console.log(`  - All properties:`, Object.keys(pair));
-    });
-  }
-  console.log('=== CHECKOUT DEBUG END ===');
-  // ============ END DEBUG ============
+  console.log('=== BOGO CHECKOUT START ===');
+  console.log('State:', state);
 
   // Validation
   if (!state || !state.pairs || state.pairs.length === 0) {
-    showErrorToast('Please add at least one pair to continue');
+    alert('Please add at least one pair to continue');
     return;
   }
 
-  // Check for incomplete pairs - flexible property checking
+  // Check for incomplete pairs (flexible property checking)
   const incompletePairs = state.pairs.filter(pair => {
-    const hasFirstItem = !!(pair.slot1 || pair.product1 || pair.item1 || pair[0]);
-    const hasSecondItem = !!(pair.slot2 || pair.product2 || pair.item2 || pair[1]);
-
-    console.log(`Pair validation - hasFirstItem: ${hasFirstItem}, hasSecondItem: ${hasSecondItem}`);
-
-    return !hasFirstItem || !hasSecondItem;
+    const hasFirstProduct = pair.slot1 || pair.product1 || pair.item1 || pair[0];
+    const hasSecondProduct = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+    return !hasFirstProduct || !hasSecondProduct;
   });
 
   if (incompletePairs.length > 0) {
-    console.error('Incomplete pairs found:', incompletePairs);
-    showErrorToast('Please complete all pairs before checkout');
+    alert('Please complete all pairs before checkout');
     return;
   }
 
-  console.log('Starting checkout process with pairs:', state.pairs);
+  console.log('Validation passed, building checkout URL...');
 
   // Show loading
   showCheckoutLoading();
 
   try {
-    // Step 1: Clear cart
-    await clearCart();
-    console.log('Cart cleared');
+    // ========================================
+    // BUILD DIRECT CHECKOUT URL
+    // ========================================
 
-    // Step 2: Add pairs to cart
-    await addPairsToCart(state.pairs);
-    console.log('Pairs added to cart');
+    const checkoutItems = [];
 
-    // Step 3: Add bonus items if Tier 3
+    // Add all BOGO pairs
+    state.pairs.forEach((pair, pairIndex) => {
+      const pairNumber = pairIndex + 1;
+
+      // Get products with flexible property names
+      const product1 = pair.slot1 || pair.product1 || pair.item1 || pair[0];
+      const product2 = pair.slot2 || pair.product2 || pair.item2 || pair[1];
+
+      // Add first product
+      if (product1) {
+        const variantId = product1.variantId || product1.variant_id || product1.id;
+        if (variantId) {
+          checkoutItems.push({
+            id: variantId,
+            quantity: 1,
+            properties: {
+              '_pair_number': pairNumber,
+              '_bogo_offer': 'Black Friday BOGO 2025'
+            }
+          });
+        }
+      }
+
+      // Add second product
+      if (product2) {
+        const variantId = product2.variantId || product2.variant_id || product2.id;
+        if (variantId) {
+          checkoutItems.push({
+            id: variantId,
+            quantity: 1,
+            properties: {
+              '_pair_number': pairNumber,
+              '_bogo_offer': 'Black Friday BOGO 2025'
+            }
+          });
+        }
+      }
+    });
+
+    // Add bonus cable for Tier 3 (if applicable)
     if (state.pairs.length >= 3) {
-      await addBonusCable();
-      console.log('Bonus cable added');
+      const bonusCableVariantId = '43480190943410'; // Titan Smart Cable variant ID
+      checkoutItems.push({
+        id: bonusCableVariantId,
+        quantity: 1,
+        properties: {
+          '_bonus_item': 'FREE Tier 3 Bonus',
+          '_tier_3_bonus': 'Titan Smart Cable'
+        }
+      });
     }
 
-    // Step 4: Redirect with discount codes
-    redirectToCheckoutWithCodes(state.pairs.length);
+    console.log('Checkout items:', checkoutItems);
+
+    // ========================================
+    // BUILD CHECKOUT URL WITH LINE ITEMS
+    // ========================================
+
+    // Build line items string for URL
+    const lineItems = checkoutItems.map(item => {
+      const properties = item.properties ?
+        Object.entries(item.properties)
+          .map(([key, val]) => `${encodeURIComponent(key)}:${encodeURIComponent(val)}`)
+          .join(',') : '';
+
+      return properties ?
+        `${item.id}:${item.quantity}[${properties}]` :
+        `${item.id}:${item.quantity}`;
+    }).join(',');
+
+    // Get discount codes
+    const discountCodes = getBOGODiscountCodes(state.pairs.length);
+    const discountParam = discountCodes ? `&discount=${encodeURIComponent(discountCodes)}` : '';
+
+    // Build final checkout URL
+    const checkoutUrl = `/cart/${lineItems}?checkout=true${discountParam}`;
+
+    console.log('Direct checkout URL:', checkoutUrl);
+
+    // ========================================
+    // PREVENT REBUY INTERFERENCE
+    // ========================================
+
+    // Flag to tell Rebuy/cart drawer to ignore this navigation
+    window.bogoDirectCheckout = true;
+    sessionStorage.setItem('bogo-direct-checkout', 'true');
+
+    // Disable any cart drawer listeners temporarily
+    if (window.Rebuy) {
+      console.log('Temporarily disabling Rebuy...');
+      const rebuyOriginal = window.Rebuy;
+      window.Rebuy = null;
+      setTimeout(() => {
+        window.Rebuy = rebuyOriginal;
+      }, 1000);
+    }
+
+    // ========================================
+    // REDIRECT TO CHECKOUT
+    // ========================================
+
+    console.log('Redirecting to checkout...');
+
+    // Small delay to ensure flags are set
+    setTimeout(() => {
+      window.location.href = checkoutUrl;
+    }, 100);
 
   } catch (error) {
     console.error('Checkout error:', error);
     hideCheckoutLoading();
-    showErrorToast('Error processing your order. Please try again.');
+    alert('Error processing your order. Please try again or contact support.');
+
+    // Clean up flags
+    window.bogoDirectCheckout = false;
+    sessionStorage.removeItem('bogo-direct-checkout');
   }
+}
+
+// Get discount codes based on tier
+function getBOGODiscountCodes(pairCount) {
+  if (pairCount === 1) {
+    return 'BOGO2025';
+  } else if (pairCount === 2) {
+    return 'BOGO2025,TIER2-5OFF';
+  } else if (pairCount >= 3) {
+    return 'BOGO2025,TIER3-10OFF';
+  }
+  return '';
 }
 
 // Show loading overlay
@@ -3974,3 +4139,44 @@ function updateModalVariant(modal) {
 }
 
 console.log('%c✅ MODAL-VARIANT-AUTOSELECT-CLOSE-076: Variant auto-selection initialized', 'color: #60c655; font-weight: bold;');
+
+// ========================================
+// SHOW LIVE ACTIVITY AFTER SCROLLING PAST COUNTER
+// ========================================
+
+(function initLiveActivityScroll() {
+  const liveActivity = document.querySelector('.live-activity-indicator');
+  const counterContent = document.querySelector('.counter-content');
+  
+  if (!liveActivity || !counterContent) {
+    console.log('Live activity or counter not found');
+    return;
+  }
+  
+  // Hide live activity initially
+  liveActivity.style.opacity = '0';
+  liveActivity.style.pointerEvents = 'none';
+  
+  function checkScroll() {
+    const counterRect = counterContent.getBoundingClientRect();
+    const counterPassed = counterRect.bottom < 0; // Counter is above viewport
+    
+    if (counterPassed) {
+      // Show live activity
+      liveActivity.style.opacity = '1';
+      liveActivity.style.pointerEvents = 'auto';
+    } else {
+      // Hide live activity
+      liveActivity.style.opacity = '0';
+      liveActivity.style.pointerEvents = 'none';
+    }
+  }
+  
+  // Check on scroll
+  window.addEventListener('scroll', checkScroll);
+  
+  // Check initially
+  checkScroll();
+  
+  console.log('✅ Live activity scroll trigger initialized');
+})();

@@ -929,11 +929,16 @@ function updateStickyCart() {
   // Count total products added (including incomplete pairs)
   const pairCount = state?.pairs?.length || 0;
   const currentPair = state?.currentPair;
-  const hasIncompleteProduct = currentPair?.slot1 && !currentPair?.slot2;
+
+  // BOGO-STICKY-CART-STATUS-025: Check BOTH slots for incomplete products
+  const hasIncompleteProduct = (currentPair?.slot1 && !currentPair?.slot2) ||
+                                 (currentPair?.slot2 && !currentPair?.slot1);
 
   console.log('Updating sticky cart:', {
     completePairs: pairCount,
-    hasIncompleteProduct: hasIncompleteProduct
+    hasIncompleteProduct: hasIncompleteProduct,
+    slot1: !!currentPair?.slot1,
+    slot2: !!currentPair?.slot2
   });
 
   // Update pair count display
@@ -955,7 +960,7 @@ function updateStickyCart() {
   const milestones = document.querySelectorAll('.bogo-milestone');
 
   if (progressFill && milestones.length > 0) {
-    // Count ALL products across all pairs
+    // Count ALL products across all pairs (BOGO-STICKY-CART-STATUS-025)
     let totalProducts = 0;
 
     if (state?.pairs && state.pairs.length > 0) {
@@ -965,15 +970,23 @@ function updateStickyCart() {
       });
     }
 
+    // BOGO-STICKY-CART-STATUS-025: Include incomplete pair products
+    if (state?.currentPair) {
+      if (state.currentPair.slot1?.variantId) totalProducts++;
+      if (state.currentPair.slot2?.variantId) totalProducts++;
+    }
+
     // Calculate progress: Each product = 16.67% (6 products = 100%)
     let progressPercent = Math.min((totalProducts / 6) * 100, 100);
 
     // Apply fill width
     progressFill.style.width = progressPercent + '%';
 
-    // Add glow animation
-    progressFill.classList.add('animating');
-    setTimeout(() => progressFill.classList.remove('animating'), 600);
+    // Add glow animation when products added
+    if (totalProducts > 0) {
+      progressFill.classList.add('animating');
+      setTimeout(() => progressFill.classList.remove('animating'), 600);
+    }
 
     // Update milestones based on COMPLETE PAIRS
     const completePairs = state?.pairs?.length || 0;
@@ -1022,36 +1035,44 @@ function updateStickyCart() {
   }
 
   // ========================================
-  // STICKY CART STATUS MESSAGES (BOGO-STICKY-CART-MOBILE-016)
-  // Clear, action-oriented, motivating
+  // STICKY CART STATUS MESSAGES (BOGO-STICKY-CART-STATUS-025)
+  // Dynamic messaging based on complete pairs + incomplete products
   // ========================================
   const statusEl = document.getElementById('sticky-cart-status');
   if (statusEl) {
+    const nextPairNumber = pairCount + 1;
+
     if (hasIncompleteProduct) {
-      // Incomplete pair - urgency
-      statusEl.textContent = '🔥 Complete pair: Select 1 more product!';
+      // Incomplete pair - urgent call to action
+      statusEl.innerHTML = `🔥 Complete pair ${nextPairNumber}: <strong>Select 1 more product!</strong>`;
       statusEl.style.color = '#fbbf24';
     } else if (pairCount === 0) {
-      // No pairs - clear starting point
-      statusEl.textContent = '🎁 Build your first pair: Select 2 products';
+      // No pairs built yet
+      statusEl.innerHTML = '🎁 <strong>Build your first BOGO pair!</strong> Select 2 products';
       statusEl.style.color = 'rgba(255, 255, 255, 0.9)';
     } else if (pairCount === 1) {
-      // Tier 1 → 2 upsell with specific value
-      statusEl.textContent = 'Add 1 pair: Save €10+ more (5% OFF + Shipping)';
+      // Tier 1 achieved - upsell to Tier 2
+      statusEl.innerHTML = '💚 <strong>Add 1 more pair</strong> for 5% OFF + Free Shipping!';
       statusEl.style.color = '#60c655';
     } else if (pairCount === 2) {
-      // Tier 2 → 3 upsell with cable value
-      statusEl.textContent = 'Add 1 pair: Get FREE €18.95 Cable + 10% OFF!';
+      // Tier 2 achieved - upsell to Tier 3
+      statusEl.innerHTML = '🎁 <strong>Add 1 more pair</strong> for 10% OFF + FREE Cable (€18.95)!';
       statusEl.style.color = '#f39c12';
     } else if (pairCount >= 3 && pairCount < 10) {
-      // Tier 3 achieved but can add more
-      statusEl.textContent = `🏆 ${pairCount} pairs! Keep building for more savings`;
+      // Tier 3 achieved - encouragement
+      statusEl.innerHTML = `🏆 <strong>${pairCount} pairs built!</strong> Amazing savings unlocked 🎉`;
       statusEl.style.color = '#60c655';
     } else {
       // 10+ pairs - celebration
-      statusEl.textContent = `🔥 Amazing! ${pairCount} pairs built!`;
+      statusEl.innerHTML = `🔥 <strong>${pairCount} pairs!</strong> You're a BOGO champion! 👑`;
       statusEl.style.color = '#60c655';
     }
+
+    console.log('Status updated:', {
+      completePairs: pairCount,
+      hasIncompleteProduct,
+      message: statusEl.textContent
+    });
   }
 
   // ========================================

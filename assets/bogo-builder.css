@@ -4120,10 +4120,19 @@
     margin-bottom: 4px;
   }
 
+  /* Status Message - Prominent Display (BOGO-STICKY-CART-STATUS-025) */
   .bogo-sticky-cart__status {
-    font-size: var(--text-sm); /* 13px */
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    margin: 8px 0;
+    transition: color 300ms ease;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .bogo-sticky-cart__status strong {
+    font-weight: 800;
   }
 
   @media (max-width: 767px) {
@@ -4132,7 +4141,8 @@
     }
 
     .bogo-sticky-cart__status {
-      font-size: var(--text-sm); /* 13px */
+      font-size: 11px; /* Mobile: Smaller for space */
+      margin: 6px 0;
     }
   }
 
@@ -4311,40 +4321,64 @@
     padding-bottom: 20px;
   }
 
-  /* Progress Track */
+  /* Progress Track (BOGO-STICKY-CART-STATUS-025) */
   .bogo-progress-track {
     position: relative;
     width: 100%;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.2); /* Lighter for better contrast */
-    border-radius: 4px;
+    height: 10px; /* Increased from 8px for better visibility */
+    background: rgba(255, 255, 255, 0.15); /* Darker for better contrast */
+    border-radius: 5px;
     overflow: visible; /* Allow glow to show */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Progress Fill - Smooth Gradient (BOGO-PROGRESS-BAR-FIX-014) */
+  /* Progress Fill - Vibrant Green (BOGO-STICKY-CART-STATUS-025) */
   .bogo-progress-fill {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, #60c655 0%, #50b645 50%, #40a635 100%);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #60c655 0%, #70d665 50%, #60c655 100%);
+    border-radius: 5px;
     width: 0%; /* Starts at 0, updated by JS */
     transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px rgba(96, 198, 85, 0.6);
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.7);
     z-index: 1; /* Above track */
+    position: relative;
   }
 
-  /* Glow effect when progressing */
+  /* Animated stripe effect (BOGO-STICKY-CART-STATUS-025) */
+  .bogo-progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Pulsing glow when animating (BOGO-STICKY-CART-STATUS-025) */
   .bogo-progress-fill.animating {
-    animation: progress-glow 800ms ease-out;
+    animation: progressPulse 800ms ease-out;
   }
 
-  @keyframes progress-glow {
-    0% { box-shadow: 0 0 8px rgba(96, 198, 85, 0.5); }
-    50% { box-shadow: 0 0 16px rgba(96, 198, 85, 0.9); }
-    100% { box-shadow: 0 0 8px rgba(96, 198, 85, 0.5); }
+  @keyframes progressPulse {
+    0% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(96, 198, 85, 1); }
+    100% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.7); }
   }
 
   /* Milestones Container - Above Track */
@@ -4455,7 +4489,7 @@
     }
 
     .bogo-progress-track {
-      height: 6px;
+      height: 8px; /* Mobile: 8px for better touch feedback */
     }
 
     .milestone-marker {

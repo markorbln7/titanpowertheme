@@ -918,50 +918,42 @@ function updateStickyCart() {
   }
 
   // ========================================
-  // UPDATE PROGRESS BAR (BOGO-PROGRESS-FIX-010)
-  // Fill per product, activate milestones per pair
+  // PROGRESS BAR UPDATE (BOGO-PROGRESS-BAR-FIX-014)
+  // Fixed: Fill per product, not per pair
   // ========================================
   const progressFill = document.getElementById('bogo-progress-fill');
   const milestones = document.querySelectorAll('.bogo-milestone');
 
   if (progressFill && milestones.length > 0) {
-    // Count total products (not pairs)
+    // Count ALL products across all pairs
     let totalProducts = 0;
-    if (state?.pairs) {
+
+    if (state?.pairs && state.pairs.length > 0) {
       state.pairs.forEach(pair => {
         if (pair.slot1?.variantId) totalProducts++;
         if (pair.slot2?.variantId) totalProducts++;
       });
     }
 
-    // Calculate progress based on products (6 products = 100%)
-    // Each product = 16.67% (100/6)
-    let progressPercent = (totalProducts / 6) * 100;
+    // Calculate progress: Each product = 16.67% (6 products = 100%)
+    let progressPercent = Math.min((totalProducts / 6) * 100, 100);
 
-    // Cap at 100%
-    if (progressPercent > 100) progressPercent = 100;
-
-    // Update progress fill width
+    // Apply fill width
     progressFill.style.width = progressPercent + '%';
 
-    // Add animation class
-    if (totalProducts > 0) {
-      progressFill.classList.add('animating');
-      setTimeout(() => progressFill.classList.remove('animating'), 800);
-    }
+    // Add glow animation
+    progressFill.classList.add('animating');
+    setTimeout(() => progressFill.classList.remove('animating'), 600);
 
-    // Update milestone active states (based on complete pairs)
-    const completePairs = state?.pairs ? state.pairs.length : 0;
+    // Update milestones based on COMPLETE PAIRS
+    const completePairs = state?.pairs?.length || 0;
 
     milestones.forEach((milestone, index) => {
-      const tier = index + 1; // Tier 1, 2, 3
+      const tierNumber = index + 1;
 
-      if (completePairs >= tier) {
-        const wasActive = milestone.classList.contains('active');
-        milestone.classList.add('active');
-
-        // Add unlock animation only on first activation
-        if (!wasActive && completePairs === tier) {
+      if (completePairs >= tierNumber) {
+        if (!milestone.classList.contains('active')) {
+          milestone.classList.add('active');
           milestone.classList.add('unlocked');
           setTimeout(() => milestone.classList.remove('unlocked'), 600);
         }
@@ -970,10 +962,10 @@ function updateStickyCart() {
       }
     });
 
-    console.log('Progress updated:', {
-      totalProducts: totalProducts,
-      progressPercent: progressPercent.toFixed(1) + '%',
-      completePairs: completePairs
+    console.log('Progress bar:', {
+      products: totalProducts,
+      pairs: completePairs,
+      fillPercent: progressPercent.toFixed(1) + '%'
     });
   }
 

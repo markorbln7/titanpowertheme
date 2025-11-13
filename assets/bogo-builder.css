@@ -4112,13 +4112,13 @@
     position: relative;
     width: 100%;
     height: 8px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2); /* Lighter for better contrast */
     border-radius: 4px;
-    overflow: hidden;
+    overflow: visible; /* Allow glow to show */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
-  /* Progress Fill - Smooth Gradient */
+  /* Progress Fill - Smooth Gradient (BOGO-PROGRESS-BAR-FIX-014) */
   .bogo-progress-fill {
     position: absolute;
     top: 0;
@@ -4126,9 +4126,10 @@
     height: 100%;
     background: linear-gradient(90deg, #60c655 0%, #50b645 50%, #40a635 100%);
     border-radius: 4px;
-    width: 0%;
+    width: 0%; /* Starts at 0, updated by JS */
     transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 8px rgba(96, 198, 85, 0.5);
+    box-shadow: 0 0 10px rgba(96, 198, 85, 0.6);
+    z-index: 1; /* Above track */
   }
 
   /* Glow effect when progressing */

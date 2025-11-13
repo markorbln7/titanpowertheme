@@ -1,3 +1,38 @@
+/* ========================================
+   DESIGN SYSTEM - 8PT GRID + TYPE SCALE
+   BOGO-MOBILE-001
+   Per CKL-113 Premium Design Excellence
+   ======================================== */
+
+:root {
+  /* Typography Scale - Major Third (1.250 ratio) */
+  --text-xs: 0.64rem;    /* 10px - Badges, labels, micro text */
+  --text-sm: 0.8rem;     /* 13px - Captions, metadata, small info */
+  --text-base: 1rem;     /* 16px - Body text (WCAG minimum, prevents iOS zoom) */
+  --text-lg: 1.25rem;    /* 20px - Large body, subheadings */
+  --text-xl: 1.563rem;   /* 25px - H4, product titles, pricing */
+  --text-2xl: 1.953rem;  /* 31px - H3, section headers, modal titles */
+  --text-3xl: 2.441rem;  /* 39px - H2, featured headlines */
+  --text-4xl: 3.052rem;  /* 49px - H1, hero headline */
+
+  /* Spacing Scale - 8pt Grid System */
+  --space-xs: 0.5rem;    /* 8px - Micro spacing, icon gaps */
+  --space-sm: 1rem;      /* 16px - Small gaps, compact spacing */
+  --space-md: 1.5rem;    /* 24px - Medium gaps, standard spacing */
+  --space-lg: 2rem;      /* 32px - Large gaps, card padding */
+  --space-xl: 3rem;      /* 48px - Section spacing, major gaps */
+  --space-2xl: 4rem;     /* 64px - Large section spacing */
+  --space-3xl: 6rem;     /* 96px - Hero sections, major separations */
+
+  /* Touch Targets (Mobile Accessibility) */
+  --touch-min: 48px;     /* Minimum tap area for mobile (WCAG 2.2) */
+
+  /* Line Heights (Readability) */
+  --line-tight: 1.2;     /* Headings, large text */
+  --line-normal: 1.5;    /* Body text (WCAG minimum) */
+  --line-relaxed: 1.6;   /* Long-form content, descriptions */
+}
+
   {%- comment -%} Premium Typography System {%- endcomment -%}
   * {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
@@ -2568,7 +2603,8 @@
   }
 
   /* ========================================
-     MOBILE RESPONSIVE
+     MODAL - MOBILE RESPONSIVE
+     BOGO-MOBILE-001
      ======================================== */
 
   @media (max-width: 768px) {
@@ -2580,46 +2616,118 @@
 
     .buy-now-popup__product-body {
       flex-direction: column !important;
-      padding: 40px 20px 100px 20px !important;
+      /* 32px top, 24px sides, 72px bottom (48px footer + 24px buffer) */
+      padding: var(--space-lg) var(--space-md) calc(var(--touch-min) + var(--space-md)) var(--space-md) !important;
     }
 
     .modal-product-figure {
       width: 100% !important;
       max-height: 300px !important;
       margin-right: 0 !important;
-      margin-bottom: 20px !important;
+      margin-bottom: var(--space-md) !important; /* 24px clean separation */
     }
 
     .carousel-images {
-      height: 300px !important;
+      height: 280px !important;
     }
 
     .buy-now-popup__content {
       width: 100% !important;
+      gap: var(--space-md) !important; /* 24px between all content blocks */
     }
 
+    /* Variant Selectors - Full Width Stack */
     .variant-selectors {
       flex-direction: column !important;
-      gap: 12px !important;
+      gap: var(--space-sm) !important; /* 16px between dropdowns */
     }
 
     .variant-selector {
       width: 100% !important;
+      height: var(--touch-min) !important; /* 48px for easy tapping */
+      font-size: var(--text-base) !important; /* 16px prevents iOS zoom */
     }
 
+    /* Reviews Section */
     .reviews-scroll-area {
       max-height: 150px !important;
     }
 
+    /* Footer - Sticky Bottom */
     .buy-now-popup__footer {
       flex-direction: column !important;
-      padding: 16px 20px !important;
-      gap: 12px !important;
+      padding: var(--space-md) !important; /* 24px all sides */
+      gap: var(--space-sm) !important; /* 16px between price and button */
     }
 
     .buy-now-popup__atc {
       width: 100% !important;
       min-width: auto !important;
+      height: var(--touch-min) !important; /* 48px touch target */
+      font-size: var(--text-base) !important; /* 16px readable */
+      font-weight: 600 !important;
+    }
+
+    /* Close Button - Larger Touch Target */
+    .close-buy-now-popup {
+      width: var(--touch-min) !important; /* 48px */
+      height: var(--touch-min) !important;
+      padding: var(--space-sm) !important; /* 16px tap buffer */
+    }
+  }
+
+  /* ========================================
+     TYPOGRAPHY SYSTEM
+     BOGO-MOBILE-001
+     Applied to all text elements
+     ======================================== */
+
+  /* Product Modal Title */
+  .modal-product-title {
+    font-size: var(--text-2xl) !important; /* 31px - prominent */
+    line-height: var(--line-tight) !important;
+    font-weight: 700 !important;
+  }
+
+  /* Pricing - Large and Bold */
+  .modal-price {
+    font-size: var(--text-2xl) !important; /* 31px - key decision point */
+    font-weight: 700 !important;
+    color: #60c655 !important;
+  }
+
+  /* Body Text - Descriptions */
+  .buy-now-popup__description-inner,
+  .buy-now-popup__description-inner p,
+  .buy-now-popup__description-inner li {
+    font-size: var(--text-base); /* 16px - WCAG compliant, no zoom */
+    line-height: var(--line-normal); /* 1.5 - readable */
+  }
+
+  /* Small Text - Metadata */
+  .rating-count,
+  .review-date {
+    font-size: var(--text-sm); /* 13px - secondary info */
+    color: #737373;
+  }
+
+  /* ========================================
+     MOBILE TOUCH TARGET ENHANCEMENTS
+     BOGO-MOBILE-001
+     Ensures all interactive elements ≥48px
+     ======================================== */
+
+  @media (max-width: 768px) {
+    /* Carousel Navigation Arrows */
+    .carousel-nav {
+      width: var(--touch-min) !important; /* 48px */
+      height: var(--touch-min) !important;
+    }
+
+    /* Carousel Thumbnails */
+    .carousel-thumbnail {
+      min-width: 72px !important; /* Slightly smaller OK for thumbnails */
+      min-height: 72px !important;
     }
   }
      Yellow announcement banner removed per user request
@@ -3675,10 +3783,11 @@
     gap: 24px;
   }
 
+  /* Sticky Cart Mobile - BOGO-MOBILE-001 */
   @media (max-width: 767px) {
     .bogo-sticky-cart__inner {
-      padding: 0 16px;
-      gap: 12px;
+      padding: 0 var(--space-md); /* 24px sides */
+      gap: var(--space-sm); /* 16px between sections */
     }
   }
 
@@ -3688,25 +3797,25 @@
   }
 
   .bogo-sticky-cart__title {
-    font-size: 16px;
+    font-size: var(--text-lg); /* 20px */
     font-weight: 700;
     color: #60c655;
     margin-bottom: 4px;
   }
 
   .bogo-sticky-cart__status {
-    font-size: 13px;
+    font-size: var(--text-sm); /* 13px */
     color: rgba(255, 255, 255, 0.8);
     font-weight: 500;
   }
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__title {
-      font-size: 14px;
+      font-size: var(--text-base); /* 16px */
     }
 
     .bogo-sticky-cart__status {
-      font-size: 11px;
+      font-size: var(--text-sm); /* 13px */
     }
   }
 
@@ -3717,7 +3826,7 @@
   }
 
   .bogo-sticky-cart__pairs {
-    font-size: 20px;
+    font-size: var(--text-lg); /* 20px */
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
@@ -3726,7 +3835,7 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__pairs {
-      font-size: 16px;
+      font-size: var(--text-xl); /* 25px - readable at glance */
     }
   }
 
@@ -3734,13 +3843,13 @@
   .bogo-sticky-cart__right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: var(--space-lg); /* 32px */
     flex-shrink: 0;
   }
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__right {
-      gap: 12px;
+      gap: var(--space-sm); /* 16px */
     }
   }
 
@@ -3749,11 +3858,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 8px;
+    margin-right: var(--space-xs); /* 8px */
   }
 
   .bogo-sticky-cart__savings-label {
-    font-size: 11px;
+    font-size: var(--text-xs); /* 10px */
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
@@ -3761,7 +3870,7 @@
   }
 
   .bogo-sticky-cart__savings-amount {
-    font-size: 24px;
+    font-size: var(--text-xl); /* 25px */
     font-weight: 900;
     color: #60c655;
     line-height: 1;
@@ -3769,21 +3878,21 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__savings-amount {
-      font-size: 18px;
+      font-size: var(--text-2xl); /* 31px - conversion focus */
     }
   }
 
   /* Action Buttons */
   .bogo-sticky-cart__actions {
     display: flex;
-    gap: 12px;
+    gap: var(--space-sm); /* 16px */
   }
 
   .bogo-sticky-cart__btn {
     height: 44px;
-    padding: 0 24px;
+    padding: 0 var(--space-md); /* 24px */
     border-radius: 12px;
-    font-size: 14px;
+    font-size: var(--text-sm); /* 13px */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -3794,9 +3903,10 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__btn {
-      height: 40px;
-      padding: 0 16px;
-      font-size: 12px;
+      height: var(--touch-min); /* 48px - CRITICAL FIX */
+      padding: 0 var(--space-md); /* 24px sides */
+      font-size: var(--text-sm); /* 13px - fits in button */
+      font-weight: 700;
     }
   }
 

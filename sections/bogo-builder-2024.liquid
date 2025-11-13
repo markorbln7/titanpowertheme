@@ -201,7 +201,12 @@
   {%- comment -%} Product Filter Dropdown {%- endcomment -%}
   <div class="filter-container">
     <div class="filter-wrapper">
-      <label for="category-filter" class="filter-label">⚠️ Limited stock available for this offer</label>
+      <label for="category-filter" class="filter-label">
+        <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">
+          <span class="stock-number">⚠️</span>
+        </span>
+        Limited stock available for this offer
+      </label>
       <select id="category-filter" class="filter-select">
         <option value="all">All Products</option>
         {% for collection in section.settings.collections %}
@@ -516,7 +521,7 @@
           <div class="progress-segment" data-tier="3">
             <div class="segment-fill"></div>
             <div class="segment-label">
-              <span class="segment-title">3 Pairs</span>
+              <span class="segment-title">3+ Pairs</span>
               <span class="segment-benefit">+10% & Cable</span>
             </div>
           </div>
@@ -713,55 +718,42 @@
 
     <div class="pair-modal__container">
 
-      {%- comment -%} Header - BOGO-REVIEW-FIXES-040 {%- endcomment -%}
-      <div class="pair-modal__header">
-        <div class="header-content">
-          <div class="header-icon">🎁</div>
-          <div class="header-text">
-            <h2>Your BOGO Pairs</h2>
-            <div class="header-pair-count" id="review-pair-count">0 Pairs Complete</div>
+      {%- comment -%} ✅ COMPACT HEADER REDESIGN - Single row layout {%- endcomment -%}
+      <div class="pair-modal__header--compact">
+        {%- comment -%} Close button - Top right {%- endcomment -%}
+        <button class="pair-modal__close" onclick="closePairModal()">×</button>
+
+        {%- comment -%} Left: Title only (compact) {%- endcomment -%}
+        <div class="pair-modal__title-compact">
+          <h2 class="pair-modal__title-text">Your BOGO Pairs</h2>
+        </div>
+
+        {%- comment -%} Center: Total Saved (Compact Green Box) {%- endcomment -%}
+        <div class="pair-modal__savings-compact">
+          <div class="savings-label-small">TOTAL SAVED</div>
+          <div class="savings-amount-compact" id="review-total-saved">€98,66</div>
+          <div class="savings-discount-small">
+            Order Discount: <span id="review-order-discount">10%</span>
           </div>
         </div>
 
-        {%- comment -%} ✅ PROMINENT SAVINGS DISPLAY {%- endcomment -%}
-        <div class="header-savings">
-          <div class="savings-label">Total Saved</div>
-          <div class="savings-amount" id="review-total-saved">€0.00</div>
-          <div class="order-discount">
-            <span class="discount-label">Order Discount:</span>
-            <span class="discount-value" id="review-order-discount">0%</span>
-          </div>
-        </div>
-
-        <div class="header-actions">
-          <button class="btn-compare-from-review" id="btn-compare-tiers">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            Compare Tiers
-          </button>
-          {%- comment -%} Clear All Pairs Button (BOGO-REVIEW-MODAL-UX-024) {%- endcomment -%}
-          <button class="clear-all-pairs-header-btn" onclick="clearAllPairs()">
-            🗑️ Clear All
-          </button>
-          <button class="pair-modal__close" onclick="closePairModal()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
+        {%- comment -%} Right: Pair count {%- endcomment -%}
+        <div class="pair-count-compact" id="review-pair-count">3 Pairs Complete</div>
       </div>
 
-      {%- comment -%} Tier Progress Bar {%- endcomment -%}
+      {%- comment -%} Tier Status Banner {%- endcomment -%}
       <div class="pair-modal__tier-progress">
-        <div class="progress-status">
-          <div class="progress-current" id="progress-current-status">
-            You have 0 pairs
-          </div>
-          <div class="progress-next" id="progress-next-benefit">
-            Add 1 pair to unlock Tier 1 benefits
-          </div>
+        <div class="tier-status-banner">
+          <span class="tier-icon">👑</span>
+          <span class="tier-text" id="progress-current-status">Tier 3 UNLOCKED - Maximum Savings!</span>
         </div>
+        <div class="tier-benefits-compact" id="progress-next-benefit">
+          10% OFF + Premium Shipping + Bonus Cable
+        </div>
+        {%- comment -%} Compare Tiers - Small underlined link {%- endcomment -%}
+        <button class="compare-tiers-link" id="btn-compare-tiers">
+          Compare Tiers →
+        </button>
       </div>
 
       {%- comment -%} BOGO-PARTITIONED-PRICING-048: Partitioned Pricing Display {%- endcomment -%}
@@ -817,9 +809,14 @@
         </div>
       </div>
 
-      {%- comment -%} Pairs Grid {%- endcomment -%}
+      {%- comment -%} ✅ Section Heading {%- endcomment -%}
+      <div class="pair-modal__section-heading">
+        <h3>BUY 1 GET 1 PAIRS</h3>
+      </div>
+
+      {%- comment -%} Pairs Grid - Compact Side-by-Side Layout {%- endcomment -%}
       <div class="pair-modal__pairs-grid" id="modal-pairs-grid">
-        {%- comment -%} Pairs will be dynamically inserted here {%- endcomment -%}
+        {%- comment -%} Pairs will be dynamically inserted here with compact side-by-side layout {%- endcomment -%}
       </div>
 
       {%- comment -%} Footer Actions {%- endcomment -%}

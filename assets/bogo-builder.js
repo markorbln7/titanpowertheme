@@ -89,7 +89,12 @@ function loadBOGOState() {
       return null;
     }
 
-    console.log('📂 BOGO state loaded from localStorage');
+    // CRITICAL: Apply migration to convert old data (BOGO-CALCULATION-FIX-033)
+    if (parsed.pairs && typeof migratePairData === 'function') {
+      parsed.pairs = migratePairData(parsed.pairs);
+    }
+
+    console.log('📂 BOGO state loaded and migrated from localStorage');
     return parsed;
   } catch (error) {
     console.warn('Failed to load BOGO state:', error);
@@ -836,10 +841,12 @@ function completePair() {
   const cheaper = pair.slot1.price <= pair.slot2.price ? pair.slot1 : pair.slot2;
   const moreExpensive = pair.slot1.price > pair.slot2.price ? pair.slot1 : pair.slot2;
 
-  // Save completed pair
+  // Save completed pair with slot1/slot2 naming (matches updateStickyCart expectations)
   state.pairs.push({
-    product1: moreExpensive,
-    product2: cheaper,
+    slot1: pair.slot1,
+    slot2: pair.slot2,
+    product1: moreExpensive,  // Keep for backwards compatibility
+    product2: cheaper,        // Keep for backwards compatibility
     savings: cheaper.price,
     pairNumber: state.activePairNumber
   });
@@ -971,7 +978,7 @@ function initSavingsTooltip() {
   }
 }
 
-// Update tooltip breakdown with current savings data
+// Update tooltip breakdown with current savings data (✅ BOGO-V2-FIXES)
 function updateTooltipBreakdown() {
   const state = window.bogoState;
   if (!state) return;
@@ -993,8 +1000,8 @@ function updateTooltipBreakdown() {
     return parseFloat(cleaned) || 0;
   };
 
-  if (pairCount > 0) {
-    // BOGO savings
+  if (pairCount > 0 && state.pairs && state.pairs.length > 0) {
+    // BOGO savings - EXACT same logic as main calculation
     state.pairs.forEach(pair => {
       const price1 = parsePrice(pair.slot1?.price);
       const price2 = parsePrice(pair.slot2?.price);
@@ -1015,7 +1022,11 @@ function updateTooltipBreakdown() {
   // Update tooltip elements
   const formatEuro = (amount) => `€${amount.toFixed(2).replace('.', ',')}`;
 
-  document.getElementById('tooltip-bogo').textContent = formatEuro(bogoSavings);
+  // BOGO always shows if pairs exist
+  const bogoItem = document.getElementById('tooltip-bogo');
+  if (bogoItem) {
+    bogoItem.textContent = formatEuro(bogoSavings);
+  }
 
   // Tier discount (show only if applicable)
   const tierItem = document.getElementById('tooltip-tier-item');
@@ -1036,12 +1047,18 @@ function updateTooltipBreakdown() {
   const cableItem = document.getElementById('tooltip-cable-item');
   cableItem.style.display = currentTier >= 3 ? 'flex' : 'none';
 
-  // Total
+  // Total - MUST match main savings display
   let totalSavings = bogoSavings + tierDiscount;
   if (currentTier >= 2) totalSavings += 4.99;
   if (currentTier >= 3) totalSavings += 18.95;
 
   document.getElementById('tooltip-total').textContent = formatEuro(totalSavings);
+
+  console.log('Tooltip breakdown:', {
+    bogo: bogoSavings.toFixed(2),
+    tier: tierDiscount.toFixed(2),
+    total: totalSavings.toFixed(2)
+  });
 }
 
 // ========================================
@@ -1175,6 +1192,99 @@ function initProgressTouchFeedback() {
 // STICKY CART V2 UPDATE LOGIC (BOGO-V2-ADVANCED)
 // ✅ Calculations + Progress + Animations + Tooltip + Haptics + Confetti
 // ========================================
+
+// ========================================
+// DATA MIGRATION HELPER (BOGO-CALCULATION-FIX-033)
+// Converts old product1/product2 structure to slot1/slot2
+// ========================================
+function migratePairData(pairs) {
+  if (!Array.isArray(pairs)) return [];
+
+  return pairs.map(pair => {
+    // If pair has product1/product2 but not slot1/slot2, migrate
+    if ((pair.product1 || pair.product2) && !pair.slot1 && !pair.slot2) {
+      console.log('✅ Migrating old pair structure:', pair.pairNumber);
+      return {
+        ...pair,
+        slot1: pair.product1,
+        slot2: pair.product2
+      };
+    }
+    return pair;
+  });
+}
+
+// ========================================
+// DIAGNOSTIC: Debug BOGO State & Pricing
+// ========================================
+function debugBOGOState() {
+  console.log('==========================================');
+  console.log('🔍 BOGO STATE DIAGNOSTIC');
+  console.log('==========================================');
+
+  const state = window.bogoState;
+
+  if (!state) {
+    console.error('❌ window.bogoState is undefined!');
+    return;
+  }
+
+  console.log('✅ State exists:', state);
+  console.log('Pairs count:', state.pairs?.length || 0);
+
+  if (state.pairs && state.pairs.length > 0) {
+    state.pairs.forEach((pair, index) => {
+      console.log(`\n--- Pair ${index + 1} ---`);
+      console.log('Full pair object:', pair);
+
+      // Check slot1
+      console.log('Slot 1:', {
+        exists: !!pair.slot1,
+        title: pair.slot1?.title,
+        price: pair.slot1?.price,
+        priceType: typeof pair.slot1?.price,
+        rawPrice: pair.slot1?.price,
+        allKeys: Object.keys(pair.slot1 || {})
+      });
+
+      // Check slot2
+      console.log('Slot 2:', {
+        exists: !!pair.slot2,
+        title: pair.slot2?.title,
+        price: pair.slot2?.price,
+        priceType: typeof pair.slot2?.price,
+        rawPrice: pair.slot2?.price,
+        allKeys: Object.keys(pair.slot2 || {})
+      });
+
+      // Try parsing
+      if (pair.slot1?.price) {
+        const cleaned = String(pair.slot1.price).replace(/[^0-9.,]/g, '').replace(',', '.');
+        console.log('Slot 1 parsed:', cleaned, '→', parseFloat(cleaned));
+      } else {
+        console.warn('⚠️ Slot 1 price is missing or falsy');
+      }
+
+      if (pair.slot2?.price) {
+        const cleaned = String(pair.slot2.price).replace(/[^0-9.,]/g, '').replace(',', '.');
+        console.log('Slot 2 parsed:', cleaned, '→', parseFloat(cleaned));
+      } else {
+        console.warn('⚠️ Slot 2 price is missing or falsy');
+      }
+    });
+  } else {
+    console.warn('⚠️ No pairs in state');
+  }
+
+  console.log('\n==========================================');
+}
+
+// Make it globally accessible for console testing
+window.debugBOGOState = debugBOGOState;
+
+// Auto-run on state change
+console.log('💡 Type debugBOGOState() in console to see state details');
+
 function updateStickyCart() {
   const state = window.bogoState;
   const stickyCartV2 = document.getElementById('bogo-sticky-cart-v2');
@@ -1214,90 +1324,85 @@ function updateStickyCart() {
     slot2: !!currentPair?.slot2
   });
 
-  // --- 1. ACCURATE SAVINGS CALCULATION ---
-  let totalSavings = 0;
-  let orderSubtotal = 0;
+  // --- 1. ACCURATE SAVINGS CALCULATION (BOGO-CALCULATION-FIX-033) ---
+  let totalSavingsCents = 0;
+  let totalRetailCents = 0;
+  let bogoSavingsCents = 0;
+  let tierDiscountCents = 0;
 
-  // Helper: Parse price strings safely
-  const parsePrice = (priceString) => {
-    if (!priceString) return 0;
-    // Remove currency symbols, spaces, handle both comma and dot decimals
-    const cleaned = priceString.replace(/[^0-9.,]/g, '').replace(',', '.');
-    return parseFloat(cleaned) || 0;
-  };
-
-  if (pairCount > 0) {
-    // 1.1 Calculate BOGO Savings (50% off cheaper item per pair)
+  if (pairCount > 0 && state.pairs && state.pairs.length > 0) {
+    // 1.1 Calculate BOGO Savings (100% off cheaper item = FREE)
     state.pairs.forEach(pair => {
-      const price1 = parsePrice(pair.slot1?.price);
-      const price2 = parsePrice(pair.slot2?.price);
+      // CRITICAL: Use fallbacks for both old and new data
+      const item1 = pair.slot1 || pair.product1;
+      const item2 = pair.slot2 || pair.product2;
 
-      // Add both items to order subtotal
-      orderSubtotal += price1 + price2;
+      // Prices are stored as integer cents (11295 = €112.95)
+      const price1 = parseInt(item1?.price || 0, 10);
+      const price2 = parseInt(item2?.price || 0, 10);
 
-      // BOGO: 50% off the cheaper item
-      const lowerPrice = Math.min(price1, price2);
-      if (lowerPrice > 0) {
-        totalSavings += lowerPrice * 0.5;
-      }
-
-      console.log(`Pair ${state.pairs.indexOf(pair) + 1}:`, {
-        price1: price1.toFixed(2),
-        price2: price2.toFixed(2),
-        bogoSavings: (lowerPrice * 0.5).toFixed(2)
+      console.log('Pair calculation:', {
+        item1: item1?.title,
+        item2: item2?.title,
+        price1Cents: price1,
+        price2Cents: price2,
+        price1Euro: (price1 / 100).toFixed(2),
+        price2Euro: (price2 / 100).toFixed(2)
       });
+
+      totalRetailCents += price1 + price2;
+
+      // BOGO FREE: 100% off cheaper item (not 50%!)
+      const cheaperPrice = Math.min(price1, price2);
+      if (cheaperPrice > 0) {
+        bogoSavingsCents += cheaperPrice;
+        console.log('BOGO savings for this pair:', (cheaperPrice / 100).toFixed(2));
+      }
     });
 
-    // 1.2 Apply Tier Discounts (on already-discounted total)
-    const discountedSubtotal = orderSubtotal - totalSavings;
-    let tierDiscount = 0;
+    console.log('Total BOGO Savings (cents):', bogoSavingsCents);
+    console.log('Total BOGO Savings (€):', (bogoSavingsCents / 100).toFixed(2));
+
+    totalSavingsCents += bogoSavingsCents;
+
+    // 1.2 Tier Discounts (on subtotal after BOGO)
+    const discountedSubtotalCents = totalRetailCents - bogoSavingsCents;
 
     if (currentTier === 3) {
-      tierDiscount = discountedSubtotal * 0.10; // 10% off
-      totalSavings += tierDiscount;
-      console.log('Tier 3 Discount (10%):', tierDiscount.toFixed(2));
+      tierDiscountCents = Math.round(discountedSubtotalCents * 0.10);
+      totalSavingsCents += tierDiscountCents;
+      console.log('Tier 3 Discount (10%):', (tierDiscountCents / 100).toFixed(2));
     } else if (currentTier === 2) {
-      tierDiscount = discountedSubtotal * 0.05; // 5% off
-      totalSavings += tierDiscount;
-      console.log('Tier 2 Discount (5%):', tierDiscount.toFixed(2));
+      tierDiscountCents = Math.round(discountedSubtotalCents * 0.05);
+      totalSavingsCents += tierDiscountCents;
+      console.log('Tier 2 Discount (5%):', (tierDiscountCents / 100).toFixed(2));
     }
 
-    // 1.3 Add Value-Add Bonuses
+    // 1.3 Value Adds (in cents)
+    const SHIPPING_VALUE_CENTS = 499;  // €4.99
+    const CABLE_VALUE_CENTS = 1895;     // €18.95
+
     if (currentTier >= 2) {
-      totalSavings += 4.99; // Premium shipping value
-      console.log('Added Shipping Value: €4.99');
+      totalSavingsCents += SHIPPING_VALUE_CENTS;
+      console.log('Added Shipping: €4.99');
     }
     if (currentTier >= 3) {
-      totalSavings += 18.95; // Titan Smart Cable value
-      console.log('Added Cable Value: €18.95');
+      totalSavingsCents += CABLE_VALUE_CENTS;
+      console.log('Added Cable: €18.95');
     }
   }
 
-  console.log('TOTAL SAVINGS:', totalSavings.toFixed(2));
+  console.log('===== SAVINGS BREAKDOWN =====');
+  console.log('BOGO Savings (€):', (bogoSavingsCents / 100).toFixed(2));
+  console.log('Tier Discount (€):', (tierDiscountCents / 100).toFixed(2));
+  console.log('TOTAL SAVINGS (€):', (totalSavingsCents / 100).toFixed(2));
+  console.log('============================');
 
-  // ✅ BOGO-V2-POLISH: Enhanced Savings Display with Animations
+  // Update Savings Display (convert cents to euros)
   const savingsEl = document.getElementById('v2-total-savings');
   if (savingsEl) {
-    const formattedSavings = `€${totalSavings.toFixed(2).replace('.', ',')}`;
-
-    // Detect tier 3 milestone unlock
-    const isMilestone = (currentTier === 3 && prevState.currentTier < 3);
-
-    // Animate if value changed
-    if (savingsEl.textContent !== formattedSavings) {
-      // Remove any existing animation classes
-      savingsEl.classList.remove('updating', 'milestone');
-
-      // Add appropriate animation
-      if (isMilestone) {
-        savingsEl.classList.add('milestone');
-        setTimeout(() => savingsEl.classList.remove('milestone'), 1200);
-      } else {
-        savingsEl.classList.add('updating');
-        setTimeout(() => savingsEl.classList.remove('updating'), 600);
-      }
-    }
-
+    const displaySavings = (totalSavingsCents / 100).toFixed(2).replace('.', ',');
+    const formattedSavings = `€${displaySavings}`;
     savingsEl.textContent = formattedSavings;
   }
 
@@ -1369,13 +1474,18 @@ function updateStickyCart() {
     reviewBtn.style.display = 'block';
     reviewBtn.onclick = reviewAction;
 
-    // Update Incentive Message Based on Tier
+    // ✅ BOGO-V2-FIXES: Update Incentive Message Based on Tier (supports 4+ pairs)
     if (currentTier === 1) {
       incentiveMsgEl.innerHTML = '🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!';
     } else if (currentTier === 2) {
       incentiveMsgEl.innerHTML = '🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (€18.95)!';
     } else if (currentTier >= 3) {
-      incentiveMsgEl.innerHTML = '👑 <strong>Max Savings Unlocked!</strong> Ready to checkout?';
+      // Change messaging for 3+ pairs
+      if (pairCount === 3) {
+        incentiveMsgEl.innerHTML = '👑 <strong>Max Tier Unlocked!</strong> Keep adding pairs for more savings!';
+      } else {
+        incentiveMsgEl.innerHTML = `👑 <strong>${pairCount} Pairs Built!</strong> Amazing value unlocked! 🎉`;
+      }
     }
   }
 
@@ -1456,13 +1566,71 @@ function updateStickyCart() {
   const shouldShow = pairCount > 0 || hasIncompleteProduct || true; // Always show for incentive
   stickyCartV2.style.display = shouldShow ? 'block' : 'none';
 
+  // ✅ DIAGNOSTIC: Auto-run debug on every update
+  console.log('=== CALLING DEBUG ===');
+  debugBOGOState();
+
+  // --- UPDATE TOOLTIP BREAKDOWN ---
+  const tooltipBogo = document.getElementById('tooltip-bogo');
+  const tooltipTier = document.getElementById('tooltip-tier');
+  const tooltipTierItem = document.getElementById('tooltip-tier-item');
+  const tooltipTierLabel = document.getElementById('tooltip-tier-label');
+  const tooltipShippingItem = document.getElementById('tooltip-shipping-item');
+  const tooltipCableItem = document.getElementById('tooltip-cable-item');
+  const tooltipTotal = document.getElementById('tooltip-total');
+
+  if (tooltipBogo && tooltipTotal) {
+    const formatEuro = (cents) => `€${(cents / 100).toFixed(2).replace('.', ',')}`;
+
+    // Calculate component savings
+    let bogoOnlyCents = 0;
+    if (pairCount > 0) {
+      state.pairs.forEach(pair => {
+        const item1 = pair.slot1 || pair.product1;
+        const item2 = pair.slot2 || pair.product2;
+        const price1 = parseInt(item1?.price || 0, 10);
+        const price2 = parseInt(item2?.price || 0, 10);
+        bogoOnlyCents += Math.min(price1, price2);
+      });
+    }
+
+    const retailCents = state.pairs.reduce((sum, pair) => {
+      const item1 = pair.slot1 || pair.product1;
+      const item2 = pair.slot2 || pair.product2;
+      return sum + parseInt(item1?.price || 0, 10) + parseInt(item2?.price || 0, 10);
+    }, 0);
+
+    const subtotalAfterBogo = retailCents - bogoOnlyCents;
+    let tierDiscountCents = 0;
+    if (currentTier === 3) tierDiscountCents = Math.round(subtotalAfterBogo * 0.10);
+    else if (currentTier === 2) tierDiscountCents = Math.round(subtotalAfterBogo * 0.05);
+
+    // Update tooltip
+    tooltipBogo.textContent = formatEuro(bogoOnlyCents);
+
+    if (currentTier >= 2) {
+      tooltipTierItem.style.display = 'block';
+      tooltipTier.textContent = formatEuro(tierDiscountCents);
+      tooltipTierLabel.textContent = currentTier === 3 ? 'Tier 3 Bonus (10%):' : 'Tier 2 Bonus (5%):';
+    } else {
+      tooltipTierItem.style.display = 'none';
+    }
+
+    if (tooltipShippingItem) tooltipShippingItem.style.display = currentTier >= 2 ? 'block' : 'none';
+    if (tooltipCableItem) tooltipCableItem.style.display = currentTier >= 3 ? 'block' : 'none';
+
+    tooltipTotal.textContent = formatEuro(totalSavingsCents);
+
+    console.log('✅ Tooltip updated:', formatEuro(totalSavingsCents));
+  }
+
   console.log('=== STICKY CART V2 UPDATE COMPLETE ===\n');
 
   // --- 5. UPDATE PREVIOUS STATE ---
   window.bogoCartPrevState = {
     pairCount: pairCount,
     currentTier: currentTier,
-    totalSavings: totalSavings
+    totalSavings: totalSavingsCents
   };
 
   // --- 6. SAVE STATE TO LOCALSTORAGE ---
@@ -1636,38 +1804,91 @@ function handleModalEscape(e) {
 
 // ✅ BOGO-PARTITIONED-PRICING-048: Calculate and update partitioned pricing display
 function updatePartitionedPricing() {
+  console.log('\n========================================');
+  console.log('🔍 MODAL CALCULATION DEBUG');
+  console.log('========================================');
+
   const state = window.bogoState;
-  const pairCount = state.pairs.length;
+  const pairCount = state.pairs?.length || 0;
 
-  // Calculate retail value (full price of all items)
-  let retailValue = 0;
+  console.log('Pairs:', pairCount);
+  console.log('Raw pairs data:', JSON.stringify(state.pairs.map(p => ({
+    product1: p.product1?.price,
+    product2: p.product2?.price,
+    slot1: p.slot1?.price,
+    slot2: p.slot2?.price
+  })), null, 2));
+
+  // Helper: Parse price (could be cents number or formatted string)
+  const parsePrice = (priceValue) => {
+    if (!priceValue) return 0;
+    // If it's already a number, assume it's in cents
+    if (typeof priceValue === 'number') return priceValue;
+    // If it's a string, parse it (could be "€30.95" or "3095")
+    const cleaned = String(priceValue).replace(/[^0-9.,]/g, '').replace(',', '.');
+    const parsed = parseFloat(cleaned) || 0;
+    // If parsed value is < 100, assume it's already in euros, multiply by 100
+    return parsed < 100 ? parsed * 100 : parsed;
+  };
+
+  // Calculate retail value (full price of all items) - BOGO-CALCULATION-FIX-033
+  let retailValueCents = 0;
+  let bogoDiscountCents = 0;
+
   state.pairs.forEach(function(pair) {
-    if (pair.product1) retailValue += pair.product1.price;
-    if (pair.product2) retailValue += pair.product2.price;
-  });
+    // Try slot1/slot2 first (new format), fallback to product1/product2 (old format)
+    const item1 = pair.slot1 || pair.product1;
+    const item2 = pair.slot2 || pair.product2;
 
-  // Calculate BOGO discount (50% of retail since every other item is free)
-  const bogoDiscount = retailValue * 0.5;
+    const price1 = parseInt(item1?.price || 0, 10);
+    const price2 = parseInt(item2?.price || 0, 10);
+
+    retailValueCents += price1 + price2;
+
+    // BOGO FREE: 100% off cheaper item (not 50%!)
+    const cheaperPrice = Math.min(price1, price2);
+    if (cheaperPrice > 0) {
+      bogoDiscountCents += cheaperPrice;
+    }
+  });
 
   // Calculate tier discount
   const tierPercent = pairCount >= 3 ? 0.10 : pairCount >= 2 ? 0.05 : 0;
-  const subtotalAfterBogo = retailValue - bogoDiscount;
-  const tierDiscount = subtotalAfterBogo * tierPercent;
+  const subtotalAfterBogoCents = retailValueCents - bogoDiscountCents;
+  const tierDiscountCents = Math.round(subtotalAfterBogoCents * tierPercent);
+
+  console.log('💰 CALCULATION BREAKDOWN:');
+  console.log('Retail value (cents):', retailValueCents, '→ €' + (retailValueCents / 100).toFixed(2));
+  console.log('BOGO discount (cents):', bogoDiscountCents, '→ €' + (bogoDiscountCents / 100).toFixed(2));
+  console.log('Subtotal after BOGO:', subtotalAfterBogoCents, '→ €' + (subtotalAfterBogoCents / 100).toFixed(2));
+  console.log('Current tier:', pairCount >= 3 ? 3 : pairCount >= 2 ? 2 : 1);
+  console.log('Tier discount (cents):', tierDiscountCents, '→ €' + (tierDiscountCents / 100).toFixed(2));
 
   // Shipping savings
-  const shippingSavings = pairCount >= 2 ? 499 : 0; // €4.99 in cents
+  const shippingSavingsCents = pairCount >= 2 ? 499 : 0; // €4.99
 
   // Bonus cable value
-  const cableSavings = pairCount >= 3 ? 1895 : 0; // €18.95 in cents
+  const cableSavingsCents = pairCount >= 3 ? 1895 : 0; // €18.95
 
   // Total savings
-  const totalSavings = bogoDiscount + tierDiscount + shippingSavings + cableSavings;
+  const totalSavingsCents = bogoDiscountCents + tierDiscountCents + shippingSavingsCents + cableSavingsCents;
+
+  console.log('📊 TOTAL SAVINGS CALCULATION:');
+  console.log('BOGO:', bogoDiscountCents, '(€' + (bogoDiscountCents / 100).toFixed(2) + ')');
+  console.log('Tier:', tierDiscountCents, '(€' + (tierDiscountCents / 100).toFixed(2) + ')');
+  console.log('Shipping:', shippingSavingsCents > 0 ? shippingSavingsCents + ' (€4.99)' : '0');
+  console.log('Cable:', cableSavingsCents > 0 ? cableSavingsCents + ' (€18.95)' : '0');
+  console.log('TOTAL:', totalSavingsCents, '(€' + (totalSavingsCents / 100).toFixed(2) + ')');
+  console.log('========================================\n');
 
   // Final amount to pay
-  const finalAmount = retailValue - totalSavings;
+  const finalAmountCents = subtotalAfterBogoCents - tierDiscountCents;
 
   // Savings percentage
-  const savingsPercent = retailValue > 0 ? Math.round((totalSavings / retailValue) * 100) : 0;
+  const savingsPercent = retailValueCents > 0 ? Math.round((totalSavingsCents / retailValueCents) * 100) : 0;
+
+  // Helper to format cents with comma
+  const formatCents = (cents) => (cents / 100).toFixed(2).replace('.', ',');
 
   // Update DOM
   const retailValueEl = document.getElementById('retail-value-total');
@@ -1676,10 +1897,10 @@ function updatePartitionedPricing() {
   const finalAmountEl = document.getElementById('final-amount');
   const savingsPercentageEl = document.getElementById('savings-percentage');
 
-  if (retailValueEl) retailValueEl.textContent = `€${(retailValue / 100).toFixed(2)}`;
-  if (bogoDiscountEl) bogoDiscountEl.textContent = `-€${(bogoDiscount / 100).toFixed(2)}`;
-  if (tierDiscountEl) tierDiscountEl.textContent = `-€${(tierDiscount / 100).toFixed(2)}`;
-  if (finalAmountEl) finalAmountEl.textContent = `€${(finalAmount / 100).toFixed(2)}`;
+  if (retailValueEl) retailValueEl.textContent = `€${formatCents(retailValueCents)}`;
+  if (bogoDiscountEl) bogoDiscountEl.textContent = `-€${formatCents(bogoDiscountCents)}`;
+  if (tierDiscountEl) tierDiscountEl.textContent = `-€${formatCents(tierDiscountCents)}`;
+  if (finalAmountEl) finalAmountEl.textContent = `€${formatCents(finalAmountCents)}`;
   if (savingsPercentageEl) savingsPercentageEl.textContent = `🎉 You Save ${savingsPercent}%!`;
 
   // Show/hide tier discount row based on tier
@@ -1713,10 +1934,10 @@ function updatePartitionedPricing() {
   }
 
   console.log('💰 Partitioned Pricing Updated:', {
-    retailValue: retailValue / 100,
-    bogoDiscount: bogoDiscount / 100,
-    tierDiscount: tierDiscount / 100,
-    finalAmount: finalAmount / 100,
+    retailValue: retailValueCents / 100,
+    bogoDiscount: bogoDiscountCents / 100,
+    tierDiscount: tierDiscountCents / 100,
+    finalAmount: finalAmountCents / 100,
     savingsPercent
   });
 }
@@ -1847,24 +2068,33 @@ function updateReviewHeaderSavings() {
 
   // Calculate total savings
   let totalSavings = 0;
+  let bogoSavings = 0;
 
   // Add BOGO savings (one free item per pair)
   state.pairs.forEach(function(pair) {
+    // Use slot1/slot2 first (new format), fallback to product1/product2 (old format)
+    const item1 = pair.slot1 || pair.product1;
+    const item2 = pair.slot2 || pair.product2;
     const freePrice = Math.min(
-      pair.product1?.price || 0,
-      pair.product2?.price || 0
+      item1?.price || 0,
+      item2?.price || 0
     );
-    totalSavings += freePrice;
+    bogoSavings += freePrice;
   });
+  totalSavings += bogoSavings;
 
-  // Add tier discount savings
+  // Add tier discount savings (MUST calculate on subtotal AFTER BOGO discount!)
   const tierPercent = pairCount >= 3 ? 0.10 : pairCount >= 2 ? 0.05 : 0;
 
-  const subtotal = state.pairs.reduce(function(sum, pair) {
-    return sum + (pair.product1?.price || 0) + (pair.product2?.price || 0);
+  const retailValue = state.pairs.reduce(function(sum, pair) {
+    const item1 = pair.slot1 || pair.product1;
+    const item2 = pair.slot2 || pair.product2;
+    return sum + (item1?.price || 0) + (item2?.price || 0);
   }, 0);
 
-  const tierSavings = subtotal * tierPercent;
+  // Tier discount is calculated on subtotal AFTER BOGO discount
+  const subtotalAfterBogo = retailValue - bogoSavings;
+  const tierSavings = Math.round(subtotalAfterBogo * tierPercent);
   totalSavings += tierSavings;
 
   // Add shipping savings
@@ -1964,49 +2194,101 @@ function setupCompareTiersButton() {
   compareBtn.dataset.listenerAdded = 'true';
 }
 
+// ✅ BOGO-REVIEW-MOBILE-REDESIGN: Compact side-by-side pair cards
 function createModalPairCard(pair, index) {
   const card = document.createElement('div');
-  card.className = 'pair-modal__pair-card';
+  card.className = 'pair-modal__pair-card--compact';
   card.setAttribute('data-pair-index', index);
 
-  // Header
+  // Compact Header with pair number and small X delete button
   const header = document.createElement('div');
-  header.className = 'pair-modal__pair-header';
+  header.className = 'pair-modal__pair-header--compact';
   header.innerHTML = `
-    <span class="pair-modal__pair-title">Pair ${pair.pairNumber}</span>
-    <span class="pair-modal__pair-savings">Save €${(pair.savings / 100).toFixed(2)}</span>
-    <button class="pair-modal__pair-delete" onclick="deletePair(${index})">Delete Pair</button>
+    <span class="pair-number-label">Pair ${pair.pairNumber}</span>
+    <button class="pair-delete-x" onclick="deletePair(${index})" aria-label="Delete pair ${pair.pairNumber}">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
   `;
   card.appendChild(header);
 
-  // Products
+  // Side-by-side Products Container
   const products = document.createElement('div');
-  products.className = 'pair-modal__pair-products';
+  products.className = 'pair-modal__pair-products--sidebyside';
 
-  // Product 1
-  const product1 = createModalProductCard(pair.product1, index, 1, false);
+  // Use slot1/slot2 (new format) with product1/product2 fallback (old format)
+  const item1 = pair.slot1 || pair.product1;
+  const item2 = pair.slot2 || pair.product2;
+
+  // Product 1 (Left)
+  const product1 = createModalProductCardCompact(item1, index, 1, false);
   products.appendChild(product1);
 
-  // ✅ Equals sign (static, no swapping)
+  // Equals sign (Center)
   const equals = document.createElement('div');
-  equals.className = 'pair-modal__equals-sign';
+  equals.className = 'pair-modal__equals-sign--compact';
   equals.textContent = '=';
-  equals.style.cssText = `
-    font-size: 32px;
-    color: rgba(255, 255, 255, 0.3);
-    user-select: none;
-  `;
   products.appendChild(equals);
 
-  // Product 2 (the free one)
-  const product2 = createModalProductCard(pair.product2, index, 2, true);
+  // Product 2 (Right - FREE)
+  const product2 = createModalProductCardCompact(item2, index, 2, true);
   products.appendChild(product2);
 
   card.appendChild(products);
 
+  // Savings display below products
+  const savings = document.createElement('div');
+  savings.className = 'pair-modal__pair-savings--compact';
+  const savingsAmount = (pair.savings / 100).toFixed(2).replace('.', ',');
+  savings.innerHTML = `€${savingsAmount} Saved!`;
+  card.appendChild(savings);
+
   return card;
 }
 
+// ✅ BOGO-REVIEW-MOBILE-REDESIGN: Compact product card for side-by-side layout
+function createModalProductCardCompact(product, pairIndex, slot, isFree) {
+  const card = document.createElement('div');
+  card.className = 'pair-modal__product--compact';
+  card.setAttribute('data-pair-index', pairIndex);
+  card.setAttribute('data-slot', slot);
+  card.setAttribute('data-product-id', product.productId);
+
+  // Free badge (absolute positioned at top)
+  if (isFree) {
+    const badge = document.createElement('div');
+    badge.className = 'pair-modal__product-badge--compact';
+    badge.textContent = 'FREE';
+    card.appendChild(badge);
+  }
+
+  // Image
+  const img = document.createElement('img');
+  img.className = 'pair-modal__product-image--compact';
+  img.src = product.image;
+  img.alt = product.title;
+  card.appendChild(img);
+
+  // Title
+  const title = document.createElement('div');
+  title.className = 'pair-modal__product-title--compact';
+  title.textContent = product.title;
+  card.appendChild(title);
+
+  // Price
+  const price = document.createElement('div');
+  price.className = 'pair-modal__product-price--compact';
+  price.textContent = `€${(product.price / 100).toFixed(2).replace('.', ',')}`;
+  if (isFree) {
+    price.classList.add('strikethrough');
+  }
+  card.appendChild(price);
+
+  return card;
+}
+
+// ✅ Keep old function for backwards compatibility (if needed elsewhere)
 function createModalProductCard(product, pairIndex, slot, isFree) {
   const card = document.createElement('div');
   card.className = 'pair-modal__product';
@@ -2187,31 +2469,50 @@ function deletePair(pairIndex) {
 
   if (!pair) {
     console.error('Pair not found');
-    showBogoToast('Error removing pair', 'error');
+    if (typeof showBogoToast === 'function') {
+      showBogoToast('Error removing pair', 'error');
+    }
     return;
   }
 
-  const pairNumber = pairIndex + 1;
+  const pairNumber = pair.pairNumber || (pairIndex + 1);
 
-  // ✅ FIX 6: Unhighlight both products using dedicated function
-  unhighlightProduct(pair.product1?.element, pair.pairNumber);
-  unhighlightProduct(pair.product2?.element, pair.pairNumber);
+  // ✅ BOGO-CALCULATION-FIX-033: Use slot1/slot2 with product1/product2 fallback
+  const item1 = pair.slot1 || pair.product1;
+  const item2 = pair.slot2 || pair.product2;
+
+  // Unhighlight both products (if elements exist)
+  if (typeof unhighlightProduct === 'function') {
+    if (item1?.element) unhighlightProduct(item1.element, pairNumber);
+    if (item2?.element) unhighlightProduct(item2.element, pairNumber);
+  }
 
   // Remove from state
   state.pairs.splice(pairIndex, 1);
 
   // Save state
-  saveBOGOState(state);
+  if (typeof saveBOGOState === 'function') {
+    saveBOGOState();
+  }
 
-  // Re-render
-  renderPairModal();
-  updateStickyCart();
+  // Re-render modal and update sticky cart
+  if (typeof renderPairModal === 'function') {
+    renderPairModal();
+  }
+  if (typeof updateStickyCart === 'function') {
+    updateStickyCart();
+  }
 
-  // Show success notification (BOGO-REVIEW-MODAL-UX-024)
-  showBogoToast(`Pair ${pairNumber} removed`, 'success', 2500);
+  // Show success notification
+  if (typeof showBogoToast === 'function') {
+    showBogoToast(`Pair ${pairNumber} removed`, 'success', 2500);
+  }
 
   console.log('✅ Pair deleted:', pairIndex);
 }
+
+// Make globally accessible
+window.deletePair = deletePair;
 
 // ✅ BOGO-INLINE-VARIANTS-044: Initialize inline variant controls
 function initInlineVariantControls() {
@@ -2410,7 +2711,7 @@ function extractBulletPoints(description) {
 // ✅ Helper: Create scrollable description section
 // ✅ BOGO-MODAL-ENHANCE-041: Removed createDescriptionSection function (Product Details section removed)
 
-// ✅ BOGO-MODAL-ENHANCE-041: Image carousel functionality
+// ✅ SINGLE LARGE IMAGE - Show only first valid product image
 function setupImageCarousel(modal, productId) {
   try {
     const figure = modal.querySelector('figure');
@@ -2421,181 +2722,34 @@ function setupImageCarousel(modal, productId) {
     // Get all product images (main + variants, max 5)
     const images = getProductImages(productId, modal);
 
-    if (images.length <= 1) {
-      // Only one image, no carousel needed
+    // Filter and get ONLY first valid image
+    const validImages = images.filter(img =>
+      img && !img.includes('no-image') && !img.includes('shopifycloud')
+    );
+
+    if (validImages.length === 0) {
+      console.warn('⚠️ No valid product images found');
       return;
     }
 
     // Mark as setup
     figure.dataset.carouselSetup = 'true';
 
-    // Create carousel structure
-    const carouselContainer = document.createElement('div');
-    carouselContainer.className = 'carousel-container';
-
-    // Create images container
+    // Create simple image container with ONLY first image
     const imagesContainer = document.createElement('div');
     imagesContainer.className = 'carousel-images';
 
-    images.forEach(function(imgSrc, index) {
-      const img = document.createElement('img');
-      img.src = imgSrc;
-      img.alt = 'Product image';
-      img.className = 'carousel-image';
-      if (index === 0) img.classList.add('active');
-      imagesContainer.appendChild(img);
-    });
+    const img = document.createElement('img');
+    img.src = validImages[0]; // Only first image
+    img.alt = 'Product image';
+    img.className = 'carousel-image active';
+    imagesContainer.appendChild(img);
 
-    // Create navigation arrows
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'carousel-nav carousel-prev';
-    prevBtn.innerHTML = '‹';
-    prevBtn.setAttribute('aria-label', 'Previous image');
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'carousel-nav carousel-next';
-    nextBtn.innerHTML = '›';
-    nextBtn.setAttribute('aria-label', 'Next image');
-
-    // Create dots indicator
-    const dotsContainer = document.createElement('div');
-    dotsContainer.className = 'carousel-dots';
-
-    images.forEach(function(_, index) {
-      const dot = document.createElement('button');
-      dot.className = 'carousel-dot';
-      if (index === 0) dot.classList.add('active');
-      dot.setAttribute('aria-label', `Go to image ${index + 1}`);
-      dotsContainer.appendChild(dot);
-    });
-
-    // ✅ BOGO-MODAL-REDESIGN-049: Create thumbnail images
-    const thumbnailsContainer = document.createElement('div');
-    thumbnailsContainer.className = 'carousel-thumbnails';
-
-    images.forEach(function(imgSrc, index) {
-      const thumbnail = document.createElement('button');
-      thumbnail.className = 'carousel-thumbnail';
-      if (index === 0) thumbnail.classList.add('active');
-      thumbnail.setAttribute('aria-label', `View image ${index + 1}`);
-
-      const thumbImg = document.createElement('img');
-      thumbImg.src = imgSrc;
-      thumbImg.alt = `Product view ${index + 1}`;
-
-      thumbnail.appendChild(thumbImg);
-      thumbnailsContainer.appendChild(thumbnail);
-    });
-
-    // Replace figure content with carousel
+    // Replace figure content with single image (no carousel controls)
     figure.innerHTML = '';
-    figure.appendChild(prevBtn);
     figure.appendChild(imagesContainer);
-    figure.appendChild(nextBtn);
-    figure.appendChild(dotsContainer);
-    figure.appendChild(thumbnailsContainer); // ✅ Add thumbnails
 
-    // Initialize carousel state
-    let currentIndex = 0;
-
-    function showImage(index) {
-      // Wrap around
-      if (index < 0) index = images.length - 1;
-      if (index >= images.length) index = 0;
-
-      currentIndex = index;
-
-      // Update images
-      const allImages = figure.querySelectorAll('.carousel-image');
-      allImages.forEach(function(img, i) {
-        img.classList.toggle('active', i === currentIndex);
-      });
-
-      // Update dots
-      const allDots = figure.querySelectorAll('.carousel-dot');
-      allDots.forEach(function(dot, i) {
-        dot.classList.toggle('active', i === currentIndex);
-      });
-
-      // ✅ BOGO-MODAL-REDESIGN-049: Update thumbnails
-      const allThumbnails = figure.querySelectorAll('.carousel-thumbnail');
-      allThumbnails.forEach(function(thumb, i) {
-        thumb.classList.toggle('active', i === currentIndex);
-      });
-    }
-
-    // Navigation handlers
-    prevBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      showImage(currentIndex - 1);
-    });
-
-    nextBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      showImage(currentIndex + 1);
-    });
-
-    // Dots click
-    const dots = figure.querySelectorAll('.carousel-dot');
-    dots.forEach(function(dot, index) {
-      dot.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        showImage(index);
-      });
-    });
-
-    // ✅ BOGO-MODAL-REDESIGN-049: Thumbnail click
-    const thumbnails = figure.querySelectorAll('.carousel-thumbnail');
-    thumbnails.forEach(function(thumbnail, index) {
-      thumbnail.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        showImage(index);
-      });
-    });
-
-    // Touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    figure.addEventListener('touchstart', function(e) {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    figure.addEventListener('touchend', function(e) {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      if (touchEndX < touchStartX - swipeThreshold) {
-        // Swipe left - next image
-        showImage(currentIndex + 1);
-      }
-      if (touchEndX > touchStartX + swipeThreshold) {
-        // Swipe right - previous image
-        showImage(currentIndex - 1);
-      }
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      if (!modal.classList.contains('active')) return;
-
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        showImage(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        showImage(currentIndex + 1);
-      }
-    });
-
-    console.log(`✅ Carousel setup with ${images.length} images`);
+    console.log('✅ Single large product image loaded');
   } catch (error) {
     console.error('❌ Error setting up carousel:', error);
   }
@@ -2878,9 +3032,9 @@ function openProductInfoModal(event, iconElement) {
       const hasVariants = parseInt(productCard.dataset.hasVariants) > 0;
 
       if (hasVariants) {
-        addToCartBtn.innerHTML = '<span style="font-size: 24px; font-weight: 700;">✓</span> Select Variant & Add to BOGO Pair';
+        addToCartBtn.innerHTML = 'Select Variant & Add to BOGO Pair';
       } else {
-        addToCartBtn.innerHTML = '<span style="font-size: 24px; font-weight: 700;">✓</span> Add to BOGO Pair';
+        addToCartBtn.innerHTML = 'Add to BOGO Pair';
       }
     }
   }, 50);

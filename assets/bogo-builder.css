@@ -6264,3 +6264,26 @@ body.modal-open .bogo-sticky-cart {
 body.checkout-loading {
   overflow: hidden;
 }
+
+/* ========================================
+   REBUY SUPPRESSION DURING CHECKOUT
+   BOGO-CHECKOUT-REBUY-FIX-028
+   ======================================== */
+
+/* Hide Rebuy Smart Cart when BOGO checkout is active */
+body.bogo-checkout-mode rebuy-cart,
+body.bogo-checkout-mode [data-rebuy-cart],
+body.bogo-checkout-mode .rebuy-cart,
+body.bogo-checkout-mode .rebuy-smart-cart,
+body.bogo-checkout-mode #rebuy-cart {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Prevent Rebuy overlays */
+body.bogo-checkout-mode .rebuy-overlay,
+body.bogo-checkout-mode .rebuy-modal {
+  display: none !important;
+}

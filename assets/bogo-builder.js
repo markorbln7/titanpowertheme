@@ -3729,14 +3729,32 @@ async function proceedToCheckout() {
     const cartData = await addResponse.json();
     console.log('Items added to cart successfully:', cartData);
 
-    // Step 5: Suppress Rebuy
+    // Step 5: Suppress Rebuy (BOGO-CHECKOUT-REBUY-FIX-028)
     suppressRebuy();
 
     // Step 6: Build checkout URL with discount codes
     const discountCodes = getBOGODiscountCodes(pairCount);
-    const checkoutUrl = discountCodes
-      ? `/checkout?discount=${encodeURIComponent(discountCodes)}`
-      : '/checkout';
+
+    // Step 6.5: Detect if in development environment (BOGO-CHECKOUT-REBUY-FIX-028)
+    const isDev = window.location.hostname === '127.0.0.1' ||
+                  window.location.hostname === 'localhost' ||
+                  window.location.port === '9292';
+
+    let checkoutUrl;
+
+    if (isDev) {
+      // Development: Go to cart page (checkout may not work)
+      console.log('⚠️ Development mode detected - redirecting to /cart');
+      checkoutUrl = discountCodes
+        ? `/cart?discount=${encodeURIComponent(discountCodes)}`
+        : '/cart';
+    } else {
+      // Production: Go directly to checkout
+      console.log('✅ Production mode - redirecting to /checkout');
+      checkoutUrl = discountCodes
+        ? `/checkout?discount=${encodeURIComponent(discountCodes)}`
+        : '/checkout';
+    }
 
     console.log('Redirecting to:', checkoutUrl);
     console.log('Discount codes:', discountCodes);
@@ -3744,9 +3762,18 @@ async function proceedToCheckout() {
     // Step 7: Clear BOGO state
     clearBOGOState();
 
-    // Step 8: Navigate to checkout
+    // Step 8: Navigate to checkout with fallback (BOGO-CHECKOUT-REBUY-FIX-028)
     setTimeout(() => {
+      // Method 1: Standard navigation
       window.location.href = checkoutUrl;
+
+      // Method 2: Fallback if Method 1 blocked
+      setTimeout(() => {
+        if (window.location.href.includes('bogo-bf-2025')) {
+          console.warn('Primary navigation blocked, using fallback...');
+          window.top.location.href = checkoutUrl;
+        }
+      }, 1000);
     }, 500);
 
   } catch (error) {
@@ -3773,38 +3800,92 @@ function getBOGODiscountCodes(pairCount) {
 }
 
 /**
- * Suppress Rebuy (BOGO-CHECKOUT-FIX-027)
- * Temporarily disable Rebuy Smart Cart
+ * Suppress Rebuy Smart Cart (BOGO-CHECKOUT-REBUY-FIX-028)
+ * Multiple suppression methods for maximum effectiveness
  */
 function suppressRebuy() {
-  window.bogoDirectCheckout = true;
-  sessionStorage.setItem('bogo-direct-checkout', 'true');
+  console.log('🚫 Suppressing Rebuy Smart Cart...');
 
+  // Method 1: Set global flags
+  window.bogoDirectCheckout = true;
+  window.rebuyDisabled = true;
+  sessionStorage.setItem('bogo-direct-checkout', 'true');
+  sessionStorage.setItem('rebuy-disabled', 'true');
+
+  // Method 2: Disable Rebuy object
   if (window.Rebuy) {
-    console.log('Suppressing Rebuy Smart Cart...');
-    window._rebuyOriginal = window.Rebuy;
+    console.log('Found Rebuy object, nullifying...');
+    window._rebuyOriginalBackup = window.Rebuy;
 
     // Replace with no-op proxy
     window.Rebuy = new Proxy({}, {
-      get: () => () => {},
+      get: (target, prop) => {
+        console.log(`Rebuy.${prop} blocked`);
+        return () => {};
+      },
       set: () => true
     });
-
-    // Restore after 3 seconds
-    setTimeout(() => {
-      if (window._rebuyOriginal) {
-        window.Rebuy = window._rebuyOriginal;
-        delete window._rebuyOriginal;
-      }
-      sessionStorage.removeItem('bogo-direct-checkout');
-    }, 3000);
   }
+
+  // Method 3: Prevent Rebuy cart events
+  const rebuyEvents = ['rebuy:cart-open', 'rebuy:cart-update', 'rebuy:checkout'];
+  rebuyEvents.forEach(eventName => {
+    document.addEventListener(eventName, (e) => {
+      console.log(`Blocked Rebuy event: ${eventName}`);
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }, true);
+  });
+
+  // Method 4: Disable Rebuy Smart Cart widget
+  const rebuyWidget = document.querySelector('rebuy-cart, [data-rebuy-cart], .rebuy-cart');
+  if (rebuyWidget) {
+    console.log('Found Rebuy widget, hiding...');
+    rebuyWidget.style.display = 'none';
+    rebuyWidget.style.pointerEvents = 'none';
+  }
+
+  // Method 5: Add body class to signal checkout mode
+  document.body.classList.add('bogo-checkout-mode');
+
+  // Restore after 5 seconds (increased from 3)
+  setTimeout(() => {
+    console.log('Restoring Rebuy...');
+    if (window._rebuyOriginalBackup) {
+      window.Rebuy = window._rebuyOriginalBackup;
+      delete window._rebuyOriginalBackup;
+    }
+    sessionStorage.removeItem('bogo-direct-checkout');
+    sessionStorage.removeItem('rebuy-disabled');
+    document.body.classList.remove('bogo-checkout-mode');
+    window.bogoDirectCheckout = false;
+    window.rebuyDisabled = false;
+  }, 5000);
 }
 
-// Show loading overlay
+// Show loading overlay (BOGO-CHECKOUT-REBUY-FIX-028)
 function showCheckoutLoading() {
   const overlay = document.createElement('div');
   overlay.id = 'checkout-loading';
+
+  // Detect dev environment
+  const isDev = window.location.hostname === '127.0.0.1' ||
+                window.location.hostname === 'localhost' ||
+                window.location.port === '9292';
+
+  const devNotice = isDev
+    ? `<p class="dev-notice" style="
+        margin-top: 12px;
+        padding: 8px 16px;
+        background: rgba(251, 191, 36, 0.2);
+        border: 1px solid rgba(251, 191, 36, 0.5);
+        border-radius: 8px;
+        color: #fbbf24;
+        font-size: 13px;
+        font-weight: 600;
+      ">⚠️ Development mode: Redirecting to cart page</p>`
+    : '';
+
   overlay.innerHTML = `
     <div style="
       position: fixed;
@@ -3839,12 +3920,13 @@ function showCheckoutLoading() {
           font-weight: 900;
           color: #ffffff;
           margin: 0 0 12px 0;
-        ">Building Your Order...</h3>
+        ">Preparing Your Checkout...</h3>
         <p style="
           font-size: 16px;
           color: rgba(255, 255, 255, 0.8);
           margin: 0;
-        ">Applying BOGO discounts</p>
+        ">Adding ${window.bogoState?.pairs?.length || 0} BOGO pairs to cart</p>
+        ${devNotice}
       </div>
     </div>
   `;

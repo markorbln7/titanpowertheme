@@ -1,6 +1,108 @@
   console.log('%c🚀 BOGO JavaScript Loading...', 'color: #60c655; font-size: 20px; font-weight: bold;');
 
 // ========================================
+// CURRENCY CONVERSION UTILITY
+// Handles multi-currency for static marketing amounts
+// ========================================
+
+const BOGOCurrency = (() => {
+  // Get active currency from Shopify
+  const getCurrency = () => {
+    return window.Shopify?.currency?.active || 
+           document.querySelector('[data-currency]')?.dataset.currency ||
+           'EUR';
+  };
+
+  // Get currency symbol
+  const getCurrencySymbol = () => {
+    const symbols = {
+      'USD': '$', 'EUR': '€', 'GBP': '£', 'CAD': '$', 'AUD': '$',
+      'JPY': '¥', 'CNY': '¥', 'RSD': 'RSD', 'CHF': 'CHF', 'SEK': 'kr',
+      'NOK': 'kr', 'DKK': 'kr', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft'
+    };
+    const currency = getCurrency();
+    return symbols[currency] || currency + ' ';
+  };
+
+  // Get conversion rate from EUR
+  const getConversionRate = () => {
+    const currency = getCurrency();
+    
+    // Try to get rate from Shopify Currency object
+    if (window.Currency && window.Currency.rates) {
+      return window.Currency.rates[currency] || 1;
+    }
+    
+    // Try to get from page meta or data
+    const rateElement = document.querySelector(`[data-currency-${currency.toLowerCase()}]`);
+    if (rateElement) {
+      return parseFloat(rateElement.dataset[`currency${currency.toLowerCase()}`]) || 1;
+    }
+    
+    // Default conversion rates (approximate - update these with your store's rates)
+    const rates = {
+      'EUR': 1,
+      'USD': 1.10,
+      'GBP': 0.86,
+      'RSD': 117,
+      'CHF': 0.96,
+      'SEK': 11.50,
+      'NOK': 11.80,
+      'DKK': 7.45,
+      'PLN': 4.35,
+      'CZK': 25.20,
+      'HUF': 390,
+      'AUD': 1.70,
+      'CAD': 1.50,
+      'JPY': 160,
+      'CNY': 7.85
+    };
+    
+    return rates[currency] || 1;
+  };
+
+  // Convert cents from EUR base to current currency
+  const convertCents = (eurCents) => {
+    const rate = getConversionRate();
+    return Math.round(eurCents * rate);
+  };
+
+  // Format money with current currency
+  const formatMoney = (cents) => {
+    const currency = getCurrency();
+    const symbol = getCurrencySymbol();
+    const amount = cents / 100;
+    
+    // Format based on currency
+    if (currency === 'RSD' || currency === 'JPY' || currency === 'HUF') {
+      // No decimals for these currencies
+      return `${symbol}${Math.round(amount)}`;
+    } else if (currency === 'EUR') {
+      // European format: €23,00
+      return `${symbol}${amount.toFixed(2).replace('.', ',')}`;
+    } else {
+      // Standard format: $23.00
+      return `${symbol}${amount.toFixed(2)}`;
+    }
+  };
+
+  // Convert and format from EUR cents
+  const convert = (eurCents) => {
+    const convertedCents = convertCents(eurCents);
+    return formatMoney(convertedCents);
+  };
+
+  return {
+    getCurrency,
+    getCurrencySymbol,
+    getConversionRate,
+    convertCents,
+    formatMoney,
+    convert
+  };
+})();
+
+// ========================================
 // PREVENT REBUY CART DRAWER ON BOGO CHECKOUT
 // BOGO-BYPASS-CART-DRAWER-078
 // ========================================
@@ -1020,12 +1122,12 @@ function updateTooltipBreakdown() {
   }
 
   // Update tooltip elements
-  const formatEuro = (amount) => `€${amount.toFixed(2).replace('.', ',')}`;
+  const formatMoney = (amount) => BOGOCurrency.formatMoney(Math.round(amount * 100));
 
   // BOGO always shows if pairs exist
   const bogoItem = document.getElementById('tooltip-bogo');
   if (bogoItem) {
-    bogoItem.textContent = formatEuro(bogoSavings);
+    bogoItem.textContent = formatMoney(bogoSavings);
   }
 
   // Tier discount (show only if applicable)
@@ -1033,7 +1135,7 @@ function updateTooltipBreakdown() {
   if (tierDiscount > 0) {
     const tierLabel = document.getElementById('tooltip-tier-label');
     tierLabel.textContent = currentTier === 3 ? 'Tier 3 (10%):' : 'Tier 2 (5%):';
-    document.getElementById('tooltip-tier').textContent = formatEuro(tierDiscount);
+    document.getElementById('tooltip-tier').textContent = formatMoney(tierDiscount);
     tierItem.style.display = 'flex';
   } else {
     tierItem.style.display = 'none';
@@ -1052,7 +1154,7 @@ function updateTooltipBreakdown() {
   if (currentTier >= 2) totalSavings += 4.99;
   if (currentTier >= 3) totalSavings += 18.95;
 
-  document.getElementById('tooltip-total').textContent = formatEuro(totalSavings);
+  document.getElementById('tooltip-total').textContent = formatMoney(totalSavings);
 
   console.log('Tooltip breakdown:', {
     bogo: bogoSavings.toFixed(2),
@@ -1398,11 +1500,10 @@ function updateStickyCart() {
   console.log('TOTAL SAVINGS (€):', (totalSavingsCents / 100).toFixed(2));
   console.log('============================');
 
-  // Update Savings Display (convert cents to euros)
+  // Update Savings Display (convert cents to current currency)
   const savingsEl = document.getElementById('v2-total-savings');
   if (savingsEl) {
-    const displaySavings = (totalSavingsCents / 100).toFixed(2).replace('.', ',');
-    const formattedSavings = `€${displaySavings}`;
+    const formattedSavings = BOGOCurrency.formatMoney(totalSavingsCents);
     savingsEl.textContent = formattedSavings;
   }
 
@@ -1478,7 +1579,7 @@ function updateStickyCart() {
     if (currentTier === 1) {
       incentiveMsgEl.innerHTML = '🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!';
     } else if (currentTier === 2) {
-      incentiveMsgEl.innerHTML = '🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (€18.95)!';
+      incentiveMsgEl.innerHTML = `🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (${BOGOCurrency.convert(1895)})!`;
     } else if (currentTier >= 3) {
       // Change messaging for 3+ pairs
       if (pairCount === 3) {
@@ -1580,7 +1681,7 @@ function updateStickyCart() {
   const tooltipTotal = document.getElementById('tooltip-total');
 
   if (tooltipBogo && tooltipTotal) {
-    const formatEuro = (cents) => `€${(cents / 100).toFixed(2).replace('.', ',')}`;
+    const formatMoney = (cents) => BOGOCurrency.formatMoney(cents);
 
     // Calculate component savings
     let bogoOnlyCents = 0;
@@ -1606,11 +1707,11 @@ function updateStickyCart() {
     else if (currentTier === 2) tierDiscountCents = Math.round(subtotalAfterBogo * 0.05);
 
     // Update tooltip
-    tooltipBogo.textContent = formatEuro(bogoOnlyCents);
+    tooltipBogo.textContent = formatMoney(bogoOnlyCents);
 
     if (currentTier >= 2) {
       tooltipTierItem.style.display = 'block';
-      tooltipTier.textContent = formatEuro(tierDiscountCents);
+      tooltipTier.textContent = formatMoney(tierDiscountCents);
       tooltipTierLabel.textContent = currentTier === 3 ? 'Tier 3 Bonus (10%):' : 'Tier 2 Bonus (5%):';
     } else {
       tooltipTierItem.style.display = 'none';
@@ -1619,9 +1720,9 @@ function updateStickyCart() {
     if (tooltipShippingItem) tooltipShippingItem.style.display = currentTier >= 2 ? 'block' : 'none';
     if (tooltipCableItem) tooltipCableItem.style.display = currentTier >= 3 ? 'block' : 'none';
 
-    tooltipTotal.textContent = formatEuro(totalSavingsCents);
+    tooltipTotal.textContent = formatMoney(totalSavingsCents);
 
-    console.log('✅ Tooltip updated:', formatEuro(totalSavingsCents));
+    console.log('✅ Tooltip updated:', formatMoney(totalSavingsCents));
   }
 
   console.log('=== STICKY CART V2 UPDATE COMPLETE ===\n');
@@ -1711,7 +1812,7 @@ function createPairCard(pair, isComplete) {
   if (isComplete && pair.savings) {
     const savings = document.createElement('div');
     savings.className = 'bogo-sticky-pair-savings';
-    savings.textContent = `Save €${(pair.savings / 100).toFixed(2)}`;
+    savings.textContent = `Save ${BOGOCurrency.formatMoney(pair.savings)}`;
     card.appendChild(savings);
   }
 
@@ -1887,8 +1988,8 @@ function updatePartitionedPricing() {
   // Savings percentage
   const savingsPercent = retailValueCents > 0 ? Math.round((totalSavingsCents / retailValueCents) * 100) : 0;
 
-  // Helper to format cents with comma
-  const formatCents = (cents) => (cents / 100).toFixed(2).replace('.', ',');
+  // Helper to format cents with currency conversion
+  const formatModalMoney = (cents) => BOGOCurrency.formatMoney(cents);
 
   // Update DOM
   const retailValueEl = document.getElementById('retail-value-total');
@@ -1897,10 +1998,10 @@ function updatePartitionedPricing() {
   const finalAmountEl = document.getElementById('final-amount');
   const savingsPercentageEl = document.getElementById('savings-percentage');
 
-  if (retailValueEl) retailValueEl.textContent = `€${formatCents(retailValueCents)}`;
-  if (bogoDiscountEl) bogoDiscountEl.textContent = `-€${formatCents(bogoDiscountCents)}`;
-  if (tierDiscountEl) tierDiscountEl.textContent = `-€${formatCents(tierDiscountCents)}`;
-  if (finalAmountEl) finalAmountEl.textContent = `€${formatCents(finalAmountCents)}`;
+  if (retailValueEl) retailValueEl.textContent = formatModalMoney(retailValueCents);
+  if (bogoDiscountEl) bogoDiscountEl.textContent = `-${formatModalMoney(bogoDiscountCents)}`;
+  if (tierDiscountEl) tierDiscountEl.textContent = `-${formatModalMoney(tierDiscountCents)}`;
+  if (finalAmountEl) finalAmountEl.textContent = formatModalMoney(finalAmountCents);
   if (savingsPercentageEl) savingsPercentageEl.textContent = `🎉 You Save ${savingsPercent}%!`;
 
   // Show/hide tier discount row based on tier
@@ -2045,7 +2146,7 @@ function updateReviewProgressBar(pairCount) {
       nextBenefit.textContent = '⭐ Add 1 more pair → FREE Premium Shipping + 5% OFF';
     } else if (pairCount === 2) {
       currentStatus.textContent = '⭐ Tier 2 Activated - 5% OFF + FREE Shipping';
-      nextBenefit.textContent = '👑 Add 1 more pair → Extra 5% + FREE €18.95 Cable';
+      nextBenefit.textContent = `👑 Add 1 more pair → Extra 5% + FREE ${BOGOCurrency.convert(1895)} Cable`;
     } else {
       currentStatus.textContent = '👑 Tier 3 UNLOCKED - Maximum Savings!';
       nextBenefit.textContent = '10% OFF + Premium Shipping + Bonus Cable';
@@ -2110,7 +2211,7 @@ function updateReviewHeaderSavings() {
   // Update displays
   const savedEl = document.getElementById('review-total-saved');
   if (savedEl) {
-    savedEl.textContent = `€${(totalSavings / 100).toFixed(2)}`;
+    savedEl.textContent = BOGOCurrency.formatMoney(totalSavings);
   }
 
   const discountEl = document.getElementById('review-order-discount');
@@ -2240,8 +2341,8 @@ function createModalPairCard(pair, index) {
   // Savings display below products
   const savings = document.createElement('div');
   savings.className = 'pair-modal__pair-savings--compact';
-  const savingsAmount = (pair.savings / 100).toFixed(2).replace('.', ',');
-  savings.innerHTML = `€${savingsAmount} Saved!`;
+  const savingsAmount = BOGOCurrency.formatMoney(pair.savings);
+  savings.innerHTML = `${savingsAmount} Saved!`;
   card.appendChild(savings);
 
   return card;
@@ -2279,7 +2380,7 @@ function createModalProductCardCompact(product, pairIndex, slot, isFree) {
   // Price
   const price = document.createElement('div');
   price.className = 'pair-modal__product-price--compact';
-  price.textContent = `€${(product.price / 100).toFixed(2).replace('.', ',')}`;
+  price.textContent = BOGOCurrency.formatMoney(product.price);
   if (isFree) {
     price.classList.add('strikethrough');
   }
@@ -2320,7 +2421,7 @@ function createModalProductCard(product, pairIndex, slot, isFree) {
   // Price
   const price = document.createElement('div');
   price.className = 'pair-modal__product-price';
-  price.textContent = `€${(product.price / 100).toFixed(2)}`;
+  price.textContent = BOGOCurrency.formatMoney(product.price);
   if (isFree) {
     price.style.textDecoration = 'line-through';
     price.style.opacity = '0.6';
@@ -3316,13 +3417,13 @@ class TierCelebrations {
       icon: '⭐',
       message: 'TIER 2 UNLOCKED!',
       submessage: 'FREE Premium Shipping + Extra 5% OFF!',
-      breakdown: 'BOGO Savings<br>+ 5% Extra Discount<br>+ FREE Premium Shipping (€4.99)',
+      breakdown: `BOGO Savings<br>+ 5% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})`,
       buttonText: 'Add 1 More Pair for FREE Cable!'
     } : {
       icon: '👑',
       message: 'MAXIMUM SAVINGS!',
       submessage: '10% OFF + FREE Shipping + FREE Cable!',
-      breakdown: 'BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (€4.99)<br>+ FREE Titan Smart Cable (€18.95)',
+      breakdown: `BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(1895)})`,
       buttonText: 'Checkout Now'
     };
 
@@ -3333,7 +3434,7 @@ class TierCelebrations {
     this.overlay.querySelector('.savings-breakdown').innerHTML = config.breakdown;
 
     const savings = this.calculateTierSavings(tier);
-    this.overlay.querySelector('.savings-total').textContent = `€${savings.toFixed(2)}`;
+    this.overlay.querySelector('.savings-total').textContent = BOGOCurrency.formatMoney(Math.round(savings * 100));
 
     // ✅ UPDATE: Two buttons - Checkout and Review Pairs
     const primaryBtn = this.overlay.querySelector('.btn-celebration-continue.primary');
@@ -3623,7 +3724,7 @@ class SocialProofNotifications {
       { text: 'just completed a Tier 2 bundle', icon: '⭐' },
       { text: 'unlocked Tier 3 savings', icon: '👑' },
       { text: 'added 3 pairs to their bundle', icon: '🎁' },
-      { text: 'saved €52 with BOGO', icon: '💰' },
+      { text: `saved ${BOGOCurrency.convert(5200)} with BOGO`, icon: '💰' },
       { text: 'is building a bundle now', icon: '🔥' },
       { text: 'unlocked FREE Premium Shipping', icon: '🚚' },
       { text: 'got a FREE Titan Smart Cable', icon: '🎉' }
@@ -5226,8 +5327,52 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('✅ Sticky cart updated');
     }
 
+    // Initialize currency conversion for static amounts
+    initStaticCurrencyConversion();
+    console.log('✅ Currency conversion initialized');
+
     console.log('🎉 All advanced features ready!');
   }, 100);
+});
+
+// ========================================
+// CURRENCY CONVERSION FOR STATIC AMOUNTS
+// Converts all hardcoded EUR amounts to current currency
+// ========================================
+
+function initStaticCurrencyConversion() {
+  console.log('💱 Initializing currency conversion...');
+  console.log('Current currency:', BOGOCurrency.getCurrency());
+  console.log('Conversion rate:', BOGOCurrency.getConversionRate());
+  
+  // Convert all elements with bogo-currency class
+  const currencyElements = document.querySelectorAll('.bogo-currency[data-amount]');
+  
+  console.log(`Found ${currencyElements.length} currency elements to convert`);
+  
+  currencyElements.forEach(el => {
+    const eurCents = parseInt(el.dataset.amount, 10);
+    if (eurCents && !isNaN(eurCents)) {
+      const converted = BOGOCurrency.convert(eurCents);
+      el.textContent = converted;
+      console.log(`Converted €${(eurCents / 100).toFixed(2)} → ${converted}`);
+    }
+  });
+  
+  console.log('✅ All static amounts converted');
+}
+
+// Listen for currency changes (if using Shopify Currency Converter)
+document.addEventListener('DOMContentLoaded', () => {
+  // Some currency converters trigger this event
+  document.addEventListener('currency:changed', () => {
+    console.log('💱 Currency changed, reinitializing...');
+    initStaticCurrencyConversion();
+    // Refresh sticky cart to show updated currency
+    if (typeof updateStickyCart === 'function') {
+      updateStickyCart();
+    }
+  });
 });
 
 // Re-initialize touch feedback on resize (orientation change)

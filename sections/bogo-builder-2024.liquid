@@ -82,7 +82,7 @@
             <div class="tier-features">
               <div class="tier-feature included">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">50% OFF Cheaper Item</span>
+                <span class="feature-text">Buy 1 Get 1 free</span>
               </div>
               <div class="tier-feature included">
                 <span class="feature-icon">🚚</span>
@@ -117,7 +117,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline green">+5% OFF</span></span>
+                <span class="feature-text">Buy 2 Get 2 free <span class="discount-badge-inline green">+5% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -152,7 +152,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline gold">+10% OFF</span></span>
+                <span class="feature-text">Buy 3 Get 3 free <span class="discount-badge-inline gold">+10% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -216,7 +216,7 @@
   <div class="filter-container">
     <div class="filter-wrapper">
       <label for="category-filter" class="filter-label">
-        <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">
+        <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;position:initial;">
           <span class="stock-number">⚠️</span>
         </span>
         <span>Limited stock available for this offer</span>
@@ -607,10 +607,26 @@
   {%- comment -%} Confetti Canvas for Tier 3 Celebration {%- endcomment -%}
   <canvas id="sticky-cart-confetti" class="sticky-cart-confetti-canvas"></canvas>
 
-  {%- comment -%} ========================================
-      TIER COMPARISON MODAL - CRO OPTIMIZATION
-      ======================================== {%- endcomment -%}
-  <div id="tier-comparison-modal" class="tier-comparison-modal">
+  {%- comment -%} ✅ MODALS MOVED OUTSIDE SECTION TO ESCAPE STACKING CONTEXT {%- endcomment -%}
+
+  <!-- ========================================== -->
+  <!-- BOGO JAVASCRIPT - CRITICAL: MUST BE INSIDE SECTION -->
+  <!-- ========================================== -->
+<script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
+
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
+
+</section>
+
+{%- comment -%} ========================================
+    MODALS - OUTSIDE SECTION FOR PROPER Z-INDEX
+    ======================================== {%- endcomment -%}
+
+{%- comment -%} ========================================
+    TIER COMPARISON MODAL - CRO OPTIMIZATION
+    ======================================== {%- endcomment -%}
+<div id="tier-comparison-modal" class="tier-comparison-modal">
     <div class="comparison-overlay"></div>
     <div class="comparison-content">
       <button class="comparison-close">✕</button>
@@ -849,17 +865,7 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- BOGO JAVASCRIPT - CRITICAL: MUST BE INSIDE SECTION -->
-  <!-- ========================================== -->
-<script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
-
-<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
-
-</section>
+</div>
 
 {% schema %}
 {

@@ -3520,3 +3520,24 @@ button#privy-submit-btn {
 #privy-container #privy-inner-container .privy-form#privy-form-22508352 input, #privy-container #privy-inner-container .privy-form#privy-form-22508352 button.selectpicker {
     box-shadow: 1px 5px 13px #000000ed;
 }
+
+/* ========================================
+   BOGO CHECKOUT MODE - FORCE HIDE REBUY
+   BOGO-CART-PAGE-REBUY-SUPPRESS-029
+   ======================================== */
+
+/* Hide Rebuy Smart Cart when BOGO checkout is active */
+html.bogo-checkout-mode rebuy-cart,
+html.bogo-checkout-mode [data-rebuy-cart],
+html.bogo-checkout-mode .rebuy-cart,
+html.bogo-checkout-mode .rebuy-smart-cart,
+html.bogo-checkout-mode #rebuy-cart,
+html.bogo-checkout-mode .rebuy-overlay,
+html.bogo-checkout-mode .rebuy-modal {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+}

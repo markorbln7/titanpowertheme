@@ -11,17 +11,13 @@
   {%- comment -%} Full Section Starfield Background {%- endcomment -%}
   <canvas id="starfield-canvas-full"></canvas>
 
-  {%- comment -%} ✅ BOGO-GLOW-STOCK-FIX-051: Sticky Announcement Bar {%- endcomment -%}
-  <div class="announcement-bar-sticky" id="stock-announcement">
-    <div class="announcement-content">
-      <span class="announcement-icon">⚠️</span>
-      <span class="announcement-text">Limited stock available for this offer</span>
-    </div>
-  </div>
+  {%- comment -%} ✅ BOGO-FOUNDATION: UNIFIED WRAPPER (1600px) {%- endcomment -%}
+  <div class="bogo-builder-main-container">
 
-  {%- comment -%} Black Friday Hero Section - PREMIUM REDESIGN {%- endcomment -%}
-  <div class="bogo-hero-2024">
+    {%- comment -%} Black Friday Hero Section - PREMIUM REDESIGN {%- endcomment -%}
+    <div class="bogo-hero-2024">
     <div class="bogo-hero-content">
+      {%- comment -%} Black Friday Badge {%- endcomment -%}
       <img
         src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/black_friday_power_up_sale_badge.png?v=1762814546"
         alt="Black Friday Power Up Sale"
@@ -31,11 +27,13 @@
         height="auto"
       >
 
-      <h1 class="hero-headline"><span class="free-gradient">FREE</span> FRIDAY SALE IS LIVE! 🔥</h1>
-      <p class="hero-subheadline">Build Your Perfect BOGO Bundle</p>
+      {%- comment -%} Main Headline {%- endcomment -%}
+      <h1 class="hero-headline hero-headline--main">
+        <span class="free-gradient">FREE</span> FRIDAY SALE IS LIVE! 🔥
+      </h1>
 
-      {%- comment -%} ✅ BOGO-HERO-POLISH-039: Battery-shaped countdown timer {%- endcomment -%}
-      <div class="battery-timer">
+      {%- comment -%} ✅ MOVED: Countdown Timer (Now directly under headline) {%- endcomment -%}
+      <div class="battery-timer battery-timer--compact">
         <div class="battery-progress-container">
           <div class="battery-body">
             <div class="battery-fill-bar" id="battery-fill" style="width: 100%;"></div>
@@ -45,20 +43,19 @@
         </div>
       </div>
 
-      {%- comment -%} NEW: Visual Tier Cards - CRO Optimized {%- endcomment -%}
-      <div class="bogo-tier-showcase">
-        <h3 class="tier-showcase-title">Choose Your Savings Level</h3>
-        {%- comment -%} ✅ BOGO-HERO-POLISH-039: Removed subtitle to reduce clutter {%- endcomment -%}
+      {%- comment -%} Offer Explanation {%- endcomment -%}
+      <h2 class="hero-headline-secondary">
+        Add <span class="free-gradient">ANY</span> Product, Get <span class="free-gradient">ANY</span> Product <span class="free-gradient">FREE</span>
+      </h2>
 
-        {%- comment -%} Product flexibility callout {%- endcomment -%}
-        <div class="product-flexibility-note">
-          <span class="flex-icon">🎯</span>
-          <span class="flex-text">
-            <strong>Total Flexibility:</strong> Mix & match any products to create your perfect bundle
-          </span>
-        </div>
+      <p class="hero-subheadline hero-subheadline--savings">
+        Mix & Match Any 2 - The More Pairs, The More You Save
+      </p>
+    </div>
 
-        <div class="tier-cards-container">
+    {%- comment -%} Tier Cards Grid {%- endcomment -%}
+    <div class="bogo-tier-showcase">
+      <div class="tier-cards-container">
           {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 1: Starter {%- endcomment -%}
           <div class="tier-card tier-1" data-tier="1">
             <div class="tier-header">
@@ -70,7 +67,7 @@
             <div class="tier-features">
               <div class="tier-feature included">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 1 Get 1 Free</span>
+                <span class="feature-text">50% OFF Cheaper Item</span>
               </div>
               <div class="tier-feature included">
                 <span class="feature-icon">🚚</span>
@@ -88,7 +85,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">You Save</div>
-              <div class="savings-amount">~€30</div>
+              <div class="savings-amount">€23+</div>
             </div>
           </div>
 
@@ -105,7 +102,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 2 get 2 Free <span class="discount-badge-inline green">+5% OFF</span></span>
+                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline green">+5% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -118,8 +115,8 @@
             </div>
 
             <div class="tier-savings">
-              <div class="savings-label">You Save</div>
-              <div class="savings-amount highlight">~€60</div>
+              <div class="savings-label">Total Savings</div>
+              <div class="savings-amount highlight">€52+</div>
             </div>
 
             <div class="tier-upgrade-hint">
@@ -140,7 +137,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 3+ get 3+ Free <span class="discount-badge-inline gold">+10% OFF</span></span>
+                <span class="feature-text">50% OFF Each Pair <span class="discount-badge-inline gold">+10% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -153,8 +150,8 @@
             </div>
 
             <div class="tier-savings">
-              <div class="savings-label">You Save</div>
-              <div class="savings-amount best">~€105</div>
+              <div class="savings-label">Total Savings</div>
+              <div class="savings-amount best">€90+</div>
             </div>
 
             <div class="tier-value-prop">
@@ -204,7 +201,12 @@
   {%- comment -%} Product Filter Dropdown {%- endcomment -%}
   <div class="filter-container">
     <div class="filter-wrapper">
-      <label for="category-filter" class="filter-label">Filter Products:</label>
+      <label for="category-filter" class="filter-label">
+        <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">
+          <span class="stock-number">⚠️</span>
+        </span>
+        Limited stock available for this offer
+      </label>
       <select id="category-filter" class="filter-select">
         <option value="all">All Products</option>
         {% for collection in section.settings.collections %}
@@ -397,10 +399,13 @@
     </div>
   </div>
 
+  {%- comment -%} ✅ BOGO-FOUNDATION: END UNIFIED WRAPPER {%- endcomment -%}
+  </div>
+
   {%- comment -%} ========================================
       PREMIUM STICKY CART - ENHANCED REDESIGN
       ======================================== {%- endcomment -%}
-  {%- comment -%} Sticky Cart - Simple Working Version {%- endcomment -%}
+  {%- comment -%} Sticky Cart - Simple Working Version (Stays outside wrapper) {%- endcomment -%}
   <div class="bogo-sticky-cart" style="display: none;">
     <div class="bogo-sticky-cart__inner">
 
@@ -412,10 +417,50 @@
         </div>
       </div>
 
-      {%- comment -%} Center: Pair Count {%- endcomment -%}
+      {%- comment -%} Center: Pair Count + Progress Bar {%- endcomment -%}
       <div class="bogo-sticky-cart__center">
         <div class="bogo-sticky-cart__pairs" id="sticky-cart-pair-count">
           0 Pairs
+        </div>
+
+{%- comment -%} Enhanced Progress Bar (BOGO-PROGRESS-008) {%- endcomment -%}
+        <div class="bogo-progress-container">
+          <div class="bogo-progress-next-reward" id="progress-next-reward">
+            <span class="reward-icon">🎁</span>
+            <span class="reward-text">Add 1 pair for 5% OFF + Shipping</span>
+          </div>
+
+          <div class="bogo-progress-bar-enhanced">
+            <div class="bogo-progress-track">
+              <div class="bogo-progress-fill" id="bogo-progress-fill"></div>
+            </div>
+
+            <div class="bogo-progress-milestones">
+              {%- comment -%} Tier 1 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="1">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">1️⃣</span>
+                </div>
+                <span class="milestone-label">BOGO<br>50% OFF</span>
+              </div>
+
+              {%- comment -%} Tier 2 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="2">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🚚</span>
+                </div>
+                <span class="milestone-label">+5% OFF<br>+ SHIP</span>
+              </div>
+
+              {%- comment -%} Tier 3 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}
+              <div class="bogo-milestone" data-tier="3">
+                <div class="milestone-marker">
+                  <span class="milestone-icon">🎁</span>
+                </div>
+                <span class="milestone-label">+10% OFF<br>+ CABLE</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -437,6 +482,111 @@
 
     </div>
   </div>
+
+  {%- comment -%} ========================================
+      STICKY CART V2 - CRO OPTIMIZED (BOGO-V2-FOUNDATION)
+      Structure + Calculations + Segmented Progress
+      ======================================== {%- endcomment -%}
+  <div class="bogo-sticky-cart-v2" id="bogo-sticky-cart-v2" style="display: none;">
+    <div class="sticky-cart-container">
+
+      {%- comment -%} 1. LEFT: Status & Pair Count {%- endcomment -%}
+      <div class="sticky-cart-status">
+        <div class="status-pair-count" id="v2-pair-count">Start Building</div>
+      </div>
+
+      {%- comment -%} 2. CENTER: Progress & Incentive Message {%- endcomment -%}
+      <div class="sticky-cart-progress">
+        {%- comment -%} Incentive message (replaces redundant text) {%- endcomment -%}
+        <div class="progress-incentive" id="v2-incentive-message">
+          Select 2 items to activate Buy 1 Get 1 50% OFF!
+        </div>
+
+        {%- comment -%} Segmented 3-step progress bar {%- endcomment -%}
+        <div class="progress-bar-segmented">
+          <div class="progress-segment" data-tier="1">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">1 Pair</span>
+              <span class="segment-benefit">BOGO 50%</span>
+            </div>
+          </div>
+          <div class="progress-segment" data-tier="2">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">2 Pairs</span>
+              <span class="segment-benefit">+5% & Ship</span>
+            </div>
+          </div>
+          <div class="progress-segment" data-tier="3">
+            <div class="segment-fill"></div>
+            <div class="segment-label">
+              <span class="segment-title">3+ Pairs</span>
+              <span class="segment-benefit">+10% & Cable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} 3. RIGHT: Total Savings with Breakdown Tooltip {%- endcomment -%}
+      <div class="sticky-cart-value">
+        <div class="value-label">You Save</div>
+        <div class="value-amount-wrapper">
+          <div class="value-amount" id="v2-total-savings">€0,00</div>
+          <button class="savings-info-btn" id="v2-savings-info" aria-label="View savings breakdown">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 7V11M8 5V5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {%- comment -%} Savings Breakdown Tooltip {%- endcomment -%}
+        <div class="savings-tooltip" id="v2-savings-tooltip" role="tooltip" aria-hidden="true">
+          <div class="savings-tooltip-arrow"></div>
+          <div class="savings-tooltip-content">
+            <div class="tooltip-title">Your Savings Breakdown</div>
+            <div class="tooltip-items" id="v2-tooltip-breakdown">
+              <div class="tooltip-item">
+                <span class="tooltip-label">BOGO Discount:</span>
+                <span class="tooltip-value" id="tooltip-bogo">€0,00</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-tier-item" style="display: none;">
+                <span class="tooltip-label" id="tooltip-tier-label">Tier Discount:</span>
+                <span class="tooltip-value" id="tooltip-tier">€0,00</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-shipping-item" style="display: none;">
+                <span class="tooltip-label">FREE Shipping:</span>
+                <span class="tooltip-value">€4,99</span>
+              </div>
+              <div class="tooltip-item" id="tooltip-cable-item" style="display: none;">
+                <span class="tooltip-label">FREE Cable:</span>
+                <span class="tooltip-value">€18,95</span>
+              </div>
+            </div>
+            <div class="tooltip-total">
+              <span class="tooltip-label">Total Saved:</span>
+              <span class="tooltip-value" id="tooltip-total">€0,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} 4. FAR RIGHT: Action Buttons {%- endcomment -%}
+      <div class="sticky-cart-actions">
+        <button class="btn-sticky-secondary" id="v2-btn-review" style="display: none;">
+          Review
+        </button>
+        <button class="btn-sticky-primary" id="v2-btn-primary">
+          Start Building
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {%- comment -%} Confetti Canvas for Tier 3 Celebration {%- endcomment -%}
+  <canvas id="sticky-cart-confetti" class="sticky-cart-confetti-canvas"></canvas>
 
   {%- comment -%} ========================================
       TIER COMPARISON MODAL - CRO OPTIMIZATION
@@ -568,51 +718,42 @@
 
     <div class="pair-modal__container">
 
-      {%- comment -%} Header - BOGO-REVIEW-FIXES-040 {%- endcomment -%}
-      <div class="pair-modal__header">
-        <div class="header-content">
-          <div class="header-icon">🎁</div>
-          <div class="header-text">
-            <h2>Your BOGO Pairs</h2>
-            <div class="header-pair-count" id="review-pair-count">0 Pairs Complete</div>
+      {%- comment -%} ✅ COMPACT HEADER REDESIGN - Single row layout {%- endcomment -%}
+      <div class="pair-modal__header--compact">
+        {%- comment -%} Close button - Top right {%- endcomment -%}
+        <button class="pair-modal__close" onclick="closePairModal()">×</button>
+
+        {%- comment -%} Left: Title only (compact) {%- endcomment -%}
+        <div class="pair-modal__title-compact">
+          <h2 class="pair-modal__title-text">Your BOGO Pairs</h2>
+        </div>
+
+        {%- comment -%} Center: Total Saved (Compact Green Box) {%- endcomment -%}
+        <div class="pair-modal__savings-compact">
+          <div class="savings-label-small">TOTAL SAVED</div>
+          <div class="savings-amount-compact" id="review-total-saved">€98,66</div>
+          <div class="savings-discount-small">
+            Order Discount: <span id="review-order-discount">10%</span>
           </div>
         </div>
 
-        {%- comment -%} ✅ PROMINENT SAVINGS DISPLAY {%- endcomment -%}
-        <div class="header-savings">
-          <div class="savings-label">Total Saved</div>
-          <div class="savings-amount" id="review-total-saved">€0.00</div>
-          <div class="order-discount">
-            <span class="discount-label">Order Discount:</span>
-            <span class="discount-value" id="review-order-discount">0%</span>
-          </div>
-        </div>
-
-        <div class="header-actions">
-          <button class="btn-compare-from-review" id="btn-compare-tiers">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            Compare Tiers
-          </button>
-          <button class="pair-modal__close" onclick="closePairModal()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
+        {%- comment -%} Right: Pair count {%- endcomment -%}
+        <div class="pair-count-compact" id="review-pair-count">3 Pairs Complete</div>
       </div>
 
-      {%- comment -%} Tier Progress Bar {%- endcomment -%}
+      {%- comment -%} Tier Status Banner {%- endcomment -%}
       <div class="pair-modal__tier-progress">
-        <div class="progress-status">
-          <div class="progress-current" id="progress-current-status">
-            You have 0 pairs
-          </div>
-          <div class="progress-next" id="progress-next-benefit">
-            Add 1 pair to unlock Tier 1 benefits
-          </div>
+        <div class="tier-status-banner">
+          <span class="tier-icon">👑</span>
+          <span class="tier-text" id="progress-current-status">Tier 3 UNLOCKED - Maximum Savings!</span>
         </div>
+        <div class="tier-benefits-compact" id="progress-next-benefit">
+          10% OFF + Premium Shipping + Bonus Cable
+        </div>
+        {%- comment -%} Compare Tiers - Small underlined link {%- endcomment -%}
+        <button class="compare-tiers-link" id="btn-compare-tiers">
+          Compare Tiers →
+        </button>
       </div>
 
       {%- comment -%} BOGO-PARTITIONED-PRICING-048: Partitioned Pricing Display {%- endcomment -%}
@@ -668,9 +809,14 @@
         </div>
       </div>
 
-      {%- comment -%} Pairs Grid {%- endcomment -%}
+      {%- comment -%} ✅ Section Heading {%- endcomment -%}
+      <div class="pair-modal__section-heading">
+        <h3>BUY 1 GET 1 PAIRS</h3>
+      </div>
+
+      {%- comment -%} Pairs Grid - Compact Side-by-Side Layout {%- endcomment -%}
       <div class="pair-modal__pairs-grid" id="modal-pairs-grid">
-        {%- comment -%} Pairs will be dynamically inserted here {%- endcomment -%}
+        {%- comment -%} Pairs will be dynamically inserted here with compact side-by-side layout {%- endcomment -%}
       </div>
 
       {%- comment -%} Footer Actions {%- endcomment -%}

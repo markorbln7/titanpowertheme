@@ -1,3 +1,146 @@
+/* ========================================
+   BOGO-FOUNDATION: TYPOGRAPHY & SPACING
+   8PT GRID + REFINED TYPE SCALE
+   ======================================== */
+
+:root {
+  /* Typography Scale - Refined (BOGO-FOUNDATION) */
+  --text-xs: 0.64rem;    /* 10px */
+  --text-sm: 0.8rem;     /* 13px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.875rem;  /* 30px */
+  /* ✅ Fluid scaling with reduced max sizes */
+  --text-3xl: clamp(1.75rem, 4vw, 2.25rem);  /* 28px -> 36px (H2) */
+  --text-4xl: clamp(2.25rem, 5vw, 3.25rem);  /* 36px -> 52px (H1) */
+
+  /* Spacing Scale - 8pt Grid System */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 1rem;      /* 16px */
+  --space-md: 1.5rem;    /* 24px */
+  --space-lg: 2rem;      /* 32px */
+  --space-xl: 3rem;      /* 48px */
+  --space-2xl: 4rem;     /* 64px */
+  --space-3xl: 6rem;     /* 96px */
+
+  /* Touch Targets (Mobile Accessibility) */
+  --touch-min: 48px;     /* Minimum tap area for mobile (WCAG 2.2) */
+
+  /* Line Heights */
+  --line-tight: 1.2;
+  --line-normal: 1.5;
+  --line-relaxed: 1.6;
+}
+
+/* ========================================
+   BOGO-FOUNDATION: MASTER CONTAINER
+   1600px Constraint
+   ======================================== */
+
+.bogo-builder-main-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--space-md); /* 24px desktop */
+  position: relative;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .bogo-builder-main-container {
+    padding: 0 var(--space-sm); /* 16px mobile */
+  }
+}
+
+/* Remove conflicting styles from internal wrappers */
+.section-collections-with-nav__wrapper,
+.bogo-hero-content,
+.filter-container {
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Vertical spacing for grid wrapper */
+.section-collections-with-nav__wrapper {
+  padding-top: var(--space-lg) !important; /* 32px */
+  padding-bottom: calc(120px + var(--space-xl)) !important; /* Space for sticky cart */
+}
+
+/* ========================================
+   VIEWPORT RESET (BOGO-VIEWPORT-012)
+   Proper base sizing for 100% zoom
+   ======================================== */
+
+.section-collections-with-nav.dark-mode {
+  /* Reset any inherited zoom/scale */
+  zoom: 1;
+  transform: none;
+  font-size: 16px; /* Standard web base */
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* Tier Cards - Reduced Scale (BOGO-VIEWPORT-012) */
+.tier-card.most-popular {
+  transform: scale(1.03) !important; /* Reduced from 1.05 */
+}
+
+@media (max-width: 1024px) {
+  .tier-card.most-popular {
+    transform: scale(1.01) !important;
+  }
+}
+
+/* Hero Section - Comfortable Sizing (BOGO-VIEWPORT-012) */
+.bogo-hero-2024 {
+  position: relative;
+  background: transparent;
+  color: #ffffff;
+  overflow: hidden;
+  padding-top: var(--space-lg); /* 32px */
+  padding-bottom: var(--space-xl); /* 48px */
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  z-index: 1;
+}
+
+.bogo-hero-content {
+  position: relative;
+  z-index: 10;
+  /* Container handles max-width now */
+}
+
+/* Sticky Cart - Comfortable Height (BOGO-VIEWPORT-012) */
+.bogo-sticky-cart {
+  min-height: 100px;
+  max-height: 120px;
+}
+
+/* Responsive Spacing Adjustments */
+@media (max-width: 1400px) {
+  .section-collections-with-nav__wrapper,
+  .bogo-hero-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bogo-hero-2024 {
+    padding: 32px 16px;
+  }
+
+  .tier-card {
+    padding: 20px 16px;
+  }
+}
+
   {%- comment -%} Premium Typography System {%- endcomment -%}
   * {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
@@ -111,10 +254,10 @@
   }
 
   .bf-badge {
-    max-width: 600px;
+    max-width: 400px;
     width: 100%;
     height: auto;
-    margin: 0 auto 30px;
+    margin: 0 auto 0px;
     display: block;
     filter: drop-shadow(0 10px 30px rgba(96, 198, 85, 0.3));
   }
@@ -122,13 +265,13 @@
   {%- comment -%} Enhanced Typography Hierarchy - Major Third {%- endcomment -%}
   .hero-headline {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-    font-size: clamp(42px, 6vw, 64px); /* ✅ Reduced from clamp(48px, 6vw, 72px) */
+    font-size: var(--text-4xl); /* Fluid 36-52px */
     font-weight: 900;
     text-transform: uppercase;
     color: #ffffff;
     letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 18px; /* ✅ Reduced from 24px */
+    line-height: var(--line-tight);
+    margin-bottom: var(--space-sm); /* 16px */
   }
 
   /* Fire emoji enhancement */
@@ -226,10 +369,10 @@
 
   /* Subtitle - CLEAR HIERARCHY with brand color */
   .hero-subheadline {
-    font-size: clamp(22px, 3vw, 28px); /* ✅ Reduced from clamp(24px, 3vw, 32px) */
+    font-size: var(--text-xl); /* 24px */
     font-weight: 600;
     color: #60c655;
-    margin-bottom: 36px; /* ✅ Reduced from 48px */
+    margin-bottom: var(--space-lg); /* 32px */
     line-height: 1.3;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   }
@@ -302,8 +445,8 @@
 
   /* ✅ BOGO-HERO-POLISH-039: Battery-shaped countdown timer */
   .battery-timer {
-    max-width: 500px;
-    margin: 0 auto 50px;
+    max-width: 450px; /* Reduced from 500px */
+    margin: 0 auto var(--space-lg); /* 32px bottom */
     position: relative;
     display: flex;
     align-items: center;
@@ -319,8 +462,8 @@
 
   .battery-body {
     position: relative;
-    width: 400px;
-    height: 80px;
+    width: 350px; /* Reduced from 400px */
+    height: 70px; /* Reduced from 80px */
     background: rgba(26, 26, 26, 0.95);
     border: 3px solid #60c655;
     border-radius: 12px;
@@ -333,8 +476,8 @@
   }
 
   .battery-head {
-    width: 16px;
-    height: 40px;
+    width: 14px; /* Reduced from 16px */
+    height: 35px; /* Reduced from 40px */
     background: rgba(26, 26, 26, 0.95);
     border: 3px solid #60c655;
     border-left: none;
@@ -370,7 +513,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
+    font-size: 24px; /* Reduced from 28px */
     font-weight: 800;
     color: #ffffff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8),
@@ -571,23 +714,119 @@
     border-bottom: none;
   }
 
+  /* ========================================
+     HERO RESTRUCTURE - COMPACT TIMER & FLOW
+     ======================================== */
+
+  /* Main headline - Large and prominent */
+  .hero-headline--main {
+    font-size: var(--text-4xl); /* 36-52px fluid */
+    margin-bottom: 20px; /* Space before timer */
+    line-height: 1.1;
+  }
+
+  /* ✅ COMPACT TIMER - 50px height */
+  .battery-timer--compact {
+    max-width: 450px;
+    margin: 0 auto 32px;
+  }
+
+  .battery-timer--compact .battery-body {
+    width: 350px;
+    height: 50px; /* Reduced from 70px */
+  }
+
+  .battery-timer--compact .battery-head {
+    width: 12px;
+    height: 28px;
+  }
+
+  .battery-timer--compact .battery-countdown-text {
+    font-size: 20px; /* Reduced from 24px */
+    line-height: 50px;
+  }
+
+  /* Secondary headline - Offer explanation */
+  .hero-headline-secondary {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    font-size: var(--text-3xl); /* 28-36px fluid */
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  /* Subheadline - Savings messaging */
+  .hero-subheadline--savings {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: #60c655;
+    line-height: 1.4;
+    margin-bottom: 0;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Spacer between hero and tier section */
+  .tier-section-spacer {
+    height: 48px;
+  }
+
+  /* Tier section header */
+  .tier-section-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 0 20px;
+  }
+
+  /* Tier section title */
+  .tier-section-title {
+    font-size: var(--text-2xl); /* 30px */
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  /* Tier section subtitle */
+  .tier-section-subtitle {
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Adjust tier showcase spacing */
+  .bogo-tier-showcase {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Remove old tier showcase title */
+  .tier-showcase-title {
+    display: none;
+  }
+
   {%- comment -%} ========================================
       TIER SHOWCASE - CRO OPTIMIZED VISUAL CARDS
       3-tier Goldilocks with Premium Shipping
       ======================================== {%- endcomment -%}
 
   .bogo-tier-showcase {
-    max-width: 1200px;
-    margin: 28px auto 32px; /* ✅ Reduced from 48px/48px */
-    padding: 0 20px; /* ✅ Reduced from 24px */
+    margin: var(--space-lg) auto var(--space-xl); /* 32px top, 48px bottom */
+    padding: 0;
     text-align: center;
   }
 
   .tier-showcase-title {
-    font-size: 26px; /* ✅ Reduced from 28px */
+    font-size: var(--text-2xl); /* 30px */
     font-weight: 900;
     color: #ffffff;
-    margin-bottom: 20px; /* ✅ BOGO-HERO-POLISH-039: Increased for proper spacing */
+    margin-bottom: var(--space-md); /* 24px */
     line-height: 1.2;
   }
 
@@ -601,9 +840,9 @@
   .tier-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px; /* ✅ Reduced from 24px */
-    margin-bottom: 20px; /* ✅ Reduced from 32px */
-    margin-top: 28px; /* ✅ BOGO-HERO-POLISH-039: Added for proper spacing from flexibility note */
+    gap: var(--space-md); /* 24px */
+    margin-bottom: var(--space-lg); /* 32px */
+    margin-top: var(--space-lg); /* 32px */
   }
 
   /* Individual tier card */
@@ -611,7 +850,7 @@
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(0, 0, 0, 0.95) 100%);
     border: 2px solid rgba(96, 198, 85, 0.3);
     border-radius: 20px;
-    padding: 20px; /* ✅ Reduced from 24px for 10% height reduction */
+    padding: var(--space-md); /* 24px standardized */
     position: relative;
     transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
     overflow: visible !important; /* ✅ Allow badges to extend outside */
@@ -628,6 +867,7 @@
     background: radial-gradient(circle, rgba(96, 198, 85, 0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 400ms ease;
+    pointer-events: none !important; /* ✅ BOGO-COMPARE-BTN-FIX: Prevent blocking clicks */
   }
 
   .tier-card:hover {
@@ -640,13 +880,47 @@
     opacity: 1;
   }
 
-  /* Tier 2 - Most Popular (DECOY) */
+  /* ========================================
+     TIER CARD VISUAL HIERARCHY
+     BOGO-TIER-002
+     Per CKL-114 Asymmetric Dominance Effect
+     ======================================== */
+
+  /* Tier 1 - Anchor (Slight De-emphasis) */
+  .tier-card[data-tier="1"] {
+    opacity: 0.95;
+  }
+
+  .tier-card[data-tier="1"]:hover {
+    opacity: 1;
+  }
+
+  /* Tier 2 - Most Popular (TARGET - Maximum Emphasis) */
   .tier-card.most-popular {
     border-color: rgba(96, 198, 85, 0.6);
     border-width: 3px;
-    transform: scale(1.03);
+    transform: scale(1.05); /* ✅ BOGO-VIEWPORT-012: Reduced from 1.08 for better 100% zoom */
     z-index: 2;
     padding-top: 28px; /* ✅ Extra space for badge */
+    box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
+    animation: tier-pulse 3s ease-in-out infinite; /* ✅ BOGO-TIER-002: Pulse animation */
+  }
+
+  /* Pulse animation for Tier 2 */
+  @keyframes tier-pulse {
+    0%, 100% {
+      box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
+    }
+    50% {
+      box-shadow: 0 16px 48px rgba(96, 198, 85, 0.6);
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .tier-card.most-popular {
+      animation: none;
+    }
   }
 
   .popular-badge {
@@ -668,11 +942,19 @@
     z-index: 10;
   }
 
-  /* Tier 3 - Best Value (TARGET) */
+  /* Tier 3 - Best Value (Prestige Anchor - Premium Feel) */
   .tier-card.best-value {
-    border-color: rgba(255, 215, 0, 0.6);
-    background: linear-gradient(135deg, rgba(96, 198, 85, 0.08) 0%, rgba(0, 0, 0, 0.95) 100%);
+    border-color: rgba(243, 156, 18, 0.6); /* ✅ BOGO-TIER-002: Orange/gold border */
+    border-width: 2px;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(42, 42, 42, 0.95) 100%); /* ✅ Darker gradient */
     padding-top: 28px; /* ✅ Extra space for badge */
+    box-shadow: 0 8px 24px rgba(243, 156, 18, 0.3); /* ✅ Gold shadow */
+    position: relative;
+  }
+
+  .tier-card.best-value:hover {
+    box-shadow: 0 12px 32px rgba(243, 156, 18, 0.5);
+    border-color: rgba(243, 156, 18, 0.8);
   }
 
   .best-badge {
@@ -957,8 +1239,41 @@
     border-radius: 8px;
   }
 
+  /* ========================================
+     BOGO-COMPARE-BTN-FIX - Ensure Button Clickability
+     Prevent pseudo-elements from blocking clicks
+     ======================================== */
+
+  /* Global fix: All decorative pseudo-elements in tier showcase */
+  .bogo-tier-showcase *::before,
+  .bogo-tier-showcase *::after {
+    pointer-events: none !important;
+  }
+
+  /* Ensure tier showcase has proper stacking */
+  .bogo-tier-showcase {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tier-cards-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Exception: Keep pointer events on interactive elements */
+  .bogo-tier-showcase button,
+  .bogo-tier-showcase a,
+  .tier-card {
+    pointer-events: auto !important;
+  }
+
   /* Compare button */
   .btn-compare-tiers {
+    position: relative !important;
+    z-index: 10 !important; /* Above decorative elements */
+    pointer-events: auto !important; /* Explicitly clickable */
+    cursor: pointer !important;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(96, 198, 85, 0.3);
     color: #ffffff;
@@ -1005,72 +1320,113 @@
     font-weight: 700;
   }
 
-  /* ✅ Mobile carousel for tier cards */
-  @media (max-width: 968px) {
+  /* ========================================
+     TIER CARDS - MOBILE OPTIMIZATION
+     BOGO-MOBILE-TIERS-018
+     Full width usage, clean badges, proper fit
+     ======================================== */
+  @media (max-width: 768px) {
     .tier-cards-container {
-      display: flex;
-      overflow-x: auto;
-      overflow-y: visible;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scroll-padding: 20px;
-      gap: 16px;
-      padding: 0 20px 20px;
-      margin-bottom: 16px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .tier-cards-container::-webkit-scrollbar {
-      display: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 32px 16px;
+      max-width: 100%;
+      margin: 0;
+      overflow: visible;
     }
 
     .tier-card {
-      flex: 0 0 85%;
-      max-width: 340px;
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
+      width: 100%;
+      max-width: 100%;
+      padding: 24px 16px;
+      min-height: 380px;
       margin: 0;
-    }
-
-    .tier-cards-container::before,
-    .tier-cards-container::after {
-      content: '';
-      flex: 0 0 7.5%;
-    }
-
-    .tier-card.most-popular {
-      transform: scale(1);
-    }
-
-    .tier-carousel-dots {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* No scaling on mobile - all cards same size */
+    .tier-card.most-popular,
+    .tier-card.best-value,
+    .tier-card[data-tier="2"] {
+      transform: scale(1.0) !important;
+    }
+
+    /* Badges - No Cutoff */
+    .popular-badge,
+    .best-badge,
+    .tier-badge {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-title {
+      font-size: 24px;
+      margin: 8px 0;
+    }
+
+    .tier-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 16px;
+    }
+
+    .tier-benefits {
+      width: 100%;
+      text-align: left;
+      padding: 0 16px;
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .tier-benefits li {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
       gap: 8px;
-      margin: 12px 0 16px;
+      flex-wrap: wrap;
     }
 
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: all 300ms ease;
+    .tier-discount {
+      font-size: 18px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      width: fit-content;
     }
 
-    .carousel-dot.active {
+    /* Discount Badges - Better Mobile Display */
+    .tier-discount-badge {
+      display: inline-block;
+      padding: 4px 10px;
       background: #60c655;
-      width: 24px;
-      border-radius: 4px;
+      color: #000000;
+      font-size: 11px;
+      font-weight: 900;
+      border-radius: 8px;
+      margin-left: 8px;
+      white-space: nowrap;
     }
+  }
 
-    .carousel-dot:focus {
-      outline: 2px solid #60c655;
-      outline-offset: 2px;
-    }
+  /* Remove tier carousel dots (BOGO-MOBILE-TIERS-018) */
+  .tier-carousel-dots {
+    display: none !important;
+  }
 
     .product-flexibility-note {
       padding: 8px 16px;
@@ -1093,16 +1449,73 @@
   {%- comment -%} ========================================
       COMPARISON MODAL - TIER TABLE
       ======================================== {%- endcomment -%}
-  .tier-comparison-modal { position: fixed; inset: 0; z-index: 10001; display: none; align-items: center; justify-content: center; padding: 20px; }
-  .tier-comparison-modal.active { display: flex; }
-  .comparison-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); cursor: pointer; }
-  .comparison-content { position: relative; width: 100%; max-width: 1000px; max-height: 90vh; background: #1a1a1a; border-radius: 20px; border: 3px solid #60c655; box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4); overflow-y: auto; }
+  /* Comparison Modal - Overlay */
+  .tier-comparison-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin));
+    padding-left: var(--modal-vertical-margin);
+    padding-right: var(--modal-vertical-margin);
+  }
+
+  .tier-comparison-modal.active {
+    display: flex;
+    pointer-events: auto; /* ✅ Block clicks when visible */
+  }
+
+  .comparison-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+
+  /* Comparison Modal - Content (Flexbox) */
+  .comparison-content {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 100%; /* Fill available space */
+    background: #1a1a1a;
+    border-radius: 20px;
+    border: 3px solid #60c655;
+    box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4);
+
+    /* ✅ Flexbox structure */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
   .comparison-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: none; border-radius: 50%; color: #fff; font-size: 24px; cursor: pointer; transition: all 300ms ease; z-index: 10; }
   .comparison-close:hover { background: rgba(255, 0, 0, 0.8); transform: rotate(90deg); }
-  .comparison-header { text-align: center; padding: 40px 24px 24px; border-bottom: 2px solid rgba(96, 198, 85, 0.3); }
+
+  /* Comparison header - fixed */
+  .comparison-header {
+    flex-shrink: 0;
+    padding: 24px;
+    background: #1a1a1a;
+    border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    text-align: center;
+  }
   .comparison-header h2 { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 8px; }
   .comparison-header p { font-size: 16px; color: rgba(255, 255, 255, 0.7); }
-  .comparison-table-wrapper { padding: 24px; overflow-x: auto; }
+
+  /* Comparison table - scrollable */
+  .comparison-table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
   .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; }
   .comparison-table thead th { padding: 20px 16px; vertical-align: top; }
   .comparison-table .feature-col { text-align: left; color: rgba(255, 255, 255, 0.6); font-weight: 600; font-size: 14px; text-transform: uppercase; }
@@ -1133,28 +1546,157 @@
   .btn-start-building { background: linear-gradient(135deg, #60c655 0%, #50b645 100%); color: #000; border: none; padding: 16px 48px; border-radius: 12px; font-size: 18px; font-weight: 900; cursor: pointer; transition: all 300ms ease; box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4); }
   .btn-start-building:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(96, 198, 85, 0.6); }
 
+  /* ========================================
+     COMPARE TIERS MODAL - MOBILE FIT
+     BOGO-MOBILE-TIERS-018
+     Fits viewport, no scroll to CTA needed
+     ======================================== */
+  @media (max-width: 768px) {
+    .tier-comparison-modal {
+      padding: 0; /* Full screen on mobile */
+    }
+
+    .comparison-content {
+      width: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      border-radius: 0;
+      border: none;
+    }
+
+    .comparison-header {
+      padding: 16px;
+    }
+
+    .comparison-table-wrapper {
+      padding: 16px;
+    }
+
+    .comparison-header h2 {
+      font-size: 18px;
+      margin: 0;
+      padding-right: 40px;
+    }
+
+    .comparison-header p {
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .comparison-table-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      min-height: 0;
+    }
+
+    .comparison-table thead th {
+      padding: 12px 8px;
+    }
+
+    .col-icon {
+      font-size: 24px;
+    }
+
+    .col-name {
+      font-size: 14px;
+    }
+
+    .col-req {
+      font-size: 10px;
+    }
+
+    /* Badges Don't Overlap on Mobile */
+    .col-badge {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      display: block;
+      width: fit-content;
+      margin: 0 auto 8px;
+      font-size: 9px;
+      padding: 3px 8px;
+    }
+
+    .comparison-table tbody td {
+      padding: 12px 8px;
+      font-size: 12px;
+    }
+
+    .feature-name {
+      font-size: 12px;
+    }
+
+    .feature-val {
+      font-size: 12px;
+    }
+
+    .comparison-cta {
+      flex-shrink: 0;
+      padding: 16px;
+      background: #1a1a1a;
+      border-top: 1px solid rgba(96, 198, 85, 0.2);
+    }
+
+    .comparison-cta p {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .btn-start-building {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+
+    .comparison-close {
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+    }
+  }
+
   {%- comment -%} ========================================
       BOGO-CELEBRATION-CLOSE-046: CLICKABLE OVERLAY
       Celebration modal dismissible by background click
       ======================================== {%- endcomment -%}
+  /* ========================================
+     CELEBRATION MODAL - RESPONSIVE SIZING
+     BOGO-CELEBRATION-MODAL-026
+     Always fits viewport with proper margins
+     ======================================== */
+
   /* Overlay container - clickable to close */
+  /* Celebration Modal - Overlay */
   .tier-celebration-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
     z-index: 10002;
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.5); /* ✅ 50% transparent black overlay */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     opacity: 0;
     transition: opacity 500ms ease;
-    cursor: pointer; /* ✅ Shows it's clickable */
-    padding: 20px; /* ✅ Space for hint text */
+    cursor: pointer;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin));
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin));
+    padding-left: var(--modal-vertical-margin);
+    padding-right: var(--modal-vertical-margin);
+    overflow: hidden;
   }
 
   .tier-celebration-overlay.show {
+    pointer-events: auto; /* ✅ Block clicks when visible */
     display: flex;
     opacity: 1;
   }
@@ -1162,64 +1704,210 @@
   /* Canvas for confetti - still non-interactive */
   .celebration-canvas {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
   }
 
-  /* Content box - prevents click-through */
+  /* Content box - Fits Available Space */
+  /* Celebration Modal - Content Box */
   .celebration-content {
     position: relative;
     text-align: center;
-    max-width: 600px;
     width: 100%;
-    padding: 48px 32px;
+    max-width: 600px;
+    height: auto; /* Changed from 100% */
+    max-height: 100%; /* Fill available space */
     background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
     border: 3px solid #60c655;
-    border-radius: 20px;
-    box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4);
+    border-radius: 24px;
+    padding: 48px 32px;
+    box-shadow: 0 32px 96px rgba(96, 198, 85, 0.5);
+
+    /* ✅ Flexbox for proper sizing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    overflow-y: auto; /* Scrollable if needed */
+    overflow-x: hidden;
     animation: celebrationPop 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    cursor: default; /* ✅ Prevent parent cursor from applying */
-    pointer-events: auto; /* ✅ Stop click propagation to overlay */
+    cursor: default;
+    pointer-events: auto;
   }
   @keyframes celebrationPop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
-  .celebration-badge { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px; background: linear-gradient(135deg, #60c655 0%, #50b645 100%); border-radius: 50%; width: 140px; height: 140px; margin-bottom: 24px; box-shadow: 0 12px 48px rgba(96, 198, 85, 0.6); animation: badgeFloat 2000ms ease-in-out infinite; }
+
+  /* Celebration Badge - Scaled Appropriately (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: clamp(80px, 15vw, 120px);
+    height: clamp(80px, 15vw, 120px);
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    border-radius: 50%;
+    margin-bottom: clamp(16px, 3vh, 24px);
+    box-shadow: 0 8px 24px rgba(96, 198, 85, 0.5);
+    border: 4px solid rgba(96, 198, 85, 0.3);
+    animation: badgeFloat 2000ms ease-in-out infinite;
+  }
+
   @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-  .tier-celebration-overlay.tier-3 .celebration-badge { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); box-shadow: 0 12px 48px rgba(255, 215, 0, 0.6); }
-  .badge-icon { font-size: 48px; line-height: 1; }
-  .badge-tier { font-size: 16px; font-weight: 900; color: #000; text-transform: uppercase; letter-spacing: 0.05em; }
-  .celebration-message { font-size: clamp(32px, 5vw, 48px); font-weight: 900; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.02em; animation: messageGlow 2000ms ease-in-out infinite; }
+
+  .tier-celebration-overlay.tier-3 .celebration-badge {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.6);
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+
+  .badge-icon {
+    font-size: clamp(32px, 6vw, 48px);
+    line-height: 1;
+  }
+
+  .badge-tier {
+    font-size: clamp(10px, 2vw, 14px);
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Celebration Messages - Responsive (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-message {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: clamp(12px, 2vh, 20px);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    animation: messageGlow 2000ms ease-in-out infinite;
+  }
+
   @keyframes messageGlow { 0%, 100% { text-shadow: 0 0 20px rgba(96, 198, 85, 0.6); } 50% { text-shadow: 0 0 40px rgba(96, 198, 85, 1); } }
-  .celebration-submessage { font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: #60c655; margin-bottom: 32px; line-height: 1.4; }
-  .celebration-savings { background: rgba(96, 198, 85, 0.1); border: 2px solid rgba(96, 198, 85, 0.3); border-radius: 16px; padding: 24px; margin-bottom: 32px; }
-  .savings-breakdown { font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 12px; line-height: 1.6; }
-  .savings-total { font-size: 48px; font-weight: 900; color: #FFD700; line-height: 1; }
 
-  /* ✅ Two-button layout in celebration modal */
-  .celebration-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  .celebration-submessage {
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 700;
+    color: #60c655;
+    margin-bottom: clamp(20px, 4vh, 32px);
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
 
-  .btn-celebration-continue { border: none; padding: 16px 40px; border-radius: 12px; font-size: 16px; font-weight: 900; cursor: pointer; transition: all 300ms ease; text-transform: uppercase; letter-spacing: 0.05em; flex: 1; min-width: 180px; max-width: 240px; }
+  /* Savings Box - Compact (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-savings {
+    background: rgba(96, 198, 85, 0.15);
+    border: 2px solid rgba(96, 198, 85, 0.4);
+    border-radius: 16px;
+    padding: clamp(16px, 3vh, 24px);
+    margin-bottom: clamp(20px, 4vh, 32px);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .savings-breakdown {
+    font-size: clamp(11px, 2vw, 14px);
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .savings-total {
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 900;
+    color: #fbbf24;
+    line-height: 1;
+    text-align: center;
+    text-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);
+  }
+
+  /* Action Buttons - Responsive Stacking (BOGO-CELEBRATION-MODAL-026) */
+  .celebration-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: clamp(16px, 3vh, 24px);
+  }
+
+  .btn-celebration-continue {
+    width: 100%;
+    height: clamp(48px, 8vh, 56px);
+    border: none;
+    border-radius: 12px;
+    font-size: clamp(13px, 2.5vw, 16px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: all 300ms ease;
+  }
 
   /* Primary button (Checkout) */
-  .btn-celebration-continue.primary { background: linear-gradient(135deg, #60c655 0%, #50b645 100%); color: #000; box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4); }
-  .btn-celebration-continue.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(96, 198, 85, 0.6); }
+  .btn-celebration-continue.primary {
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    color: #000;
+    box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+  }
+
+  .btn-celebration-continue.primary:hover {
+    background: linear-gradient(135deg, #70d665 0%, #60c655 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(96, 198, 85, 0.6);
+  }
 
   /* Secondary button (Review Pairs) */
-  .btn-celebration-continue.secondary { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 2px solid rgba(96, 198, 85, 0.5); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
-  .btn-celebration-continue.secondary:hover { background: rgba(255, 255, 255, 0.15); border-color: #60c655; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(96, 198, 85, 0.3); }
+  .btn-celebration-continue.secondary {
+    height: clamp(44px, 7vh, 52px);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: clamp(12px, 2.5vw, 15px);
+    font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-celebration-continue.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #60c655;
+    transform: translateY(-2px);
+  }
 
   /* Tier 3 - Gold primary button */
-  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4); }
-  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary:hover { box-shadow: 0 12px 32px rgba(255, 215, 0, 0.6); }
+  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
+  }
 
-  /* ✅ BOGO-CELEBRATION-CLOSE-046: Hint text for overlay dismissal */
+  .tier-celebration-overlay.tier-3 .btn-celebration-continue.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+  }
+
+  /* Dismiss/Hint Text (BOGO-CELEBRATION-MODAL-026) */
   .celebration-hint {
-    margin-top: 24px;
-    font-size: 14px;
+    margin-top: clamp(16px, 3vh, 24px);
+    font-size: clamp(11px, 2vw, 13px);
     color: rgba(255, 255, 255, 0.6);
     font-weight: 500;
     text-align: center;
     letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 300ms ease;
     animation: hintPulse 2000ms ease-in-out infinite;
+  }
+
+  .celebration-hint:hover {
+    color: rgba(255, 255, 255, 0.9);
   }
 
   @keyframes hintPulse {
@@ -1227,10 +1915,89 @@
     50% { opacity: 1; }
   }
 
-  /* Mobile: Stack buttons vertically */
+  /* Ensure content is above particles */
+  .celebration-content > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Mobile Specific Adjustments (BOGO-CELEBRATION-MODAL-026) */
   @media (max-width: 768px) {
-    .celebration-buttons { flex-direction: column; gap: 12px; }
-    .btn-celebration-continue { min-width: 100%; max-width: 100%; }
+    .tier-celebration-overlay {
+      padding: 10px; /* Minimal padding on mobile */
+    }
+
+    .celebration-content {
+      max-width: calc(100vw - 20px);
+      padding: 32px 24px;
+    }
+
+    .celebration-buttons {
+      gap: 10px;
+    }
+  }
+
+  /* Very Small Screens (BOGO-CELEBRATION-MODAL-026) */
+  @media (max-width: 480px) {
+    .tier-celebration-overlay {
+      padding: 40px 12px 90px 12px;
+    }
+
+    .celebration-badge {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  /* Landscape Orientation - More Compact (BOGO-CELEBRATION-MODAL-026) */
+  @media (max-height: 600px) and (orientation: landscape) {
+    .tier-celebration-overlay {
+      padding: 20px 20px 80px 20px;
+    }
+
+    .celebration-content {
+      padding: 16px;
+    }
+
+    .celebration-badge {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 12px;
+    }
+
+    .celebration-message {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .celebration-submessage {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .celebration-savings {
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .savings-total {
+      font-size: 32px;
+    }
+
+    .celebration-buttons {
+      margin-top: 12px;
+      gap: 8px;
+    }
+
+    .btn-celebration-continue {
+      height: 40px;
+      font-size: 13px;
+    }
+
+    .btn-celebration-continue.secondary {
+      height: 36px;
+      font-size: 12px;
+    }
   }
   .bogo-sticky-cart.celebration-pulse { animation: cartCelebratePulse 1200ms ease-out; }
   @keyframes cartCelebratePulse { 0%, 100% { transform: translateY(0); box-shadow: 0 -4px 20px rgba(96, 198, 85, 0.3); } 25% { transform: translateY(-8px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } 50% { transform: translateY(0); box-shadow: 0 -12px 60px rgba(96, 198, 85, 0.8); } 75% { transform: translateY(-4px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } }
@@ -1274,9 +2041,7 @@
   .filter-container {
     position: relative;
     z-index: 10;
-    max-width: 1400px;
-    margin: 0 auto 40px;
-    padding: 0 20px;
+    margin-bottom: var(--space-lg); /* 32px */
   }
 
   .filter-wrapper {
@@ -1295,6 +2060,19 @@
     font-weight: 600;
     font-size: 18px;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Warning badge styling */
+  .filter-label .stock-badge-circle {
+    background: #ffc10787 !important;
+    border: 2px solid rgb(255 193 7 / 84%) !important;
+  }
+
+  .filter-label .stock-badge-circle .stock-number {
+    font-size: 13px !important;
+    margin-bottom: 5px;
   }
 
   .filter-select {
@@ -1342,7 +2120,7 @@
     z-index: 10;
     max-width: 1400px !important;
     margin: 0 auto !important;
-    padding: 40px 20px !important;
+    padding: 0px 10px !important;
   }
 
   {%- comment -%} ✅ BOGO-GLOW-STOCK-FIX-051: Product Cards - NO glow on border {%- endcomment -%}
@@ -1872,19 +2650,19 @@
       Circular badges with high contrast, animate only on change
       ======================================== {%- endcomment -%}
 
-  /* ✅ Minimal circular stock badges - top-left */
-  /* ✅ Stock badge - 35px, closer to corner, more transparent */
+  /* ✅ Minimal circular stock badges - top-left (BOGO-PRODUCT-CARD-ICONS-015) */
+  /* ✅ Stock badge - 30px, 15% smaller, symmetrical with info button */
   .stock-badge-circle {
     position: absolute;
     top: 8px; /* ✅ Closer to corner */
     left: 8px; /* ✅ Closer to corner */
-    width: 35px; /* ✅ Smaller: 35px */
-    height: 35px; /* ✅ Smaller: 35px */
+    width: 30px; /* ✅ 15% smaller: 30px */
+    height: 30px; /* ✅ 15% smaller: 30px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px; /* ✅ Slightly smaller font */
+    font-size: 11px; /* ✅ Proportionally smaller font */
     font-weight: 900;
     z-index: 5;
     transition: all 300ms ease;
@@ -1945,24 +2723,24 @@
     transform: scale(1.05);
   }
 
-  /* Mobile - keep 35px size */
+  /* Mobile - 27px size (BOGO-PRODUCT-CARD-ICONS-015) */
   @media (max-width: 768px) {
     .stock-badge-circle {
-      width: 35px; /* ✅ Same size on mobile */
-      height: 35px;
-      font-size: 11px;
-      top: 8px;
-      left: 8px;
+      width: 27px;
+      height: 27px;
+      font-size: 10px;
+      margin-left: -10px;
+      margin-top: -10px;
     }
   }
 
-  {%- comment -%} Product Info Icon - 35px to match stock badge {%- endcomment -%}
+  {%- comment -%} Product Info Icon - 30px to match stock badge (BOGO-PRODUCT-CARD-ICONS-015) {%- endcomment -%}
   .product-info-icon {
     position: absolute;
-    top: 8px; /* ✅ Closer to corner, matches stock badge */
-    right: 8px; /* ✅ Closer to corner */
-    width: 35px; /* ✅ 35px to match stock badge */
-    height: 35px; /* ✅ 35px to match stock badge */
+    top: 8px; /* ✅ Matches stock badge */
+    right: 8px; /* ✅ Symmetrical positioning */
+    width: 30px; /* ✅ 15% smaller: 30px to match stock badge */
+    height: 30px; /* ✅ 15% smaller: 30px to match stock badge */
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid rgba(96, 198, 85, 0.6);
     border-radius: 50%;
@@ -1978,12 +2756,12 @@
   .product-info-icon:hover {
     background: rgba(96, 198, 85, 0.3);
     border-color: rgba(96, 198, 85, 1.0);
-    transform: scale(1.15);
+    transform: scale(1.05); /* ✅ Reduced hover scale to match stock badge */
   }
 
   .product-info-icon svg {
-    width: 18px; /* ✅ Slightly smaller to fit 35px container */
-    height: 18px;
+    width: 15px; /* ✅ Proportionally smaller to fit 30px container */
+    height: 15px;
   }
 
   @keyframes pulse-info {
@@ -1995,18 +2773,18 @@
     }
   }
 
-  /* Mobile - keep 35px size for info icon */
+  /* Mobile - 27px to match stock badge (BOGO-PRODUCT-CARD-ICONS-015) */
   @media (max-width: 768px) {
     .product-info-icon {
-      width: 35px;
-      height: 35px;
-      top: 8px;
-      right: 8px;
+      width: 27px;
+      height: 27px;
+      margin-right: -10px;
+      margin-top: -10px;
     }
 
     .product-info-icon svg {
-      width: 16px;
-      height: 16px;
+      width: 14px; /* ✅ Proportional to 27px container */
+      height: 14px;
     }
   }
 
@@ -2016,61 +2794,77 @@
      ======================================== */
 
   /* Overlay - Full screen flexbox */
+  /* Product Info Modal - Overlay */
   .buy-now-popup-overlay {
     position: fixed !important;
     inset: 0 !important;
+    height: 100dvh !important;
     background: rgba(0, 0, 0, 0.85) !important;
     backdrop-filter: blur(8px);
     z-index: 9999 !important;
     display: none !important;
     align-items: center !important;
     justify-content: center !important;
+
+    /* ✅ Reserve space for header/sticky cart */
+    padding-top: calc(var(--header-height) + var(--modal-vertical-margin)) !important;
+    padding-bottom: calc(var(--sticky-cart-height) + var(--modal-vertical-margin)) !important;
+    padding-left: var(--modal-vertical-margin) !important;
+    padding-right: var(--modal-vertical-margin) !important;
   }
 
   .buy-now-popup-overlay.active {
     display: flex !important;
   }
 
-  /* Modal Wrapper */
+  /* Product Info Modal - Wrapper (Flexbox) - PREMIUM LIGHT THEME */
   .buy-now-popup__wrapper {
     position: relative !important;
-    width: 80vw !important;
-    max-width: 1280px !important;
-    height: 70vh !important;
-    max-height: 860px !important;
-    background: #ffffff !important;
-    border-radius: 12px !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    height: auto !important; /* Changed from 70vh */
+    max-height: 100% !important; /* Fill available space */
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+
+    /* ✅ Flexbox structure */
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
   }
 
-  /* Close Button */
+  /* Close Button - LIGHT THEME */
   .close-buy-now-popup {
     position: absolute !important;
-    top: 16px !important;
-    right: 16px !important;
-    width: 25px !important;
-    height: 25px !important;
-    fill: #999999 !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 32px !important;
+    height: 32px !important;
+    fill: #6b7280 !important;
     cursor: pointer !important;
     z-index: 10 !important;
-    transition: fill 300ms ease;
+    transition: all 300ms ease;
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 50% !important;
+    padding: 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
   }
 
   .close-buy-now-popup:hover {
-    fill: #ff0000 !important;
+    fill: #1f2937 !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   }
 
-  /* Product Body - TWO COLUMN LAYOUT */
+  /* Product Info Modal - Body (Scrollable) */
   .buy-now-popup__product-body {
     display: flex !important;
     flex-direction: row !important;
-    flex: 1 !important;
-    padding: 70px !important;
-    overflow-y: auto !important;
-    gap: 0 !important;
+    flex: 1 !important; /* Take remaining space */
+    padding: 32px !important;
+    overflow-y: auto !important; /* Scrollable */
+    gap: 32px !important;
     min-height: 0 !important;
   }
 
@@ -2088,27 +2882,30 @@
     flex-direction: column !important;
   }
 
-  /* Discount Badge */
-  .discount_message {
+  /* Discount Badge - GET FOR FREE STYLE */
+  .buy-now-popup__wrapper .discount_message {
     position: absolute !important;
-    top: 12px !important;
-    left: 12px !important;
-    background: #ff3b30 !important;
+    top: 16px !important;
+    left: 16px !important;
+    background: linear-gradient(135deg, #60c655 0%, #4ea843 100%) !important;
     color: #ffffff !important;
-    padding: 6px 12px !important;
-    border-radius: 6px !important;
-    font-size: 12px !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
     z-index: 2 !important;
+    box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3) !important;
   }
 
-  /* Main Carousel Container */
+  /* Main Carousel Container (BOGO-MODAL-CAROUSEL-017) */
   .carousel-images {
     position: relative !important;
     width: 100% !important;
     height: 400px !important;
-    background: #f8f8f8 !important;
-    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
     overflow: hidden !important;
     margin-bottom: 12px !important;
     display: flex !important;
@@ -2141,21 +2938,18 @@
     border-radius: 8px !important;
   }
 
-  /* Carousel Navigation Arrows */
+  /* Carousel Navigation Arrows (BOGO-MODAL-CAROUSEL-017) */
   .carousel-nav {
     position: absolute !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     width: 40px !important;
     height: 40px !important;
-    background: rgba(0, 0, 0, 0.5) !important;
-    color: #ffffff !important;
-    border: none !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 50% !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
     cursor: pointer !important;
-    z-index: 2 !important;
+    z-index: 5 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2164,81 +2958,81 @@
 
   .carousel-nav:hover {
     background: rgba(0, 0, 0, 0.8) !important;
-    transform: translateY(-50%) scale(1.1) !important;
+    border-color: #60c655 !important;
+    transform: translateY(-50%) scale(1.05) !important;
   }
 
   .carousel-prev {
-    left: 10px !important;
+    left: 12px !important;
   }
 
   .carousel-next {
-    right: 10px !important;
+    right: 12px !important;
   }
 
-  /* Carousel Dots */
-  .carousel-dots {
-    position: absolute !important;
-    bottom: 10px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    display: flex !important;
-    gap: 8px !important;
-    z-index: 2 !important;
+  /* Arrow Icon - Centered and Proper Size */
+  .carousel-nav svg,
+  .carousel-nav i {
+    width: 18px !important;
+    height: 18px !important;
+    color: #ffffff !important;
+    stroke: currentColor !important;
+    stroke-width: 2.5 !important;
+    margin: 0 !important; /* Remove any margins causing off-center */
   }
 
-  .carousel-dot {
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.5) !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: all 300ms ease !important;
-    padding: 0 !important;
+  /* Hide arrows if only 1 image */
+  .carousel-images[data-image-count="1"] .carousel-nav {
+    display: none !important;
   }
 
-  .carousel-dot:hover,
-  .carousel-dot.active {
-    background: #60c655 !important;
-    transform: scale(1.2) !important;
+  /* Remove Carousel Dots Completely (BOGO-MODAL-CAROUSEL-017) */
+  .carousel-dots,
+  .carousel-indicators,
+  .image-dots {
+    display: none !important;
   }
 
-  /* Carousel Thumbnails */
+  /* Carousel Thumbnails - Compact (BOGO-MODAL-CAROUSEL-017) */
   .carousel-thumbnails {
     display: flex !important;
     gap: 8px !important;
+    padding: 12px 0 0 0 !important;
     justify-content: center !important;
-    overflow-x: auto !important;
-    padding: 4px 0 !important;
+    flex-wrap: wrap !important;
   }
 
   .carousel-thumbnail {
-    width: 80px !important;
-    height: 80px !important;
-    border: 2px solid #e5e5e5 !important;
+    width: 60px !important;
+    height: 60px !important;
     border-radius: 8px !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
     overflow: hidden !important;
     cursor: pointer !important;
     transition: all 300ms ease !important;
-    padding: 0 !important;
-    background: #f8f8f8 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
     flex-shrink: 0 !important;
   }
 
   .carousel-thumbnail:hover {
     border-color: #60c655 !important;
+    transform: scale(1.05) !important;
   }
 
   .carousel-thumbnail.active {
     border-color: #60c655 !important;
-    border-width: 3px !important;
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.5) !important;
   }
 
   .carousel-thumbnail img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    padding: 8px !important;
+    object-fit: cover !important;
+  }
+
+  /* Hide thumbnails if only 1 image */
+  .carousel-thumbnails[data-image-count="1"] {
+    display: none !important;
   }
 
   /* ========================================
@@ -2257,15 +3051,20 @@
 
   /* Product Title */
   .modal-product-title {
-    font-size: 21px !important;
+    font-size: 24px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #1f2937 !important;
     text-decoration: none !important;
-    padding-bottom: 8px !important;
-    border-bottom: 1px solid #e5e5e5 !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
     line-height: 1.2 !important;
     display: block !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 12px !important;
+    transition: color 300ms ease !important;
+  }
+
+  .modal-product-title:hover {
+    color: #60c655 !important;
   }
 
   /* Description Section */
@@ -2309,7 +3108,14 @@
     margin-bottom: 8px !important;
     font-size: 14px !important;
     line-height: 1.6 !important;
-    color: #333333 !important;
+    color: #4b5563 !important;
+  }
+
+  .buy-now-popup__description-inner p,
+  .buy-now-popup__description-inner div {
+    color: #4b5563 !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
   }
 
   .buy-now-popup__expand-desc {
@@ -2353,33 +3159,35 @@
   .variant-selector {
     flex: 1 !important;
     min-width: 120px !important;
-    height: 46px !important;
+    height: 48px !important;
     padding: 0 16px !important;
-    background: transparent !important;
-    border: 1px solid #000000 !important;
-    border-radius: 20px !important;
-    font-size: 16px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
-    color: #000000 !important;
+    color: #1f2937 !important;
     cursor: pointer !important;
     transition: all 300ms ease !important;
     appearance: none !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23000000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236b7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
     background-position: right 16px center !important;
     padding-right: 40px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   }
 
   .variant-selector:hover {
     border-color: #60c655 !important;
+    box-shadow: 0 2px 6px rgba(96, 198, 85, 0.15) !important;
   }
 
   .variant-selector:focus {
     outline: none !important;
     border-color: #60c655 !important;
-    box-shadow: 0 0 0 3px rgba(96, 198, 85, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(96, 198, 85, 0.2), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
   }
 
   .variant-selector option {
@@ -2397,18 +3205,20 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 12px 16px !important;
-    background: rgba(96, 198, 85, 0.15) !important;
-    border-radius: 8px 8px 0 0 !important;
+    padding: 14px 16px !important;
+    background: linear-gradient(135deg, rgba(96, 198, 85, 0.08) 0%, rgba(96, 198, 85, 0.12) 100%) !important;
+    border-radius: 12px 12px 0 0 !important;
+    border: 1px solid rgba(96, 198, 85, 0.15) !important;
+    border-bottom: none !important;
   }
 
   .reviews-header h3 {
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #1f2937 !important;
     margin: 0 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: 0.8px !important;
   }
 
   .reviews-rating-summary {
@@ -2449,16 +3259,23 @@
     overflow-y: auto !important;
     padding: 12px !important;
     background: #ffffff !important;
-    border: 1px solid rgba(96, 198, 85, 0.2) !important;
+    border: 1px solid rgba(96, 198, 85, 0.15) !important;
     border-top: none !important;
-    border-radius: 0 0 8px 8px !important;
+    border-radius: 0 0 12px 12px !important;
   }
 
   .review-card {
-    padding: 12px !important;
-    background: #f8f8f8 !important;
-    border-radius: 6px !important;
-    margin-bottom: 8px !important;
+    padding: 14px !important;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%) !important;
+    border-radius: 8px !important;
+    margin-bottom: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    transition: all 250ms ease !important;
+  }
+
+  .review-card:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
   }
 
   .review-card:last-child {
@@ -2477,7 +3294,7 @@
   .review-author {
     font-size: 13px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #1f2937 !important;
   }
 
   .review-stars {
@@ -2487,39 +3304,52 @@
 
   .review-date {
     font-size: 11px !important;
-    color: #999999 !important;
+    color: #9ca3af !important;
   }
 
   .review-title {
     font-size: 13px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #1f2937 !important;
     margin-bottom: 4px !important;
   }
 
   .review-content {
     font-size: 12px !important;
-    line-height: 1.5 !important;
-    color: #333333 !important;
+    line-height: 1.6 !important;
+    color: #4b5563 !important;
   }
 
   /* ========================================
      FOOTER - ABSOLUTE AT BOTTOM
      ======================================== */
 
+  /* Product Info Modal - Footer (Fixed at bottom) */
   .buy-now-popup__footer {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
+    position: relative !important; /* Changed from absolute */
+    bottom: auto !important;
+    left: auto !important;
+    flex-shrink: 0; /* Don't shrink */
     width: 100% !important;
     display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 16px 72px !important;
-    background: #ffffff !important;
-    border-top: 1px solid #e5e5e5 !important;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.08) !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    padding: 24px !important;
+    gap: 16px !important;
+    background: linear-gradient(180deg, rgba(248, 249, 250, 0.95) 0%, #ffffff 100%) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: blur(10px) !important;
     z-index: 5 !important;
+  }
+
+  .buy-now-popup__price-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
   }
 
   .buy-now-popup__price {
@@ -2528,37 +3358,108 @@
     gap: 12px !important;
   }
 
+  /* GET FOR FREE Badge */
+  .get-for-free-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+    background: linear-gradient(135deg, #60c655 0%, #4ea843 100%) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(96, 198, 85, 0.3) !important;
+  }
+
+  /* Modal Price Section with Badge (BOGO-MODAL-CAROUSEL-017) */
+  .modal-price-section {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 16px 0 !important;
+  }
+
   .modal-price {
-    font-size: 21px !important;
-    font-weight: 700 !important;
+    font-size: 32px !important;
+    font-weight: 900 !important;
     color: #60c655 !important;
+    line-height: 1 !important;
+    text-shadow: 0 1px 2px rgba(96, 198, 85, 0.1) !important;
+  }
+
+  /* "Get 1 FREE" Pill Badge */
+  .modal-bogo-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+    background: rgba(96, 198, 85, 0.2) !important;
+    border: 1px solid #60c655 !important;
+    border-radius: 20px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #60c655 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    white-space: nowrap !important;
   }
 
   .modal-compare-price {
-    font-size: 16px !important;
+    font-size: 18px !important;
     font-weight: 500 !important;
-    color: #999999 !important;
+    color: #9ca3af !important;
     text-decoration: line-through !important;
   }
 
+  /* Add to BOGO Pair Button - Premium Green */
   .buy-now-popup__atc {
+    width: 100% !important;
     min-width: 280px !important;
-    height: 46px !important;
+    height: 56px !important;
     padding: 0 32px !important;
-    background: #60c655 !important;
+    background: linear-gradient(135deg, #60c655 0%, #4ea843 100%) !important;
     color: #ffffff !important;
     font-size: 16px !important;
-    font-weight: 600 !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
     border: none !important;
-    border-radius: 20px !important;
+    border-radius: 28px !important;
     cursor: pointer !important;
-    transition: all 300ms ease !important;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 8px 20px rgba(96, 198, 85, 0.35) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .buy-now-popup__atc::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    transition: width 0.6s, height 0.6s !important;
+  }
+
+  .buy-now-popup__atc:hover::before {
+    width: 300px !important;
+    height: 300px !important;
   }
 
   .buy-now-popup__atc:hover {
-    background: #50b645 !important;
+    background: linear-gradient(135deg, #70d665 0%, #60c655 100%) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(96, 198, 85, 0.4) !important;
+    box-shadow: 0 12px 28px rgba(96, 198, 85, 0.45) !important;
+  }
+
+  .buy-now-popup__atc:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 12px rgba(96, 198, 85, 0.35) !important;
   }
 
   /* Hide old elements (quantity, upsells) */
@@ -2568,58 +3469,178 @@
   }
 
   /* ========================================
-     MOBILE RESPONSIVE
+     MODAL - MOBILE RESPONSIVE
+     BOGO-MOBILE-001
      ======================================== */
 
   @media (max-width: 768px) {
+    /* Full screen on mobile */
+    .buy-now-popup-overlay {
+      padding: 0 !important;
+    }
+
     .buy-now-popup__wrapper {
-      width: 95vw !important;
-      height: auto !important;
-      max-height: 90vh !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      border-radius: 0 !important;
     }
 
     .buy-now-popup__product-body {
       flex-direction: column !important;
-      padding: 40px 20px 100px 20px !important;
+      padding: 24px !important;
+      padding-bottom: 160px !important; /* Reserve space for fixed footer */
     }
 
     .modal-product-figure {
       width: 100% !important;
       max-height: 300px !important;
       margin-right: 0 !important;
-      margin-bottom: 20px !important;
+      margin-bottom: var(--space-md) !important; /* 24px clean separation */
     }
 
     .carousel-images {
-      height: 300px !important;
+      height: 320px !important; /* Larger on mobile (BOGO-MODAL-CAROUSEL-017) */
+    }
+
+    .carousel-nav {
+      width: 36px !important;
+      height: 36px !important;
+    }
+
+    .carousel-nav svg,
+    .carousel-nav i {
+      width: 16px !important;
+      height: 16px !important;
+    }
+
+    .carousel-thumbnail {
+      width: 50px !important;
+      height: 50px !important;
     }
 
     .buy-now-popup__content {
       width: 100% !important;
+      gap: var(--space-md) !important; /* 24px between all content blocks */
     }
 
+    /* Variant Selectors - Full Width Stack */
     .variant-selectors {
       flex-direction: column !important;
-      gap: 12px !important;
+      gap: var(--space-sm) !important; /* 16px between dropdowns */
     }
 
     .variant-selector {
       width: 100% !important;
+      height: var(--touch-min) !important; /* 48px for easy tapping */
+      font-size: var(--text-base) !important; /* 16px prevents iOS zoom */
     }
 
+    /* Reviews Section */
     .reviews-scroll-area {
       max-height: 150px !important;
     }
 
+    /* Footer - FIXED at Bottom for Thumb Zone */
     .buy-now-popup__footer {
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
       flex-direction: column !important;
-      padding: 16px 20px !important;
+      padding: 20px 16px 24px !important;
       gap: 12px !important;
+      background: linear-gradient(180deg, rgba(248, 249, 250, 0.98) 0%, rgba(255, 255, 255, 0.98) 100%) !important;
+      backdrop-filter: blur(12px) !important;
+      box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.12) !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+      z-index: 100 !important;
+    }
+
+    .buy-now-popup__price-container {
+      justify-content: center !important;
+      margin-bottom: 12px !important;
     }
 
     .buy-now-popup__atc {
       width: 100% !important;
       min-width: auto !important;
+      height: 56px !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      border-radius: 28px !important;
+      box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4) !important;
+    }
+
+    .modal-price {
+      font-size: 24px !important;
+    }
+
+    .modal-bogo-badge {
+      font-size: 10px !important;
+      padding: 5px 10px !important;
+    }
+
+    /* Close Button - Larger Touch Target */
+    .close-buy-now-popup {
+      width: var(--touch-min) !important; /* 48px */
+      height: var(--touch-min) !important;
+      padding: var(--space-sm) !important; /* 16px tap buffer */
+    }
+  }
+
+  /* ========================================
+     TYPOGRAPHY SYSTEM
+     BOGO-MOBILE-001
+     Applied to all text elements
+     ======================================== */
+
+  /* Product Modal Title */
+  .modal-product-title {
+    font-size: var(--text-2xl) !important; /* 31px - prominent */
+    line-height: var(--line-tight) !important;
+    font-weight: 700 !important;
+  }
+
+  /* Pricing - Large and Bold */
+  .modal-price {
+    font-size: var(--text-2xl) !important; /* 31px - key decision point */
+    font-weight: 700 !important;
+    color: #60c655 !important;
+  }
+
+  /* Body Text - Descriptions */
+  .buy-now-popup__description-inner,
+  .buy-now-popup__description-inner p,
+  .buy-now-popup__description-inner li {
+    font-size: var(--text-base); /* 16px - WCAG compliant, no zoom */
+    line-height: var(--line-normal); /* 1.5 - readable */
+  }
+
+  /* Small Text - Metadata */
+  .rating-count,
+  .review-date {
+    font-size: var(--text-sm); /* 13px - secondary info */
+    color: #737373;
+  }
+
+  /* ========================================
+     MOBILE TOUCH TARGET ENHANCEMENTS
+     BOGO-MOBILE-001
+     Ensures all interactive elements ≥48px
+     ======================================== */
+
+  @media (max-width: 768px) {
+    /* Carousel Navigation Arrows */
+    .carousel-nav {
+      width: var(--touch-min) !important; /* 48px */
+      height: var(--touch-min) !important;
+    }
+
+    /* Carousel Thumbnails */
+    .carousel-thumbnail {
+      min-width: 72px !important; /* Slightly smaller OK for thumbnails */
+      min-height: 72px !important;
     }
   }
      Yellow announcement banner removed per user request
@@ -2923,17 +3944,14 @@
   /* Mobile responsive for social proof */
   @media (max-width: 768px) {
     .live-activity-indicator {
-      top: 70px;
-      right: 12px;
-      padding: 8px 12px;
-      font-size: 12px;
+      padding: 6px 12px;
+      font-size: 11px;
+      margin-top: -7px;
+      margin-right: -3px;
     }
 
     .activity-text {
-      max-width: 150px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      max-width: 200px;
     }
 
     #social-proof-notifications {
@@ -3270,6 +4288,58 @@
 
     .countdown-number {
       font-size: 28px;
+    }
+
+    /* Mobile hero restructure styles */
+    .hero-headline--main {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .battery-timer--compact {
+      max-width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .battery-timer--compact .battery-body {
+      width: 280px;
+      height: 45px;
+    }
+
+    .battery-timer--compact .battery-head {
+      width: 10px;
+      height: 24px;
+    }
+
+    .battery-timer--compact .battery-countdown-text {
+      font-size: 16px;
+      line-height: 45px;
+    }
+
+    .hero-headline-secondary {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .hero-subheadline--savings {
+      font-size: 18px;
+      padding: 0 16px;
+    }
+
+    .tier-section-spacer {
+      height: 32px;
+    }
+
+    .tier-section-header {
+      margin-bottom: 24px;
+    }
+
+    .tier-section-title {
+      font-size: 24px;
+    }
+
+    .tier-section-subtitle {
+      font-size: 14px;
     }
 
     .tier-offer-box {
@@ -3675,10 +4745,11 @@
     gap: 24px;
   }
 
+  /* Sticky Cart Mobile - BOGO-MOBILE-001 */
   @media (max-width: 767px) {
     .bogo-sticky-cart__inner {
-      padding: 0 16px;
-      gap: 12px;
+      padding: 0 var(--space-md); /* 24px sides */
+      gap: var(--space-sm); /* 16px between sections */
     }
   }
 
@@ -3688,25 +4759,35 @@
   }
 
   .bogo-sticky-cart__title {
-    font-size: 16px;
+    font-size: var(--text-lg); /* 20px */
     font-weight: 700;
     color: #60c655;
     margin-bottom: 4px;
   }
 
+  /* Status Message - Prominent Display (BOGO-STICKY-CART-STATUS-025) */
   .bogo-sticky-cart__status {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
+    font-weight: 600;
+    text-align: center;
+    margin: 8px 0;
+    transition: color 300ms ease;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .bogo-sticky-cart__status strong {
+    font-weight: 800;
   }
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__title {
-      font-size: 14px;
+      font-size: var(--text-base); /* 16px */
     }
 
     .bogo-sticky-cart__status {
-      font-size: 11px;
+      font-size: 11px; /* Mobile: Smaller for space */
+      margin: 6px 0;
     }
   }
 
@@ -3717,7 +4798,7 @@
   }
 
   .bogo-sticky-cart__pairs {
-    font-size: 20px;
+    font-size: var(--text-lg); /* 20px */
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
@@ -3726,7 +4807,7 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__pairs {
-      font-size: 16px;
+      font-size: var(--text-xl); /* 25px - readable at glance */
     }
   }
 
@@ -3734,13 +4815,13 @@
   .bogo-sticky-cart__right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: var(--space-lg); /* 32px */
     flex-shrink: 0;
   }
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__right {
-      gap: 12px;
+      gap: var(--space-sm); /* 16px */
     }
   }
 
@@ -3749,11 +4830,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 8px;
+    margin-right: var(--space-xs); /* 8px */
   }
 
   .bogo-sticky-cart__savings-label {
-    font-size: 11px;
+    font-size: var(--text-xs); /* 10px */
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
@@ -3761,7 +4842,7 @@
   }
 
   .bogo-sticky-cart__savings-amount {
-    font-size: 24px;
+    font-size: var(--text-xl); /* 25px */
     font-weight: 900;
     color: #60c655;
     line-height: 1;
@@ -3769,21 +4850,21 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__savings-amount {
-      font-size: 18px;
+      font-size: var(--text-2xl); /* 31px - conversion focus */
     }
   }
 
   /* Action Buttons */
   .bogo-sticky-cart__actions {
     display: flex;
-    gap: 12px;
+    gap: var(--space-sm); /* 16px */
   }
 
   .bogo-sticky-cart__btn {
     height: 44px;
-    padding: 0 24px;
+    padding: 0 var(--space-md); /* 24px */
     border-radius: 12px;
-    font-size: 14px;
+    font-size: var(--text-sm); /* 13px */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -3794,9 +4875,10 @@
 
   @media (max-width: 767px) {
     .bogo-sticky-cart__btn {
-      height: 40px;
-      padding: 0 16px;
-      font-size: 12px;
+      height: var(--touch-min); /* 48px - CRITICAL FIX */
+      padding: 0 var(--space-md); /* 24px sides */
+      font-size: var(--text-sm); /* 13px - fits in button */
+      font-weight: 700;
     }
   }
 
@@ -3835,6 +4917,292 @@
 
     .bogo-sticky-cart__center {
       text-align: left;
+    }
+  }
+
+  /* ========================================
+     ENHANCED PROGRESS BAR (BOGO-PROGRESS-FIX-010)
+     Centered, compact, clear layout
+     ======================================== */
+
+  .bogo-progress-container {
+    width: 100%;
+    max-width: 280px;
+    margin: 12px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Next Reward Indicator */
+  .bogo-progress-next-reward {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    background: rgba(251, 191, 36, 0.15);
+    border-radius: 12px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  .reward-icon {
+    font-size: 12px;
+  }
+
+  .reward-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fbbf24;
+    letter-spacing: 0.02em;
+  }
+
+  /* Progress Bar Container */
+  .bogo-progress-bar-enhanced {
+    position: relative;
+    width: 100%;
+    padding-top: 28px;
+    padding-bottom: 20px;
+  }
+
+  /* Progress Track (BOGO-STICKY-CART-STATUS-025) */
+  .bogo-progress-track {
+    position: relative;
+    width: 100%;
+    height: 10px; /* Increased from 8px for better visibility */
+    background: rgba(255, 255, 255, 0.15); /* Darker for better contrast */
+    border-radius: 5px;
+    overflow: visible; /* Allow glow to show */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Progress Fill - Vibrant Green (BOGO-STICKY-CART-STATUS-025) */
+  .bogo-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #60c655 0%, #70d665 50%, #60c655 100%);
+    border-radius: 5px;
+    width: 0%; /* Starts at 0, updated by JS */
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.7);
+    z-index: 1; /* Above track */
+    position: relative;
+  }
+
+  /* Animated stripe effect (BOGO-STICKY-CART-STATUS-025) */
+  .bogo-progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* Pulsing glow when animating (BOGO-STICKY-CART-STATUS-025) */
+  .bogo-progress-fill.animating {
+    animation: progressPulse 800ms ease-out;
+  }
+
+  @keyframes progressPulse {
+    0% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(96, 198, 85, 1); }
+    100% { box-shadow: 0 0 12px rgba(96, 198, 85, 0.7); }
+  }
+
+  /* Milestones Container - Above Track */
+  .bogo-progress-milestones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    padding: 0 2px;
+  }
+
+  .bogo-milestone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex: 0 0 auto;
+  }
+
+  /* Milestone Marker - Compact Size */
+  .milestone-marker {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 2;
+  }
+
+  .milestone-icon {
+    font-size: 11px;
+    opacity: 0.4;
+    transition: opacity 400ms ease;
+  }
+
+  /* Active State - Clear but Not Overwhelming */
+  .bogo-milestone.active .milestone-marker {
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    border-color: #60c655;
+    box-shadow:
+      0 0 12px rgba(96, 198, 85, 0.7),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+  }
+
+  .bogo-milestone.active .milestone-icon {
+    opacity: 1;
+  }
+
+  /* Milestone Labels - Below Track (BOGO-STICKY-CART-MOBILE-016) */
+  .milestone-label {
+    position: absolute;
+    top: 32px;
+    font-size: 8px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    white-space: normal; /* Allow wrapping for line breaks */
+    max-width: 60px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 400ms ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  .bogo-milestone.active .milestone-label {
+    color: #60c655;
+    text-shadow: 0 0 6px rgba(96, 198, 85, 0.6);
+    font-weight: 900;
+  }
+
+  /* Unlocked Effect */
+  .bogo-milestone.unlocked .milestone-marker {
+    animation: milestone-unlock 600ms ease-out;
+  }
+
+  @keyframes milestone-unlock {
+    0% { transform: scale(1.1); }
+    40% { transform: scale(1.3) rotate(8deg); }
+    60% { transform: scale(1.25) rotate(-8deg); }
+    100% { transform: scale(1.1); }
+  }
+
+  /* Mobile Adjustments (BOGO-STICKY-CART-MOBILE-016) */
+  @media (max-width: 767px) {
+    .bogo-sticky-cart {
+      height: 88px; /* Taller for better spacing */
+    }
+
+    .bogo-progress-container {
+      max-width: 240px;
+    }
+
+    .reward-text {
+      font-size: 9px;
+    }
+
+    .bogo-progress-track {
+      height: 8px; /* Mobile: 8px for better touch feedback */
+    }
+
+    .milestone-marker {
+      width: 18px;
+      height: 18px;
+    }
+
+    .milestone-icon {
+      font-size: 10px;
+    }
+
+    .milestone-label {
+      font-size: 7px;
+      top: 28px;
+      max-width: 50px;
+      line-height: 1.1;
+    }
+
+    /* Increase spacing between milestones */
+    .bogo-progress-milestones {
+      padding: 0 8px;
+      justify-content: space-between;
+    }
+
+    /* Larger checkout button text */
+    .bogo-sticky-cart__btn {
+      height: 48px;
+      padding: 0 20px;
+      font-size: 14px; /* Increased from 13px */
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    /* Clearer pair count */
+    .bogo-sticky-cart__pairs {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    /* Savings amount more prominent */
+    .bogo-sticky-cart__savings-amount {
+      font-size: 24px;
+      font-weight: 900;
+    }
+  }
+
+  /* Hide reward text on very small screens */
+  @media (max-width: 480px) {
+    .bogo-sticky-cart {
+      height: 80px;
+    }
+
+    .reward-text {
+      display: none;
+    }
+
+    .reward-icon {
+      font-size: 14px;
+    }
+
+    .milestone-label {
+      font-size: 6px;
+      max-width: 45px;
+    }
+
+    /* Hide "next reward" text on very small screens */
+    .bogo-progress-next-reward {
+      display: none;
     }
   }
 
@@ -3930,10 +5298,12 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    pointer-events: none; /* ✅ BOGO-COMPARE-BTN-FIX: No blocking when hidden */
   }
 
   .pair-modal.active {
     display: flex;
+    pointer-events: auto; /* ✅ Block clicks when visible */
   }
 
   /* ✅ BOGO-REVIEW-FIXES-040: Enhanced dark overlay */
@@ -3948,21 +5318,23 @@
     cursor: pointer; /* ✅ Indicate clickable */
   }
 
-  /* Modal container */
+  /* Modal container - BOGO-MODAL-FIX-011 */
   .pair-modal__container {
     position: relative;
-    width: 100%;
-    max-width: 1200px;
-    max-height: 90vh;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); /* ✅ Enhanced gradient */
-    border-radius: 20px;
-    border: 3px solid #60c655;
-    box-shadow: 0 24px 80px rgba(96, 198, 85, 0.4);
+    width: 90%;
+    max-width: 900px; /* Reduced from 1000px for better fit */
+    height: 80vh; /* Fixed height for better control */
+    max-height: 80vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border-radius: 16px;
+    border: 2px solid #60c655;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     animation: slideUpScale 400ms cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    z-index: 2; /* ✅ Above overlay */
+    overflow-y: auto; /* Single scroll on container */
+    overflow-x: hidden;
+    z-index: 2;
   }
 
   @keyframes fadeIn {
@@ -4131,6 +5503,451 @@
   }
 
   /* ========================================
+     UNIFIED MODAL SCROLL (BOGO-MODAL-SCROLL-FIX-013)
+     Single scroll container for all content
+     ======================================== */
+
+  /* Header - sticky at top */
+  .pair-modal__header {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); /* Match container */
+  }
+
+  /* ========================================
+     COMPACT HEADER REDESIGN (Mobile-first)
+     ======================================== */
+
+  .pair-modal__header--compact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 50px 12px 16px;
+    background: #1a1a1a;
+    border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-shrink: 0;
+    gap: 12px;
+  }
+
+  .pair-modal__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 200ms ease;
+    z-index: 10;
+  }
+
+  .pair-modal__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  .pair-modal__title-compact {
+    flex: 0 0 auto;
+  }
+
+  .pair-icon {
+    font-size: 20px;
+  }
+
+  .pair-modal__title-text {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .pair-count-compact {
+    flex: 0 0 auto;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .pair-modal__savings-compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(96, 198, 85, 0.15);
+    border: 2px solid #60c655;
+    border-radius: 8px;
+    min-width: 100px;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .savings-label-small {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
+  .savings-amount-compact {
+    font-size: 20px;
+    font-weight: 900;
+    color: #60c655;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .savings-discount-small {
+    font-size: 10px;
+    color: rgba(96, 198, 85, 0.8);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  /* Tier Status Banner - OLD CENTERED DESIGN */
+  .tier-status-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+  }
+
+  .tier-icon {
+    font-size: 20px;
+  }
+
+  .tier-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .tier-benefits-compact {
+    font-size: 13px;
+    color: #60c655;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 16px;
+    background: rgba(96, 198, 85, 0.1);
+  }
+
+  .compare-tiers-link {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 8px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    transition: color 200ms ease;
+  }
+
+  .compare-tiers-link:hover {
+    color: #60c655;
+  }
+
+  /* Section Heading */
+  .pair-modal__section-heading {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  .pair-modal__section-heading h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+  }
+
+  /* Hide old header elements */
+  .header-content,
+  .header-savings,
+  .header-actions,
+  .btn-compare-from-review,
+  .clear-all-pairs-header-btn {
+    display: none !important;
+  }
+
+  /* ========================================
+     SIDE-BY-SIDE PAIR CARDS (Mobile-first)
+     ======================================== */
+
+  .pair-modal__pair-card--compact {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .pair-modal__pair-header--compact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .pair-number-label {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .pair-delete-x {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255, 68, 68, 0.15);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    color: #ff4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 200ms ease;
+    padding: 0;
+  }
+
+  .pair-delete-x:hover {
+    background: rgba(255, 68, 68, 0.25);
+    border-color: rgba(255, 68, 68, 0.5);
+    transform: scale(1.1);
+  }
+
+  .pair-delete-x svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pair-modal__pair-products--sidebyside {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .pair-modal__product--compact {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 8px;
+    position: relative;
+  }
+
+  .pair-modal__product-image--compact {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-bottom: 6px;
+  }
+
+  .pair-modal__product-title--compact {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    max-height: 28px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .pair-modal__product-price--compact {
+    font-size: 13px;
+    font-weight: 800;
+    color: #60c655;
+  }
+
+  .pair-modal__product-price--compact.strikethrough {
+    text-decoration: line-through;
+    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .pair-modal__product-badge--compact {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #60c655;
+    color: #000000;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pair-modal__equals-sign--compact {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .pair-modal__pair-savings--compact {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #60c655;
+    padding: 8px;
+    background: rgba(96, 198, 85, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(96, 198, 85, 0.2);
+  }
+
+  /* Desktop adjustments */
+  @media (min-width: 768px) {
+    /* Desktop: Single row with larger savings in center */
+    .pair-modal__header--compact {
+      padding: 14px 60px 14px 20px;
+      gap: 20px;
+    }
+
+    .pair-modal__title-text {
+      font-size: 18px;
+    }
+
+    .pair-count-compact {
+      font-size: 13px;
+    }
+
+    .pair-modal__savings-compact {
+      min-width: 140px;
+      max-width: 220px;
+      padding: 10px 16px;
+    }
+
+    .savings-amount-compact {
+      font-size: 24px;
+    }
+
+    /* Product cards */
+    .pair-modal__pair-products--sidebyside {
+      gap: 16px;
+    }
+
+    .pair-modal__product-image--compact {
+      width: 120px;
+      height: 120px;
+    }
+
+    .pair-modal__product-title--compact {
+      font-size: 13px;
+    }
+
+    .pair-modal__product-price--compact {
+      font-size: 15px;
+    }
+
+    .pair-modal__equals-sign--compact {
+      font-size: 32px;
+    }
+
+    .pair-modal__pair-savings--compact {
+      font-size: 18px;
+    }
+  }
+
+  /* Hide old buttons */
+  .btn-clear-all,
+  .pair-modal__pair-delete {
+    display: none !important;
+  }
+
+  /* Content sections - NO individual scrolling */
+  .pair-modal__tier-progress {
+    flex-shrink: 0;
+    overflow: visible;
+    padding: 0;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .partitioned-pricing {
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .pair-modal__pairs-grid {
+    flex-shrink: 0; /* Don't flex, just stack */
+    overflow: visible; /* Remove scroll */
+    padding-bottom: 24px; /* Space at bottom */
+  }
+
+  /* Footer - sticky at bottom */
+  .pair-modal__footer {
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background: rgb(0 0 0 / 75%);
+  }
+
+  /* Custom Scrollbar - Unified (BOGO-MODAL-SCROLL-FIX-013) */
+  .pair-modal__container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .pair-modal__container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
+  .pair-modal__container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #60c655 0%, #50b645 100%);
+    border-radius: 4px;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .pair-modal__container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #70d665 0%, #60c655 100%);
+  }
+
+  /* Firefox scrollbar */
+  .pair-modal__container {
+    scrollbar-width: thin;
+    scrollbar-color: #60c655 rgba(0, 0, 0, 0.4);
+  }
+
+  /* ========================================
      BOGO-PARTITIONED-PRICING-048
      Partitioned pricing display with value breakdown
      ======================================== */
@@ -4278,10 +6095,11 @@
     }
   }
 
-  /* ✅ Tier Progress - SEGMENTED 3-tier progress bar */
+  /* ✅ Tier Progress - Centered design (old style) */
   .pair-modal__tier-progress {
-    padding: 24px 48px 32px;
-    border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+    padding: 0;
+    background: transparent;
+    border-bottom: none;
   }
 
   /* Tier legend at top */
@@ -4437,10 +6255,10 @@
     border-left: 4px solid #60c655;
   }
 
-  /* Pairs Grid */
+  /* Pairs Grid - BOGO-MODAL-SCROLL-FIX-022: NO separate scroll */
   .pair-modal__pairs-grid {
-    flex: 1;
-    overflow-y: auto;
+    flex-shrink: 0; /* Stack naturally */
+    overflow: visible; /* Single scroll container only */
     padding: 32px 48px;
     display: flex;
     flex-direction: column;
@@ -4602,7 +6420,7 @@
     display: flex;
     gap: 16px;
     padding: 24px 48px;
-    background: rgba(96, 198, 85, 0.05);
+    background: rgb(0 0 0 / 75%);
     border-top: 1px solid rgba(96, 198, 85, 0.3);
   }
 
@@ -4630,32 +6448,92 @@
     box-shadow: 0 6px 24px rgba(96, 198, 85, 0.6);
   }
 
+  /* Continue Shopping Button - Solid Background (BOGO-REVIEW-MODAL-UX-024) */
   .pair-modal__btn-secondary {
-    background: transparent;
-    color: #60c655;
-    border: 2px solid #60c655;
+    background: #000000; /* Solid black, not transparent */
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
   }
 
   .pair-modal__btn-secondary:hover {
-    background: rgba(96, 198, 85, 0.1);
+    background: #1a1a1a;
+    border-color: #60c655;
     transform: translateY(-2px);
   }
 
-  /* Mobile Responsive */
-  /* ✅ Mobile responsive styles */
+  /* ========================================
+     REVIEW MODAL - MOBILE OPTIMIZATION
+     BOGO-REVIEW-MODAL-MOBILE-019
+     Full-screen overlay, compact header, clear button
+     ======================================== */
   @media (max-width: 768px) {
-    .pair-modal__container {
-      max-height: 95vh;
-      border-radius: 16px;
+    /* Full-screen modal */
+    .pair-modal {
+      padding: 0;
     }
 
-    .pair-modal__header,
+    .pair-modal__container {
+      width: 100%;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Compact Header */
+    .pair-modal__header {
+      padding: 12px 16px;
+      background: #1a1a1a;
+      border-bottom: 1px solid rgba(96, 198, 85, 0.3);
+    }
+
+    .pair-modal__header--compact {
+      padding: 12px 50px 12px 16px; /* More right padding for X button */
+    }
+
+    .pair-modal__close {
+      top: 8px;
+      right: 8px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .pair-modal__savings-compact {
+      margin-right: 0; /* Reset, header padding handles spacing */
+    }
+
+    /* Scrollbar - Unified */
+    .pair-modal__container::-webkit-scrollbar {
+      width: 10px;
+    }
+
     .partitioned-pricing,
-    .pair-modal__tier-progress,
-    .pair-modal__pairs-grid,
+    .pair-modal__pairs-grid {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    /* Tier progress full-width (no side padding) */
+    .pair-modal__tier-progress {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     .pair-modal__footer {
-      padding-left: 24px;
-      padding-right: 24px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background: #1a1a1a;
+      border-top: 2px solid rgba(96, 198, 85, 0.3);
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Add padding to modal content so it doesn't hide behind fixed buttons */
+    .pair-modal__pairs-grid {
+      padding-bottom: 100px;
     }
 
     /* Mobile partitioned pricing */
@@ -4753,5 +6631,1650 @@
 
     .pair-modal__footer {
       flex-direction: column;
+      gap: 10px;
+      background: rgb(0 0 0 / 75%);
+      border-top: 1px solid rgba(96, 198, 85, 0.3);
+    }
+
+    /* Footer Buttons - Solid Black (BOGO-REVIEW-MODAL-UX-024) */
+    .pair-modal__btn-secondary {
+      background: #000000 !important; /* Solid black */
+      color: #ffffff !important;
+      border: 2px solid rgba(255, 255, 255, 0.3) !important;
+      backdrop-filter: none !important;
+      height: 44px;
+      font-size: 14px;
+    }
+
+    .pair-modal__btn-secondary:hover {
+      background: #1a1a1a !important;
+      border-color: #60c655 !important;
+    }
+
+    .pair-modal__btn-primary {
+      height: 52px;
+      font-size: 15px;
+      background: linear-gradient(135deg, #60c655 0%, #50b645 100%) !important;
+      color: #000000 !important;
     }
   }
+
+/* ========================================
+   Z-INDEX HIERARCHY FIX
+   BOGO-MOBILE-TIERS-018
+   Ensure modals always above everything
+   ======================================== */
+
+/* Footer elements - Low z-index */
+footer,
+.site-footer,
+.footer-container,
+.footer-logo,
+header.site-header,
+.header-wrapper {
+  position: relative;
+  z-index: 100 !important;
+}
+
+/* Sticky Cart - Above footer */
+.bogo-sticky-cart {
+  z-index: 999 !important;
+}
+
+/* Hide Sticky Cart When Modal Open (BOGO-REVIEW-MODAL-MOBILE-019) */
+body.modal-open .bogo-sticky-cart {
+  display: none !important;
+}
+
+/* Darken Modal Overlay (BOGO-REVIEW-MODAL-MOBILE-019) */
+.pair-modal__overlay {
+  background: rgba(0, 0, 0, 0.95) !important; /* Nearly opaque */
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Modals - Highest priority */
+.buy-now-popup-overlay,
+.tier-comparison-modal,
+.compare-tiers-overlay,
+.modal-overlay,
+.tier-celebration-overlay {
+  z-index: 10000 !important;
+}
+
+/* Modal close buttons */
+.close-buy-now-popup,
+.modal-close,
+.comparison-close,
+.compare-tiers-close {
+  z-index: 10001 !important;
+}
+
+/* Remove gap below tiers (BOGO-MOBILE-TIERS-018) */
+.tier-cards-container + *,
+.bogo-tiers + * {
+  margin-top: 0 !important;
+  padding-top: 32px;
+}
+
+/* ========================================
+   VARIANT SWATCHES & BUTTONS
+   BOGO-VARIANT-SWATCHES-020
+   Visual selectors for instant choice
+   ======================================== */
+
+/* Variant Selectors Container */
+.variant-selectors-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.variant-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.variant-option-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+/* Color Swatches */
+.variant-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variant-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 300ms ease;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.variant-swatch:hover {
+  border-color: rgba(96, 198, 85, 0.5);
+  transform: scale(1.05);
+}
+
+.variant-swatch.selected {
+  border-color: #60c655;
+  box-shadow: 0 0 12px rgba(96, 198, 85, 0.6);
+  transform: scale(1.1);
+}
+
+/* Checkmark for selected swatch */
+.variant-swatch.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Color swatch colors */
+.variant-swatch[data-color="black"] { background: #000000; }
+.variant-swatch[data-color="white"] { background: #ffffff; border-color: #333; }
+.variant-swatch[data-color="gray"],
+.variant-swatch[data-color="grey"] { background: #808080; }
+.variant-swatch[data-color="blue"] { background: #3b82f6; }
+.variant-swatch[data-color="red"] { background: #ef4444; }
+.variant-swatch[data-color="green"] { background: #60c655; }
+.variant-swatch[data-color="yellow"] { background: #fbbf24; }
+.variant-swatch[data-color="orange"] { background: #f97316; }
+.variant-swatch[data-color="purple"] { background: #a855f7; }
+.variant-swatch[data-color="pink"] { background: #ec4899; }
+
+/* Size/Length Buttons */
+.variant-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.variant-button {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 300ms ease;
+  min-width: 60px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.variant-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(96, 198, 85, 0.5);
+}
+
+.variant-button.selected {
+  background: rgba(96, 198, 85, 0.2);
+  border-color: #60c655;
+  color: #60c655;
+  box-shadow: 0 0 8px rgba(96, 198, 85, 0.4);
+}
+
+.variant-button.out-of-stock {
+  opacity: 0.3;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.variant-button.out-of-stock::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: rgba(239, 68, 68, 0.8);
+  transform: translateY(-50%) rotate(-15deg);
+}
+
+/* Hide fallback selects */
+.variant-selectors-fallback {
+  display: none !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .variant-swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .variant-button {
+    padding: 8px 14px;
+    font-size: 13px;
+    min-width: 55px;
+  }
+
+  .variant-option-label {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   TOAST NOTIFICATION SYSTEM
+   BOGO-REVIEW-MODAL-UX-024
+   ======================================== */
+
+.bogo-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(96, 198, 85, 0.5);
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10002;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: toastSlideIn 300ms ease forwards;
+}
+
+.bogo-toast.success {
+  border-color: rgba(96, 198, 85, 0.7);
+}
+
+.bogo-toast.success .toast-icon {
+  color: #60c655;
+}
+
+.bogo-toast.error {
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+.bogo-toast.error .toast-icon {
+  color: #ef4444;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+.bogo-toast.hiding {
+  animation: toastSlideOut 300ms ease forwards;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .bogo-toast {
+    bottom: 80px; /* Above sticky cart */
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: auto;
+  }
+
+  @keyframes toastSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes toastSlideOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+}
+
+/* ========================================
+   CLEAR ALL PAIRS BUTTON
+   BOGO-REVIEW-MODAL-UX-024
+   ======================================== */
+
+.pair-modal__header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.clear-all-pairs-header-btn {
+  padding: 8px 14px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 300ms ease;
+  white-space: nowrap;
+}
+
+.clear-all-pairs-header-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .clear-all-pairs-header-btn {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+}
+
+/* ========================================
+   CHECKOUT LOADING OVERLAY
+   BOGO-CHECKOUT-FIX-027
+   ======================================== */
+
+.bogo-checkout-loading,
+#checkout-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10003;
+  animation: fadeIn 300ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loading-content {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(96, 198, 85, 0.5);
+  border-radius: 20px;
+  max-width: 400px;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(96, 198, 85, 0.2);
+  border-top-color: #60c655;
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-content h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.loading-content p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* Prevent interaction while loading */
+body.checkout-loading {
+  overflow: hidden;
+}
+
+/* ========================================
+   REBUY SUPPRESSION DURING CHECKOUT
+   BOGO-CHECKOUT-REBUY-FIX-028
+   ======================================== */
+
+/* Hide Rebuy Smart Cart when BOGO checkout is active */
+body.bogo-checkout-mode rebuy-cart,
+body.bogo-checkout-mode [data-rebuy-cart],
+body.bogo-checkout-mode .rebuy-cart,
+body.bogo-checkout-mode .rebuy-smart-cart,
+body.bogo-checkout-mode #rebuy-cart {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Prevent Rebuy overlays */
+body.bogo-checkout-mode .rebuy-overlay,
+body.bogo-checkout-mode .rebuy-modal {
+  display: none !important;
+}
+
+/* ========================================
+   STICKY CART V2 - FOUNDATION (BOGO-V2-FOUNDATION)
+   Desktop Structure + Segmented Progress + Calculations
+   Responsive optimization comes in next prompt
+   ======================================== */
+
+/* Main Container */
+/* ✅ BOGO-V2-POLISH: Main Container with Premium Gradient */
+.bogo-sticky-cart-v2 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 1) 0%, rgb(0 0 0 / 90%) 100%);
+  z-index: 9000;
+  transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -1px 0px 12px 9px rgb(0 0 0);
+  min-height: 120px;
+  backdrop-filter: blur(8px);
+  animation: cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Entrance animation */
+@keyframes cartSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ✅ BOGO-V2-POLISH: Enhanced Premium Glow/Fade Effect */
+.bogo-sticky-cart-v2::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 100%,
+    rgba(96, 198, 85, 0.15) 0%,
+    rgba(0, 0, 0, 0.9) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.8;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced glow when cart has pairs */
+.bogo-sticky-cart-v2.has-pairs::before {
+  opacity: 1;
+  background: radial-gradient(ellipse 80% 70% at 50% 100%, rgba(96, 198, 85, 0.25) 0%, rgba(96, 198, 85, 0.12) 20%, rgb(0 0 0 / 81%) 35%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Inner Container - Desktop Horizontal Layout */
+.sticky-cart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1600px; /* Match global container */
+  margin: 0 auto;
+  padding: 20px 32px;
+  gap: 32px;
+  height: 100%;
+}
+
+/* ========================================
+   1. STATUS SECTION (Left)
+   ======================================== */
+.sticky-cart-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.status-pair-count {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* ========================================
+   2. PROGRESS SECTION (Center)
+   ======================================== */
+.sticky-cart-progress {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ✅ BOGO-V2-POLISH: Premium Incentive Message with Gold Shine */
+.progress-incentive {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
+  line-height: 1.3;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.08) 0%,
+    rgba(251, 191, 36, 0.12) 50%,
+    rgba(251, 191, 36, 0.08) 100%
+  );
+  background-size: 200% 100%;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms ease;
+}
+
+/* ✅ BOGO-V2-FIXES: Reduced shimmer intensity */
+.progress-incentive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%, /* Reduced from 0.15 */
+    transparent 100%
+  );
+  animation: incentiveShine 4s ease-in-out infinite; /* Slowed from 3s */
+}
+
+@keyframes incentiveShine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; } /* Pauses at end */
+}
+
+.progress-incentive strong {
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+
+/* Segmented Progress Bar Container */
+.progress-bar-segmented {
+  display: flex;
+  gap: 8px;
+  height: 48px; /* Taller for better visibility */
+}
+
+/* ✅ BOGO-V2-POLISH: Individual Segment with Hover & Grid Pattern */
+.progress-segment {
+  flex: 1;
+  position: relative;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* Subtle grid pattern overlay */
+.progress-segment::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+/* Hover effects */
+.progress-segment:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Active segment enhancements */
+.progress-segment.active {
+  border-color: rgba(96, 198, 85, 0.5);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.2);
+}
+
+.progress-segment.active:hover {
+  border-color: rgba(96, 198, 85, 0.7);
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+}
+
+/* ✅ BOGO-V2-POLISH: Enhanced Segment Fill with Bounce Animation */
+.segment-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #60c655 0%, #70d665 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+}
+
+/* Active state with bouncy unlock animation */
+.progress-segment.active .segment-fill {
+  transform: scaleX(1);
+  animation: segmentUnlock 1000ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes segmentUnlock {
+  0% {
+    transform: scaleX(0);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+  50% {
+    transform: scaleX(1.05);
+    box-shadow: 0 0 30px rgba(96, 198, 85, 1);
+  }
+  70% {
+    transform: scaleX(0.98);
+  }
+  85% {
+    transform: scaleX(1.02);
+  }
+  100% {
+    transform: scaleX(1);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+}
+
+/* Segment Label (Text overlay) */
+.segment-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ✅ BOGO-V2-FIXES: WHITE text on dark segments for visibility */
+.segment-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff; /* Changed from rgba(255,255,255,0.6) to full white */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 400ms ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8); /* Add shadow for readability */
+}
+
+.segment-benefit {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8); /* Brighter white */
+  transition: color 400ms ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Active segment labels - WHITE and GREEN on green background */
+.progress-segment.active .segment-title {
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: none;
+}
+
+.progress-segment.active .segment-benefit {
+  color: rgb(96 198 85);
+  font-weight: 700;
+  text-shadow: none;
+}
+
+/* ========================================
+   3. VALUE SECTION (Right)
+   ======================================== */
+.sticky-cart-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.value-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ✅ BOGO-V2-POLISH: Savings Amount with Enhanced Animations */
+.value-amount {
+  font-size: 32px;
+  font-weight: 900;
+  color: #60c655;
+  line-height: 1.1;
+  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+}
+
+/* Pop-in animation when savings update */
+.value-amount.updating {
+  animation: savingsPopIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes savingsPopIn {
+  0% {
+    transform: scale(1);
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+  40% {
+    transform: scale(1.15);
+    text-shadow: 0 4px 16px rgba(96, 198, 85, 0.8);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+}
+
+/* Milestone celebration for tier 3 unlock */
+.value-amount.milestone {
+  animation: milestoneCelebration 1200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes milestoneCelebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    color: #60c655;
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.3);
+  }
+  15% {
+    transform: scale(1.2) rotate(-5deg);
+    color: #fbbf24;
+    text-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+  }
+  30% {
+    transform: scale(1.3) rotate(5deg);
+    color: #60c655;
+  }
+  45% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  60% {
+    transform: scale(1.25) rotate(3deg);
+    color: #fbbf24;
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+    color: #60c655;
+  }
+}
+
+/* ========================================
+   4. ACTIONS SECTION (Far Right)
+   ======================================== */
+.sticky-cart-actions {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.btn-sticky-primary,
+.btn-sticky-secondary {
+  padding: 14px 28px; /* Larger buttons */
+  border-radius: 12px;
+  font-size: 18px; /* Increased from Gemini's 16px */
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 300ms ease;
+  border: none;
+  min-height: 54px; /* Larger touch target */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* ✅ BOGO-V2-POLISH: Primary CTA with Shimmer Effect */
+.btn-sticky-primary {
+  background: linear-gradient(
+    135deg,
+    #60c655 0%,
+    #70d665 50%,
+    #60c655 100%
+  );
+  background-size: 200% 100%;
+  color: #000000;
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sticky-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sticky-primary:hover {
+  background-position: 100% 0;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(96, 198, 85, 0.6);
+}
+
+.btn-sticky-primary:hover::before {
+  left: 100%;
+}
+
+.btn-sticky-primary:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* ✅ BOGO-V2-POLISH: Secondary CTA with Enhanced States */
+.btn-sticky-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-sticky-secondary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 400ms ease, height 400ms ease;
+}
+
+.btn-sticky-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.btn-sticky-secondary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* ========================================
+   SAVINGS BREAKDOWN TOOLTIP (BOGO-V2-ADVANCED)
+   Interactive hover/tap tooltip showing savings details
+   ======================================== */
+
+/* Wrapper for amount + info button */
+.value-amount-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+/* Info Button */
+.savings-info-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(96, 198, 85, 0.15);
+  border: 1px solid rgba(96, 198, 85, 0.3);
+  color: #60c655;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.savings-info-btn:hover {
+  background: rgba(96, 198, 85, 0.25);
+  border-color: rgba(96, 198, 85, 0.5);
+  transform: scale(1.1);
+}
+
+.savings-info-btn:active {
+  transform: scale(0.95);
+}
+
+.savings-info-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tooltip Container */
+.savings-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 280px;
+  background: #1a1a1a;
+  border: 2px solid #60c655;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Show tooltip */
+.savings-tooltip.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Tooltip Arrow */
+.savings-tooltip-arrow {
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  width: 14px;
+  height: 14px;
+  background: #1a1a1a;
+  border-right: 2px solid #60c655;
+  border-bottom: 2px solid #60c655;
+  transform: rotate(45deg);
+}
+
+/* Tooltip Content */
+.savings-tooltip-content {
+  position: relative;
+  z-index: 1;
+}
+
+.tooltip-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #60c655;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Tooltip Items */
+.tooltip-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(96, 198, 85, 0.2);
+}
+
+.tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.tooltip-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.tooltip-value {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Total Row - Prominent */
+.tooltip-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  padding-top: 8px;
+}
+
+.tooltip-total .tooltip-label {
+  color: #ffffff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tooltip-total .tooltip-value {
+  color: #60c655;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+/* ========================================
+   CONFETTI CELEBRATION CANVAS
+   ======================================== */
+.sticky-cart-confetti-canvas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 400px; /* Confetti rises from cart */
+  pointer-events: none;
+  z-index: 9001; /* Above cart */
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.sticky-cart-confetti-canvas.active {
+  opacity: 1;
+}
+
+/* ========================================
+   ENHANCED EMPTY STATE
+   ======================================== */
+.sticky-cart-empty-visual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.6;
+  animation: emptyStatePulse 2s infinite;
+}
+
+@keyframes emptyStatePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+.empty-state-icon {
+  font-size: 20px;
+  animation: emptyStateFloat 3s ease-in-out infinite;
+}
+
+@keyframes emptyStateFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ========================================
+   HIDE OLD CART (V2 takes over)
+   ======================================== */
+.bogo-sticky-cart {
+  display: none !important;
+}
+
+/* ========================================
+   TABLET OPTIMIZATION (768px - 1024px)
+   Condensed horizontal layout, smaller fonts
+   ======================================== */
+@media (max-width: 1024px) {
+  .sticky-cart-container {
+    padding: 16px 24px; /* Reduced from 20px 32px */
+    gap: 24px; /* Reduced from 32px */
+  }
+
+  /* Status section - Slightly smaller */
+  .sticky-cart-status {
+    min-width: 140px;
+  }
+
+  .status-pair-count {
+    font-size: 20px; /* Reduced from 24px */
+  }
+
+  /* Progress section - Condensed */
+  .sticky-cart-progress {
+    max-width: 500px; /* Reduced from 600px */
+    gap: 10px;
+  }
+
+  .progress-incentive {
+    font-size: 13px; /* Reduced from 15px */
+  }
+
+  .progress-bar-segmented {
+    height: 42px; /* Reduced from 48px */
+    gap: 6px;
+  }
+
+  .segment-title {
+    font-size: 12px; /* Reduced from 13px */
+  }
+
+  .segment-benefit {
+    font-size: 10px; /* Reduced from 11px */
+  }
+
+  /* Value section - Slightly smaller */
+  .sticky-cart-value {
+    min-width: 100px;
+  }
+
+  .value-amount {
+    font-size: 28px; /* Reduced from 32px */
+  }
+
+  /* Action buttons - More compact */
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    padding: 12px 20px; /* Reduced from 14px 28px */
+    font-size: 16px; /* Reduced from 18px */
+    min-height: 48px; /* Reduced from 54px */
+  }
+}
+
+/* ========================================
+   MOBILE OPTIMIZATION (<768px)
+   STACKED 2-ROW LAYOUT
+   Row 1: Status | Progress | Savings
+   Row 2: Buttons (Full Width)
+   ✅ BOGO-V2-POLISH: All animations preserved on mobile
+   ======================================== */
+@media (max-width: 767px) {
+  /* Enhanced glow effect - adjusted for mobile */
+  .bogo-sticky-cart-v2::before {
+    top: -50px;
+    height: 50px;
+    filter: blur(10px);
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Mobile Tooltip Adjustments */
+  .savings-tooltip {
+    width: 260px;
+    right: -20px; /* Extend beyond value section */
+  }
+
+  .tooltip-title {
+    font-size: 13px;
+  }
+
+  .tooltip-item {
+    font-size: 12px;
+  }
+
+  .tooltip-total {
+    font-size: 14px;
+  }
+
+  .tooltip-total .tooltip-value {
+    font-size: 16px;
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Touch Feedback for Progress Bar */
+  .progress-segment {
+    position: relative;
+    overflow: visible; /* Allow ripple to show */
+  }
+
+  .progress-segment::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 10px;
+    background: rgba(96, 198, 85, 0.3);
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .progress-segment.tapped::after {
+    animation: tapRipple 600ms ease-out;
+  }
+
+  @keyframes tapRipple {
+    0% {
+      opacity: 1;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+  }
+
+  /* Enable flexbox wrapping for stacked layout */
+  .sticky-cart-container {
+    flex-wrap: wrap; /* KEY: Allows elements to wrap to new row */
+    padding: 14px 16px 16px; /* Compact vertical padding */
+    gap: 12px; /* Tighter gaps */
+    min-height: 140px; /* Taller to accommodate 2 rows */
+  }
+
+  /* ========================================
+     ROW 1 LAYOUT (Top Row)
+     [Status]    [Progress]    [Savings]
+     ======================================== */
+
+  /* Status (Left) */
+  .sticky-cart-status {
+    order: 1;
+    min-width: auto;
+    flex: 0 0 auto; /* Don't grow/shrink */
+  }
+
+  /* ✅ BOGO-V2-FIXES: Mobile word break for pair count */
+  .status-pair-count {
+    font-size: 16px; /* Slightly smaller to fit */
+    font-weight: 900;
+    max-width: 60px; /* Force word wrap */
+    line-height: 1.1;
+    word-break: break-word; /* Allow breaking */
+  }
+
+  /* Progress (Center) - Takes available space */
+  .sticky-cart-progress {
+    order: 2;
+    flex: 1; /* Grows to fill space */
+    min-width: 180px; /* Ensure minimum width for progress bar */
+    max-width: none; /* Remove desktop max-width */
+  }
+
+  .progress-incentive {
+    font-size: 12px; /* Minimum readable size */
+    font-weight: 700;
+    margin-bottom: -2px; /* Tighter spacing to bar */
+  }
+
+  .progress-bar-segmented {
+    height: 36px; /* Compact but touch-friendly */
+    gap: 4px;
+  }
+
+  .segment-title {
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  /* Hide benefit text on mobile for space */
+  .segment-benefit {
+    display: none;
+  }
+
+  /* Savings (Right) */
+  .sticky-cart-value {
+    order: 3;
+    min-width: auto;
+    flex: 0 0 auto; /* Don't grow/shrink */
+    align-items: flex-end;
+  }
+
+  .value-label {
+    font-size: 10px;
+  }
+
+  .value-amount {
+    font-size: 22px; /* Prominent but fits */
+    font-weight: 900;
+  }
+
+  /* ========================================
+     ROW 2 LAYOUT (Bottom Row)
+     [Review Button]  [Primary Button]
+     Both full-width, side by side
+     ======================================== */
+
+  .sticky-cart-actions {
+    order: 4;
+    width: 100%; /* Full width */
+    flex-basis: 100%; /* Force to new row */
+    gap: 12px;
+  }
+
+  /* ✅ BOGO-V2-POLISH: Buttons retain shimmer/ripple on mobile */
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    flex: 1; /* Both buttons share space equally */
+    width: 100%;
+    min-height: 48px; /* CRITICAL: iOS touch target minimum */
+    padding: 12px 16px;
+    font-size: 16px; /* Readable button text */
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+
+  /* Reduce transform on mobile for performance */
+  .btn-sticky-primary:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .btn-sticky-secondary:hover {
+    transform: translateY(-1px);
+  }
+
+  /* When only primary button visible, it takes full width */
+  .btn-sticky-primary:only-child {
+    flex: 1 1 100%;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE (<480px)
+   Further optimizations for narrow screens
+   ======================================== */
+@media (max-width: 479px) {
+  .sticky-cart-container {
+    padding: 12px 12px 14px;
+    gap: 10px;
+  }
+
+  /* Status - More compact */
+  .status-pair-count {
+    font-size: 11px;
+  }
+
+  /* Progress - Adjust for narrow width */
+  .sticky-cart-progress {
+    min-width: 150px;
+  }
+
+  .progress-incentive {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .progress-bar-segmented {
+    height: 32px;
+    gap: 3px;
+  }
+
+  .segment-title {
+    font-size: 10px;
+  }
+
+  /* Savings - Smaller but still readable */
+  .value-amount {
+    font-size: 20px;
+  }
+
+  .value-label {
+    font-size: 9px;
+  }
+
+  /* ✅ BOGO-V2-ADVANCED: Hide info button on very small screens */
+  .savings-info-btn {
+    display: none; /* Too cramped */
+  }
+
+  /* Buttons - Maintain touch targets */
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    font-size: 15px;
+    padding: 10px 14px;
+    min-height: 48px; /* Never go below 48px */
+  }
+}
+
+/* ========================================
+   EXTRA SMALL MOBILE (<375px)
+   iPhone SE, older devices
+   ======================================== */
+@media (max-width: 374px) {
+  .sticky-cart-container {
+    min-height: 150px; /* Slightly taller for breathing room */
+  }
+
+  /* Hide status text on very small screens, show icon only */
+  .status-pair-count {
+    font-size: 14px;
+    max-width: 80px; /* Prevent long text from wrapping too much */
+  }
+
+  /* Progress takes more space */
+  .sticky-cart-progress {
+    min-width: 130px;
+  }
+
+  .progress-incentive {
+    font-size: 10px;
+  }
+
+  /* Segment labels even more compact */
+  .segment-title {
+    font-size: 9px;
+  }
+
+  /* Savings stays visible */
+  .value-amount {
+    font-size: 18px;
+  }
+
+  /* Buttons maintain accessibility */
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    font-size: 14px;
+    min-height: 48px; /* NEVER compromise touch targets */
+  }
+}
+
+/* ========================================
+   MOBILE LANDSCAPE (<900px width, <500px height)
+   Horizontal phones, reduce vertical padding
+   ======================================== */
+@media (max-width: 900px) and (max-height: 500px) {
+  .sticky-cart-container {
+    padding: 10px 16px; /* Reduce vertical padding */
+    min-height: 100px; /* Shorter */
+  }
+
+  .progress-incentive {
+    font-size: 11px;
+    margin-bottom: -4px;
+  }
+
+  .progress-bar-segmented {
+    height: 30px;
+  }
+
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    min-height: 44px; /* Slightly smaller in landscape */
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   IPAD SPECIFIC (768px - 1024px)
+   Better handling for iPad Pro, iPad Air
+   ======================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* iPads should use condensed horizontal, not stacked */
+  .sticky-cart-container {
+    flex-wrap: nowrap; /* Keep horizontal on iPad */
+  }
+
+  /* Ensure progress bar doesn't get too cramped */
+  .sticky-cart-progress {
+    min-width: 300px;
+  }
+
+  /* Buttons stay readable */
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    min-width: 100px; /* Prevent buttons from becoming too narrow */
+  }
+}
+
+/* ========================================
+   HIGH-DPI DISPLAYS (Retina, 2x, 3x)
+   Sharper borders and shadows
+   ======================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .progress-segment {
+    border-width: 1px; /* Thinner borders on retina */
+  }
+
+  .btn-sticky-primary,
+  .btn-sticky-secondary {
+    border-width: 1px; /* Thinner borders on retina */
+  }
+}
+
+/* ===================================================== */
+/* PRODUCT MODAL - SINGLE LARGE IMAGE REDESIGN          */
+/* ===================================================== */
+
+/* Hide all carousel controls */
+.buy-now-popup__wrapper .carousel-nav,
+.buy-now-popup__wrapper .carousel-dots,
+.buy-now-popup__wrapper .carousel-thumbnails {
+  display: none !important;
+}
+
+/* Make image container much larger - Desktop */
+.buy-now-popup__wrapper .carousel-images {
+  height: 500px !important; /* 4x larger than current ~125px */
+  aspect-ratio: 1 / 1 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+
+.buy-now-popup__wrapper .carousel-image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Show only first image */
+.buy-now-popup__wrapper .carousel-image:not(:first-child) {
+  display: none !important;
+}
+
+/* Mobile - Much larger product image with title below */
+@media (max-width: 768px) {
+  /* Larger image container (2.5x bigger) */
+  .buy-now-popup__wrapper .carousel-images {
+    height: 350px !important;
+    width: 100% !important;
+    margin-bottom: 0 !important; /* Remove gap */
+  }
+
+  /* Reorder: Image first, then title */
+  .buy-now-popup__wrapper .buy-now-popup__product-body {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .buy-now-popup__wrapper .modal-product-figure {
+    order: 1 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .buy-now-popup__wrapper .buy-now-popup__content {
+    order: 2 !important;
+  }
+
+  /* Title styling - prominent below image */
+  .buy-now-popup__wrapper .modal-product-title {
+    font-size: 22px !important;
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+    text-align: center !important;
+  }
+}
+
+/* Desktop - Larger in grid layout */
+@media (min-width: 769px) {
+  .buy-now-popup__wrapper .modal-product-figure {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}

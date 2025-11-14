@@ -369,6 +369,8 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
 // ===========================================
 // COUNTDOWN TIMER - Battery Progress Bar
+// Fixed End Date: Monday, November 17, 2025, 5:00 PM GMT
+// Auto-hides when timer reaches zero
 // ===========================================
 (function() {
   const countdownText = document.getElementById('countdown-text');
@@ -376,36 +378,32 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
   if (!countdownText || !batteryFill) return;
 
-  const SALE_DURATION_MS = 72 * 60 * 60 * 1000;
+  // ⚠️ FIXED END DATE: Monday, November 17, 2025, 5:00 PM GMT
+  const SALE_END = new Date('2025-11-17T17:00:00Z').getTime();
 
-  function getSaleStartTime() {
-    const now = new Date();
-    const dayOfWeek = now.getUTCDay();
-    const hour = now.getUTCHours();
-
-    let daysUntilFriday = (5 - dayOfWeek + 7) % 7;
-    if (dayOfWeek === 5 && hour >= 17) {
-      daysUntilFriday = 7;
-    }
-
-    const nextFriday = new Date(now);
-    nextFriday.setUTCDate(now.getUTCDate() + daysUntilFriday);
-    nextFriday.setUTCHours(17, 0, 0, 0);
-
-    return nextFriday.getTime();
-  }
-
-  const saleStart = getSaleStartTime();
-  const saleEnd = saleStart + SALE_DURATION_MS;
+  // Calculate sale start (72 hours before end date for battery percentage)
+  const SALE_DURATION_MS = 72 * 60 * 60 * 1000; // 72 hours
+  const SALE_START = SALE_END - SALE_DURATION_MS;
 
   function updateCountdown() {
     const now = Date.now();
-    const timeLeft = saleEnd - now;
+    const timeLeft = SALE_END - now;
 
     if (timeLeft <= 0) {
-      countdownText.textContent = '⚡ SALE ENDED ⚡';
-      batteryFill.style.width = '0%';
-      batteryFill.classList.add('low-battery');
+      // ✅ Auto-hide timer when it reaches zero
+      const timerContainer = countdownText.closest('.countdown-container') ||
+                            countdownText.closest('.timer-container') ||
+                            countdownText.parentElement;
+
+      if (timerContainer) {
+        timerContainer.style.display = 'none';
+      } else {
+        // Fallback: hide just the elements
+        countdownText.style.display = 'none';
+        if (batteryFill.parentElement) {
+          batteryFill.parentElement.style.display = 'none';
+        }
+      }
       return;
     }
 
@@ -428,8 +426,10 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
     countdownText.textContent = display;
 
-    const percentRemaining = (timeLeft / SALE_DURATION_MS) * 100;
-    batteryFill.style.width = `${Math.max(0, percentRemaining)}%`;
+    // Calculate battery percentage based on time elapsed since sale start
+    const timeElapsed = now - SALE_START;
+    const percentRemaining = Math.max(0, Math.min(100, ((SALE_DURATION_MS - timeElapsed) / SALE_DURATION_MS) * 100));
+    batteryFill.style.width = `${percentRemaining}%`;
 
     // ✅ BOGO-HERO-POLISH-039: Add low battery warning when < 25% time remaining
     if (percentRemaining < 25) {

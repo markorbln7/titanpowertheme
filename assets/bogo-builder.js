@@ -1,6 +1,36 @@
   console.log('%c🚀 BOGO JavaScript Loading...', 'color: #60c655; font-size: 20px; font-weight: bold;');
 
 // ========================================
+// CLEAR CART ON LOAD - ALWAYS START FRESH
+// ========================================
+
+(function clearCartImmediately() {
+  const clearCart = async () => {
+    try {
+      const response = await fetch('/cart/clear.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (response.ok) {
+        console.log('✅ Cart cleared on BOGO page load');
+      } else {
+        console.warn('⚠️ Failed to clear cart:', response.status);
+      }
+    } catch (error) {
+      console.warn('⚠️ Cart clear error:', error);
+    }
+  };
+
+  // Clear immediately if DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', clearCart);
+  } else {
+    clearCart();
+  }
+})();
+
+// ========================================
 // CURRENCY CONVERSION UTILITY
 // Handles multi-currency for static marketing amounts
 // ========================================
@@ -2569,11 +2599,34 @@ function deletePairFromSticky(pairNumber) {
     const pairItem1 = p.slot1 || p.product1;
     const pairItem2 = p.slot2 || p.product2;
 
-    if (pairItem1 && pairItem1.element) {
-      updatePairBadgeNumber(pairItem1.element, oldNumber, p.pairNumber);
+    // ✅ Validate and update badge for item 1
+    if (pairItem1) {
+      const element1 = pairItem1.element;
+      // Check if element is valid DOM element with querySelector method
+      if (element1 && typeof element1 === 'object' && 'querySelector' in element1 && document.body.contains(element1)) {
+        updatePairBadgeNumber(element1, oldNumber, p.pairNumber);
+      } else if (pairItem1.variantId) {
+        // Try to find element by variant ID
+        const foundElement = document.querySelector(`[data-product-id="${pairItem1.variantId}"]`);
+        if (foundElement) {
+          updatePairBadgeNumber(foundElement, oldNumber, p.pairNumber);
+        }
+      }
     }
-    if (pairItem2 && pairItem2.element) {
-      updatePairBadgeNumber(pairItem2.element, oldNumber, p.pairNumber);
+
+    // ✅ Validate and update badge for item 2
+    if (pairItem2) {
+      const element2 = pairItem2.element;
+      // Check if element is valid DOM element with querySelector method
+      if (element2 && typeof element2 === 'object' && 'querySelector' in element2 && document.body.contains(element2)) {
+        updatePairBadgeNumber(element2, oldNumber, p.pairNumber);
+      } else if (pairItem2.variantId) {
+        // Try to find element by variant ID
+        const foundElement = document.querySelector(`[data-product-id="${pairItem2.variantId}"]`);
+        if (foundElement) {
+          updatePairBadgeNumber(foundElement, oldNumber, p.pairNumber);
+        }
+      }
     }
   });
 
@@ -2592,6 +2645,31 @@ function deletePairFromSticky(pairNumber) {
 // ✅ ENHANCED: Update pair badge with correct pair number
 function updatePairBadgeNumber(element, oldNumber, newNumber) {
   if (!element) return;
+
+  // ✅ Validate element is a DOM element, not a product ID
+  if (typeof element === 'string' || typeof element === 'number') {
+    console.warn('⚠️ updatePairBadgeNumber received product ID instead of element:', element);
+    // Try to find the element by product ID
+    const foundElement = document.querySelector(`[data-product-id="${element}"]`);
+    if (foundElement) {
+      element = foundElement;
+    } else {
+      console.warn('⚠️ Could not find element for product ID:', element);
+      return;
+    }
+  }
+
+  // ✅ Ensure element is still in DOM
+  if (!document.body.contains(element)) {
+    console.warn('⚠️ Element no longer in DOM, skipping badge update');
+    return;
+  }
+
+  // ✅ Ensure element has querySelector method
+  if (typeof element.querySelector !== 'function') {
+    console.error('⚠️ Invalid element passed to updatePairBadgeNumber:', element);
+    return;
+  }
 
   console.log(`🔄 Updating badge: Pair ${oldNumber} → ${newNumber}`);
 
@@ -3508,7 +3586,13 @@ class TierCelebrations {
   }
 
   celebrate(tier) {
-    console.log(`🎉 Celebrating Tier ${tier} unlock!`);
+    console.log(`🎉 ========================================`);
+    console.log(`🎉 CELEBRATE CALLED WITH TIER: ${tier}`);
+    console.log(`🎉 Type: ${typeof tier}, Value: ${tier}`);
+    console.log(`🎉 tier === 2: ${tier === 2}`);
+    console.log(`🎉 tier === 3: ${tier === 3}`);
+    console.log(`🎉 ========================================`);
+    
     const config = tier === 2 ? {
       icon: '⭐',
       message: 'TIER 2 UNLOCKED!',
@@ -3532,15 +3616,47 @@ class TierCelebrations {
     const savings = this.calculateTierSavings(tier);
     this.overlay.querySelector('.savings-total').textContent = BOGOCurrency.formatMoney(Math.round(savings * 100));
 
-    // ✅ UPDATE: Two buttons - Checkout and Continue Shopping
-    const primaryBtn = this.overlay.querySelector('.btn-celebration-continue.primary');
-    const secondaryBtn = this.overlay.querySelector('.btn-celebration-continue.secondary');
+    // ✅ Clean button setup - clone to remove old event listeners
+    const primaryBtnOld = this.overlay.querySelector('.btn-celebration-continue.primary');
+    const secondaryBtnOld = this.overlay.querySelector('.btn-celebration-continue.secondary');
+    
+    const primaryBtn = primaryBtnOld.cloneNode(true);
+    const secondaryBtn = secondaryBtnOld.cloneNode(true);
+    
+    primaryBtnOld.replaceWith(primaryBtn);
+    secondaryBtnOld.replaceWith(secondaryBtn);
 
+    // ✅ Set button content
     primaryBtn.textContent = config.buttonText;
-    primaryBtn.onclick = () => this.closeCelebration(tier, 'checkout');
-
+    primaryBtn.type = 'button';
     secondaryBtn.textContent = 'Continue Shopping';
-    secondaryBtn.onclick = () => this.closeCelebration(tier, 'continue'); // ✅ Just close, don't open review
+    secondaryBtn.type = 'button';
+    
+    // ✅ PRIMARY BUTTON: Check if overlay has tier-3 class
+    primaryBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isTier3 = this.overlay.classList.contains('tier-3');
+      console.log(`🎉 Primary button clicked. Has tier-3 class: ${isTier3}`);
+      
+      this.closeCelebration(tier, 'continue');
+      
+      if (isTier3 && typeof proceedToCheckout === 'function') {
+        console.log('✅ TIER 3: Going to checkout');
+        proceedToCheckout();
+      } else {
+        console.log('✅ TIER 2: Just closing modal');
+      }
+    };
+
+    // ✅ SECONDARY BUTTON: Always just closes
+    secondaryBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('🎉 Secondary: Closing modal');
+      this.closeCelebration(tier, 'continue');
+    };
 
     // ✅ Add hint text for closing
     let hintText = this.overlay.querySelector('.celebration-hint');
@@ -3592,16 +3708,11 @@ class TierCelebrations {
   }
 
   closeCelebration(tier, action) {
+    console.log(`🎉 closeCelebration called - tier: ${tier}, action: ${action}`);
+    console.log('🎉 Closing celebration modal and returning to product selection');
     this.overlay.classList.remove('show');
-
-    setTimeout(() => {
-      if (action === 'checkout') {
-        // ✅ Proceed to checkout
-        proceedToCheckout();
-      }
-      // ✅ For any other action ('continue'), just close and return to product selection
-      // No review modal opening from celebration - user goes back to building pairs
-    }, 500);
+    // ✅ Always just close and return to product selection
+    // User can checkout from sticky cart when ready
   }
 
   triggerConfetti() {

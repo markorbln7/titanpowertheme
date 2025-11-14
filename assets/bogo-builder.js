@@ -3698,12 +3698,23 @@ class TierCelebrations {
 
   calculateTierSavings(tier) {
     const state = window.bogoState;
+    
+    // 1. Calculate BOGO Savings (100% off cheaper item)
     let bogoSavings = state.pairs.reduce((sum, pair) => sum + pair.savings, 0);
+    
+    // 2. Calculate subtotal (full retail price)
     const subtotal = state.pairs.reduce((sum, pair) => sum + pair.product1.price + pair.product2.price, 0);
+    
+    // 3. ✅ FIX: Calculate tier discount on discounted subtotal (AFTER BOGO, not before)
+    const discountedSubtotal = subtotal - bogoSavings;
     const tierPercent = tier === 2 ? 0.05 : tier === 3 ? 0.10 : 0;
-    const tierSavings = subtotal * tierPercent;
+    const tierSavings = discountedSubtotal * tierPercent;
+    
+    // 4. Add value bonuses
     const shippingSavings = tier >= 2 ? 499 : 0;
     const cableSavings = tier === 3 ? 1895 : 0;
+    
+    // 5. Total savings (all in cents)
     return (bogoSavings + tierSavings + shippingSavings + cableSavings) / 100;
   }
 

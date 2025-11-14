@@ -2267,7 +2267,7 @@
   /* Apply floating animation - slower duration */
   @media (prefers-reduced-motion: no-preference) {
     .dark-mode .section-collections-with-nav__product-image img {
-      animation: float-gentle 12s ease-in-out infinite;
+      animation: none;
     }
   }
 

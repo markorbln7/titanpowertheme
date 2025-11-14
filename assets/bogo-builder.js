@@ -910,11 +910,11 @@ function removePairSelection(element, pairNumber) {
   if (pairIndex !== -1) {
     const pair = state.pairs[pairIndex];
 
-    // Remove pair from array
-    state.pairs.splice(pairIndex, 1);
+    // ✅ Remove visual highlights from products (use slot1/slot2 with fallback)
+    const item1 = pair.slot1 || pair.product1;
+    const item2 = pair.slot2 || pair.product2;
 
-    // Check if either product still has other badges
-    [pair.product1, pair.product2].forEach(function(product) {
+    [item1, item2].forEach(function(product) {
       if (product && product.element) {
         const remainingBadges = product.element.querySelectorAll('.pair-slot-badge');
         if (remainingBadges.length === 1) { // Only the one being removed
@@ -924,6 +924,35 @@ function removePairSelection(element, pairNumber) {
         }
       }
     });
+
+    // Remove pair from array
+    state.pairs.splice(pairIndex, 1);
+
+    // ✅ FIX: Renumber ALL remaining pairs sequentially (1, 2, 3, etc.)
+    state.pairs.forEach(function(p, index) {
+      const oldNumber = p.pairNumber;
+      p.pairNumber = index + 1;
+
+      // Update badges on products if number changed
+      if (oldNumber !== p.pairNumber) {
+        const pairItem1 = p.slot1 || p.product1;
+        const pairItem2 = p.slot2 || p.product2;
+
+        if (pairItem1 && pairItem1.element) {
+          updatePairBadgeNumber(pairItem1.element, oldNumber, p.pairNumber);
+        }
+        if (pairItem2 && pairItem2.element) {
+          updatePairBadgeNumber(pairItem2.element, oldNumber, p.pairNumber);
+        }
+      }
+    });
+
+    // Set next pair number
+    state.activePairNumber = state.pairs.length + 1;
+    console.log(`✅ Badge click removal: Pairs renumbered. Next pair: ${state.activePairNumber}`);
+
+    // Save state
+    saveBOGOState();
 
     showNotification(`Pair ${pairNumber} removed`, 'info');
     updateStickyCart();
@@ -943,10 +972,10 @@ function completePair() {
   const cheaper = pair.slot1.price <= pair.slot2.price ? pair.slot1 : pair.slot2;
   const moreExpensive = pair.slot1.price > pair.slot2.price ? pair.slot1 : pair.slot2;
 
-  // Save completed pair with slot1/slot2 naming (matches updateStickyCart expectations)
+  // ✅ FIX: Save pair with PRICE-ORDERED products (expensive left, cheap right for FREE display)
   state.pairs.push({
-    slot1: pair.slot1,
-    slot2: pair.slot2,
+    slot1: moreExpensive,  // ✅ More expensive on LEFT (pays)
+    slot2: cheaper,        // ✅ Cheaper on RIGHT (FREE)
     product1: moreExpensive,  // Keep for backwards compatibility
     product2: cheaper,        // Keep for backwards compatibility
     savings: cheaper.price,
@@ -982,6 +1011,9 @@ function completePair() {
   // Reset for next pair
   state.currentPair = { slot1: null, slot2: null };
   state.activePairNumber++;
+
+  // ✅ Save state after completing pair
+  saveBOGOState();
 
   // Update UI
   updateStickyCart();
@@ -2329,18 +2361,28 @@ function createModalPairCard(pair, index) {
   const item1 = pair.slot1 || pair.product1;
   const item2 = pair.slot2 || pair.product2;
 
-  // Product 1 (Left)
-  const product1 = createModalProductCardCompact(item1, index, 1, false);
+  // ✅ FIX: Determine which is cheaper/expensive by price
+  let cheaperItem, expensiveItem;
+  if (item1.price <= item2.price) {
+    cheaperItem = item1;
+    expensiveItem = item2;
+  } else {
+    cheaperItem = item2;
+    expensiveItem = item1;
+  }
+
+  // Product 1 (Left) - MORE EXPENSIVE (pays full price)
+  const product1 = createModalProductCardCompact(expensiveItem, index, 1, false);
   products.appendChild(product1);
 
   // Equals sign (Center)
   const equals = document.createElement('div');
   equals.className = 'pair-modal__equals-sign--compact';
-  equals.textContent = '=';
+  equals.textContent = '+';
   products.appendChild(equals);
 
-  // Product 2 (Right - FREE)
-  const product2 = createModalProductCardCompact(item2, index, 2, true);
+  // Product 2 (Right) - CHEAPER with crossed price (FREE)
+  const product2 = createModalProductCardCompact(cheaperItem, index, 2, true);
   products.appendChild(product2);
 
   card.appendChild(products);
@@ -2454,6 +2496,12 @@ function unhighlightProduct(element, pairNumber) {
     return;
   }
 
+  // ✅ FIX: Check if element is still in the DOM
+  if (!document.body.contains(element)) {
+    console.warn('Element no longer in DOM, skipping unhighlight:', element);
+    return;
+  }
+
   console.log('🔄 Unhighlighting product for pair:', pairNumber);
 
   // Remove specific pair badge
@@ -2497,13 +2545,16 @@ function deletePairFromSticky(pairNumber) {
 
   const pair = state.pairs[pairIndex];
 
-  // ✅ Remove visual highlights from products
-  if (pair.product1 && pair.product1.element) {
-    unhighlightProduct(pair.product1.element, pairNumber);
+  // ✅ Remove visual highlights from products (use slot1/slot2 with fallback)
+  const item1 = pair.slot1 || pair.product1;
+  const item2 = pair.slot2 || pair.product2;
+
+  if (item1 && item1.element) {
+    unhighlightProduct(item1.element, pairNumber);
   }
 
-  if (pair.product2 && pair.product2.element) {
-    unhighlightProduct(pair.product2.element, pairNumber);
+  if (item2 && item2.element) {
+    unhighlightProduct(item2.element, pairNumber);
   }
 
   // Remove pair from state
@@ -2514,12 +2565,15 @@ function deletePairFromSticky(pairNumber) {
     const oldNumber = p.pairNumber;
     p.pairNumber = index + 1;
 
-    // Update badges on products
-    if (p.product1 && p.product1.element) {
-      updatePairBadgeNumber(p.product1.element, oldNumber, p.pairNumber);
+    // ✅ Update badges on products (use slot1/slot2 with fallback)
+    const pairItem1 = p.slot1 || p.product1;
+    const pairItem2 = p.slot2 || p.product2;
+
+    if (pairItem1 && pairItem1.element) {
+      updatePairBadgeNumber(pairItem1.element, oldNumber, p.pairNumber);
     }
-    if (p.product2 && p.product2.element) {
-      updatePairBadgeNumber(p.product2.element, oldNumber, p.pairNumber);
+    if (pairItem2 && pairItem2.element) {
+      updatePairBadgeNumber(pairItem2.element, oldNumber, p.pairNumber);
     }
   });
 
@@ -2609,6 +2663,29 @@ function deletePair(pairIndex) {
 
   // Remove from state
   state.pairs.splice(pairIndex, 1);
+
+  // ✅ FIX: Renumber ALL remaining pairs sequentially (1, 2, 3, etc.)
+  state.pairs.forEach((p, index) => {
+    const oldNumber = p.pairNumber;
+    p.pairNumber = index + 1;
+
+    // Update badges on products if number changed
+    if (oldNumber !== p.pairNumber) {
+      const pairItem1 = p.slot1 || p.product1;
+      const pairItem2 = p.slot2 || p.product2;
+
+      if (pairItem1 && pairItem1.element) {
+        updatePairBadgeNumber(pairItem1.element, oldNumber, p.pairNumber);
+      }
+      if (pairItem2 && pairItem2.element) {
+        updatePairBadgeNumber(pairItem2.element, oldNumber, p.pairNumber);
+      }
+    }
+  });
+
+  // Set next pair number
+  state.activePairNumber = state.pairs.length + 1;
+  console.log(`✅ Pairs renumbered. Next pair will be: ${state.activePairNumber}`);
 
   // Save state
   if (typeof saveBOGOState === 'function') {
@@ -3455,39 +3532,39 @@ class TierCelebrations {
     const savings = this.calculateTierSavings(tier);
     this.overlay.querySelector('.savings-total').textContent = BOGOCurrency.formatMoney(Math.round(savings * 100));
 
-    // ✅ UPDATE: Two buttons - Checkout and Review Pairs
+    // ✅ UPDATE: Two buttons - Checkout and Continue Shopping
     const primaryBtn = this.overlay.querySelector('.btn-celebration-continue.primary');
     const secondaryBtn = this.overlay.querySelector('.btn-celebration-continue.secondary');
 
     primaryBtn.textContent = config.buttonText;
     primaryBtn.onclick = () => this.closeCelebration(tier, 'checkout');
 
-    secondaryBtn.textContent = 'Review Pairs';
-    secondaryBtn.onclick = () => this.closeCelebration(tier, 'review');
+    secondaryBtn.textContent = 'Continue Shopping';
+    secondaryBtn.onclick = () => this.closeCelebration(tier, 'continue'); // ✅ Just close, don't open review
 
-    // ✅ BOGO-CELEBRATION-CLOSE-046: Add hint text
+    // ✅ Add hint text for closing
     let hintText = this.overlay.querySelector('.celebration-hint');
     if (!hintText) {
       hintText = document.createElement('p');
       hintText.className = 'celebration-hint';
-      hintText.textContent = 'Click anywhere to continue shopping';
+      hintText.textContent = 'Click anywhere or press ESC to continue building';
       const content = this.overlay.querySelector('.celebration-content');
       if (content) content.appendChild(hintText);
     }
 
-    // ✅ BOGO-CELEBRATION-CLOSE-046: Click overlay to close
+    // ✅ FIX: Click overlay to close - just close, don't open review modal
     const overlayClickHandler = (e) => {
       if (e.target === this.overlay) {
-        this.closeCelebration(tier, 'review');
+        this.closeCelebration(tier, 'continue'); // Just close, don't open review
         this.overlay.removeEventListener('click', overlayClickHandler);
       }
     };
     this.overlay.addEventListener('click', overlayClickHandler);
 
-    // ✅ BOGO-CELEBRATION-CLOSE-046: ESC key to close
+    // ✅ FIX: ESC key to close - just close, don't open review modal
     const escapeHandler = (e) => {
       if (e.key === 'Escape') {
-        this.closeCelebration(tier, 'review');
+        this.closeCelebration(tier, 'continue'); // Just close, don't open review
         document.removeEventListener('keydown', escapeHandler);
       }
     };
@@ -3519,15 +3596,11 @@ class TierCelebrations {
 
     setTimeout(() => {
       if (action === 'checkout') {
-        // ✅ BOGO-CHECKOUT-FINAL-061: Proceed to checkout
+        // ✅ Proceed to checkout
         proceedToCheckout();
-      } else if (action === 'review') {
-        // Open pair management modal
-        const reviewBtn = document.getElementById('sticky-cart-review');
-        if (reviewBtn) {
-          reviewBtn.click(); // Trigger review modal
-        }
       }
+      // ✅ For any other action ('continue'), just close and return to product selection
+      // No review modal opening from celebration - user goes back to building pairs
     }, 500);
   }
 

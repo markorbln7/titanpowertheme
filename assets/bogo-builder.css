@@ -6179,23 +6179,36 @@
     background: rgba(96, 198, 85, 0.1);
   }
 
-  /* ✅ Partial fill state (in progress) */
+  /* ✅ Partial fill state (in progress) - GOLD */
   .progress-segment.partial .segment-fill {
     width: 50%;
-    background: linear-gradient(135deg, rgba(96, 198, 85, 0.6) 0%, rgba(96, 198, 85, 0.3) 100%);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%);
     animation: partialPulse 2000ms ease-in-out infinite;
   }
 
   .progress-segment.partial {
-    border-color: rgba(96, 198, 85, 0.6);
+    border-color: #FFD700; /* ✅ Gold border */
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.3); /* ✅ Gold glow */
+    animation: partialGlow 2000ms ease-in-out infinite; /* ✅ Gold pulsing */
   }
 
+  /* ✅ Gold pulsing animation for partial state fill */
   @keyframes partialPulse {
     0%, 100% {
       opacity: 1;
     }
     50% {
       opacity: 0.7;
+    }
+  }
+
+  /* ✅ Gold glow animation for partial segment border */
+  @keyframes partialGlow {
+    0%, 100% {
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
     }
   }
 
@@ -6230,9 +6243,14 @@
     letter-spacing: 0.05em;
   }
 
-  .progress-segment.filled .segment-tier,
-  .progress-segment.partial .segment-tier {
+  .progress-segment.filled .segment-tier {
     color: #000000;
+  }
+
+  /* ✅ Partial state uses gold text */
+  .progress-segment.partial .segment-tier {
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
   }
 
   .segment-benefit {
@@ -6243,9 +6261,14 @@
     letter-spacing: 0.03em;
   }
 
-  .progress-segment.filled .segment-benefit,
-  .progress-segment.partial .segment-benefit {
+  .progress-segment.filled .segment-benefit {
     color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* ✅ Partial state uses gold text */
+  .progress-segment.partial .segment-benefit {
+    color: #FFA500; /* Orange-gold for benefit text */
+    text-shadow: 0 0 6px rgba(255, 165, 0, 0.4);
   }
 
   /* ✅ Progress status messages */

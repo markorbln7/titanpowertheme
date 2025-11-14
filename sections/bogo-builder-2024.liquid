@@ -3,9 +3,9 @@
 {{ 'bogo-builder.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Currency will be converted by JavaScript - store values in cents {%- endcomment -%}
-{% assign tier1_savings_cents = 2300 %}
-{% assign tier2_savings_cents = 5200 %}
-{% assign tier3_savings_cents = 9000 %}
+{% assign tier1_savings_cents = 3000 %}
+{% assign tier2_savings_cents = 6000 %}
+{% assign tier3_savings_cents = 10500 %}
 {% assign shipping_value_cents = 499 %}
 {% assign cable_value_cents = 1895 %}
 {% assign tier_price_diff_cents = 1500 %}
@@ -100,7 +100,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">You Save</div>
-              <div class="savings-amount"><span class="bogo-currency" data-amount="{{ tier1_savings_cents }}">€23</span>+</div>
+              <div class="savings-amount"><span class="bogo-currency" data-amount="{{ tier1_savings_cents }}">€30</span>+</div>
             </div>
           </div>
 
@@ -131,7 +131,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">Total Savings</div>
-              <div class="savings-amount highlight"><span class="bogo-currency" data-amount="{{ tier2_savings_cents }}">€52</span>+</div>
+              <div class="savings-amount highlight"><span class="bogo-currency" data-amount="{{ tier2_savings_cents }}">€60</span>+</div>
             </div>
 
             <div class="tier-upgrade-hint">
@@ -166,7 +166,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">Total Savings</div>
-              <div class="savings-amount best"><span class="bogo-currency" data-amount="{{ tier3_savings_cents }}">€90</span>+</div>
+              <div class="savings-amount best"><span class="bogo-currency" data-amount="{{ tier3_savings_cents }}">€105</span>+</div>
             </div>
 
             <div class="tier-value-prop">

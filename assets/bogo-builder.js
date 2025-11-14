@@ -1509,9 +1509,16 @@ function updateStickyCart() {
 
   // --- 2. UPDATE STATUS & MESSAGING ---
   const pairCountEl = document.getElementById('v2-pair-count');
-  const incentiveMsgEl = document.getElementById('v2-incentive-message');
+  const incentiveMsgEl = document.getElementById('v2-incentive-message'); // Desktop version
+  const incentiveMsgElMobile = document.getElementById('v2-incentive-message-mobile'); // Mobile version
   const primaryBtn = document.getElementById('v2-btn-primary');
   const reviewBtn = document.getElementById('v2-btn-review');
+  
+  // ✅ Helper function to update both desktop AND mobile incentive messages
+  const updateIncentiveMessage = (htmlContent) => {
+    if (incentiveMsgEl) incentiveMsgEl.innerHTML = htmlContent;
+    if (incentiveMsgElMobile) incentiveMsgElMobile.innerHTML = htmlContent;
+  };
 
   // ✅ BOGO-V2-POLISH: Animate pair count changes
   if (pairCountEl && pairCount !== prevState.pairCount && pairCount > 0) {
@@ -1553,7 +1560,7 @@ function updateStickyCart() {
     // STATE: Incomplete Pair
     const nextPairNum = pairCount + 1;
     pairCountEl.textContent = `Building Pair ${nextPairNum}...`;
-    incentiveMsgEl.innerHTML = '🔥 <strong>Select 1 more item</strong> to complete your pair!';
+    updateIncentiveMessage('🔥 <strong>Select 1 more item</strong> to complete your pair!');
     primaryBtn.textContent = 'Continue Shopping';
     primaryBtn.onclick = scrollToProducts;
     reviewBtn.style.display = pairCount > 0 ? 'block' : 'none';
@@ -1562,7 +1569,7 @@ function updateStickyCart() {
   } else if (pairCount === 0) {
     // STATE: Empty Cart
     pairCountEl.textContent = 'Start Building';
-    incentiveMsgEl.innerHTML = 'Select 2 items to activate <strong>Buy 1 Get 1 50% OFF!</strong>';
+    updateIncentiveMessage('Select 2 items to activate <strong>Buy 1 Get 1 50% OFF!</strong>');
     primaryBtn.textContent = 'Start Building';
     primaryBtn.onclick = scrollToProducts;
     reviewBtn.style.display = 'none';
@@ -1577,15 +1584,15 @@ function updateStickyCart() {
 
     // ✅ BOGO-V2-FIXES: Update Incentive Message Based on Tier (supports 4+ pairs)
     if (currentTier === 1) {
-      incentiveMsgEl.innerHTML = '🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!';
+      updateIncentiveMessage('🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!');
     } else if (currentTier === 2) {
-      incentiveMsgEl.innerHTML = `🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (${BOGOCurrency.convert(1895)})!`;
+      updateIncentiveMessage(`🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (${BOGOCurrency.convert(1895)})!`);
     } else if (currentTier >= 3) {
       // Change messaging for 3+ pairs
       if (pairCount === 3) {
-        incentiveMsgEl.innerHTML = '👑 <strong>Max Tier Unlocked!</strong> Keep adding pairs for more savings!';
+        updateIncentiveMessage('👑 <strong>Max Tier Unlocked!</strong> Keep adding pairs for more savings!');
       } else {
-        incentiveMsgEl.innerHTML = `👑 <strong>${pairCount} Pairs Built!</strong> Amazing value unlocked! 🎉`;
+        updateIncentiveMessage(`👑 <strong>${pairCount} Pairs Built!</strong> Amazing value unlocked! 🎉`);
       }
     }
   }
@@ -2434,6 +2441,18 @@ function createModalProductCard(product, pairIndex, slot, isFree) {
 // ✅ FIX 6: Unhighlight product when pair is deleted
 function unhighlightProduct(element, pairNumber) {
   if (!element) return;
+
+  // ✅ Check if element is a valid DOM element
+  if (typeof element === 'string' || typeof element === 'number') {
+    // If it's an ID, try to find the element
+    element = document.querySelector(`[data-product-id="${element}"]`);
+  }
+  
+  // Ensure element has querySelector method (is a DOM element)
+  if (!element || typeof element.querySelector !== 'function') {
+    console.warn('Invalid element passed to unhighlightProduct:', element);
+    return;
+  }
 
   console.log('🔄 Unhighlighting product for pair:', pairNumber);
 

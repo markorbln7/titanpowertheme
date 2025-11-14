@@ -2,6 +2,21 @@
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
 {{ 'bogo-builder.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%} Currency will be converted by JavaScript - store values in cents {%- endcomment -%}
+{% assign tier1_savings_cents = 2300 %}
+{% assign tier2_savings_cents = 5200 %}
+{% assign tier3_savings_cents = 9000 %}
+{% assign shipping_value_cents = 499 %}
+{% assign cable_value_cents = 1895 %}
+{% assign tier_price_diff_cents = 1500 %}
+{% assign tier_price_diff_max_cents = 2000 %}
+{% assign tier1_total_value_cents = 6000 %}
+{% assign tier2_total_value_cents = 11000 %}
+{% assign tier3_total_value_cents = 18000 %}
+{% assign tier1_you_save_cents = 3000 %}
+{% assign tier2_you_save_cents = 6000 %}
+{% assign tier3_you_save_cents = 10500 %}
+
 {% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'anniversary' or page.handle == '4thjulysale' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' or page.handle == 'chirstmas-2024' or page.handle == 'christmas-2024' %}
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
@@ -85,7 +100,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">You Save</div>
-              <div class="savings-amount">€23+</div>
+              <div class="savings-amount"><span class="bogo-currency" data-amount="{{ tier1_savings_cents }}">€23</span>+</div>
             </div>
           </div>
 
@@ -106,7 +121,7 @@
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
-                <span class="feature-text">FREE Premium Shipping<br><span class="feature-value">(€4.99 value)</span></span>
+                <span class="feature-text">FREE Premium Shipping<br><span class="feature-value">(<span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span> value)</span></span>
               </div>
               <div class="tier-feature excluded">
                 <span class="feature-icon">❌</span>
@@ -116,7 +131,7 @@
 
             <div class="tier-savings">
               <div class="savings-label">Total Savings</div>
-              <div class="savings-amount highlight">€52+</div>
+              <div class="savings-amount highlight"><span class="bogo-currency" data-amount="{{ tier2_savings_cents }}">€52</span>+</div>
             </div>
 
             <div class="tier-upgrade-hint">
@@ -141,21 +156,21 @@
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
-                <span class="feature-text">FREE Premium Shipping<br><span class="feature-value">(€4.99 value)</span></span>
+                <span class="feature-text">FREE Premium Shipping<br><span class="feature-value">(<span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span> value)</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">🎁</span>
-                <span class="feature-text">FREE Titan Smart Cable<br><span class="feature-value">(€18.95 value)</span></span>
+                <span class="feature-text">FREE Titan Smart Cable<br><span class="feature-value">(<span class="bogo-currency" data-amount="{{ cable_value_cents }}">€18.95</span> value)</span></span>
               </div>
             </div>
 
             <div class="tier-savings">
               <div class="savings-label">Total Savings</div>
-              <div class="savings-amount best">€90+</div>
+              <div class="savings-amount best"><span class="bogo-currency" data-amount="{{ tier3_savings_cents }}">€90</span>+</div>
             </div>
 
             <div class="tier-value-prop">
-              Only €15-20 more than 2 pairs!
+              Only <span class="bogo-currency" data-amount="{{ tier_price_diff_cents }}">€15</span>-<span class="bogo-currency" data-amount="{{ tier_price_diff_max_cents }}">€20</span> more than 2 pairs!
             </div>
           </div>
         </div>
@@ -183,7 +198,6 @@
         </div>
       </div>
     </div>
-  </div>
 
   {%- comment -%} ✅ BOGO-SOCIAL-PROOF-050: Live Activity Indicator {%- endcomment -%}
   <div class="live-activity-indicator">
@@ -205,7 +219,7 @@
         <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;">
           <span class="stock-number">⚠️</span>
         </span>
-        Limited stock available for this offer
+        <span>Limited stock available for this offer</span>
       </label>
       <select id="category-filter" class="filter-select">
         <option value="all">All Products</option>
@@ -468,7 +482,7 @@
       <div class="bogo-sticky-cart__right">
         <div class="bogo-sticky-cart__savings">
           <span class="bogo-sticky-cart__savings-label">SAVED:</span>
-          <span class="bogo-sticky-cart__savings-amount" id="sticky-cart-savings">€0,00</span>
+          <span class="bogo-sticky-cart__savings-amount" id="sticky-cart-savings">€0.00</span>
         </div>
         <div class="bogo-sticky-cart__actions">
           <button id="sticky-cart-review" class="bogo-sticky-cart__btn bogo-sticky-cart__btn--review" style="display: none;">
@@ -494,11 +508,16 @@
       <div class="sticky-cart-status">
         <div class="status-pair-count" id="v2-pair-count">Start Building</div>
       </div>
-
+      <div class="progress-incentive progress-incentive-mobile" id="v2-incentive-message-mobile">
+        Select 2 items to activate Buy 1 Get 1 50% OFF!
+      </div>
       {%- comment -%} 2. CENTER: Progress & Incentive Message {%- endcomment -%}
       <div class="sticky-cart-progress">
-        {%- comment -%} Incentive message (replaces redundant text) {%- endcomment -%}
-        <div class="progress-incentive" id="v2-incentive-message">
+        {%- comment -%} Mobile: Incentive message ABOVE progress bar {%- endcomment -%}
+        
+
+        {%- comment -%} Desktop: Incentive message INSIDE progress {%- endcomment -%}
+        <div class="progress-incentive progress-incentive-desktop" id="v2-incentive-message">
           Select 2 items to activate Buy 1 Get 1 50% OFF!
         </div>
 
@@ -532,7 +551,7 @@
       <div class="sticky-cart-value">
         <div class="value-label">You Save</div>
         <div class="value-amount-wrapper">
-          <div class="value-amount" id="v2-total-savings">€0,00</div>
+          <div class="value-amount" id="v2-total-savings">€0.00</div>
           <button class="savings-info-btn" id="v2-savings-info" aria-label="View savings breakdown">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="2"/>
@@ -549,24 +568,24 @@
             <div class="tooltip-items" id="v2-tooltip-breakdown">
               <div class="tooltip-item">
                 <span class="tooltip-label">BOGO Discount:</span>
-                <span class="tooltip-value" id="tooltip-bogo">€0,00</span>
+                <span class="tooltip-value" id="tooltip-bogo">€0.00</span>
               </div>
               <div class="tooltip-item" id="tooltip-tier-item" style="display: none;">
                 <span class="tooltip-label" id="tooltip-tier-label">Tier Discount:</span>
-                <span class="tooltip-value" id="tooltip-tier">€0,00</span>
+                <span class="tooltip-value" id="tooltip-tier">€0.00</span>
               </div>
               <div class="tooltip-item" id="tooltip-shipping-item" style="display: none;">
                 <span class="tooltip-label">FREE Shipping:</span>
-                <span class="tooltip-value">€4,99</span>
+                <span class="tooltip-value"><span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span></span>
               </div>
               <div class="tooltip-item" id="tooltip-cable-item" style="display: none;">
                 <span class="tooltip-label">FREE Cable:</span>
-                <span class="tooltip-value">€18,95</span>
+                <span class="tooltip-value"><span class="bogo-currency" data-amount="{{ cable_value_cents }}">€18.95</span></span>
               </div>
             </div>
             <div class="tooltip-total">
               <span class="tooltip-label">Total Saved:</span>
-              <span class="tooltip-value" id="tooltip-total">€0,00</span>
+              <span class="tooltip-value" id="tooltip-total">€0.00</span>
             </div>
           </div>
         </div>
@@ -652,27 +671,27 @@
             </tr>
             <tr class="highlight-row">
               <td class="feature-name">Premium Shipping</td>
-              <td class="feature-val empty">€4.99</td>
-              <td class="feature-val good">✅ FREE<br><span class="val-note">(€4.99 value)</span></td>
-              <td class="feature-val best">✅ FREE<br><span class="val-note">(€4.99 value)</span></td>
+              <td class="feature-val empty"><span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span></td>
+              <td class="feature-val good">✅ FREE<br><span class="val-note">(<span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span> value)</span></td>
+              <td class="feature-val best">✅ FREE<br><span class="val-note">(<span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span> value)</span></td>
             </tr>
             <tr class="highlight-row">
               <td class="feature-name">Bonus Cable</td>
               <td class="feature-val empty">—</td>
               <td class="feature-val empty">—</td>
-              <td class="feature-val best">✅ FREE<br><span class="val-note">(€18.95 value)</span></td>
+              <td class="feature-val best">✅ FREE<br><span class="val-note">(<span class="bogo-currency" data-amount="{{ cable_value_cents }}">€18.95</span> value)</span></td>
             </tr>
             <tr class="totals-row">
               <td class="feature-name"><strong>Total Value</strong></td>
-              <td class="feature-val"><strong>~€60</strong></td>
-              <td class="feature-val"><strong>~€110</strong></td>
-              <td class="feature-val best"><strong>~€180</strong></td>
+              <td class="feature-val"><strong>~<span class="bogo-currency" data-amount="{{ tier1_total_value_cents }}">€60</span></strong></td>
+              <td class="feature-val"><strong>~<span class="bogo-currency" data-amount="{{ tier2_total_value_cents }}">€110</span></strong></td>
+              <td class="feature-val best"><strong>~<span class="bogo-currency" data-amount="{{ tier3_total_value_cents }}">€180</span></strong></td>
             </tr>
             <tr class="savings-row">
               <td class="feature-name"><strong>YOU SAVE</strong></td>
-              <td class="feature-val savings"><strong>~€30</strong></td>
-              <td class="feature-val savings"><strong>~€60</strong></td>
-              <td class="feature-val savings best"><strong>~€105</strong></td>
+              <td class="feature-val savings"><strong>~<span class="bogo-currency" data-amount="{{ tier1_you_save_cents }}">€30</span></strong></td>
+              <td class="feature-val savings"><strong>~<span class="bogo-currency" data-amount="{{ tier2_you_save_cents }}">€60</span></strong></td>
+              <td class="feature-val savings best"><strong>~<span class="bogo-currency" data-amount="{{ tier3_you_save_cents }}">€105</span></strong></td>
             </tr>
           </tbody>
         </table>
@@ -731,7 +750,7 @@
         {%- comment -%} Center: Total Saved (Compact Green Box) {%- endcomment -%}
         <div class="pair-modal__savings-compact">
           <div class="savings-label-small">TOTAL SAVED</div>
-          <div class="savings-amount-compact" id="review-total-saved">€98,66</div>
+          <div class="savings-amount-compact" id="review-total-saved">€98.66</div>
           <div class="savings-discount-small">
             Order Discount: <span id="review-order-discount">10%</span>
           </div>
@@ -760,7 +779,7 @@
       <div class="partitioned-pricing">
         <div class="pricing-row retail-value">
           <span class="pricing-label">Full Retail Value:</span>
-          <span class="pricing-amount" id="retail-value-total">€0,00</span>
+          <span class="pricing-amount" id="retail-value-total">€0.00</span>
         </div>
 
         <div class="pricing-divider"></div>
@@ -770,7 +789,7 @@
             <span class="discount-icon">💰</span>
             BOGO Discount:
           </span>
-          <span class="pricing-amount savings" id="bogo-discount">-€0,00</span>
+          <span class="pricing-amount savings" id="bogo-discount">-€0.00</span>
         </div>
 
         <div class="pricing-row discount tier-discount-row" style="display: none;">
@@ -778,7 +797,7 @@
             <span class="discount-icon">⭐</span>
             <span id="tier-discount-label">Tier 2 Bonus (5% OFF):</span>
           </span>
-          <span class="pricing-amount savings" id="tier-discount">-€0,00</span>
+          <span class="pricing-amount savings" id="tier-discount">-€0.00</span>
         </div>
 
         <div class="pricing-row discount shipping-row" style="display: none;">
@@ -786,7 +805,7 @@
             <span class="discount-icon">🚚</span>
             FREE Premium Shipping:
           </span>
-          <span class="pricing-amount savings">-€4.99</span>
+          <span class="pricing-amount savings">-<span class="bogo-currency" data-amount="{{ shipping_value_cents }}">€4.99</span></span>
         </div>
 
         <div class="pricing-row discount cable-row" style="display: none;">
@@ -794,14 +813,14 @@
             <span class="discount-icon">🎁</span>
             FREE Titan Smart Cable:
           </span>
-          <span class="pricing-amount savings">-€18.95</span>
+          <span class="pricing-amount savings">-<span class="bogo-currency" data-amount="{{ cable_value_cents }}">€18.95</span></span>
         </div>
 
         <div class="pricing-divider final"></div>
 
         <div class="pricing-row final-total">
           <span class="pricing-label">You Pay:</span>
-          <span class="pricing-amount final" id="final-amount">€0,00</span>
+          <span class="pricing-amount final" id="final-amount">€0.00</span>
         </div>
 
         <div class="savings-percentage">

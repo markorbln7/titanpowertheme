@@ -502,83 +502,37 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 // ===========================================
 
 /**
- * Initialize BOGO state (BOGO-PERSIST-006)
- * Restores from localStorage if available
+ * Initialize BOGO state (SH-DISABLE-STATE-RESTORATION-001)
+ * Always starts fresh - persistence disabled per user requirement
  */
 (function initBOGOState() {
-  // Try to restore saved state
-  const savedState = loadBOGOState();
+  // ✅ ALWAYS START FRESH: Clear any saved state on page load
+  // User requirement: Don't persist state across navigation - fresh start every time
+  // This prevents UI sync bugs from incomplete pairs being restored
+  console.log('🔄 Clearing any saved BOGO state - fresh start on page load');
 
-  if (savedState && savedState.pairs && savedState.pairs.length > 0) {
-    // Restore saved state
-    window.bogoState = {
-      pairs: savedState.pairs,
-      currentPair: {
-        // ✅ FIX: Explicitly ensure proper null structure (BOGO-SURGICAL-FIX-COMBINED-001)
-        slot1: savedState.currentPair?.slot1 || null,
-        slot2: savedState.currentPair?.slot2 || null
-      },
-      activePairNumber: savedState.activePairNumber || ((savedState.pairs.length || 0) + 1)  // ✅ FIX: Restore saved number (BOGO-SURGICAL-FIX-COMBINED-001)
-    };
-    console.log('✅ BOGO state restored from localStorage:', window.bogoState.pairs.length, 'pairs');
-
-    // Update sticky cart to show restored pairs
-    // Wait for DOM to be ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        if (typeof updateStickyCart === 'function') {
-          updateStickyCart();
-        }
-      });
-    } else {
-      // DOM already loaded, update immediately
-      setTimeout(() => {
-        if (typeof updateStickyCart === 'function') {
-          updateStickyCart();
-        }
-      }, 100);
-    }
+  // Clear localStorage immediately
+  if (typeof clearBOGOState === 'function') {
+    clearBOGOState();
   } else {
-    // Initialize fresh state
-    window.bogoState = {
-      pairs: [],
-      currentPair: {
-        slot1: null,
-        slot2: null
-      },
-      activePairNumber: 1
-    };
-    console.log('✅ BOGO state initialized (fresh)');
+    // Fallback if function doesn't exist
+    localStorage.removeItem('titan-bogo-state');
   }
 
-  // ✅ FIX: Validate and auto-fix corrupted state (BOGO-SURGICAL-FIX-COMBINED-001)
-  if (window.bogoState.currentPair) {
-    const cp = window.bogoState.currentPair;
+  // Always initialize fresh state (skip restoration logic)
+  window.bogoState = {
+    pairs: [],
+    currentPair: {
+      slot1: null,
+      slot2: null
+    },
+    activePairNumber: 1
+  };
 
-    // Defensive: If both slots somehow filled on load, auto-complete the pair
-    if (cp.slot1 && cp.slot2) {
-      console.warn('⚠️ currentPair had both slots filled on load - auto-completing');
+  console.log('✅ BOGO state initialized (fresh - persistence disabled)');
+  console.log('📝 Note: State will NOT persist across page navigations');
 
-      // Move to pairs array and reset currentPair
-      window.bogoState.pairs.push({
-        slot1: cp.slot1,
-        slot2: cp.slot2,
-        product1: cp.slot1,
-        product2: cp.slot2,
-        savings: Math.min(cp.slot1.price || 0, cp.slot2.price || 0),
-        pairNumber: window.bogoState.activePairNumber
-      });
-
-      window.bogoState.currentPair = { slot1: null, slot2: null };
-      window.bogoState.activePairNumber++;
-      saveBOGOState();
-    }
-
-    // Log incomplete pair for debugging
-    if ((cp.slot1 && !cp.slot2) || (!cp.slot1 && cp.slot2)) {
-      console.log('✅ Incomplete pair restored:', cp.slot1 ? 'slot1 filled' : 'slot2 filled');
-    }
-  }
+  // No validation needed - state is always fresh
 })();
 
 // ✅ BOGO-INLINE-VARIANTS-044: Enhanced product click handler

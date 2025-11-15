@@ -3139,6 +3139,7 @@
     opacity: 1 !important;
     pointer-events: auto !important;
     position: relative !important;
+    padding: 0px !important;
   }
 
   /* Fallback for single image (old structure) */
@@ -3574,13 +3575,13 @@
     display: inline-flex !important;
     align-items: center !important;
     padding: 6px 12px !important;
-    background: linear-gradient(135deg, #60c655 0%, #4ea843 100%) !important;
+    background: linear-gradient(135deg, #60c655b0 0%, #4ea843a6 100%) !important;
     color: #ffffff !important;
     font-size: 12px !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
-    border-radius: 6px !important;
+    border-radius: 25px !important;
     box-shadow: 0 2px 8px rgba(96, 198, 85, 0.3) !important;
   }
 
@@ -3701,6 +3702,7 @@
       flex-direction: column !important;
       padding: 24px !important;
       padding-bottom: 160px !important; /* Reserve space for fixed footer */
+      gap: 0px !important;
     }
 
     .modal-product-figure {
@@ -3744,7 +3746,8 @@
     .variant-selector {
       width: 100% !important;
       height: var(--touch-min) !important; /* 48px for easy tapping */
-      font-size: var(--text-base) !important; /* 16px prevents iOS zoom */
+      font-size: 17px !important;
+      margin-top: 7px;
     }
 
     /* Reviews Section */
@@ -3776,9 +3779,9 @@
     .buy-now-popup__atc {
       width: 100% !important;
       min-width: auto !important;
-      height: 56px !important;
+      height: 65px !important;
       font-size: 15px !important;
-      font-weight: 800 !important;
+      font-weight: 700 !important;
       border-radius: 28px !important;
       box-shadow: 0 8px 24px rgba(96, 198, 85, 0.4) !important;
     }
@@ -4098,14 +4101,14 @@
     transition: all 300ms ease;
   }
 
-  /* ✅ BOGO-PREMIUM-BADGE-FINAL-056: Minimal text-glow "POPULAR" badge */
+  /* ✅ BOGO-PREMIUM-BADGE-FINAL-056: Minimal text-glow "BEST SELLER" badge (SH-BESTSELLER-BADGE-UPDATE-001) */
   .popularity-badge-premium {
     position: absolute;
     top: 4px;
     left: 50%;
     transform: translateX(-50%) translateZ(0);
     z-index: 8;
-    font-size: 9px;
+    font-size: 11px; /* ✅ CHANGED: 9px → 11px (SH-BESTSELLER-BADGE-UPDATE-001) */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -4145,7 +4148,7 @@
 
   @media (max-width: 768px) {
     .popularity-badge-premium {
-      font-size: 8px;
+      font-size: 10px; /* ✅ CHANGED: 8px → 10px (SH-BESTSELLER-BADGE-UPDATE-001) */
       text-shadow: 0 0 10px rgba(96, 198, 85, 0.9),
                    0 0 18px rgba(96, 198, 85, 0.6),
                    0 0 26px rgba(96, 198, 85, 0.4);
@@ -8591,7 +8594,7 @@ body.bogo-checkout-mode .rebuy-modal {
   aspect-ratio: 1 / 1 !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
   border-radius: 12px !important;
-  padding: 20px !important;
+  padding: 0px !important;
 }
 
 .buy-now-popup__wrapper .carousel-image {

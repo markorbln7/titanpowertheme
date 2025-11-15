@@ -251,6 +251,13 @@
                    data-product-title="{{ product.title | escape }}"
                    onclick="handleProductClick(event, this)">
 
+            {%- comment -%} ✅ SH-BESTSELLER-BADGE-UPDATE-001: Best Seller Badge {%- endcomment -%}
+            {% assign bestseller_ids = "8467056656562,8467055247538,8273510236338,8273528324274,8526179041458,8328405745842,7431305298098,8187933327538,8438326493362,8321507098802,8366528299186,7383356342450" | split: "," %}
+            {% assign product_id_str = product.id | append: "" %}
+            {% if bestseller_ids contains product_id_str %}
+              <div class="popularity-badge-premium">BEST SELLER</div>
+            {% endif %}
+
             {%- comment -%} ✅ BOGO-INLINE-VARIANTS-044: STATE 1 - Default Display {%- endcomment -%}
             <div class="card-default-state active">
               {%- comment -%} Discount Badge - COMPACT {%- endcomment -%}
@@ -477,7 +484,7 @@
                 <div class="milestone-marker">
                   <span class="milestone-icon">🚚</span>
                 </div>
-                <span class="milestone-label">+5% OFF<br>+ SHIP</span>
+                <span class="milestone-label">+5% OFF<br>+ FREE SHIP</span>
               </div>
 
               {%- comment -%} Tier 3 - BOGO-STICKY-CART-MOBILE-016 {%- endcomment -%}

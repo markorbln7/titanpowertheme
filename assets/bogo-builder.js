@@ -187,23 +187,58 @@ const BOGO_EXPIRY_HOURS = 24;
 window.bogoCheckoutTimeout = null;
 window.bogoCheckoutFallbackTimeout = null;
 
+// ========================================
+// UTILITY: DEBOUNCE FUNCTION
+// SH-PERFORMANCE-QUICK-WINS-001
+// ========================================
+
 /**
- * Save BOGO state to localStorage
+ * Debounces a function call
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Milliseconds to wait
+ * @returns {Function} Debounced function
  */
-function saveBOGOState() {
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// ========================================
+// STATE PERSISTENCE (DEBOUNCED)
+// SH-PERFORMANCE-QUICK-WINS-001
+// ========================================
+
+/**
+ * Immediate version - actually writes to localStorage
+ * (Not called directly except in special cases)
+ */
+function saveBOGOStateImmediate() {
   try {
     const stateToSave = {
       pairs: window.bogoState.pairs || [],
       currentPair: window.bogoState.currentPair || {},
-      activePairNumber: window.bogoState.activePairNumber || 1,  // ✅ FIX: Save pair number (BOGO-SURGICAL-FIX-COMBINED-001)
+      activePairNumber: window.bogoState.activePairNumber || 1,
       timestamp: Date.now()
     };
     localStorage.setItem(BOGO_STORAGE_KEY, JSON.stringify(stateToSave));
-    console.log('💾 BOGO state saved to localStorage');
+    console.log('💾 BOGO state saved to localStorage (debounced)');
   } catch (error) {
     console.warn('Failed to save BOGO state:', error);
   }
 }
+
+/**
+ * Debounced version - this is what gets called
+ * Waits 500ms of inactivity before actually saving
+ */
+const saveBOGOState = debounce(saveBOGOStateImmediate, 500);
 
 /**
  * Load BOGO state from localStorage
@@ -6593,6 +6628,9 @@ function populateProductRatings() {
 
   console.log(`⭐ Populating ratings for ${ratingDisplays.length} products`);
 
+  // ✅ FIX: Cache window width ONCE before loop (SH-PERFORMANCE-QUICK-WINS-001)
+  const isMobile = window.innerWidth <= 768;
+
   ratingDisplays.forEach(display => {
     const productId = display.dataset.productId;
 
@@ -6628,7 +6666,7 @@ function populateProductRatings() {
       let countText = `${totalReviews.toLocaleString()} review${totalReviews !== 1 ? 's' : ''}`;
 
       // Mobile: Shorter format
-      if (window.innerWidth <= 768) {
+      if (isMobile) { // ✅ USE CACHED VALUE
         countText = `(${totalReviews.toLocaleString()})`;
       }
 

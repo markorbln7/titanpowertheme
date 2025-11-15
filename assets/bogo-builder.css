@@ -2738,6 +2738,124 @@
   }
 
   {%- comment -%} ========================================
+      STAR RATINGS ON PRODUCT GRID (SH-STAR-RATINGS-GRID-001)
+      Premium dark theme with gold stars, clickable to view reviews
+      ======================================== {%- endcomment -%}
+
+  .product-rating-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* 8pt grid */
+    margin-top: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    padding: 6px 0; /* Touch target padding */
+    transition: transform 150ms ease-out;
+    user-select: none;
+  }
+
+  .product-rating-display:hover {
+    transform: scale(1.05);
+  }
+
+  .product-rating-display:active {
+    transform: scale(0.98);
+  }
+
+  /* Star container - relative positioning for overlay */
+  .rating-stars {
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+
+  /* Empty stars (background layer) */
+  .stars-empty {
+    color: rgba(255, 255, 255, 0.15); /* Subtle on dark bg */
+  }
+
+  /* Filled stars (overlay layer) - width set dynamically by JS */
+  .stars-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #F59E0B; /* Gold - premium trust color */
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.4); /* Subtle glow */
+  }
+
+  /* Review count text */
+  .rating-count {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.01em;
+    transition: color 150ms ease-out;
+  }
+
+  .product-rating-display:hover .rating-count {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .product-rating-display {
+      gap: 6px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .rating-stars {
+      font-size: 13px; /* Slightly smaller */
+    }
+
+    .rating-count {
+      font-size: 11px;
+    }
+  }
+
+  /* Loading state */
+  .product-rating-display[data-loading="true"] .rating-stars {
+    opacity: 0.3;
+  }
+
+  .product-rating-display[data-loading="true"] .rating-count {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* No reviews state - hide completely */
+  .product-rating-display.no-reviews {
+    display: none;
+  }
+
+  /* Accessibility: Focus state */
+  .product-rating-display:focus-visible {
+    outline: 2px solid #60c655;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  /* Accessibility: Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .product-rating-display,
+    .product-rating-display:hover,
+    .product-rating-display:active {
+      transform: none;
+    }
+
+    .stars-filled {
+      text-shadow: none;
+    }
+  }
+
+  {%- comment -%} ========================================
       BOGO-GLOW-STOCK-FIX-051: MINIMAL STOCK BADGES
       Circular badges with high contrast, animate only on change
       ======================================== {%- endcomment -%}
@@ -3344,7 +3462,7 @@
   .rating-count {
     font-size: 13px !important;
     font-weight: 600 !important;
-    color: #333333 !important;
+    color: #575757 !important;
   }
 
   .reviews-scroll-area {
@@ -4144,7 +4262,7 @@
   .rating-count {
     font-size: 14px !important;
     font-weight: 600 !important;
-    color: #333333 !important;
+    color: #575757 !important;
   }
 
   /* ✅ Reviews scroll area with proper styling */

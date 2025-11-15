@@ -296,6 +296,20 @@
                 <div class="top-part">
                   <h4 class="product-title section-collections-with-nav__product-title">{{ product.title }}</h4>
 
+                  {%- comment -%} ⭐ Star Ratings Display (SH-STAR-RATINGS-GRID-001) {%- endcomment -%}
+                  <div class="product-rating-display"
+                       data-product-id="{{ product.id }}"
+                       onclick="openReviewsModal(event, this)"
+                       role="button"
+                       tabindex="0"
+                       aria-label="View product reviews">
+                    <div class="rating-stars" aria-hidden="true">
+                      <span class="stars-empty">★★★★★</span>
+                      <span class="stars-filled" style="width: 0%">★★★★★</span>
+                    </div>
+                    <span class="rating-count">Loading...</span>
+                  </div>
+
                   {%- comment -%} BOGO "Get 1 FREE" Message {%- endcomment -%}
                   <div class="product-bogo-message product-bogo-badge">
                     → Get 1 FREE

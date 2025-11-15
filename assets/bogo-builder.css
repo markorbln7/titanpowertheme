@@ -484,11 +484,13 @@
     left: 0;
     top: 0;
     height: 100%;
-    width: 100%;
+    width: 100%; /* Always 100% width - animated via scaleX */
     background: linear-gradient(90deg, #60c655 0%, #7ed957 50%, #60c655 100%);
     box-shadow: 0 0 30px rgba(96, 198, 85, 0.6),
                 inset 0 2px 8px rgba(255, 255, 255, 0.2);
-    transition: width 1s ease-out, background 500ms ease;
+    transform-origin: left center; /* Scale from left (PERF-QUICK-WINS-001) */
+    transition: transform 1s ease-out, background 500ms ease; /* GPU-accelerated (PERF-QUICK-WINS-001) */
+    will-change: transform; /* Browser optimization hint (PERF-QUICK-WINS-001) */
     z-index: 1;
     animation: energyPulse 2s ease-in-out infinite;
   }

@@ -314,6 +314,15 @@ function showBogoToast(message, type = 'success', duration = 3000) {
   let animationId;
   let stars = [];
 
+  // ✅ PERF-QUICK-WINS-001: Debounce utility to prevent excessive resize calls
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
+
   function resizeCanvas() {
     const oldWidth = canvas.width;
     const oldHeight = canvas.height;
@@ -369,7 +378,11 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
   // Initialize
   resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+
+  // ✅ PERF-QUICK-WINS-001: Debounce resize to 250ms (prevents hundreds of calls during window resize)
+  const debouncedResizeCanvas = debounce(resizeCanvas, 250);
+  window.addEventListener('resize', debouncedResizeCanvas);
+
   animate();
 
   console.log('✅ Starfield animation started!');
@@ -444,7 +457,10 @@ function showBogoToast(message, type = 'success', duration = 3000) {
     // Calculate battery percentage based on time elapsed since sale start
     const timeElapsed = now - SALE_START;
     const percentRemaining = Math.max(0, Math.min(100, ((SALE_DURATION_MS - timeElapsed) / SALE_DURATION_MS) * 100));
-    batteryFill.style.width = `${percentRemaining}%`;
+
+    // ✅ PERF-QUICK-WINS-001: Use scaleX for GPU acceleration (no layout reflows)
+    const scaleValue = percentRemaining / 100; // Convert to 0.0-1.0
+    batteryFill.style.transform = `scaleX(${Math.max(0, scaleValue)})`;
 
     // ✅ BOGO-HERO-POLISH-039: Add low battery warning when < 25% time remaining
     if (percentRemaining < 25) {
@@ -452,13 +468,11 @@ function showBogoToast(message, type = 'success', duration = 3000) {
     } else {
       batteryFill.classList.remove('low-battery');
     }
-
-    requestAnimationFrame(() => {
-      setTimeout(updateCountdown, 1000);
-    });
   }
 
+  // ✅ PERF-QUICK-WINS-001: Use simple setInterval (more efficient than requestAnimationFrame + setTimeout)
   updateCountdown();
+  setInterval(updateCountdown, 1000);
 })();
 
 // ===========================================
@@ -2884,8 +2898,8 @@ function initializeStockLevels() {
     updateStockDisplay(card);
   });
 
-  // Decrease stock randomly every 5 seconds
-  setInterval(decreaseRandomStock, 5000);
+  // ✅ PERF-QUICK-WINS-001: Reduce stock update frequency (30s vs 5s = 80% less CPU usage)
+  setInterval(decreaseRandomStock, 30000);
 
   console.log('✅ Stock levels initialized');
 }
@@ -6467,8 +6481,8 @@ function initializeStockLevels() {
     updateStockDisplay(card);
   });
 
-  // Decrease stock randomly every 5 seconds
-  setInterval(decreaseRandomStock, 5000);
+  // ✅ PERF-QUICK-WINS-001: Reduce stock update frequency (30s vs 5s = 80% less CPU usage)
+  setInterval(decreaseRandomStock, 30000);
 }
 
 // ========================================
@@ -7227,7 +7241,7 @@ window.addEventListener('popstate', async function(event) {
 
   const batteryFill = document.getElementById('battery-fill');
   if (batteryFill) {
-    batteryFill.style.width = '0%';
+    batteryFill.style.transform = 'scaleX(0)'; // ✅ PERF-QUICK-WINS-001: Use scaleX
   }
 
   // Reset cart count displays

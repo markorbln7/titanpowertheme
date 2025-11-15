@@ -183,6 +183,10 @@ const BOGOCurrency = (() => {
 const BOGO_STORAGE_KEY = 'titan-bogo-state';
 const BOGO_EXPIRY_HOURS = 24;
 
+// ✅ FIX: Initialize checkout timeout references (BOGO-SURGICAL-FIX-COMBINED-001)
+window.bogoCheckoutTimeout = null;
+window.bogoCheckoutFallbackTimeout = null;
+
 /**
  * Save BOGO state to localStorage
  */
@@ -191,6 +195,7 @@ function saveBOGOState() {
     const stateToSave = {
       pairs: window.bogoState.pairs || [],
       currentPair: window.bogoState.currentPair || {},
+      activePairNumber: window.bogoState.activePairNumber || 1,  // ✅ FIX: Save pair number (BOGO-SURGICAL-FIX-COMBINED-001)
       timestamp: Date.now()
     };
     localStorage.setItem(BOGO_STORAGE_KEY, JSON.stringify(stateToSave));
@@ -239,8 +244,18 @@ function loadBOGOState() {
  * Clear BOGO state from localStorage
  */
 function clearBOGOState() {
+  // Clear localStorage
   localStorage.removeItem(BOGO_STORAGE_KEY);
-  console.log('🗑️ BOGO state cleared');
+
+  // ✅ BOGO-BACK-FIX-002: Also reset in-memory state
+  if (window.bogoState) {
+    window.bogoState = {
+      pairs: [],
+      currentPair: {}
+    };
+  }
+
+  console.log('🗑️ BOGO state cleared (localStorage + memory)');
 }
 
 /**
@@ -484,11 +499,12 @@ function showBogoToast(message, type = 'success', duration = 3000) {
     // Restore saved state
     window.bogoState = {
       pairs: savedState.pairs,
-      currentPair: savedState.currentPair || {
-        slot1: null,
-        slot2: null
+      currentPair: {
+        // ✅ FIX: Explicitly ensure proper null structure (BOGO-SURGICAL-FIX-COMBINED-001)
+        slot1: savedState.currentPair?.slot1 || null,
+        slot2: savedState.currentPair?.slot2 || null
       },
-      activePairNumber: (savedState.pairs.length || 0) + 1
+      activePairNumber: savedState.activePairNumber || ((savedState.pairs.length || 0) + 1)  // ✅ FIX: Restore saved number (BOGO-SURGICAL-FIX-COMBINED-001)
     };
     console.log('✅ BOGO state restored from localStorage:', window.bogoState.pairs.length, 'pairs');
 
@@ -519,6 +535,35 @@ function showBogoToast(message, type = 'success', duration = 3000) {
       activePairNumber: 1
     };
     console.log('✅ BOGO state initialized (fresh)');
+  }
+
+  // ✅ FIX: Validate and auto-fix corrupted state (BOGO-SURGICAL-FIX-COMBINED-001)
+  if (window.bogoState.currentPair) {
+    const cp = window.bogoState.currentPair;
+
+    // Defensive: If both slots somehow filled on load, auto-complete the pair
+    if (cp.slot1 && cp.slot2) {
+      console.warn('⚠️ currentPair had both slots filled on load - auto-completing');
+
+      // Move to pairs array and reset currentPair
+      window.bogoState.pairs.push({
+        slot1: cp.slot1,
+        slot2: cp.slot2,
+        product1: cp.slot1,
+        product2: cp.slot2,
+        savings: Math.min(cp.slot1.price || 0, cp.slot2.price || 0),
+        pairNumber: window.bogoState.activePairNumber
+      });
+
+      window.bogoState.currentPair = { slot1: null, slot2: null };
+      window.bogoState.activePairNumber++;
+      saveBOGOState();
+    }
+
+    // Log incomplete pair for debugging
+    if ((cp.slot1 && !cp.slot2) || (!cp.slot1 && cp.slot2)) {
+      console.log('✅ Incomplete pair restored:', cp.slot1 ? 'slot1 filled' : 'slot2 filled');
+    }
   }
 })();
 
@@ -868,6 +913,10 @@ function addProductToPair(productData) {
     state.currentPair.slot1 = productData;
     highlightProduct(productData.element, 1, state.activePairNumber);
     showNotification(`${productData.title} added to Pair ${state.activePairNumber} (Slot 1) ✓`);
+
+    // ✅ FIX: Save state immediately after slot1 fill (BOGO-SURGICAL-FIX-COMBINED-001)
+    saveBOGOState();
+
     updateStickyCart();
   } else if (!state.currentPair.slot2) {
     // Fill second slot
@@ -6590,6 +6639,10 @@ async function proceedToCheckout() {
     return;
   }
 
+  // ✅ BOGO-BACK-FIX-002: Mark checkout start in browser history (for back button detection)
+  history.pushState({ bogoCheckoutStarted: true }, '', window.location.href);
+  console.log('📍 Checkout state marked in browser history');
+
   // Show loading
   showCheckoutLoading();
 
@@ -6715,12 +6768,17 @@ async function proceedToCheckout() {
     clearBOGOState();
 
     // Step 8: Navigate to checkout with fallback
-    setTimeout(() => {
+    // ✅ FIX: Store timeout refs so they can be cancelled on back button (BOGO-SURGICAL-FIX-COMBINED-001)
+    window.bogoCheckoutTimeout = setTimeout(() => {
+      window.bogoCheckoutTimeout = null;
+
       // Method 1: Standard navigation
       window.location.href = destinationUrl;
 
       // Method 2: Fallback if Method 1 blocked (Preserving existing logic)
-      setTimeout(() => {
+      window.bogoCheckoutFallbackTimeout = setTimeout(() => {
+        window.bogoCheckoutFallbackTimeout = null;
+
         if (window.location.href.includes('bogo-bf-2025')) {
           console.warn('Primary navigation blocked, using fallback...');
           // Ensure window.top is accessible before using it
@@ -6731,6 +6789,8 @@ async function proceedToCheckout() {
       }, 1000);
     }, 500);
 
+    console.log('✅ Checkout redirect scheduled for 500ms');
+
   } catch (error) {
     console.error('Checkout error:', error);
     hideCheckoutLoading();
@@ -6739,6 +6799,16 @@ async function proceedToCheckout() {
     // Clean up flags
     window.bogoDirectCheckout = false;
     sessionStorage.removeItem('bogo-direct-checkout');
+
+    // ✅ FIX: Clean up pending timeouts (BOGO-SURGICAL-FIX-COMBINED-001)
+    if (window.bogoCheckoutTimeout) {
+      clearTimeout(window.bogoCheckoutTimeout);
+      window.bogoCheckoutTimeout = null;
+    }
+    if (window.bogoCheckoutFallbackTimeout) {
+      clearTimeout(window.bogoCheckoutFallbackTimeout);
+      window.bogoCheckoutFallbackTimeout = null;
+    }
   }
 }
 
@@ -7076,6 +7146,103 @@ function showErrorToast(message) {
 window.proceedToCheckout = proceedToCheckout;
 
 console.log('%c✅ BOGO-CHECKOUT-FINAL-061: Checkout integration loaded', 'color: #60c655; font-weight: bold;');
+
+// ═══════════════════════════════════════════════════════════════════
+// HANDLE BROWSER BACK BUTTON DURING CHECKOUT (BOGO-BACK-FIX-002)
+// Maintains Marko's design: Clear cart to prevent Rebuy conflicts
+// ═══════════════════════════════════════════════════════════════════
+window.addEventListener('popstate', async function(event) {
+  console.log('🔙 Back button detected during checkout flow');
+
+  // ✅ FIX: Cancel any pending checkout redirects (BOGO-SURGICAL-FIX-COMBINED-001)
+  if (window.bogoCheckoutTimeout) {
+    clearTimeout(window.bogoCheckoutTimeout);
+    window.bogoCheckoutTimeout = null;
+    console.log('✅ Cancelled primary checkout redirect');
+  }
+
+  if (window.bogoCheckoutFallbackTimeout) {
+    clearTimeout(window.bogoCheckoutFallbackTimeout);
+    window.bogoCheckoutFallbackTimeout = null;
+    console.log('✅ Cancelled fallback checkout redirect');
+  }
+
+  // STEP 1: Hide loading modal immediately (critical UX fix)
+  const checkoutModal = document.getElementById('checkout-loading');
+  if (checkoutModal) {
+    checkoutModal.remove();
+    console.log('✅ Checkout loading modal removed');
+  }
+
+  // STEP 2: Ensure cart is cleared (maintain Marko's design intent)
+  // This prevents Rebuy from adding free gifts to BOGO items
+  try {
+    await fetch('/cart/clear.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    console.log('✅ Cart cleared on back navigation (prevents Rebuy conflicts)');
+  } catch (error) {
+    console.warn('⚠️ Failed to clear cart on back:', error);
+    // Continue anyway - modal is already hidden
+  }
+
+  // STEP 3: Reset in-memory state completely
+  if (window.bogoState) {
+    window.bogoState = {
+      pairs: [],
+      currentPair: {}
+    };
+    console.log('✅ In-memory state reset');
+  }
+
+  // STEP 4: Clear localStorage
+  if (typeof clearBOGOState === 'function') {
+    clearBOGOState();
+  } else {
+    localStorage.removeItem('titan-bogo-state');
+  }
+
+  // STEP 5: Clean up all checkout-related flags
+  window.bogoDirectCheckout = false;
+  window.rebuyDisabled = false;
+  sessionStorage.removeItem('bogo-direct-checkout');
+  sessionStorage.removeItem('rebuy-disabled');
+  document.body.classList.remove('bogo-checkout-mode');
+
+  // STEP 6: Reset UI to empty state
+  // Reset sticky cart
+  const stickyCart = document.querySelector('.bogo-sticky-cart');
+  if (stickyCart && typeof updateStickyCartUI === 'function') {
+    updateStickyCartUI();
+  }
+
+  // Reset progress/battery displays
+  const progressText = document.querySelector('[class*="progress-text"]');
+  if (progressText) {
+    progressText.textContent = '0/3 selected';
+  }
+
+  const batteryFill = document.getElementById('battery-fill');
+  if (batteryFill) {
+    batteryFill.style.width = '0%';
+  }
+
+  // Reset cart count displays
+  const cartCounts = document.querySelectorAll('.cart-count, [class*="cart"][class*="count"]');
+  cartCounts.forEach(el => {
+    el.textContent = '0';
+  });
+
+  // STEP 7: Show user-friendly notification
+  if (typeof showBogoToast === 'function') {
+    showBogoToast('Checkout cancelled. Build a new bundle to continue!', 'info', 3000);
+  }
+
+  console.log('✅ Back button cleanup complete - user can build new bundle');
+});
 
 
 // DISABLED: // ========================================

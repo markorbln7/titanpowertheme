@@ -2506,7 +2506,7 @@
     background: rgba(26, 26, 26, 0.95);
     border: 2px solid rgba(96, 198, 85, 0.5);
     border-radius: 16px;
-    padding: 20px;
+    padding: 10px;
   }
 
   .card-variant-state.active {
@@ -2522,7 +2522,7 @@
   }
 
   .variant-header h4 {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 900;
     color: #ffffff;
     margin: 0;
@@ -2544,6 +2544,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: -12px;
+    margin-right: -3px;
   }
 
   .variant-close-btn:hover {
@@ -2732,8 +2734,8 @@
     }
 
     .btn-add-variant {
-      padding: 12px;
-      font-size: 14px;
+      padding: 8px;
+      font-size: 12px;
     }
   }
 
@@ -3865,187 +3867,9 @@
   }
 
   /* ========================================
-     BOGO-SOCIAL-PROOF-050: SOCIAL PROOF SYSTEM
-     Live activity, notifications, counters, badges
+     SH-REMOVE-LIVE-ACTIVITY-INDICATOR-001
+     Removed live activity & social proof for premium brand positioning
      ======================================== */
-
-  /* LIVE ACTIVITY INDICATOR */
-  .live-activity-indicator {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(0, 0, 0, 0.85);
-    border: 1px solid rgba(96, 198, 85, 0.4);
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    z-index: 900;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 300ms ease;
-    animation: slideInRight 600ms ease-out;
-  }
-
-  .live-activity-indicator:hover {
-    background: rgba(0, 0, 0, 0.95);
-    border-color: #60c655;
-    transform: translateX(-4px);
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .activity-pulse {
-    width: 8px;
-    height: 8px;
-    background: #60c655;
-    border-radius: 50%;
-    animation: activityPulse 2000ms ease-in-out infinite;
-    box-shadow: 0 0 0 0 rgba(96, 198, 85, 0.7);
-  }
-
-  @keyframes activityPulse {
-    0%, 100% {
-      box-shadow: 0 0 0 0 rgba(96, 198, 85, 0.7);
-    }
-    50% {
-      box-shadow: 0 0 0 6px rgba(96, 198, 85, 0);
-    }
-  }
-
-  .activity-icon {
-    font-size: 16px;
-  }
-
-  .activity-number {
-    color: #60c655;
-    font-weight: 900;
-    transition: all 300ms ease;
-  }
-
-  /* SOCIAL PROOF NOTIFICATIONS */
-  #social-proof-notifications {
-    position: fixed;
-    bottom: 120px;
-    left: 20px;
-    z-index: 950;
-    max-width: 380px;
-  }
-
-  .social-proof-notification {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(96, 198, 85, 0.4);
-    border-radius: 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    animation: slideInLeft 500ms ease-out;
-    position: relative;
-    cursor: pointer;
-    transition: all 300ms ease;
-  }
-
-  .social-proof-notification:hover {
-    background: rgba(0, 0, 0, 0.95);
-    border-color: #60c655;
-    transform: translateX(4px);
-  }
-
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slideOutLeft {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(-100px);
-    }
-  }
-
-  .notification-icon {
-    width: 44px;
-    height: 44px;
-    background: rgba(96, 198, 85, 0.15);
-    border: 2px solid rgba(96, 198, 85, 0.4);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .notification-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .notification-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 2px;
-  }
-
-  .notification-action {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.4;
-  }
-
-  .notification-time {
-    font-size: 11px;
-    color: rgba(96, 198, 85, 0.8);
-    margin-top: 2px;
-  }
-
-  .notification-close {
-    width: 24px;
-    height: 24px;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 200ms ease;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .notification-close:hover {
-    color: #ffffff;
-    transform: scale(1.2);
-  }
 
   /* TOTAL BUNDLES COUNTER */
   .total-bundles-counter {
@@ -4155,36 +3979,8 @@
     }
   }
 
-  /* Mobile responsive for social proof */
+  /* Mobile responsive */
   @media (max-width: 768px) {
-    .live-activity-indicator {
-      padding: 6px 12px;
-      font-size: 11px;
-      margin-top: -7px;
-      margin-right: -3px;
-    }
-
-    .activity-text {
-      max-width: 200px;
-    }
-
-    #social-proof-notifications {
-      left: 12px;
-      right: 12px;
-      max-width: none;
-      bottom: 100px;
-    }
-
-    .social-proof-notification {
-      padding: 12px 14px;
-    }
-
-    .notification-icon {
-      width: 36px;
-      height: 36px;
-      font-size: 18px;
-    }
-
     .total-bundles-counter {
       margin: 24px auto 0;
       padding: 12px 16px;
@@ -7164,6 +6960,11 @@ body.modal-open .bogo-sticky-cart {
   line-height: 1.4;
   color: #ffffff;
 
+  /* ✅ TEXT WRAPPING: Prevent overflow (SH-FIX-MOBILE-TOAST-OVERFLOW-001) */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+
   /* ✅ BACKGROUND: Premium glass morphism */
   background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(12px) saturate(180%);
@@ -7183,6 +6984,10 @@ body.modal-open .bogo-sticky-cart {
   display: flex;
   align-items: center;
   gap: 12px;
+
+  /* ✅ OVERFLOW: Prevent content spillage (SH-FIX-MOBILE-TOAST-OVERFLOW-001) */
+  overflow: hidden;
+  box-sizing: border-box;
 
   /* ✅ STACKING: Above all other UI */
   z-index: 100001 !important;
@@ -7206,6 +7011,9 @@ body.modal-open .bogo-sticky-cart {
 .toast-message {
   flex: 1;
   min-width: 0; /* Allow text truncation */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal; /* Ensure text wraps (SH-FIX-MOBILE-TOAST-OVERFLOW-001) */
 }
 
 /* ✅ SUCCESS VARIANT: Green accent */
@@ -7257,26 +7065,35 @@ body.modal-open .bogo-sticky-cart {
 
 /* ✅ MOBILE: Optimized for thumb zone */
 @media (max-width: 768px) {
-  .bogo-toast {
-    /* Position above 70px sticky cart */
-    bottom: 90px;
-
-    /* Full-width with margins */
-    left: 16px;
-    right: 16px;
-    max-width: none;
-    transform: none;
-
-    /* Slightly tighter spacing on mobile */
-    padding: 10px 14px;
-    font-size: 14px;
-  }
+  /* ❌ DELETED: Old conflicting toast rule - replaced by nuclear option at line 8651 (SH-FINAL-FIX-OVERLAY-TOAST-001) */
 
   .toast-icon {
     font-size: 18px;
   }
 
-  /* Mobile animations without horizontal transform */
+  /* ✅ MOBILE: Simple fade animations without transform (SH-FINAL-FIX-OVERLAY-TOAST-001) */
+  @keyframes toastSlideUp {
+    0% {
+      opacity: 0;
+      /* No transform - allows CSS positioning to work */
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes toastSlideDown {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/* ✅ DESKTOP: Keep transform animations (SH-FINAL-FIX-OVERLAY-TOAST-001) */
+@media (min-width: 769px) {
   @keyframes toastSlideUp {
     0% {
       opacity: 0;
@@ -7297,6 +7114,15 @@ body.modal-open .bogo-sticky-cart {
       opacity: 0;
       transform: translateY(24px) scale(0.95);
     }
+  }
+}
+
+/* ✅ EMERGENCY FIX: Extra small screens (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .bogo-toast {
+    width: calc(100% - 24px);
+    padding: 8px 12px;
+    font-size: 13px;
   }
 }
 
@@ -8649,5 +8475,295 @@ body.bogo-checkout-mode .rebuy-modal {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+}
+
+/* ===== IMAGE LIGHTBOX - FINAL FIX (SH-FIX-LIGHTBOX-TOAST-FINAL-001) ===== */
+
+/* Main lightbox container */
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999 !important;
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  animation: lightboxFadeIn 200ms ease;
+  cursor: pointer; /* Show it's clickable */
+}
+
+.image-lightbox[style*="display: flex"] {
+  display: flex !important; /* Force flex when shown */
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Dark overlay - CRITICAL */
+.lightbox-overlay {
+  position: absolute; /* ✅ FIX: Keeps overlay INSIDE lightbox stacking context (SH-FINAL-FIX-OVERLAY-TOAST-001) */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.92); /* Dark semi-transparent */
+  cursor: pointer;
+}
+
+/* ===== LIGHTBOX OVERLAY - NUCLEAR FIX (SH-FINAL-FIXES-DESKTOP-OVERLAY-001) ===== */
+
+/* Force overlay to be visible above everything */
+.image-lightbox .lightbox-overlay,
+#image-lightbox .lightbox-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.92) !important;
+  z-index: 999997 !important; /* Below image but above modal */
+  cursor: pointer !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure lightbox container is positioned */
+.image-lightbox,
+#image-lightbox {
+  position: fixed !important;
+  z-index: 999998 !important;
+}
+
+/* Ensure content is above overlay */
+.lightbox-content {
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+/* Ensure image is on top */
+.lightbox-image {
+  position: relative !important;
+  z-index: 1000000 !important;
+}
+
+/* Content container */
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  cursor: default; /* Don't close when clicking here */
+  padding: 20px;
+}
+
+/* Close button */
+.lightbox-close {
+  position: absolute;
+  top: -60px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 200ms ease;
+  backdrop-filter: blur(10px);
+  z-index: 1000000;
+  padding: 0;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: rotate(90deg);
+}
+
+.lightbox-close:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+/* The zoomed image */
+.lightbox-image {
+  max-width: 85vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+
+  /* White background for transparent PNGs */
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 0 2px rgba(96, 198, 85, 0.3);
+
+  animation: imagePop 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default; /* Don't close when clicking image */
+
+  /* Enable pinch-to-zoom on mobile */
+  touch-action: pinch-zoom;
+}
+
+@keyframes imagePop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .lightbox-close {
+    top: -70px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .lightbox-image {
+    max-width: 92vw;
+    max-height: 92vh;
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .lightbox-content {
+    padding: 10px;
+  }
+}
+
+/* Remove magnifying glass indicator */
+.modal-product-figure::after {
+  display: none !important;
+}
+
+/* Make image clickable indicator */
+.modal-product-figure {
+  cursor: pointer;
+  position: relative;
+}
+
+.modal-product-figure:hover .carousel-image {
+  transform: scale(1.02);
+  transition: transform 200ms ease;
+}
+
+.carousel-image {
+  transition: transform 200ms ease;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .image-lightbox,
+  .lightbox-image {
+    animation: none;
+  }
+
+  .lightbox-close:hover {
+    transform: none;
+  }
+
+  .modal-product-figure:hover .carousel-image {
+    transform: none;
+  }
+}
+
+/* ===== MOBILE TOAST FIX - NUCLEAR OPTION (SH-FIX-LIGHTBOX-TOAST-FINAL-001) ===== */
+
+/* Force toast to be properly positioned on mobile */
+@media (max-width: 768px) {
+  /* Target ALL possible toast selectors */
+  .bogo-toast,
+  .toast-card,
+  .celebration-toast,
+  .notification-toast,
+  [class*="toast"],
+  [class*="notification"][class*="card"] {
+    /* Remove any conflicting positioning */
+    position: fixed !important;
+
+    /* Center horizontally */
+    left: 16px !important;
+    right: 16px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    /* Width constraints */
+    width: auto !important;
+    max-width: calc(100vw - 32px) !important;
+
+    /* Ensure proper stacking */
+    bottom: 100px !important;
+
+    /* Transform should NOT affect position */
+    transform: none !important;
+
+    /* Text handling */
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    overflow: visible !important;
+
+    /* Box model */
+    box-sizing: border-box !important;
+    padding: 14px 16px !important;
+  }
+
+  /* Text elements inside toast */
+  .bogo-toast *,
+  .toast-card *,
+  [class*="toast"] * {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 375px) {
+  .bogo-toast,
+  .toast-card,
+  [class*="toast"] {
+    left: 12px !important;
+    right: 12px !important;
+    max-width: calc(100vw - 24px) !important;
+    font-size: 13px !important;
+    padding: 12px 14px !important;
+  }
+}
+
+/* ===== DESKTOP TOAST CENTERING (SH-FINAL-FIXES-DESKTOP-OVERLAY-001) ===== */
+@media (min-width: 769px) {
+  .bogo-toast,
+  [class*="toast"] {
+    /* Center horizontally on desktop */
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: 400px !important;
+    bottom: 120px !important;
+
+    /* Ensure proper display */
+    margin: 0 !important;
   }
 }

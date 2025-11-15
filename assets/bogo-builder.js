@@ -6132,333 +6132,10 @@ function getTierForCount(pairCount) {
 }
 
 // ========================================
-// BOGO-SOCIAL-PROOF-050: SOCIAL PROOF SYSTEM
 // ========================================
-
-// Configuration
-const SOCIAL_PROOF_CONFIG = {
-  liveActivity: {
-    enabled: true,
-    baseRange: [15, 35],
-    updateInterval: [8000, 15000]
-  },
-  notifications: {
-    enabled: false, // ✅ DISABLED: "Person from location added X pairs" notifications
-    showInterval: [15000, 25000],
-    displayDuration: 8000,
-    maxVisible: 1
-  },
-  bundlesCounter: {
-    enabled: true,
-    baseRange: [1000, 1500],
-    incrementInterval: [20000, 40000]
-  },
-  popularityBadges: {
-    enabled: true,
-    showProbability: 0.4
-  }
-};
-
-// Live Activity Counter
-class LiveActivityCounter {
-  constructor() {
-    this.baseCount = this.getRandomBase();
-    this.currentCount = this.baseCount;
-    this.element = document.getElementById('live-users');
-    if (this.element && SOCIAL_PROOF_CONFIG.liveActivity.enabled) {
-      this.init();
-    }
-  }
-
-  getRandomBase() {
-    const [min, max] = SOCIAL_PROOF_CONFIG.liveActivity.baseRange;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  init() {
-    this.updateDisplay();
-    setInterval(() => {
-      this.fluctuateCount();
-    }, this.getRandomInterval());
-  }
-
-  getRandomInterval() {
-    const [min, max] = SOCIAL_PROOF_CONFIG.liveActivity.updateInterval;
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  fluctuateCount() {
-    const change = Math.floor(Math.random() * 6) - 2; // -2 to +3
-    this.currentCount = Math.max(10, Math.min(45, this.currentCount + change));
-    this.updateDisplay();
-  }
-
-  updateDisplay() {
-    if (this.element) {
-      this.element.style.transform = 'scale(1.2)';
-      this.element.style.color = '#FFD700';
-
-      setTimeout(() => {
-        this.element.textContent = this.currentCount;
-      }, 150);
-
-      setTimeout(() => {
-        this.element.style.transform = 'scale(1)';
-        this.element.style.color = '#60c655';
-      }, 300);
-    }
-  }
-}
-
-// Social Proof Notifications
-class SocialProofNotifications {
-  constructor() {
-    this.container = document.getElementById('social-proof-notifications');
-    if (!this.container || !SOCIAL_PROOF_CONFIG.notifications.enabled) return;
-
-    this.notifications = this.generateNotifications();
-    this.currentIndex = 0;
-    this.isRunning = true;
-    this.init();
-  }
-
-  generateNotifications() {
-    const names = [
-      'Emma L.', 'James K.', 'Sarah M.', 'Michael R.', 'Lisa T.',
-      'David W.', 'Jennifer H.', 'Robert P.', 'Maria G.', 'John D.',
-      'Sophie B.', 'Thomas C.', 'Anna F.', 'Chris M.', 'Rachel S.'
-    ];
-
-    const actions = [
-      { text: 'just completed a Tier 2 bundle', icon: '⭐' },
-      { text: 'unlocked Tier 3 savings', icon: '👑' },
-      { text: 'added 3 pairs to their bundle', icon: '🎁' },
-      { text: `saved ${BOGOCurrency.convert(5200)} with BOGO`, icon: '💰' },
-      { text: 'is building a bundle now', icon: '🔥' },
-      { text: 'unlocked FREE Premium Shipping', icon: '🚚' },
-      { text: 'got a FREE Titan Smart Cable', icon: '🎉' }
-    ];
-
-    const locations = [
-      'Dublin', 'Cork', 'Galway', 'Limerick', 'Waterford',
-      'London', 'Manchester', 'Berlin', 'Paris', 'Amsterdam',
-      'Brussels', 'Vienna', 'Stockholm', 'Copenhagen'
-    ];
-
-    return Array.from({ length: 20 }, () => {
-      const name = names[Math.floor(Math.random() * names.length)];
-      const location = locations[Math.floor(Math.random() * locations.length)];
-      const action = actions[Math.floor(Math.random() * actions.length)];
-      const minutesAgo = Math.floor(Math.random() * 15) + 1;
-
-      return {
-        name: `${name} from ${location}`,
-        action: action.text,
-        icon: action.icon,
-        time: `${minutesAgo} ${minutesAgo === 1 ? 'minute' : 'minutes'} ago`
-      };
-    });
-  }
-
-  init() {
-    setTimeout(() => {
-      this.showNext();
-    }, 5000);
-
-    this.interval = setInterval(() => {
-      if (this.isRunning) {
-        this.showNext();
-      }
-    }, this.getRandomInterval());
-  }
-
-  getRandomInterval() {
-    const [min, max] = SOCIAL_PROOF_CONFIG.notifications.showInterval;
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  showNext() {
-    const notification = this.notifications[this.currentIndex];
-    this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
-    this.show(notification);
-  }
-
-  show(notification) {
-    const element = document.createElement('div');
-    element.className = 'social-proof-notification';
-    element.innerHTML = `
-      <div class="notification-icon">${notification.icon}</div>
-      <div class="notification-content">
-        <div class="notification-name">${notification.name}</div>
-        <div class="notification-action">${notification.action}</div>
-        <div class="notification-time">${notification.time}</div>
-      </div>
-      <button class="notification-close">×</button>
-    `;
-
-    this.container.appendChild(element);
-
-    const closeBtn = element.querySelector('.notification-close');
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      this.hide(element);
-    });
-
-    element.addEventListener('click', () => {
-      this.hide(element);
-    });
-
-    setTimeout(() => {
-      this.hide(element);
-    }, SOCIAL_PROOF_CONFIG.notifications.displayDuration);
-  }
-
-  hide(element) {
-    element.style.animation = 'slideOutLeft 400ms ease-out';
-    setTimeout(() => {
-      element.remove();
-    }, 400);
-  }
-
-  pause() {
-    this.isRunning = false;
-  }
-
-  resume() {
-    this.isRunning = true;
-  }
-}
-
-// Total Bundles Counter
-class TotalBundlesCounter {
-  constructor() {
-    this.element = document.getElementById('total-bundles');
-    if (!this.element || !SOCIAL_PROOF_CONFIG.bundlesCounter.enabled) return;
-
-    this.baseCount = this.getTodayBase();
-    this.currentCount = this.baseCount;
-    this.init();
-  }
-
-  getTodayBase() {
-    const [min, max] = SOCIAL_PROOF_CONFIG.bundlesCounter.baseRange;
-    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const seed = dayOfYear * 1234567;
-    const random = Math.sin(seed) * 10000;
-    return Math.floor(Math.abs(random) % (max - min)) + min;
-  }
-
-  init() {
-    this.updateDisplay();
-    setInterval(() => {
-      this.incrementCount();
-    }, this.getRandomInterval());
-  }
-
-  getRandomInterval() {
-    const [min, max] = SOCIAL_PROOF_CONFIG.bundlesCounter.incrementInterval;
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  incrementCount() {
-    const increase = Math.floor(Math.random() * 3) + 1;
-    this.currentCount += increase;
-    this.updateDisplay();
-  }
-
-  updateDisplay() {
-    if (this.element) {
-      const formatted = this.currentCount.toLocaleString('en-US');
-      this.element.style.transform = 'scale(1.15)';
-
-      setTimeout(() => {
-        this.element.textContent = formatted;
-      }, 150);
-
-      setTimeout(() => {
-        this.element.style.transform = 'scale(1)';
-      }, 300);
-    }
-  }
-}
-
-// ✅ BOGO-PREMIUM-BADGE-FINAL-056: Minimal text-glow "POPULAR" badge
-function addPopularityBadges() {
-  if (!SOCIAL_PROOF_CONFIG.popularityBadges.enabled) return;
-
-  const productCards = document.querySelectorAll('.product-card');
-
-  // ✅ Minimal text-glow badge - no icon, just glowing text
-  const popularBadge = { type: 'premium', text: 'POPULAR', probability: 0.4 };
-
-  productCards.forEach((card, index) => {
-    const random = Math.random();
-
-    // ✅ Show "POPULAR" badge on ~40% of products
-    if (random < popularBadge.probability) {
-      const badgeElement = document.createElement('div');
-      badgeElement.className = 'popularity-badge-premium';
-      badgeElement.textContent = popularBadge.text;
-
-      // ✅ Append to card
-      card.appendChild(badgeElement);
-    }
-  });
-}
-
-// Initialize all social proof systems
-document.addEventListener('DOMContentLoaded', function() {
-  if (SOCIAL_PROOF_CONFIG.liveActivity.enabled) {
-    new LiveActivityCounter();
-  }
-
-  if (SOCIAL_PROOF_CONFIG.notifications.enabled) {
-    window.socialProofSystem = new SocialProofNotifications();
-
-    // Pause notifications when modals are open
-    const observer = new MutationObserver(function(mutations) {
-      const modalOpen = document.querySelector('.buy-now-popup__wrapper.active, .tier-celebration-overlay.show, .tier-comparison-modal.active');
-
-      if (modalOpen && window.socialProofSystem) {
-        window.socialProofSystem.pause();
-      } else if (window.socialProofSystem) {
-        window.socialProofSystem.resume();
-      }
-    });
-
-    observer.observe(document.body, {
-      attributes: true,
-      subtree: true,
-      attributeFilter: ['class']
-    });
-  }
-
-  if (SOCIAL_PROOF_CONFIG.bundlesCounter.enabled) {
-    new TotalBundlesCounter();
-  }
-
-  if (SOCIAL_PROOF_CONFIG.popularityBadges.enabled) {
-    setTimeout(addPopularityBadges, 500);
-  }
-
-  console.log('%c✅ BOGO-SOCIAL-PROOF-050: Social proof system loaded', 'color: #60c655; font-weight: bold;');
-});
-
-// Easy toggle function
-window.toggleSocialProof = function(enabled) {
-  const indicator = document.querySelector('.live-activity-indicator');
-  if (indicator) {
-    indicator.style.display = enabled ? 'flex' : 'none';
-  }
-
-  if (window.socialProofSystem) {
-    if (enabled) {
-      window.socialProofSystem.resume();
-    } else {
-      window.socialProofSystem.pause();
-    }
-  }
-};
+// SH-REMOVE-LIVE-ACTIVITY-INDICATOR-001
+// Removed live activity counter for premium brand positioning
+// ========================================
 
 // ========================================
 // BOGO-GLOW-STOCK-FIX-051: STOCK BADGES
@@ -7965,45 +7642,10 @@ function updateModalVariant(modal) {
 console.log('%c✅ MODAL-VARIANT-AUTOSELECT-CLOSE-076: Variant auto-selection initialized', 'color: #60c655; font-weight: bold;');
 
 // ========================================
-// SHOW LIVE ACTIVITY AFTER SCROLLING PAST COUNTER
 // ========================================
-
-(function initLiveActivityScroll() {
-  const liveActivity = document.querySelector('.live-activity-indicator');
-  const counterContent = document.querySelector('.counter-content');
-  
-  if (!liveActivity || !counterContent) {
-    console.log('Live activity or counter not found');
-    return;
-  }
-  
-  // Hide live activity initially
-  liveActivity.style.opacity = '0';
-  liveActivity.style.pointerEvents = 'none';
-  
-  function checkScroll() {
-    const counterRect = counterContent.getBoundingClientRect();
-    const counterPassed = counterRect.bottom < 0; // Counter is above viewport
-    
-    if (counterPassed) {
-      // Show live activity
-      liveActivity.style.opacity = '1';
-      liveActivity.style.pointerEvents = 'auto';
-    } else {
-      // Hide live activity
-      liveActivity.style.opacity = '0';
-      liveActivity.style.pointerEvents = 'none';
-    }
-  }
-  
-  // Check on scroll
-  window.addEventListener('scroll', checkScroll);
-  
-  // Check initially
-  checkScroll();
-  
-  console.log('✅ Live activity scroll trigger initialized');
-})();
+// SH-REMOVE-LIVE-ACTIVITY-INDICATOR-001
+// Removed live activity scroll trigger
+// ========================================
 
 // ========================================
 // VARIANT SWATCHES & BUTTONS
@@ -8155,4 +7797,119 @@ window.addEventListener('resize', () => {
   if (typeof initProgressTouchFeedback === 'function') {
     initProgressTouchFeedback();
   }
+});
+
+// ===== IMAGE LIGHTBOX ZOOM (SH-PRODUCT-IMAGE-ZOOM-001) =====
+
+// ===== IMAGE LIGHTBOX - FINAL FIX (SH-FIX-LIGHTBOX-TOAST-FINAL-001) =====
+
+/**
+ * Opens the image lightbox
+ */
+function openImageLightbox(imageSrc) {
+  console.log('🔍 Opening lightbox:', imageSrc);
+
+  const lightbox = document.getElementById('image-lightbox');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const overlay = document.querySelector('.lightbox-overlay');
+
+  if (!lightbox || !lightboxImage) {
+    console.error('❌ Lightbox elements not found');
+    return;
+  }
+
+  // Get full-size image URL (remove Shopify size suffix)
+  const fullSizeUrl = imageSrc
+    .replace(/_\d+x\d*\./, '.')
+    .replace(/_\d+x\./, '.')
+    .replace(/_small\./, '.')
+    .replace(/_medium\./, '.')
+    .replace(/_large\./, '.')
+    .replace(/_grande\./, '.');
+
+  console.log('📸 Full size URL:', fullSizeUrl);
+
+  // Set image
+  lightboxImage.src = fullSizeUrl;
+
+  // ✅ FORCE OVERLAY VISIBILITY WITH INLINE STYLES (SH-FINAL-FIXES-DESKTOP-OVERLAY-001)
+  if (overlay) {
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.background = 'rgba(0, 0, 0, 0.92)';
+    overlay.style.zIndex = '999997';
+    overlay.style.display = 'block';
+    overlay.style.visibility = 'visible';
+    overlay.style.opacity = '1';
+    console.log('✅ Overlay forced visible with inline styles');
+  }
+
+  // Show lightbox
+  lightbox.style.display = 'flex';
+  lightbox.style.zIndex = '999998';
+
+  // Prevent body scroll
+  document.body.style.overflow = 'hidden';
+
+  console.log('✅ Lightbox opened');
+}
+
+/**
+ * Closes the image lightbox
+ */
+function closeImageLightbox() {
+  console.log('❌ Closing lightbox');
+
+  const lightbox = document.getElementById('image-lightbox');
+
+  if (!lightbox) return;
+
+  // Hide lightbox
+  lightbox.style.display = 'none';
+
+  // Restore body scroll
+  document.body.style.overflow = '';
+
+  console.log('✅ Lightbox closed');
+}
+
+/**
+ * Initialize lightbox on page load
+ */
+function initImageLightbox() {
+  console.log('🖼️ Initializing image lightbox');
+
+  // Handle clicks on product images in modals
+  document.addEventListener('click', function(e) {
+    const figure = e.target.closest('.modal-product-figure');
+
+    if (figure && !e.target.closest('.lightbox-close')) {
+      const img = figure.querySelector('.carousel-image');
+      if (img && img.src) {
+        e.preventDefault();
+        e.stopPropagation();
+        openImageLightbox(img.src);
+      }
+    }
+  });
+
+  // ESC key to close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      const lightbox = document.getElementById('image-lightbox');
+      if (lightbox && lightbox.style.display === 'flex') {
+        closeImageLightbox();
+      }
+    }
+  });
+
+  console.log('✅ Lightbox initialized');
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  initImageLightbox();
 });

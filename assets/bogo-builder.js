@@ -6719,9 +6719,11 @@ function getBOGODiscountCodes(pairCount) {
   if (pairCount === 1) {
     return 'BOGO2025';
   } else if (pairCount === 2) {
-    return 'BOGO2025,TIER2-5OFF,FREE-SHIPPING-TIER2';
+    // Tier 2: BOGO + 5% OFF + Free Premium Shipping
+    return 'BOGO2025,TIER2-5OFF,FREESHIP';
   } else if (pairCount >= 3) {
-    return 'BOGO2025,TIER3-10OFF,FREE-SHIPPING-TIER3';
+    // Tier 3: BOGO + 10% OFF + Free Cable + Free Premium Shipping
+    return 'BOGO2025,TIER3-10OFF,FREECABLE2025,FREESHIP';
   }
   return '';
 }

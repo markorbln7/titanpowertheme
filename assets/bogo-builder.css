@@ -234,16 +234,29 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #ffffff;
-    box-shadow: 0 8px 32px rgba(96, 198, 85, 0.4);
-    animation: badgeGlow 2000ms ease-in-out infinite;
+    position: relative; /* ✅ PERF-OPTIMIZATION: Required for ::after pseudo-element */
+    /* box-shadow moved to ::after pseudo-element for GPU acceleration */
   }
 
-  @keyframes badgeGlow {
+  /* ✅ PERF-OPTIMIZATION (SH-CSS-GLOW-OPTIMIZATION-001): GPU-accelerated glow animation */
+  .hero-headline--sale::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 8px 40px rgba(96, 198, 85, 0.6); /* Static max glow */
+    z-index: -1;
+    animation: badgeGlow-opacity 2000ms ease-in-out infinite;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  @keyframes badgeGlow-opacity {
     0%, 100% {
-      box-shadow: 0 8px 32px rgba(96, 198, 85, 0.4);
+      opacity: 0.67; /* 0.4/0.6 = 0.67 to match original min intensity */
     }
     50% {
-      box-shadow: 0 8px 40px rgba(96, 198, 85, 0.6);
+      opacity: 1; /* Full max glow */
     }
   }
 
@@ -897,24 +910,38 @@
     transform: scale(1.05); /* ✅ BOGO-VIEWPORT-012: Reduced from 1.08 for better 100% zoom */
     z-index: 2;
     padding-top: 28px; /* ✅ Extra space for badge */
-    box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
-    animation: tier-pulse 3s ease-in-out infinite; /* ✅ BOGO-TIER-002: Pulse animation */
+    position: relative; /* ✅ PERF-OPTIMIZATION: Required for ::after pseudo-element */
+    /* box-shadow moved to ::after pseudo-element for GPU acceleration */
   }
 
-  /* Pulse animation for Tier 2 */
-  @keyframes tier-pulse {
+  /* ✅ PERF-OPTIMIZATION (SH-CSS-GLOW-OPTIMIZATION-001): GPU-accelerated glow animation */
+  .tier-card.most-popular::after {
+    content: '';
+    position: absolute;
+    inset: -3px; /* Match border width */
+    border-radius: inherit;
+    box-shadow: 0 16px 48px rgba(96, 198, 85, 0.6); /* Static max glow */
+    z-index: -1;
+    animation: tier-pulse-opacity 3s ease-in-out infinite;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  /* Pulse animation for Tier 2 - GPU-accelerated */
+  @keyframes tier-pulse-opacity {
     0%, 100% {
-      box-shadow: 0 12px 32px rgba(96, 198, 85, 0.4);
+      opacity: 0.67; /* 0.4/0.6 = 0.67 to match original min intensity */
     }
     50% {
-      box-shadow: 0 16px 48px rgba(96, 198, 85, 0.6);
+      opacity: 1; /* Full max glow */
     }
   }
 
   /* Respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
-    .tier-card.most-popular {
+    .tier-card.most-popular::after {
       animation: none;
+      opacity: 0.85; /* Static medium glow */
     }
   }
 
@@ -966,27 +993,34 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     letter-spacing: 0.08em;
     white-space: nowrap;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6),
-                0 0 40px rgba(255, 215, 0, 0.4),
-                0 4px 16px rgba(0, 0, 0, 0.5),
+    /* Static shadows that don't animate (inset + drop shadow) */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5),
                 inset 0 1px 2px rgba(255, 255, 255, 0.5);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     z-index: 10;
-    animation: bestValueGlow 2000ms ease-in-out infinite;
+    /* Glow moved to ::before pseudo-element for GPU acceleration */
   }
 
-  @keyframes bestValueGlow {
+  /* ✅ PERF-OPTIMIZATION (SH-CSS-GLOW-OPTIMIZATION-001): GPU-accelerated glow animation */
+  .best-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
+                0 0 60px rgba(255, 215, 0, 0.6); /* Static max glow */
+    z-index: -1;
+    animation: bestValueGlow-opacity 2000ms ease-in-out infinite;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  @keyframes bestValueGlow-opacity {
     0%, 100% {
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6),
-                  0 0 40px rgba(255, 215, 0, 0.4),
-                  0 4px 16px rgba(0, 0, 0, 0.5),
-                  inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      opacity: 0.67; /* Min glow: (20/30 + 40/60) / 2 ≈ 0.67 */
     }
     50% {
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
-                  0 0 60px rgba(255, 215, 0, 0.6),
-                  0 4px 16px rgba(0, 0, 0, 0.5),
-                  inset 0 1px 2px rgba(255, 255, 255, 0.5);
+      opacity: 1; /* Full max glow */
     }
   }
 
@@ -2026,8 +2060,39 @@
       font-size: 12px;
     }
   }
-  .bogo-sticky-cart.celebration-pulse { animation: cartCelebratePulse 1200ms ease-out; }
-  @keyframes cartCelebratePulse { 0%, 100% { transform: translateY(0); box-shadow: 0 -4px 20px rgba(96, 198, 85, 0.3); } 25% { transform: translateY(-8px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } 50% { transform: translateY(0); box-shadow: 0 -12px 60px rgba(96, 198, 85, 0.8); } 75% { transform: translateY(-4px); box-shadow: 0 -8px 40px rgba(96, 198, 85, 0.6); } }
+
+  /* ✅ PERF-OPTIMIZATION (SH-CSS-GLOW-OPTIMIZATION-001): Split transform and glow for GPU */
+  .bogo-sticky-cart.celebration-pulse {
+    animation: cartCelebrateBounce 1200ms ease-out; /* Transform only on main element */
+  }
+
+  .bogo-sticky-cart.celebration-pulse::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 -12px 60px rgba(96, 198, 85, 0.8); /* Static max glow */
+    z-index: -1;
+    animation: cartCelebrateGlow 1200ms ease-out;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  /* Transform animation (GPU-accelerated) */
+  @keyframes cartCelebrateBounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-8px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-4px); }
+  }
+
+  /* Glow animation via opacity (GPU-accelerated) */
+  @keyframes cartCelebrateGlow {
+    0%, 100% { opacity: 0.25; } /* 0.3/0.8 ≈ 0.375, using 0.25 for subtler start */
+    25% { opacity: 0.75; } /* 0.6/0.8 = 0.75 */
+    50% { opacity: 1; }    /* Full max glow */
+    75% { opacity: 0.75; } /* 0.6/0.8 = 0.75 */
+  }
 
   /* Tier benefit styling for sticky cart */
   .tier-benefit { display: block; font-size: 12px; color: #FFD700; margin-top: 4px; font-weight: 600; }
@@ -5286,9 +5351,25 @@
     .gift-icon {
       animation: none;
     }
+
+    /* ✅ PERF-OPTIMIZATION (SH-CSS-GLOW-OPTIMIZATION-001): Disable glow animations for accessibility */
+    .hero-headline--sale::after,
+    .best-badge::before,
+    .bogo-sticky-cart.celebration-pulse::before {
+      animation: none;
+      opacity: 0.85; /* Static medium glow */
+    }
+
+    .bogo-sticky-cart.celebration-pulse {
+      animation: none; /* Disable bounce */
+    }
   }
 
-  /* Legacy celebration pulse */
+  /* ⚠️ FIX (SH-STICKY-CART-ANIMATION-FIX-001): Removed legacy duplicate celebration-pulse
+   * This was overriding the better animation at line 2030 (translateY bounce with glow)
+   * The legacy scale(1.02) animation was too subtle and conflicted with the newer one
+   */
+  /* Legacy celebration pulse - REMOVED
   .bogo-sticky-cart.celebration-pulse {
     animation: cartCelebratePulse 1200ms ease-out;
   }
@@ -5301,6 +5382,7 @@
       transform: scale(1.02);
     }
   }
+  */
 
   /* Modal overlay */
   .pair-modal {
@@ -6936,103 +7018,194 @@ body.modal-open .bogo-sticky-cart {
 
 /* ========================================
    TOAST NOTIFICATION SYSTEM
-   BOGO-REVIEW-MODAL-UX-024
+   SH-PREMIUM-TOAST-REDESIGN-001
+   Apple-inspired premium toast notifications
+   Following CKL-113 design principles
    ======================================== */
 
 .bogo-toast {
+  /* ✅ POSITION: Bottom third, thumb-friendly zone */
   position: fixed;
-  bottom: 24px;
+  bottom: 100px; /* Clears 70-80px sticky cart + safe margin */
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.95);
+
+  /* ✅ SIZE: Compact banner, not modal-like */
+  max-width: min(400px, 85vw);
+  width: auto;
+
+  /* ✅ SPACING: 8pt grid (12px × 16px) - compact but breathable */
+  padding: 12px 16px;
+
+  /* ✅ TYPOGRAPHY: Clear hierarchy, 16px minimum */
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
   color: #ffffff;
-  padding: 16px 24px;
+
+  /* ✅ BACKGROUND: Premium glass morphism */
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+
+  /* ✅ BORDER: Subtle accent, not dominant */
+  border: 1px solid rgba(96, 198, 85, 0.3);
   border-radius: 12px;
-  border: 1px solid rgba(96, 198, 85, 0.5);
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 100001 !important; /* ✅ Above modals and header */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+
+  /* ✅ SHADOW: Sophisticated depth */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* ✅ LAYOUT: Horizontal flex with icon */
   display: flex;
   align-items: center;
   gap: 12px;
+
+  /* ✅ STACKING: Above all other UI */
+  z-index: 100001 !important;
+
+  /* ✅ ANIMATION: Smooth 400ms slide + scale */
   opacity: 0;
-  animation: toastSlideIn 300ms ease forwards;
+  animation: toastSlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  /* ✅ PERFORMANCE: GPU acceleration */
+  will-change: transform, opacity;
 }
 
+/* ✅ ICON: Clear visual indicator */
+.toast-icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ✅ MESSAGE: Flexible text container */
+.toast-message {
+  flex: 1;
+  min-width: 0; /* Allow text truncation */
+}
+
+/* ✅ SUCCESS VARIANT: Green accent */
 .bogo-toast.success {
-  border-color: rgba(96, 198, 85, 0.7);
+  border-color: rgba(96, 198, 85, 0.4);
 }
 
 .bogo-toast.success .toast-icon {
   color: #60c655;
+  text-shadow: 0 0 8px rgba(96, 198, 85, 0.5);
 }
 
+/* ✅ ERROR VARIANT: Red accent */
 .bogo-toast.error {
-  border-color: rgba(239, 68, 68, 0.7);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .bogo-toast.error .toast-icon {
   color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
 }
 
-@keyframes toastSlideIn {
-  from {
+/* ✅ ANIMATION: Premium slide-up with scale */
+@keyframes toastSlideUp {
+  0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) translateY(24px) scale(0.95);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
-@keyframes toastSlideOut {
-  from {
+@keyframes toastSlideDown {
+  0% {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
-  to {
+  100% {
     opacity: 0;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) translateY(24px) scale(0.95);
   }
 }
 
 .bogo-toast.hiding {
-  animation: toastSlideOut 300ms ease forwards;
+  animation: toastSlideDown 400ms cubic-bezier(0.4, 0, 0.68, 0.06) forwards;
 }
 
-/* Mobile adjustments */
+/* ✅ MOBILE: Optimized for thumb zone */
 @media (max-width: 768px) {
   .bogo-toast {
-    bottom: 80px; /* Above sticky cart */
+    /* Position above 70px sticky cart */
+    bottom: 90px;
+
+    /* Full-width with margins */
     left: 16px;
     right: 16px;
+    max-width: none;
     transform: none;
-    width: auto;
+
+    /* Slightly tighter spacing on mobile */
+    padding: 10px 14px;
+    font-size: 14px;
   }
 
-  @keyframes toastSlideIn {
-    from {
+  .toast-icon {
+    font-size: 18px;
+  }
+
+  /* Mobile animations without horizontal transform */
+  @keyframes toastSlideUp {
+    0% {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px) scale(0.95);
     }
-    to {
+    100% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
   }
 
-  @keyframes toastSlideOut {
-    from {
+  @keyframes toastSlideDown {
+    0% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
-    to {
+    100% {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px) scale(0.95);
     }
   }
+}
+
+/* ✅ ACCESSIBILITY: Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .bogo-toast {
+    animation: toastFadeIn 200ms ease forwards;
+  }
+
+  .bogo-toast.hiding {
+    animation: toastFadeOut 200ms ease forwards;
+  }
+
+  @keyframes toastFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes toastFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+}
+
+/* ✅ LONG MESSAGE SUPPORT: Line clamping for very long text */
+.toast-message.toast-long {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ========================================

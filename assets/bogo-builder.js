@@ -1694,7 +1694,7 @@ function updateStickyCart() {
   } else if (pairCount === 0) {
     // STATE: Empty Cart
     pairCountEl.textContent = 'Start Building';
-    updateIncentiveMessage('Select 2 items to activate <strong>Buy 1 Get 1 50% OFF!</strong>');
+    updateIncentiveMessage('Select 2 items to activate <strong>Buy 1 Get 1 FREE!</strong>');
     primaryBtn.textContent = 'Start Building';
     primaryBtn.onclick = scrollToProducts;
     reviewBtn.style.display = 'none';
@@ -1774,11 +1774,14 @@ function updateStickyCart() {
 
   // ✅ BOGO-V2-ADVANCED: Pulse cart + haptics + confetti on tier unlock
   if (currentTier > prevState.currentTier && currentTier > 0) {
-    // Visual pulse animation
-    stickyCartV2.style.animation = 'none';
-    setTimeout(() => {
-      stickyCartV2.style.animation = 'cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards';
-    }, 10);
+    // ⚠️ FIX (SH-STICKY-CART-ANIMATION-FIX-001): Removed cartSlideUp animation
+    // It conflicts with celebration-pulse animation applied in tier celebration modal (line 5920)
+    // The celebration-pulse (1200ms) provides better visual feedback than cartSlideUp (500ms)
+    // Visual pulse animation - DISABLED to prevent animation conflict
+    // stickyCartV2.style.animation = 'none';
+    // setTimeout(() => {
+    //   stickyCartV2.style.animation = 'cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards';
+    // }, 10);
 
     // Haptic feedback on mobile
     if (currentTier === 1) {

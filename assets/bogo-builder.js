@@ -7005,11 +7005,16 @@ async function addBonusCable() {
 function redirectToCheckoutWithCodes(pairCount) {
   let codes = ['BOGO2025']; // Always include BOGO
 
-  // Add tier discount
+  // Add tier-specific benefits
   if (pairCount >= 3) {
-    codes.push('TIER3-10OFF');
-  } else if (pairCount === 2) {
-    codes.push('TIER2-5OFF');
+    // Tier 3: 10% OFF + Free Cable + Free Premium Shipping
+    codes.push('TIER3-10OFF');    // 10% discount
+    codes.push('FREECABLE2025');  // Free Titan Smart Cable (€14.95 value)
+    codes.push('FREESHIP');       // Free premium shipping ($4.95 value)
+  } else if (pairCount >= 2) {
+    // Tier 2: 5% OFF + Free Premium Shipping
+    codes.push('TIER2-5OFF');     // 5% discount
+    codes.push('FREESHIP');       // Free premium shipping ($4.95 value)
   }
 
   const codesString = codes.join(',');
@@ -7908,6 +7913,42 @@ function initImageLightbox() {
 
   console.log('✅ Lightbox initialized');
 }
+
+// ===== REMOVE STICKY HEADER ON BOGO PAGE (SH-QUICK-FIX-TOAST-HEADER-001) =====
+(function() {
+  // Check if we're on BOGO page (multiple detection methods)
+  const isBOGOPage = window.location.pathname.includes('bogo') ||
+                     document.body.classList.contains('template-page') ||
+                     document.querySelector('.section-bogo-builder-2024') ||
+                     document.body.className.includes('bogo');
+
+  if (isBOGOPage) {
+    console.log('🎯 BOGO page detected - removing sticky header');
+
+    // Find header element (try multiple selectors)
+    const header = document.querySelector('sticky-header') ||
+                   document.querySelector('.header-wrapper') ||
+                   document.querySelector('.shopify-section-header') ||
+                   document.querySelector('#shopify-section-header') ||
+                   document.querySelector('.site-header') ||
+                   document.querySelector('header.header');
+
+    if (header) {
+      // Remove sticky positioning
+      header.style.position = 'relative';
+      header.style.top = 'auto';
+      header.style.transform = 'none';
+      header.style.willChange = 'auto';
+
+      // Remove body padding
+      document.body.style.paddingTop = '0';
+
+      console.log('✅ Sticky header removed on BOGO page');
+    } else {
+      console.log('⚠️ Header element not found');
+    }
+  }
+})();
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {

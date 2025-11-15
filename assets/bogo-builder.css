@@ -8767,3 +8767,50 @@ body.bogo-checkout-mode .rebuy-modal {
     margin: 0 !important;
   }
 }
+
+/* ===== REMOVE STICKY HEADER ON BOGO PAGE ONLY (SH-QUICK-FIX-TOAST-HEADER-001) ===== */
+
+/* Target BOGO page specifically using multiple selector patterns */
+body.template-page sticky-header,
+body.template-page .header-wrapper,
+body[class*="bogo"] sticky-header,
+body[class*="bogo"] .header-wrapper,
+.section-bogo-builder-2024 ~ * sticky-header,
+.bogo-page-active sticky-header,
+.bogo-page-active .header-wrapper {
+  /* Remove sticky positioning */
+  position: relative !important;
+
+  /* Reset any transform that might create sticky effect */
+  transform: none !important;
+
+  /* Ensure it scrolls naturally */
+  top: auto !important;
+
+  /* Remove any fixed positioning effects */
+  will-change: auto !important;
+}
+
+/* Also remove sticky behavior from header components */
+body.template-page .shopify-section-header-sticky,
+body.template-page .shopify-section-header-hidden,
+body[class*="bogo"] .shopify-section-header-sticky,
+body[class*="bogo"] .shopify-section-header-hidden {
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+}
+
+/* Reset body padding that compensates for sticky header */
+body.template-page,
+body[class*="bogo"] {
+  padding-top: 0 !important;
+}
+
+/* Ensure main content starts at top */
+body.template-page main,
+body.template-page .main-content,
+body[class*="bogo"] main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}

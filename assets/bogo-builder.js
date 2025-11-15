@@ -7169,6 +7169,13 @@ console.log('%c✅ BOGO-CHECKOUT-FINAL-061: Checkout integration loaded', 'color
 // Maintains Marko's design: Clear cart to prevent Rebuy conflicts
 // ═══════════════════════════════════════════════════════════════════
 window.addEventListener('popstate', async function(event) {
+  // ✅ CRITICAL FIX: Only run on BACK button, not during checkout redirect
+  // If bogoCheckoutStarted is true in state, we're IN checkout flow - don't interfere
+  if (event.state && event.state.bogoCheckoutStarted === true) {
+    console.log('✅ Checkout in progress - popstate handler ignoring (not a back button)');
+    return; // Exit early, let checkout complete
+  }
+
   console.log('🔙 Back button detected during checkout flow');
 
   // ✅ FIX: Cancel any pending checkout redirects (BOGO-SURGICAL-FIX-COMBINED-001)

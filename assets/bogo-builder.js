@@ -5667,32 +5667,110 @@ document.addEventListener('keydown', function(e) {
 });
 
 function showNotification(message) {
-  // Simple toast notification
+  // ✅ PREMIUM TOAST REDESIGN (SH-REDESIGN-LEGACY-TOAST-001)
+  // Dark theme with color-coded text for better readability
+
   const toast = document.createElement('div');
-  toast.textContent = message;
+
+  // Parse message and apply color coding
+  let formattedMessage = message;
+
+  // Pattern 1: "🎉 Pair X Complete! Product Name is FREE! Add another pair..."
+  // Highlight pair number, product name, "FREE", and savings percentage in green
+  formattedMessage = formattedMessage.replace(
+    /🎉\s+(Pair \d+)\s+(Complete!)\s+(.+?)\s+(is FREE!)(.*)$/,
+    '<span style="color: #60c655; font-size: 20px;">🎉</span> <span style="color: #60c655; font-weight: 700;">$1</span> <span style="opacity: 0.9;">$2</span> <span style="color: #60c655; font-weight: 700;">$3</span> <span style="color: #60c655; font-weight: 700; font-size: 16px;">$4</span>$5'
+  );
+
+  // Pattern 2: Highlight percentage in tier messages (e.g., "save 5% on entire order")
+  formattedMessage = formattedMessage.replace(
+    /(save|savings?)\s+(\d+%)/gi,
+    '$1 <span style="color: #60c655; font-weight: 700;">$2</span>'
+  );
+
+  // Pattern 3: "Product Name added to Pair X (Slot Y) ✓"
+  // Highlight product name and pair number in green
+  formattedMessage = formattedMessage.replace(
+    /^(.+?)\s+(added to)\s+(Pair \d+)(.*)$/,
+    '<span style="color: #60c655; font-weight: 700;">$1</span> <span style="opacity: 0.8;">$2</span> <span style="color: #60c655; font-weight: 700;">$3</span>$4'
+  );
+
+  // Pattern 4: "Pair X removed"
+  // Highlight pair number in green
+  formattedMessage = formattedMessage.replace(
+    /(Pair \d+)\s+(removed)/,
+    '<span style="color: #60c655; font-weight: 700;">$1</span> <span style="opacity: 0.8;">$2</span>'
+  );
+
+  // Pattern 5: Warning messages (⚠️)
+  // Highlight warning symbol in orange
+  formattedMessage = formattedMessage.replace(
+    /⚠️/g,
+    '<span style="color: #F59E0B; font-size: 18px;">⚠️</span>'
+  );
+
+  // Pattern 6: Success checkmark (✓)
+  // Keep green
+  formattedMessage = formattedMessage.replace(
+    /✓/g,
+    '<span style="color: #60c655;">✓</span>'
+  );
+
+  // Use innerHTML instead of textContent to support color coding
+  toast.innerHTML = formattedMessage;
+
+  // Premium dark styling
   toast.style.cssText = `
     position: fixed;
-    bottom: 100px;
+    bottom: 110px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(96, 198, 85, 0.95);
+
+    /* Premium dark glass background */
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Nearly full width */
+    width: 80%;
+    max-width: 600px;
+
+    /* Spacing */
+    padding: 14px 20px;
+
+    /* Typography */
     color: white;
-    padding: 16px 32px;
-    border-radius: 8px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+
+    /* Borders & shadows */
+    border: 1px solid rgba(96, 198, 85, 0.3);
+    border-radius: 10px;
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+
+    /* Z-index */
     z-index: 10000;
-    font-size: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    animation: slideUp 0.3s ease-out;
+
+    /* Animation */
+    animation: toastSlideUp 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
+    /* Performance */
+    will-change: transform, opacity;
   `;
+
   document.body.appendChild(toast);
 
+  // Auto-dismiss after 2.5 seconds
   setTimeout(() => {
-    toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    toast.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(-20px)';
+    toast.style.transform = 'translateX(-50%) translateY(-20px) scale(0.95)';
     setTimeout(() => toast.remove(), 300);
-  }, 2000);
+  }, 2500);
 }
 
 // Ensure functions are globally accessible

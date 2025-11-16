@@ -6669,29 +6669,36 @@ async function proceedToCheckout() {
     // Step 7: Clear BOGO state
     clearBOGOState();
 
-    // Step 8: Navigate to checkout with fallback
-    // ✅ FIX: Store timeout refs so they can be cancelled on back button (BOGO-SURGICAL-FIX-COMBINED-001)
-    window.bogoCheckoutTimeout = setTimeout(() => {
-      window.bogoCheckoutTimeout = null;
+    // Step 8: IMMEDIATE redirect to checkout (CRITICAL FIX: SH-CRITICAL-FIX-CHECKOUT-HIJACKING-001)
+    // Removed 500ms + 1000ms delays that created race condition with Rebuy.
+    // Root cause: Rebuy detected cart:change events and hijacked navigation during the delay window.
+    // Solution: Redirect immediately after cart operations complete, before Rebuy can react.
 
-      // Method 1: Standard navigation
+    console.log('🚀 IMMEDIATE redirect to:', destinationUrl);
+
+    // Aggressive inline Rebuy suppression (belt and suspenders approach)
+    // Hide/disable any Rebuy elements that might interfere during redirect
+    try {
+      document.querySelectorAll('[data-rebuy], [data-rebuy-cart], rebuy-cart, .rebuy-cart').forEach(el => {
+        el.style.display = 'none';
+        el.style.pointerEvents = 'none';
+      });
+    } catch (e) {
+      // Ignore errors - this is belt-and-suspenders, main fix is immediate redirect
+    }
+
+    // Use location.replace() for immediate navigation without history entry
+    // This is faster than location.href and prevents back button confusion
+    try {
+      window.location.replace(destinationUrl);
+    } catch (e) {
+      // Fallback to href if replace fails (extremely rare)
+      console.warn('⚠️ location.replace failed, using location.href fallback:', e);
       window.location.href = destinationUrl;
+    }
 
-      // Method 2: Fallback if Method 1 blocked (Preserving existing logic)
-      window.bogoCheckoutFallbackTimeout = setTimeout(() => {
-        window.bogoCheckoutFallbackTimeout = null;
-
-        if (window.location.href.includes('bogo-bf-2025')) {
-          console.warn('Primary navigation blocked, using fallback...');
-          // Ensure window.top is accessible before using it
-          if (window.top) {
-            window.top.location.href = destinationUrl;
-          }
-        }
-      }, 1000);
-    }, 500);
-
-    console.log('✅ Checkout redirect scheduled for 500ms');
+    // Note: No setTimeout delays = no race condition window for Rebuy
+    console.log('✅ Immediate redirect executed');
 
   } catch (error) {
     console.error('Checkout error:', error);
@@ -6702,15 +6709,8 @@ async function proceedToCheckout() {
     window.bogoDirectCheckout = false;
     sessionStorage.removeItem('bogo-direct-checkout');
 
-    // ✅ FIX: Clean up pending timeouts (BOGO-SURGICAL-FIX-COMBINED-001)
-    if (window.bogoCheckoutTimeout) {
-      clearTimeout(window.bogoCheckoutTimeout);
-      window.bogoCheckoutTimeout = null;
-    }
-    if (window.bogoCheckoutFallbackTimeout) {
-      clearTimeout(window.bogoCheckoutFallbackTimeout);
-      window.bogoCheckoutFallbackTimeout = null;
-    }
+    // Timeout cleanup removed (SH-CRITICAL-FIX-CHECKOUT-HIJACKING-001)
+    // No timeouts exist after immediate redirect fix
   }
 }
 
@@ -7070,18 +7070,9 @@ window.addEventListener('popstate', async function(event) {
 
   console.log('🔙 Back button detected during checkout flow');
 
-  // ✅ FIX: Cancel any pending checkout redirects (BOGO-SURGICAL-FIX-COMBINED-001)
-  if (window.bogoCheckoutTimeout) {
-    clearTimeout(window.bogoCheckoutTimeout);
-    window.bogoCheckoutTimeout = null;
-    console.log('✅ Cancelled primary checkout redirect');
-  }
-
-  if (window.bogoCheckoutFallbackTimeout) {
-    clearTimeout(window.bogoCheckoutFallbackTimeout);
-    window.bogoCheckoutFallbackTimeout = null;
-    console.log('✅ Cancelled fallback checkout redirect');
-  }
+  // Timeout cancellation removed (SH-CRITICAL-FIX-CHECKOUT-HIJACKING-001)
+  // No timeouts exist after immediate redirect fix
+  console.log('✅ Back button detected - cart will be cleared');
 
   // STEP 1: Hide loading modal immediately (critical UX fix)
   const checkoutModal = document.getElementById('checkout-loading');

@@ -3541,3 +3541,57 @@ html.bogo-checkout-mode .rebuy-modal {
   position: absolute !important;
   left: -9999px !important;
 }
+
+/* ========================================
+   Shop Modal Variant Selector Fix
+   [SH-FIX-SHOP-MODAL-VARIANTS-001]
+   ======================================== */
+
+/* Hide visual variant buttons in shop modal only */
+.buy-now-popup .variant-selectors-visual {
+  display: none !important;
+}
+
+/* Ensure fallback dropdown container is visible */
+.buy-now-popup .variant-selectors-fallback {
+  display: block !important;
+  margin-bottom: 20px;
+}
+
+/* Style dropdowns to match BOGO page styling */
+.buy-now-popup .variant-selector {
+  all: revert;
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: all 200ms ease;
+  outline: none;
+}
+
+.buy-now-popup .variant-selector:hover {
+  border-color: #60c655;
+}
+
+.buy-now-popup .variant-selector:focus {
+  border-color: #60c655;
+  box-shadow: 0 0 0 3px rgba(96, 198, 85, 0.1);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .buy-now-popup .variant-selector {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+}

@@ -238,6 +238,7 @@
     },
     "scroll_to_button_7LJcTQ": {
       "type": "scroll-to-button",
+      "disabled": true,
       "custom_css": [
         ".my-\\[20px\\] {margin-top: 30px; margin-bottom: 20px;}",
         ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655; color: #fff !important;}"
@@ -247,40 +248,9 @@
         "button_text": "GET STARTED"
       }
     },
-    "limited_offers_zbhK6h": {
-      "type": "limited-offers",
-      "custom_css": [
-        ".top-image.mb-\\[20px\\] {display: none;}",
-        ".offers-title {margin-top: 30px;}",
-        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
-        ".timer {font-weight: bold; color: #ffa500; background: #ffffff; padding: 8px 20px; border-radius: 8px; border: 2px solid #ffa500; margin: 20px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; max-width: 270px; margin-bottom: -10px;}"
-      ],
-      "settings": {
-        "text_right": "",
-        "countdown_to": "2025-05-05T00:00:00-07:00"
-      }
-    },
-    "section_collections_with_nav_7prVeC": {
-      "type": "section-collections-with-nav",
-      "custom_css": [
-        ".font-bold {font-weight: 400; padding: 0px 10px 0px 10px; margin-bottom: -60px;}"
-      ],
-      "settings": {
-        "use_popup": true,
-        "show_alt_images": true,
-        "collections": [
-          "new-tech-drop"
-        ],
-        "add_4": "shopify://shop_images/MULTIBUY_OFFER_aDD_4X_3b63f045-a350-4b10-b134-c1d41bdd80d6.jpg",
-        "add_4_text": "4",
-        "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
-        "add_6_text": "6",
-        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
-        "add_10_text": "10"
-      }
-    },
     "titan_linked_image_A4GJp6": {
       "type": "titan-linked-image",
+      "disabled": true,
       "custom_css": [
         ".shadow {box-shadow: none !important; max-width: 200px; align-items: center; margin-left: auto; margin-right: auto; margin-top: -90px; margin-bottom: 0px; background-color: #e4eaea;}",
         ".max-w-screen-xl {background-color: #e4eaea;}",
@@ -292,6 +262,58 @@
         "desktop_image": "shopify://shop_images/PRO_20_CODE.png",
         "mobile_image": "shopify://shop_images/PRO_20_CODE.png",
         "link": ""
+      }
+    },
+    "limited_offers_jKBGqn": {
+      "type": "limited-offers",
+      "blocks": {
+        "air_tabs_CqeHcU": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/TITAN_CABLE_PRO_4TH_JULY_SALE_D-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro-1"
+          }
+        },
+        "air_tabs_p6GFEp": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_1_FREE_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/magtech-powerpack%E2%84%A2-buy-1-get-1-free?preview_theme_id="
+          }
+        },
+        "air_tabs_d63GCf": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_2_FREE_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/b3g2f"
+          }
+        },
+        "air_tabs_8NEtjJ": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/titan_buds_2.0_bogof_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/the-titan-buds-bundle-offer"
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_CqeHcU",
+        "air_tabs_p6GFEp",
+        "air_tabs_d63GCf",
+        "air_tabs_8NEtjJ"
+      ],
+      "disabled": true,
+      "settings": {
+        "text_right": "",
+        "countdown_to": "09th December"
       }
     },
     "section_collections_with_nav_EzNML8": {
@@ -898,9 +920,8 @@
     "bf_promo_discount_fjxfqV",
     "gift_display_section_PDXACj",
     "scroll_to_button_7LJcTQ",
-    "limited_offers_zbhK6h",
-    "section_collections_with_nav_7prVeC",
     "titan_linked_image_A4GJp6",
+    "limited_offers_jKBGqn",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",

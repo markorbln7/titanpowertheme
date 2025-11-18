@@ -1,0 +1,140 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+   .font-sans {
+        font-family: "Work Sans", serif;
+        font-weight: 600;
+   }
+   .font-bold {
+        font-weight: 900;
+   }
+  .custom-pack-wrapper {
+    max-width: 1300px;
+    padding: 20px 10px;
+    margin: 0 auto;
+  }
+  .block-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-right: 4px solid white;
+    align-items: center;
+    justify-content: center;
+  }
+  .block-item:last-child {
+    border-right: none;
+  }
+  @media (min-width: 768px) {
+    .block-items {
+      flex-direction: row;
+    }
+    .custom-pack-wrapper {
+      padding: 40px 10px;
+    }
+  }
+</style>
+
+<section class="bg-black text-center">
+  <div class="custom-pack-wrapper">
+  {% if section.settings.show_banner %}
+  <div class="max-w-[700px] mx-auto">
+    <img class="w-full" width="100%" height="auto"  src="{{ section.settings.banner_image | img_url:'master' }}">
+  </div>
+  {% endif %}
+    {% if section.settings.section_title %}
+      <h2 class="text-white text-[30px] md:text-[60px] font-sans font-bold relative">
+
+        {{ section.settings.section_title }}
+      </h2>
+    {% endif %}
+    {% if section.settings.section_eyebrow %}
+      <div class="text-[#60c655] text-[18px] md:text-[24px] mb-[20px]">
+        {{ section.settings.section_eyebrow }}
+      </div>
+    {% endif %}
+
+    <div class="block-items flex flex-row md:flex-row max-w-[800px] mx-auto">
+      {% for block in section.blocks limit: 3 %}
+        <div class="block-item">
+          {% if block.settings.eyebrow_position == false %}
+            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
+              {{ block.settings.block_eyebrow }}
+            </div>
+          {% endif %}
+
+          <h3 class="text-white text-[40px] md:text-[80px] font-sans leading-[1] relative">
+            <div class="text-[27px] md:text-[52px] absolute top-0 right-0">%</div>
+            <span>{{ block.settings.block_title }}</span><span class="text-[11px] md:text-[22px]"> OFF</span>
+          </h3>
+
+          {% if block.settings.eyebrow_position %}
+            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
+              {{ block.settings.block_eyebrow }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Shopify Section: Custom Pack Builder -->
+{% schema %}
+{
+  "name": "BF Promo Discount",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show Banner",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Build a Custom Pack"
+    },
+    {
+      "type": "text",
+      "id": "section_eyebrow",
+      "label": "Section Eyebrow"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_item",
+      "name": "Block Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "block_eyebrow",
+          "label": "Block Eyebrow",
+          "default": "4+ items"
+        },
+        {
+          "type": "text",
+          "id": "block_title",
+          "label": "Block Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "eyebrow_position",
+          "label": "Eyebrow below title",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bf Promo Discount",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

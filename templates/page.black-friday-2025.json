@@ -39,6 +39,7 @@
         "discount_block_zzHkXL",
         "discount_block_tFL3T6"
       ],
+      "disabled": true,
       "custom_css": [
         ".savings {color: #000000; margin-bottom: -3px; background: linear-gradient(131deg, #c4d3d3, #fff 98%); box-shadow: 0 1px 5px rgb(0 0 0 / 15%); background: linear-gradient(131deg, #e0e0e0, #8ee584 98%);}",
         ".py-\\[20px\\] {padding-top: 12px; padding-bottom: 12px;}",
@@ -248,7 +249,6 @@
     },
     "limited_offers_zbhK6h": {
       "type": "limited-offers",
-      "disabled": true,
       "custom_css": [
         ".top-image.mb-\\[20px\\] {display: none;}",
         ".offers-title {margin-top: 30px;}",
@@ -292,65 +292,6 @@
         "desktop_image": "shopify://shop_images/PRO_20_CODE.png",
         "mobile_image": "shopify://shop_images/PRO_20_CODE.png",
         "link": ""
-      }
-    },
-    "limited_offers_jKBGqn": {
-      "type": "limited-offers",
-      "blocks": {
-        "air_tabs_CqeHcU": {
-          "type": "air_tabs",
-          "settings": {
-            "oos": false,
-            "product_image": "shopify://shop_images/TITAN_CABLE_PRO_4TH_JULY_SALE_D-min.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro-1"
-          }
-        },
-        "air_tabs_p6GFEp": {
-          "type": "air_tabs",
-          "settings": {
-            "oos": false,
-            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_1_FREE_2-min.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/magtech-powerpack%E2%84%A2-buy-1-get-1-free?preview_theme_id="
-          }
-        },
-        "air_tabs_d63GCf": {
-          "type": "air_tabs",
-          "settings": {
-            "oos": false,
-            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_2_FREE_2-min.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/b3g2f"
-          }
-        },
-        "air_tabs_8NEtjJ": {
-          "type": "air_tabs",
-          "settings": {
-            "oos": false,
-            "product_image": "shopify://shop_images/titan_buds_2.0_bogof_2-min.jpg",
-            "text": "",
-            "url": "https://titanpowerplus.com/products/the-titan-buds-bundle-offer"
-          }
-        }
-      },
-      "block_order": [
-        "air_tabs_CqeHcU",
-        "air_tabs_p6GFEp",
-        "air_tabs_d63GCf",
-        "air_tabs_8NEtjJ"
-      ],
-      "custom_css": [
-        ".offers-list__single--url {background-color: #f2c054; color: #000000;}",
-        ".timer {color: #f2c054; display: none;}",
-        "img.w-full.desktop {display: none !important;}",
-        ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\", sans-serif; text-transform: capitalize;}",
-        "@media only screen and (max-width: 768px) {.mobile {display: block; display: none !important; }}",
-        ".offers-list {margin-bottom: 30px;}"
-      ],
-      "settings": {
-        "text_right": "",
-        "countdown_to": "09th December"
       }
     },
     "section_collections_with_nav_EzNML8": {
@@ -700,81 +641,6 @@
         "add_10_text": "10"
       }
     },
-    "gift_display_section_HhwPbQ": {
-      "type": "gift-display-section",
-      "blocks": {
-        "gift_images_QyHg4g": {
-          "type": "gift_images",
-          "disabled": true,
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "SHOP TODAY",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_ytGNRy": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_cable_case_e56d5bb6-c826-4b16-8b7b-4fbb0535dc78.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "Cable Kit",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "mystery-gift-holder-do-not-delete",
-            "money_product": ""
-          }
-        },
-        "gift_images_aD6KWM": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TITAN CABLE",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "pd",
-            "money_product": ""
-          }
-        },
-        "gift_images_c8dHNc": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/pngs_of_products_FREE_GIFTS_3_in1_cable_e_dfe2a0d3-8265-4e36-9f99-313a26d3d339.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TRAVEL CASE",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "turbo-dock-price-holder-do-not-delete",
-            "money_product": ""
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_QyHg4g",
-        "gift_images_ytGNRy",
-        "gift_images_aD6KWM",
-        "gift_images_c8dHNc"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 13px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #f2c054; font-size: 18px;}",
-        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
-        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
-        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
-        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        ".mt-\\[20px\\] {margin-top: 30px;}",
-        ".gift-overlay.is-active {background-color: #f2c054b3;}"
-      ],
-      "settings": {
-        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
-        "set_inactive": false
-      }
-    },
     "bf_promo_discount_AibFnrL": {
       "type": "bf-promo-discount",
       "blocks": {
@@ -835,16 +701,6 @@
       "settings": {
         "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",
         "show_banner": false
-      }
-    },
-    "newsletter_image_JefRx4": {
-      "type": "newsletter-image",
-      "disabled": true,
-      "settings": {
-        "title": "Get Notified",
-        "text": "Stay updated with our latest news and offers. Subscribe today!",
-        "desktop_image": "shopify://shop_images/Newsletter-banner-titan-power-plus-chargers-cables-iphone-usb-c.jpg",
-        "mobile_image": "shopify://shop_images/notified_mobile_section_shop.jpg"
       }
     },
     "testimonial_slider_XJAQhD": {
@@ -1025,20 +881,6 @@
         "subtitle": "2.4+ MLN PRODUCTS SOLD"
       }
     },
-    "titan_impact_banner_Mpi6LL": {
-      "type": "titan-impact-banner",
-      "disabled": true,
-      "custom_css": [
-        "p.text-\\[16px\\].text-black.opacity-70.italic.leading-\\[1\\.7\\] {padding: 10px; font-weight: 400; font-style: normal; font-size: 16px; margin-bottom: -80px;}",
-        "p.text-\\[14px\\].text-black.opacity-70.mb-\\[8px\\] {margin-top: 60px;}"
-      ],
-      "name": "Impact Banner",
-      "settings": {
-        "subtitle": "Based on 22000+ Reviews",
-        "heading": "2.4+ MLN PRODUCTS SOLD",
-        "body": "For over half a decade, we’ve shipped millions of products across the globe — driven by over 1,000,000 Power Users who’ve helped us build smarter, tougher tech through constant feedback and unwavering support. Don’t just take it from us — here’s what they’re saying."
-      }
-    },
     "product_reviews_UYaUdq": {
       "type": "product-reviews",
       "custom_css": [
@@ -1059,7 +901,6 @@
     "limited_offers_zbhK6h",
     "section_collections_with_nav_7prVeC",
     "titan_linked_image_A4GJp6",
-    "limited_offers_jKBGqn",
     "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",
@@ -1067,12 +908,9 @@
     "bf_promo_discount_AibFnr",
     "bundle_builder_bf_25_f9XMRq",
     "section_collections_with_nav_Xpintm",
-    "gift_display_section_HhwPbQ",
     "bf_promo_discount_AibFnrL",
     "bf_top_bar_hxgfNg",
-    "newsletter_image_JefRx4",
     "testimonial_slider_XJAQhD",
-    "titan_impact_banner_Mpi6LL",
     "product_reviews_UYaUdq"
   ]
 }

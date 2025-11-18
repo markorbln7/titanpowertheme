@@ -1,0 +1,253 @@
+{{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
+{{ 'section-explore.css' | asset_url | stylesheet_tag }}
+{% comment %} <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> {% endcomment %}
+
+{% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'anniversary' or page.handle == '4thjulysale' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' or page.handle == 'chirstmas-2024' or page.handle == 'christmas-2024' %}
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endif %}
+
+<section class="section-collections-with-nav section-explore">
+   {% if section.blocks.size > 0 %}
+    <nav class="section-collections-with-nav__navigation py-[30px] tp-sticky">
+       <ul class="flex items-center justify-center md:gap-[10px] gap-[10px] max-w-[750px] mx-auto flex-wrap">
+            {% for block in section.blocks  %}
+                {% comment %} {% assign collection_obj = collections[collection.handle] %} {% endcomment %}
+                <li class="{% if forloop.index == 1 %}active {% endif %} lg:min-w-[180px] relative lg:flex-wrap w-[30%] pt-[14px] md:pt-0 !mb-[10px] !md:mb-0">
+                     {% if block.settings.icon != blank %}
+                      <div class="small-icon top-[-18px] md:top-[3px] image md:max-w-[35px] max-w-[25px] absolute md:left-[10px] left-[50%] translate-x-[-50%] translate-y-0 md:transform-none"><img width="100" height="auto" src="{{ block.settings.icon | img_url:'master' }}"></div>
+                     {% endif %}
+                    <a href='{{ block.settings.anchor }}' class="collection-link">{{ block.settings.heading }}</a>
+                </li>
+            {% endfor %}
+       </ul>
+    </nav>
+  {% endif %}
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <div class="collection" id="{{ collection_obj.handle  | strip }}">
+          <div class="mb-[16px]">
+            <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[0px] text-center collection-title">{{ collection_obj.title }}</h2>
+            {% if collection_obj.description %}
+              <p class="text-[16px] text-center font-bold">{{ collection_obj.description | strip_html }}</p>
+            {% endif %}
+          </div>
+          <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
+            {% for product in collection_obj.products %}
+              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+                <article class="section-collections-with-nav__product relative" data-product-id="{{ product.id }}">
+                  {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
+                    <div class="absolute left-[10px] top-[10px]">
+                      <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                        <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
+                        <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                      </div>
+                    </div>
+                  {% else %}
+                    {% if product.metafields.custom.new_shop_discount %}
+                      <div class="absolute left-[10px] top-[10px]">
+                        <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                          <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                          <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                  {% if product.metafields.custom.custom_url %}
+                    {% assign url = product.metafields.custom.custom_url %}
+                  {% else %}
+                    {% assign url = product.url %}
+                  {% endif %}
+                  {% if section.settings.use_popup == true %}
+                    <div class="!block absolute w-full h-full top-0 left-0 pointer js-section-explore__buy-now"></div>
+                  {% else %}
+                    <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
+                  {% endif %}
+                      <figure class="section-collections-with-nav__product-image">
+                        {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                          <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
+                          {% if product.metafields.custom.new_shop_image %}
+                            {% assign product_image =  product.metafields.custom.new_shop_image %}
+                            <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                          {% else %}
+                            {% assign product_image = product.featured_image %}
+                            {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                          {% endif %}
+                        {% endif %}
+                      </figure>
+
+                      <div class="section-collections-with-nav__product-details justify-between">
+                          <div class="top-part">
+                            <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
+
+                            {% if product.metafields.custom.ticks %}
+                              {{product.metafields.custom.ticks | metafield_tag }}
+                            {% endif %}
+                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                              <div clas="prices">
+                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                                {% if product.compare_at_price  %}
+                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                                {% endif %}
+                              </div>
+                              {% if section.settings.use_popup == true %}
+                                <div class="arrow pointer js-section-explore__buy-now">
+                                    +
+                                </div>
+                              {% else %}
+                                <a href="{{ product.url }}" class="arrow">
+                                  <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
+                                </a>
+                              {% endif %}
+                            </div>
+                          </div>
+                      </div>
+                      {% if product.metafields.custom.new_shop_discount_top %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+                      {% else %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount %}
+                      {% endif %}
+                      {% render 'buy-now-popup'  product_image: product.featured_image price: product.price compare_at_price: product.compare_at_price title: product.title
+                        upsell_product_one: product.metafields.custom.first_upsell_product
+                        description: product_description upsell_product_one:
+                        upsell_product_one upsell_product_two: upsell_product_two
+                        product_id: product.selected_or_first_available_variant.id
+                        quantity: '1'
+                        product: product
+                        badge_text: badge_text
+                        grid_1: section.settings.add_4
+                        grid_2: section.settings.add_6
+                        grid_3: section.settings.add_10
+                        grid_1_text: section.settings.add_4_text
+                        grid_2_text: section.settings.add_6_text
+                        grid_3_text: section.settings.add_10_text
+                     %}
+                  </article>
+                  <script>
+
+                    window.productVariants = window.productVariants || {};
+                    window.productVariants[{{ product.id }}] = [
+                      {% for variant in product.variants %}
+                        {% if variant.metafields.custom.popup_image %}
+                          {% assign images = variant.metafields.custom.popup_image | img_url: 'master' %}
+                        {% else %}
+                          {% assign images = variant.image.src | img_url: 'master' %}
+                        {% endif %}
+                      {
+                        id: '{{ variant.id }}',
+                        options: [
+                          {% for option in variant.options %}
+                          '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
+                          {% endfor %}
+                        ],
+                        image: '{{ images }}',
+                        price: '{{ variant.price | money }}',
+                        compare_at_price: '{{ variant.compare_at_price | money }}',
+                      }{% unless forloop.last %}, {% endunless %}
+                      {% endfor %}
+                    ];
+                  </script>
+
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</section>
+
+{% comment %} <script>
+    AOS.init();
+    document.addEventListener("shopify:section:load", () => {
+      AOS.init();
+    })
+  </script> {% endcomment %}
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "bundle build bf25",
+  "settings": [
+    {
+      "type": "checkbox",
+      "label": "Activate Popups",
+      "id": "use_popup",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "label": "Show Alt Images",
+      "id": "show_alt_images",
+      "default": false
+    },
+    {
+      "type": "collection_list",
+      "label": "Collections",
+      "id": "collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_4",
+      "label": "Add 4 image"
+    },
+    {
+      "type": "text",
+      "id": "add_4_text",
+      "label": "Add 4 Number"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_6",
+      "label": "Add 6 image"
+    },
+    {
+      "type": "text",
+      "id": "add_6_text",
+      "label": "Add 6 Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_10",
+      "label": "Add 10 image"
+    },
+    {
+      "type": "text",
+      "id": "add_10_text",
+      "label": "Add 10 Number"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav",
+      "name": "Nav",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "bundle build bf25"
+    }
+  ]
+}
+{% endschema %}

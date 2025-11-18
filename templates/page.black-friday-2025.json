@@ -896,7 +896,6 @@
     },
     "section_product_zigzag_bf_2025_NgGNnM": {
       "type": "section-product-zigzag-bf-2025",
-      "name": "Bf Product Zigzag Section",
       "blocks": {
         "upsell_product_repeater_edgdyc": {
           "type": "upsell_product_repeater",
@@ -975,7 +974,6 @@
     },
     "gift_display_section_bf25_zXdfGr": {
       "type": "gift-display-section-bf25",
-      "name": "Gift Display Section bf25",
       "blocks": {
         "gift_images_p8WriF": {
           "type": "gift_images",
@@ -1050,7 +1048,6 @@
     },
     "bundle_builder_bf_25_f9XMRq": {
       "type": "bundle-builder-bf-25",
-      "name": "Bundle builder bf25",
       "blocks": {
         "nav_cc9cT7": {
           "type": "nav",
@@ -1136,18 +1133,6 @@
         "add_10_text": "10"
       }
     },
-    "section_bundle_builder_bf25_kL4Cih": {
-      "type": "section-bundle-builder-bf25",
-      "name": "bundle build bf25",
-      "settings": {
-        "use_popup": false,
-        "show_alt_images": false,
-        "collections": [],
-        "add_4_text": "",
-        "add_6_text": "",
-        "add_10_text": ""
-      }
-    },
     "bf_promo_discount_2025_DDCWWr": {
       "type": "bf-promo-discount-2025",
       "blocks": {
@@ -1205,6 +1190,34 @@
         "section_title": "Build a Custom Pack",
         "section_eyebrow": ""
       }
+    },
+    "section_bundle_builder_bf25_eMVmtq": {
+      "type": "section-bundle-builder-bf25",
+      "custom_css": [
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".js-buy-more {color: #000; font-weight: 700;}",
+        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
+        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
+        ".arrow {color: #fff; background: #60c655;}",
+        ".section-collections-with-nav__product-price {color: #000000;}",
+        ".md\\:top-\\[-15px\\] {display: NONE;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}"
+      ],
+      "name": "bundle build bf25",
+      "settings": {
+        "use_popup": true,
+        "show_alt_images": true,
+        "collections": [
+          "plugs",
+          "cables-byob",
+          "premium-new",
+          "wireless-new"
+        ],
+        "add_4_text": "4",
+        "add_6_text": "8",
+        "add_10_text": "12"
+      }
     }
   },
   "order": [
@@ -1230,7 +1243,7 @@
     "section_product_zigzag_bf_2025_NgGNnM",
     "gift_display_section_bf25_zXdfGr",
     "bundle_builder_bf_25_f9XMRq",
-    "section_bundle_builder_bf25_kL4Cih",
-    "bf_promo_discount_2025_DDCWWr"
+    "bf_promo_discount_2025_DDCWWr",
+    "section_bundle_builder_bf25_eMVmtq"
   ]
 }

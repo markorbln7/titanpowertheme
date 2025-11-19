@@ -1,0 +1,973 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "sticky_cart_7W3hCL": {
+      "type": "sticky-cart",
+      "blocks": {
+        "discount_block_cFiJdB": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 3,
+            "percentage_off": 55
+          }
+        },
+        "discount_block_zzHkXL": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 7,
+            "percentage_off": 70
+          }
+        },
+        "discount_block_tFL3T6": {
+          "type": "discount-block",
+          "settings": {
+            "item_count": 10,
+            "percentage_off": 80
+          }
+        }
+      },
+      "block_order": [
+        "discount_block_cFiJdB",
+        "discount_block_zzHkXL",
+        "discount_block_tFL3T6"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".savings {color: #000000; margin-bottom: -3px; background: linear-gradient(131deg, #c4d3d3, #fff 98%); box-shadow: 0 1px 5px rgb(0 0 0 / 15%); background: linear-gradient(131deg, #e0e0e0, #8ee584 98%);}",
+        ".py-\\[20px\\] {padding-top: 12px; padding-bottom: 12px;}",
+        ".tracking-bar-progress {height: 7px; box-shadow: 0 3px 10px rgb(0 0 0 / 8%);}",
+        "@media screen and (max-width: 768px) {.savings {margin-top: -16px; } .tracking-bar-progress {max-width: 100%; width: 330px; }}",
+        ".gap-\\[8px\\] {gap: 7px;}"
+      ],
+      "settings": {
+        "welcome_message": "Welcome to our store!"
+      }
+    },
+    "game": {
+      "type": "compare-table",
+      "disabled": true,
+      "settings": {}
+    },
+    "bf_promo_discount_AibFnrK": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_WmBdEV": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_D3V3fQ": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_XTEFBY": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_WmBdEV",
+        "block_item_D3V3fQ",
+        "block_item_XTEFBY"
+      ],
+      "custom_css": [
+        ".flex-row {display: none;}",
+        ".max-w-\\[700px\\] {max-width: 400px; margin-top: 5px; margin-bottom: -0px;}",
+        ".custom-pack-wrapper {padding: 1px 10px;}"
+      ],
+      "settings": {
+        "show_banner": true,
+        "banner_image": "shopify://shop_images/Black_Friday_Power_up_sale_badge33.png",
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "bf_top_bar_YUNa4V": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #f2c054;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + Save 80%  By Adding more",
+        "show_banner": false
+      }
+    },
+    "bf_promo_discount_fjxfqV": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_nCdMca": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_HwYx7R": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_8RTrqd": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_nCdMca",
+        "block_item_HwYx7R",
+        "block_item_8RTrqd"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}",
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
+      ],
+      "settings": {
+        "show_banner": true,
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "gift_display_section_PDXACj": {
+      "type": "gift-display-section",
+      "blocks": {
+        "gift_images_p8WriF": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "FREE SHIPPING",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "SHOP TODAY",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
+        "gift_images_rKPd7B": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_mystery.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "MYSTERY GIFT",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
+            "money_product": ""
+          }
+        },
+        "gift_images_4DTz49": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/dock_-_gift.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TURBO DOCK",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "pd",
+            "money_product": ""
+          }
+        },
+        "gift_images_yWcNKm": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble_1.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "SMART CABLE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
+            "money_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_p8WriF",
+        "gift_images_rKPd7B",
+        "gift_images_4DTz49",
+        "gift_images_yWcNKm"
+      ],
+      "custom_css": [
+        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
+        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
+        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
+        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
+        ".mt-\\[20px\\] {margin-top: 30px;}",
+        ".gift-overlay.is-active {background-color: #9df294;}"
+      ],
+      "settings": {
+        "welcome_message": "Stack Deals to Unlock 4 FREE GIFTS!",
+        "set_inactive": false
+      }
+    },
+    "scroll_to_button_7LJcTQ": {
+      "type": "scroll-to-button",
+      "disabled": true,
+      "custom_css": [
+        ".my-\\[20px\\] {margin-top: 30px; margin-bottom: 20px;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655; color: #fff !important;}"
+      ],
+      "settings": {
+        "target_class": "section-collections-with-nav",
+        "button_text": "GET STARTED"
+      }
+    },
+    "titan_linked_image_A4GJp6": {
+      "type": "titan-linked-image",
+      "disabled": true,
+      "custom_css": [
+        ".shadow {box-shadow: none !important; max-width: 200px; align-items: center; margin-left: auto; margin-right: auto; margin-top: -90px; margin-bottom: 0px; background-color: #e4eaea;}",
+        ".max-w-screen-xl {background-color: #e4eaea;}",
+        "section.bg-\\[\\#d6e1e1\\].pt-\\[20px\\].pb-0.md\\:pt-\\[40px\\].md\\:pb-\\[60px\\] {background-color: #e4eaea;}",
+        "@media only screen and (max-width: 768px) {.mobile {display: block; max-width: 50%; } .pt-\\[20px\\] {margin-top: -80px; }}"
+      ],
+      "settings": {
+        "title": "",
+        "desktop_image": "shopify://shop_images/PRO_20_CODE.png",
+        "mobile_image": "shopify://shop_images/PRO_20_CODE.png",
+        "link": ""
+      }
+    },
+    "limited_offers_jKBGqn": {
+      "type": "limited-offers",
+      "blocks": {
+        "air_tabs_CqeHcU": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/TITAN_CABLE_PRO_4TH_JULY_SALE_D-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/titan-smart-cable%E2%84%A2-pro-1"
+          }
+        },
+        "air_tabs_p6GFEp": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_1_FREE_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/magtech-powerpack%E2%84%A2-buy-1-get-1-free?preview_theme_id="
+          }
+        },
+        "air_tabs_d63GCf": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/4th_julY_sale_BUY_3_GET_2_FREE_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/b3g2f"
+          }
+        },
+        "air_tabs_8NEtjJ": {
+          "type": "air_tabs",
+          "settings": {
+            "oos": false,
+            "product_image": "shopify://shop_images/titan_buds_2.0_bogof_2-min.jpg",
+            "text": "",
+            "url": "https://titanpowerplus.com/products/the-titan-buds-bundle-offer"
+          }
+        }
+      },
+      "block_order": [
+        "air_tabs_CqeHcU",
+        "air_tabs_p6GFEp",
+        "air_tabs_d63GCf",
+        "air_tabs_8NEtjJ"
+      ],
+      "disabled": true,
+      "settings": {
+        "text_right": "",
+        "countdown_to": "09th December"
+      }
+    },
+    "section_collections_with_nav_EzNML8": {
+      "type": "section-collections-with-nav",
+      "custom_css": [
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".js-buy-more {color: #000; font-weight: 700;}",
+        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
+        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
+        ".arrow {color: #fff; background: #60c655;}",
+        ".section-collections-with-nav__product-price {color: #000000;}",
+        ".md\\:top-\\[-15px\\] {display: NONE;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}"
+      ],
+      "settings": {
+        "use_popup": true,
+        "show_alt_images": true,
+        "collections": [
+          "power-pairs"
+        ],
+        "add_4": "shopify://shop_images/DISCOUNT_BOX_GET_3.png",
+        "add_4_text": "3",
+        "add_6": "shopify://shop_images/DISCOUNT_BOX_GET_7.png",
+        "add_6_text": "7",
+        "add_10": "shopify://shop_images/DISCOUNT_BOX_GET_10.png",
+        "add_10_text": "10"
+      }
+    },
+    "section_product_zigzag_pJ4EYx": {
+      "type": "section-product-zigzag",
+      "blocks": {
+        "upsell_product_repeater_edgdyc": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "4-in-1cable",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "4-in-1 Cable"
+          }
+        },
+        "upsell_product_repeater_YgHARB": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-cube™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "Travel Cube",
+            "product_upsell_image": "shopify://shop_images/cube_45026eb8-5d21-4f0f-8cbe-20d8cb073bdd.png"
+          }
+        },
+        "upsell_product_repeater_jDfpt9": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-m-travel-case™-1",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "Tech Travel Case",
+            "product_upsell_image": "shopify://shop_images/Free_case_gift.png"
+          }
+        },
+        "icons_repeater_3YzibB": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Fast Charging",
+            "icon": "shopify://shop_images/icons8-lightning-100_3652dbfc-8b9a-4d1a-bff4-c6d8d4463a85.png"
+          }
+        },
+        "icons_repeater_P3UrXM": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Ultra-Durable Design",
+            "icon": "shopify://shop_images/icons8-muscle-100.webp"
+          }
+        },
+        "icons_repeater_EagFUg": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Travel Ready",
+            "icon": "shopify://shop_images/icons8-plane-100_b6a84b36-05d1-4985-893a-bde1c1eeef87.png"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_edgdyc",
+        "upsell_product_repeater_YgHARB",
+        "upsell_product_repeater_jDfpt9",
+        "icons_repeater_3YzibB",
+        "icons_repeater_P3UrXM",
+        "icons_repeater_EagFUg"
+      ],
+      "custom_css": [
+        ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
+        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}",
+        "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}"
+      ],
+      "settings": {
+        "top_title": "Party Packs",
+        "section_subtitle": "These hand picked staff favourites count as multiple items towards your discount-shop smarter!",
+        "product": "",
+        "section_title": "The Adventurer Kit",
+        "product_image": "shopify://shop_images/Power_pairs_-_travel_kit.png",
+        "product_label": "Power anywhere. Charge everything. Fly stress-free.",
+        "discount_text": "3 Items 55% OFF",
+        "reverse_layout": true
+      }
+    },
+    "section_product_zigzag_BFhezE": {
+      "type": "section-product-zigzag",
+      "blocks": {
+        "upsell_product_repeater_P6rmQR": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-smart-buds™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "Titan Smart Buds",
+            "product_upsell_image": "shopify://shop_images/All_edited_buds_images-budss_13ada521-413f-4ad0-b1fd-c3d4e34a84a6.png"
+          }
+        },
+        "upsell_product_repeater_KGWBBi": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-100w-multi-cable™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "100W Multi Cable",
+            "product_upsell_image": "shopify://shop_images/1ooW_power_pairs.png"
+          }
+        },
+        "upsell_product_repeater_wpHcyV": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "1-x-4-in-1-dock-pro-copy",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "4-in-1 Dock Pro",
+            "product_upsell_image": "shopify://shop_images/4_in_1_dock_pro.png"
+          }
+        },
+        "icons_repeater_FP3Ndn": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Prestine Audio",
+            "icon": "shopify://shop_images/icons8-audio-wave-90_8394fa18-d214-4396-b986-4d646730c07b.png"
+          }
+        },
+        "icons_repeater_kcbHpE": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Multi Device Charge",
+            "icon": "shopify://shop_images/3devices_icon_1f2989d4-f625-4049-a197-998c457d7b64.png"
+          }
+        },
+        "icons_repeater_wQnWyM": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Fast Charging",
+            "icon": "shopify://shop_images/icons8-lightning-100_3652dbfc-8b9a-4d1a-bff4-c6d8d4463a85.png"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_P6rmQR",
+        "upsell_product_repeater_KGWBBi",
+        "upsell_product_repeater_wpHcyV",
+        "icons_repeater_FP3Ndn",
+        "icons_repeater_kcbHpE",
+        "icons_repeater_wQnWyM"
+      ],
+      "custom_css": [
+        ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
+        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
+        ".product-zigzag__upsell-products {gap: 10px;}",
+        "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}",
+        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}"
+      ],
+      "settings": {
+        "top_title": "",
+        "section_subtitle": "",
+        "product": "",
+        "section_title": "The Daily Hustler Kit",
+        "product_image": "shopify://shop_images/Power_pairs_1.png",
+        "product_label": "Work hard. Charge fast. Stay in flow",
+        "discount_text": "3 Items 55% OFF",
+        "reverse_layout": true
+      }
+    },
+    "bf_top_bar_8RrMkH": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #f2c054;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",
+        "show_banner": false
+      }
+    },
+    "bf_promo_discount_AibFnr": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_WmBdEV": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_D3V3fQ": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_XTEFBY": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_WmBdEV",
+        "block_item_D3V3fQ",
+        "block_item_XTEFBY"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}",
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
+      ],
+      "settings": {
+        "show_banner": false,
+        "section_title": "Customize Your Pack",
+        "section_eyebrow": "The More You Add, More You Save"
+      }
+    },
+    "section_collections_with_nav_Xpintm": {
+      "type": "section-collections-with-nav",
+      "blocks": {
+        "nav_cc9cT7": {
+          "type": "nav",
+          "settings": {
+            "heading": "Cables",
+            "anchor": "#cables-byob",
+            "icon": "shopify://shop_images/cable_icon_shop.png"
+          }
+        },
+        "nav_6tjcah": {
+          "type": "nav",
+          "settings": {
+            "heading": "PREMIUM",
+            "anchor": "#premium-new",
+            "icon": "shopify://shop_images/premium_icon_shop.png"
+          }
+        },
+        "nav_7DVmXb": {
+          "type": "nav",
+          "settings": {
+            "heading": "Plugs",
+            "anchor": "#plugs",
+            "icon": "shopify://shop_images/plug_icon_shop.png"
+          }
+        },
+        "nav_ihnPa7": {
+          "type": "nav",
+          "settings": {
+            "heading": "Wireless",
+            "anchor": "#wireless-new",
+            "icon": "shopify://shop_images/wireless_icon_shop.png"
+          }
+        },
+        "nav_cahXtQ": {
+          "type": "nav",
+          "disabled": true,
+          "settings": {
+            "heading": "New Tech",
+            "anchor": "#shopify-section-template--16599228448946__section_explore_fXzahR",
+            "icon": "shopify://shop_images/new_tech_icon_d5f4f27a-306b-4cda-aa82-e2890b4ff79a.png"
+          }
+        },
+        "nav_7hL3VQ": {
+          "type": "nav",
+          "disabled": true,
+          "settings": {
+            "heading": "Bundle",
+            "anchor": "#shopify-section-template--16599228448946__titan_linked_image_A4GJp6",
+            "icon": "shopify://shop_images/bundle_icon_shop.png"
+          }
+        }
+      },
+      "block_order": [
+        "nav_cc9cT7",
+        "nav_6tjcah",
+        "nav_7DVmXb",
+        "nav_ihnPa7",
+        "nav_cahXtQ",
+        "nav_7hL3VQ"
+      ],
+      "custom_css": [
+        ".section-collections-with-nav__navigation li {box-shadow: 0 0 10px #b5b5b5;}",
+        ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}",
+        ".js-buy-more {display: none;}"
+      ],
+      "settings": {
+        "use_popup": true,
+        "show_alt_images": false,
+        "collections": [
+          "cables-byob",
+          "premium-new",
+          "plugs",
+          "wireless-new"
+        ],
+        "add_4": "shopify://shop_images/DISCOUNT_BOX_GET_3.png",
+        "add_4_text": "3",
+        "add_6": "shopify://shop_images/DISCOUNT_BOX_GET_7.png",
+        "add_6_text": "7",
+        "add_10": "shopify://shop_images/DISCOUNT_BOX_GET_10.png",
+        "add_10_text": "10"
+      }
+    },
+    "bf_promo_discount_AibFnrL": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_WmBdEV": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_D3V3fQ": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_XTEFBY": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_WmBdEV",
+        "block_item_D3V3fQ",
+        "block_item_XTEFBY"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}",
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
+      ],
+      "settings": {
+        "show_banner": false,
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "bf_top_bar_hxgfNg": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #f2c054;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE 80%  BY BUNDLING",
+        "show_banner": false
+      }
+    },
+    "testimonial_slider_XJAQhD": {
+      "type": "testimonial-slider",
+      "blocks": {
+        "slider_Dx3V9k": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN SMART CABLE PRO",
+            "text": "I’ve used Titan cables for years, but this new one is on another level. The Pro version feels heavier, tougher, and way smarter. The magnetic wind-up is genius, I just toss it in my bag and it stays clean. Already ordered a second set for my work desk.",
+            "name": "Emily R.",
+            "image": "shopify://shop_images/titan_cable_pro_review.jpg-1.png"
+          }
+        },
+        "slider_Kpdhid": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN SMART BUDS",
+            "text": "Didn’t expect to love these as much as I do. I’ve used every kind of earbuds, from cheap ones to overpriced brands, and these are by far the most comfortable. The open-ear style is super light, and I love that I can still hear what’s going on around me. Battery life is solid too.",
+            "name": "Jordan S.",
+            "image": "shopify://shop_images/titan_smart_budsc_review.png"
+          }
+        },
+        "slider_YMgba7": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN SMART CABLE",
+            "text": "I bought a Titan Power+ cable as a result of solid research and out of desperation. I have an autistic son who has managed to damage every cable he’s ever had. I decided to buy a Titan cable due to my research and I am absolutely delighted with it! It has been subjected to harsh treatment by him and has come out unscathed. Would I buy another? Undoubtedly!",
+            "name": "Jennie A.",
+            "image": "shopify://shop_images/titan_cable_16b85c04-206e-45d7-9184-850c95c0e15c.jpg"
+          }
+        },
+        "slider_cYNm8G": {
+          "type": "slider",
+          "settings": {
+            "title": "FOLDING 3-IN-1 DOCK",
+            "text": "Now this is cool! Folds right up in my pocket and can wirelessly change for my phone, watch, and earbuds. It's an all-in-one charging pocket rocket that, for a wireless charger, charges damn quickly! Getting another for my office now!",
+            "name": "Rina D.",
+            "image": "shopify://shop_images/folding_dock_review.jpg"
+          }
+        },
+        "slider_YnppAx": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN XL TRAVEL CASE",
+            "text": "Absolutely love my Titan Travel Case! It's the perfect solution for keeping my Titan tech organized and protected while on the move. From the durable construction to the thoughtfully designed compartments, it's a must-have for any Titan enthusiast like me.",
+            "name": "John D.",
+            "image": "shopify://shop_images/XL_case_review.jpg"
+          }
+        },
+        "slider_eMGnpW": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN USB-C PD CABLE",
+            "text": "I've been using Titan Power Plus cables for years, and they're the best. So, I decided to try their earbuds, expecting the same quality. And they didn't disappoint! Superior to others that cost four times more, these earbuds are a smart buy. Do yourself a favor and get these, either for yourself or as a gift. They are 110% quality. Thanks again, Titan Power Plus!",
+            "name": "Claire M.",
+            "image": "shopify://shop_images/titan_cable_2_9bd48680-7869-4210-83bd-797776869088.jpg"
+          }
+        },
+        "slider_EePmq9": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN 3-IN-1 MULTI CABLE",
+            "text": "I love how this product allows me to charge my phone and Xbox controller simultaneously while I'm watching TV! It's incredibly convenient to have one cable with iPhone, Type-C, and Micro-USB connectors, catering to all my devices without the need for multiple cables.",
+            "name": "Steve B.",
+            "image": "shopify://shop_images/multi_cable_e8246705-b01e-4f79-b78f-e66430ff8536.jpg"
+          }
+        },
+        "slider_6JER9k": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN BUDS 2.0",
+            "text": "I've been using Titan Power Plus cables for years, and they're the best. So, I decided to try their earbuds, expecting the same quality. And they didn't disappoint! Superior to others that cost four times more, these earbuds are a smart buy. Do yourself a favor and get these, either for yourself or as a gift. They are 110% quality. Thanks again, Titan Power Plus!",
+            "name": "Tony M.",
+            "image": "shopify://shop_images/buds_review.jpg"
+          }
+        },
+        "slider_6LTNQD": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN TRAVEL KIT",
+            "text": "This is a real lifesaver fast I'm always on the move. It's perfect for keeping all my devices charged, from phones to tablets, and the built-in stand is super handy. I love my tiny gadget box with all 3 cables in one and the fast charging is a big plus. I always have it to hand, just in case! Pun intended!",
+            "name": "Daniel M.",
+            "image": "shopify://shop_images/travel_kit_74e79d34-3ba2-4035-acbb-d926d1e61ddc.jpg"
+          }
+        },
+        "slider_hbWdyB": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN 45W NANO PD PLUG",
+            "text": "I have had these before and they have really held up and work great! My old one is 3 years old and going strong.  Every time I get a new Apple device I give their plug away. These charge faster and holdup forever and to get 4 charging ports is just great 😊 👍 ! Had to get another my wife has confiscated mine! Lol",
+            "name": "Josh G.",
+            "image": "shopify://shop_images/45W_PLug_3ece91e9-8738-4b80-8871-7869adc2a8a1.jpg"
+          }
+        },
+        "slider_6beGXR": {
+          "type": "slider",
+          "settings": {
+            "title": "BLUETOOTH PD CAR CHARGER",
+            "text": "Game-changer for my daily drives. It lets me wirelessly play my favorite tracks and keeps my devices charged super fast. I always just assumed you couldn't charge fast in a car but the PD socket fills me up in not time. I hate going out for the day and running out of juice, and this bad boy is my new saviour!",
+            "name": "David S.",
+            "image": "shopify://shop_images/bluetooth_car_charger_3e225754-22a1-402f-a3d0-f6f2283e7ba1.jpg"
+          }
+        },
+        "slider_NghWnn": {
+          "type": "slider",
+          "disabled": true,
+          "settings": {
+            "title": "TITAN MASSAGE GUN",
+            "text": "I've seen bunch of these advertised so I was skeptical at first, haven't been so wrong in my life, you can feel the quality the moment you pick it up.",
+            "name": "Ashley M.",
+            "image": "shopify://shop_images/massage_gun_review.jpg"
+          }
+        },
+        "slider_jHUJXj": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN WIRELESS TURBO DOCK",
+            "text": "WOW this product is a home office gem, offering fast, wire-free charging that keeps devices powered up and workspaces neat. Stylish and practical, it charges through cases and serves as a sleek desk accessory. Thankyou Titan",
+            "name": "Rodrigo O.",
+            "image": "shopify://shop_images/dock_f64b7bf7-057f-496a-b559-e6f9424b01ea.jpg"
+          }
+        },
+        "slider_UYfkyD": {
+          "type": "slider",
+          "settings": {
+            "title": "3-in-1 WIRELESS DOCK",
+            "text": "This keeps all my devices fully charged. It's perfect for my desk, charging my phone, watch, and earbuds all at once! I feel like a right boss lady. Nice too how it doubles up as a sleek clock. When you hate wires and mess like me this is a no brainer.",
+            "name": "Nina S.",
+            "image": "shopify://shop_images/mothership_dock_7a9804ab-9ce4-485e-945d-110960fdaaa0.jpg"
+          }
+        },
+        "slider_ewdc6N": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN 3-PORT CAR CHARGER",
+            "text": "Always recall the days I wake up groggy and forget to charge my phone. I get to work and have to face no charge! Now I can roll out of bed and rock up at work fully charged every day. And keeping the kids happy and charge on long drives Is lovely too.",
+            "name": "John D.",
+            "image": "shopify://shop_images/car_charger_f9e7087a-fb7d-43c6-8722-febd9a495335.jpg"
+          }
+        },
+        "slider_CdXDbi": {
+          "type": "slider",
+          "settings": {
+            "title": "TITAN WIRELESS CAR CHARGER",
+            "text": "My phone port stopped working so I am having to charge my phone wirelessly. I wanted one that could swivel, adjust, and hold my phone in place while charging.  This Wireless Charger checked off all the boxes. I love having my maps clearly in front of me. No more dangerous swerving trying to read maps off my knee.",
+            "name": "Dawn C.",
+            "image": "shopify://shop_images/wireless_car_charger_ea186dcc-14e3-4c5d-8f7d-9bc6e209ccc8.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slider_Dx3V9k",
+        "slider_Kpdhid",
+        "slider_YMgba7",
+        "slider_cYNm8G",
+        "slider_YnppAx",
+        "slider_eMGnpW",
+        "slider_EePmq9",
+        "slider_6JER9k",
+        "slider_6LTNQD",
+        "slider_hbWdyB",
+        "slider_6beGXR",
+        "slider_NghWnn",
+        "slider_jHUJXj",
+        "slider_UYfkyD",
+        "slider_ewdc6N",
+        "slider_CdXDbi"
+      ],
+      "custom_css": [
+        ".slider-outer {background-color: #e4eaea;}",
+        ".slide-content__image img {box-shadow: 0 0 0px #00000000 !important; border: 0px solid #35ff2ec2 !important;}",
+        ".slider-outer {background-color: #d6e1e1;}",
+        ".product-image__title--sub {color: #626262; font-family: RALEWAY; font-size: 30px; margin-bottom: 60px;}"
+      ],
+      "settings": {
+        "title": "",
+        "subtitle": "2.4+ MLN PRODUCTS SOLD"
+      }
+    },
+    "product_reviews_UYaUdq": {
+      "type": "product-reviews",
+      "custom_css": [
+        ".product-rev {margin-top: 20px;}",
+        ".product-zig__bigtitle.color-black {display: none;}"
+      ],
+      "settings": {}
+    },
+    "section_product_zigzag_bf_2025_NgGNnM": {
+      "type": "section-product-zigzag-bf-2025",
+      "name": "Bf Product Zigzag Section",
+      "settings": {
+        "top_title": "",
+        "section_subtitle": "",
+        "product": "",
+        "section_title": "",
+        "product_label": "Multi-Device Charging for Spring Ventures",
+        "discount_text": "70% OFF",
+        "reverse_layout": false
+      }
+    },
+    "gift_display_section_bf25_zXdfGr": {
+      "type": "gift-display-section-bf25",
+      "name": "Gift Display Section bf25",
+      "settings": {
+        "welcome_message": "Welcome to our store!",
+        "set_inactive": false
+      }
+    },
+    "bundle_builder_bf_25_f9XMRq": {
+      "type": "bundle-builder-bf-25",
+      "name": "Bundle builder bf25",
+      "settings": {
+        "use_popup": false,
+        "show_alt_images": false,
+        "collections": [
+          "cables-byob",
+          "plugs",
+          "premium-new",
+          "wireless-new"
+        ],
+        "add_4_text": "",
+        "add_6_text": "",
+        "add_10_text": ""
+      }
+    },
+    "section_bundle_builder_bf25_kL4Cih": {
+      "type": "section-bundle-builder-bf25",
+      "name": "bundle build bf25",
+      "settings": {
+        "use_popup": false,
+        "show_alt_images": false,
+        "collections": [],
+        "add_4_text": "",
+        "add_6_text": "",
+        "add_10_text": ""
+      }
+    }
+  },
+  "order": [
+    "sticky_cart_7W3hCL",
+    "game",
+    "bf_promo_discount_AibFnrK",
+    "bf_top_bar_YUNa4V",
+    "bf_promo_discount_fjxfqV",
+    "gift_display_section_PDXACj",
+    "scroll_to_button_7LJcTQ",
+    "titan_linked_image_A4GJp6",
+    "limited_offers_jKBGqn",
+    "section_collections_with_nav_EzNML8",
+    "section_product_zigzag_pJ4EYx",
+    "section_product_zigzag_BFhezE",
+    "bf_top_bar_8RrMkH",
+    "bf_promo_discount_AibFnr",
+    "section_collections_with_nav_Xpintm",
+    "bf_promo_discount_AibFnrL",
+    "bf_top_bar_hxgfNg",
+    "testimonial_slider_XJAQhD",
+    "product_reviews_UYaUdq",
+    "section_product_zigzag_bf_2025_NgGNnM",
+    "gift_display_section_bf25_zXdfGr",
+    "bundle_builder_bf_25_f9XMRq",
+    "section_bundle_builder_bf25_kL4Cih"
+  ]
+}

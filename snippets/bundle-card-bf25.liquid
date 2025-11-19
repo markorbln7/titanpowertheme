@@ -1,0 +1,120 @@
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+BUNDLE CARD COMPONENT
+Used by: section-power-pairs-bf25.liquid
+
+Parameters:
+- bundle_settings: Block settings object (bundle configuration)
+- total_price: Calculated bundle price (cents)
+- total_compare_price: Calculated compare price (cents)
+- total_items: Total item count in bundle
+- has_products: Boolean - whether bundle has products configured
+
+Usage:
+{% render 'bundle-card-bf25',
+  bundle_settings: bundle_block.settings,
+  total_price: 8900,
+  total_compare_price: 17800,
+  total_items: 4,
+  has_products: true
+%}
+═══════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{%- liquid
+  comment
+    Extract bundle settings
+  endcomment
+  assign tier = bundle_settings.tier_level
+  assign bundle_id = bundle_settings.bundle_id
+  assign bundle_title = bundle_settings.bundle_title
+  assign tier_badge = bundle_settings.tier_badge_text
+  assign avatar_tags = bundle_settings.avatar_tags
+
+  comment
+    Determine if this is a premium tier (3 or 4)
+  endcomment
+  assign is_premium = false
+  if tier == '3' or tier == '4'
+    assign is_premium = true
+  endif
+
+  comment
+    Calculate savings
+  endcomment
+  assign savings = 0
+  if total_compare_price > total_price
+    assign savings = total_compare_price | minus: total_price
+  endif
+-%}
+
+<article
+  class="pp-bundle-card glass-surface {% if is_premium %}pp-bundle-card--premium{% endif %}"
+  data-bundle-id="{{ bundle_id }}"
+  data-tier="{{ tier }}"
+>
+
+  {%- comment -%} CARD HEADER {%- endcomment -%}
+  <div class="pp-bundle-card__header">
+    <h3 class="pp-bundle-card__title">{{ bundle_title }}</h3>
+
+    {% if tier_badge != blank %}
+      <div class="pp-bundle-card__badge pp-bundle-card__badge--tier-{{ tier }}">
+        {{ tier_badge }}
+      </div>
+    {% endif %}
+  </div>
+
+  {%- comment -%} PRICING SECTION {%- endcomment -%}
+  <div class="pp-bundle-card__pricing">
+    <div class="pp-bundle-card__items">
+      <span class="pp-bundle-card__item-count">{{ total_items }}</span>
+      <span class="pp-bundle-card__item-label">items</span>
+    </div>
+
+    <div class="pp-bundle-card__prices">
+      <span class="pp-bundle-card__price">{{ total_price | money }}</span>
+
+      {% if total_compare_price > total_price %}
+        <span class="pp-bundle-card__compare-price">{{ total_compare_price | money }}</span>
+      {% endif %}
+    </div>
+
+    {% if savings > 0 %}
+      <div class="pp-bundle-card__savings">
+        Save {{ savings | money }}
+      </div>
+    {% endif %}
+  </div>
+
+  {%- comment -%} AVATAR TAGS SECTION {%- endcomment -%}
+  {% if avatar_tags != blank %}
+    <div class="pp-bundle-card__avatars">
+      <span class="pp-bundle-card__avatars-label">Built For:</span>
+      <span class="pp-bundle-card__avatars-text">{{ avatar_tags }}</span>
+    </div>
+  {% endif %}
+
+  {%- comment -%} STATUS INDICATOR {%- endcomment -%}
+  <div class="pp-bundle-card__status">
+    {% if has_products %}
+      <span class="pp-bundle-card__status-icon pp-bundle-card__status-icon--ready">✓</span>
+      <span class="pp-bundle-card__status-text">Ready to customize</span>
+    {% else %}
+      <span class="pp-bundle-card__status-icon pp-bundle-card__status-icon--empty">⚠</span>
+      <span class="pp-bundle-card__status-text">No products configured</span>
+    {% endif %}
+  </div>
+
+  {%- comment -%} CALL TO ACTION {%- endcomment -%}
+  <button
+    class="pp-bundle-card__cta {% unless has_products %}pp-bundle-card__cta--disabled{% endunless %}"
+    data-action="open-sheet"
+    data-bundle-id="{{ bundle_id }}"
+    {% unless has_products %}disabled{% endunless %}
+  >
+    <span class="pp-bundle-card__cta-text">View & Customize</span>
+    <span class="pp-bundle-card__cta-icon">→</span>
+  </button>
+
+</article>

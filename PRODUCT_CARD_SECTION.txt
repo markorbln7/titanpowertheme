@@ -1,0 +1,201 @@
+    </div>
+
+  {%- comment -%} ✅ BOGO-SOCIAL-PROOF-050: Live Activity Indicator {%- endcomment -%}
+  <div class="live-activity-indicator">
+    <span class="activity-pulse"></span>
+    <span class="activity-icon">🔥</span>
+    <span class="activity-text">
+      <span class="activity-number" id="live-users">23</span>
+      people building bundles now
+    </span>
+  </div>
+
+  {%- comment -%} ✅ BOGO-SOCIAL-PROOF-050: Social Proof Notifications Container {%- endcomment -%}
+  <div id="social-proof-notifications"></div>
+
+  {%- comment -%} Product Filter Dropdown {%- endcomment -%}
+  <div class="filter-container">
+    <div class="filter-wrapper">
+      <label for="category-filter" class="filter-label">
+        <span class="stock-badge-circle" style="width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px;position:initial;">
+          <span class="stock-number">⚠️</span>
+        </span>
+        <span>Limited stock available for this offer</span>
+      </label>
+      <select id="category-filter" class="filter-select">
+        <option value="all">All Products</option>
+        {% for collection in section.settings.collections %}
+          {% assign collection_obj = collections[collection.handle] %}
+          <option value="{{ collection_obj.handle }}">{{ collection_obj.title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  {%- comment -%} Unified Product Grid {%- endcomment -%}
+  <div class="section-collections-with-nav__wrapper">
+    <div class="products">
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        {% for product in collection_obj.products %}
+          {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+          {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+          {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+
+          <article class="section-collections-with-nav__product product-card relative"
+                   data-product-id="{{ product.id }}"
+                   data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                   data-has-variants="{{ product.variants.size | minus: 1 }}"
+                   data-price="{{ product.price }}"
+                   data-category="{{ collection_obj.handle }}"
+                   data-product-handle="{{ product.handle }}"
+                   data-product-title="{{ product.title | escape }}"
+                   onclick="handleProductClick(event, this)">
+
+            {%- comment -%} ✅ BOGO-INLINE-VARIANTS-044: STATE 1 - Default Display {%- endcomment -%}
+            <div class="card-default-state active">
+              {%- comment -%} Discount Badge - COMPACT {%- endcomment -%}
+              {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
+                <div class="absolute left-[0px] top-[0px] z-10">
+                  <div class="discount_message">
+                    {{ product.metafields.custom.new_shop_discount_top }}
+                  </div>
+                </div>
+              {% else %}
+                {% if product.metafields.custom.new_shop_discount %}
+                  <div class="absolute left-[0px] top-[0px] z-10">
+                    <div class="discount_message">
+                      {{ product.metafields.custom.new_shop_discount }}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {%- comment -%} Product Info Icon (opens modal) {%- endcomment -%}
+              <div class="product-info-icon product-info-btn" data-product-id="{{ product.id }}" data-action="info" onclick="openProductInfoModal(event, this)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
+                  <text x="12" y="17" text-anchor="middle" fill="#60c655" font-size="14" font-weight="700">i</text>
+                </svg>
+              </div>
+
+              <div class="product-image-container">
+                <figure class="section-collections-with-nav__product-image">
+                  {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                    <img src="{{ product.metafields.custom.top_new_shop_image | image_url: width: 400 }}" width="360" height="auto" class="product-image object-cover" loading="lazy">
+                  {% else %}
+                    {% if product.metafields.custom.new_shop_image %}
+                      <img src="{{ product.metafields.custom.new_shop_image | image_url: width: 400 }}" width="360" height="auto" class="product-image object-cover" loading="lazy">
+                    {% else %}
+                      {{ product.featured_image | image_url: width: 400 | image_tag: height: 360, loading: 'lazy', class: 'product-image object-cover' }}
+                    {% endif %}
+                  {% endif %}
+                </figure>
+              </div>
+
+              <div class="product-details section-collections-with-nav__product-details">
+                <div class="top-part">
+                  <h4 class="product-title section-collections-with-nav__product-title">{{ product.title }}</h4>
+
+                  {%- comment -%} ⭐ Star Ratings Display (SH-STAR-RATINGS-GRID-001) {%- endcomment -%}
+                  <div class="product-rating-display"
+                       data-product-id="{{ product.id }}"
+                       onclick="openReviewsModal(event, this)"
+                       role="button"
+                       tabindex="0"
+                       aria-label="View product reviews">
+                    <div class="rating-stars" aria-hidden="true">
+                      <span class="stars-empty">★★★★★</span>
+                      <span class="stars-filled" style="width: 0%">★★★★★</span>
+                    </div>
+                    <span class="rating-count">Loading...</span>
+                  </div>
+
+                  {%- comment -%} BOGO "Get 1 FREE" Message {%- endcomment -%}
+                  <div class="product-bogo-message product-bogo-badge">
+                    → Get 1 FREE
+                  </div>
+
+                  <div class="section-collections-with-nav__product-prices product-price flex items-center flex-wrap text-center justify-center">
+                    <div class="prices">
+                      <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                      {% if product.compare_at_price  %}
+                          <span class="section-collections-with-nav__product-price-compared ml-2">{{ product.compare_at_price | money }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {%- comment -%} ✅ BOGO-INLINE-VARIANTS-044: STATE 2 - Variant Selection {%- endcomment -%}
+            <div class="card-variant-state">
+              <div class="variant-header">
+                <h4>Pick Variants</h4>
+                <button class="variant-close-btn" type="button" aria-label="Close variant selection">✕</button>
+              </div>
+
+              <div class="variant-selectors-inline">
+                {%- comment -%} Populated dynamically by JavaScript {%- endcomment -%}
+              </div>
+
+              <button class="btn-add-variant" type="button" disabled>
+                + Add to Pair
+              </button>
+            </div>
+
+            {%- comment -%} Pair Badge Container {%- endcomment -%}
+            <div class="pair-badge-container"></div>
+
+            {%- comment -%} Modal Popup Data {%- endcomment -%}
+            {% if product.metafields.custom.new_shop_discount_top %}
+              {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+            {% else %}
+              {% assign badge_text = product.metafields.custom.new_shop_discount %}
+            {% endif %}
+
+            {% if section.settings.use_popup %}
+              {% render 'buy-now-popup-bogof'
+                product_image: product.featured_image,
+                price: product.price,
+                compare_at_price: product.compare_at_price,
+                title: product.title,
+                description: product_description,
+                upsell_product_one: upsell_product_one,
+                upsell_product_two: upsell_product_two,
+                product_id: product.selected_or_first_available_variant.id,
+                quantity: '1',
+                product: product,
+                badge_text: badge_text,
+                grid_1: section.settings.add_4,
+                grid_2: section.settings.add_6,
+                grid_3: section.settings.add_10,
+                grid_1_text: section.settings.add_4_text,
+                grid_2_text: section.settings.add_6_text,
+                grid_3_text: section.settings.add_10_text
+              %}
+            {% endif %}
+          </article>
+
+          <script>
+            // ✅ BOGO-INLINE-VARIANTS-059: Store variant data
+            window.productVariants = window.productVariants || {};
+            window.productVariants[{{ product.id }}] = [
+              {% for variant in product.variants %}
+                {% if variant.metafields.custom.popup_image %}
+                  {% assign images = variant.metafields.custom.popup_image | img_url: 'master' %}
+                {% else %}
+                  {% assign images = variant.image.src | img_url: 'master' %}
+                {% endif %}
+              {
+                id: '{{ variant.id }}',
+                title: '{{ variant.title | escape }}',
+                options: [
+                  {% for option in variant.options %}
+                  '{{ option | escape }}'{% unless forloop.last %}, {% endunless %}
+                  {% endfor %}
+                ],
+                option1: '{{ variant.option1 | escape }}',
+                option2: '{{ variant.option2 | escape }}',
+                option3: '{{ variant.option3 | escape }}',
+                image: '{{ images }}',

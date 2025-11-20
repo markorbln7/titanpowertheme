@@ -9,26 +9,68 @@
    }
   .custom-pack-wrapper {
     max-width: 1300px;
-    padding: 20px 10px;
+    padding: 40px 20px;
+    margin: 0 auto;
+    background: #000000;
+  }
+
+  .block-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    max-width: 1000px;
     margin: 0 auto;
   }
+
   .block-item {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    border-right: 4px solid white;
+    flex: 1;
+    padding: 16px 8px;
+    border-right: 2px solid rgba(96, 198, 85, 0.3);
     align-items: center;
     justify-content: center;
+    min-width: 0;
   }
+
   .block-item:last-child {
     border-right: none;
   }
-  @media (min-width: 768px) {
-    .block-items {
-      flex-direction: row;
-    }
+
+  /* Mobile: Horizontal scroll */
+  @media (max-width: 768px) {
     .custom-pack-wrapper {
-      padding: 40px 10px;
+      padding: 20px 10px;
+    }
+
+    .block-items {
+      max-width: 100%;
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding: 0 10px;
+      gap: 2px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .block-items::-webkit-scrollbar {
+      display: none;
+    }
+
+    .block-item {
+      flex: 0 0 auto;
+      min-width: 85px;
+      padding: 12px 6px;
+      border-right: 1px solid rgba(96, 198, 85, 0.3);
+    }
+  }
+
+  /* Desktop: Ensure all blocks fit proportionally */
+  @media (min-width: 769px) {
+    .block-item {
+      padding: 20px 12px;
     }
   }
 </style>
@@ -52,22 +94,22 @@
       </div>
     {% endif %}
 
-    <div class="block-items flex flex-row md:flex-row max-w-[800px] mx-auto">
-      {% for block in section.blocks limit: 3 %}
-        <div class="block-item">
+    <div class="block-items flex flex-row md:flex-row max-w-[1000px] mx-auto gap-[2px] md:gap-[4px]">
+      {% for block in section.blocks %}
+        <div class="block-item" {{ block.shopify_attributes }}>
           {% if block.settings.eyebrow_position == false %}
-            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
+            <div class="text-[#60c655] text-[14px] md:text-[24px] leading-[1] font-semibold">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}
 
-          <h3 class="text-white text-[40px] md:text-[80px] font-sans leading-[1] relative">
-            <div class="text-[27px] md:text-[52px] absolute top-0 right-0">%</div>
-            <span>{{ block.settings.block_title }}</span><span class="text-[11px] md:text-[22px]"> OFF</span>
+          <h3 class="text-white text-[36px] md:text-[70px] font-sans leading-[1] relative">
+            <div class="text-[24px] md:text-[46px] absolute top-0 right-0">%</div>
+            <span>{{ block.settings.block_title }}</span><span class="text-[10px] md:text-[20px]"> OFF</span>
           </h3>
 
           {% if block.settings.eyebrow_position %}
-            <div class="text-[#60c655] text-[16px] md:text-[30px] leading-[1]">
+            <div class="text-[#60c655] text-[14px] md:text-[24px] leading-[1] font-semibold">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}

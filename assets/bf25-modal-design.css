@@ -135,7 +135,7 @@
      MODAL CONFIGURATION
      ───────────────────────────────────────────────────────────────────── */
 
-  --bf25-modal-max-width: 800px;
+  --bf25-modal-max-width: 1400px;
   --bf25-modal-max-height: 90vh;
   --bf25-modal-border-radius: 32px; /* Desktop */
   --bf25-modal-border-radius-mobile: 0px; /* Mobile fullscreen */
@@ -232,7 +232,7 @@
   pointer-events: auto;
 
   /* Desktop Sizing: Centered, constrained */
-  width: min(90vw, var(--bf25-modal-max-width));
+  width: min(95vw, var(--bf25-modal-max-width));
   height: var(--bf25-modal-max-height);
   max-height: var(--bf25-modal-max-height);
   top: 50%;
@@ -533,22 +533,29 @@
 .bf25-modal-layout {
   display: flex;
   flex-direction: column;
-  gap: var(--bf25-space-5);
-  align-items: flex-start;
+  gap: var(--bf25-space-8);
+  align-items: stretch;
+  padding: var(--bf25-space-6);
 }
 
-/* Desktop: Side-by-side layout with adjusted spacing for larger images */
-@media (min-width: 769px) {
+/* Desktop: Side-by-side layout */
+@media (min-width: 1024px) {
   .bf25-modal-layout {
     flex-direction: row;
-    gap: var(--bf25-space-8);
-  }
-}
-
-/* Large desktop: More space for bigger images */
-@media (min-width: 1200px) {
-  .bf25-modal-layout {
     gap: var(--bf25-space-10);
+    align-items: flex-start;
+  }
+
+  .bf25-modal-image-section {
+    flex: 0 0 auto;
+    max-width: 500px;
+  }
+
+  .bf25-modal-details-section {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+    padding: var(--bf25-space-4);
   }
 }
 
@@ -560,18 +567,19 @@
   position: relative;
   flex-shrink: 0;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   margin: 0 auto;
+  padding: var(--bf25-space-4);
 }
 
 .bf25-modal-image-container {
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   aspect-ratio: 1 / 1;
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 20px;
-  padding: var(--bf25-space-6);
+  border-radius: 16px;
+  padding: var(--bf25-space-4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -590,8 +598,8 @@
   position: relative;
   width: 100%;
   height: auto;
-  max-width: 800px;
-  max-height: 800px;
+  max-width: 500px;
+  max-height: 500px;
   object-fit: contain;
   border-radius: 16px;
 
@@ -630,20 +638,20 @@
   text-align: center;
 }
 
-/* Tablet: Scale to 600px (1.5x) */
+/* Tablet: Scale to 450px */
 @media (max-width: 1024px) {
   .bf25-modal-image-section,
   .bf25-modal-image-container {
-    max-width: 600px;
+    max-width: 450px;
   }
 
   .bf25-modal-product-image {
-    max-width: 600px;
-    max-height: 600px;
+    max-width: 450px;
+    max-height: 450px;
   }
 }
 
-/* Mobile: Full width up to 500px */
+/* Mobile: Full width up to 400px */
 @media (max-width: 768px) {
   .bf25-modal-image-section {
     max-width: 100%;
@@ -655,14 +663,7 @@
 
   .bf25-modal-product-image {
     max-width: 100%;
-    max-height: 500px;
-  }
-}
-
-/* Desktop: Allow full 800px */
-@media (min-width: 1025px) {
-  .bf25-modal-image-section {
-    max-width: 800px;
+    max-height: 400px;
   }
 }
 
@@ -1596,6 +1597,25 @@
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(96, 198, 85, 0.4);
   z-index: 10;
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   CRITICAL: Ensure Tier Buttons Are Visible in Power Packs Mode
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* Always show tier buttons when in Power Packs mode */
+.bf25-modal-container .bf25-tier-buttons,
+.bf25-modal-content .bf25-tier-buttons {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.bf25-modal-container .bf25-tier-button,
+.bf25-modal-content .bf25-tier-button {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
@@ -2809,6 +2829,105 @@
 .bf25-modal a.bf25-inline-link {
   min-width: auto;
   min-height: auto;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CRITICAL: Nuclear Theme Search/Modal Suppression
+   ════════════════════════════════════════════════════════════════════ */
+
+/* When BF25 modal is open, hide ALL theme modal/search elements */
+.bf25-modal-container.is-active ~ details-modal,
+.bf25-modal-container.is-active ~ * details-modal,
+body:has(.bf25-modal-container.is-active) details-modal,
+body:has(.bf25-modal-container.is-active) .header__search,
+body:has(.bf25-modal-container.is-active) .search-modal,
+body:has(.bf25-modal-container.is-active) .modal__content:not(.bf25-modal-content) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Hide close buttons specifically */
+.bf25-modal-container.is-active ~ * .modal__toggle-close,
+.bf25-modal-container.is-active ~ * .modal__close-button,
+body:has(.bf25-modal-container.is-active) .modal__toggle-close,
+body:has(.bf25-modal-container.is-active) .modal__close-button,
+body:has(.bf25-modal-container.is-active) .icon-close:not(.bf25-modal-close) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Force close any open details elements */
+body:has(.bf25-modal-container.is-active) details[open]:not(.bf25-description-details) {
+  display: none !important;
+}
+
+/* Suppress search modal specifically */
+body:has(.bf25-modal-container.is-active) details-modal[class*="search"] {
+  display: none !important;
+}
+
+/* Prevent theme modals from appearing */
+.header__search[open],
+details-modal[open] {
+  pointer-events: none;
+}
+
+/* Ensure BF25 modal is on top of everything */
+.bf25-modal-container {
+  z-index: 99999 !important;
+  isolation: isolate;
+}
+
+.bf25-modal-content {
+  z-index: 100000 !important;
+  isolation: isolate;
+}
+
+/* EXCEPTION: Always show BF25 tier buttons */
+.bf25-tier-buttons,
+.bf25-tier-button,
+.bf25-quantity-controls {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CRITICAL: Hide Power Pairs Bottom Sheet
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Hide Power Pairs sheet when BF25 modal is open */
+body:has(.bf25-modal-container.is-active) #pp-bottom-sheet,
+body:has(.bf25-modal-container.is-active) .pp-bottom-sheet,
+body:has(.bf25-modal-container.is-active) [data-sheet="power-pairs"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CRITICAL: Fix Header Icons & Hide Theme Close Buttons
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Ensure header icons display horizontally */
+.header__icons {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+/* Hide theme close buttons when BF25 modal is open */
+body:has(.bf25-modal-container.is-active) .header__icons .modal__toggle-close,
+body:has(.bf25-modal-container.is-active) .header__icons .icon-close:not(.bf25-modal-close) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 /* ─────────────────────────────────────────────────────────────────── */

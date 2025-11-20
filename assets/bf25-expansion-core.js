@@ -2052,6 +2052,13 @@ class ExpansionManager {
     // Configuration
     this.config = window.bf25Config || {};
 
+    // CRITICAL DEBUG: Mode tracking
+    console.log('═══════════════════════════════════════');
+    console.log('🚀 BF25Expansion initialized');
+    console.log('📍 Mode from config:', this.config.mode);
+    console.log('🔧 Full config:', this.config);
+    console.log('═══════════════════════════════════════');
+
     // Validate DOM elements exist
     if (!this.container || !this.overlay || !this.content) {
       console.error('❌ BF25: Required DOM elements not found. Modal system disabled.');
@@ -2069,7 +2076,7 @@ class ExpansionManager {
     // Debug
     if (this.config.debug) {
       console.group('🚀 ExpansionManager Initialized');
-      console.log('Mode:', this.state.get('mode'));
+      console.log('Mode:', this.config.mode);
       console.log('Tiers:', this.config.tiers);
       console.log('DOM elements:', {
         container: !!this.container,
@@ -2322,6 +2329,36 @@ class ExpansionManager {
       }
 
       // ─────────────────────────────────────────────────────────────────
+      // CRITICAL: Force close theme search/modals
+      // ─────────────────────────────────────────────────────────────────
+      const themeModals = document.querySelectorAll('details-modal[open], details[open]');
+      themeModals.forEach(modal => {
+        modal.removeAttribute('open');
+      });
+
+      // Close search specifically
+      const searchDetails = document.querySelector('.header__search details');
+      if (searchDetails) {
+        searchDetails.open = false;
+      }
+
+      // Force close Power Pairs bottom sheet
+      const ppSheet = document.querySelector('#pp-bottom-sheet, .pp-bottom-sheet, [data-sheet="power-pairs"]');
+      if (ppSheet) {
+        ppSheet.style.display = 'none';
+        ppSheet.style.visibility = 'hidden';
+        ppSheet.style.opacity = '0';
+        ppSheet.classList.remove('is-active', 'is-visible', 'is-open');
+        if (this.config.debug) {
+          console.log('🚫 Closed Power Pairs sheet');
+        }
+      }
+
+      if (this.config.debug) {
+        console.log('🚫 Closed theme modals:', themeModals.length);
+      }
+
+      // ─────────────────────────────────────────────────────────────────
       // DATA VALIDATION (Prompt 12)
       // ─────────────────────────────────────────────────────────────────
       const validatedProduct = this.validateProductData(productId);
@@ -2502,6 +2539,16 @@ class ExpansionManager {
       // Restore focus after animation completes
       setTimeout(() => {
         this.restoreFocus();
+
+        // Re-enable theme modals after BF25 closes
+        const themeModals = document.querySelectorAll('details-modal');
+        themeModals.forEach(modal => {
+          modal.style.pointerEvents = '';
+        });
+
+        if (this.config.debug) {
+          console.log('✅ Re-enabled theme modals');
+        }
       }, 350); // Wait for animation to complete
 
       // Reset state (will happen after animation completes)
@@ -2853,7 +2900,13 @@ class ExpansionManager {
    * @returns {string} HTML for quantity controls
    */
   generateQuantityControls() {
-    const mode = this.config.mode || 'individual_products';
+    const mode = this.config.mode || 'power_packs';
+
+    if (this.config.debug) {
+      console.log('🎮 generateQuantityControls called');
+      console.log('   Mode from config:', this.config.mode);
+      console.log('   Mode being used:', mode);
+    }
 
     if (mode === 'power_packs') {
       return this.generatePowerPacksUI();

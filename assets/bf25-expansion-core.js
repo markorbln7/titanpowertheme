@@ -2920,6 +2920,12 @@ class ExpansionManager {
    * Simplifies choice to 3 pre-set tier quantities
    */
   generatePowerPacksUI() {
+    if (this.config.debug) {
+      console.log('🎯 generatePowerPacksUI called');
+      console.log('   Total tiers available:', this.config.tiers?.length);
+      console.log('   Tiers:', this.config.tiers);
+    }
+
     // Generate tier quantities from config (tiers 2, 3, 4)
     const tierOptions = [
       { quantity: this.config.tiers[1].min, tier: this.tierCalculator.getTierForQuantity(this.config.tiers[1].min) },
@@ -2927,8 +2933,16 @@ class ExpansionManager {
       { quantity: this.config.tiers[3].min, tier: this.tierCalculator.getTierForQuantity(this.config.tiers[3].min) }
     ];
 
+    if (this.config.debug) {
+      console.log('   Tier options created:', tierOptions);
+    }
+
     // Get current quantity
     const currentQuantity = this.state.get('quantity') || 8;
+
+    if (this.config.debug) {
+      console.log('   Current quantity:', currentQuantity);
+    }
 
     let html = '<div class="bf25-quantity-controls bf25-power-packs-mode">';
 

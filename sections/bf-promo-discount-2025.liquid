@@ -8,69 +8,70 @@
         font-weight: 900;
    }
   .custom-pack-wrapper {
-    max-width: 1300px;
-    padding: 40px 20px;
+    max-width: 1400px;
+    padding: 60px 20px;
     margin: 0 auto;
     background: #000000;
   }
 
   .block-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
     margin: 0 auto;
+    gap: 8px;
   }
 
   .block-item {
+    background: linear-gradient(135deg, rgba(96, 198, 85, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+    border: 2px solid rgba(96, 198, 85, 0.3);
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 16px 8px;
-    border-right: 2px solid rgba(96, 198, 85, 0.3);
-    align-items: center;
     justify-content: center;
-    min-width: 0;
+    align-items: center;
   }
 
-  .block-item:last-child {
-    border-right: none;
+  .block-item:hover {
+    border-color: rgba(96, 198, 85, 0.6);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(96, 198, 85, 0.2);
   }
 
-  /* Mobile: Horizontal scroll */
+  /* Mobile: 2x2 grid */
   @media (max-width: 768px) {
     .custom-pack-wrapper {
-      padding: 20px 10px;
+      padding: 40px 10px;
     }
 
     .block-items {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
       max-width: 100%;
-      overflow-x: auto;
-      justify-content: flex-start;
-      padding: 0 10px;
-      gap: 2px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .block-items::-webkit-scrollbar {
-      display: none;
     }
 
     .block-item {
-      flex: 0 0 auto;
-      min-width: 85px;
-      padding: 12px 6px;
-      border-right: 1px solid rgba(96, 198, 85, 0.3);
+      padding: 20px 12px;
+      min-height: 140px;
+      border-radius: 12px;
     }
   }
 
-  /* Desktop: Ensure all blocks fit proportionally */
-  @media (min-width: 769px) {
+  /* Tablet: 4 columns but adjust sizing */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .block-items {
+      max-width: 100%;
+      padding: 0 20px;
+      gap: 6px;
+    }
+
     .block-item {
-      padding: 20px 12px;
+      padding: 24px 16px;
+      min-height: 180px;
     }
   }
 </style>
@@ -94,22 +95,22 @@
       </div>
     {% endif %}
 
-    <div class="block-items flex flex-row md:flex-row max-w-[1000px] mx-auto gap-[2px] md:gap-[4px]">
+    <div class="block-items">
       {% for block in section.blocks %}
         <div class="block-item" {{ block.shopify_attributes }}>
           {% if block.settings.eyebrow_position == false %}
-            <div class="text-[#60c655] text-[14px] md:text-[24px] leading-[1] font-semibold">
+            <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mb-2">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}
 
-          <h3 class="text-white text-[36px] md:text-[70px] font-sans leading-[1] relative">
-            <div class="text-[24px] md:text-[46px] absolute top-0 right-0">%</div>
+          <h3 class="text-white text-[36px] md:text-[60px] font-sans leading-[1] relative">
+            <div class="text-[24px] md:text-[40px] absolute top-0 right-0">%</div>
             <span>{{ block.settings.block_title }}</span><span class="text-[10px] md:text-[20px]"> OFF</span>
           </h3>
 
           {% if block.settings.eyebrow_position %}
-            <div class="text-[#60c655] text-[14px] md:text-[24px] leading-[1] font-semibold">
+            <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mt-2">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}
@@ -139,29 +140,31 @@
       "type": "text",
       "id": "section_title",
       "label": "Section Title",
-      "default": "Build a Custom Pack"
+      "default": "Build Your Horror-Free Pack"
     },
     {
       "type": "text",
       "id": "section_eyebrow",
-      "label": "Section Eyebrow"
+      "label": "Section Eyebrow",
+      "default": "The More You Add, More You Save"
     }
   ],
   "blocks": [
     {
       "type": "block_item",
-      "name": "Block Item",
+      "name": "Discount Tier",
       "settings": [
         {
           "type": "text",
           "id": "block_eyebrow",
-          "label": "Block Eyebrow",
+          "label": "Items Text",
           "default": "4+ items"
         },
         {
           "type": "text",
           "id": "block_title",
-          "label": "Block Title"
+          "label": "Discount Percentage",
+          "default": "60"
         },
         {
           "type": "checkbox",
@@ -172,10 +175,41 @@
       ]
     }
   ],
+  "max_blocks": 6,
   "presets": [
     {
       "name": "Bf Promo Discount bf 2025",
-      "category": "Custom"
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "60"
+          }
+        },
+        {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "8+ items",
+            "block_title": "75"
+          }
+        },
+        {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "12+ items",
+            "block_title": "80"
+          }
+        },
+        {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "16+ items",
+            "block_title": "85"
+          }
+        }
+      ]
     }
   ]
 }

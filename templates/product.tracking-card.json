@@ -449,6 +449,27 @@
     "section_pdp_hero_master_light_simple_MWFQT8": {
       "type": "section-pdp-hero-master-light-simple",
       "blocks": {
+        "grid_images_YQkW3F": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box2.jpg",
+            "image_qty": "2"
+          }
+        },
+        "grid_images_ee7QyK": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box4_-_light_green_badge.jpg",
+            "image_qty": "4"
+          }
+        },
+        "grid_images_FAiNBp": {
+          "type": "gridImages",
+          "settings": {
+            "grid_image": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box8.jpg",
+            "image_qty": "8"
+          }
+        },
         "product_repeater_zxGj8j": {
           "type": "product_repeater",
           "settings": {
@@ -564,6 +585,9 @@
         }
       },
       "block_order": [
+        "grid_images_YQkW3F",
+        "grid_images_ee7QyK",
+        "grid_images_FAiNBp",
         "product_repeater_zxGj8j",
         "product_repeater_rdKFHe",
         "product_repeater_3ejLVT",
@@ -587,8 +611,8 @@
         "hide_grid": false,
         "hide_length": false,
         "show_variant_picker": false,
-        "show_grid_images": false,
-        "show_qty": false,
+        "show_grid_images": true,
+        "show_qty": true,
         "show_gift_layout": true,
         "show_disc_box": true,
         "section_title": "Titan Smart Tracker",

@@ -1140,55 +1140,51 @@ class TierCalculator {
 
   /**
    * Update main price display area
+   * Updated: BF25-FIX-013 - Inline badge, compare price
    */
   updateMainPrice(pricing) {
     const priceContainer = document.querySelector('.bf25-modal-pricing');
     if (!priceContainer) return;
 
+    const product = this.state.get('product');
+    const comparePrice = product?.comparePrice || 0;
+    const basePrice = product?.basePrice || 0;
+
     // Build new price HTML
     const html = `
-      <div class="bf25-price-container">
-        <!-- Tier discount badge (separated from prices) -->
-        ${pricing.hasDiscount ? `
-          <div class="bf25-tier-badge">
-            <span class="bf25-tier-badge-icon">🔥</span>
-            <span class="bf25-tier-badge-text">
-              ${pricing.displayLabel}: ${pricing.currentTier.label}
-            </span>
-          </div>
-        ` : ''}
-
-        <!-- Pricing section (always stacked) -->
-        <div class="bf25-price-stack">
-          <!-- Current price (per item) -->
-          <div class="bf25-price-main">
-            <span class="bf25-price-current bf25-text-xl bf25-text-accent">
-              ${pricing.formatted.discountedPricePerItem}
-            </span>
-            ${pricing.hasDiscount ? `
-              <span class="bf25-price-original bf25-text-md bf25-text-tertiary">
-                <s>${pricing.formatted.basePricePerItem}</s>
-              </span>
-            ` : ''}
-            <span class="bf25-price-per bf25-text-sm bf25-text-secondary">per item</span>
-          </div>
-
-          <!-- Total price (if quantity > 1) -->
-          ${pricing.quantity > 1 ? `
-            <div class="bf25-price-total">
-              <span class="bf25-text-sm bf25-text-secondary">Total:</span>
-              <span class="bf25-text-lg bf25-text-primary">
-                ${pricing.formatted.discountedTotal}
-              </span>
-              ${pricing.hasDiscount ? `
-                <span class="bf25-text-sm bf25-text-tertiary">
-                  (was ${pricing.formatted.baseTotal})
-                </span>
-              ` : ''}
-            </div>
+      <!-- Price Row (inline badge) -->
+      <div class="bf25-price-row">
+        <!-- Left: Current price + per item + badge -->
+        <div class="bf25-price-group">
+          <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
+          <span class="bf25-per-item">per item</span>
+          ${pricing.hasDiscount && pricing.currentTier ? `
+            <span class="bf25-badge-inline">🔥 ${pricing.currentTier.label}</span>
           ` : ''}
         </div>
+
+        <!-- Right: Original compare price -->
+        ${comparePrice && comparePrice > basePrice ? `
+          <span class="bf25-price-compare">
+            <s>${this.formatPrice(comparePrice)}</s>
+          </span>
+        ` : ''}
       </div>
+
+      <!-- Total Row -->
+      ${pricing.quantity > 1 ? `
+        <div class="bf25-total-row">
+          <div>
+            <span class="bf25-total-label">Total:</span>
+            <span class="bf25-total-amount">${pricing.formatted.discountedTotal}</span>
+          </div>
+          ${comparePrice && comparePrice > basePrice ? `
+            <span class="bf25-total-savings">
+              (save ${this.formatPrice((comparePrice - pricing.discountedPricePerItem) * pricing.quantity)})
+            </span>
+          ` : ''}
+        </div>
+      ` : ''}
     `;
 
     priceContainer.innerHTML = html;
@@ -3040,7 +3036,8 @@ class ExpansionManager {
   }
 
   /**
-   * Generate action buttons (Add to Cart, Buy Now)
+   * Generate action buttons (Add to Deal)
+   * Updated: BF25-FIX-013 - Changed to "ADD TO DEAL"
    */
   generateActionButtons() {
     return `
@@ -3050,8 +3047,10 @@ class ExpansionManager {
           class="bf25-button bf25-add-to-cart"
           data-action="add-to-cart"
         >
-          <span class="bf25-button-icon">🛒</span>
-          <span class="bf25-button-text">Add to Cart</span>
+          <span class="bf25-button-text">ADD TO DEAL</span>
+          <span class="bf25-button-price" data-base-price="${this.state.get('product')?.basePrice || 0}">
+            ${this.formatPrice(this.state.get('product')?.basePrice || 0)}
+          </span>
           <span class="bf25-button-loader" hidden>
             <svg class="bf25-spinner" width="20" height="20" viewBox="0 0 20 20">
               <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="50" stroke-dashoffset="0">
@@ -4379,8 +4378,9 @@ class ExpansionManager {
   }
 
   /**
-   * Create badges HTML (Best Seller, Discount)
+   * Create badges HTML (Best Seller only)
    * Based on BOGO feature extraction
+   * Updated: BF25-FIX-013 - Removed discount badge from image
    *
    * @param {Object} product - Product data from window.productData
    * @returns {string} HTML for badges
@@ -4398,15 +4398,8 @@ class ExpansionManager {
     `;
     }
 
-    // Discount Badge
-    if (product.discount) {
-      badgesHTML += `
-      <div class="bf25-badge bf25-badge-discount">
-        <span class="bf25-badge-icon">⚡</span>
-        <span class="bf25-badge-text">${product.discount}</span>
-      </div>
-    `;
-    }
+    // Discount Badge - REMOVED (BF25-FIX-013)
+    // Discount is now shown inline with price instead
 
     badgesHTML += '</div>';
 
@@ -4596,18 +4589,20 @@ class ExpansionManager {
           `;
         })()}
 
-        <!-- Price Display + Progress (After Description - BF25-FIX-012) -->
+        <!-- Price Display (Updated BF25-FIX-013: Inline badge + compare price) -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
-          <div class="bf25-price-container">
-            <span class="bf25-price-current bf25-text-xl bf25-text-accent">
-              ${this.formatPrice(product.basePrice)}
-            </span>
-            ${product.comparePrice > product.basePrice ? `
-              <span class="bf25-price-compare bf25-text-md bf25-text-tertiary">
+          <!-- Price Row (inline badge) -->
+          <div class="bf25-price-row">
+            <!-- Left: Current price + per item -->
+            <div class="bf25-price-group">
+              <span class="bf25-price-current">${this.formatPrice(product.basePrice)}</span>
+              <span class="bf25-per-item">per item</span>
+            </div>
+
+            <!-- Right: Original compare price -->
+            ${product.comparePrice && product.comparePrice > product.basePrice ? `
+              <span class="bf25-price-compare">
                 <s>${this.formatPrice(product.comparePrice)}</s>
-              </span>
-              <span class="bf25-price-savings bf25-text-sm bf25-text-accent">
-                Save ${Math.round((1 - product.basePrice / product.comparePrice) * 100)}%
               </span>
             ` : ''}
           </div>

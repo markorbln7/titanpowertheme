@@ -286,22 +286,42 @@
   }
 }
 
-/* Custom Scrollbar (webkit browsers) */
+/* ═══════════════════════════════════════════════════════════
+   Custom Scrollbar - Minimal Black Design
+   Updated: 2025-01-22 - Ref: BF25-FIX-013
+   ═══════════════════════════════════════════════════════════ */
+
+.bf25-modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
 .bf25-modal-content::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .bf25-modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
 }
 
 .bf25-modal-content::-webkit-scrollbar-thumb {
-  background: var(--bf25-accent);
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
 }
 
 .bf25-modal-content::-webkit-scrollbar-thumb:hover {
-  background: var(--bf25-accent-hover);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Hide scrollbar completely (optional) */
+.bf25-modal-content.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.bf25-modal-content.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -806,8 +826,25 @@
   min-width: 0; /* Allow text truncation */
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Modal Title - Work Sans Typography
+   Updated: 2025-01-22 - Ref: BF25-FIX-013
+   ═══════════════════════════════════════════════════════════ */
+
 .bf25-modal-title {
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--bf25-space-3);
   color: var(--bf25-text-primary);
+}
+
+@media (max-width: 768px) {
+  .bf25-modal-title {
+    font-size: 22px;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
@@ -1223,10 +1260,10 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   Upsells Section (BF25-DESC-005)
-   Added: 2025-01-22
-   ═══════════════════════════════════════════════════════════════════════════════*/
+/* ═══════════════════════════════════════════════════════════
+   Upsells Section - Enlarged Products
+   Updated: 2025-01-22 - Ref: BF25-FIX-013
+   ═══════════════════════════════════════════════════════════ */
 
 .bf25-upsells-section {
   margin: var(--bf25-space-4) 0;
@@ -1237,7 +1274,9 @@
 }
 
 .bf25-upsells-title {
-  font-weight: 600;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
   margin-bottom: var(--bf25-space-3);
 }
 
@@ -1249,7 +1288,7 @@
 
 .bf25-upsell-card {
   display: grid;
-  grid-template-columns: 80px 1fr auto;
+  grid-template-columns: 100px 1fr auto; /* Enlarged from 80px */
   gap: var(--bf25-space-3);
   align-items: center;
   padding: var(--bf25-space-3);
@@ -1267,8 +1306,8 @@
 
 .bf25-upsell-image {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 100px; /* Enlarged from 80px */
+  height: 100px;
   border-radius: var(--bf25-radius-sm);
   overflow: hidden;
   background: rgba(255, 255, 255, 0.03);
@@ -1290,21 +1329,24 @@
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
-  line-height: 1;
 }
 
 .bf25-upsell-info {
   display: flex;
   flex-direction: column;
   gap: var(--bf25-space-1);
-  min-width: 0;
 }
 
 .bf25-upsell-title {
+  font-family: 'Work Sans', sans-serif;
   font-weight: 600;
+  font-size: 15px; /* Enlarged from 13px */
+  line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .bf25-upsell-price {
@@ -1334,77 +1376,151 @@
   transform: scale(1.05);
 }
 
-.bf25-upsell-add svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Mobile optimization */
+/* Mobile */
 @media (max-width: 768px) {
-  .bf25-description-wrapper {
-    max-height: 80px;
-  }
-
   .bf25-upsell-card {
-    grid-template-columns: 60px 1fr auto;
-    gap: var(--bf25-space-2);
+    grid-template-columns: 80px 1fr auto;
   }
 
   .bf25-upsell-image {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
   }
 
   .bf25-upsell-title {
-    font-size: 13px;
-  }
-
-  .bf25-upsell-add {
-    padding: var(--bf25-space-1) var(--bf25-space-2);
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* Pricing */
-/* ─────────────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   Pricing Section - Inline Badge + Compare Price
+   Updated: 2025-01-22 - Ref: BF25-FIX-013
+   ═══════════════════════════════════════════════════════════ */
 
+.bf25-modal-pricing {
+  padding: var(--bf25-space-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bf25-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bf25-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bf25-space-3);
+  flex-wrap: wrap;
+}
+
+.bf25-price-group {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-2);
+  flex-wrap: wrap;
+}
+
+.bf25-price-current {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--bf25-accent);
+  line-height: 1;
+}
+
+.bf25-per-item {
+  font-size: 12px;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+/* Inline badge - compact */
+.bf25-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--bf25-accent);
+  color: #000;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Compare at price - right side */
+.bf25-price-compare {
+  font-size: 18px;
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+/* Total row */
+.bf25-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bf25-space-2);
+  padding-top: var(--bf25-space-3);
+  margin-top: var(--bf25-space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-total-label {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-right: var(--bf25-space-2);
+}
+
+.bf25-total-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--bf25-accent);
+}
+
+.bf25-total-savings {
+  font-size: 13px;
+  opacity: 0.7;
+  font-weight: 600;
+  color: var(--bf25-accent);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bf25-price-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bf25-price-current {
+    font-size: 28px;
+  }
+
+  .bf25-badge-inline {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
+/* Legacy pricing styles (backwards compatibility) */
 .bf25-price-container {
   display: flex;
   flex-direction: column;
   gap: var(--bf25-space-3);
-  padding: var(--bf25-space-3);
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Price stack section - always vertical */
 .bf25-price-stack {
   display: flex;
   flex-direction: column;
   gap: var(--bf25-space-2);
 }
 
-/* Price main/total rows */
 .bf25-price-main,
 .bf25-price-total {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--bf25-space-2);
-}
-
-.bf25-price-current {
-  font-size: 32px !important;
-  font-weight: 700;
-  color: var(--bf25-accent, #60c655) !important;
-}
-
-.bf25-price-compare {
-  text-decoration: line-through;
-  opacity: 0.6;
-  font-size: 18px;
 }
 
 .bf25-price-savings {

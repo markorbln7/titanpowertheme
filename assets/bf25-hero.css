@@ -7,16 +7,698 @@
  * File: assets/bf25-hero.css
  * Purpose: Glassmorphic design system for Power Slider hero section
  *
- * NOTE: CSS content will be added in PROMPT 2
+ * Architecture:
+ * - Mobile-first responsive (320px → 1440px)
+ * - Extends existing --bf25-* CSS variables from bf25-modal-design.css
+ * - 16-segment gradient visualization with robust calculation
+ * - Apple/Tesla-level glassmorphic aesthetic
+ * - WCAG 2.2 AA compliant (contrast, touch targets)
  *
- * This file will include:
- * - CSS custom properties (colors, spacing, animations)
- * - Glassmorphic card styling (backdrop-filter, rgba backgrounds)
- * - 16-segment slider visualization
- * - Gift box layouts and lock/unlock states
- * - Dynamic tier card styling
- * - Responsive breakpoints (mobile-first, 768px)
- * - Checkpoint positioning and styling
+ * Key Features:
+ * - Dark theme (#0a0a0a) with lime green accent (#60c655)
+ * - GPU-accelerated animations (transform, opacity, width)
+ * - Locked/unlocked gift states with grayscale filters
+ * - Dynamic tier theming via CSS custom properties
+ * - Height constraints (mobile: 200px, desktop: 250px)
  *
  * ═══════════════════════════════════════════════════════════════════════
  */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES (Hero-Specific)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Hero Section Sizing */
+  --bf25-hero-height-mobile: clamp(180px, 50vw, 200px);
+  --bf25-hero-height-desktop: clamp(220px, 15vw, 250px);
+
+  /* Dynamic Properties (Updated by JavaScript in Prompt 3) */
+  --fill-width: 0%; /* Slider fill width (0-100%) */
+  --color-tier-current: #6b7280; /* Current tier accent color */
+
+  /* Slider Visualization */
+  --segment-count: 16;
+  --segment-gap: 2px;
+  --total-gap-width: calc((var(--segment-count) - 1) * var(--segment-gap));
+  --segment-width: calc((100% - var(--total-gap-width)) / var(--segment-count));
+  --gradient-step-size: calc(var(--segment-width) + var(--segment-gap));
+
+  /* Border Radius Scale */
+  --bf25-radius-sm: 8px;
+  --bf25-radius-md: 16px;
+  --bf25-radius-lg: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SECTION FOUNDATION (Dark Theme)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero {
+  background: #0a0a0a;
+  color: var(--bf25-text-primary, #ffffff);
+  padding: var(--bf25-space-5) var(--bf25-space-4);
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.bf25-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HEADER (H1 + H2 Typography)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__header {
+  text-align: center;
+  margin-bottom: var(--bf25-space-5);
+}
+
+.bf25-hero__heading {
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 800;
+  line-height: var(--bf25-leading-tight, 1.2);
+  letter-spacing: var(--bf25-tracking-tighter, -0.02em);
+  color: var(--bf25-text-primary, #ffffff);
+  margin: 0 0 var(--bf25-space-2) 0;
+}
+
+.bf25-hero__subheading {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+  line-height: var(--bf25-leading-snug, 1.4);
+  color: var(--bf25-text-secondary, #e0e0e0);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MAIN MODULE (Interactive Area)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__module {
+  display: grid;
+  gap: var(--bf25-space-5);
+}
+
+/* Desktop: 2-column layout (gifts + card | slider below) */
+@media (min-width: 769px) {
+  .bf25-hero__module {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--bf25-space-6);
+  }
+
+  .bf25-hero__gifts {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  .bf25-hero__card {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .bf25-hero__slider-wrapper {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   GIFT BOXES (4 Premium Gifts)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__gifts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 769px) {
+  .bf25-hero__gifts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Individual Gift Box (Glassmorphic, Locked by Default) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__gift-box {
+  position: relative;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--bf25-radius-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  text-align: center;
+}
+
+.bf25-hero__gift-box:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Gift Image Wrapper (Contains Image + Lock Icon) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__gift-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: var(--bf25-space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bf25-hero__gift-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--bf25-radius-sm);
+  /* Default: Locked state (grayscale, reduced opacity) */
+  filter: grayscale(100%);
+  opacity: 0.4;
+  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+.bf25-hero__gift-lock-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  opacity: 0.8;
+  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  pointer-events: none;
+  display: inline-block; /* Fix emoji rotation */
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Gift Info (Label + Value) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__gift-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bf25-hero__gift-label {
+  font-size: var(--bf25-text-sm, 14px);
+  font-weight: 600;
+  color: var(--bf25-text-secondary, #e0e0e0);
+}
+
+.bf25-hero__gift-value {
+  font-size: var(--bf25-text-xs, 12px);
+  font-weight: 500;
+  color: var(--bf25-accent, #60c655);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* UNLOCKED STATE (Applied by JavaScript) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-lock-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.bf25-hero__gift-box.is-unlocked {
+  border-color: var(--bf25-accent, #60c655);
+  background: rgba(96, 198, 85, 0.05);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SLIDER WRAPPER (Visualization + Input)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__slider-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   16-SEGMENT VISUALIZATION (Robust Gradient Calculation)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__visualization {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: var(--bf25-space-5);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Track (16 Gray Segments - Background) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) var(--segment-width),
+    transparent var(--segment-width),
+    transparent var(--gradient-step-size)
+  );
+  border-radius: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Fill (16 Green Segments - Animated Width) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__fill {
+  position: absolute;
+  width: var(--fill-width);
+  height: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    var(--bf25-accent, #60c655) 0,
+    var(--bf25-accent, #60c655) var(--segment-width),
+    transparent var(--segment-width),
+    transparent var(--gradient-step-size)
+  );
+  border-radius: 6px;
+  box-shadow: 0 0 20px var(--bf25-accent-glow, rgba(96, 198, 85, 0.4));
+  transition: width var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  will-change: width;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NATIVE RANGE INPUT (Invisible Overlay)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__input {
+  position: absolute;
+  top: -16px; /* Expand touch area above visualization */
+  left: 0;
+  width: 100%;
+  height: var(--bf25-touch-target-min, 44px); /* WCAG AA touch target */
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  touch-action: pan-y; /* Allow vertical scroll while dragging */
+}
+
+.bf25-hero__input:focus {
+  outline: none; /* Focus managed visually by wrapper */
+}
+
+.bf25-hero__input:focus-visible {
+  outline: none;
+}
+
+/* Remove default range styling */
+.bf25-hero__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+}
+
+.bf25-hero__input::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+  background: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CHECKPOINTS (Tier Unlock Positions at 4, 8, 12, 16)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__checkpoints {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 8px;
+}
+
+.bf25-hero__checkpoint {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transform: translateX(-50%); /* Center on position */
+}
+
+/* Position checkpoints at exact tier boundaries */
+.bf25-hero__checkpoint[data-value="4"] { left: 25%; } /* 4/16 = 25% */
+.bf25-hero__checkpoint[data-value="8"] { left: 50%; } /* 8/16 = 50% */
+.bf25-hero__checkpoint[data-value="12"] { left: 75%; } /* 12/16 = 75% */
+.bf25-hero__checkpoint[data-value="16"] { left: 100%; } /* 16/16 = 100% */
+
+.bf25-hero__checkpoint-icon {
+  font-size: 24px;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  display: inline-block; /* Fix emoji rotation */
+}
+
+.bf25-hero__checkpoint-label {
+  font-size: var(--bf25-text-xs, 12px);
+  font-weight: 600;
+  color: var(--bf25-text-tertiary, #999999);
+  transition: color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* REACHED STATE (Applied by JavaScript when slider passes checkpoint) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-icon {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
+  color: var(--bf25-accent, #60c655);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DYNAMIC TIER CARD (Glassmorphic Premium Design)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__card {
+  background: var(--bf25-bg-modal, rgba(26, 26, 26, 0.95));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--color-tier-current, rgba(96, 198, 85, 0.2));
+  border-radius: var(--bf25-radius-md);
+  box-shadow:
+    0 0 0 1px rgba(96, 198, 85, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(96, 198, 85, 0.1);
+  padding: var(--bf25-space-4);
+  transition: border-color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Card Header (Badge + Discount Display) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bf25-space-3);
+  margin-bottom: var(--bf25-space-4);
+  padding-bottom: var(--bf25-space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-hero__tier-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bf25-hero__tier-badge-text {
+  font-size: var(--bf25-text-md, 18px);
+  font-weight: 700;
+  color: var(--color-tier-current, #6b7280);
+  transition: color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+.bf25-hero__discount-display {
+  display: flex;
+  align-items: center;
+}
+
+.bf25-hero__discount-label {
+  font-size: var(--bf25-text-lg, 20px);
+  font-weight: 800;
+  color: var(--bf25-accent, #60c655);
+  letter-spacing: var(--bf25-tracking-tighter, -0.02em);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Card Body (Gift Unlock List) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__card-body {
+  margin-bottom: var(--bf25-space-4);
+}
+
+.bf25-hero__gift-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bf25-space-2);
+}
+
+.bf25-hero__gift-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-2);
+  padding: var(--bf25-space-2);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bf25-radius-sm);
+  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+.bf25-hero__gift-list-icon {
+  font-size: 18px;
+  opacity: 0.6;
+  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  display: inline-block; /* Fix emoji rotation */
+}
+
+.bf25-hero__gift-list-text {
+  font-size: var(--bf25-text-sm, 14px);
+  font-weight: 500;
+  color: var(--bf25-text-secondary, #e0e0e0);
+  opacity: 0.7;
+  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* UNLOCKED GIFT LIST ITEM STATE */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__gift-list-item.is-unlocked {
+  background: rgba(96, 198, 85, 0.1);
+  border: 1px solid rgba(96, 198, 85, 0.2);
+}
+
+.bf25-hero__gift-list-item.is-unlocked .bf25-hero__gift-list-icon {
+  opacity: 1;
+}
+
+.bf25-hero__gift-list-item.is-unlocked .bf25-hero__gift-list-text {
+  color: var(--bf25-text-primary, #ffffff);
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Card Footer (Pricing Summary) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+.bf25-hero__card-footer {
+  padding-top: var(--bf25-space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-hero__pricing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bf25-space-2);
+}
+
+.bf25-hero__pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bf25-hero__pricing-label {
+  font-size: var(--bf25-text-sm, 14px);
+  font-weight: 500;
+  color: var(--bf25-text-tertiary, #999999);
+}
+
+.bf25-hero__pricing-value {
+  font-size: var(--bf25-text-md, 18px);
+  font-weight: 700;
+  color: var(--bf25-text-primary, #ffffff);
+}
+
+.bf25-hero__pricing-row--savings {
+  margin-top: var(--bf25-space-1);
+}
+
+.bf25-hero__pricing-value--savings {
+  color: var(--bf25-accent, #60c655);
+  font-size: var(--bf25-text-lg, 20px);
+  font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CALL TO ACTION BUTTON
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__cta {
+  margin-top: var(--bf25-space-6);
+  text-align: center;
+}
+
+.bf25-hero__cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--bf25-height-lg, 48px);
+  padding: 0 var(--bf25-space-5);
+  background: var(--bf25-accent, #60c655);
+  color: #000000;
+  font-size: var(--bf25-text-md, 18px);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--bf25-radius-md);
+  box-shadow: 0 4px 20px var(--bf25-accent-glow, rgba(96, 198, 85, 0.4));
+  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  cursor: pointer;
+}
+
+.bf25-hero__cta-button:hover {
+  background: var(--bf25-accent-hover, #50b045);
+  box-shadow: 0 6px 30px var(--bf25-accent-glow, rgba(96, 198, 85, 0.6));
+  transform: translateY(-2px);
+}
+
+.bf25-hero__cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px var(--bf25-accent-glow, rgba(96, 198, 85, 0.3));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RESPONSIVE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .bf25-hero {
+    padding: var(--bf25-space-4) var(--bf25-space-3);
+  }
+
+  .bf25-hero__heading {
+    font-size: 28px;
+  }
+
+  .bf25-hero__subheading {
+    font-size: 14px;
+  }
+
+  .bf25-hero__gifts {
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .bf25-hero__gift-box {
+    padding: 12px;
+  }
+
+  .bf25-hero__gift-lock-icon {
+    font-size: 24px;
+  }
+
+  .bf25-hero__checkpoint-icon {
+    font-size: 20px;
+  }
+
+  .bf25-hero__card {
+    padding: var(--bf25-space-3);
+  }
+
+  .bf25-hero__tier-badge-text {
+    font-size: var(--bf25-text-sm, 14px);
+  }
+
+  .bf25-hero__discount-label {
+    font-size: var(--bf25-text-md, 16px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bf25-hero__gift-box {
+    border-width: 2px;
+  }
+
+  .bf25-hero__card {
+    border-width: 2px;
+  }
+}
+
+/* Focus visible states */
+.bf25-hero__input:focus-visible ~ .bf25-hero__visualization {
+  outline: 2px solid var(--bf25-accent, #60c655);
+  outline-offset: 4px;
+}
+
+.bf25-hero__cta-button:focus-visible {
+  outline: 2px solid var(--bf25-accent, #60c655);
+  outline-offset: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* GPU acceleration for animated elements */
+.bf25-hero__fill,
+.bf25-hero__gift-image,
+.bf25-hero__checkpoint-icon {
+  transform: translateZ(0);
+  will-change: auto; /* Let browser decide, avoid overuse */
+}
+
+/* Contain paint for isolated components */
+.bf25-hero__gift-box,
+.bf25-hero__card {
+  contain: layout style paint;
+}

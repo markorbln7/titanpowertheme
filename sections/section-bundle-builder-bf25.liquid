@@ -427,7 +427,7 @@ window.productData["{{ product.id }}"] = {
   // ─────────────────────────────────────────────────────────
   // Content (Rich Text)
   // ─────────────────────────────────────────────────────────
-  description: {{ product.metafields.custom.product_description | default: product.description | json }},
+  description: {{ product.metafields.custom.product_description.value | default: product.description | json }},
   ticks: {{ product.metafields.custom.ticks | json }},
 
   // ─────────────────────────────────────────────────────────

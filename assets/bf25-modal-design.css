@@ -766,6 +766,465 @@
   font-style: italic;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   CRITICAL FIX: Ensure reviews are always visible
+   Added: 2025-01-22 - Ref: BF25-REV-001
+   ═══════════════════════════════════════════════════════════════════ */
+
+.bf25-modal-reviews,
+.bf25-modal-reviews .bf25-reviews-container,
+.bf25-modal-reviews .bf25-reviews-empty {
+  /* Override reveal animation - make immediately visible */
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  animation: none !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+.bf25-modal-reviews {
+  margin-bottom: var(--bf25-space-4);
+  min-height: 24px; /* Prevent collapse */
+}
+
+.bf25-reviews-container {
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   REVIEW CARDS - BOGO System Integration (BF25-REV-003)
+   Added: 2025-01-22
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+.bf25-modal-reviews-section {
+  width: 100%;
+  margin-bottom: var(--bf25-space-6);
+}
+
+.bf25-reviews-header {
+  margin-bottom: var(--bf25-space-4);
+}
+
+.bf25-reviews-header h3 {
+  font-size: var(--bf25-text-lg);
+  font-weight: 600;
+  margin-bottom: var(--bf25-space-2);
+  color: var(--bf25-text-primary);
+}
+
+.bf25-reviews-rating-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-3);
+}
+
+.bf25-rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.bf25-rating-stars .bf25-star {
+  color: var(--bf25-accent);
+  font-size: 20px;
+}
+
+.bf25-rating-stars .bf25-star.bf25-filled {
+  color: var(--bf25-accent);
+}
+
+.bf25-rating-stars .bf25-star.bf25-half {
+  color: var(--bf25-accent);
+  opacity: 0.5;
+}
+
+.bf25-reviews-scroll-area {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: var(--bf25-space-2);
+  margin-bottom: var(--bf25-space-3);
+}
+
+/* Custom scrollbar styling */
+.bf25-reviews-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bf25-reviews-scroll-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.bf25-reviews-scroll-area::-webkit-scrollbar-thumb {
+  background: var(--bf25-accent);
+  border-radius: 3px;
+}
+
+.bf25-reviews-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: var(--bf25-accent-hover);
+}
+
+.bf25-review-card {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: var(--bf25-space-4);
+  margin-bottom: var(--bf25-space-3);
+  transition: all 0.2s ease;
+}
+
+.bf25-review-card:hover {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: var(--bf25-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.bf25-review-card:last-child {
+  margin-bottom: 0;
+}
+
+.bf25-review-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bf25-space-2);
+  margin-bottom: var(--bf25-space-3);
+}
+
+.bf25-review-author {
+  font-weight: 600;
+  color: var(--bf25-text-primary);
+  font-size: var(--bf25-text-sm);
+}
+
+.bf25-review-stars {
+  color: var(--bf25-accent);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.bf25-review-date {
+  color: var(--bf25-text-tertiary);
+  font-size: var(--bf25-text-xs);
+  margin-left: auto;
+}
+
+.bf25-review-title {
+  font-weight: 600;
+  color: var(--bf25-text-primary);
+  margin-bottom: var(--bf25-space-2);
+  line-height: 1.4;
+}
+
+.bf25-review-content {
+  color: var(--bf25-text-secondary);
+  line-height: 1.6;
+}
+
+.bf25-review-total-count {
+  text-align: center;
+  padding-top: var(--bf25-space-2);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--bf25-text-tertiary);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .bf25-reviews-scroll-area {
+    max-height: 300px;
+  }
+
+  .bf25-review-card {
+    padding: var(--bf25-space-3);
+  }
+
+  .bf25-review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bf25-space-1);
+  }
+
+  .bf25-review-date {
+    margin-left: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Product Card Reviews Display (BF25-REV-006)
+   Added: 2025-01-22
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+.bf25-product-rating-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bf25-product-rating-display:hover {
+  transform: scale(1.05);
+}
+
+.bf25-rating-stars {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.bf25-rating-stars .stars-empty {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.bf25-rating-stars .stars-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--bf25-accent, #60c655);
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.3s ease;
+}
+
+.bf25-rating-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .bf25-rating-stars {
+    font-size: 14px;
+  }
+
+  .bf25-rating-count {
+    font-size: 11px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Product Description Section (BF25-DESC-005)
+   Added: 2025-01-22
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+.bf25-description-section {
+  margin: var(--bf25-space-4) 0;
+}
+
+.bf25-description-wrapper {
+  max-height: 100px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradient fade when collapsed */
+.bf25-description-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--bf25-bg-primary));
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.bf25-description-wrapper.expanded {
+  max-height: 2000px;
+}
+
+.bf25-description-wrapper.expanded::after {
+  opacity: 0;
+}
+
+.bf25-description-content {
+  padding: var(--bf25-space-3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bf25-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Toggle button */
+.bf25-description-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-2);
+  padding: var(--bf25-space-2) 0;
+  margin-top: var(--bf25-space-2);
+  background: none;
+  border: none;
+  color: var(--bf25-accent);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bf25-description-toggle:hover {
+  color: var(--bf25-accent-hover);
+  transform: translateX(4px);
+}
+
+.bf25-toggle-arrow {
+  transition: transform 0.3s ease;
+}
+
+.bf25-description-toggle[aria-expanded="true"] .bf25-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Upsells Section (BF25-DESC-005)
+   Added: 2025-01-22
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+.bf25-upsells-section {
+  margin: var(--bf25-space-4) 0;
+  padding: var(--bf25-space-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bf25-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bf25-upsells-title {
+  font-weight: 600;
+  margin-bottom: var(--bf25-space-3);
+}
+
+.bf25-upsells-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--bf25-space-3);
+}
+
+.bf25-upsell-card {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--bf25-space-3);
+  align-items: center;
+  padding: var(--bf25-space-3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--bf25-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.25s ease;
+}
+
+.bf25-upsell-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.1);
+  border-color: rgba(96, 198, 85, 0.3);
+}
+
+.bf25-upsell-image {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--bf25-radius-sm);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.bf25-upsell-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bf25-upsell-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--bf25-accent);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.bf25-upsell-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bf25-space-1);
+  min-width: 0;
+}
+
+.bf25-upsell-title {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bf25-upsell-price {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-2);
+}
+
+.bf25-upsell-add {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-1);
+  padding: var(--bf25-space-2) var(--bf25-space-3);
+  background: var(--bf25-accent);
+  color: #000;
+  border: none;
+  border-radius: var(--bf25-radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.bf25-upsell-add:hover {
+  background: var(--bf25-accent-hover);
+  transform: scale(1.05);
+}
+
+.bf25-upsell-add svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .bf25-description-wrapper {
+    max-height: 80px;
+  }
+
+  .bf25-upsell-card {
+    grid-template-columns: 60px 1fr auto;
+    gap: var(--bf25-space-2);
+  }
+
+  .bf25-upsell-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .bf25-upsell-title {
+    font-size: 13px;
+  }
+
+  .bf25-upsell-add {
+    padding: var(--bf25-space-1) var(--bf25-space-2);
+    font-size: 12px;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────── */
 /* Pricing */
 /* ─────────────────────────────────────────────────────────────────── */

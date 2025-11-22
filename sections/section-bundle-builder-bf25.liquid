@@ -2,6 +2,7 @@
 {{ 'section-bundle-builder-bf25.css' | asset_url | stylesheet_tag }}
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
 {{ 'bf25-modal-design.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
 <script src="{{ 'bf25-expansion-core.js' | asset_url }}" defer></script>
 {% comment %} <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> {% endcomment %}
@@ -105,6 +106,17 @@
                           <div class="top-part">
                             <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
 
+                            <!-- Reviews Display (BF25-REV-006) -->
+                            <div class="bf25-product-rating-display"
+                                 data-product-id="{{ product.id }}"
+                                 role="button"
+                                 tabindex="0">
+                              <div class="bf25-rating-stars" aria-hidden="true">
+                                <span class="stars-empty">★★★★★</span>
+                                <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                              </div>
+                              <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                            </div>
 
                             {% if product.metafields.custom.ticks %}
                               {{product.metafields.custom.ticks | metafield_tag }}
@@ -258,77 +270,122 @@ PRESERVED STRUCTURE:
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// STRUCTURE 1: BF25 CONFIGURATION
+// STRUCTURE 1: BF25 CONFIGURATION - Protected Initialization
+// Ref: BF25-MODE-002 - Prevent overwrite by other sections
 // ═══════════════════════════════════════════════════════════
-window.bf25Config = {
-  // Display mode from Theme Customizer
-  mode: "{{ section.settings.modal_display_mode | default: 'power_packs' }}",
 
-  // Tier structure for discount calculations (Black Friday 2025)
-  // Thresholds: 4, 8, 12 items (Power Packs mode)
-  tiers: [
-    {
-      min: 1,
-      max: 3,
-      multiplier: 1.0,
-      displayLabel: "Standard",
-      label: "Standard",
-      badge: null
+(function() {
+  'use strict';
+
+  // Configuration for this section
+  const sectionConfig = {
+    // Display mode from Theme Customizer
+    mode: "{{ section.settings.modal_display_mode | default: 'power_packs' }}",
+
+    // Tier structure for discount calculations (Black Friday 2025)
+    // Thresholds: 4, 8, 12 items (Power Packs mode)
+    tiers: [
+      {
+        min: 1,
+        max: 3,
+        multiplier: 1.0,
+        displayLabel: "Standard",
+        label: "Standard",
+        badge: null
+      },
+      {
+        min: 4,
+        max: 7,
+        multiplier: 0.91,
+        displayLabel: "60% OFF",
+        label: "Better Deal",
+        badge: "⚡ FREE: 4-in-1 Cable"
+      },
+      {
+        min: 8,
+        max: 11,
+        multiplier: 0.76,
+        displayLabel: "70% OFF",
+        label: "Great Deal",
+        badge: "🎁 FREE: Cable + Travel Case"
+      },
+      {
+        min: 12,
+        max: 15,
+        multiplier: 0.65,
+        displayLabel: "80% OFF",
+        label: "Best Deal",
+        badge: "🔥 FREE: Cables + Cases + Pre-Launch Set"
+      },
+      {
+        min: 16,
+        max: 999,
+        multiplier: 0.57,
+        displayLabel: "85% OFF",
+        label: "Bigfoot Unlock",
+        badge: "💎 FREE: Mystery Box + VIP Status"
+      }
+    ],
+
+    // Enhanced features configuration
+    enhancedFeatures: {
+      showReviews: {{ section.settings.show_reviews | default: true }},
+      showStockLevels: {{ section.settings.show_stock_levels | default: true }},
+      showCountdown: {{ section.settings.show_countdown | default: true }},
+      showFeatures: {{ section.settings.show_features | default: true }},
+      showShipping: {{ section.settings.show_shipping | default: true }},
+      enableKeyboardShortcuts: {{ section.settings.enable_keyboard_shortcuts | default: true }},
+      showTrustBadges: {{ section.settings.show_trust_badges | default: true }}
     },
-    {
-      min: 4,
-      max: 7,
-      multiplier: 0.91,
-      displayLabel: "60% OFF",
-      label: "Better Deal",
-      badge: "⚡ FREE: 4-in-1 Cable"
+
+    // Animation settings
+    animation: {
+      duration: 400,
+      easing: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
     },
-    {
-      min: 8,
-      max: 11,
-      multiplier: 0.76,
-      displayLabel: "70% OFF",
-      label: "Great Deal",
-      badge: "🎁 FREE: Cable + Travel Case"
-    },
-    {
-      min: 12,
-      max: 15,
-      multiplier: 0.65,
-      displayLabel: "80% OFF",
-      label: "Best Deal",
-      badge: "🔥 FREE: Cables + Cases + Pre-Launch Set"
-    },
-    {
-      min: 16,
-      max: 999,
-      multiplier: 0.57,
-      displayLabel: "85% OFF",
-      label: "Bigfoot Unlock",
-      badge: "💎 FREE: Mystery Box + VIP Status"
+
+    // Debug mode
+    debug: true
+  };
+
+  // Initialize or merge configuration
+  if (typeof window.bf25Config === 'undefined') {
+    // First initialization - set everything
+    window.bf25Config = sectionConfig;
+
+    if (sectionConfig.debug) {
+      console.log('🚀 BF25 Config Initialized (Primary Section)');
+      console.log('   Mode:', sectionConfig.mode);
+      console.log('   Source: section-bundle-builder-bf25');
     }
-  ],
+  } else {
+    // Config already exists - only merge non-critical settings
+    // NEVER overwrite mode, tiers, or core functionality
 
-  // Enhanced features configuration
-  enhancedFeatures: {
-    showReviews: {{ section.settings.show_reviews | default: true }},
-    showStockLevels: {{ section.settings.show_stock_levels | default: true }},
-    showCountdown: {{ section.settings.show_countdown | default: true }},
-    showFeatures: {{ section.settings.show_features | default: true }},
-    showShipping: {{ section.settings.show_shipping | default: true }},
-    enableKeyboardShortcuts: {{ section.settings.enable_keyboard_shortcuts | default: true }},
-    showTrustBadges: {{ section.settings.show_trust_badges | default: true }}
-  },
+    if (sectionConfig.debug) {
+      console.warn('⚠️ BF25 Config already exists - skipping reinit');
+      console.warn('   Existing mode:', window.bf25Config.mode);
+      console.warn('   This section mode:', sectionConfig.mode);
+      console.warn('   Keeping existing configuration');
+    }
 
-  // Animation settings (used in Prompt 5)
-  animation: {
-    duration: 400,
-    easing: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
-  },
+    // Only merge enhancedFeatures if they don't exist
+    if (!window.bf25Config.enhancedFeatures) {
+      window.bf25Config.enhancedFeatures = sectionConfig.enhancedFeatures;
+    }
+  }
 
-  // Debug mode (useful during development)
-  debug: true
-};
+  // Freeze the mode to prevent accidental changes
+  Object.defineProperty(window.bf25Config, 'mode', {
+    value: window.bf25Config.mode,
+    writable: false,
+    configurable: false
+  });
+
+  if (sectionConfig.debug) {
+    console.log('🔒 Mode locked:', window.bf25Config.mode);
+  }
+})();
 
 // ═══════════════════════════════════════════════════════════
 // STRUCTURE 2: PRODUCT METADATA
@@ -392,15 +449,30 @@ window.productData["{{ product.id }}"] = {
   available: {{ product.available | json }},
 
   // ─────────────────────────────────────────────────────────
-  // Upsell Products (IDs only - look up details when needed)
+  // Upsell Products (Full details from metafields)
   // ─────────────────────────────────────────────────────────
   upsells: [
-    {%- if product.metafields.custom.first_upsell_product -%}
-      "{{ product.metafields.custom.first_upsell_product.id }}"
-      {%- if product.metafields.custom.second_upsell_product -%},{%- endif -%}
+    {%- if product.metafields.custom.first_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.first_upsell_product.value.id }}",
+        title: {{ product.metafields.custom.first_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.first_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.first_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.first_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.first_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.first_upsell_product.value.url }}"
+      }{%- if product.metafields.custom.second_upsell_product.value -%},{%- endif -%}
     {%- endif -%}
-    {%- if product.metafields.custom.second_upsell_product -%}
-      "{{ product.metafields.custom.second_upsell_product.id }}"
+    {%- if product.metafields.custom.second_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.second_upsell_product.value.id }}",
+        title: {{ product.metafields.custom.second_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.second_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.second_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.second_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.second_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.second_upsell_product.value.url }}"
+      }
     {%- endif -%}
   ],
 

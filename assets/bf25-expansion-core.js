@@ -4130,6 +4130,66 @@ class ExpansionManager {
     }
   }
 
+  /**
+   * Bind description toggle events
+   * Added: BF25-DESC-005
+   */
+  bindDescriptionEvents() {
+    const descriptionToggle = this.container.querySelector('.bf25-description-toggle');
+    const descriptionWrapper = this.container.querySelector('.bf25-description-wrapper');
+
+    if (descriptionToggle && descriptionWrapper) {
+      descriptionToggle.addEventListener('click', () => {
+        const isExpanded = descriptionWrapper.classList.contains('expanded');
+
+        if (isExpanded) {
+          descriptionWrapper.classList.remove('expanded');
+          descriptionToggle.setAttribute('aria-expanded', 'false');
+          descriptionToggle.querySelector('.bf25-toggle-text').textContent = 'Learn More';
+        } else {
+          descriptionWrapper.classList.add('expanded');
+          descriptionToggle.setAttribute('aria-expanded', 'true');
+          descriptionToggle.querySelector('.bf25-toggle-text').textContent = 'Show Less';
+        }
+
+        if (this.config.debug) {
+          console.log('📝 Description toggled:', isExpanded ? 'collapsed' : 'expanded');
+        }
+      });
+    }
+
+    if (this.config.debug) {
+      console.log('✅ Description toggle events bound');
+    }
+  }
+
+  /**
+   * Bind upsell add button events
+   * Added: BF25-DESC-005
+   */
+  bindUpsellEvents() {
+    const upsellButtons = this.container.querySelectorAll('.bf25-upsell-add');
+
+    upsellButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const upsellUrl = button.dataset.upsellUrl;
+
+        if (upsellUrl) {
+          // Navigate to upsell product page
+          window.location.href = upsellUrl;
+
+          if (this.config.debug) {
+            console.log('🔗 Navigating to upsell:', upsellUrl);
+          }
+        }
+      });
+    });
+
+    if (this.config.debug && upsellButtons.length > 0) {
+      console.log(`✅ ${upsellButtons.length} upsell buttons bound`);
+    }
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // CONTENT GENERATION HELPERS
   // ═══════════════════════════════════════════════════════════════════
@@ -4200,6 +4260,105 @@ class ExpansionManager {
       ${ratingText}
     </div>
   `;
+  }
+
+  /**
+   * Get reviews from BOGO database
+   * Falls back to empty if not found
+   *
+   * @param {string} productId - Product ID
+   * @returns {Object|null} Review data or null
+   */
+  getBogoReviews(productId) {
+    // Access BOGO's PRODUCT_REVIEWS object (defined in bogo-builder.js)
+    if (typeof window.PRODUCT_REVIEWS === 'undefined') {
+      console.warn('⚠️ BOGO reviews not loaded - is bogo-builder.js included?');
+      return null;
+    }
+
+    const reviewData = window.PRODUCT_REVIEWS[productId];
+
+    if (!reviewData) {
+      if (this.config.debug) {
+        console.log(`ℹ️ No reviews found for product ${productId} in BOGO database`);
+      }
+      return null;
+    }
+
+    return reviewData;
+  }
+
+  /**
+   * Create full review cards like BOGO system
+   * Matches BOGO's createReviewsSection() function
+   *
+   * @param {string} productId - Product ID
+   * @returns {string} HTML for reviews section
+   */
+  createBogoReviewsSection(productId) {
+    const reviewData = this.getBogoReviews(productId);
+
+    if (!reviewData) {
+      return '<div class="bf25-reviews-empty bf25-text-tertiary bf25-text-sm">No reviews yet</div>';
+    }
+
+    const { totalReviews, avgRating, reviews } = reviewData;
+
+    // Generate star HTML
+    const fullStars = Math.floor(avgRating);
+    const hasHalfStar = (avgRating % 1) >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    let starsHTML = '';
+    for (let i = 0; i < fullStars; i++) {
+      starsHTML += '<span class="bf25-star bf25-filled">★</span>';
+    }
+    if (hasHalfStar) {
+      starsHTML += '<span class="bf25-star bf25-half">★</span>';
+    }
+    for (let i = 0; i < emptyStars; i++) {
+      starsHTML += '<span class="bf25-star">★</span>';
+    }
+
+    // Generate review cards HTML
+    const reviewCardsHTML = reviews.map(review => {
+      const reviewStars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+
+      return `
+        <div class="bf25-review-card">
+          <div class="bf25-review-header">
+            <div class="bf25-review-author">${review.author}</div>
+            <div class="bf25-review-stars">${reviewStars}</div>
+            <div class="bf25-review-date">${review.date}</div>
+          </div>
+          <div class="bf25-review-title bf25-text-md bf25-mb-2">${review.title}</div>
+          <div class="bf25-review-content bf25-text-sm bf25-text-secondary">${review.content}</div>
+        </div>
+      `;
+    }).join('');
+
+    // Complete reviews section HTML (matches BOGO structure)
+    return `
+      <div class="bf25-modal-reviews-section">
+        <div class="bf25-reviews-header bf25-mb-3">
+          <h3 class="bf25-text-md bf25-mb-2">Customer Reviews</h3>
+          <div class="bf25-reviews-rating-summary bf25-mb-3">
+            <div class="bf25-rating-stars bf25-mb-1">
+              ${starsHTML}
+            </div>
+            <div class="bf25-text-sm bf25-text-secondary">
+              ${avgRating.toFixed(1)} / 5
+            </div>
+          </div>
+        </div>
+        <div class="bf25-reviews-scroll-area">
+          ${reviewCardsHTML}
+        </div>
+        <div class="bf25-review-total-count bf25-text-xs bf25-text-tertiary bf25-text-center bf25-mt-2">
+          ${reviews.length} Reviews of ${totalReviews.toLocaleString()}
+        </div>
+      </div>
+    `;
   }
 
   /**
@@ -4395,11 +4554,6 @@ class ExpansionManager {
           ${product.title}
         </h2>
 
-        <!-- Reviews -->
-        <div class="bf25-modal-reviews bf25-mb-4 bf25-reveal-stagger-1">
-          ${this.createReviewStars(product.reviewRating, product.reviewCount)}
-        </div>
-
         <!-- Price Display -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
           <div class="bf25-price-container">
@@ -4458,7 +4612,7 @@ class ExpansionManager {
           `;
         })()}
 
-        <!-- Description / Learn More -->
+        <!-- Description Section -->
         ${(() => {
           const description = product.description;
 
@@ -4467,17 +4621,79 @@ class ExpansionManager {
           }
 
           return `
-            <details class="bf25-description-details bf25-mb-4 bf25-reveal-stagger-2">
-              <summary class="bf25-description-summary">
-                <span class="bf25-summary-text">Learn More</span>
-                <span class="bf25-summary-icon">▼</span>
-              </summary>
-              <div class="bf25-description-content">
-                ${description}
+            <div class="bf25-description-section bf25-mb-4 bf25-reveal-stagger-2">
+              <div class="bf25-description-wrapper">
+                <div class="bf25-description-content bf25-text-sm bf25-text-secondary">
+                  ${description}
+                </div>
               </div>
-            </details>
+              <button class="bf25-description-toggle" type="button" aria-expanded="false">
+                <span class="bf25-toggle-text">Learn More</span>
+                <svg class="bf25-toggle-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           `;
         })()}
+
+        <!-- Upsells Section -->
+        ${(() => {
+          const upsells = product.upsells;
+
+          if (!upsells || upsells.length === 0) {
+            return '';
+          }
+
+          const upsellCards = upsells.map(upsell => {
+            // Calculate discount percentage
+            const discount = upsell.comparePrice > upsell.price
+              ? Math.round(((upsell.comparePrice - upsell.price) / upsell.comparePrice) * 100)
+              : 0;
+
+            // Format prices
+            const price = this.formatPrice(upsell.price);
+            const comparePrice = upsell.comparePrice > upsell.price
+              ? this.formatPrice(upsell.comparePrice)
+              : '';
+
+            return `
+              <div class="bf25-upsell-card" data-product-id="${upsell.id}">
+                <div class="bf25-upsell-image">
+                  ${discount > 0 ? `<span class="bf25-upsell-badge">${discount}% OFF</span>` : ''}
+                  <img src="${upsell.image}" alt="${upsell.title}" loading="lazy">
+                </div>
+                <div class="bf25-upsell-info">
+                  <h4 class="bf25-upsell-title bf25-text-sm bf25-text-primary">${upsell.title}</h4>
+                  <div class="bf25-upsell-price">
+                    <span class="bf25-text-md bf25-text-accent">${price}</span>
+                    ${comparePrice ? `<span class="bf25-text-sm bf25-text-tertiary" style="text-decoration: line-through;">${comparePrice}</span>` : ''}
+                  </div>
+                </div>
+                <button class="bf25-upsell-add" type="button" data-upsell-url="${upsell.url}">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  Add
+                </button>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="bf25-upsells-section bf25-mb-4 bf25-reveal-stagger-2">
+              <h3 class="bf25-upsells-title bf25-text-md bf25-text-primary bf25-mb-3">You May Also Like</h3>
+              <div class="bf25-upsells-grid">
+                ${upsellCards}
+              </div>
+            </div>
+          `;
+        })()}
+
+        <!-- Reviews (Moved to bottom - BF25-REV-006) -->
+        <div class="bf25-modal-reviews bf25-mb-4 bf25-reveal-stagger-3">
+          ${this.createBogoReviewsSection(product.id)}
+        </div>
 
         <!-- Variant Selectors (Prompt 7 - IMPLEMENTED) -->
         <div class="bf25-variant-section bf25-mb-5 bf25-reveal-stagger-2">
@@ -4494,18 +4710,6 @@ class ExpansionManager {
           ${this.generateActionButtons()}
 
         </div>
-
-        <!-- Upsells (Placeholder for Prompt 11) -->
-        ${product.upsells && product.upsells.length > 0 ? `
-          <div class="bf25-upsells-section bf25-mt-6 bf25-reveal-stagger-3">
-            <h3 class="bf25-text-md bf25-mb-3">You May Also Like</h3>
-            <div class="bf25-upsells-placeholder">
-              <p class="bf25-text-sm bf25-text-tertiary">
-                [Prompt 11 will add ${product.upsells.length} upsell products here]
-              </p>
-            </div>
-          </div>
-        ` : ''}
 
       </div>
 
@@ -4532,9 +4736,93 @@ class ExpansionManager {
     // ─────────────────────────────────────────────────────────────────
     this.bindQuantityEvents();
 
+    // ─────────────────────────────────────────────────────────────────
+    // STEP 8: Bind description toggle events
+    // ─────────────────────────────────────────────────────────────────
+    this.bindDescriptionEvents();
+
+    // ─────────────────────────────────────────────────────────────────
+    // STEP 9: Bind upsell add button events
+    // ─────────────────────────────────────────────────────────────────
+    this.bindUpsellEvents();
+
     if (this.config.debug) {
       console.log('✅ Content populated');
     }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PRODUCT CARD REVIEWS POPULATION
+// Added: BF25-REV-006
+// ═══════════════════════════════════════════════════════════════════════
+
+/**
+ * Populate review stars on product cards
+ * Uses BOGO review data to show stars and count
+ */
+function populateCardReviews() {
+  // Get all product cards
+  const cards = document.querySelectorAll('.bf25-product-card');
+
+  if (!cards.length) {
+    if (window.bf25Config?.debug) {
+      console.log('ℹ️ No BF25 product cards found for review population');
+    }
+    return;
+  }
+
+  // Check if BOGO reviews are available
+  if (typeof window.PRODUCT_REVIEWS === 'undefined') {
+    console.warn('⚠️ BOGO reviews not loaded - cannot populate card reviews');
+    return;
+  }
+
+  let populatedCount = 0;
+
+  cards.forEach(card => {
+    const productId = card.dataset.productId;
+    const reviewData = window.PRODUCT_REVIEWS[productId];
+
+    if (!reviewData) {
+      // Hide reviews for products without data
+      const ratingDisplay = card.querySelector('.bf25-product-rating-display');
+      if (ratingDisplay) {
+        ratingDisplay.style.display = 'none';
+      }
+      return;
+    }
+
+    const { totalReviews, avgRating } = reviewData;
+
+    // Calculate star width percentage (e.g., 4.7 = 94%)
+    const starPercentage = (avgRating / 5) * 100;
+
+    // Update stars filled width
+    const starsFilled = card.querySelector('.stars-filled');
+    if (starsFilled) {
+      starsFilled.style.width = `${starPercentage}%`;
+    }
+
+    // Update review count text
+    const ratingCount = card.querySelector('.bf25-rating-count');
+    if (ratingCount) {
+      ratingCount.textContent = `${totalReviews.toLocaleString()} reviews`;
+    }
+
+    // Update aria-label for accessibility
+    const ratingDisplay = card.querySelector('.bf25-product-rating-display');
+    if (ratingDisplay) {
+      ratingDisplay.setAttribute('aria-label',
+        `Rated ${avgRating} out of 5 stars, ${totalReviews.toLocaleString()} reviews. Click to view details.`
+      );
+    }
+
+    populatedCount++;
+  });
+
+  if (window.bf25Config?.debug) {
+    console.log(`⭐ Populated reviews on ${populatedCount} product cards`);
   }
 }
 
@@ -4565,6 +4853,9 @@ function initBF25Expansion() {
     console.log('📊 Products available:', Object.keys(window.productData).length);
     console.log('🎯 Mode:', window.bf25Config.mode);
   }
+
+  // Populate product card reviews after small delay to ensure PRODUCT_REVIEWS loaded
+  setTimeout(populateCardReviews, 100);
 }
 
 // Initialize when DOM is ready

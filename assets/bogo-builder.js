@@ -3119,7 +3119,8 @@ function getProductImages(productId, modal) {
 // PRODUCT-SPECIFIC REVIEWS DATABASE
 // Review data will be populated in subsequent implementation steps
 // ═══════════════════════════════════════════════════════════════════
-const PRODUCT_REVIEWS = {
+// Make reviews accessible to other sections (BF25 modal)
+window.PRODUCT_REVIEWS = {
 
   // ═══════════════════════════════════════════════════════════════
   // PRODUCTS 1-7: PREMIUM CABLES & MULTI-CABLES

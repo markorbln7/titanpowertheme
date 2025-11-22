@@ -707,6 +707,19 @@ class PowerPairsState {
   }
 
   /**
+   * Calculate compare-at subtotal for bundle (using product.compareAtPrice)
+   * @param {Array} products - Array of products
+   * @returns {number} Compare-at subtotal in cents
+   */
+  calculateCompareAtSubtotal(products) {
+    return products.reduce((sum, product) => {
+      // Use the product's compareAtPrice (set in Liquid from product.compare_at_price)
+      const comparePrice = product.compareAtPrice || product.price;
+      return sum + (comparePrice * product.quantity);
+    }, 0);
+  }
+
+  /**
    * Set the currently active bundle
    * @param {string} bundleId - Bundle identifier
    */
@@ -1033,9 +1046,6 @@ class VariantModal {
    * @returns {string} HTML string
    */
   renderVariantOptions(product) {
-    // Group variants by option (for now, simple list)
-    // Multi-option handling will be refined in Prompt 9
-
     const variantsHTML = product.variants.map(variant => {
       const isSelected = variant.id === product.selectedVariantId;
       const isAvailable = variant.available;
@@ -1044,6 +1054,9 @@ class VariantModal {
       if (isSelected) btnClass += ' pp-variant-option-btn--selected';
       if (!isAvailable) btnClass += ' pp-variant-option-btn--unavailable';
 
+      // Show compare-at price if available
+      const showComparePrice = variant.compare_at_price && variant.compare_at_price > variant.price;
+
       return `
         <button
           class="${btnClass}"
@@ -1051,23 +1064,28 @@ class VariantModal {
           data-action="select-variant"
           ${!isAvailable ? 'disabled' : ''}
           aria-pressed="${isSelected}"
+          aria-label="Select ${variant.title}${!isAvailable ? ' (Out of stock)' : ''}"
         >
           ${variant.image && variant.image !== product.image ? `
             <img
               src="${variant.image}"
               alt="${variant.title}"
               class="pp-variant-option-image"
+              loading="lazy"
             >
           ` : ''}
           <div class="pp-variant-option-label">${variant.title}</div>
-          <div class="pp-variant-option-price">${this.formatMoney(variant.price)}</div>
+          <div class="pp-variant-option-price">
+            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
+            ${this.formatMoney(variant.price)}
+          </div>
         </button>
       `;
     }).join('');
 
     return `
       <div class="pp-variant-options-section">
-        <h4 class="pp-variant-options-title">Select Option</h4>
+        <h4 class="pp-variant-options-title">Choose Variant</h4>
         <div class="pp-variant-options-grid">
           ${variantsHTML}
         </div>
@@ -1275,7 +1293,7 @@ class VariantModal {
   }
 
   /**
-   * Show success feedback overlay
+   * Show success feedback overlay (auto-hides after 800ms)
    */
   showSuccessFeedback() {
     const successOverlay = this.contentArea.querySelector('.pp-variant-success-feedback');
@@ -1284,6 +1302,11 @@ class VariantModal {
       successOverlay.classList.add('active');
 
       console.log('[PowerPairs Variant Modal] Success feedback displayed');
+
+      // Auto-hide after 800ms
+      setTimeout(() => {
+        successOverlay.classList.remove('active');
+      }, 800);
     }
   }
 
@@ -1341,11 +1364,12 @@ class VariantModal {
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    if (window.Shopify && window.Shopify.formatMoney) {
-      return window.Shopify.formatMoney(cents, window.theme?.moneyFormat || '€{{amount}}');
+    if (window.Shopify && window.Shopify.formatMoney && window.theme && window.theme.moneyFormat) {
+      return window.Shopify.formatMoney(cents, window.theme.moneyFormat);
     }
-    const euros = (cents / 100).toFixed(2);
-    return `€${euros}`;
+    // Fallback - use RSD if Shopify not available
+    const amount = (cents / 100).toFixed(2);
+    return `${amount} RSD`;
   }
 }
 
@@ -1545,6 +1569,15 @@ class ExpansionManager {
 
     // Calculate current pricing
     const pricing = this.calculateBundlePricing(bundle);
+    
+    console.log('[PowerPairs] Pricing calculated:', {
+      compareAtSubtotal: pricing.compareAtSubtotal,
+      subtotal: pricing.subtotal,
+      finalPrice: pricing.finalPrice,
+      savings: pricing.savings,
+      discountPercent: pricing.discountPercent,
+      achievedTier: pricing.achievedTier
+    });
 
     // Generate variant status message
     const statusMessage = this.renderVariantStatusMessage(incompleteCount, allComplete);
@@ -1558,31 +1591,59 @@ class ExpansionManager {
     // Generate CTA section
     const ctaHTML = this.renderCTA(bundle, pricing, allComplete);
 
-    // Render complete content structure
+    // Render complete content structure - REDESIGNED
     this.contentArea.innerHTML = `
+      <div class="pp-sheet-header-custom">
+        <h2 style="font-size: 26px; font-weight: 700; margin: 0; color: var(--pp-text-primary);">${bundle.title}</h2>
+        <button class="pp-sheet-close" data-action="close-sheet" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
       <div class="pp-sheet-content-wrapper">
 
-        ${this.renderSheetHeader(bundle)}
+        <div class="pp-pricing-header">
+          <div class="pp-pricing-header__row">
+            <span class="pp-pricing-header__emoji">💰</span>
+            <span class="pp-pricing-header__current">${this.formatMoney(pricing.finalPrice)}</span>
+            <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
+            ${pricing.savings > 0 ? `
+              <span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>
+            ` : ''}
+          </div>
+          <div class="pp-pricing-header__tier">
+            <span class="pp-pricing-header__tier-icon">⚡</span>
+            <span>Tier ${pricing.achievedTier || bundle.tier || 1}: Unlock ${pricing.discountPercent}% OFF (${pricing.totalItems} items)</span>
+          </div>
+        </div>
 
         ${statusMessage}
 
-        <div class="pp-sheet-products">
-          <div class="pp-sheet-products__header">
-            <h3 class="pp-sheet-products__title">Select Your Products</h3>
-            <span class="pp-sheet-products__count">${bundle.products.length} items</span>
+        <div class="pp-products-section-v2">
+          <div class="pp-products-section-v2__header">
+            <h3 class="pp-products-section-v2__title">📦 Your Bundle</h3>
+            <span class="pp-products-section-v2__count">${bundle.products.length} products</span>
           </div>
-
-          <div class="pp-product-grid">
+          <div class="pp-products-grid-v2">
             ${productGridHTML}
           </div>
         </div>
 
         ${multipliersHTML}
 
-        ${ctaHTML}
-
       </div>
+      
+      ${ctaHTML}
     `;
+
+    // Re-attach close button listener
+    const closeBtn = this.contentArea.querySelector('[data-action="close-sheet"]');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.close());
+    }
 
     // Attach click listeners to product cards
     this.attachProductCardListeners();
@@ -1826,7 +1887,7 @@ class ExpansionManager {
     }
 
     // Find the product grid container
-    const gridContainer = this.contentArea.querySelector('.pp-product-grid');
+    const gridContainer = this.contentArea.querySelector('.pp-products-grid-v2');
     if (!gridContainer) {
       console.error('[PowerPairs] Product grid not found');
       return;
@@ -1885,11 +1946,11 @@ class ExpansionManager {
     // Parse multipliers from bundle settings (comma-separated string)
     const availableMultipliers = bundle.multipliers.map(m => parseInt(m));
 
-    // Generate multiplier pills
+    // Generate multiplier pills with tier info
     const pillsHTML = availableMultipliers.map(multiplier => {
       const totalItems = bundle.baseItemCount * multiplier;
       const tier = this.calculateTierFromItems(totalItems);
-      const tierIcon = TIER_ICONS[tier] || '';
+      const tierIcon = this.getTierIcon(tier);
       const isActive = multiplier === bundle.multiplier;
 
       return `
@@ -1900,10 +1961,7 @@ class ExpansionManager {
           aria-pressed="${isActive}"
         >
           <div class="pp-pill-multiplier">${multiplier}x</div>
-          <div class="pp-pill-tier">
-            <span class="pp-pill-tier-icon">${tierIcon}</span>
-            Tier ${tier}
-          </div>
+          <div class="pp-pill-tier">${tierIcon} Tier ${tier}</div>
           <div class="pp-pill-items">${totalItems} items</div>
         </button>
       `;
@@ -1937,23 +1995,10 @@ class ExpansionManager {
 
     return `
       <div class="pp-sheet-multipliers">
-        <div class="pp-sheet-multipliers__header">
-          <h3 class="pp-sheet-multipliers__title">How Many Kits?</h3>
-          <p class="pp-sheet-multipliers__subtitle">Select quantity to unlock higher tiers</p>
-        </div>
-
+        <h3 class="pp-sheet-multipliers__title">🔢 How many kits?</h3>
         <div class="pp-multiplier-pills">
           ${pillsHTML}
         </div>
-
-        ${tierMessage ? `
-          <div class="pp-tier-unlock-message ${isPremiumTier ? 'pp-tier-unlock-message--premium' : ''}">
-            <span class="pp-tier-unlock-message__icon">${TIER_ICONS[pricing.achievedTier]}</span>
-            <span>${tierMessage}</span>
-          </div>
-        ` : ''}
-
-        ${giftsHTML}
       </div>
     `;
   }
@@ -1971,60 +2016,19 @@ class ExpansionManager {
       ? 'Select Variants First'
       : `Add ${bundle.multiplier}x Kit to Cart`;
 
-    // Get social proof settings from section data
-    const sectionElement = document.querySelector('#PowerPairsBF25');
-    const customersServed = sectionElement?.dataset.customersServed || '100,000';
-    const satisfactionRate = sectionElement?.dataset.satisfactionRate || '98';
-
     return `
-      <div class="pp-sheet-cta">
-        ${allComplete ? `
-          <div class="pp-cta-social-proof">
-            <div class="pp-social-proof-item">
-              <span class="pp-social-proof-icon">👥</span>
-              <span class="pp-social-proof-value">${customersServed}+</span>
-              <span>customers served</span>
-            </div>
-            <div class="pp-social-proof-item">
-              <span class="pp-social-proof-icon">⭐</span>
-              <span class="pp-social-proof-value">${satisfactionRate}%</span>
-              <span>satisfaction rate</span>
-            </div>
-          </div>
-
-          <div class="pp-urgency-message">
-            <span class="pp-urgency-icon">⚡</span>
-            <span>Black Friday Pricing - Limited Time Only</span>
-          </div>
-        ` : ''}
-
-        <div class="pp-sheet-cta__summary">
-          <div class="pp-sheet-cta__items">
-            <span class="pp-sheet-cta__items-label">Total Items</span>
-            <span class="pp-sheet-cta__items-value">${pricing.totalItems}</span>
-          </div>
-          <div class="pp-sheet-cta__pricing">
-            <div class="pp-sheet-cta__price">${this.formatMoney(pricing.finalPrice)}</div>
-            <div class="pp-sheet-cta__discount">Save ${this.formatMoney(pricing.savings)} (${pricing.discountPercent}% OFF)</div>
-          </div>
-        </div>
-
+      <div class="pp-sheet-cta-fixed">
         <button
-          class="pp-sheet-cta__button"
+          class="pp-sheet-cta__button-main"
           data-action="add-to-cart"
           ${isDisabled ? 'disabled' : ''}
           aria-label="${buttonText}"
         >
-          <span class="pp-sheet-cta__button-icon">🛒</span>
-          <span>${buttonText}</span>
+          <span class="pp-cta-icon">🛒</span>
+          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Add ${pricing.totalItems} Items`}</span>
+          <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
+          <span class="pp-cta-arrow">→</span>
         </button>
-
-        ${allComplete ? `
-          <div class="pp-security-badge">
-            <span class="pp-security-icon">🔒</span>
-            <span>Secure checkout guaranteed</span>
-          </div>
-        ` : ''}
       </div>
     `;
   }
@@ -2036,9 +2040,20 @@ class ExpansionManager {
     const multiplierButtons = this.contentArea.querySelectorAll('[data-action="select-multiplier"]');
 
     console.log(`[PowerPairs] Attaching listeners to ${multiplierButtons.length} multiplier buttons`);
+    
+    // Debug: Log each button
+    multiplierButtons.forEach((button, index) => {
+      const multiplier = button.dataset.multiplier;
+      console.log(`[PowerPairs] Button ${index + 1}: ${multiplier}x`, {
+        element: button,
+        disabled: button.disabled,
+        visible: button.offsetParent !== null
+      });
+    });
 
     multiplierButtons.forEach(button => {
       button.addEventListener('click', (e) => {
+        e.stopPropagation();
         const multiplier = parseInt(button.dataset.multiplier);
         console.log(`[PowerPairs] Multiplier clicked: ${multiplier}x`);
 
@@ -2108,18 +2123,35 @@ class ExpansionManager {
     const pricing = this.calculateBundlePricing(bundle);
     const allComplete = bundle.variantsComplete;
 
+    console.log('[PowerPairs] Refresh state:', {
+      bundleId: bundle.id,
+      allComplete,
+      variantsComplete: bundle.variantsComplete,
+      products: bundle.products.map(p => ({
+        title: p.title,
+        hasVariant: !!p.selectedVariant,
+        complete: p.variantSelectionComplete
+      }))
+    });
+
     // Update multipliers section
     const multipliersElement = this.contentArea.querySelector('.pp-sheet-multipliers');
     if (multipliersElement) {
       multipliersElement.outerHTML = this.renderMultipliers(bundle, pricing);
       this.attachMultiplierListeners(); // Re-attach listeners
+      console.log('[PowerPairs] Multipliers section updated');
+    } else {
+      console.warn('[PowerPairs] Multipliers element not found');
     }
 
     // Update CTA section
-    const ctaElement = this.contentArea.querySelector('.pp-sheet-cta');
+    const ctaElement = this.contentArea.querySelector('.pp-sheet-cta-fixed');
     if (ctaElement) {
       ctaElement.outerHTML = this.renderCTA(bundle, pricing, allComplete);
       this.attachCTAListener(); // Re-attach listener
+      console.log('[PowerPairs] CTA updated - disabled:', !allComplete);
+    } else {
+      console.warn('[PowerPairs] CTA element not found for refresh');
     }
 
     // Update header summary
@@ -2458,13 +2490,13 @@ class ExpansionManager {
    */
   formatMoney(cents) {
     // Use Shopify's money formatting if available
-    if (window.Shopify && window.Shopify.formatMoney) {
-      return window.Shopify.formatMoney(cents, window.theme?.moneyFormat || '€{{amount}}');
+    if (window.Shopify && window.Shopify.formatMoney && window.theme && window.theme.moneyFormat) {
+      return window.Shopify.formatMoney(cents, window.theme.moneyFormat);
     }
 
     // Fallback formatter
-    const euros = (cents / 100).toFixed(2);
-    return `€${euros}`;
+    const amount = (cents / 100).toFixed(2);
+    return `${amount} RSD`;
   }
 
   /**
@@ -2532,10 +2564,17 @@ class ExpansionManager {
     // Get tier discount multiplier
     const tierMultiplier = TIER_MULTIPLIERS[achievedTier] || 1;
 
-    // Calculate final price
+    // Calculate compare-at subtotal (for crossed price display)
+    const compareAtSubtotal = window.PPState.calculateCompareAtSubtotal(bundle.products) * bundle.multiplier;
+    
+    // Calculate regular subtotal (current prices)
     const subtotal = bundle.baseSubtotal * bundle.multiplier;
+    
+    // Calculate final price with tier discount applied to regular price
     const finalPrice = Math.round(subtotal * tierMultiplier);
-    const savings = subtotal - finalPrice;
+    
+    // Calculate savings from compare-at price
+    const savings = compareAtSubtotal - finalPrice;
 
     // Calculate discount percentage
     const discountPercent = Math.round((1 - tierMultiplier) * 100);
@@ -2543,9 +2582,10 @@ class ExpansionManager {
     return {
       totalItems,
       achievedTier,
-      subtotal,
-      finalPrice,
-      savings,
+      compareAtSubtotal,  // Original compare-at price (for crossed display)
+      subtotal,           // Current price before tier discount
+      finalPrice,         // Final price with tier discount
+      savings,            // Total savings from compare-at
       discountPercent,
       tierMultiplier
     };
@@ -2648,6 +2688,16 @@ class ExpansionManager {
       this.firstFocusable.focus();
       return;
     }
+  }
+
+  /**
+   * Get tier icon emoji
+   * @param {number} tier - Tier number
+   * @returns {string} Tier icon
+   */
+  getTierIcon(tier) {
+    const icons = { 1: '⚡', 2: '🎁', 3: '🔥', 4: '💎' };
+    return icons[tier] || '⚡';
   }
 }
 

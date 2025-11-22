@@ -788,24 +788,29 @@ class TierCalculator {
     // Get base price per item (already 55% off in Shopify)
     const basePricePerItem = this.getBasePricePerItem(product, variantId);
 
+    // CRITICAL: Use comparePrice for tier calculations (BF25-FIX-016)
+    const comparePrice = product.comparePrice || basePricePerItem;
+
     // Get current tier
     const currentTier = this.getTierForQuantity(quantity);
 
     if (this.config.debug) {
-      console.log('💰 Pricing Calculation');
+      console.log('💰 Pricing Calculation (BF25-FIX-016)');
       console.log('   Quantity:', quantity);
+      console.log('   Compare Price:', this.formatPrice(comparePrice));
+      console.log('   Base Price:', this.formatPrice(basePricePerItem));
       console.log('   Tier:', currentTier?.label);
       console.log('   Multiplier:', currentTier?.multiplier);
       console.log('   Display:', currentTier?.displayLabel);
     }
 
-    // Calculate prices using MULTIPLIER (not discount percentage)
-    // Products are already 55% off in Shopify, multiplier applies on top
+    // Calculate prices using MULTIPLIER from comparePrice (FIXED - BF25-FIX-016)
+    // Tier discounts now apply to original compare price, not Shopify discounted price
     const multiplier = currentTier?.multiplier || 1.0;
-    const discountedPricePerItem = Math.round(basePricePerItem * multiplier);
+    const discountedPricePerItem = Math.round(comparePrice * multiplier);
 
-    // Calculate totals
-    const baseTotal = basePricePerItem * quantity;
+    // Calculate totals from compare price
+    const baseTotal = comparePrice * quantity;
     const discountedTotal = discountedPricePerItem * quantity;
     const savingsTotal = baseTotal - discountedTotal;
 
@@ -1140,7 +1145,7 @@ class TierCalculator {
 
   /**
    * Update main price display area
-   * Updated: BF25-FIX-013 - Inline badge, compare price
+   * Updated: BF25-FIX-014 - Prominent discount badge with percentage
    */
   updateMainPrice(pricing) {
     const priceContainer = document.querySelector('.bf25-modal-pricing');
@@ -1150,41 +1155,47 @@ class TierCalculator {
     const comparePrice = product?.comparePrice || 0;
     const basePrice = product?.basePrice || 0;
 
+    // Calculate discount percentage for display
+    const discountPercent = pricing.hasDiscount && pricing.currentTier?.multiplier
+      ? Math.round((1 - pricing.currentTier.multiplier) * 100)
+      : 0;
+
     // Build new price HTML
     const html = `
-      <!-- Price Row (inline badge) -->
-      <div class="bf25-price-row">
-        <!-- Left: Current price + per item + badge -->
-        <div class="bf25-price-group">
+      <!-- Main Price Row: Discounted | Original (BF25-FIX-017) -->
+      <div class="bf25-price-main-row">
+        <div class="bf25-price-current-group">
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
           <span class="bf25-per-item">per item</span>
-          ${pricing.hasDiscount && pricing.currentTier ? `
-            <span class="bf25-badge-inline">🔥 ${pricing.currentTier.label}</span>
-          ` : ''}
         </div>
 
-        <!-- Right: Original compare price -->
-        ${comparePrice && comparePrice > basePrice ? `
+        <!-- Always show compare price if available -->
+        ${comparePrice && comparePrice > 0 ? `
           <span class="bf25-price-compare">
             <s>${this.formatPrice(comparePrice)}</s>
           </span>
         ` : ''}
       </div>
 
-      <!-- Total Row -->
-      ${pricing.quantity > 1 ? `
-        <div class="bf25-total-row">
-          <div>
-            <span class="bf25-total-label">Total:</span>
-            <span class="bf25-total-amount">${pricing.formatted.discountedTotal}</span>
+      <!-- Discount Badge Row - Prominent -->
+      ${pricing.hasDiscount && pricing.currentTier ? `
+        <div class="bf25-discount-badge-row">
+          <div class="bf25-discount-badge-prominent">
+            <span>🔥 ${discountPercent}% OFF: ${pricing.currentTier.label}</span>
           </div>
-          ${comparePrice && comparePrice > basePrice ? `
-            <span class="bf25-total-savings">
-              (save ${this.formatPrice((comparePrice - pricing.discountedPricePerItem) * pricing.quantity)})
-            </span>
-          ` : ''}
         </div>
       ` : ''}
+
+      <!-- Total Row - De-emphasized -->
+      <div class="bf25-total-row">
+        <span class="bf25-total-label">Total:</span>
+        <span class="bf25-total-amount">${pricing.formatted.discountedTotal}</span>
+        ${comparePrice && comparePrice > basePrice ? `
+          <span class="bf25-total-savings">
+            (save ${this.formatPrice((comparePrice - pricing.discountedPricePerItem) * pricing.quantity)})
+          </span>
+        ` : ''}
+      </div>
     `;
 
     priceContainer.innerHTML = html;
@@ -3048,9 +3059,6 @@ class ExpansionManager {
           data-action="add-to-cart"
         >
           <span class="bf25-button-text">ADD TO DEAL</span>
-          <span class="bf25-button-price" data-base-price="${this.state.get('product')?.basePrice || 0}">
-            ${this.formatPrice(this.state.get('product')?.basePrice || 0)}
-          </span>
           <span class="bf25-button-loader" hidden>
             <svg class="bf25-spinner" width="20" height="20" viewBox="0 0 20 20">
               <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="50" stroke-dashoffset="0">
@@ -4589,18 +4597,23 @@ class ExpansionManager {
           `;
         })()}
 
-        <!-- Price Display (Updated BF25-FIX-013: Inline badge + compare price) -->
+        <!-- Variant Selectors (Moved after description - BF25-FIX-016) -->
+        <div class="bf25-variant-section bf25-mb-4 bf25-reveal-stagger-2">
+          ${this.variantManager.initialize(productId)}
+        </div>
+
+        <!-- Price Display (Updated BF25-FIX-017: Show discounted price with compare) -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
-          <!-- Price Row (inline badge) -->
-          <div class="bf25-price-row">
-            <!-- Left: Current price + per item -->
-            <div class="bf25-price-group">
-              <span class="bf25-price-current">${this.formatPrice(product.basePrice)}</span>
+          <!-- Main Price Row: Discounted | Original -->
+          <div class="bf25-price-main-row">
+            <!-- Left: Current DISCOUNTED price (from comparePrice initially) -->
+            <div class="bf25-price-current-group">
+              <span class="bf25-price-current">${this.formatPrice(product.comparePrice || product.basePrice)}</span>
               <span class="bf25-per-item">per item</span>
             </div>
 
-            <!-- Right: Original compare price -->
-            ${product.comparePrice && product.comparePrice > product.basePrice ? `
+            <!-- Right: Original compare price (always show if available) -->
+            ${product.comparePrice && product.comparePrice > 0 ? `
               <span class="bf25-price-compare">
                 <s>${this.formatPrice(product.comparePrice)}</s>
               </span>
@@ -4669,11 +4682,6 @@ class ExpansionManager {
         <!-- Reviews (Moved to bottom - BF25-REV-006) -->
         <div class="bf25-modal-reviews bf25-mb-4 bf25-reveal-stagger-3">
           ${this.createBogoReviewsSection(product.id)}
-        </div>
-
-        <!-- Variant Selectors (Prompt 7 - IMPLEMENTED) -->
-        <div class="bf25-variant-section bf25-mb-5 bf25-reveal-stagger-3">
-          ${this.variantManager.initialize(productId)}
         </div>
 
       </div>

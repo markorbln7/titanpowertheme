@@ -104,6 +104,7 @@ class PowerSlider {
   cacheDOM() {
     return {
       sliderInput: this.container.querySelector('.bf25-hero__input'),
+      sliderWrapper: this.container.querySelector('.bf25-hero__slider-wrapper'),
       visualizationFill: this.container.querySelector('.bf25-hero__fill'),
       giftBoxes: this.container.querySelectorAll('.bf25-hero__gift-box'),
       checkpoints: this.container.querySelectorAll('.bf25-hero__checkpoint'),
@@ -123,6 +124,20 @@ class PowerSlider {
     // Bind slider input event
     this.elements.sliderInput.addEventListener('input', (e) => {
       this.handleSliderInput(parseInt(e.target.value, 10));
+    });
+
+    // Focus management (Prompt 5 - Accessibility)
+    // Add visual focus indicator to wrapper when invisible input is focused
+    this.elements.sliderInput.addEventListener('focus', () => {
+      if (this.elements.sliderWrapper) {
+        this.elements.sliderWrapper.classList.add('is-focused');
+      }
+    });
+
+    this.elements.sliderInput.addEventListener('blur', () => {
+      if (this.elements.sliderWrapper) {
+        this.elements.sliderWrapper.classList.remove('is-focused');
+      }
     });
 
     // Set initial state (value = 0)
@@ -349,17 +364,49 @@ class PowerSlider {
   }
 
   /**
-   * Update ARIA attributes for accessibility
-   * Updates slider aria-valuenow and aria-valuetext
+   * Update ARIA attributes for accessibility (Prompt 5 - Enhanced)
+   * Creates comprehensive screen reader announcements
+   * Includes: quantity, tier, discount, unlocked gifts, estimated savings
    */
   updateARIA() {
-    if (this.elements.sliderInput) {
-      this.elements.sliderInput.setAttribute('aria-valuenow', this.currentValue);
+    if (!this.elements.sliderInput) return;
+
+    // Edge case: No items selected
+    if (this.currentValue === 0) {
+      this.elements.sliderInput.setAttribute('aria-valuenow', 0);
       this.elements.sliderInput.setAttribute(
         'aria-valuetext',
-        `${this.currentValue} items selected, ${this.currentTier.display_label}`
+        '0 items selected. Slide to explore savings.'
       );
+      return;
     }
+
+    // Strip emojis from badge for clarity
+    const cleanBadge = this.currentTier.badge.replace(/[🔥⭐🚀💎]/g, '').trim();
+
+    // Calculate unlocked gifts
+    const unlockedGifts = this.gifts.filter(g => g.tier <= this.currentTier.id);
+    const giftNames = unlockedGifts.map(g => g.name).join(', ');
+
+    // Calculate current savings (matching updatePricing logic)
+    const retailTotal = this.currentValue * this.config.avg_price_retail;
+    const estimatedTotal = this.currentValue * this.config.avg_price_shopify * this.currentTier.multiplier;
+    const giftValue = unlockedGifts.reduce((sum, g) => sum + g.value, 0);
+    const totalSavings = (retailTotal - estimatedTotal) + giftValue;
+
+    // Build comprehensive announcement
+    let announcement = `${this.currentValue} items selected. `;
+    announcement += `Tier ${this.currentTier.id}: ${cleanBadge}, ${this.currentTier.display_label}. `;
+
+    if (unlockedGifts.length > 0) {
+      announcement += `${unlockedGifts.length} free gift${unlockedGifts.length > 1 ? 's' : ''} unlocked: ${giftNames}. `;
+    }
+
+    announcement += `Estimated savings ${this.config.currency_symbol}${totalSavings.toFixed(2)}.`;
+
+    // Update ARIA attributes
+    this.elements.sliderInput.setAttribute('aria-valuenow', this.currentValue);
+    this.elements.sliderInput.setAttribute('aria-valuetext', announcement);
   }
 
   /**

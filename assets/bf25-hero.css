@@ -254,6 +254,25 @@
 .bf25-hero__slider-wrapper {
   position: relative;
   width: 100%;
+  transition: outline 200ms ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Focus Indicator (Prompt 5 - WCAG 2.2 AA Accessibility) */
+/* ─────────────────────────────────────────────────────────────────── */
+
+/* JS-managed focus state (since input is invisible with opacity: 0) */
+.bf25-hero__slider-wrapper.is-focused {
+  outline: 2px solid var(--bf25-accent, #60c655);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Ensure outline is visible in high contrast mode */
+@media (prefers-contrast: high) {
+  .bf25-hero__slider-wrapper.is-focused {
+    outline-width: 3px;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

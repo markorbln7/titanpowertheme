@@ -860,6 +860,7 @@ class TierCalculator {
 
       // Current pricing
       basePricePerItem,
+      comparePrice,  // BF25-FIX-022: Include comparePrice in result
       discountedPricePerItem,
       baseTotal,
       discountedTotal,
@@ -1151,18 +1152,39 @@ class TierCalculator {
     const priceContainer = document.querySelector('.bf25-modal-pricing');
     if (!priceContainer) return;
 
-    const product = this.state.get('product');
-    const comparePrice = product?.comparePrice || 0;
-    const basePrice = product?.basePrice || 0;
+    // BF25-FIX-022: Get comparePrice from pricing object (passed as parameter)
+    // Pricing calculation already has comparePrice from product data
+    const comparePrice = pricing.comparePrice || 0;
+    const basePrice = pricing.basePricePerItem || 0;
 
-    // Build new price HTML (BF25-FIX-018)
+    // Debug logging for BF25-FIX-020/022
+    console.log('🔍 updateMainPrice - Compare Price Debug:', {
+      pricingHasCompare: 'comparePrice' in pricing,
+      comparePrice: comparePrice,
+      comparePriceType: typeof comparePrice,
+      comparePriceGreaterThanZero: comparePrice > 0,
+      condition: comparePrice && comparePrice > 0,
+      formattedCompare: this.formatPrice ? this.formatPrice(comparePrice) : 'formatPrice method missing'
+    });
+
+    // Pre-build compare price HTML to avoid template literal nesting issues
+    let compareHtml = '';
+    if (comparePrice > 0) {
+      const formatted = this.formatPrice(comparePrice);
+      compareHtml = '<span class="bf25-price-compare"><s>' + formatted + '</s></span>';
+      console.log('✅ Compare price HTML generated:', compareHtml);
+    } else {
+      console.log('❌ Compare price not shown (value:', comparePrice, ')');
+    }
+
+    // Build new price HTML (BF25-FIX-020)
     const html = `
       <!-- Main Price Row: Discounted | Original -->
       <div class="bf25-price-main-row">
         <div class="bf25-price-current-group">
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
           <span class="bf25-per-item">per item</span>
-          ${comparePrice && comparePrice > 0 ? `<span class="bf25-price-compare"><s>${this.formatPrice(comparePrice)}</s></span>` : ''}
+          ${compareHtml}
         </div>
       </div>
 
@@ -4517,6 +4539,17 @@ class ExpansionManager {
     const imageUrl = this.getProductImage(product, variants);
 
     // ─────────────────────────────────────────────────────────────────
+    // STEP 2.5: Pre-build initial compare price HTML (BF25-FIX-021)
+    // ─────────────────────────────────────────────────────────────────
+    let initialCompareHtml = '';
+    if (product.comparePrice && product.comparePrice > 0) {
+      initialCompareHtml = '<span class="bf25-price-compare"><s>' + this.formatPrice(product.comparePrice) + '</s></span>';
+      console.log('🔍 Initial compare price HTML:', initialCompareHtml, '(value:', product.comparePrice, ')');
+    } else {
+      console.log('❌ No initial compare price (value:', product.comparePrice, ')');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
     // STEP 3: Build complete modal HTML
     // ─────────────────────────────────────────────────────────────────
     const html = `
@@ -4591,14 +4624,14 @@ class ExpansionManager {
           ${this.variantManager.initialize(productId)}
         </div>
 
-        <!-- Price Display (Updated BF25-FIX-019: Inline compare price) -->
+        <!-- Price Display (Updated BF25-FIX-021: Pre-built compare price) -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
           <!-- Main Price Row: Discounted | Original -->
           <div class="bf25-price-main-row">
             <div class="bf25-price-current-group">
               <span class="bf25-price-current">${this.formatPrice(product.comparePrice || product.basePrice)}</span>
               <span class="bf25-per-item">per item</span>
-              ${product.comparePrice && product.comparePrice > 0 ? `<span class="bf25-price-compare"><s>${this.formatPrice(product.comparePrice)}</s></span>` : ''}
+              ${initialCompareHtml}
             </div>
           </div>
         </div>

@@ -1432,12 +1432,12 @@
   font-weight: 500;
 }
 
-/* Compare at price - right side, prominent */
+/* Compare at price - inline after "per item" (BF25-FIX-019) */
 .bf25-price-compare {
-  font-size: 20px;
-  opacity: 0.7;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  margin-left: 12px;
+  font-size: 18px;
+  color: #ff6b6b;
+  opacity: 0.8;
 }
 
 .bf25-price-compare s {

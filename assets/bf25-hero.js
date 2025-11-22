@@ -62,6 +62,7 @@ class PowerSlider {
     // Current state
     this.currentValue = 0;
     this.currentTier = this.tiers[0]; // Default to tier 0 (Explore)
+    this.previousTier = this.tiers[0]; // Track previous tier for celebrations (Prompt 4)
 
     // Cache all DOM elements
     this.elements = this.cacheDOM();
@@ -140,6 +141,9 @@ class PowerSlider {
     this.currentValue = value;
     this.currentTier = this.calculateTier(value);
 
+    // Detect tier unlock (Prompt 4)
+    const tierUnlocked = this.currentTier.id > this.previousTier.id;
+
     console.log(`🎚️ Slider: ${value} items → Tier ${this.currentTier.id} (${this.currentTier.badge})`);
 
     // Update all UI components
@@ -149,6 +153,16 @@ class PowerSlider {
     this.updateTierCard();
     this.updatePricing();
     this.updateARIA();
+
+    // Trigger celebrations AFTER visual updates (Prompt 4)
+    if (tierUnlocked && this.currentValue > 0) {
+      this.triggerCelebration();
+      this.triggerTierCardAnimation();
+      this.triggerHaptics();
+    }
+
+    // Update previous tier for next comparison
+    this.previousTier = this.currentTier;
   }
 
   /**
@@ -174,6 +188,7 @@ class PowerSlider {
   /**
    * Update gift box unlock states
    * Toggles .is-unlocked class and changes lock icon
+   * (Prompt 4: Added unlock animation trigger)
    */
   updateGiftBoxes() {
     this.elements.giftBoxes.forEach((box, index) => {
@@ -181,11 +196,17 @@ class PowerSlider {
       if (!gift) return;
 
       const isUnlocked = this.currentTier.id >= gift.tier;
+      const wasLocked = !box.classList.contains('is-unlocked');
 
       if (isUnlocked) {
         box.classList.add('is-unlocked');
         const lockIcon = box.querySelector('.bf25-hero__gift-lock-icon');
         if (lockIcon) lockIcon.textContent = '✅';
+
+        // Trigger unlock animation on first unlock (Prompt 4)
+        if (wasLocked && this.currentTier.id === gift.tier) {
+          this.triggerGiftUnlockAnimation(box);
+        }
       } else {
         box.classList.remove('is-unlocked');
         const lockIcon = box.querySelector('.bf25-hero__gift-lock-icon');
@@ -338,6 +359,95 @@ class PowerSlider {
         'aria-valuetext',
         `${this.currentValue} items selected, ${this.currentTier.display_label}`
       );
+    }
+  }
+
+  /**
+   * ═════════════════════════════════════════════════════════════════════
+   * CELEBRATION & ANIMATION METHODS (Prompt 4)
+   * ═════════════════════════════════════════════════════════════════════
+   */
+
+  /**
+   * Trigger checkpoint celebration animation
+   * Adds pulse animation class to the active checkpoint
+   */
+  triggerCelebration() {
+    const checkpoint = Array.from(this.elements.checkpoints).find(
+      cp => parseInt(cp.dataset.tier, 10) === this.currentTier.id
+    );
+
+    if (!checkpoint) return;
+
+    console.log(`🎉 Celebrating tier ${this.currentTier.id} unlock!`);
+
+    // Remove class if exists (to allow re-trigger)
+    checkpoint.classList.remove('animate-celebration');
+
+    // Force reflow to restart animation
+    void checkpoint.offsetWidth;
+
+    // Add animation class
+    checkpoint.classList.add('animate-celebration');
+
+    // Remove class after animation completes
+    checkpoint.addEventListener('animationend', () => {
+      checkpoint.classList.remove('animate-celebration');
+    }, { once: true });
+  }
+
+  /**
+   * Trigger tier card color pulse animation
+   * Adds pulse animation to tier card border/glow
+   */
+  triggerTierCardAnimation() {
+    if (!this.elements.card) return;
+
+    // Remove class if exists
+    this.elements.card.classList.remove('animate-tier-change');
+
+    // Force reflow
+    void this.elements.card.offsetWidth;
+
+    // Add animation class
+    this.elements.card.classList.add('animate-tier-change');
+
+    // Remove class after animation completes
+    this.elements.card.addEventListener('animationend', () => {
+      this.elements.card.classList.remove('animate-tier-change');
+    }, { once: true });
+  }
+
+  /**
+   * Trigger gift box unlock animation
+   * @param {HTMLElement} giftBox - The gift box element to animate
+   */
+  triggerGiftUnlockAnimation(giftBox) {
+    if (!giftBox) return;
+
+    // Remove class if exists
+    giftBox.classList.remove('animate-unlock');
+
+    // Force reflow
+    void giftBox.offsetWidth;
+
+    // Add animation class
+    giftBox.classList.add('animate-unlock');
+
+    // Remove class after animation completes
+    giftBox.addEventListener('animationend', () => {
+      giftBox.classList.remove('animate-unlock');
+    }, { once: true });
+  }
+
+  /**
+   * Trigger haptic feedback on mobile devices
+   * Provides tactile confirmation of tier unlock
+   */
+  triggerHaptics() {
+    if (navigator.vibrate) {
+      navigator.vibrate(50); // 50ms vibration
+      console.log('📳 Haptic feedback triggered');
     }
   }
 }

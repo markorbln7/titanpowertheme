@@ -686,15 +686,109 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   ANIMATIONS & CELEBRATIONS (Prompt 4)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Checkpoint Celebration Animation */
+/* ─────────────────────────────────────────────────────────────────── */
+
+@keyframes celebratePulse {
+  0% {
+    transform: scale(1) translateX(-50%);
+    filter: drop-shadow(0 0 0px currentColor);
+  }
+  50% {
+    transform: scale(1.3) translateX(-50%);
+    filter: drop-shadow(0 0 10px currentColor);
+  }
+  100% {
+    transform: scale(1) translateX(-50%);
+    filter: drop-shadow(0 0 0px currentColor);
+  }
+}
+
+.bf25-hero__checkpoint.animate-celebration {
+  animation: celebratePulse 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Gift Unlock Animation */
+/* ─────────────────────────────────────────────────────────────────── */
+
+@keyframes giftUnlock {
+  0% {
+    transform: scale(1);
+    filter: grayscale(100%);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    filter: grayscale(50%);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+}
+
+.bf25-hero__gift-box.animate-unlock .bf25-hero__gift-image {
+  animation: giftUnlock 500ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* Tier Card Color Transition */
+/* ─────────────────────────────────────────────────────────────────── */
+
+@keyframes tierColorPulse {
+  0% {
+    border-color: var(--color-tier-current);
+    box-shadow:
+      0 0 0 1px rgba(96, 198, 85, 0.1),
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(96, 198, 85, 0.1);
+  }
+  50% {
+    border-color: var(--color-tier-current);
+    box-shadow:
+      0 0 0 2px var(--color-tier-current),
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 0 60px var(--color-tier-current);
+  }
+  100% {
+    border-color: var(--color-tier-current);
+    box-shadow:
+      0 0 0 1px rgba(96, 198, 85, 0.1),
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 0 40px rgba(96, 198, 85, 0.1);
+  }
+}
+
+.bf25-hero__card.animate-tier-change {
+  animation: tierColorPulse 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
    PERFORMANCE OPTIMIZATIONS
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* GPU acceleration for animated elements */
+/* GPU acceleration for animated elements (Prompt 4) */
 .bf25-hero__fill,
 .bf25-hero__gift-image,
 .bf25-hero__checkpoint-icon {
   transform: translateZ(0);
-  will-change: auto; /* Let browser decide, avoid overuse */
+  will-change: transform, opacity; /* Optimized for animations */
+}
+
+/* Enhanced gift box unlock animation */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
+  transform: scale(1.05);
+}
+
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-lock-icon {
+  transform: translate(-50%, -50%) scale(1.2);
 }
 
 /* Contain paint for isolated components */

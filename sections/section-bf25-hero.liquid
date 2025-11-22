@@ -1,0 +1,405 @@
+{{ 'bf25-hero.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════════════════
+BF25 INTERACTIVE HERO SECTION - "POWER SLIDER"
+═══════════════════════════════════════════════════════════════════════
+
+Prompt: BF25-HERO-P1 (HTML Foundation)
+Purpose: Interactive tier exploration hero for Black Friday 2025 campaign
+Architecture: 6-prompt sequential build (this is Prompt 1 of 6)
+
+Flow:
+1. [P1] HTML structure + JSON data (THIS FILE)
+2. [P2] CSS styling (glassmorphic design, 16-segment visualization)
+3. [P3] JavaScript interactivity (slider logic, tier calculations)
+4. [P4] Animations (gift unlocks, tier transitions)
+5. [P5] Mobile optimizations (70% traffic priority)
+6. [P6] Accessibility + performance (WCAG 2.2 AA, Lighthouse 90+)
+
+═══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+<section class="bf25-hero" id="bf25-hero-section">
+  <div class="bf25-hero__container">
+
+    {%- comment -%} ═══ HEADER ═══ {%- endcomment -%}
+    <header class="bf25-hero__header">
+      <h1 class="bf25-hero__heading">
+        {{ section.settings.heading | default: "Build Your Black Friday Deal" }}
+      </h1>
+      <h2 class="bf25-hero__subheading">
+        {{ section.settings.subheading | default: "Slide to unlock bigger discounts + premium gifts" }}
+      </h2>
+    </header>
+
+    {%- comment -%} ═══ MAIN INTERACTIVE MODULE ═══ {%- endcomment -%}
+    <div class="bf25-hero__module">
+
+      {%- comment -%} ─── GIFT BOXES (4 Premium Gifts) ─── {%- endcomment -%}
+      <div class="bf25-hero__gifts">
+
+        {%- comment -%} Gift 1: 4-in-1 Cable (Tier 1, unlocks at 4 items) {%- endcomment -%}
+        <div class="bf25-hero__gift-box" data-gift-id="cable" data-tier="1">
+          <div class="bf25-hero__gift-image-wrapper">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_top_image_a895a2f4-c7a7-4e8f-889a-883407938d24.png?v=1763844565"
+              alt="4-in-1 Cable"
+              class="bf25-hero__gift-image"
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+            <span class="bf25-hero__gift-lock-icon" aria-hidden="true">🔒</span>
+          </div>
+          <div class="bf25-hero__gift-info">
+            <span class="bf25-hero__gift-label">Cable</span>
+            <span class="bf25-hero__gift-value">€30</span>
+          </div>
+        </div>
+
+        {%- comment -%} Gift 2: Travel Case + Free Shipping (Tier 2, unlocks at 8 items) {%- endcomment -%}
+        <div class="bf25-hero__gift-box" data-gift-id="case" data-tier="2">
+          <div class="bf25-hero__gift-image-wrapper">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578"
+              alt="Travel Case + Free Shipping"
+              class="bf25-hero__gift-image"
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+            <span class="bf25-hero__gift-lock-icon" aria-hidden="true">🔒</span>
+          </div>
+          <div class="bf25-hero__gift-info">
+            <span class="bf25-hero__gift-label">Case</span>
+            <span class="bf25-hero__gift-value">€35</span>
+          </div>
+        </div>
+
+        {%- comment -%} Gift 3: Magnetic Cable Set (Tier 3, unlocks at 12 items) {%- endcomment -%}
+        <div class="bf25-hero__gift-box" data-gift-id="magnetic" data-tier="3">
+          <div class="bf25-hero__gift-image-wrapper">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Untitled-3.png?v=1763847726"
+              alt="Magnetic Cable Set"
+              class="bf25-hero__gift-image"
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+            <span class="bf25-hero__gift-lock-icon" aria-hidden="true">🔒</span>
+          </div>
+          <div class="bf25-hero__gift-info">
+            <span class="bf25-hero__gift-label">Magnetic</span>
+            <span class="bf25-hero__gift-value">€60</span>
+          </div>
+        </div>
+
+        {%- comment -%} Gift 4: Bigfoot Mystery Box (Tier 4, unlocks at 16 items) {%- endcomment -%}
+        <div class="bf25-hero__gift-box" data-gift-id="mystery" data-tier="4">
+          <div class="bf25-hero__gift-image-wrapper">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578"
+              alt="Bigfoot Mystery Box"
+              class="bf25-hero__gift-image"
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+            <span class="bf25-hero__gift-lock-icon" aria-hidden="true">🔒</span>
+          </div>
+          <div class="bf25-hero__gift-info">
+            <span class="bf25-hero__gift-label">Mystery</span>
+            <span class="bf25-hero__gift-value">€150+</span>
+          </div>
+        </div>
+
+      </div>
+
+      {%- comment -%} ─── SLIDER VISUALIZATION + INPUT ─── {%- endcomment -%}
+      <div class="bf25-hero__slider-wrapper">
+
+        {%- comment -%} Visual Track (16 segments will be styled in CSS) {%- endcomment -%}
+        <div class="bf25-hero__visualization">
+          <div class="bf25-hero__track"></div>
+          <div class="bf25-hero__fill"></div>
+        </div>
+
+        {%- comment -%} Native Range Input (accessible, keyboard-navigable) {%- endcomment -%}
+        <input
+          type="range"
+          min="0"
+          max="16"
+          step="1"
+          value="0"
+          class="bf25-hero__input"
+          id="bf25-hero-slider"
+          aria-label="Select number of items to see tier discounts and unlock gifts"
+          aria-valuemin="0"
+          aria-valuemax="16"
+          aria-valuenow="0"
+          aria-valuetext="0 items selected"
+        />
+
+        {%- comment -%} Checkpoints (Tier unlock positions at 4, 8, 12, 16) {%- endcomment -%}
+        <div class="bf25-hero__checkpoints">
+          <div class="bf25-hero__checkpoint" data-tier="1" data-value="4">
+            <span class="bf25-hero__checkpoint-icon" aria-hidden="true">🔥</span>
+            <span class="bf25-hero__checkpoint-label">4</span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="2" data-value="8">
+            <span class="bf25-hero__checkpoint-icon" aria-hidden="true">⭐</span>
+            <span class="bf25-hero__checkpoint-label">8</span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="3" data-value="12">
+            <span class="bf25-hero__checkpoint-icon" aria-hidden="true">🚀</span>
+            <span class="bf25-hero__checkpoint-label">12</span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="4" data-value="16">
+            <span class="bf25-hero__checkpoint-icon" aria-hidden="true">💎</span>
+            <span class="bf25-hero__checkpoint-label">16</span>
+          </div>
+        </div>
+
+      </div>
+
+      {%- comment -%} ─── DYNAMIC TIER CARD ─── {%- endcomment -%}
+      <div class="bf25-hero__card" data-active-tier="0">
+
+        {%- comment -%} Card Header: Badge + Discount Display {%- endcomment -%}
+        <div class="bf25-hero__card-header">
+          <div class="bf25-hero__tier-badge">
+            <span class="bf25-hero__tier-badge-text">Explore Tiers</span>
+          </div>
+          <div class="bf25-hero__discount-display">
+            <span class="bf25-hero__discount-label">Move the slider</span>
+          </div>
+        </div>
+
+        {%- comment -%} Card Body: Gift Unlock List {%- endcomment -%}
+        <div class="bf25-hero__card-body">
+          <ul class="bf25-hero__gift-list">
+            <li class="bf25-hero__gift-list-item" data-gift="cable">
+              <span class="bf25-hero__gift-list-icon">🔒</span>
+              <span class="bf25-hero__gift-list-text">4-in-1 Cable (€30)</span>
+            </li>
+            <li class="bf25-hero__gift-list-item" data-gift="case">
+              <span class="bf25-hero__gift-list-icon">🔒</span>
+              <span class="bf25-hero__gift-list-text">Travel Case + Free Shipping (€35)</span>
+            </li>
+            <li class="bf25-hero__gift-list-item" data-gift="magnetic">
+              <span class="bf25-hero__gift-list-icon">🔒</span>
+              <span class="bf25-hero__gift-list-text">Magnetic Cable Set (€60)</span>
+            </li>
+            <li class="bf25-hero__gift-list-item" data-gift="mystery">
+              <span class="bf25-hero__gift-list-icon">🔒</span>
+              <span class="bf25-hero__gift-list-text">Bigfoot Mystery Box (€150+)</span>
+            </li>
+          </ul>
+        </div>
+
+        {%- comment -%} Card Footer: Pricing Summary {%- endcomment -%}
+        <div class="bf25-hero__card-footer">
+          <div class="bf25-hero__pricing">
+            <div class="bf25-hero__pricing-row">
+              <span class="bf25-hero__pricing-label">Total Value:</span>
+              <span class="bf25-hero__pricing-value" data-price-type="total">€0.00</span>
+            </div>
+            <div class="bf25-hero__pricing-row bf25-hero__pricing-row--savings">
+              <span class="bf25-hero__pricing-label">You Save:</span>
+              <span class="bf25-hero__pricing-value bf25-hero__pricing-value--savings" data-price-type="savings">€0.00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    {%- comment -%} ═══ CALL TO ACTION ═══ {%- endcomment -%}
+    <div class="bf25-hero__cta">
+      <a href="{{ section.settings.cta_url | default: '#bf25-products' }}" class="bf25-hero__cta-button">
+        {{ section.settings.cta_text | default: "Start Building Your Deal" }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════════════════
+EMBEDDED JSON CONFIGURATION DATA
+═══════════════════════════════════════════════════════════════════════
+This data will be parsed by bf25-hero.js (Prompt 3) to drive interactivity.
+Includes: tier structure, gift data, pricing config, currency settings.
+═══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+<script type="application/json" id="bf25HeroData">
+{
+  "config": {
+    "max_items": 16,
+    "currency_symbol": "{{ cart.currency.symbol | default: '€' }}",
+    "avg_price_retail": {{ section.settings.avg_price_retail | default: 40.00 | json }},
+    "avg_price_shopify": {{ section.settings.avg_price_shopify | default: 20.00 | json }}
+  },
+  "gifts": [
+    {
+      "id": "cable",
+      "name": "4-in-1 Cable",
+      "value": 30.00,
+      "tier": 1,
+      "label": "Cable",
+      "image_url": "https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_top_image_a895a2f4-c7a7-4e8f-889a-883407938d24.png?v=1763844565"
+    },
+    {
+      "id": "case",
+      "name": "Travel Case + Free Shipping",
+      "value": 39.99,
+      "tier": 2,
+      "label": "Case",
+      "image_url": "https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578"
+    },
+    {
+      "id": "magnetic",
+      "name": "Magnetic Cable Set",
+      "value": 60.00,
+      "tier": 3,
+      "label": "Magnetic",
+      "image_url": "https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Untitled-3.png?v=1763847726"
+    },
+    {
+      "id": "mystery",
+      "name": "Bigfoot Mystery Box",
+      "value": 150.00,
+      "tier": 4,
+      "label": "Mystery",
+      "image_url": "https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578"
+    }
+  ],
+  "tiers": [
+    {
+      "id": 0,
+      "min": 0,
+      "max": 3,
+      "badge": "Explore Tiers",
+      "display_label": "Move the slider",
+      "multiplier": 1.0,
+      "color": "#6b7280",
+      "icon": ""
+    },
+    {
+      "id": 1,
+      "min": 4,
+      "max": 7,
+      "badge": "🔥 Better Deal",
+      "display_label": "60% OFF",
+      "multiplier": 0.91,
+      "color": "#60c655",
+      "icon": "🔥"
+    },
+    {
+      "id": 2,
+      "min": 8,
+      "max": 11,
+      "badge": "⭐ Great Deal",
+      "display_label": "70% OFF",
+      "multiplier": 0.76,
+      "color": "#FFD700",
+      "icon": "⭐"
+    },
+    {
+      "id": 3,
+      "min": 12,
+      "max": 15,
+      "badge": "🚀 Best Deal",
+      "display_label": "80% OFF",
+      "multiplier": 0.65,
+      "color": "#FF6B35",
+      "icon": "🚀"
+    },
+    {
+      "id": 4,
+      "min": 16,
+      "max": 999,
+      "badge": "💎 Bigfoot Unlock",
+      "display_label": "85% OFF",
+      "multiplier": 0.57,
+      "color": "#9D4EDD",
+      "icon": "💎"
+    }
+  ]
+}
+</script>
+
+{%- comment -%} JavaScript will be added in Prompt 3 {%- endcomment -%}
+<script src="{{ 'bf25-hero.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════════════════
+SHOPIFY THEME CUSTOMIZER SCHEMA
+═══════════════════════════════════════════════════════════════════════
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "BF25 Interactive Hero",
+  "tag": "section",
+  "class": "bf25-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading (H1)",
+      "default": "Build Your Black Friday Deal"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading (H2)",
+      "default": "Slide to unlock bigger discounts + premium gifts"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Start Building Your Deal"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL",
+      "default": "#bf25-products"
+    },
+    {
+      "type": "header",
+      "content": "Pricing Configuration"
+    },
+    {
+      "type": "number",
+      "id": "avg_price_retail",
+      "label": "Average Retail Price (€)",
+      "default": 40.00,
+      "info": "Used to calculate total value and savings"
+    },
+    {
+      "type": "number",
+      "id": "avg_price_shopify",
+      "label": "Average Shopify Price (€)",
+      "default": 20.00,
+      "info": "Base price after initial discount (before tier multipliers)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BF25 Interactive Hero",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

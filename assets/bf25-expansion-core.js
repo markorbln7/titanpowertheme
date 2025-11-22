@@ -785,34 +785,34 @@ class TierCalculator {
       return null;
     }
 
-    // Get base price per item (already 55% off in Shopify)
+    // Get base price per item (Shopify price - already discounted)
     const basePricePerItem = this.getBasePricePerItem(product, variantId);
 
-    // CRITICAL: Use comparePrice for tier calculations (BF25-FIX-016)
+    // Get compare price for display reference (original retail price)
     const comparePrice = product.comparePrice || basePricePerItem;
 
     // Get current tier
     const currentTier = this.getTierForQuantity(quantity);
 
     if (this.config.debug) {
-      console.log('💰 Pricing Calculation (BF25-FIX-016)');
+      console.log('💰 Pricing Calculation (BF25-FIX-018)');
       console.log('   Quantity:', quantity);
-      console.log('   Compare Price:', this.formatPrice(comparePrice));
-      console.log('   Base Price:', this.formatPrice(basePricePerItem));
+      console.log('   Shopify Price (base):', this.formatPrice(basePricePerItem));
+      console.log('   Compare Price (retail):', this.formatPrice(comparePrice));
       console.log('   Tier:', currentTier?.label);
       console.log('   Multiplier:', currentTier?.multiplier);
-      console.log('   Display:', currentTier?.displayLabel);
+      console.log('   Display Label:', currentTier?.displayLabel);
     }
 
-    // Calculate prices using MULTIPLIER from comparePrice (FIXED - BF25-FIX-016)
-    // Tier discounts now apply to original compare price, not Shopify discounted price
+    // CRITICAL FIX (BF25-FIX-018): Apply tier multiplier to Shopify basePrice, NOT comparePrice
+    // Tier discounts stack on top of the already-discounted Shopify price
     const multiplier = currentTier?.multiplier || 1.0;
-    const discountedPricePerItem = Math.round(comparePrice * multiplier);
+    const discountedPricePerItem = Math.round(basePricePerItem * multiplier);
 
-    // Calculate totals from compare price
-    const baseTotal = comparePrice * quantity;
+    // Calculate totals - use comparePrice for savings reference
+    const baseTotal = basePricePerItem * quantity;
     const discountedTotal = discountedPricePerItem * quantity;
-    const savingsTotal = baseTotal - discountedTotal;
+    const savingsTotal = (comparePrice - discountedPricePerItem) * quantity;
 
     // Calculate effective discount percentage for display
     // This is just for showing "You saved X%", not for calculation
@@ -835,14 +835,14 @@ class TierCalculator {
     const nextTier = this.getNextTier(quantity);
     const itemsToNextTier = this.getItemsToNextTier(quantity);
 
-    // Calculate potential next tier pricing (using multiplier)
+    // Calculate potential next tier pricing (using multiplier on basePrice)
     let nextTierPricing = null;
     if (nextTier) {
       const nextTierQuantity = nextTier.min;
       const nextTierMultiplier = nextTier.multiplier || 1.0;
       const nextTierDiscountedPrice = Math.round(basePricePerItem * nextTierMultiplier);
       const nextTierTotal = nextTierDiscountedPrice * nextTierQuantity;
-      const nextTierSavings = (basePricePerItem * nextTierQuantity) - nextTierTotal;
+      const nextTierSavings = (comparePrice - nextTierDiscountedPrice) * nextTierQuantity;
 
       nextTierPricing = {
         tier: nextTier,
@@ -1155,14 +1155,9 @@ class TierCalculator {
     const comparePrice = product?.comparePrice || 0;
     const basePrice = product?.basePrice || 0;
 
-    // Calculate discount percentage for display
-    const discountPercent = pricing.hasDiscount && pricing.currentTier?.multiplier
-      ? Math.round((1 - pricing.currentTier.multiplier) * 100)
-      : 0;
-
-    // Build new price HTML
+    // Build new price HTML (BF25-FIX-018)
     const html = `
-      <!-- Main Price Row: Discounted | Original (BF25-FIX-017) -->
+      <!-- Main Price Row: Discounted | Original -->
       <div class="bf25-price-main-row">
         <div class="bf25-price-current-group">
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
@@ -1177,11 +1172,11 @@ class TierCalculator {
         ` : ''}
       </div>
 
-      <!-- Discount Badge Row - Prominent -->
+      <!-- Discount Badge Row - Show tier displayLabel (BF25-FIX-018) -->
       ${pricing.hasDiscount && pricing.currentTier ? `
         <div class="bf25-discount-badge-row">
           <div class="bf25-discount-badge-prominent">
-            <span>🔥 ${discountPercent}% OFF: ${pricing.currentTier.label}</span>
+            <span>🔥 ${pricing.currentTier.displayLabel}: ${pricing.currentTier.label}</span>
           </div>
         </div>
       ` : ''}

@@ -634,13 +634,13 @@
 
 .bf25-modal-footer-fixed .bf25-button-text {
   font-size: 18px; /* Bigger - BF25-FIX-012 */
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   font-weight: 800;
 }
 
+/* Hide button price - BF25-FIX-016 */
 .bf25-modal-footer-fixed .bf25-button-price {
-  font-size: 20px; /* Bigger - BF25-FIX-012 */
-  font-weight: 900;
+  display: none;
 }
 
 /* Mobile */
@@ -1393,8 +1393,8 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Pricing Section - Inline Badge + Compare Price
-   Updated: 2025-01-22 - Ref: BF25-FIX-013
+   Pricing Section - Clear Discount + Compare Price
+   Updated: 2025-01-22 - Ref: BF25-FIX-014
    ═══════════════════════════════════════════════════════════ */
 
 .bf25-modal-pricing {
@@ -1404,6 +1404,121 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Main Price Row: Current Price | Compare Price */
+.bf25-price-main-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--bf25-space-3);
+  margin-bottom: var(--bf25-space-2);
+}
+
+.bf25-price-current-group {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bf25-space-2);
+}
+
+.bf25-price-current {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--bf25-accent);
+  line-height: 1;
+}
+
+.bf25-per-item {
+  font-size: 13px;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+/* Compare at price - right side, prominent */
+.bf25-price-compare {
+  font-size: 20px;
+  opacity: 0.7;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.bf25-price-compare s {
+  text-decoration: line-through;
+}
+
+/* Discount Badge Row - Prominent */
+.bf25-discount-badge-row {
+  margin: var(--bf25-space-3) 0;
+}
+
+.bf25-discount-badge-prominent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--bf25-accent);
+  color: #000;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+/* Total Row - De-emphasized */
+.bf25-total-row {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-2);
+  padding-top: var(--bf25-space-3);
+  margin-top: var(--bf25-space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-total-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.bf25-total-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9); /* White, not green */
+}
+
+.bf25-total-savings {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bf25-accent);
+  opacity: 0.8;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bf25-price-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bf25-space-1);
+  }
+
+  .bf25-price-current {
+    font-size: 32px;
+  }
+
+  .bf25-price-compare {
+    font-size: 18px;
+  }
+
+  .bf25-discount-badge-prominent {
+    font-size: 13px;
+    padding: 7px 14px;
+  }
+
+  .bf25-total-amount {
+    font-size: 15px;
+  }
+}
+
+/* Legacy styles for backwards compatibility */
 .bf25-price-row {
   display: flex;
   align-items: center;
@@ -1419,20 +1534,6 @@
   flex-wrap: wrap;
 }
 
-.bf25-price-current {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--bf25-accent);
-  line-height: 1;
-}
-
-.bf25-per-item {
-  font-size: 12px;
-  opacity: 0.7;
-  font-weight: 500;
-}
-
-/* Inline badge - compact */
 .bf25-badge-inline {
   display: inline-flex;
   align-items: center;
@@ -1445,61 +1546,6 @@
   font-weight: 700;
   white-space: nowrap;
   line-height: 1.2;
-}
-
-/* Compare at price - right side */
-.bf25-price-compare {
-  font-size: 18px;
-  opacity: 0.6;
-  font-weight: 500;
-}
-
-/* Total row */
-.bf25-total-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--bf25-space-2);
-  padding-top: var(--bf25-space-3);
-  margin-top: var(--bf25-space-3);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bf25-total-label {
-  font-size: 14px;
-  font-weight: 600;
-  opacity: 0.8;
-  margin-right: var(--bf25-space-2);
-}
-
-.bf25-total-amount {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--bf25-accent);
-}
-
-.bf25-total-savings {
-  font-size: 13px;
-  opacity: 0.7;
-  font-weight: 600;
-  color: var(--bf25-accent);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .bf25-price-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .bf25-price-current {
-    font-size: 28px;
-  }
-
-  .bf25-badge-inline {
-    font-size: 10px;
-    padding: 3px 8px;
-  }
 }
 
 /* Legacy pricing styles (backwards compatibility) */

@@ -1,0 +1,367 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * PHASE 2: POPUP UI REDESIGN - CRO OPTIMIZED
+ * New styles for cleaner, higher-converting bottom sheet UI
+ * ═══════════════════════════════════════════════════════════
+ */
+
+/* ═══════════════════════════════════════════════════════
+   CUSTOM SHEET HEADER
+   ═══════════════════════════════════════════════════════ */
+
+.pp-sheet-header-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--pp-border-primary);
+  position: sticky;
+  top: 0;
+  background: var(--pp-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 10;
+}
+
+.pp-sheet-header-custom .pp-sheet-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--pp-border-secondary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--pp-text-secondary);
+}
+
+.pp-sheet-header-custom .pp-sheet-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--pp-border-primary);
+  transform: rotate(90deg);
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRICING HEADER - CLEAN HIERARCHY
+   Shows pricing prominently at top of popup
+   ═══════════════════════════════════════════════════════ */
+
+.pp-pricing-header {
+  background: linear-gradient(135deg,
+    rgba(96, 198, 85, 0.1) 0%,
+    rgba(96, 198, 85, 0.05) 100%
+  );
+  border-radius: var(--pp-radius-md);
+  padding: 14px 16px;
+  margin: 0 0 16px 0;
+  border: 1px solid rgba(96, 198, 85, 0.2);
+}
+
+.pp-sheet-content-wrapper {
+  padding: 20px 0px 100px 0px;
+  overflow-y: auto;
+}
+
+.pp-pricing-header__row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: nowrap;
+  margin-bottom: 8px;
+}
+
+.pp-pricing-header__emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.pp-pricing-header__current {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--pp-accent-primary);
+  line-height: 1;
+}
+
+.pp-pricing-header__crossed {
+  font-size: 14px;
+  font-weight: 600;
+  color: #EF4444;
+  text-decoration: line-through;
+  opacity: 1 !important;
+  display: inline-block !important;
+}
+
+.pp-pricing-header__savings {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(96, 198, 85, 0.2);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pp-accent-primary);
+  white-space: nowrap;
+}
+
+.pp-pricing-header__tier {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pp-pricing-header__tier-icon {
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .pp-pricing-header__current {
+    font-size: 24px;
+  }
+
+  .pp-pricing-header__crossed {
+    font-size: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRODUCT SECTION V2
+   ═══════════════════════════════════════════════════════ */
+
+.pp-products-section-v2 {
+  margin-bottom: var(--pp-space-lg);
+}
+
+.pp-products-section-v2__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pp-space-md);
+}
+
+.pp-products-section-v2__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--pp-text-primary);
+  margin: 0;
+}
+
+.pp-products-section-v2__count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.pp-products-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 767px) {
+  .pp-products-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Make existing cards more compact */
+.pp-products-grid-v2 .pp-product-compact-card {
+  padding: 12px;
+  min-height: auto;
+}
+
+.pp-products-grid-v2 .pp-product-compact-image {
+  width: 100%;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.pp-products-grid-v2 .pp-product-compact-title {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.pp-products-grid-v2 .pp-product-compact-price {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════
+   VARIANT STATUS MESSAGE - COMPACT
+   ═══════════════════════════════════════════════════════ */
+
+.pp-variant-status-message {
+  padding: 10px 14px;
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: rgba(255, 165, 0, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pp-variant-status-message--complete {
+  background: rgba(96, 198, 85, 0.1);
+  border-color: rgba(96, 198, 85, 0.3);
+  color: var(--pp-accent-primary);
+}
+
+.pp-variant-status-message__icon {
+  font-size: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MULTIPLIER SECTION - COMPACT REDESIGN
+   ═══════════════════════════════════════════════════════ */
+
+.pp-sheet-multipliers {
+  margin-bottom: 20px;
+}
+
+.pp-sheet-multipliers__title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: var(--pp-text-primary);
+}
+
+.pp-multiplier-pills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .pp-multiplier-pills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pp-multiplier-pill {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--pp-border-secondary);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.pp-multiplier-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--pp-border-primary);
+  transform: translateY(-2px);
+}
+
+.pp-multiplier-pill.active {
+  border-color: var(--pp-accent-primary);
+  color: #000;
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+}
+
+.pp-pill-multiplier {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.pp-pill-tier {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.pp-pill-items {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.pp-multiplier-pill.active .pp-pill-items {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CTA BUTTON - STICKY AT BOTTOM
+   ═══════════════════════════════════════════════════════ */
+
+.pp-sheet-cta-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px 20px 20px;
+  background: rgba(26, 26, 26, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--pp-border-primary);
+  z-index: 10000;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pp-sheet-cta__button-main {
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--pp-accent-primary) 0%, #50b045 100%);
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.4);
+}
+
+.pp-sheet-cta__button-main:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 198, 85, 0.5);
+}
+
+.pp-sheet-cta__button-main:disabled {
+  background: linear-gradient(135deg, rgba(102, 102, 102, 0.3) 0%, rgba(102, 102, 102, 0.2) 100%);
+  color: var(--pp-text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+.pp-cta-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.pp-cta-text {
+  flex: 1;
+  text-align: left;
+  font-weight: 700;
+}
+
+.pp-cta-price {
+  font-size: 18px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.pp-cta-arrow {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+
+

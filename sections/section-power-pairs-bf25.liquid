@@ -22,6 +22,8 @@ Preconnect to Shopify CDN for faster image loading
 {%- endif -%}
 
 {{ 'section-power-pairs-bf25.css' | asset_url | stylesheet_tag }}
+{{ 'section-power-pairs-bf25-redesign.css' | asset_url | stylesheet_tag }}
+{{ 'section-power-pairs-bf25-variant-picker.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'section-power-pairs-bf25.js' | asset_url }}" defer="defer"></script>
 
 {%- comment -%}
@@ -246,33 +248,11 @@ Product Association Test:
   {%- comment -%} Bottom sheet container {%- endcomment -%}
   <aside id="pp-bottom-sheet" class="pp-bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="pp-sheet-title">
 
-    {%- comment -%} Sheet header {%- endcomment -%}
-    <div class="pp-sheet-header">
-      <h2 id="pp-sheet-title" class="pp-sheet-title">Customize Your Kit</h2>
-      <button
-        class="pp-sheet-close"
-        data-action="close-sheet"
-        aria-label="Close customization panel"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    {%- comment -%} Sheet body (content will be populated by JavaScript in Prompt 7) {%- endcomment -%}
+    {%- comment -%} Sheet content (will be populated by JavaScript) {%- endcomment -%}
     <div class="pp-sheet-body">
-      <p class="pp-sheet-placeholder">Sheet content will load here...</p>
+      <p class="pp-sheet-placeholder">Loading...</p>
     </div>
 
-    {%- comment -%} Sheet footer (sticky add to cart) {%- endcomment -%}
-    <div class="pp-sheet-footer">
-      <button class="pp-sheet-cta" disabled>
-        <span class="pp-sheet-cta-text">Add to Cart</span>
-        <span class="pp-sheet-cta-price">$0.00</span>
-      </button>
-    </div>
 
     {%- comment -%}
     ═══════════════════════════════════════════════════════════

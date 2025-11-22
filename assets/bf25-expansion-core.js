@@ -1162,14 +1162,8 @@ class TierCalculator {
         <div class="bf25-price-current-group">
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
           <span class="bf25-per-item">per item</span>
+          ${comparePrice && comparePrice > 0 ? `<span class="bf25-price-compare"><s>${this.formatPrice(comparePrice)}</s></span>` : ''}
         </div>
-
-        <!-- Always show compare price if available -->
-        ${comparePrice && comparePrice > 0 ? `
-          <span class="bf25-price-compare">
-            <s>${this.formatPrice(comparePrice)}</s>
-          </span>
-        ` : ''}
       </div>
 
       <!-- Discount Badge Row - Show tier displayLabel (BF25-FIX-018) -->
@@ -4597,22 +4591,15 @@ class ExpansionManager {
           ${this.variantManager.initialize(productId)}
         </div>
 
-        <!-- Price Display (Updated BF25-FIX-017: Show discounted price with compare) -->
+        <!-- Price Display (Updated BF25-FIX-019: Inline compare price) -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
           <!-- Main Price Row: Discounted | Original -->
           <div class="bf25-price-main-row">
-            <!-- Left: Current DISCOUNTED price (from comparePrice initially) -->
             <div class="bf25-price-current-group">
               <span class="bf25-price-current">${this.formatPrice(product.comparePrice || product.basePrice)}</span>
               <span class="bf25-per-item">per item</span>
+              ${product.comparePrice && product.comparePrice > 0 ? `<span class="bf25-price-compare"><s>${this.formatPrice(product.comparePrice)}</s></span>` : ''}
             </div>
-
-            <!-- Right: Original compare price (always show if available) -->
-            ${product.comparePrice && product.comparePrice > 0 ? `
-              <span class="bf25-price-compare">
-                <s>${this.formatPrice(product.comparePrice)}</s>
-              </span>
-            ` : ''}
           </div>
         </div>
 

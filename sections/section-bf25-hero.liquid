@@ -1,3 +1,4 @@
+{% if section.settings.enable_section %}
 {{ 'bf25-hero.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%}
@@ -336,6 +337,8 @@ Includes: tier structure, gift data, pricing config, currency settings.
 {%- comment -%} JavaScript will be added in Prompt 3 {%- endcomment -%}
 <script src="{{ 'bf25-hero.js' | asset_url }}" defer></script>
 
+{% endif %}
+
 {%- comment -%}
 ═══════════════════════════════════════════════════════════════════════
 SHOPIFY THEME CUSTOMIZER SCHEMA
@@ -350,49 +353,68 @@ SHOPIFY THEME CUSTOMIZER SCHEMA
   "settings": [
     {
       "type": "header",
-      "content": "Content Settings"
+      "content": "📱 Content Settings"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Main Heading (H1)",
-      "default": "Build Your Black Friday Deal"
+      "label": "Main Headline",
+      "default": "Build Your Black Friday Deal",
+      "info": "Large H1 text (24-48px responsive)"
     },
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subheading (H2)",
-      "default": "Slide to unlock bigger discounts + premium gifts"
+      "label": "Subtitle",
+      "default": "Slide to unlock bigger discounts + premium gifts",
+      "info": "Secondary text below headline (14-18px responsive)"
     },
     {
       "type": "text",
       "id": "cta_text",
       "label": "CTA Button Text",
-      "default": "Start Building Your Deal"
+      "default": "Start Building Your Deal →",
+      "info": "Text displayed on the call-to-action button"
     },
     {
       "type": "url",
       "id": "cta_url",
-      "label": "CTA Button URL",
-      "default": "#bf25-products"
+      "label": "CTA Button Link",
+      "default": "#bf25-products",
+      "info": "Can use anchor links like #products or full URLs"
     },
     {
       "type": "header",
-      "content": "Pricing Configuration"
+      "content": "💰 Pricing Configuration"
+    },
+    {
+      "type": "paragraph",
+      "content": "These values calculate estimated totals and savings. Retail price is compare_at_price. Base price has tier multipliers applied (0.91, 0.76, 0.65, 0.57 for tiers 1-4)."
     },
     {
       "type": "number",
       "id": "avg_price_retail",
-      "label": "Average Retail Price (€)",
+      "label": "Average Retail Price",
       "default": 40.00,
-      "info": "Used to calculate total value and savings"
+      "info": "Original retail price used for savings calculation (e.g., €40)"
     },
     {
       "type": "number",
       "id": "avg_price_shopify",
-      "label": "Average Shopify Price (€)",
+      "label": "Average Base Price",
       "default": 20.00,
-      "info": "Base price after initial discount (before tier multipliers)"
+      "info": "Shopify price that tier multipliers apply to (e.g., €20)"
+    },
+    {
+      "type": "header",
+      "content": "🔧 Advanced Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Hero Section",
+      "default": true,
+      "info": "Toggle section visibility on/off"
     }
   ],
   "presets": [

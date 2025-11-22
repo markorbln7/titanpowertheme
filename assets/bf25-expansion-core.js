@@ -4132,34 +4132,45 @@ class ExpansionManager {
 
   /**
    * Bind description toggle events
-   * Added: BF25-DESC-005
+   * Updated: BF25-FIX-007
    */
   bindDescriptionEvents() {
-    const descriptionToggle = this.container.querySelector('.bf25-description-toggle');
-    const descriptionWrapper = this.container.querySelector('.bf25-description-wrapper');
+    const toggle = this.container.querySelector('.bf25-description-toggle');
+    const wrapper = this.container.querySelector('.bf25-description-wrapper');
 
-    if (descriptionToggle && descriptionWrapper) {
-      descriptionToggle.addEventListener('click', () => {
-        const isExpanded = descriptionWrapper.classList.contains('expanded');
-
-        if (isExpanded) {
-          descriptionWrapper.classList.remove('expanded');
-          descriptionToggle.setAttribute('aria-expanded', 'false');
-          descriptionToggle.querySelector('.bf25-toggle-text').textContent = 'Learn More';
-        } else {
-          descriptionWrapper.classList.add('expanded');
-          descriptionToggle.setAttribute('aria-expanded', 'true');
-          descriptionToggle.querySelector('.bf25-toggle-text').textContent = 'Show Less';
-        }
-
-        if (this.config.debug) {
-          console.log('📝 Description toggled:', isExpanded ? 'collapsed' : 'expanded');
-        }
-      });
+    if (!toggle || !wrapper) {
+      if (this.config.debug) {
+        console.log('ℹ️ No description to bind events');
+      }
+      return;
     }
 
+    toggle.addEventListener('click', () => {
+      const isExpanded = wrapper.classList.contains('expanded');
+
+      if (isExpanded) {
+        // Collapse
+        wrapper.classList.remove('expanded');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.querySelector('.bf25-toggle-text').textContent = 'Learn More';
+        const arrow = toggle.querySelector('.bf25-arrow');
+        if (arrow) arrow.textContent = '▼';
+      } else {
+        // Expand
+        wrapper.classList.add('expanded');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.querySelector('.bf25-toggle-text').textContent = 'Show Less';
+        const arrow = toggle.querySelector('.bf25-arrow');
+        if (arrow) arrow.textContent = '▲';
+      }
+
+      if (this.config.debug) {
+        console.log('📝 Description toggled:', isExpanded ? 'collapsed' : 'expanded');
+      }
+    });
+
     if (this.config.debug) {
-      console.log('✅ Description toggle events bound');
+      console.log('✅ Description toggle bound');
     }
   }
 
@@ -4571,47 +4582,6 @@ class ExpansionManager {
           </div>
         </div>
 
-        <!-- Features Section (Ticks/Features) -->
-        ${(() => {
-          // Handle features/ticks - can be array of strings OR array of objects
-          const items = product.ticks || product.features;
-
-          if (this.config.debug) {
-            console.log('🔍 Product ticks/features:', items);
-            console.log('   Type:', typeof items);
-            console.log('   Is array:', Array.isArray(items));
-            if (Array.isArray(items)) {
-              items.forEach((item, i) => {
-                console.log(`   Item ${i}:`, typeof item, item);
-              });
-            }
-          }
-
-          if (!items || !Array.isArray(items) || items.length === 0) {
-            return '';
-          }
-
-          // Convert items to strings - handle objects
-          const itemStrings = items.map(item => {
-            if (typeof item === 'string') return item;
-            if (typeof item === 'object' && item !== null) {
-              // Try common property names
-              return item.text || item.title || item.name || item.feature || item.tick || '';
-            }
-            return '';
-          }).filter(item => item.length > 0 && item !== '[object Object]');
-
-          if (itemStrings.length === 0) return '';
-
-          return `
-            <div class="bf25-modal-ticks bf25-text-sm bf25-mb-5 bf25-reveal-stagger-2">
-              <ul>
-                ${itemStrings.map(item => `<li>${item}</li>`).join('')}
-              </ul>
-            </div>
-          `;
-        })()}
-
         <!-- Description Section -->
         ${(() => {
           const description = product.description;
@@ -4623,19 +4593,22 @@ class ExpansionManager {
           return `
             <div class="bf25-description-section bf25-mb-4 bf25-reveal-stagger-2">
               <div class="bf25-description-wrapper">
-                <div class="bf25-description-content bf25-text-sm bf25-text-secondary">
+                <div class="bf25-description-inner">
                   ${description}
                 </div>
               </div>
               <button class="bf25-description-toggle" type="button" aria-expanded="false">
                 <span class="bf25-toggle-text">Learn More</span>
-                <svg class="bf25-toggle-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <span class="bf25-arrow">▼</span>
               </button>
             </div>
           `;
         })()}
+
+        <!-- Quantity Controls (Tier Buttons) - Moved up per BF25-FIX-007 -->
+        <div class="bf25-quantity-section bf25-mb-5 bf25-reveal-stagger-2">
+          ${this.generateQuantityControls()}
+        </div>
 
         <!-- Upsells Section -->
         ${(() => {
@@ -4696,23 +4669,17 @@ class ExpansionManager {
         </div>
 
         <!-- Variant Selectors (Prompt 7 - IMPLEMENTED) -->
-        <div class="bf25-variant-section bf25-mb-5 bf25-reveal-stagger-2">
+        <div class="bf25-variant-section bf25-mb-5 bf25-reveal-stagger-3">
           ${this.variantManager.initialize(productId)}
-        </div>
-
-        <!-- Quantity Controls & Action Buttons (Prompt 9 - IMPLEMENTED) -->
-        <div class="bf25-actions-section bf25-reveal-stagger-3">
-
-          <!-- Quantity Controls (Mode-specific) -->
-          ${this.generateQuantityControls()}
-
-          <!-- Action Buttons -->
-          ${this.generateActionButtons()}
-
         </div>
 
       </div>
 
+    </div>
+
+    <!-- Fixed Footer with Add to Cart (BF25-FIX-007) -->
+    <div class="bf25-modal-footer-fixed">
+      ${this.generateActionButtons()}
     </div>
   `;
 

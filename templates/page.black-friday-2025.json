@@ -327,8 +327,31 @@
         "countdown_to": "09th December"
       }
     },
+    "section_bundle_builder_bf25_eMVmtq": {
+      "type": "section-bundle-builder-bf25",
+      "custom_css": [
+        ".section-collections-with-nav__navigation li {box-shadow: 0 0 10px #b5b5b5;}",
+        ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}",
+        ".js-buy-more {display: none;}"
+      ],
+      "name": "bundle build bf25",
+      "settings": {
+        "modal_display_mode": "power_packs",
+        "use_popup": true,
+        "show_alt_images": true,
+        "collections": [
+          "power-pairs"
+        ],
+        "add_4_text": "4",
+        "add_6_text": "8",
+        "add_10_text": "12"
+      }
+    },
     "section_collections_with_nav_EzNML8": {
       "type": "section-collections-with-nav",
+      "disabled": true,
       "custom_css": [
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
         ".js-buy-more {color: #000; font-weight: 700;}",
@@ -413,6 +436,7 @@
         "icons_repeater_P3UrXM",
         "icons_repeater_EagFUg"
       ],
+      "disabled": true,
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
@@ -504,17 +528,11 @@
         "section_eyebrow": "The More You Add, More You Save"
       }
     },
-    "section_bundle_builder_bf25_eMVmtq": {
+    "section_bundle_builder_bf25_EPy4QM": {
       "type": "section-bundle-builder-bf25",
-      "custom_css": [
-        ".section-collections-with-nav__navigation li {box-shadow: 0 0 10px #b5b5b5;}",
-        ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
-        ".variant-selector {color: #313131;}",
-        ".quantity__input {font-size: 20px; margin-top: 10px;}",
-        ".js-buy-more {display: none;}"
-      ],
       "name": "bundle build bf25",
       "settings": {
+        "modal_display_mode": "power_packs",
         "use_popup": true,
         "show_alt_images": true,
         "collections": [
@@ -785,6 +803,31 @@
         ".product-zig__bigtitle.color-black {display: none;}"
       ],
       "settings": {}
+    },
+    "section_power_pairs_bf25_fmUJY6": {
+      "type": "section-power-pairs-bf25",
+      "name": "Power Pairs BF25",
+      "settings": {
+        "section_title": "🎁 POWER PAIRS - Ready-Made Kits",
+        "section_subtitle": "Jump straight to your tier",
+        "show_trust_badges": true,
+        "trust_badge_1_enabled": true,
+        "trust_badge_1_icon": "🔒",
+        "trust_badge_1_text": "Secure Checkout",
+        "trust_badge_2_enabled": true,
+        "trust_badge_2_icon": "✓",
+        "trust_badge_2_text": "30-Day Returns",
+        "trust_badge_3_enabled": true,
+        "trust_badge_3_icon": "🚚",
+        "trust_badge_3_text": "Free Shipping",
+        "trust_badge_4_enabled": true,
+        "trust_badge_4_icon": "⭐",
+        "trust_badge_4_text": "50K+ Reviews",
+        "customers_served": "100,000",
+        "satisfaction_rate": "98",
+        "enable_performance_optimizations": true,
+        "defer_bottom_sheet_js": true
+      }
     }
   },
   "order": [
@@ -797,11 +840,13 @@
     "scroll_to_button_7LJcTQ",
     "titan_linked_image_A4GJp6",
     "limited_offers_jKBGqn",
+    "section_bundle_builder_bf25_eMVmtq",
     "section_collections_with_nav_EzNML8",
+    "section_power_pairs_bf25_fmUJY6",
     "section_product_zigzag_bf_2025_NgGNnM",
     "bf_top_bar_8RrMkH",
     "bf_promo_discount_2025_8j4wb6",
-    "section_bundle_builder_bf25_eMVmtq",
+    "section_bundle_builder_bf25_EPy4QM",
     "bf_promo_discount_2025_HncBNf",
     "bf_top_bar_hxgfNg",
     "testimonial_slider_XJAQhD",

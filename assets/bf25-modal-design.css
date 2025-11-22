@@ -586,12 +586,13 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Centered - BF25-FIX-012 */
+  gap: var(--bf25-space-3);
   padding: var(--bf25-space-4);
   background: var(--bf25-accent);
   color: #000;
   border: none;
-  border-radius: var(--bf25-radius-md);
+  border-radius: 12px; /* Rounded corners - BF25-FIX-012 */
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -603,7 +604,7 @@
 .bf25-modal-footer-fixed .bf25-modal-add-cart:hover {
   background: var(--bf25-accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+  box-shadow: 0 6px 20px rgba(96, 198, 85, 0.4); /* Stronger glow - BF25-FIX-012 */
 }
 
 .bf25-modal-footer-fixed .bf25-add-to-cart:active,
@@ -612,12 +613,14 @@
 }
 
 .bf25-modal-footer-fixed .bf25-button-text {
-  font-size: 16px;
+  font-size: 18px; /* Bigger - BF25-FIX-012 */
+  letter-spacing: 1px;
+  font-weight: 800;
 }
 
 .bf25-modal-footer-fixed .bf25-button-price {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 20px; /* Bigger - BF25-FIX-012 */
+  font-weight: 900;
 }
 
 /* Mobile */
@@ -1098,12 +1101,12 @@
    Updated: 2025-01-22
    ═══════════════════════════════════════════════════════════════════════════════*/
 
-.bf25-description-section {
-  margin: var(--bf25-space-4) 0;
+.bf25-description-wrapper {
+  margin-bottom: var(--bf25-space-4);
   overflow: hidden;
 }
 
-.bf25-description-wrapper {
+.bf25-description-inner {
   height: 100px;
   overflow: hidden;
   position: relative;
@@ -1111,7 +1114,7 @@
 }
 
 /* Gradient fade when collapsed */
-.bf25-description-wrapper::after {
+.bf25-description-inner::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1124,20 +1127,21 @@
   transition: opacity 0.3s ease;
 }
 
-.bf25-description-wrapper.expanded {
+.bf25-description-wrapper.expanded .bf25-description-inner {
   height: auto;
   max-height: 2000px;
 }
 
-.bf25-description-wrapper.expanded::after {
+.bf25-description-wrapper.expanded .bf25-description-inner::after {
   opacity: 0;
 }
 
-.bf25-description-inner {
+.bf25-description-content {
   padding: var(--bf25-space-3);
   background: rgba(255, 255, 255, 0.02);
   border-radius: var(--bf25-radius-md);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 0; /* Fix gap at top - BF25-FIX-012 */
 }
 
 /* Style description content */
@@ -1189,6 +1193,13 @@
 .bf25-description-toggle:hover {
   color: var(--bf25-accent-hover);
   transform: translateX(4px);
+}
+
+.bf25-description-arrow {
+  transition: transform 0.3s ease;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .bf25-arrow {

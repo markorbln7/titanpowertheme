@@ -4132,7 +4132,7 @@ class ExpansionManager {
 
   /**
    * Bind description toggle events
-   * Updated: BF25-FIX-007
+   * Updated: BF25-FIX-012
    */
   bindDescriptionEvents() {
     const toggle = this.container.querySelector('.bf25-description-toggle');
@@ -4152,16 +4152,22 @@ class ExpansionManager {
         // Collapse
         wrapper.classList.remove('expanded');
         toggle.setAttribute('aria-expanded', 'false');
-        toggle.querySelector('.bf25-toggle-text').textContent = 'Learn More';
-        const arrow = toggle.querySelector('.bf25-arrow');
-        if (arrow) arrow.textContent = '▼';
+        const textSpan = toggle.querySelector('.bf25-toggle-text');
+        if (textSpan) textSpan.textContent = 'Learn More';
+
+        // Rotate arrow back
+        const arrow = toggle.querySelector('.bf25-description-arrow');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
       } else {
         // Expand
         wrapper.classList.add('expanded');
         toggle.setAttribute('aria-expanded', 'true');
-        toggle.querySelector('.bf25-toggle-text').textContent = 'Show Less';
-        const arrow = toggle.querySelector('.bf25-arrow');
-        if (arrow) arrow.textContent = '▲';
+        const textSpan = toggle.querySelector('.bf25-toggle-text');
+        if (textSpan) textSpan.textContent = 'Show Less';
+
+        // Rotate arrow
+        const arrow = toggle.querySelector('.bf25-description-arrow');
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
       }
 
       if (this.config.debug) {
@@ -4565,7 +4571,32 @@ class ExpansionManager {
           ${product.title}
         </h2>
 
-        <!-- Price Display -->
+        <!-- Description Section (Moved up - BF25-FIX-012) -->
+        ${(() => {
+          const description = product.description;
+
+          if (!description || typeof description !== 'string' || description === '[object Object]' || description.trim().length === 0) {
+            return '';
+          }
+
+          return `
+            <div class="bf25-description-wrapper bf25-mb-4">
+              <div class="bf25-description-inner">
+                <div class="bf25-description-content">
+                  ${description}
+                </div>
+              </div>
+              <button class="bf25-description-toggle" type="button" aria-expanded="false">
+                <span class="bf25-toggle-text">Learn More</span>
+                <svg class="bf25-description-arrow" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                  <path d="M225.408 368.384L496 640.641l270.592-272.257-48.64-49.024L496 542.592 274.176 319.36l-48.768 49.024z m0 0z" fill="#60c655"></path>
+                </svg>
+              </button>
+            </div>
+          `;
+        })()}
+
+        <!-- Price Display + Progress (After Description - BF25-FIX-012) -->
         <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
           <div class="bf25-price-container">
             <span class="bf25-price-current bf25-text-xl bf25-text-accent">
@@ -4581,29 +4612,6 @@ class ExpansionManager {
             ` : ''}
           </div>
         </div>
-
-        <!-- Description Section -->
-        ${(() => {
-          const description = product.description;
-
-          if (!description || typeof description !== 'string' || description === '[object Object]' || description.length === 0) {
-            return '';
-          }
-
-          return `
-            <div class="bf25-description-section bf25-mb-4 bf25-reveal-stagger-2">
-              <div class="bf25-description-wrapper">
-                <div class="bf25-description-inner">
-                  ${description}
-                </div>
-              </div>
-              <button class="bf25-description-toggle" type="button" aria-expanded="false">
-                <span class="bf25-toggle-text">Learn More</span>
-                <span class="bf25-arrow">▼</span>
-              </button>
-            </div>
-          `;
-        })()}
 
         <!-- Quantity Controls (Tier Buttons) - Moved up per BF25-FIX-007 -->
         <div class="bf25-quantity-section bf25-mb-5 bf25-reveal-stagger-2">

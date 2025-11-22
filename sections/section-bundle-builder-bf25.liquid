@@ -425,9 +425,25 @@ window.productData["{{ product.id }}"] = {
   {% endif %}
 
   // ─────────────────────────────────────────────────────────
-  // Content (Rich Text)
+  // Content (Rich Text) - BF25-FIX-011
+  // Using metafield_tag to render rich_text_field as HTML string
   // ─────────────────────────────────────────────────────────
-  description: {{ product.metafields.custom.product_description.value | default: product.description | json }},
+  {% comment %}
+    Try multiple approaches to get description as string
+    Metafield type: rich_text_field
+  {% endcomment %}
+  {% liquid
+    assign desc_rendered = product.metafields.custom.product_description | metafield_tag
+
+    if desc_rendered == blank
+      assign desc_rendered = product.metafields.custom.product_description.value
+    endif
+
+    if desc_rendered == blank
+      assign desc_rendered = product.description
+    endif
+  %}
+  description: {{ desc_rendered | json }},
   ticks: {{ product.metafields.custom.ticks | json }},
 
   // ─────────────────────────────────────────────────────────

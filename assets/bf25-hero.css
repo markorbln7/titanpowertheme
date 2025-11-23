@@ -1,594 +1,459 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════
- * BF25 INTERACTIVE HERO - STYLESHEET
+ * BF25 INTERACTIVE HERO - PREMIUM DESIGN OVERHAUL (CKL-113)
  * ═══════════════════════════════════════════════════════════════════════
  *
- * Prompt: BF25-HERO-P2 (CSS Styling)
- * File: assets/bf25-hero.css
- * Purpose: Glassmorphic design system for Power Slider hero section
- *
- * Architecture:
- * - Mobile-first responsive (320px → 1440px)
- * - Extends existing --bf25-* CSS variables from bf25-modal-design.css
- * - 16-segment gradient visualization with robust calculation
- * - Apple/Tesla-level glassmorphic aesthetic
- * - WCAG 2.2 AA compliant (contrast, touch targets)
- *
- * Key Features:
- * - Dark theme (#0a0a0a) with lime green accent (#60c655)
- * - GPU-accelerated animations (transform, opacity, width)
- * - Locked/unlocked gift states with grayscale filters
- * - Dynamic tier theming via CSS custom properties
- * - Height constraints (mobile: 200px, desktop: 250px)
- *
- * ═══════════════════════════════════════════════════════════════════════
+ * Goal: Apple/Tesla-level premium aesthetic, compact layout, engaging interactions.
  */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   CSS CUSTOM PROPERTIES (Hero-Specific)
+   1. CSS CUSTOM PROPERTIES & DESIGN SYSTEM
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Hero Section Sizing */
-  --bf25-hero-height-mobile: clamp(180px, 50vw, 200px);
-  --bf25-hero-height-desktop: clamp(220px, 15vw, 250px);
+  /* Brand Colors (CKL-113 Refined) */
+  --color-bg-dark: #0a0a0a;
+  --color-text-primary: #ffffff;
+  --color-text-subtle: #a1a1aa;
+  --color-accent-lime: #60c655;
+  --color-accent-glow: rgba(96, 198, 85, 0.5);
 
-  /* Dynamic Properties (Updated by JavaScript in Prompt 3) */
-  --fill-width: 0%; /* Slider fill width (0-100%) */
-  --color-tier-current: #6b7280; /* Current tier accent color */
+  /* Glassmorphism (Premium) */
+  --glass-bg-subtle: rgba(255, 255, 255, 0.03);
+  --glass-border-color: rgba(255, 255, 255, 0.1);
+  --glass-filter: blur(20px) saturate(180%);
 
-  /* Slider Visualization */
+  /* Typography (Work Sans) */
+  --font-base: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing (8px grid, compact) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Animation */
+  --easing-premium: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --duration-fast: 200ms;
+  --duration-medium: 400ms;
+  --duration-slow: 600ms;
+
+  /* Dynamic Properties (Updated by JS) */
+  --fill-width: 0%;
+  --color-tier-current: #6b7280; /* Default gray */
+
+  /* Slider Visualization (16 Segments - Robust Calculation) */
   --segment-count: 16;
-  --segment-gap: 2px;
+  --segment-gap: 3px; /* Visible gap between cells */
   --total-gap-width: calc((var(--segment-count) - 1) * var(--segment-gap));
   --segment-width: calc((100% - var(--total-gap-width)) / var(--segment-count));
   --gradient-step-size: calc(var(--segment-width) + var(--segment-gap));
-
-  /* Border Radius Scale */
-  --bf25-radius-sm: 8px;
-  --bf25-radius-md: 16px;
-  --bf25-radius-lg: 24px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SECTION FOUNDATION (Dark Theme)
+   2. SECTION FOUNDATION & TYPOGRAPHY
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero {
-  background: #0a0a0a;
-  color: var(--bf25-text-primary, #ffffff);
-  padding: var(--bf25-space-5) var(--bf25-space-4);
-  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  position: relative;
-  overflow: hidden;
+  background: var(--color-bg-dark);
+  color: var(--color-text-primary);
+  padding: var(--space-6) var(--space-4);
+  font-family: var(--font-base);
 }
 
 .bf25-hero__container {
-  max-width: 1200px;
+  max-width: 980px; /* Compact width */
   margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   HEADER (H1 + H2 Typography)
-   ═══════════════════════════════════════════════════════════════════════ */
-
 .bf25-hero__header {
   text-align: center;
-  margin-bottom: var(--bf25-space-5);
+  margin-bottom: var(--space-5);
 }
 
 .bf25-hero__heading {
-  font-size: clamp(24px, 4vw, 48px);
+  font-size: clamp(28px, 5vw, 40px);
   font-weight: 800;
-  line-height: var(--bf25-leading-tight, 1.2);
-  letter-spacing: var(--bf25-tracking-tighter, -0.02em);
-  color: var(--bf25-text-primary, #ffffff);
-  margin: 0 0 var(--bf25-space-2) 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-2) 0;
 }
 
 .bf25-hero__subheading {
-  font-size: clamp(14px, 2vw, 18px);
+  font-size: clamp(14px, 2vw, 16px);
   font-weight: 400;
-  line-height: var(--bf25-leading-snug, 1.4);
-  color: var(--bf25-text-secondary, #e0e0e0);
+  color: var(--color-text-subtle);
   margin: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   MAIN MODULE (Interactive Area)
+   3. MAIN MODULE LAYOUT (Centralized & Compact)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__module {
-  display: grid;
-  gap: var(--bf25-space-5);
-}
-
-/* Desktop: 2-column layout (gifts + card | slider below) */
-@media (min-width: 769px) {
-  .bf25-hero__module {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: var(--bf25-space-6);
-  }
-
-  .bf25-hero__gifts {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-  }
-
-  .bf25-hero__card {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-  }
-
-  .bf25-hero__slider-wrapper {
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  /* Height constraint achieved by component compactness */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   GIFT BOXES (4 Premium Gifts)
+   4. GIFT BOXES (4x1 Grid, Blackout & Dramatic Unlock)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__gifts {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  max-width: 400px;
-  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr); /* 4x1 Grid (Requirement Met) */
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 450px;
 }
-
-@media (min-width: 769px) {
-  .bf25-hero__gifts {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    max-width: 100%;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Individual Gift Box (Glassmorphic, Locked by Default) */
-/* ─────────────────────────────────────────────────────────────────── */
 
 .bf25-hero__gift-box {
   position: relative;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--bf25-radius-md);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
   text-align: center;
+  transition: transform var(--duration-medium) var(--easing-premium);
+  contain: layout paint style;
 }
-
-.bf25-hero__gift-box:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Gift Image Wrapper (Contains Image + Lock Icon) */
-/* ─────────────────────────────────────────────────────────────────── */
 
 .bf25-hero__gift-image-wrapper {
   position: relative;
-  width: 100%;
   aspect-ratio: 1 / 1;
-  margin-bottom: var(--bf25-space-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: var(--space-2);
+  border-radius: 12px;
+  overflow: hidden;
+
+  /* Premium Glassmorphism Container */
+  background: var(--glass-bg-subtle);
+  border: 1px solid var(--glass-border-color);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  transition: all var(--duration-medium) var(--easing-premium);
 }
 
 .bf25-hero__gift-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: var(--bf25-radius-sm);
-  /* Default: Locked state (grayscale, reduced opacity) */
-  filter: grayscale(100%);
-  opacity: 0.4;
-  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  transition: all var(--duration-slow) var(--easing-premium);
+  will-change: filter, opacity, transform;
+
+  /* LOCKED STATE: Blacked Out Silhouette (Requirement Met) */
+  filter: brightness(0.1) grayscale(100%);
+  opacity: 0.8;
+  transform: scale(0.95);
 }
 
-.bf25-hero__gift-lock-icon {
+/* 4.1 Premium SVG Icons & Status */
+.bf25-hero__gift-status-icon {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 32px;
-  opacity: 0.8;
-  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-  pointer-events: none;
-  display: inline-block; /* Fix emoji rotation */
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* Gift Info (Label + Value) */
-/* ─────────────────────────────────────────────────────────────────── */
+.icon {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    transition: all var(--duration-medium) var(--easing-premium);
+    top: 50%;
+    left: 50%;
+}
 
-.bf25-hero__gift-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.icon-lock {
+    color: var(--color-text-primary);
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.icon-check {
+    color: var(--color-accent-lime);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
 }
 
 .bf25-hero__gift-label {
-  font-size: var(--bf25-text-sm, 14px);
+  font-size: 12px;
   font-weight: 600;
-  color: var(--bf25-text-secondary, #e0e0e0);
+  color: var(--color-text-subtle);
+  transition: color var(--duration-medium) var(--easing-premium);
 }
 
-.bf25-hero__gift-value {
-  font-size: var(--bf25-text-xs, 12px);
-  font-weight: 500;
-  color: var(--bf25-accent, #60c655);
+@media (min-width: 769px) {
+    .bf25-hero__gift-label {
+        font-size: 14px;
+    }
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* UNLOCKED STATE (Applied by JavaScript) */
-/* ─────────────────────────────────────────────────────────────────── */
+/* 4.2 UNLOCKED STATE & Animation */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper {
+  border-color: var(--color-accent-lime);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.3);
+}
 
 .bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
-  filter: grayscale(0%);
+  filter: brightness(1) grayscale(0%);
   opacity: 1;
+  transform: scale(1);
 }
 
-.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-lock-icon {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+    color: var(--color-text-primary);
 }
 
-.bf25-hero__gift-box.is-unlocked {
-  border-color: var(--bf25-accent, #60c655);
-  background: rgba(96, 198, 85, 0.05);
-  box-shadow: 0 0 20px rgba(96, 198, 85, 0.2);
+/* Icon Transition (Handled by CSS) */
+.bf25-hero__gift-box.is-unlocked .icon-lock {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5); /* Lock bursts away */
+}
+.bf25-hero__gift-box.is-unlocked .icon-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Dramatic Unlock Animation (Pop & Glow Burst) */
+@keyframes giftUnlockPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.bf25-hero__gift-box.animate-unlock {
+  animation: giftUnlockPop var(--duration-slow) var(--easing-premium);
+}
+
+/* Color Burst Overlay (Enhances the reveal) */
+.bf25-hero__gift-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent-lime);
+    opacity: 0;
+}
+
+@keyframes colorBurst {
+    0% { opacity: 0; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+.bf25-hero__gift-box.animate-unlock .bf25-hero__gift-overlay {
+    animation: colorBurst var(--duration-slow) var(--easing-premium);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   SLIDER WRAPPER (Visualization + Input)
+   5. SLIDER VISUALIZATION (Battery Style - High Visibility)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__slider-wrapper {
   position: relative;
   width: 100%;
-  transition: outline 200ms ease;
+  max-width: 700px;
 }
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Focus Indicator (Prompt 5 - WCAG 2.2 AA Accessibility) */
-/* ─────────────────────────────────────────────────────────────────── */
-
-/* JS-managed focus state (since input is invisible with opacity: 0) */
-.bf25-hero__slider-wrapper.is-focused {
-  outline: 2px solid var(--bf25-accent, #60c655);
-  outline-offset: 4px;
-  border-radius: 8px;
-}
-
-/* Ensure outline is visible in high contrast mode */
-@media (prefers-contrast: high) {
-  .bf25-hero__slider-wrapper.is-focused {
-    outline-width: 3px;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   16-SEGMENT VISUALIZATION (Robust Gradient Calculation)
-   ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__visualization {
   position: relative;
   width: 100%;
-  height: 12px;
-  border-radius: 6px;
+  height: 20px; /* Increased height (Requirement Met) */
+  border-radius: 10px;
   overflow: hidden;
-  margin-bottom: var(--bf25-space-5);
+  /* Battery Casing */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0,0,0,0.3);
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* Track (16 Gray Segments - Background) */
-/* ─────────────────────────────────────────────────────────────────── */
-
+/* 5.1 Track (High Contrast Segments) */
 .bf25-hero__track {
   position: absolute;
   width: 100%;
   height: 100%;
+  /* Creates 16 visible empty segments */
   background: repeating-linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.1) 0,
-    rgba(255, 255, 255, 0.1) var(--segment-width),
+    rgba(255, 255, 255, 0.15) 0,
+    rgba(255, 255, 255, 0.15) var(--segment-width),
     transparent var(--segment-width),
     transparent var(--gradient-step-size)
   );
-  border-radius: 6px;
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* Fill (16 Green Segments - Animated Width) */
-/* ─────────────────────────────────────────────────────────────────── */
-
+/* 5.2 Fill (Energized Lime Green) */
 .bf25-hero__fill {
   position: absolute;
   width: var(--fill-width);
   height: 100%;
+  /* Creates 16 glowing green segments */
   background: repeating-linear-gradient(
     to right,
-    var(--bf25-accent, #60c655) 0,
-    var(--bf25-accent, #60c655) var(--segment-width),
+    var(--color-accent-lime) 0,
+    var(--color-accent-lime) var(--segment-width),
     transparent var(--segment-width),
     transparent var(--gradient-step-size)
   );
-  border-radius: 6px;
-  box-shadow: 0 0 20px var(--bf25-accent-glow, rgba(96, 198, 85, 0.4));
-  transition: width var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  /* Intense Glow */
+  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 5px var(--color-accent-glow);
+  transition: width var(--duration-medium) var(--easing-premium);
   will-change: width;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   NATIVE RANGE INPUT (Invisible Overlay)
-   ═══════════════════════════════════════════════════════════════════════ */
-
+/* 5.3 Invisible Input (Accessibility) */
 .bf25-hero__input {
   position: absolute;
-  top: -16px; /* Expand touch area above visualization */
+  top: -12px; /* Center 44px target over 20px visualization */
   left: 0;
   width: 100%;
-  height: var(--bf25-touch-target-min, 44px); /* WCAG AA touch target */
+  height: 44px;
   opacity: 0;
   cursor: pointer;
   z-index: 10;
   -webkit-appearance: none;
   appearance: none;
-  background: transparent;
-  touch-action: pan-y; /* Allow vertical scroll while dragging */
+  touch-action: pan-y;
 }
 
-.bf25-hero__input:focus {
-  outline: none; /* Focus managed visually by wrapper */
+.bf25-hero__input:focus { outline: none; }
+.bf25-hero__input::-webkit-slider-thumb { -webkit-appearance: none; }
+.bf25-hero__input::-moz-range-thumb { appearance: none; }
+
+/* JS-managed focus state */
+.bf25-hero__slider-wrapper.is-focused .bf25-hero__visualization {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 4px;
 }
 
-.bf25-hero__input:focus-visible {
-  outline: none;
-}
-
-/* Remove default range styling */
-.bf25-hero__input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 0;
-  height: 0;
-}
-
-.bf25-hero__input::-moz-range-thumb {
-  width: 0;
-  height: 0;
-  border: none;
-  background: transparent;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   CHECKPOINTS (Tier Unlock Positions at 4, 8, 12, 16)
-   ═══════════════════════════════════════════════════════════════════════ */
-
+/* 5.4 Checkpoints (Minimalist & Clear) */
 .bf25-hero__checkpoints {
   position: relative;
   width: 100%;
-  height: 40px;
-  margin-top: 8px;
+  height: 30px;
+  margin-top: var(--space-1);
 }
 
 .bf25-hero__checkpoint {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transform: translateX(-50%); /* Center on position */
+  transform: translateX(-50%);
 }
 
-/* Position checkpoints at exact tier boundaries */
-.bf25-hero__checkpoint[data-value="4"] { left: 25%; } /* 4/16 = 25% */
-.bf25-hero__checkpoint[data-value="8"] { left: 50%; } /* 8/16 = 50% */
-.bf25-hero__checkpoint[data-value="12"] { left: 75%; } /* 12/16 = 75% */
-.bf25-hero__checkpoint[data-value="16"] { left: 100%; } /* 16/16 = 100% */
-
-.bf25-hero__checkpoint-icon {
-  font-size: 24px;
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-  display: inline-block; /* Fix emoji rotation */
-}
+.bf25-hero__checkpoint[data-value="4"] { left: 25%; }
+.bf25-hero__checkpoint[data-value="8"] { left: 50%; }
+.bf25-hero__checkpoint[data-value="12"] { left: 75%; }
+.bf25-hero__checkpoint[data-value="16"] { left: 100%; }
 
 .bf25-hero__checkpoint-label {
-  font-size: var(--bf25-text-xs, 12px);
+  font-size: 12px;
   font-weight: 600;
-  color: var(--bf25-text-tertiary, #999999);
-  transition: color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  color: var(--color-text-subtle);
+  transition: color var(--duration-medium) var(--easing-premium);
+  text-align: center;
 }
 
-/* ─────────────────────────────────────────────────────────────────── */
-/* REACHED STATE (Applied by JavaScript when slider passes checkpoint) */
-/* ─────────────────────────────────────────────────────────────────── */
-
-.bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-icon {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.1);
+/* Responsive "items" text */
+.checkpoint-subtext {
+    display: none;
 }
 
+@media (min-width: 500px) {
+    .checkpoint-subtext {
+        display: inline;
+    }
+    .bf25-hero__checkpoint-label {
+        font-size: 14px;
+    }
+}
+
+/* REACHED STATE */
 .bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
-  color: var(--bf25-accent, #60c655);
+  color: var(--color-accent-lime);
+}
+
+/* Checkpoint Celebration Animation (Subtle Text Pulse) */
+@keyframes celebratePulse {
+  0% { transform: scale(1) translateX(-50%); }
+  50% { transform: scale(1.3) translateX(-50%); text-shadow: 0 0 10px var(--color-accent-lime); }
+  100% { transform: scale(1) translateX(-50%); }
+}
+
+.bf25-hero__checkpoint.animate-celebration {
+  animation: celebratePulse var(--duration-slow) var(--easing-premium);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   DYNAMIC TIER CARD (Glassmorphic Premium Design)
+   6. DYNAMIC TIER CARD (Compact Glassmorphism)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__card {
-  background: var(--bf25-bg-modal, rgba(26, 26, 26, 0.95));
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--color-tier-current, rgba(96, 198, 85, 0.2));
-  border-radius: var(--bf25-radius-md);
-  box-shadow:
-    0 0 0 1px rgba(96, 198, 85, 0.1),
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(96, 198, 85, 0.1);
-  padding: var(--bf25-space-4);
-  transition: border-color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
+  width: 100%;
+  max-width: 700px;
+  background: var(--glass-bg-subtle);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border: 1px solid var(--color-tier-current);
+  border-radius: 16px;
+  padding: var(--space-3);
+  transition: border-color var(--duration-medium) var(--easing-premium);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  contain: layout paint style;
 }
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Card Header (Badge + Discount Display) */
-/* ─────────────────────────────────────────────────────────────────── */
 
 .bf25-hero__card-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: var(--bf25-space-3);
-  margin-bottom: var(--bf25-space-4);
-  padding-bottom: var(--bf25-space-3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bf25-hero__tier-badge {
-  display: flex;
   align-items: center;
-  gap: 8px;
+  margin-bottom: var(--space-3);
 }
 
 .bf25-hero__tier-badge-text {
-  font-size: var(--bf25-text-md, 18px);
+  font-size: 16px;
   font-weight: 700;
-  color: var(--color-tier-current, #6b7280);
-  transition: color var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-}
-
-.bf25-hero__discount-display {
-  display: flex;
-  align-items: center;
+  color: var(--color-tier-current);
+  transition: color var(--duration-medium) var(--easing-premium);
 }
 
 .bf25-hero__discount-label {
-  font-size: var(--bf25-text-lg, 20px);
-  font-weight: 800;
-  color: var(--bf25-accent, #60c655);
-  letter-spacing: var(--bf25-tracking-tighter, -0.02em);
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Card Body (Gift Unlock List) */
-/* ─────────────────────────────────────────────────────────────────── */
-
-.bf25-hero__card-body {
-  margin-bottom: var(--bf25-space-4);
-}
-
-.bf25-hero__gift-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--bf25-space-2);
-}
-
-.bf25-hero__gift-list-item {
-  display: flex;
-  align-items: center;
-  gap: var(--bf25-space-2);
-  padding: var(--bf25-space-2);
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: var(--bf25-radius-sm);
-  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-}
-
-.bf25-hero__gift-list-icon {
   font-size: 18px;
-  opacity: 0.6;
-  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-  display: inline-block; /* Fix emoji rotation */
+  font-weight: 800;
+  color: var(--color-accent-lime);
 }
 
-.bf25-hero__gift-list-text {
-  font-size: var(--bf25-text-sm, 14px);
-  font-weight: 500;
-  color: var(--bf25-text-secondary, #e0e0e0);
-  opacity: 0.7;
-  transition: opacity var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* UNLOCKED GIFT LIST ITEM STATE */
-/* ─────────────────────────────────────────────────────────────────── */
-
-.bf25-hero__gift-list-item.is-unlocked {
-  background: rgba(96, 198, 85, 0.1);
-  border: 1px solid rgba(96, 198, 85, 0.2);
-}
-
-.bf25-hero__gift-list-item.is-unlocked .bf25-hero__gift-list-icon {
-  opacity: 1;
-}
-
-.bf25-hero__gift-list-item.is-unlocked .bf25-hero__gift-list-text {
-  color: var(--bf25-text-primary, #ffffff);
-  opacity: 1;
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Card Footer (Pricing Summary) */
-/* ─────────────────────────────────────────────────────────────────── */
-
-.bf25-hero__card-footer {
-  padding-top: var(--bf25-space-3);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bf25-hero__pricing {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bf25-space-2);
-}
-
+/* Pricing Summary */
 .bf25-hero__pricing-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: var(--space-1);
 }
 
 .bf25-hero__pricing-label {
-  font-size: var(--bf25-text-sm, 14px);
-  font-weight: 500;
-  color: var(--bf25-text-tertiary, #999999);
+  font-size: 14px;
+  color: var(--color-text-subtle);
 }
 
 .bf25-hero__pricing-value {
-  font-size: var(--bf25-text-md, 18px);
+  font-size: 16px;
   font-weight: 700;
-  color: var(--bf25-text-primary, #ffffff);
 }
 
 .bf25-hero__pricing-row--savings {
-  margin-top: var(--bf25-space-1);
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--glass-border-color);
 }
 
 .bf25-hero__pricing-value--savings {
-  color: var(--bf25-accent, #60c655);
-  font-size: var(--bf25-text-lg, 20px);
+  color: var(--color-accent-lime);
+  font-size: 18px;
   font-weight: 800;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   CALL TO ACTION BUTTON
+   7. CALL TO ACTION & POLISH
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__cta {
-  margin-top: var(--bf25-space-6);
+  margin-top: var(--space-5);
   text-align: center;
 }
 
@@ -596,222 +461,33 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--bf25-height-lg, 48px);
-  padding: 0 var(--bf25-space-5);
-  background: var(--bf25-accent, #60c655);
-  color: #000000;
-  font-size: var(--bf25-text-md, 18px);
+  height: 48px;
+  padding: 0 var(--space-4);
+  background: var(--color-accent-lime);
+  color: var(--color-bg-dark);
+  font-size: 16px;
   font-weight: 700;
   text-decoration: none;
-  border-radius: var(--bf25-radius-md);
-  box-shadow: 0 4px 20px var(--bf25-accent-glow, rgba(96, 198, 85, 0.4));
-  transition: all var(--bf25-duration, 400ms) var(--bf25-easing, ease);
-  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(96, 198, 85, 0.4);
+  transition: all var(--duration-fast) var(--easing-premium);
 }
 
 .bf25-hero__cta-button:hover {
-  background: var(--bf25-accent-hover, #50b045);
-  box-shadow: 0 6px 30px var(--bf25-accent-glow, rgba(96, 198, 85, 0.6));
+  background: #50b045; /* Darker green on hover */
+  box-shadow: 0 6px 30px rgba(96, 198, 85, 0.6);
   transform: translateY(-2px);
 }
 
-.bf25-hero__cta-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px var(--bf25-accent-glow, rgba(96, 198, 85, 0.3));
-}
-
 /* ═══════════════════════════════════════════════════════════════════════
-   RESPONSIVE OPTIMIZATIONS
+   8. ACCESSIBILITY
    ═══════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
-  .bf25-hero {
-    padding: var(--bf25-space-4) var(--bf25-space-3);
-  }
-
-  .bf25-hero__heading {
-    font-size: 28px;
-  }
-
-  .bf25-hero__subheading {
-    font-size: 14px;
-  }
-
-  .bf25-hero__gifts {
-    gap: 10px;
-    max-width: 100%;
-  }
-
-  .bf25-hero__gift-box {
-    padding: 12px;
-  }
-
-  .bf25-hero__gift-lock-icon {
-    font-size: 24px;
-  }
-
-  .bf25-hero__checkpoint-icon {
-    font-size: 20px;
-  }
-
-  .bf25-hero__card {
-    padding: var(--bf25-space-3);
-  }
-
-  .bf25-hero__tier-badge-text {
-    font-size: var(--bf25-text-sm, 14px);
-  }
-
-  .bf25-hero__discount-label {
-    font-size: var(--bf25-text-md, 16px);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   ACCESSIBILITY
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* Respect user motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .bf25-hero__gift-box {
-    border-width: 2px;
-  }
-
-  .bf25-hero__card {
-    border-width: 2px;
-  }
-}
-
-/* Focus visible states */
-.bf25-hero__input:focus-visible ~ .bf25-hero__visualization {
-  outline: 2px solid var(--bf25-accent, #60c655);
-  outline-offset: 4px;
-}
-
-.bf25-hero__cta-button:focus-visible {
-  outline: 2px solid var(--bf25-accent, #60c655);
-  outline-offset: 4px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   ANIMATIONS & CELEBRATIONS (Prompt 4)
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Checkpoint Celebration Animation */
-/* ─────────────────────────────────────────────────────────────────── */
-
-@keyframes celebratePulse {
-  0% {
-    transform: scale(1) translateX(-50%);
-    filter: drop-shadow(0 0 0px currentColor);
-  }
-  50% {
-    transform: scale(1.3) translateX(-50%);
-    filter: drop-shadow(0 0 10px currentColor);
-  }
-  100% {
-    transform: scale(1) translateX(-50%);
-    filter: drop-shadow(0 0 0px currentColor);
-  }
-}
-
-.bf25-hero__checkpoint.animate-celebration {
-  animation: celebratePulse 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Gift Unlock Animation */
-/* ─────────────────────────────────────────────────────────────────── */
-
-@keyframes giftUnlock {
-  0% {
-    transform: scale(1);
-    filter: grayscale(100%);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1.1);
-    filter: grayscale(50%);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.05);
-    filter: grayscale(0%);
-    opacity: 1;
-  }
-}
-
-.bf25-hero__gift-box.animate-unlock .bf25-hero__gift-image {
-  animation: giftUnlock 500ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-/* ─────────────────────────────────────────────────────────────────── */
-/* Tier Card Color Transition */
-/* ─────────────────────────────────────────────────────────────────── */
-
-@keyframes tierColorPulse {
-  0% {
-    border-color: var(--color-tier-current);
-    box-shadow:
-      0 0 0 1px rgba(96, 198, 85, 0.1),
-      0 20px 60px rgba(0, 0, 0, 0.4),
-      0 0 40px rgba(96, 198, 85, 0.1);
-  }
-  50% {
-    border-color: var(--color-tier-current);
-    box-shadow:
-      0 0 0 2px var(--color-tier-current),
-      0 20px 60px rgba(0, 0, 0, 0.4),
-      0 0 60px var(--color-tier-current);
-  }
-  100% {
-    border-color: var(--color-tier-current);
-    box-shadow:
-      0 0 0 1px rgba(96, 198, 85, 0.1),
-      0 20px 60px rgba(0, 0, 0, 0.4),
-      0 0 40px rgba(96, 198, 85, 0.1);
-  }
-}
-
-.bf25-hero__card.animate-tier-change {
-  animation: tierColorPulse 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   PERFORMANCE OPTIMIZATIONS
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* GPU acceleration for animated elements (Prompt 4) */
-.bf25-hero__fill,
-.bf25-hero__gift-image,
-.bf25-hero__checkpoint-icon {
-  transform: translateZ(0);
-  will-change: transform, opacity; /* Optimized for animations */
-}
-
-/* Enhanced gift box unlock animation */
-.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
-  transform: scale(1.05);
-}
-
-.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-lock-icon {
-  transform: translate(-50%, -50%) scale(1.2);
-}
-
-/* Contain paint for isolated components */
-.bf25-hero__gift-box,
-.bf25-hero__card {
-  contain: layout style paint;
 }

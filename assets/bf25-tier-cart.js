@@ -12,28 +12,28 @@
   // ============================================
   const GIFT_PRODUCTS = {
     cable: {
-      handle: 'bf25-free-cable',
+      handle: 'bf25sc-free-cable',
       variantId: null, // Will be fetched dynamically
       tier: 1,
       emoji: '🔌',
       name: 'Premium Cable'
     },
     case: {
-      handle: 'bf25-free-case',
+      handle: 'bf25sc-free-case',
       variantId: null,
       tier: 2,
       emoji: '📦',
       name: 'Protective Case'
     },
     magnetic: {
-      handle: 'bf25-free-magnetic-set',
+      handle: 'bf25sc-free-magnetic-set',
       variantId: null,
       tier: 3,
       emoji: '🧲',
       name: 'Magnetic Set'
     },
     mystery: {
-      handle: 'bf25-free-mystery-box',
+      handle: 'bf25sc-free-mystery-box',
       variantId: null,
       tier: 4,
       emoji: '🎁',
@@ -208,7 +208,7 @@
       // Find gift slot for this tier
       const checkpoint = this.getCheckpointForTier(tier);
       const slot = document.querySelector(
-        `.bf25-gift-slot[data-checkpoint-value="${checkpoint}"]`
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
       );
 
       if (!slot) {
@@ -289,7 +289,7 @@
       const tierData = BF25_TIERS.find(t => t.id === tier);
       if (!tierData) return;
 
-      const announcer = document.getElementById('bf25-cart-announcements');
+      const announcer = document.getElementById('bf25sc-cart-announcements');
       if (announcer) {
         const lastGift = tierData.gifts[tierData.gifts.length - 1];
         const message = `Congratulations! ${tierData.badge} unlocked. Free ${lastGift.name} added to your cart.`;
@@ -320,7 +320,7 @@
   // ============================================
   class ConfettiSystem {
     constructor() {
-      this.container = document.getElementById('bf25-confetti-container');
+      this.container = document.getElementById('bf25sc-confetti-container');
       this.pool = [];
       this.activeParticles = [];
       this.maxPoolSize = 20;
@@ -388,7 +388,7 @@
      */
     createParticle() {
       const particle = document.createElement('div');
-      particle.className = 'bf25-confetti-particle';
+      particle.className = 'bf25sc-confetti-particle';
       return particle;
     }
 
@@ -412,7 +412,7 @@
       particle.style.display = 'none';
       particle.style.opacity = '0';
       particle.removeAttribute('data-variant');
-      particle.className = 'bf25-confetti-particle';
+      particle.className = 'bf25sc-confetti-particle';
 
       // Remove from active list
       const index = this.activeParticles.indexOf(particle);
@@ -469,7 +469,7 @@
       const yFinal = 15; // Settle below trigger
 
       // Setup particle
-      particle.className = `bf25-confetti-particle bf25-confetti-particle--${shape} bf25-confetti-particle--tier-${tier}`;
+      particle.className = `bf25sc-confetti-particle bf25sc-confetti-particle--${shape} bf25sc-confetti-particle--tier-${tier}`;
       particle.dataset.variant = variant;
       particle.style.width = `${size}px`;
       particle.style.height = shape === 'triangle' ? 'auto' : `${size}px`;
@@ -551,7 +551,7 @@
      */
     getTriggerPosition(checkpoint) {
       const slot = document.querySelector(
-        `.bf25-gift-slot[data-checkpoint-value="${checkpoint}"]`
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
       );
 
       if (!slot) {
@@ -602,15 +602,15 @@
     // ============================================
     cacheDOM() {
       return {
-        container: document.getElementById('bf25-sticky-cart'),
-        segments: document.querySelectorAll('.bf25-progress-bar__segment'),
-        tierLabels: document.querySelectorAll('.bf25-tier-label'),
-        giftSlots: document.querySelectorAll('.bf25-gift-slot'),
-        incentiveText: document.getElementById('bf25-incentive-text'),
-        savingsAmount: document.getElementById('bf25-savings-amount'),
-        btnView: document.getElementById('bf25-btn-view'),
-        btnBuy: document.getElementById('bf25-btn-buy'),
-        announcer: document.getElementById('bf25-cart-announcements')
+        container: document.getElementById('bf25sc-sticky-cart'),
+        segments: document.querySelectorAll('.bf25sc-progress-bar__segment'),
+        tierLabels: document.querySelectorAll('.bf25sc-tier-label'),
+        giftSlots: document.querySelectorAll('.bf25sc-gift-slot'),
+        incentiveText: document.getElementById('bf25sc-incentive-text'),
+        savingsAmount: document.getElementById('bf25sc-savings-amount'),
+        btnView: document.getElementById('bf25sc-btn-view'),
+        btnBuy: document.getElementById('bf25sc-btn-buy'),
+        announcer: document.getElementById('bf25sc-cart-announcements')
       };
     }
 
@@ -676,13 +676,16 @@
     showEmptyState() {
       if (!this.elements.container) return;
 
-      // Show container
+      // Always show container
       this.elements.container.style.display = 'flex';
 
       // Set Tier 0
       this.updateVisualization(0);
 
-      console.log('[BF25 Cart] Empty state displayed');
+      // Show empty state message
+      this.handleEmptyState(0);
+
+      console.log('[BF25SC Cart] Empty state displayed');
     }
 
     calculateTier(itemCount) {
@@ -747,9 +750,9 @@
 
       if (this.elements.container) {
         // Set CSS variables
-        this.elements.container.style.setProperty('--bf25-tier-color', color);
-        this.elements.container.style.setProperty('--bf25-tier-glow-color', glowColor);
-        this.elements.container.style.setProperty('--bf25-tier-glow', glow);
+        this.elements.container.style.setProperty('--bf25sc-tier-color', color);
+        this.elements.container.style.setProperty('--bf25sc-tier-glow-color', glowColor);
+        this.elements.container.style.setProperty('--bf25sc-tier-glow', glow);
 
         // Set data attribute for tier-specific CSS
         this.elements.container.dataset.activeTier = this.currentTier.id;
@@ -757,7 +760,7 @@
         // Convert hex to RGB for border glow
         const rgb = this.hexToRgb(color);
         this.elements.container.style.setProperty(
-          '--bf25-tier-color-rgb',
+          '--bf25sc-tier-color-rgb',
           `${rgb.r}, ${rgb.g}, ${rgb.b}`
         );
       }
@@ -898,7 +901,7 @@
       }
 
       // Show expanded section
-      const expanded = document.getElementById('bf25-expanded-cart');
+      const expanded = document.getElementById('bf25sc-expanded-cart');
       if (expanded) {
         expanded.style.display = 'block';
       }
@@ -926,7 +929,7 @@
       }
 
       // Hide expanded section (after transition)
-      const expanded = document.getElementById('bf25-expanded-cart');
+      const expanded = document.getElementById('bf25sc-expanded-cart');
       if (expanded) {
         setTimeout(() => {
           if (!this.elements.container.classList.contains('is-expanded')) {
@@ -989,7 +992,7 @@
     // ============================================
     getResponsiveMessage(nextTier, needed) {
       if (!nextTier) {
-        return '<strong class="bf25-highlight">🎉 Maximum savings unlocked!</strong>';
+        return '<strong class="bf25sc-highlight">🎉 Maximum savings unlocked!</strong>';
       }
 
       const emoji = nextTier.badge.match(/[^\s]+/)[0];
@@ -1008,12 +1011,12 @@
       // Compact mobile (<768px)
       if (viewportWidth < 768) {
         const moreText = needed === 1 ? 'more' : 'more';
-        return `Add <strong class="bf25-highlight">${needed} ${moreText}</strong> → <strong class="bf25-highlight">${emoji} ${discount}</strong> + ${giftEmoji}`;
+        return `Add <strong class="bf25sc-highlight">${needed} ${moreText}</strong> → <strong class="bf25sc-highlight">${emoji} ${discount}</strong> + ${giftEmoji}`;
       }
 
       // Desktop (768px+)
       const itemsText = needed === 1 ? 'item' : 'items';
-      return `Add <strong class="bf25-highlight">${needed} more ${itemsText}</strong> for <strong class="bf25-highlight">${emoji} ${discount} OFF</strong> + <strong class="bf25-highlight">${giftName}</strong>`;
+      return `Add <strong class="bf25sc-highlight">${needed} more ${itemsText}</strong> for <strong class="bf25sc-highlight">${emoji} ${discount} OFF</strong> + <strong class="bf25sc-highlight">${giftName}</strong>`;
     }
 
     // ============================================
@@ -1127,10 +1130,10 @@
 
       // Gift product handles (to be excluded from count)
       const giftHandles = [
-        'bf25-free-cable',
-        'bf25-free-case',
-        'bf25-free-magnetic-set',
-        'bf25-free-mystery-box'
+        'bf25sc-free-cable',
+        'bf25sc-free-case',
+        'bf25sc-free-magnetic-set',
+        'bf25sc-free-mystery-box'
       ];
 
       let count = 0;
@@ -1155,10 +1158,10 @@
       if (!cart || !cart.items) return 0;
 
       const giftHandles = [
-        'bf25-free-cable',
-        'bf25-free-case',
-        'bf25-free-magnetic-set',
-        'bf25-free-mystery-box'
+        'bf25sc-free-cable',
+        'bf25sc-free-case',
+        'bf25sc-free-magnetic-set',
+        'bf25sc-free-mystery-box'
       ];
 
       let subtotal = 0;
@@ -1254,14 +1257,78 @@
       if (!this.elements.container) return;
 
       if (itemCount === 0) {
-        // Hide cart (or show empty message)
-        this.elements.container.style.display = 'none';
-        console.log('[BF25 Cart] Hidden (empty cart)');
-      } else {
-        // Show cart
+        // Show empty state
         this.elements.container.style.display = 'flex';
-        console.log('[BF25 Cart] Visible (cart has items)');
+        this.elements.container.classList.add('is-empty');
+        this.showEmptyStateMessage();
+        console.log('[BF25SC Cart] Showing empty state');
+      } else {
+        // Show normal cart
+        this.elements.container.style.display = 'flex';
+        this.elements.container.classList.remove('is-empty');
+        this.hideEmptyStateMessage();
+        console.log('[BF25SC Cart] Visible (cart has items)');
       }
+    }
+
+    /**
+     * Show empty state message
+     */
+    showEmptyStateMessage() {
+      // Hide progress bar
+      const progressWrapper = this.elements.container.querySelector('.bf25sc-sticky-cart__progress-wrapper');
+      if (progressWrapper) {
+        progressWrapper.style.display = 'none';
+      }
+
+      // Update incentive text
+      if (this.elements.incentiveText) {
+        this.elements.incentiveText.innerHTML = 'Your cart is empty - Add <strong class="bf25sc-highlight">4 items</strong> to unlock <strong class="bf25sc-highlight">🔥 60% OFF</strong>!';
+      }
+
+      // Update savings
+      if (this.elements.savingsAmount) {
+        this.elements.savingsAmount.textContent = 'Save €0';
+      }
+
+      // Disable buttons
+      if (this.elements.btnView) {
+        this.elements.btnView.disabled = true;
+        this.elements.btnView.style.opacity = '0.5';
+        this.elements.btnView.style.cursor = 'not-allowed';
+      }
+
+      if (this.elements.btnBuy) {
+        this.elements.btnBuy.disabled = true;
+        this.elements.btnBuy.style.opacity = '0.5';
+        this.elements.btnBuy.style.cursor = 'not-allowed';
+      }
+    }
+
+    /**
+     * Hide empty state message (return to normal)
+     */
+    hideEmptyStateMessage() {
+      // Show progress bar
+      const progressWrapper = this.elements.container.querySelector('.bf25sc-sticky-cart__progress-wrapper');
+      if (progressWrapper) {
+        progressWrapper.style.display = 'flex';
+      }
+
+      // Enable buttons
+      if (this.elements.btnView) {
+        this.elements.btnView.disabled = false;
+        this.elements.btnView.style.opacity = '1';
+        this.elements.btnView.style.cursor = 'pointer';
+      }
+
+      if (this.elements.btnBuy) {
+        this.elements.btnBuy.disabled = false;
+        this.elements.btnBuy.style.opacity = '1';
+        this.elements.btnBuy.style.cursor = 'pointer';
+      }
+
+      // Incentive message will be updated by updateIncentiveMessage()
     }
 
     /**
@@ -1489,8 +1556,8 @@
      * Render products in expanded view
      */
     renderProducts(cart) {
-      const scrollContainer = document.getElementById('bf25-product-scroll');
-      const emptyState = document.getElementById('bf25-expanded-empty');
+      const scrollContainer = document.getElementById('bf25sc-product-scroll');
+      const emptyState = document.getElementById('bf25sc-expanded-empty');
 
       if (!scrollContainer) return;
 
@@ -1508,10 +1575,10 @@
 
       // Gift product handles
       const giftHandles = [
-        'bf25-free-cable',
-        'bf25-free-case',
-        'bf25-free-magnetic-set',
-        'bf25-free-mystery-box'
+        'bf25sc-free-cable',
+        'bf25sc-free-case',
+        'bf25sc-free-magnetic-set',
+        'bf25sc-free-mystery-box'
       ];
 
       // Render each product
@@ -1532,13 +1599,13 @@
      */
     createProductCard(item, isGift) {
       const card = document.createElement('div');
-      card.className = `bf25-product-card${isGift ? ' bf25-product-card--gift' : ''}`;
+      card.className = `bf25sc-product-card${isGift ? ' bf25sc-product-card--gift' : ''}`;
       card.dataset.variantId = item.variant_id;
       card.dataset.key = item.key;
 
       // Thumbnail
       const thumbnail = document.createElement('img');
-      thumbnail.className = 'bf25-product-card__thumbnail';
+      thumbnail.className = 'bf25sc-product-card__thumbnail';
       thumbnail.src = item.featured_image?.url || item.image || '';
       thumbnail.alt = item.product_title || 'Product';
       thumbnail.loading = 'lazy';
@@ -1547,7 +1614,7 @@
       // Quantity Badge
       if (!isGift) {
         const quantity = document.createElement('div');
-        quantity.className = 'bf25-product-card__quantity';
+        quantity.className = 'bf25sc-product-card__quantity';
         quantity.textContent = item.quantity;
         card.appendChild(quantity);
       }
@@ -1555,7 +1622,7 @@
       // FREE Badge (for gifts)
       if (isGift) {
         const badge = document.createElement('div');
-        badge.className = 'bf25-product-card__gift-badge';
+        badge.className = 'bf25sc-product-card__gift-badge';
         badge.textContent = 'FREE';
         card.appendChild(badge);
       }
@@ -1563,7 +1630,7 @@
       // Remove Button (not for gifts)
       if (!isGift) {
         const removeBtn = document.createElement('button');
-        removeBtn.className = 'bf25-product-card__remove';
+        removeBtn.className = 'bf25sc-product-card__remove';
         removeBtn.textContent = '×';
         removeBtn.setAttribute('aria-label', `Remove ${item.product_title}`);
         removeBtn.addEventListener('click', (e) => {

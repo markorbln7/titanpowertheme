@@ -1,0 +1,378 @@
+/* ============================================
+   BF25 STICKY CART - PROGRESS BAR STYLES
+   Version: 1.0
+   ============================================ */
+
+/* ====================================
+   CSS VARIABLES
+   ==================================== */
+:root {
+  /* Brand Colors */
+  --bf25-dark-base: #0a0a0a;
+  --bf25-dark-elevated: #191919;
+  --bf25-accent-green: #60c655;
+
+  /* Tier Colors (Dynamic - Updated by JavaScript) */
+  --bf25-tier-color: #6b7280;
+  --bf25-tier-glow-color: #a1a1aa;
+  --bf25-tier-glow: rgba(107, 114, 128, 0.3);
+  --bf25-tier-color-rgb: 107, 114, 128;
+
+  /* Typography */
+  --bf25-font-body: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bf25-text-xs: 0.6875rem;   /* 11px */
+  --bf25-text-sm: 0.75rem;     /* 12px */
+  --bf25-text-base: 0.875rem;  /* 14px */
+  --bf25-text-lg: 1rem;        /* 16px */
+
+  /* Spacing */
+  --bf25-space-xs: 4px;
+  --bf25-space-sm: 6px;
+  --bf25-space-md: 8px;
+  --bf25-space-lg: 12px;
+  --bf25-space-xl: 16px;
+
+  /* Progress Bar Dimensions */
+  --bf25-pb-height: 20px;
+  --bf25-pb-radius: 10px;
+  --bf25-pb-segment-gap: 3px;
+
+  /* Z-Index */
+  --bf25-z-sticky: 999;
+}
+
+/* ====================================
+   STICKY CONTAINER
+   ==================================== */
+.bf25-sticky-cart {
+  /* Positioning */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--bf25-z-sticky);
+
+  /* Glassmorphic Background (Premium) */
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 10, 0.98) 0%,
+    rgba(25, 25, 25, 0.98) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  /* Dynamic Tier Glow Border */
+  border-top: 2px solid rgba(var(--bf25-tier-color-rgb), 0.4);
+
+  /* Elevation Shadow */
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.7),
+    inset 0 10px 20px -10px var(--bf25-tier-glow);
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--bf25-space-sm) var(--bf25-space-lg);
+  gap: var(--bf25-space-xs);
+
+  /* Smooth Transitions */
+  transition:
+    border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Performance Optimizations */
+  contain: layout paint style;
+  will-change: border-color, box-shadow;
+}
+
+/* ====================================
+   PROGRESS WRAPPER
+   ==================================== */
+.bf25-sticky-cart__progress-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--bf25-space-xs);
+}
+
+/* ====================================
+   TIER LABELS (Above Bar)
+   ==================================== */
+.bf25-sticky-cart__tier-labels {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  pointer-events: none;
+}
+
+.bf25-tier-label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  transition: transform 0.3s ease;
+}
+
+/* Checkpoint Positioning */
+.bf25-tier-label[data-checkpoint="start"] {
+  left: 0%;
+  transform: translateX(0);
+}
+.bf25-tier-label[data-checkpoint="4"] {
+  left: 25%;
+}
+.bf25-tier-label[data-checkpoint="8"] {
+  left: 50%;
+}
+.bf25-tier-label[data-checkpoint="12"] {
+  left: 75%;
+}
+.bf25-tier-label[data-checkpoint="16"] {
+  left: 100%;
+  transform: translateX(-100%);
+}
+
+.bf25-tier-label__text {
+  display: inline-block;
+  font-family: var(--bf25-font-body);
+  font-size: var(--bf25-text-xs);
+  font-weight: 700;
+  line-height: 1;
+  color: #a1a1aa;
+  background: var(--bf25-dark-base);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Reached State (Dynamic Tier Color) */
+.bf25-tier-label.is-reached .bf25-tier-label__text {
+  color: #000;
+  background: var(--bf25-tier-color);
+  border-color: var(--bf25-tier-color);
+  box-shadow: 0 0 8px var(--bf25-tier-glow);
+  font-size: calc(var(--bf25-text-xs) + 1px);
+}
+
+/* ====================================
+   PROGRESS BAR CONTAINER
+   ==================================== */
+.bf25-progress-bar {
+  position: relative;
+  width: 100%;
+  height: var(--bf25-pb-height);
+  border-radius: var(--bf25-pb-radius);
+  overflow: visible; /* Allow gift icons to overflow slightly */
+
+  /* Premium Casing */
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Performance */
+  contain: layout paint;
+}
+
+/* ====================================
+   SEGMENTS CONTAINER (Flexbox)
+   ==================================== */
+.bf25-progress-bar__segments {
+  display: flex !important; /* Force visibility */
+  gap: var(--bf25-pb-segment-gap);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ====================================
+   INDIVIDUAL SEGMENT
+   ==================================== */
+.bf25-progress-bar__segment {
+  /* CRITICAL: Force visibility (prevents hiding bug) */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  /* Flexbox Distribution */
+  flex: 1;
+  min-width: 2px;
+  height: 100%;
+
+  /* Styling */
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+
+  /* Smooth Transitions */
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+
+  /* Position Context for Gift Icons */
+  position: relative;
+}
+
+/* ====================================
+   FILLED SEGMENT (Active State)
+   ==================================== */
+.bf25-progress-bar__segment.is-filled {
+  /* Animated Gradient Background */
+  background: linear-gradient(
+    90deg,
+    var(--bf25-tier-color) 0%,
+    var(--bf25-tier-glow-color) 50%,
+    var(--bf25-tier-color) 100%
+  );
+  background-size: 200% 100%;
+
+  /* Flowing Animation (GPU-Accelerated) */
+  animation: bf25SegmentFlow 2s ease-in-out infinite;
+
+  /* Tier-Specific Glow */
+  box-shadow:
+    0 0 12px var(--bf25-tier-glow),
+    inset 0 0 8px var(--bf25-tier-glow);
+}
+
+/* ====================================
+   ANIMATIONS
+   ==================================== */
+@keyframes bf25SegmentFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ====================================
+   GIFT SLOTS (On Checkpoints)
+   ==================================== */
+.bf25-gift-slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.bf25-gift-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Locked State (Grayscale) */
+.bf25-gift-icon--locked {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+/* Claimed State (Full Color) - Applied via JavaScript */
+.bf25-gift-slot[data-state="claimed"] .bf25-gift-icon--locked {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* ====================================
+   TIER-SPECIFIC OVERRIDES
+   ==================================== */
+
+/* Tier 3 (GOLD) - ALL Elements Gold */
+.bf25-sticky-cart[data-active-tier="3"] {
+  --bf25-tier-color: #FFD700;
+  --bf25-tier-glow-color: #FFF700;
+  --bf25-tier-glow: rgba(255, 215, 0, 0.7);
+  --bf25-tier-color-rgb: 255, 215, 0;
+}
+
+.bf25-sticky-cart[data-active-tier="3"] .bf25-tier-label.is-reached .bf25-tier-label__text {
+  background: #FFD700 !important;
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7) !important;
+}
+
+/* Tier 4 (PLATINUM) - ALL Elements Platinum */
+.bf25-sticky-cart[data-active-tier="4"] {
+  --bf25-tier-color: #E0F7FF;
+  --bf25-tier-glow-color: #FFFFFF;
+  --bf25-tier-glow: rgba(224, 247, 255, 0.8);
+  --bf25-tier-color-rgb: 224, 247, 255;
+}
+
+.bf25-sticky-cart[data-active-tier="4"] .bf25-tier-label.is-reached .bf25-tier-label__text {
+  color: #000 !important;
+  background: #E0F7FF !important;
+  border-color: #E0F7FF !important;
+  box-shadow: 0 0 20px rgba(224, 247, 255, 0.8) !important;
+}
+
+/* ====================================
+   ACCESSIBILITY
+   ==================================== */
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-progress-bar__segment.is-filled {
+    animation: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ====================================
+   RESPONSIVE (Mobile First)
+   ==================================== */
+
+/* Tablet & Up (768px+) */
+@media (min-width: 768px) {
+  .bf25-sticky-cart {
+    padding: var(--bf25-space-md) var(--bf25-space-xl);
+  }
+
+  .bf25-gift-slot {
+    width: 24px;
+    height: 24px;
+  }
+
+  .bf25-gift-icon {
+    font-size: 20px;
+  }
+}
+
+/* Desktop (1280px+) */
+@media (min-width: 1280px) {
+  .bf25-sticky-cart__progress-wrapper {
+    max-width: 800px;
+  }
+}

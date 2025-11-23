@@ -1,0 +1,114 @@
+{% comment %}
+  BF25 Tier-Based Sticky Cart - Progress Bar Section
+  Version: 1.0
+  Purpose: Display real-time cart progress with tier visualization
+{% endcomment %}
+
+<!-- Sticky Cart Container -->
+<div
+  id="bf25-sticky-cart"
+  class="bf25-sticky-cart"
+  data-active-tier="0"
+  data-item-count="0"
+  data-section-id="{{ section.id }}"
+  style="display: {% if section.settings.show_by_default %}flex{% else %}none{% endif %};"
+>
+
+  <!-- Progress Section (28px height) -->
+  <div class="bf25-sticky-cart__progress-wrapper">
+
+    <!-- Tier Labels Row (8px height, above bar) -->
+    <div class="bf25-sticky-cart__tier-labels">
+      <div class="bf25-tier-label" data-tier="0" data-value="1" data-checkpoint="start">
+        <span class="bf25-tier-label__text">50%</span>
+      </div>
+      <div class="bf25-tier-label" data-tier="1" data-value="4" data-checkpoint="4">
+        <span class="bf25-tier-label__text">60%</span>
+      </div>
+      <div class="bf25-tier-label" data-tier="2" data-value="8" data-checkpoint="8">
+        <span class="bf25-tier-label__text">70%</span>
+      </div>
+      <div class="bf25-tier-label" data-tier="3" data-value="12" data-checkpoint="12">
+        <span class="bf25-tier-label__text">80%</span>
+      </div>
+      <div class="bf25-tier-label" data-tier="4" data-value="16" data-checkpoint="16">
+        <span class="bf25-tier-label__text">85%</span>
+      </div>
+    </div>
+
+    <!-- Progress Bar Container (20px height) -->
+    <div class="bf25-progress-bar">
+
+      <!-- 16-Segment Structure (Flexbox Layout) -->
+      <div class="bf25-progress-bar__segments">
+        {% for i in (1..16) %}
+        <div
+          class="bf25-progress-bar__segment"
+          data-segment="{{ i }}"
+          data-checkpoint="{% if i == 4 or i == 8 or i == 12 or i == 16 %}true{% else %}false{% endif %}"
+        >
+          <!-- Gift icon slots at checkpoints (4, 8, 12, 16) -->
+          {% if i == 4 or i == 8 or i == 12 or i == 16 %}
+          <div class="bf25-gift-slot" data-checkpoint-value="{{ i }}" data-state="locked">
+            <span class="bf25-gift-icon bf25-gift-icon--locked">🎁</span>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Action Section (Placeholder for PROMPT 1B) -->
+  <div class="bf25-sticky-cart__actions-placeholder">
+    <!-- Will be built in PROMPT 1B -->
+  </div>
+
+</div>
+
+<!-- Load CSS -->
+{{ 'bf25-tier-cart.css' | asset_url | stylesheet_tag }}
+
+<!-- Schema for Theme Customizer -->
+{% schema %}
+{
+  "name": "BF25 Sticky Cart",
+  "tag": "section",
+  "class": "bf25-tier-cart-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_by_default",
+      "label": "Show by default (for testing)",
+      "default": true,
+      "info": "Turn off in production to only show when cart has items"
+    },
+    {
+      "type": "header",
+      "content": "Position"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Sticky position",
+      "options": [
+        {
+          "value": "bottom",
+          "label": "Bottom of screen"
+        },
+        {
+          "value": "top",
+          "label": "Top of screen"
+        }
+      ],
+      "default": "bottom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BF25 Sticky Cart"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,310 @@
+{%- comment -%}
+Mystery Box Section
+Clean, simple implementation with Tailwind CSS
+{%- endcomment -%}
+
+{{ 'section-mystery-box.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-mystery-box.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign master_product = section.settings.master_product
+  assign main_variant = master_product.selected_or_first_available_variant
+  
+  if main_variant == blank
+    assign main_variant = master_product.variants.first
+  endif
+-%}
+
+<section
+  id="MysteryBox-{{ section.id }}"
+  class="mystery-box"
+  data-section-id="{{ section.id }}"
+  data-section-type="mystery-box"
+>
+  <div class="max-w-[1446px] mx-auto bg-black border-2 glass-surface">
+    <div class="grid grid-cols-1 lg:grid-cols-[57%_43%]">
+      
+      {%- comment -%} IMAGE AREA (LEFT 60%) {%- endcomment -%}
+      <div class="relative w-full">
+        {%- comment -%} Desktop Image {%- endcomment -%}
+        {%- if section.settings.image_desktop != blank -%}
+          <img
+            src="{{ section.settings.image_desktop | image_url: width: 1200 }}"
+            alt="{{ section.settings.title }}"
+            class="w-full h-full object-cover hidden lg:block"
+            loading="lazy"
+          >
+        {%- endif -%}
+        
+        {%- comment -%} Mobile Image {%- endcomment -%}
+        {%- if section.settings.image_mobile != blank -%}
+          <img
+            src="{{ section.settings.image_mobile | image_url: width: 800 }}"
+            alt="{{ section.settings.title }}"
+            class="w-full h-full object-cover lg:hidden"
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        {%- comment -%} Hotspots {%- endcomment -%}
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign hotspot_product = block.settings.product
+              assign hotspot_variant = hotspot_product.selected_or_first_available_variant
+              
+              if hotspot_variant == blank
+                assign hotspot_variant = hotspot_product.variants.first
+              endif
+            -%}
+            
+            <div
+              class="mystery-box__hotspot absolute"
+              {{ block.shopify_attributes }}
+              style="
+                --desktop-top: {{ block.settings.position_desktop_top }}%;
+                --desktop-left: {{ block.settings.position_desktop_left }}%;
+                --mobile-top: {{ block.settings.position_mobile_top }}%;
+                --mobile-left: {{ block.settings.position_mobile_left }}%;
+                --desktop-line-width: {{ block.settings.line_width_desktop }}%;
+                --mobile-line-width: {{ block.settings.line_width_mobile }}%;
+              "
+            >
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="text-[#60c655] text-[12px] mb-1">{{ block.settings.eyebrow }}</p>
+              {%- endif -%}
+              
+              {%- if block.settings.hotspot_title != blank -%}
+                <p class="text-white text-[14px] mb-1">{{ block.settings.hotspot_title }}</p>
+              {%- endif -%}
+              
+              {%- if hotspot_product != blank and hotspot_variant -%}
+                <p class="text-white text-[20px] font-bold">{{ hotspot_variant.price | money }}</p>
+              {%- endif -%}
+              
+              {%- comment -%} Pointer Line {%- endcomment -%}
+              <div class="mystery-box__hotspot-line"></div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} CONTENT AREA (RIGHT 40%) {%- endcomment -%}
+      <div class="p-8 lg:p-12 flex flex-col justify-center !pl-0">
+        
+        {%- comment -%} Title {%- endcomment -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="text-white text-[40px] font-bold mb-5">
+            {{ section.settings.title }}
+          </h2>
+        {%- endif -%}
+
+        {%- comment -%} Subtitle {%- endcomment -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="text-[#d1d1d1] text-[24px] mb-5">
+            {{ section.settings.subtitle }}
+          </p>
+        {%- endif -%}
+
+        {%- comment -%} Note {%- endcomment -%}
+        {%- if section.settings.note != blank -%}
+          <p class="text-[#d1d1d1] text-[16px] mb-4">
+            {{ section.settings.note }}
+          </p>
+        {%- endif -%}
+
+        {%- comment -%} Pricing {%- endcomment -%}
+        {%- if master_product != blank and main_variant -%}
+          <div class="flex items-end gap-4 mb-5">
+            <p class="text-[#60c655] text-[56px] font-bold leading-none">
+              {{ main_variant.price | money }}
+            </p>
+            
+            {%- if main_variant.compare_at_price > main_variant.price -%}
+              <div class="pb-2">
+                <p class="text-white text-[24px] font-bold leading-[28px]">
+                  Worth Up to
+                </p>
+                <p class="text-[#ff9900] text-[24px] font-bold leading-[28px]">
+                  {{ main_variant.compare_at_price | money }}
+                </p>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Buttons {%- endcomment -%}
+          <div class="flex flex-col gap-5">
+            <button
+              type="button"
+              class="mystery-box__add-to-cart w-full bg-[#60c655] text-black text-[18px] font-bold py-4 px-8 hover:bg-[#52b046] transition-colors"
+              data-variant-id="{{ main_variant.id }}"
+              data-action="add-to-cart"
+            >
+              <span data-button-text>Add to Cart</span>
+            </button>
+
+            <a
+              href="/cart/{{ main_variant.id }}:1?checkout=true"
+              class="block w-full bg-white text-black text-[18px] font-bold py-4 px-8 text-center hover:bg-gray-200 transition-colors"
+            >
+              Buy Now
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mystery Box",
+  "tag": "section",
+  "class": "section-mystery-box",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Product"
+    },
+    {
+      "type": "product",
+      "id": "master_product",
+      "label": "Product",
+      "info": "Select the product to add to cart"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Tech Essentials Box"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Includes 1 Random Item or Bundle per Box"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "Note: Colors are random and bundles may ship separately"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow Text"
+        },
+        {
+          "type": "text",
+          "id": "hotspot_title",
+          "label": "Title"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Product price will be displayed"
+        },
+        {
+          "type": "header",
+          "content": "Desktop Position"
+        },
+        {
+          "type": "range",
+          "id": "position_desktop_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Top",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "position_desktop_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Left",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Mobile Position"
+        },
+        {
+          "type": "range",
+          "id": "position_mobile_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Top",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "position_mobile_left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Left",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Pointer Line"
+        },
+        {
+          "type": "text",
+          "id": "line_width_desktop",
+          "label": "Line Width Desktop (%)",
+          "default": "20",
+          "info": "Enter width as percentage (e.g., 20 or 150)"
+        },
+        {
+          "type": "text",
+          "id": "line_width_mobile",
+          "label": "Line Width Mobile (%)",
+          "default": "20",
+          "info": "Enter width as percentage (e.g., 20 or 150)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mystery Box"
+    }
+  ]
+}
+{% endschema %}
+

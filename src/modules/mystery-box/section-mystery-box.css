@@ -1,0 +1,33 @@
+/* Mystery Box Section - Hotspot Positioning */
+
+.mystery-box__hotspot {
+  /* Mobile positioning by default */
+  top: var(--mobile-top);
+  left: var(--mobile-left);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Desktop positioning */
+@media screen and (min-width: 1024px) {
+  .mystery-box__hotspot {
+    top: var(--desktop-top);
+    left: var(--desktop-left);
+  }
+}
+
+/* Pointer Line */
+.mystery-box__hotspot-line {
+  display: block;
+  width: var(--mobile-line-width);
+  height: 2px;
+  background-color: white;
+  margin-top: 8px;
+}
+
+@media screen and (min-width: 1024px) {
+  .mystery-box__hotspot-line {
+    width: var(--desktop-line-width);
+  }
+}
+

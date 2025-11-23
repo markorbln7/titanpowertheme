@@ -133,7 +133,7 @@
   position: absolute;
   top: 0;
   transform: translateX(-50%);
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease; /* Reduced from 0.3s for snappier feel */
 }
 
 /* Checkpoint Positioning */
@@ -429,9 +429,9 @@
   font-size: 16px;
   line-height: 1;
   transition:
-    opacity 0.3s ease,
-    filter 0.3s ease,
-    transform 0.3s ease;
+    opacity 0.25s ease, /* Reduced from 0.3s for snappier animations */
+    filter 0.25s ease,
+    transform 0.25s ease;
 }
 
 /* Locked State (Grayscale) */

@@ -420,10 +420,27 @@
   z-index: 5;
 }
 
-/* Hide on mobile (too crowded) */
+/* Mobile positioning adjustments */
 @media (max-width: 640px) {
   .bf25-hero__drag-indicator {
-    display: none;
+    left: -35px; /* Closer to bar on mobile */
+    gap: 2px;
+  }
+
+  .bf25-hero__drag-finger {
+    width: 24px;
+    height: 24px;
+  }
+
+  .bf25-hero__drag-hint {
+    font-size: 9px;
+  }
+}
+
+/* Hide only on very narrow screens if needed */
+@media (max-width: 380px) {
+  .bf25-hero__drag-indicator {
+    left: -30px;
   }
 }
 

@@ -216,52 +216,55 @@
         return;
       }
 
-      console.log(`[GiftAnimator] Starting 6-frame sequence for tier ${tier} (with Value Flash)`);
+      // Performance monitoring
+      console.time(`[GiftAnimator] Tier ${tier} animation`);
+      console.log(`[GiftAnimator] Starting optimized sequence for tier ${tier} (1.8s target)`);
 
       // Add animating class
       slot.classList.add('is-animating');
 
-      // FRAME 2: Wiggle (0.4s)
+      // FRAME 2: Energize (0.3s) - OPTIMIZED from 0.4s
       slot.classList.add('is-unlocking');
-      await this.wait(400);
+      await this.wait(300);
       slot.classList.remove('is-unlocking');
 
-      // FRAME 3: Reveal (0.4s)
+      // FRAME 3: Morph/Burst (0.3s) - OPTIMIZED from 0.4s
       slot.classList.add('is-revealing');
-      await this.wait(400);
+      await this.wait(300);
       slot.classList.remove('is-revealing');
 
-      // FRAME 4: Celebrate + Value Flash (0.9s total)
+      // FRAME 4: Celebration Peak + Value Flash (0.9s total) - UNCHANGED
       slot.classList.add('is-celebrating');
 
-      // T=0.8s - 4A: Accessibility announcement
-      await this.wait(200);
+      // Brief pause before Value Flash
+      await this.wait(100);
+
+      // Trigger Value Flash + Announcement
       this.announceGift(tier);
-
-      // T=0.8s - 4B: Trigger Value Flash
       slot.classList.add('is-flashing');
-      console.log(`[GiftAnimator] Value Flash triggered for tier ${tier}`);
+      console.log(`[GiftAnimator] Value Flash + Confetti triggered for tier ${tier}`);
 
-      // T=1.0s - 4C: Trigger confetti (parallel with Value Flash)
+      // Stagger confetti slightly after Value Flash
       await this.wait(200);
       this.triggerConfetti(tier, checkpoint);
 
-      // T=1.0-1.7s - 4D: Wait for Value Flash to complete (0.9s animation)
-      await this.wait(500);
+      // Wait for Value Flash to complete (900ms total for Frame 4)
+      await this.wait(600);
 
       slot.classList.remove('is-celebrating');
       slot.classList.remove('is-flashing');
 
-      // FRAME 5: Settle (0.3s)
+      // FRAME 5: Settle (0.3s) - UNCHANGED
       slot.classList.add('is-settling');
       await this.wait(300);
       slot.classList.remove('is-settling');
 
-      // FRAME 6: Claimed (Final State)
+      // FRAME 6: Claimed (instant)
       slot.dataset.state = 'claimed';
       slot.classList.remove('is-animating');
 
-      console.log(`[GiftAnimator] ✓ Sequence complete for tier ${tier} (with Value Flash)`);
+      console.timeEnd(`[GiftAnimator] Tier ${tier} animation`);
+      console.log(`[GiftAnimator] ✓ Optimized sequence complete for tier ${tier} (1.8s)`);
     }
 
     /**

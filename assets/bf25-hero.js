@@ -97,6 +97,14 @@ class PowerSlider {
       this.handleSliderInput(parseInt(e.target.value, 10));
     });
 
+    // Hide drag indicator on first touch/click
+    const dragIndicator = document.getElementById('bf25-drag-indicator');
+    if (dragIndicator) {
+      this.elements.sliderInput.addEventListener('pointerdown', () => {
+        dragIndicator.classList.add('is-hidden');
+      }, { once: true });
+    }
+
     // Focus management (Accessibility)
     this.elements.sliderInput.addEventListener('focus', () => {
       if (this.elements.sliderWrapper) {
@@ -117,11 +125,22 @@ class PowerSlider {
     console.log('🎚️ Slider moved to:', value);
     console.log('📊 Current tier:', this.calculateTier(value));
 
+    // Hide drag indicator after first interaction
+    const dragIndicator = document.getElementById('bf25-drag-indicator');
+    if (dragIndicator && value > 0) {
+      dragIndicator.classList.add('is-hidden');
+    }
+
     // Optimization: Exit if value didn't change
     if (this.currentValue === value) return;
 
     this.currentValue = value;
     this.currentTier = this.calculateTier(value);
+
+    // Add tier to slider wrapper for styling
+    if (this.elements.sliderWrapper) {
+      this.elements.sliderWrapper.dataset.activeTier = this.currentTier.id;
+    }
 
     const tierUnlocked = this.currentTier.id > this.previousTier.id;
     const tierChanged = this.currentTier.id !== this.previousTier.id;
@@ -137,8 +156,6 @@ class PowerSlider {
     if (tierChanged) {
       this.updateBenefitsList();
     }
-
-    this.updateUnlocksPreview();
     this.updatePricing();
     this.updateARIA();
 
@@ -372,35 +389,6 @@ class PowerSlider {
     return item;
   }
 
-  updateUnlocksPreview() {
-    if (!this.elements.unlocksPreview || !this.elements.unlocksText) return;
-
-    let message = '';
-    let status = 'locked';
-
-    if (this.currentValue === 0) {
-      message = 'Slide to unlock gifts + discounts';
-      status = 'locked';
-    } else if (this.currentValue < 4) {
-      message = `Unlock ${this.gifts[0].name} at 4 items`;
-      status = 'locked';
-    } else if (this.currentValue >= 4 && this.currentValue < 8) {
-      message = `✓ ${this.gifts[0].name} unlocked! Reach 8 for ${this.gifts[1].name}`;
-      status = 'unlocking';
-    } else if (this.currentValue >= 8 && this.currentValue < 12) {
-      message = `✓ ${this.gifts[0].name} + ${this.gifts[1].name}! Reach 12 for ${this.gifts[2].name}`;
-      status = 'unlocking';
-    } else if (this.currentValue >= 12 && this.currentValue < 16) {
-      message = `✓ 3 gifts unlocked! Reach 16 for ${this.gifts[3].name}`;
-      status = 'unlocking';
-    } else if (this.currentValue >= 16) {
-      message = `🎉 All 4 premium gifts unlocked! (€275+ value)`;
-      status = 'unlocking';
-    }
-
-    this.elements.unlocksText.textContent = message;
-    this.elements.unlocksPreview.setAttribute('data-unlock-status', status);
-  }
 
   updatePricing() {
     if (this.currentValue === 0) {

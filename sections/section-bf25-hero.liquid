@@ -12,6 +12,12 @@
   <symbol id="icon-benefit-check" viewBox="0 0 20 20" fill="currentColor">
     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
   </symbol>
+  <symbol id="icon-finger-drag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+    <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+    <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+    <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+  </symbol>
 </svg>
 
 <section class="bf25-hero" id="bf25-hero-section">
@@ -106,6 +112,14 @@
           </div>
         </div>
 
+        <!-- NEW: Finger drag indicator -->
+        <div class="bf25-hero__drag-indicator" id="bf25-drag-indicator">
+          <svg class="bf25-hero__drag-finger">
+            <use xlink:href="#icon-finger-drag"></use>
+          </svg>
+          <span class="bf25-hero__drag-hint">Drag</span>
+        </div>
+
         <!-- UPDATED: Progress Bar (DOM Segments) -->
         <div class="progress-bar progress-bar--segmented" id="bf25-visualization">
           <div class="progress-bar__segments">
@@ -147,14 +161,6 @@
           </div>
           <div class="bf25-hero__discount-display">
             <span class="bf25-hero__discount-label">Move the slider</span>
-          </div>
-        </div>
-
-        <!-- NEW: Unlock Preview Section -->
-        <div class="bf25-hero__unlocks-preview">
-          <div class="bf25-hero__unlocks-current" data-unlock-status="locked">
-            <span class="bf25-hero__unlocks-icon">🎁</span>
-            <span class="bf25-hero__unlocks-text">Slide to unlock gifts + discounts</span>
           </div>
         </div>
 

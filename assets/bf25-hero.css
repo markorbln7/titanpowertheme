@@ -401,6 +401,76 @@
 }
 */
 
+/* ═══════════════════════════════════════════════════════════════
+   DRAG INDICATOR (FINGER POINTER)
+   ═══════════════════════════════════════════════════════════== */
+
+.bf25-hero__drag-indicator {
+  position: absolute;
+  left: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 1;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Hide on mobile (too crowded) */
+@media (max-width: 640px) {
+  .bf25-hero__drag-indicator {
+    display: none;
+  }
+}
+
+/* Finger icon */
+.bf25-hero__drag-finger {
+  width: 32px;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 0 8px rgba(96, 198, 85, 0.3));
+
+  /* Pulsing animation */
+  animation: fingerPulse 2s ease-in-out infinite;
+}
+
+/* "Drag" hint text */
+.bf25-hero__drag-hint {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Pulsing animation */
+@keyframes fingerPulse {
+  0%, 100% {
+    transform: scale(1) translateX(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) translateX(3px);
+    opacity: 1;
+  }
+}
+
+/* Hide indicator after first interaction */
+.bf25-hero__drag-indicator.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Glow effect when active */
+.bf25-hero__slider-wrapper:hover .bf25-hero__drag-finger {
+  color: #60c655;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.6));
+}
+
 /* Discount Labels (Above Slider) */
 .bf25-hero__discount-labels {
   position: relative;
@@ -821,11 +891,14 @@
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* Tier 3: Magnetic Cable Set (3rd gift) - TEXT becomes gold */
+/* Tier 3: Magnetic Cable Set (3rd gift) - Enhanced gold gradient */
 .bf25-hero__card[data-active-tier="3"] .bf25-hero__benefit-item[data-tier="3"] .bf25-hero__benefit-text,
 .bf25-hero__card[data-active-tier="4"] .bf25-hero__benefit-item[data-tier="3"] .bf25-hero__benefit-text {
-  color: #FFD700 !important;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  background: linear-gradient(90deg, #d1b002 0%, #ffd700 50%, #f8e47a 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -900,55 +973,81 @@
   box-shadow: 0 0 12px rgba(224, 247, 255, 0.4);
 }
 
-/* Tier 4: Bigfoot Mystery Box (4th gift) - TEXT becomes platinum */
+/* Tier 4: Bigfoot Mystery Box (4th gift) - Enhanced platinum gradient */
 .bf25-hero__card[data-active-tier="4"] .bf25-hero__benefit-item[data-tier="4"] .bf25-hero__benefit-text {
-  color: #E0F7FF !important;
-  text-shadow: 0 0 10px rgba(224, 247, 255, 0.6);
+  background: linear-gradient(90deg, #d6f6ff 0%, #cae8f3 50%, #fafdff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 0 10px rgba(224, 247, 255, 0.6));
 }
 
-/* Unlock Preview Section */
-.bf25-hero__unlocks-preview {
-  padding: var(--space-3) 0;
-  border-top: 1px solid var(--glass-border-color);
-  border-bottom: 1px solid var(--glass-border-color);
-  margin-bottom: var(--space-3);
-}
+/* ═══════════════════════════════════════════════════════════════
+   TIER 0 (DEFAULT) - CENTERED MESSAGING
+   ═══════════════════════════════════════════════════════════== */
 
-.bf25-hero__unlocks-current {
-  display: flex;
+/* Tier 0 - Centered messaging */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  font-size: 13px;
-  line-height: 1.4;
-  transition: all var(--duration-medium) var(--easing-premium);
+  gap: 8px;
+  padding: var(--space-5) var(--space-4);
 }
 
-.bf25-hero__unlocks-icon {
-  font-size: 18px;
-  transition: transform var(--duration-medium) var(--easing-premium);
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__tier-badge {
+  order: 2;
+  opacity: 0.5;
 }
 
-.bf25-hero__unlocks-text {
-  color: var(--color-text-subtle);
-  font-weight: 500;
-  transition: color var(--duration-medium) var(--easing-premium);
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__discount-display {
+  order: 1;
 }
 
-/* State: Unlocking (when user reaches a tier) */
-.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-icon {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 8px var(--color-accent-lime));
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__discount-label {
+  font-size: 20px; /* Larger */
+  font-weight: 700;
+  color: #60c655;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 
-.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-text {
-  color: var(--color-accent-lime);
-  font-weight: 600;
+/* Hide "Explore Tiers" or make it subtle */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__tier-badge-text {
+  font-size: 12px;
+  opacity: 0.4;
 }
 
-@media (min-width: 769px) {
-  .bf25-hero__unlocks-current {
-    font-size: 14px;
-  }
+/* ═══════════════════════════════════════════════════════════════
+   TIER-WIDE COLOR OVERRIDE (All elements match current tier)
+   ═══════════════════════════════════════════════════════════== */
+
+/* TIER 3 (GOLD) - ALL REACHED CHECKPOINTS AND LABELS BECOME GOLD */
+.bf25-hero__slider-wrapper[data-active-tier="3"] .bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
+  color: #FFD700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  font-weight: 700;
+}
+
+.bf25-hero__slider-wrapper[data-active-tier="3"] .bf25-hero__discount-label-item.is-reached .bf25-hero__discount-text {
+  color: #000 !important;
+  background: #FFD700 !important;
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+/* TIER 4 (PLATINUM) - ALL REACHED CHECKPOINTS AND LABELS BECOME PLATINUM */
+.bf25-hero__slider-wrapper[data-active-tier="4"] .bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
+  color: #E0F7FF !important;
+  text-shadow: 0 0 15px rgba(224, 247, 255, 0.8);
+  font-weight: 700;
+}
+
+.bf25-hero__slider-wrapper[data-active-tier="4"] .bf25-hero__discount-label-item.is-reached .bf25-hero__discount-text {
+  color: #000 !important;
+  background: #E0F7FF !important;
+  border-color: #E0F7FF !important;
+  box-shadow: 0 0 20px rgba(224, 247, 255, 0.8);
 }
 
 /* Pricing Summary */

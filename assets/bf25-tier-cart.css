@@ -376,3 +376,535 @@
     max-width: 800px;
   }
 }
+
+/* ====================================
+   ACTION SECTION
+   ==================================== */
+.bf25-sticky-cart__action-section {
+  display: flex;
+  align-items: center;
+  gap: var(--bf25-space-md);
+  width: 100%;
+  max-width: 700px;
+  height: 37px;
+  margin-top: var(--bf25-space-xs);
+}
+
+/* ====================================
+   INCENTIVE MESSAGE
+   ==================================== */
+.bf25-action-incentive {
+  flex: 1;
+  min-width: 150px;
+  overflow: hidden;
+}
+
+.bf25-action-incentive__text {
+  /* Fluid Typography (13px → 15px) */
+  font-size: clamp(0.8125rem, 0.75rem + 0.5vw, 0.9375rem);
+  font-family: var(--bf25-font-body);
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.3;
+
+  /* 2-Line Clamp (Mobile) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Highlighted Keywords (Dynamic Tier Color) */
+.bf25-highlight {
+  color: var(--bf25-tier-color);
+  font-weight: 700;
+  text-shadow: 0 0 8px var(--bf25-tier-glow);
+}
+
+/* Desktop: 1-Line Clamp */
+@media (min-width: 768px) {
+  .bf25-action-incentive__text {
+    -webkit-line-clamp: 1;
+    font-size: 15px;
+  }
+}
+
+/* ====================================
+   SAVINGS DISPLAY
+   ==================================== */
+.bf25-action-savings {
+  flex-shrink: 0;
+  width: 80px;
+  text-align: center;
+}
+
+.bf25-action-savings__amount {
+  font-family: var(--bf25-font-body);
+  font-size: var(--bf25-text-lg);
+  font-weight: 700;
+  color: var(--bf25-tier-color);
+  text-shadow: 0 0 8px var(--bf25-tier-glow);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+  white-space: nowrap;
+}
+
+/* ====================================
+   CTAs
+   ==================================== */
+.bf25-action-ctas {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.bf25-action-btn {
+  /* Reset */
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  /* Typography */
+  font-family: var(--bf25-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  /* Transitions */
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Touch Target Enhancement (Mobile) */
+  position: relative;
+}
+
+/* View Button */
+.bf25-action-btn--view {
+  width: 65px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.bf25-action-btn--view:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.bf25-action-btn--view:active {
+  transform: scale(0.98);
+}
+
+/* Buy Now Button */
+.bf25-action-btn--buy {
+  width: 75px;
+  background: var(--bf25-tier-color);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 2px 8px var(--bf25-tier-glow);
+}
+
+.bf25-action-btn--buy:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--bf25-tier-glow);
+}
+
+.bf25-action-btn--buy:active {
+  transform: translateY(0);
+}
+
+/* Touch Target Expansion (Mobile) */
+@media (max-width: 767px) {
+  .bf25-action-btn::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    left: -6px;
+    right: -6px;
+    /* Invisible hit area for 44x44px WCAG compliance */
+  }
+}
+
+/* ====================================
+   ACCESSIBILITY
+   ==================================== */
+.bf25-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible (Keyboard Navigation) */
+.bf25-action-btn:focus-visible {
+  outline: 2px solid var(--bf25-tier-color);
+  outline-offset: 2px;
+}
+
+/* ====================================
+   RESPONSIVE ADJUSTMENTS
+   ==================================== */
+@media (min-width: 768px) {
+  .bf25-sticky-cart__action-section {
+    max-width: 800px;
+    gap: var(--bf25-space-lg);
+  }
+
+  .bf25-action-savings {
+    width: 100px;
+  }
+
+  .bf25-action-btn {
+    font-size: 14px;
+    min-height: 36px;
+  }
+
+  .bf25-action-btn--view {
+    width: 75px;
+  }
+
+  .bf25-action-btn--buy {
+    width: 90px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .bf25-action-incentive {
+    min-width: 200px;
+  }
+}
+
+/* ====================================
+   MOBILE OPTIMIZATIONS (<375px)
+   ==================================== */
+@media (max-width: 374px) {
+  /* Ultra-Compact Container */
+  .bf25-sticky-cart {
+    padding: 4px 8px;
+  }
+
+  /* Smaller Progress Bar */
+  .bf25-sticky-cart__progress-wrapper {
+    height: 24px;
+  }
+
+  .bf25-progress-bar {
+    height: 18px;
+  }
+
+  /* Smaller Tier Labels */
+  .bf25-tier-label__text {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+
+  /* Smaller Gift Icons */
+  .bf25-gift-slot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .bf25-gift-icon {
+    font-size: 14px;
+  }
+
+  /* Compact Action Section */
+  .bf25-sticky-cart__action-section {
+    gap: 6px;
+    height: 32px;
+  }
+
+  /* Hide Savings on Tiny Screens */
+  .bf25-action-savings {
+    display: none;
+  }
+
+  /* Incentive Takes Available Space */
+  .bf25-action-incentive {
+    flex: 1;
+    min-width: 0; /* Allow shrinking */
+  }
+
+  /* Ultra-Compact Message */
+  .bf25-action-incentive__text {
+    font-size: 12px;
+    -webkit-line-clamp: 1; /* Force 1 line */
+  }
+
+  /* Smaller Buttons */
+  .bf25-action-btn {
+    font-size: 11px;
+    min-height: 28px;
+    padding: 4px 6px;
+  }
+
+  .bf25-action-btn--view {
+    width: 50px;
+  }
+
+  .bf25-action-btn--buy {
+    width: 60px;
+  }
+}
+
+/* ====================================
+   TABLET OPTIMIZATIONS (768px - 1279px)
+   ==================================== */
+@media (min-width: 768px) and (max-width: 1279px) {
+  /* Balanced Layout */
+  .bf25-sticky-cart {
+    padding: 8px 20px;
+  }
+
+  .bf25-sticky-cart__action-section {
+    gap: 12px;
+  }
+
+  /* Show Full Messages */
+  .bf25-action-incentive__text {
+    font-size: 14px;
+  }
+
+  /* Larger CTAs */
+  .bf25-action-btn--view {
+    width: 80px;
+  }
+
+  .bf25-action-btn--buy {
+    width: 100px;
+  }
+}
+
+/* ====================================
+   DESKTOP OPTIMIZATIONS (1280px+)
+   ==================================== */
+@media (min-width: 1280px) {
+  /* Centered with Max Width */
+  .bf25-sticky-cart {
+    padding: 12px 32px;
+  }
+
+  .bf25-sticky-cart__progress-wrapper,
+  .bf25-sticky-cart__action-section {
+    max-width: 900px;
+  }
+
+  /* Spacious Layout */
+  .bf25-sticky-cart__action-section {
+    gap: 16px;
+  }
+
+  /* Generous Sizing */
+  .bf25-action-savings {
+    width: 120px;
+  }
+
+  .bf25-action-btn {
+    font-size: 15px;
+    min-height: 40px;
+  }
+
+  .bf25-action-btn--view {
+    width: 90px;
+  }
+
+  .bf25-action-btn--buy {
+    width: 110px;
+  }
+
+  /* Hover Effects Enhanced */
+  .bf25-action-btn--buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--bf25-tier-glow);
+  }
+}
+
+/* ====================================
+   LANDSCAPE MOBILE (<768px + landscape)
+   ==================================== */
+@media (max-width: 767px) and (orientation: landscape) {
+  /* Reduce Height for Landscape */
+  .bf25-sticky-cart {
+    padding: 4px 12px;
+  }
+
+  .bf25-sticky-cart__progress-wrapper {
+    height: 22px;
+  }
+
+  .bf25-progress-bar {
+    height: 16px;
+  }
+
+  .bf25-sticky-cart__action-section {
+    height: 30px;
+  }
+
+  /* Compact Everything */
+  .bf25-tier-label__text {
+    font-size: 9px;
+    padding: 1px 3px;
+  }
+
+  .bf25-action-incentive__text {
+    font-size: 11px;
+  }
+
+  .bf25-action-btn {
+    min-height: 26px;
+    font-size: 11px;
+  }
+}
+
+/* ====================================
+   TIER-SPECIFIC ENHANCEMENTS
+   ==================================== */
+
+/* Tier 3 (GOLD) - Premium Styling */
+.bf25-sticky-cart[data-active-tier="3"] {
+  /* Enhanced Gold Glow */
+  border-top-color: rgba(255, 215, 0, 0.6);
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.7),
+    inset 0 10px 20px -10px rgba(255, 215, 0, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+/* Gold Gradient for Text */
+.bf25-sticky-cart[data-active-tier="3"] .bf25-highlight {
+  background: linear-gradient(90deg, #d1b002 0%, #ffd700 50%, #f8e47a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+}
+
+/* Tier 4 (PLATINUM) - Ultimate Styling */
+.bf25-sticky-cart[data-active-tier="4"] {
+  /* Enhanced Platinum Glow */
+  border-top-color: rgba(224, 247, 255, 0.7);
+  box-shadow:
+    0 -10px 40px rgba(0, 0, 0, 0.7),
+    inset 0 10px 20px -10px rgba(224, 247, 255, 0.4),
+    0 0 40px rgba(224, 247, 255, 0.3);
+}
+
+/* Platinum Gradient for Text */
+.bf25-sticky-cart[data-active-tier="4"] .bf25-highlight {
+  background: linear-gradient(90deg, #d6f6ff 0%, #cae8f3 50%, #fafdff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(224, 247, 255, 0.6));
+}
+
+/* Platinum Button Styling */
+.bf25-sticky-cart[data-active-tier="4"] .bf25-action-btn--buy {
+  color: #000;
+  font-weight: 800;
+}
+
+/* ====================================
+   ACCESSIBILITY ENHANCEMENTS
+   ==================================== */
+
+/* Focus Visible States (Keyboard Navigation) */
+.bf25-action-btn:focus-visible {
+  outline: 3px solid var(--bf25-tier-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(var(--bf25-tier-color-rgb), 0.2);
+}
+
+/* High Contrast Focus */
+@media (prefers-contrast: high) {
+  .bf25-action-btn:focus-visible {
+    outline: 4px solid currentColor;
+    outline-offset: 4px;
+  }
+}
+
+/* ====================================
+   PERFORMANCE OPTIMIZATIONS
+   ==================================== */
+
+/* Respect User Preferences: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-sticky-cart,
+  .bf25-sticky-cart *,
+  .bf25-sticky-cart *::before,
+  .bf25-sticky-cart *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Disable flowing animation */
+  .bf25-progress-bar__segment.is-filled {
+    animation: none;
+    background: var(--bf25-tier-color);
+  }
+}
+
+/* Respect User Preferences: Save Data */
+@media (prefers-reduced-data: reduce) {
+  /* Simplify visuals for low bandwidth */
+  .bf25-sticky-cart {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ====================================
+   PRINT STYLES
+   ==================================== */
+@media print {
+  .bf25-sticky-cart {
+    display: none !important;
+  }
+}
+
+/* ====================================
+   LOADING STATE
+   ==================================== */
+.bf25-sticky-cart[data-state="loading"] {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.bf25-sticky-cart[data-state="loading"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+}
+
+/* ====================================
+   ERROR STATE
+   ==================================== */
+.bf25-sticky-cart[data-state="error"] {
+  border-top-color: rgba(239, 68, 68, 0.6);
+}
+
+.bf25-sticky-cart[data-state="error"] .bf25-action-incentive__text {
+  color: #fca5a5;
+}

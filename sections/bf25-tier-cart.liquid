@@ -60,15 +60,64 @@
     </div>
   </div>
 
-  <!-- Action Section (Placeholder for PROMPT 1B) -->
-  <div class="bf25-sticky-cart__actions-placeholder">
-    <!-- Will be built in PROMPT 1B -->
+  <!-- Action Section (37px height) -->
+  <div class="bf25-sticky-cart__action-section">
+
+    <!-- Incentive Message (Left, flexible width) -->
+    <div class="bf25-action-incentive">
+      <span class="bf25-action-incentive__text" id="bf25-incentive-text">
+        Add <strong class="bf25-highlight">4 items</strong> → <strong class="bf25-highlight">🔥 60% OFF</strong>
+      </span>
+    </div>
+
+    <!-- Savings Display (Center, 80px fixed) -->
+    <div class="bf25-action-savings">
+      <span class="bf25-action-savings__amount" id="bf25-savings-amount">Save €0</span>
+    </div>
+
+    <!-- CTAs (Right, 75px total) -->
+    <div class="bf25-action-ctas">
+      <button
+        type="button"
+        class="bf25-action-btn bf25-action-btn--view"
+        id="bf25-btn-view"
+        aria-label="View cart contents"
+        aria-expanded="false"
+      >
+        View ▼
+      </button>
+      <button
+        type="button"
+        class="bf25-action-btn bf25-action-btn--buy"
+        id="bf25-btn-buy"
+        aria-label="Proceed to checkout"
+      >
+        Buy Now
+      </button>
+    </div>
+
   </div>
+
+  <!-- Accessibility Announcements -->
+  <div
+    id="bf25-cart-announcements"
+    class="bf25-sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
 
 </div>
 
 <!-- Load CSS -->
 {{ 'bf25-tier-cart.css' | asset_url | stylesheet_tag }}
+
+<!-- Load JavaScript -->
+<script src="{{ 'bf25-tier-cart.js' | asset_url }}" defer></script>
+
+<!-- Load Test Suite (Development Only) -->
+{% if section.settings.enable_testing %}
+<script src="{{ 'bf25-tier-cart-tests.js' | asset_url }}" defer></script>
+{% endif %}
 
 <!-- Schema for Theme Customizer -->
 {% schema %}
@@ -83,6 +132,13 @@
       "label": "Show by default (for testing)",
       "default": true,
       "info": "Turn off in production to only show when cart has items"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_testing",
+      "label": "Enable testing suite",
+      "default": false,
+      "info": "Load test scripts for development"
     },
     {
       "type": "header",

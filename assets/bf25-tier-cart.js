@@ -900,6 +900,12 @@
     expandCart() {
       if (!this.elements.container) return;
 
+      // CRITICAL: Prevent expand if cart is empty
+      if (this.itemCount === 0) {
+        console.log('[BF25SC Cart] Cannot expand - cart is empty');
+        return;
+      }
+
       console.log('[BF25 Cart] Expanding cart view');
 
       // Add expanded class
@@ -1323,13 +1329,48 @@
         this.elements.container.style.display = 'flex';
         this.elements.container.classList.add('is-empty');
         this.showEmptyStateMessage();
-        console.log('[BF25SC Cart] Showing empty state');
+
+        // CRITICAL: Collapse cart if expanded
+        if (this.elements.container.classList.contains('is-expanded')) {
+          console.log('[BF25SC Cart] Collapsing expanded cart (empty state)');
+          this.collapseCart();
+        }
+
+        // Disable buttons
+        if (this.elements.btnView) {
+          this.elements.btnView.disabled = true;
+          this.elements.btnView.style.opacity = '0.5';
+          this.elements.btnView.style.cursor = 'not-allowed';
+        }
+
+        if (this.elements.btnBuy) {
+          this.elements.btnBuy.disabled = true;
+          this.elements.btnBuy.style.opacity = '0.5';
+          this.elements.btnBuy.style.cursor = 'not-allowed';
+        }
+
+        console.log('[BF25SC Cart] Empty state active');
+
       } else {
         // Show normal cart
         this.elements.container.style.display = 'flex';
         this.elements.container.classList.remove('is-empty');
         this.hideEmptyStateMessage();
-        console.log('[BF25SC Cart] Visible (cart has items)');
+
+        // Re-enable buttons
+        if (this.elements.btnView) {
+          this.elements.btnView.disabled = false;
+          this.elements.btnView.style.opacity = '1';
+          this.elements.btnView.style.cursor = 'pointer';
+        }
+
+        if (this.elements.btnBuy) {
+          this.elements.btnBuy.disabled = false;
+          this.elements.btnBuy.style.opacity = '1';
+          this.elements.btnBuy.style.cursor = 'pointer';
+        }
+
+        console.log('[BF25SC Cart] Cart active (has items)');
       }
     }
 

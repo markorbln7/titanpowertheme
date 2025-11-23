@@ -135,20 +135,27 @@
         return;
       }
 
-      // Show empty state
-      this.showEmptyState();
+      // Initialize debounce timeout
+      this.syncTimeout = null;
+      this.retryCount = 0;
 
       // Bind events
       this.bindEvents();
 
-      // NEW: Initialize keyboard navigation
+      // Initialize cart listeners
+      this.initCartListeners();
+
+      // Initialize keyboard navigation
       this.initKeyboardNav();
 
-      // NEW: Handle viewport changes
+      // Handle viewport changes
       this.handleViewportChange();
 
-      // NEW: Set initial body padding (CLS prevention)
+      // Set initial body padding (CLS prevention)
       document.body.style.paddingBottom = '65px';
+
+      // Sync cart on load
+      this.syncCart();
 
       console.log('[BF25 Cart] ✓ Ready');
     }
@@ -502,14 +509,31 @@
       }
 
       // Announce to screen reader
-      this.announce(`Error: Unable to update cart. Please refresh the page.`);
+      this.announce(`Error updating cart. Please refresh the page.`);
 
-      // Auto-recover after 3 seconds
+      // Retry logic (exponential backoff)
+      if (!this.retryCount) this.retryCount = 0;
+
+      if (this.retryCount < 3) {
+        this.retryCount++;
+        const delay = Math.pow(2, this.retryCount) * 1000; // 2s, 4s, 8s
+
+        console.log(`[BF25 Cart] Retrying in ${delay}ms (attempt ${this.retryCount}/3)`);
+
+        setTimeout(() => {
+          this.syncCart();
+        }, delay);
+      } else {
+        console.error('[BF25 Cart] Max retries reached, giving up');
+        this.retryCount = 0;
+      }
+
+      // Auto-recover after 5 seconds
       setTimeout(() => {
         if (this.elements.container) {
           this.elements.container.dataset.state = 'idle';
         }
-      }, 3000);
+      }, 5000);
     }
 
     // ============================================
@@ -526,6 +550,243 @@
           console.log('[BF25 Cart] Viewport changed, UI updated');
         }, 150);
       });
+    }
+
+    // ============================================
+    // SHOPIFY CART API INTEGRATION
+    // ============================================
+
+    /**
+     * Fetch current cart data from Shopify
+     */
+    async fetchCart() {
+      try {
+        const response = await fetch('/cart.js', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Cart fetch failed: ${response.status}`);
+        }
+
+        const cart = await response.json();
+        console.log('[BF25 Cart] Fetched cart:', cart);
+        return cart;
+
+      } catch (error) {
+        this.handleError(error, 'fetchCart');
+        return null;
+      }
+    }
+
+    /**
+     * Calculate non-gift item count
+     * Excludes any items with 'BF25-Gift' tag or in gift list
+     */
+    calculateItemCount(cart) {
+      if (!cart || !cart.items) return 0;
+
+      // Gift product handles (to be excluded from count)
+      const giftHandles = [
+        'bf25-free-cable',
+        'bf25-free-case',
+        'bf25-free-magnetic-set',
+        'bf25-free-mystery-box'
+      ];
+
+      let count = 0;
+      cart.items.forEach(item => {
+        // Skip gift items
+        const isGift = giftHandles.some(handle =>
+          item.handle && item.handle.includes(handle)
+        );
+
+        if (!isGift) {
+          count += item.quantity;
+        }
+      });
+
+      return count;
+    }
+
+    /**
+     * Calculate cart subtotal (excluding gifts)
+     */
+    calculateSubtotal(cart) {
+      if (!cart || !cart.items) return 0;
+
+      const giftHandles = [
+        'bf25-free-cable',
+        'bf25-free-case',
+        'bf25-free-magnetic-set',
+        'bf25-free-mystery-box'
+      ];
+
+      let subtotal = 0;
+      cart.items.forEach(item => {
+        const isGift = giftHandles.some(handle =>
+          item.handle && item.handle.includes(handle)
+        );
+
+        if (!isGift) {
+          subtotal += item.final_line_price;
+        }
+      });
+
+      return subtotal / 100; // Convert cents to euros
+    }
+
+    /**
+     * Calculate actual savings (discount + gift value)
+     */
+    calculateSavings(cart) {
+      if (!cart || !cart.items) return 0;
+
+      const subtotal = this.calculateSubtotal(cart);
+      const itemCount = this.calculateItemCount(cart);
+      const tier = this.calculateTier(itemCount);
+
+      // Discount savings (if tier has multiplier)
+      let discountSavings = 0;
+      if (tier.multiplier) {
+        const fullPrice = subtotal / tier.multiplier; // Reverse calculate full price
+        discountSavings = fullPrice - subtotal;
+      }
+
+      // Gift value savings
+      const giftValue = tier.gifts.reduce((sum, gift) => sum + gift.value, 0);
+
+      return Math.round(discountSavings + giftValue);
+    }
+
+    /**
+     * Sync cart data and update UI
+     */
+    async syncCart() {
+      console.log('[BF25 Cart] Syncing with Shopify cart...');
+
+      // Set loading state
+      this.setState('syncing');
+
+      try {
+        // Fetch cart
+        const cart = await this.fetchCart();
+
+        if (!cart) {
+          throw new Error('Failed to fetch cart');
+        }
+
+        // Calculate counts
+        const itemCount = this.calculateItemCount(cart);
+        const savings = this.calculateSavings(cart);
+
+        console.log(`[BF25 Cart] Sync complete: ${itemCount} items, €${savings} savings`);
+
+        // Update visualization
+        this.updateVisualization(itemCount);
+
+        // Update savings display
+        if (this.elements.savingsAmount) {
+          this.elements.savingsAmount.textContent = `Save €${savings}`;
+        }
+
+        // Show/hide cart based on items
+        this.handleEmptyState(itemCount);
+
+        // Set idle state
+        this.setState('idle');
+
+        return { itemCount, savings };
+
+      } catch (error) {
+        this.handleError(error, 'syncCart');
+        this.setState('error');
+        return null;
+      }
+    }
+
+    /**
+     * Handle empty cart state
+     */
+    handleEmptyState(itemCount) {
+      if (!this.elements.container) return;
+
+      if (itemCount === 0) {
+        // Hide cart (or show empty message)
+        this.elements.container.style.display = 'none';
+        console.log('[BF25 Cart] Hidden (empty cart)');
+      } else {
+        // Show cart
+        this.elements.container.style.display = 'flex';
+        console.log('[BF25 Cart] Visible (cart has items)');
+      }
+    }
+
+    /**
+     * Set manager state
+     */
+    setState(newState) {
+      this.state = newState;
+
+      if (this.elements.container) {
+        this.elements.container.dataset.state = newState;
+      }
+
+      console.log(`[BF25 Cart] State: ${newState}`);
+    }
+
+    // ============================================
+    // CART EVENT LISTENERS
+    // ============================================
+
+    /**
+     * Initialize cart event listeners
+     */
+    initCartListeners() {
+      console.log('[BF25 Cart] Initializing cart listeners...');
+
+      // Listen for Shopify theme cart updates
+      document.addEventListener('cart:updated', () => {
+        console.log('[BF25 Cart] Event: cart:updated');
+        this.debouncedSync();
+      });
+
+      // Listen for custom events (if your theme uses them)
+      document.addEventListener('cart-drawer:updated', () => {
+        console.log('[BF25 Cart] Event: cart-drawer:updated');
+        this.debouncedSync();
+      });
+
+      // Listen for Rebuy updates (if Rebuy is installed)
+      if (window.Rebuy) {
+        document.addEventListener('rebuy:cart.change', () => {
+          console.log('[BF25 Cart] Event: rebuy:cart.change');
+          this.debouncedSync();
+        });
+      }
+
+      // Fallback: Poll every 5 seconds (safety net)
+      setInterval(() => {
+        if (this.state === 'idle') {
+          this.syncCart();
+        }
+      }, 5000);
+
+      console.log('[BF25 Cart] ✓ Listeners active');
+    }
+
+    /**
+     * Debounced sync (prevents rapid API calls)
+     */
+    debouncedSync() {
+      clearTimeout(this.syncTimeout);
+      this.syncTimeout = setTimeout(() => {
+        this.syncCart();
+      }, 200); // 200ms debounce
     }
 
     // ============================================

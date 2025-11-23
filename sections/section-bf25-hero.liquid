@@ -84,9 +84,35 @@
       </div>
 
       <div class="bf25-hero__slider-wrapper">
-        <div class="bf25-hero__visualization">
-          <div class="bf25-hero__track"></div>
-          <div class="bf25-hero__fill"></div>
+
+        <!-- NEW: Discount Labels Above Bar -->
+        <div class="bf25-hero__discount-labels">
+          <!-- NEW: 50% at 1 item -->
+          <div class="bf25-hero__discount-label-item" data-tier="0" data-value="1">
+            <span class="bf25-hero__discount-text">50%</span>
+          </div>
+
+          <div class="bf25-hero__discount-label-item" data-tier="1" data-value="4">
+            <span class="bf25-hero__discount-text">60%</span>
+          </div>
+          <div class="bf25-hero__discount-label-item" data-tier="2" data-value="8">
+            <span class="bf25-hero__discount-text">70%</span>
+          </div>
+          <div class="bf25-hero__discount-label-item" data-tier="3" data-value="12">
+            <span class="bf25-hero__discount-text">80%</span>
+          </div>
+          <div class="bf25-hero__discount-label-item" data-tier="4" data-value="16">
+            <span class="bf25-hero__discount-text">85%</span>
+          </div>
+        </div>
+
+        <!-- UPDATED: Progress Bar (DOM Segments) -->
+        <div class="progress-bar progress-bar--segmented" id="bf25-visualization">
+          <div class="progress-bar__segments">
+            {% for i in (1..16) %}
+            <div class="progress-bar__segment" data-segment="{{ i }}"></div>
+            {% endfor %}
+          </div>
         </div>
 
         <input type="range" min="0" max="16" step="1" value="0" class="bf25-hero__input" id="bf25-hero-slider"
@@ -94,6 +120,11 @@
                aria-valuemin="0" aria-valuemax="16" aria-valuenow="0" aria-valuetext="0 items selected"/>
 
         <div class="bf25-hero__checkpoints">
+          <!-- NEW: 1 Item Checkpoint -->
+          <div class="bf25-hero__checkpoint" data-value="1">
+            <span class="bf25-hero__checkpoint-label">1 <span class="checkpoint-subtext">item</span></span>
+          </div>
+          <!-- Existing checkpoints remain -->
           <div class="bf25-hero__checkpoint" data-tier="1" data-value="4">
             <span class="bf25-hero__checkpoint-label">4 <span class="checkpoint-subtext">items</span></span>
           </div>
@@ -192,14 +223,16 @@
       "name": "Magnetic Cable Set",
       "value": 60.00,
       "tier": 3,
-      "benefit_text": "FREE Magnetic Cable Set (€60 value)"
+      "benefit_text": "🆕 NEW RELEASE: Magnetic Cable Set (€60 value)",
+      "special_class": "exclusive"
     },
     {
       "id": "mystery",
       "name": "Bigfoot Mystery Box",
       "value": 150.00,
       "tier": 4,
-      "benefit_text": "FREE Bigfoot Mystery Box (€150+ value)"
+      "benefit_text": "🎁 EXCLUSIVE: Bigfoot Mystery Box (€150+ value)",
+      "special_class": "mystery"
     }
   ],
   "tiers": [
@@ -237,20 +270,20 @@
       "id": 3,
       "min": 12,
       "max": 15,
-      "badge": "Best Deal",
+      "badge": "Gold Tier",
       "display_label": "80% OFF",
       "multiplier": 0.65,
-      "color": "#60c655",
+      "color": "#FFD700",
       "discount_benefit_text": "80% OFF all items"
     },
     {
       "id": 4,
       "min": 16,
       "max": 999,
-      "badge": "Bigfoot Unlock",
+      "badge": "Platinum Unlock",
       "display_label": "85% OFF",
       "multiplier": 0.57,
-      "color": "#60c655",
+      "color": "#E0F7FF",
       "discount_benefit_text": "85% OFF all items"
     }
   ]

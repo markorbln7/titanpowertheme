@@ -52,6 +52,20 @@
   --gradient-step-size: calc(var(--segment-width) + var(--segment-gap));
 }
 
+/* Ultimate Progress Bar Design System Variables */
+.progress-bar {
+  /* Base Config (Reusable) */
+  --pb-height: 24px;
+  --pb-radius: 12px;
+  --pb-segment-count: 1;
+  --pb-segment-gap: 3px;
+
+  /* Dynamic Variables (Set by JS) */
+  /* --pb-fill-width */
+  /* --pb-fill-gradient */
+  /* --pb-glow-color */
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    2. SECTION FOUNDATION & TYPOGRAPHY
    ═══════════════════════════════════════════════════════════════════════ */
@@ -282,77 +296,181 @@
   overflow: visible; /* Fix: Allow input to extend beyond wrapper */
 }
 
-.bf25-hero__visualization {
+/* ==================================================================
+   ULTIMATE PREMIUM PROGRESS BAR DESIGN SYSTEM
+   ================================================================== */
+
+/* Base Component Structure */
+.progress-bar {
   position: relative;
   width: 100%;
-  height: 20px; /* Increased height (Requirement Met) */
-  border-radius: 10px;
-  overflow: hidden; /* RESTORE from 'visible' */
-  /* Battery Casing */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0,0,0,0.3);
-  pointer-events: none; /* Ensure it doesn't block input */
+  height: var(--pb-height);
+  border-radius: var(--pb-radius);
+  overflow: hidden;
+
+  /* Premium Casing: Depth and Texture */
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6),
+              0 1px 0 rgba(255, 255, 255, 0.05);
+
+  pointer-events: none;
 }
 
-/* 5.1 Track (High Contrast Segments) */
-.bf25-hero__track {
+.progress-bar__track,
+.progress-bar__fill {
   position: absolute;
-  top: 0; /* CRITICAL FIX */
-  left: 0; /* CRITICAL FIX */
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: block !important; /* Force visibility */
+}
+
+.progress-bar__track {
+  width: 100%;
+  z-index: 1;
+}
+
+.progress-bar__fill {
+  width: var(--pb-fill-width);
+  z-index: 2;
+  transition: width var(--duration-medium) var(--easing-premium),
+              box-shadow var(--duration-medium) var(--easing-premium);
+  will-change: width, box-shadow;
+
+  /* Dynamic gradient set by JS */
+  background-image: var(--pb-fill-gradient);
+
+  /* Dynamic glow set by JS */
+  box-shadow: 0 0 20px var(--pb-glow-color), 0 0 5px var(--pb-glow-color);
+}
+
+/* Segmented Variant (16 segments with masking) */
+/* Segments Container (Flexbox) */
+.progress-bar__segments {
+  display: flex;
+  gap: 3px;
   width: 100%;
   height: 100%;
-  z-index: 1; /* CRITICAL: Track on bottom layer */
-  /* Creates 16 visible empty segments */
-  background: repeating-linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.15) 0,
-    rgba(255, 255, 255, 0.15) var(--segment-width),
-    transparent var(--segment-width),
-    transparent var(--gradient-step-size)
-  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
-/* 5.2 Fill (Energized Lime Green) */
-.bf25-hero__fill {
-  position: absolute;
-  top: 0; /* CRITICAL FIX */
-  left: 0; /* CRITICAL FIX */
-  width: var(--fill-width);
+/* Individual Segment */
+.progress-bar__segment {
+  display: block !important; /* CRITICAL: Force visibility */
+  flex: 1;
   height: 100%;
-  z-index: 2; /* CRITICAL: Fill on top layer */
-
-  /* Restore gradient visualization */
-  background: repeating-linear-gradient(
-    to right,
-    var(--color-accent-lime) 0,
-    var(--color-accent-lime) var(--segment-width),
-    transparent var(--segment-width),
-    transparent var(--gradient-step-size)
-  );
-
-  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 5px var(--color-accent-glow);
+  min-width: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background-color 300ms ease, box-shadow 300ms ease;
   opacity: 1;
-  transition: width var(--duration-medium) var(--easing-premium);
-  will-change: width;
+  visibility: visible;
+}
+
+/* Filled Segment */
+.progress-bar__segment.is-filled {
+  /* Animated gradient background */
+  background: linear-gradient(
+    90deg,
+    var(--color-tier-current) 0%,
+    var(--color-tier-glow) 50%,
+    var(--color-tier-current) 100%
+  );
+  background-size: 200% 100%;
+  animation: segmentFlow 2s ease-in-out infinite;
+  box-shadow: 0 0 12px var(--pb-glow-color),
+              inset 0 0 8px var(--pb-glow-color);
+}
+
+@keyframes segmentFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Energy Flow Animation - DISABLED for discrete filling */
+/*
+@keyframes energyFlow {
+  0% { background-position: 0 0; }
+  100% { background-position: calc(var(--pb-gradient-step-size) * 2) 0; }
+}
+*/
+
+/* Discount Labels (Above Slider) */
+.bf25-hero__discount-labels {
+  position: relative;
+  width: 100%;
+  height: 25px;
+  margin-bottom: var(--space-2);
   pointer-events: none;
+}
+
+.bf25-hero__discount-label-item {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+/* Positioning */
+.bf25-hero__discount-label-item[data-value="1"] {
+  left: 0%;
+  transform: translateX(0);
+}
+.bf25-hero__discount-label-item[data-value="4"] { left: 25%; }
+.bf25-hero__discount-label-item[data-value="8"] { left: 50%; }
+.bf25-hero__discount-label-item[data-value="12"] { left: 75%; }
+.bf25-hero__discount-label-item[data-value="16"] {
+  left: 100%;
+  transform: translateX(-100%);
+  margin-left: -5px; /* Shift left to prevent wrap */
+}
+
+.bf25-hero__discount-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+  transition: all var(--duration-medium) var(--easing-premium);
+  background: var(--color-bg-dark);
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--glass-border-color);
+  white-space: nowrap;
+}
+
+@media (min-width: 500px) {
+  .bf25-hero__discount-text {
+    font-size: 13px;
+  }
+}
+
+/* Active/Reached State */
+.bf25-hero__discount-label-item.is-reached .bf25-hero__discount-text {
+  color: var(--color-bg-dark);
+  background: var(--color-tier-current);
+  border-color: var(--color-tier-current);
+  box-shadow: 0 0 8px var(--pb-glow-color);
 }
 
 /* 5.3 Invisible Input (Accessibility) */
 .bf25-hero__input {
   position: absolute;
-  top: -12px; /* Center 44px target over 20px visualization */
+  top: 23px; /* FIXED: Position to center over progress bar (after discount labels) */
   left: 0;
   width: 100%;
   height: 44px;
   opacity: 0;
   cursor: pointer;
-  z-index: 100; /* Increased from 10 to 100 */
+  z-index: 100;
   -webkit-appearance: none;
   appearance: none;
   touch-action: pan-y;
   background: transparent;
-  margin: 0; /* CRITICAL: Remove default margins */
+  margin: 0;
+  pointer-events: auto; /* CRITICAL: Ensure input catches pointer events */
 }
 
 .bf25-hero__input:focus { outline: none; }
@@ -416,10 +534,18 @@
   transform: translateX(-50%);
 }
 
+.bf25-hero__checkpoint[data-value="1"] {
+  left: 0%;
+  transform: translateX(0);
+}
 .bf25-hero__checkpoint[data-value="4"] { left: 25%; }
 .bf25-hero__checkpoint[data-value="8"] { left: 50%; }
 .bf25-hero__checkpoint[data-value="12"] { left: 75%; }
-.bf25-hero__checkpoint[data-value="16"] { left: 100%; }
+.bf25-hero__checkpoint[data-value="16"] {
+  left: 100%;
+  transform: translateX(-100%);
+  margin-left: -5px; /* Shift left to prevent wrap */
+}
 
 .bf25-hero__checkpoint-label {
   font-size: 12px;
@@ -443,20 +569,62 @@
     }
 }
 
+@media (max-width: 500px) {
+  .bf25-hero__checkpoint[data-value="16"] .bf25-hero__checkpoint-label {
+    font-size: 11px; /* Slightly smaller for last checkpoint */
+  }
+
+  .bf25-hero__checkpoint[data-value="16"] .checkpoint-subtext {
+    display: none; /* Hide "items" text on mobile for 16 */
+  }
+}
+
 /* REACHED STATE */
 .bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
   color: var(--color-accent-lime);
 }
 
+/* Active checkpoint (current value) gets tier color */
+.bf25-hero__checkpoint.is-active .bf25-hero__checkpoint-label {
+  color: var(--color-tier-current);
+  font-weight: 800;
+  text-shadow: 0 0 8px var(--pb-glow-color);
+}
+
 /* Checkpoint Celebration Animation (Subtle Text Pulse) */
 @keyframes celebratePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Centered elements */
+@keyframes celebratePulseCentered {
   0% { transform: scale(1) translateX(-50%); }
-  50% { transform: scale(1.3) translateX(-50%); text-shadow: 0 0 10px var(--color-accent-lime); }
+  50% { transform: scale(1.2) translateX(-50%); }
   100% { transform: scale(1) translateX(-50%); }
 }
 
-.bf25-hero__checkpoint.animate-celebration {
-  animation: celebratePulse var(--duration-slow) var(--easing-premium);
+/* End-aligned elements */
+@keyframes celebratePulseEnd {
+  0% { transform: scale(1) translateX(-100%); }
+  50% { transform: scale(1.2) translateX(-100%); }
+  100% { transform: scale(1) translateX(-100%); }
+}
+
+/* Apply animations */
+.bf25-hero__checkpoint.animate-celebration,
+.bf25-hero__discount-label-item.animate-celebration {
+  animation: celebratePulseCentered var(--duration-slow) var(--easing-premium);
+}
+
+.bf25-hero__checkpoint[data-value="1"].animate-celebration {
+  animation-name: celebratePulse;
+}
+
+.bf25-hero__checkpoint[data-value="16"].animate-celebration,
+.bf25-hero__discount-label-item[data-value="16"].animate-celebration {
+  animation-name: celebratePulseEnd;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -474,7 +642,7 @@
   padding: var(--space-3);
   transition: all var(--duration-medium) var(--easing-premium);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
-              0 0 30px var(--tier-glow-color); /* Add tier-specific glow */
+              0 0 40px var(--tier-glow-color);
   contain: layout paint style;
 }
 
@@ -564,6 +732,180 @@
   line-height: 1.4;
 }
 
+/* Special styling for premium gifts */
+.bf25-hero__benefit-item--exclusive .bf25-hero__benefit-text {
+  background: linear-gradient(90deg, #60c655 0%, #70d665 50%, #60c655 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.bf25-hero__benefit-item--mystery .bf25-hero__benefit-text {
+  background: linear-gradient(90deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TIER 3 (GOLD) - COMPREHENSIVE THEMING
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Card border and glow */
+.bf25-hero__card[data-active-tier="3"] {
+  border-color: #FFD700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+/* Badge and discount label */
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__tier-badge-text,
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__discount-label {
+  color: #FFD700;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Tier 3 (Gold) - Header turns gold */
+.bf25-hero__gifts-header-text[data-tier="3"] {
+  color: #FFD700 !important;
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-color: rgba(255, 215, 0, 0.4) !important;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* Checkpoints reached in Tier 3 */
+.bf25-hero__checkpoint[data-value="12"].is-reached .bf25-hero__checkpoint-label {
+  color: #FFD700;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* Discount labels for Tier 3 */
+.bf25-hero__discount-label-item[data-value="12"].is-reached .bf25-hero__discount-text {
+  color: #000;
+  background: #FFD700;
+  border-color: #FFD700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Magnetic gift box (3rd gift) gold border */
+.bf25-hero__gift-box[data-gift-id="magnetic"].is-unlocked .bf25-hero__gift-image-wrapper {
+  border-color: #FFD700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5),
+              inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+/* You Save section - gold background */
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__pricing-row--savings {
+  background: linear-gradient(90deg,
+    rgba(255, 215, 0, 0.1) 0%,
+    rgba(255, 215, 0, 0.2) 50%,
+    rgba(255, 215, 0, 0.1) 100%
+  );
+  border-color: #FFD700;
+}
+
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__pricing-row--savings .bf25-hero__pricing-label,
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* TIER 3 (GOLD) - ALL TICKS BECOME GOLD */
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__benefit-item .bf25-hero__benefit-icon {
+  color: #FFD700 !important;
+  background: rgba(255, 215, 0, 0.15) !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Tier 3: Magnetic Cable Set (3rd gift) - TEXT becomes gold */
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__benefit-item[data-tier="3"] .bf25-hero__benefit-text,
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__benefit-item[data-tier="3"] .bf25-hero__benefit-text {
+  color: #FFD700 !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TIER 4 (PLATINUM/ICE BLUE) - COMPREHENSIVE THEMING
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Card border and glow */
+.bf25-hero__card[data-active-tier="4"] {
+  border-color: #E0F7FF;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 40px rgba(224, 247, 255, 0.6);
+}
+
+/* Badge and discount label */
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__tier-badge-text,
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__discount-label {
+  color: #E0F7FF;
+  text-shadow: 0 0 20px rgba(224, 247, 255, 0.8);
+}
+
+/* Tier 4 (Platinum) - Header turns ice blue */
+.bf25-hero__gifts-header-text[data-tier="4"] {
+  color: #E0F7FF !important;
+  background: rgba(224, 247, 255, 0.1) !important;
+  border-color: rgba(224, 247, 255, 0.4) !important;
+  box-shadow: 0 0 25px rgba(224, 247, 255, 0.4);
+  text-shadow: 0 0 12px rgba(224, 247, 255, 0.6);
+}
+
+/* Checkpoints reached in Tier 4 */
+.bf25-hero__checkpoint[data-value="16"].is-reached .bf25-hero__checkpoint-label {
+  color: #E0F7FF;
+  font-weight: 800;
+  text-shadow: 0 0 15px rgba(224, 247, 255, 1);
+}
+
+/* Discount labels for Tier 4 */
+.bf25-hero__discount-label-item[data-value="16"].is-reached .bf25-hero__discount-text {
+  color: #000;
+  background: #E0F7FF;
+  border-color: #E0F7FF;
+  box-shadow: 0 0 20px rgba(224, 247, 255, 0.8);
+}
+
+/* Mystery gift box (4th gift) ice blue border */
+.bf25-hero__gift-box[data-gift-id="mystery"].is-unlocked .bf25-hero__gift-image-wrapper {
+  border-color: #E0F7FF;
+  box-shadow: 0 0 30px rgba(224, 247, 255, 0.7),
+              inset 0 0 25px rgba(224, 247, 255, 0.15);
+}
+
+/* You Save section - ice blue background */
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__pricing-row--savings {
+  background: linear-gradient(90deg,
+    rgba(224, 247, 255, 0.1) 0%,
+    rgba(224, 247, 255, 0.2) 50%,
+    rgba(224, 247, 255, 0.1) 100%
+  );
+  border-color: #E0F7FF;
+}
+
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__pricing-row--savings .bf25-hero__pricing-label,
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+  color: #E0F7FF;
+  text-shadow: 0 0 15px rgba(224, 247, 255, 0.8);
+}
+
+/* TIER 4 (PLATINUM) - ALL TICKS BECOME PLATINUM */
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__benefit-item .bf25-hero__benefit-icon {
+  color: #E0F7FF !important;
+  background: rgba(224, 247, 255, 0.15) !important;
+  box-shadow: 0 0 12px rgba(224, 247, 255, 0.4);
+}
+
+/* Tier 4: Bigfoot Mystery Box (4th gift) - TEXT becomes platinum */
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__benefit-item[data-tier="4"] .bf25-hero__benefit-text {
+  color: #E0F7FF !important;
+  text-shadow: 0 0 10px rgba(224, 247, 255, 0.6);
+}
+
 /* Unlock Preview Section */
 .bf25-hero__unlocks-preview {
   padding: var(--space-3) 0;
@@ -635,15 +977,31 @@
 }
 
 .bf25-hero__pricing-row--savings {
-  margin-top: var(--space-2);
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--glass-border-color);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-top: 2px solid var(--color-accent-lime);
+  background: rgba(96, 198, 85, 0.05);
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+}
+
+.bf25-hero__pricing-row--savings .bf25-hero__pricing-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--color-accent-lime);
 }
 
 .bf25-hero__pricing-value--savings {
   color: var(--color-accent-lime);
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 28px;
+  font-weight: 900;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.5);
+  line-height: 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

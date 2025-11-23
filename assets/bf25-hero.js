@@ -23,6 +23,9 @@ class PowerSlider {
     this.currentTier = this.tiers[0];
     this.previousTier = this.tiers[0];
 
+    // Define Energy Flow gradients for each tier
+    this.gradientMap = this.defineGradients();
+
     this.elements = this.cacheDOM();
 
     if (!this.elements.sliderInput) {
@@ -44,12 +47,37 @@ class PowerSlider {
     }
   }
 
+  // Define the "Energy Flow" gradients for each tier
+  defineGradients() {
+    // Green (Tiers 1, 2) - User provided gradient
+    const green = 'linear-gradient(90deg, #4CAF50 0%, #60c655 20%, #7FFF00 40%, #39FF14 50%, #7FFF00 60%, #60c655 80%, #4CAF50 100%)';
+
+    // Gold (Tier 3) - Sophisticated gold energy flow
+    const gold = 'linear-gradient(90deg, #DAA520 0%, #FFD700 20%, #FFEE58 40%, #FFFFE0 50%, #FFEE58 60%, #FFD700 80%, #DAA520 100%)';
+
+    // Platinum/Ice Blue (Tier 4) - Premium frozen energy
+    const platinum = 'linear-gradient(90deg, #B0E0E6 0%, #E0F7FF 20%, #FFFFFF 40%, #F0FFFF 50%, #FFFFFF 60%, #E0F7FF 80%, #B0E0E6 100%)';
+
+    // Gray (Tier 0)
+    const gray = 'linear-gradient(90deg, #6b7280 0%, #a1a1aa 50%, #6b7280 100%)';
+
+    // Map Tiers to Styles
+    return {
+      0: { gradient: gray, glow: 'rgba(107, 114, 128, 0.3)', color: '#6b7280' },
+      1: { gradient: green, glow: 'rgba(96, 198, 85, 0.5)', color: '#60c655' },
+      2: { gradient: green, glow: 'rgba(127, 255, 0, 0.6)', color: '#60c655' },
+      3: { gradient: gold, glow: 'rgba(255, 215, 0, 0.7)', color: '#FFD700' },
+      4: { gradient: platinum, glow: 'rgba(224, 247, 255, 0.8)', color: '#E0F7FF' }
+    };
+  }
+
   cacheDOM() {
     return {
       sliderInput: this.container.querySelector('.bf25-hero__input'),
       sliderWrapper: this.container.querySelector('.bf25-hero__slider-wrapper'),
       giftBoxes: this.container.querySelectorAll('.bf25-hero__gift-box'),
       checkpoints: this.container.querySelectorAll('.bf25-hero__checkpoint'),
+      discountLabels: this.container.querySelectorAll('.bf25-hero__discount-label-item'),
       card: this.container.querySelector('.bf25-hero__card'),
       tierBadgeText: this.container.querySelector('.bf25-hero__tier-badge-text'),
       discountLabel: this.container.querySelector('.bf25-hero__discount-label'),
@@ -102,6 +130,7 @@ class PowerSlider {
     this.updateGiftBoxes();
     this.updateGiftsHeader();
     this.updateCheckpoints();
+    this.updateDiscountLabels();
     this.updateTierCard();
 
     // Only regenerate benefits list if tier actually changed
@@ -128,10 +157,58 @@ class PowerSlider {
   }
 
   updateVisualization() {
-    const percentage = (this.currentValue / this.config.max_items) * 100;
     const section = document.getElementById('bf25-hero-section') || this.container;
-    section.style.setProperty('--fill-width', `${percentage}%`);
-    console.log('📊 Fill width set to:', percentage + '%');
+
+    // Determine tier color and glow
+    let color, glow, glowColor;
+
+    switch(this.currentTier.id) {
+      case 0:
+        color = '#6b7280'; // Gray
+        glow = 'rgba(107, 114, 128, 0.3)';
+        glowColor = '#a1a1aa'; // Lighter gray for animation
+        break;
+      case 1:
+        color = '#60c655'; // Green
+        glow = 'rgba(96, 198, 85, 0.5)';
+        glowColor = '#7FFF00'; // Brighter green
+        break;
+      case 2:
+        color = '#60c655'; // Brighter green
+        glow = 'rgba(127, 255, 0, 0.6)';
+        glowColor = '#39FF14'; // Neon green
+        break;
+      case 3:
+        color = '#FFD700'; // Gold
+        glow = 'rgba(255, 215, 0, 0.7)';
+        glowColor = '#FFF700'; // Bright gold
+        break;
+      case 4:
+        color = '#E0F7FF'; // Platinum/Ice Blue
+        glow = 'rgba(224, 247, 255, 0.8)';
+        glowColor = '#FFFFFF'; // Pure white
+        break;
+      default:
+        color = '#6b7280';
+        glow = 'rgba(107, 114, 128, 0.3)';
+        glowColor = '#a1a1aa';
+    }
+
+    // Set tier colors globally
+    section.style.setProperty('--color-tier-current', color);
+    section.style.setProperty('--pb-glow-color', glow);
+    section.style.setProperty('--color-tier-glow', glowColor);
+
+    // Fill segments individually (DOM approach)
+    const segments = this.container.querySelectorAll('.progress-bar__segment');
+    segments.forEach((segment, index) => {
+      // Segments are 0-indexed, values are 1-16
+      if (index < this.currentValue) {
+        segment.classList.add('is-filled');
+      } else {
+        segment.classList.remove('is-filled');
+      }
+    });
   }
 
   /**
@@ -161,58 +238,64 @@ class PowerSlider {
   updateGiftsHeader() {
     if (!this.elements.giftsHeaderText) return;
 
-    if (this.currentTier.id === 0) {
-      this.elements.giftsHeaderText.textContent = "Slide to unlock Discounts + Free Gifts";
-      return;
+    const unlockedCount = this.gifts.filter(g => this.currentTier.id >= g.tier).length;
+    const totalGifts = this.gifts.length;
+
+    // Set data-tier for CSS styling
+    this.elements.giftsHeaderText.dataset.tier = this.currentTier.id;
+
+    if (unlockedCount === 0) {
+      this.elements.giftsHeaderText.textContent = 'Slide to unlock Discounts + Free Gifts';
+    } else if (unlockedCount === totalGifts) {
+      // Remove confetti emoji, keep only present
+      const totalValue = this.gifts.reduce((sum, g) => sum + g.value, 0);
+      this.elements.giftsHeaderText.textContent =
+        `🎁 All ${totalGifts} premium gifts unlocked! (€${totalValue.toFixed(0)}+ value)`;
+    } else {
+      this.elements.giftsHeaderText.textContent =
+        `${this.currentTier.display_label} + ${unlockedCount} FREE GIFT${unlockedCount > 1 ? 'S' : ''} UNLOCKED!`;
     }
-
-    const discount = this.currentTier.display_label;
-    const unlockedCount = this.gifts.filter(g => g.tier <= this.currentTier.id).length;
-    const giftText = unlockedCount === 1 ? "Free Gift" : "Free Gifts";
-
-    this.elements.giftsHeaderText.textContent = `${discount} + ${unlockedCount} ${giftText} Unlocked!`;
   }
 
   updateCheckpoints() {
     this.elements.checkpoints.forEach(checkpoint => {
       const checkpointValue = parseInt(checkpoint.dataset.value, 10);
+
+      // Mark as reached if we've passed this checkpoint
       if (this.currentValue >= checkpointValue) {
         checkpoint.classList.add('is-reached');
       } else {
         checkpoint.classList.remove('is-reached');
+      }
+
+      // NEW: Mark current checkpoint as active
+      if (this.currentValue === checkpointValue) {
+        checkpoint.classList.add('is-active');
+      } else {
+        checkpoint.classList.remove('is-active');
+      }
+    });
+  }
+
+  // Update Discount Labels (Above bar)
+  updateDiscountLabels() {
+    this.elements.discountLabels.forEach(label => {
+      const labelValue = parseInt(label.dataset.value, 10);
+      if (this.currentValue >= labelValue) {
+        label.classList.add('is-reached');
+      } else {
+        label.classList.remove('is-reached');
       }
     });
   }
 
   updateTierCard() {
     this.elements.card.dataset.activeTier = this.currentTier.id;
-    const section = document.getElementById('bf25-hero-section') || this.container;
-
-    // Determine tier display color (with gold/platinum for higher tiers)
-    let displayColor = this.currentTier.color;
-    let glowColor = 'rgba(96, 198, 85, 0.3)'; // Default lime green glow
-
-    // Special colors for high tiers
-    if (this.currentTier.id === 3) {
-      // Tier 3 (Best Deal): Gold accent
-      displayColor = '#FFD700'; // Gold
-      glowColor = 'rgba(255, 215, 0, 0.4)';
-    } else if (this.currentTier.id === 4) {
-      // Tier 4 (Bigfoot): Platinum/blue-white
-      displayColor = '#E5E4E2'; // Platinum
-      glowColor = 'rgba(229, 228, 226, 0.5)';
-    }
-
-    section.style.setProperty('--color-tier-current', displayColor);
-    section.style.setProperty('--tier-glow-color', glowColor);
-
-    console.log('✅ Updated tier colors:', displayColor, glowColor);
+    // Note: Colors now handled globally in updateVisualization()
 
     if (this.elements.tierBadgeText) {
-      // Badge text is clean (no emojis in the updated JSON)
       this.elements.tierBadgeText.textContent = this.currentTier.badge;
     }
-
     if (this.elements.discountLabel) {
       this.elements.discountLabel.textContent = this.currentTier.display_label;
     }
@@ -236,7 +319,11 @@ class PowerSlider {
 
     // 1. Add the Discount benefit (using data from JSON)
     if (this.currentTier.discount_benefit_text) {
-      const discountItem = this.createBenefitItem(this.currentTier.discount_benefit_text);
+      const discountItem = this.createBenefitItem(
+        this.currentTier.discount_benefit_text,
+        null,
+        this.currentTier.id // Pass tier ID
+      );
       this.elements.benefitsList.appendChild(discountItem);
     }
 
@@ -244,7 +331,11 @@ class PowerSlider {
     const unlockedGifts = this.gifts.filter(g => g.tier <= this.currentTier.id);
     unlockedGifts.forEach((gift, index) => {
       if (gift.benefit_text) {
-        const giftItem = this.createBenefitItem(gift.benefit_text);
+        const giftItem = this.createBenefitItem(
+          gift.benefit_text,
+          gift.special_class,
+          gift.tier // Pass tier that unlocked this gift
+        );
         // Staggered animation delay for entrance
         giftItem.style.animationDelay = `${(index + 1) * 50}ms`;
         this.elements.benefitsList.appendChild(giftItem);
@@ -253,9 +344,15 @@ class PowerSlider {
   }
 
   // NEW Helper: Create a benefit list item DOM element
-  createBenefitItem(text) {
+  createBenefitItem(text, specialClass = null, unlockTier = null) {
     const item = document.createElement('div');
     item.className = 'bf25-hero__benefit-item';
+    if (specialClass) {
+      item.classList.add(`bf25-hero__benefit-item--${specialClass}`);
+    }
+    if (unlockTier !== null) {
+      item.dataset.tier = unlockTier; // Track which tier unlocked this
+    }
 
     // Icon (using the new SVG sprite check)
     const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -380,10 +477,17 @@ class PowerSlider {
   /* CELEBRATION & ANIMATION METHODS */
 
   triggerCelebration() {
+    // Celebrate the checkpoint (below bar)
     const checkpoint = Array.from(this.elements.checkpoints).find(
       cp => parseInt(cp.dataset.tier, 10) === this.currentTier.id
     );
     if (checkpoint) this.triggerAnimation(checkpoint, 'animate-celebration');
+
+    // Celebrate the discount label (above bar)
+    const discountLabel = Array.from(this.elements.discountLabels).find(
+      dl => parseInt(dl.dataset.tier, 10) === this.currentTier.id
+    );
+    if (discountLabel) this.triggerAnimation(discountLabel, 'animate-celebration');
   }
 
   triggerGiftUnlockAnimation(giftBox) {

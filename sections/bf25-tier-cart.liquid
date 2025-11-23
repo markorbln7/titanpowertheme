@@ -49,8 +49,20 @@
         >
           <!-- Gift icon slots at checkpoints (4, 8, 12, 16) -->
           {% if i == 4 or i == 8 or i == 12 or i == 16 %}
-          <div class="bf25-gift-slot" data-checkpoint-value="{{ i }}" data-state="locked">
+          <div class="bf25-gift-slot" data-checkpoint-value="{{ i }}" data-state="locked" data-tier="{% if i == 4 %}1{% elsif i == 8 %}2{% elsif i == 12 %}3{% elsif i == 16 %}4{% endif %}">
+            <!-- Locked Icon (Default) -->
             <span class="bf25-gift-icon bf25-gift-icon--locked">🎁</span>
+
+            <!-- Unlocked Icons (Tier-Specific) -->
+            <span class="bf25-gift-icon bf25-gift-icon--unlocked">
+              {% if i == 4 %}🔌{% endif %}
+              {% if i == 8 %}📦{% endif %}
+              {% if i == 12 %}🧲{% endif %}
+              {% if i == 16 %}🎁{% endif %}
+            </span>
+
+            <!-- Checkmark (Claimed State) -->
+            <span class="bf25-gift-checkmark">✅</span>
           </div>
           {% endif %}
         </div>

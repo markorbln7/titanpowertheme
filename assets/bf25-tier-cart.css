@@ -940,3 +940,131 @@
 .bf25-sticky-cart[data-state="error"] .bf25-action-incentive__text {
   color: #fca5a5;
 }
+
+/* ====================================
+   GIFT ANIMATION SYSTEM
+   ==================================== */
+
+/* Apply will-change only during animation */
+.bf25-gift-slot.is-animating {
+  will-change: transform, opacity, filter;
+}
+
+/* Frame 2: Wiggle (0.4s) */
+@keyframes bf25GiftWiggle {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(-10deg) scale(1.1);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(10deg) scale(1.1);
+  }
+}
+
+.bf25-gift-slot.is-unlocking .bf25-gift-icon--locked {
+  animation: bf25GiftWiggle 0.4s ease-in-out;
+  filter: grayscale(0);
+  transition: filter 0.4s ease-in-out;
+}
+
+/* Frame 3: Reveal Crossfade (0.4s) */
+.bf25-gift-slot.is-revealing .bf25-gift-icon--locked {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition:
+    opacity 0.4s cubic-bezier(0.2, 0.8, 0.3, 1),
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.bf25-gift-slot.is-revealing .bf25-gift-icon--unlocked {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.3);
+  transition:
+    opacity 0.4s cubic-bezier(0.2, 0.8, 0.3, 1),
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* Frame 4: Shine Sweep (1.2s) */
+@keyframes bf25ShineSweep {
+  0% {
+    -webkit-mask-position: -150% 0;
+    mask-position: -150% 0;
+  }
+  100% {
+    -webkit-mask-position: 250% 0;
+    mask-position: 250% 0;
+  }
+}
+
+.bf25-gift-slot.is-celebrating .bf25-gift-icon--unlocked {
+  -webkit-mask-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  mask-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  animation: bf25ShineSweep 1.2s ease-out;
+}
+
+/* Frame 5: Settle (0.3s) */
+.bf25-gift-slot.is-settling .bf25-gift-icon--unlocked {
+  transform: translate(-50%, -50%) scale(1.0);
+  transition: transform 0.3s ease-out;
+}
+
+/* Frame 6: Claimed (Final State) */
+.bf25-gift-slot[data-state="claimed"] .bf25-gift-icon--locked {
+  display: none;
+}
+
+.bf25-gift-slot[data-state="claimed"] .bf25-gift-icon--unlocked {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: translate(-50%, -50%) scale(1.0);
+}
+
+.bf25-gift-slot[data-state="claimed"] .bf25-gift-checkmark {
+  display: block;
+  opacity: 1;
+}
+
+/* Gift Checkmark */
+.bf25-gift-checkmark {
+  display: none;
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Unlocked Icon (Initially Hidden) */
+.bf25-gift-icon--unlocked {
+  opacity: 0;
+  filter: grayscale(0);
+  display: flex !important; /* Override initial hide */
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-gift-slot.is-unlocking .bf25-gift-icon--locked,
+  .bf25-gift-slot.is-celebrating .bf25-gift-icon--unlocked {
+    animation: none;
+  }
+
+  .bf25-gift-slot.is-revealing .bf25-gift-icon--locked,
+  .bf25-gift-slot.is-revealing .bf25-gift-icon--unlocked {
+    transition-duration: 0.1s;
+  }
+}

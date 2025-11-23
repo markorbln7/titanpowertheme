@@ -8,6 +8,40 @@
   'use strict';
 
   // ============================================
+  // GIFT PRODUCT CONFIGURATION
+  // ============================================
+  const GIFT_PRODUCTS = {
+    cable: {
+      handle: 'bf25-free-cable',
+      variantId: null, // Will be fetched dynamically
+      tier: 1,
+      emoji: '🔌',
+      name: 'Premium Cable'
+    },
+    case: {
+      handle: 'bf25-free-case',
+      variantId: null,
+      tier: 2,
+      emoji: '📦',
+      name: 'Protective Case'
+    },
+    magnetic: {
+      handle: 'bf25-free-magnetic-set',
+      variantId: null,
+      tier: 3,
+      emoji: '🧲',
+      name: 'Magnetic Set'
+    },
+    mystery: {
+      handle: 'bf25-free-mystery-box',
+      variantId: null,
+      tier: 4,
+      emoji: '🎁',
+      name: 'Mystery Box'
+    }
+  };
+
+  // ============================================
   // TIER CONFIGURATION
   // ============================================
   const BF25_TIERS = [
@@ -82,6 +116,185 @@
   ];
 
   // ============================================
+  // GIFT ANIMATOR CLASS
+  // ============================================
+  class GiftAnimator {
+    constructor() {
+      this.queue = new Set();
+      this.isAnimating = false;
+      this.celebratedTiers = this.loadCelebratedTiers();
+    }
+
+    /**
+     * Load celebrated tiers from sessionStorage
+     */
+    loadCelebratedTiers() {
+      try {
+        const stored = sessionStorage.getItem('bf25_celebrated_tiers');
+        return new Set(stored ? JSON.parse(stored) : []);
+      } catch (error) {
+        console.warn('[GiftAnimator] Failed to load celebrated tiers:', error);
+        return new Set();
+      }
+    }
+
+    /**
+     * Save celebrated tiers to sessionStorage
+     */
+    saveCelebratedTiers() {
+      try {
+        sessionStorage.setItem(
+          'bf25_celebrated_tiers',
+          JSON.stringify(Array.from(this.celebratedTiers))
+        );
+      } catch (error) {
+        console.warn('[GiftAnimator] Failed to save celebrated tiers:', error);
+      }
+    }
+
+    /**
+     * Add tier to animation queue
+     */
+    animate(tier) {
+      // Skip if already celebrated this session
+      if (this.celebratedTiers.has(tier)) {
+        console.log(`[GiftAnimator] Tier ${tier} already celebrated this session`);
+        return;
+      }
+
+      console.log(`[GiftAnimator] Queueing tier ${tier} for animation`);
+      this.queue.add(tier);
+
+      if (!this.isAnimating) {
+        this.processQueue();
+      }
+    }
+
+    /**
+     * Process animation queue
+     */
+    async processQueue() {
+      if (this.queue.size === 0) {
+        this.isAnimating = false;
+        return;
+      }
+
+      // Get highest tier (jump to max strategy)
+      const targetTier = Math.max(...Array.from(this.queue));
+      this.queue.clear();
+
+      console.log(`[GiftAnimator] Animating tier ${targetTier}`);
+      this.isAnimating = true;
+
+      try {
+        await this.executeSequence(targetTier);
+
+        // Mark as celebrated
+        this.celebratedTiers.add(targetTier);
+        this.saveCelebratedTiers();
+
+      } catch (error) {
+        console.error('[GiftAnimator] Animation error:', error);
+      }
+
+      this.isAnimating = false;
+      this.processQueue(); // Process next in queue
+    }
+
+    /**
+     * Execute 6-frame animation sequence
+     */
+    async executeSequence(tier) {
+      // Find gift slot for this tier
+      const checkpoint = this.getCheckpointForTier(tier);
+      const slot = document.querySelector(
+        `.bf25-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (!slot) {
+        console.error(`[GiftAnimator] No slot found for tier ${tier}`);
+        return;
+      }
+
+      console.log(`[GiftAnimator] Starting 6-frame sequence for tier ${tier}`);
+
+      // Add animating class
+      slot.classList.add('is-animating');
+
+      // FRAME 2: Wiggle (0.4s)
+      slot.classList.add('is-unlocking');
+      await this.wait(400);
+      slot.classList.remove('is-unlocking');
+
+      // FRAME 3: Reveal (0.4s)
+      slot.classList.add('is-revealing');
+      await this.wait(400);
+      slot.classList.remove('is-revealing');
+
+      // FRAME 4: Shine (1.2s)
+      slot.classList.add('is-celebrating');
+
+      // T=0.8s: Accessibility announcement
+      await this.wait(800);
+      this.announceGift(tier);
+
+      await this.wait(400); // Complete shine
+      slot.classList.remove('is-celebrating');
+
+      // FRAME 5: Settle (0.3s)
+      slot.classList.add('is-settling');
+      await this.wait(300);
+      slot.classList.remove('is-settling');
+
+      // FRAME 6: Claimed (Final State)
+      slot.dataset.state = 'claimed';
+      slot.classList.remove('is-animating');
+
+      console.log(`[GiftAnimator] ✓ Sequence complete for tier ${tier}`);
+    }
+
+    /**
+     * Get checkpoint value for tier
+     */
+    getCheckpointForTier(tier) {
+      const checkpoints = { 1: 4, 2: 8, 3: 12, 4: 16 };
+      return checkpoints[tier] || 4;
+    }
+
+    /**
+     * Announce gift unlock to screen readers
+     */
+    announceGift(tier) {
+      const tierData = BF25_TIERS.find(t => t.id === tier);
+      if (!tierData) return;
+
+      const announcer = document.getElementById('bf25-cart-announcements');
+      if (announcer) {
+        const lastGift = tierData.gifts[tierData.gifts.length - 1];
+        const message = `Congratulations! ${tierData.badge} unlocked. Free ${lastGift.name} added to your cart.`;
+        announcer.textContent = message;
+        console.log(`[GiftAnimator] Announced: ${message}`);
+      }
+    }
+
+    /**
+     * Helper: Wait for duration
+     */
+    wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    /**
+     * Reset celebrations (for testing)
+     */
+    reset() {
+      this.celebratedTiers.clear();
+      sessionStorage.removeItem('bf25_celebrated_tiers');
+      console.log('[GiftAnimator] Celebrations reset');
+    }
+  }
+
+  // ============================================
   // CART MANAGER CLASS
   // ============================================
   class CartManager {
@@ -144,6 +357,9 @@
 
       // Initialize cart listeners
       this.initCartListeners();
+
+      // Initialize GiftAnimator
+      this.initGiftAnimator();
 
       // Initialize keyboard navigation
       this.initKeyboardNav();
@@ -225,10 +441,23 @@
       this.updateSavings();
       this.updateARIA();
 
-      // Check for tier change celebration (future animation hook)
+      // Check for tier unlock (trigger animation + gift add)
       if (this.previousTier && this.previousTier.id < this.currentTier.id) {
         console.log(`[BF25 Cart] 🎉 Tier unlocked: ${this.currentTier.badge}`);
-        // TODO: Trigger celebration animation in PROMPT 3
+
+        // Trigger celebration animation
+        if (this.giftAnimator) {
+          this.giftAnimator.animate(this.currentTier.id);
+        }
+
+        // Reconcile gifts (add new tier gifts)
+        this.reconcileGifts(this.currentTier);
+      }
+
+      // Check for tier downgrade (remove excess gifts)
+      if (this.previousTier && this.previousTier.id > this.currentTier.id) {
+        console.log(`[BF25 Cart] Tier downgraded to ${this.currentTier.id}`);
+        this.reconcileGifts(this.currentTier);
       }
     }
 
@@ -737,6 +966,202 @@
       }
 
       console.log(`[BF25 Cart] State: ${newState}`);
+    }
+
+    // ============================================
+    // GIFT MANAGEMENT
+    // ============================================
+
+    /**
+     * Initialize GiftAnimator
+     */
+    initGiftAnimator() {
+      this.giftAnimator = new GiftAnimator();
+      console.log('[BF25 Cart] GiftAnimator initialized');
+    }
+
+    /**
+     * Get required gifts for current tier
+     */
+    getRequiredGifts(tier) {
+      const giftKeys = {
+        1: ['cable'],
+        2: ['cable', 'case'],
+        3: ['cable', 'case', 'magnetic'],
+        4: ['cable', 'case', 'magnetic', 'mystery']
+      };
+      return giftKeys[tier] || [];
+    }
+
+    /**
+     * Fetch product variant ID by handle
+     */
+    async fetchVariantId(handle) {
+      try {
+        const response = await fetch(`/products/${handle}.js`);
+        if (!response.ok) return null;
+
+        const product = await response.json();
+        return product.variants && product.variants[0]
+          ? product.variants[0].id
+          : null;
+
+      } catch (error) {
+        console.error(`[BF25 Cart] Failed to fetch variant for ${handle}:`, error);
+        return null;
+      }
+    }
+
+    /**
+     * Add gift to cart
+     */
+    async addGiftToCart(giftKey) {
+      const gift = GIFT_PRODUCTS[giftKey];
+      if (!gift) {
+        console.error(`[BF25 Cart] Unknown gift: ${giftKey}`);
+        return false;
+      }
+
+      console.log(`[BF25 Cart] Adding gift: ${gift.name}`);
+
+      try {
+        // Fetch variant ID if not cached
+        if (!gift.variantId) {
+          gift.variantId = await this.fetchVariantId(gift.handle);
+          if (!gift.variantId) {
+            console.error(`[BF25 Cart] Variant not found for ${gift.handle}`);
+            return false;
+          }
+        }
+
+        // Add to cart
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: gift.variantId,
+            quantity: 1,
+            properties: {
+              '_bf25_gift': 'true',
+              '_bf25_tier': gift.tier
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to add gift: ${response.status}`);
+        }
+
+        console.log(`[BF25 Cart] ✓ Gift added: ${gift.name}`);
+        return true;
+
+      } catch (error) {
+        console.error(`[BF25 Cart] Error adding gift ${gift.name}:`, error);
+        return false;
+      }
+    }
+
+    /**
+     * Remove gift from cart
+     */
+    async removeGiftFromCart(giftKey) {
+      const gift = GIFT_PRODUCTS[giftKey];
+      if (!gift) return false;
+
+      console.log(`[BF25 Cart] Removing gift: ${gift.name}`);
+
+      try {
+        // Fetch current cart
+        const cart = await this.fetchCart();
+        if (!cart) return false;
+
+        // Find gift item
+        const giftItem = cart.items.find(item =>
+          item.handle === gift.handle ||
+          (item.properties && item.properties._bf25_gift === 'true')
+        );
+
+        if (!giftItem) {
+          console.log(`[BF25 Cart] Gift not in cart: ${gift.name}`);
+          return false;
+        }
+
+        // Remove via cart update
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: giftItem.key,
+            quantity: 0
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to remove gift: ${response.status}`);
+        }
+
+        console.log(`[BF25 Cart] ✓ Gift removed: ${gift.name}`);
+        return true;
+
+      } catch (error) {
+        console.error(`[BF25 Cart] Error removing gift ${gift.name}:`, error);
+        return false;
+      }
+    }
+
+    /**
+     * Reconcile gifts (add missing, remove excess)
+     */
+    async reconcileGifts(currentTier) {
+      console.log(`[BF25 Cart] Reconciling gifts for tier ${currentTier.id}`);
+
+      const requiredGifts = this.getRequiredGifts(currentTier.id);
+      const cart = await this.fetchCart();
+      if (!cart) return;
+
+      // Find which gifts are currently in cart
+      const currentGifts = cart.items
+        .filter(item =>
+          Object.values(GIFT_PRODUCTS).some(g => g.handle === item.handle)
+        )
+        .map(item => {
+          const giftEntry = Object.entries(GIFT_PRODUCTS).find(
+            ([key, g]) => g.handle === item.handle
+          );
+          return giftEntry ? giftEntry[0] : null;
+        })
+        .filter(Boolean);
+
+      console.log(`[BF25 Cart] Required: [${requiredGifts}], Current: [${currentGifts}]`);
+
+      // Add missing gifts
+      for (const giftKey of requiredGifts) {
+        if (!currentGifts.includes(giftKey)) {
+          await this.addGiftToCart(giftKey);
+          await this.wait(300); // Throttle API calls
+        }
+      }
+
+      // Remove excess gifts
+      for (const giftKey of currentGifts) {
+        if (!requiredGifts.includes(giftKey)) {
+          await this.removeGiftFromCart(giftKey);
+          await this.wait(300);
+        }
+      }
+
+      console.log('[BF25 Cart] ✓ Gift reconciliation complete');
+    }
+
+    /**
+     * Helper: Wait
+     */
+    wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     // ============================================

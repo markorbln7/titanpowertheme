@@ -7,6 +7,7 @@
 
 class PowerSlider {
   constructor(containerElement) {
+    console.log('🎯 Container received:', containerElement);
     this.container = containerElement;
     this.data = this.loadData();
     if (!this.data) {
@@ -53,7 +54,10 @@ class PowerSlider {
       tierBadgeText: this.container.querySelector('.bf25-hero__tier-badge-text'),
       discountLabel: this.container.querySelector('.bf25-hero__discount-label'),
       pricingTotal: this.container.querySelector('[data-price-type="total"]'),
-      pricingSavings: this.container.querySelector('[data-price-type="savings"]')
+      pricingSavings: this.container.querySelector('[data-price-type="savings"]'),
+      pricingPerItem: this.container.querySelector('[data-price-type="per-item"]'),
+      unlocksPreview: this.container.querySelector('.bf25-hero__unlocks-current'),
+      unlocksText: this.container.querySelector('.bf25-hero__unlocks-text')
     };
   }
 
@@ -79,6 +83,12 @@ class PowerSlider {
   }
 
   handleSliderInput(value) {
+    console.log('🎚️ Slider moved to:', value);
+    console.log('📊 Current tier:', this.calculateTier(value));
+
+    // Optimization: Exit if value didn't change
+    if (this.currentValue === value) return;
+
     this.currentValue = value;
     this.currentTier = this.calculateTier(value);
 
@@ -88,6 +98,7 @@ class PowerSlider {
     this.updateGiftBoxes();
     this.updateCheckpoints();
     this.updateTierCard();
+    this.updateUnlocksPreview();
     this.updatePricing();
     this.updateARIA();
 
@@ -107,7 +118,9 @@ class PowerSlider {
 
   updateVisualization() {
     const percentage = (this.currentValue / this.config.max_items) * 100;
-    this.container.style.setProperty('--fill-width', `${percentage}%`);
+    const section = document.getElementById('bf25-hero-section') || this.container;
+    section.style.setProperty('--fill-width', `${percentage}%`);
+    console.log('📊 Fill width set to:', percentage + '%');
   }
 
   /**
@@ -146,8 +159,27 @@ class PowerSlider {
 
   updateTierCard() {
     this.elements.card.dataset.activeTier = this.currentTier.id;
-    // Update the color variable (used for the border and badge text)
-    this.container.style.setProperty('--color-tier-current', this.currentTier.color);
+    const section = document.getElementById('bf25-hero-section') || this.container;
+
+    // Determine tier display color (with gold/platinum for higher tiers)
+    let displayColor = this.currentTier.color;
+    let glowColor = 'rgba(96, 198, 85, 0.3)'; // Default lime green glow
+
+    // Special colors for high tiers
+    if (this.currentTier.id === 3) {
+      // Tier 3 (Best Deal): Gold accent
+      displayColor = '#FFD700'; // Gold
+      glowColor = 'rgba(255, 215, 0, 0.4)';
+    } else if (this.currentTier.id === 4) {
+      // Tier 4 (Bigfoot): Platinum/blue-white
+      displayColor = '#E5E4E2'; // Platinum
+      glowColor = 'rgba(229, 228, 226, 0.5)';
+    }
+
+    section.style.setProperty('--color-tier-current', displayColor);
+    section.style.setProperty('--tier-glow-color', glowColor);
+
+    console.log('✅ Updated tier colors:', displayColor, glowColor);
 
     if (this.elements.tierBadgeText) {
       // Badge text is clean (no emojis in the updated JSON)
@@ -159,14 +191,49 @@ class PowerSlider {
     }
   }
 
+  updateUnlocksPreview() {
+    if (!this.elements.unlocksPreview || !this.elements.unlocksText) return;
+
+    let message = '';
+    let status = 'locked';
+
+    if (this.currentValue === 0) {
+      message = 'Slide to unlock gifts + discounts';
+      status = 'locked';
+    } else if (this.currentValue < 4) {
+      message = `Unlock ${this.gifts[0].name} at 4 items`;
+      status = 'locked';
+    } else if (this.currentValue >= 4 && this.currentValue < 8) {
+      message = `✓ ${this.gifts[0].name} unlocked! Reach 8 for ${this.gifts[1].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 8 && this.currentValue < 12) {
+      message = `✓ ${this.gifts[0].name} + ${this.gifts[1].name}! Reach 12 for ${this.gifts[2].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 12 && this.currentValue < 16) {
+      message = `✓ 3 gifts unlocked! Reach 16 for ${this.gifts[3].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 16) {
+      message = `🎉 All 4 premium gifts unlocked! (€275+ value)`;
+      status = 'unlocking';
+    }
+
+    this.elements.unlocksText.textContent = message;
+    this.elements.unlocksPreview.setAttribute('data-unlock-status', status);
+  }
+
   updatePricing() {
     if (this.currentValue === 0) {
-        this.setPricingText('—', '—');
+        this.setPricingText('—', '—', '—');
         return;
     }
 
-    const estimatedTotal = this.currentValue * this.config.avg_price_shopify * this.currentTier.multiplier;
-    const retailTotal = this.currentValue * this.config.avg_price_retail;
+    const avgShopifyPrice = Number(this.config.avg_price_shopify) || 0;
+    const avgRetailPrice = Number(this.config.avg_price_retail) || 0;
+
+    const estimatedTotal = this.currentValue * avgShopifyPrice * this.currentTier.multiplier;
+    const perItemPrice = estimatedTotal / this.currentValue;
+
+    const retailTotal = this.currentValue * avgRetailPrice;
 
     // Calculate gift value safely
     const giftValue = this.gifts.reduce((sum, gift) => {
@@ -176,12 +243,17 @@ class PowerSlider {
 
     const totalSavings = (retailTotal - estimatedTotal) + giftValue;
 
-    this.setPricingText(this.formatPrice(estimatedTotal), this.formatPrice(totalSavings));
+    this.setPricingText(
+      this.formatPrice(estimatedTotal),
+      this.formatPrice(totalSavings),
+      this.formatPrice(perItemPrice)
+    );
   }
 
-  setPricingText(total, savings) {
+  setPricingText(total, savings, perItem) {
     if (this.elements.pricingTotal) this.elements.pricingTotal.textContent = total;
     if (this.elements.pricingSavings) this.elements.pricingSavings.textContent = savings;
+    if (this.elements.pricingPerItem) this.elements.pricingPerItem.textContent = perItem;
   }
 
   formatPrice(amount) {
@@ -247,7 +319,25 @@ class PowerSlider {
 
   triggerHaptics() {
     if (navigator.vibrate) {
-      navigator.vibrate(50);
+      // Define vibration patterns: [vibrate_ms, pause_ms, vibrate_ms, ...]
+      let pattern;
+      switch (this.currentTier.id) {
+        case 1:
+          pattern = [50]; // Light tick (T1)
+          break;
+        case 2:
+          pattern = [50, 30, 50]; // Double tick (T2)
+          break;
+        case 3:
+          pattern = [100]; // Stronger buzz (T3)
+          break;
+        case 4:
+          pattern = [100, 50, 150]; // Strong celebration (T4 Bigfoot)
+          break;
+        default:
+          return; // No vibration for T0
+      }
+      navigator.vibrate(pattern);
     }
   }
 }

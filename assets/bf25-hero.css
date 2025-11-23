@@ -18,6 +18,10 @@
   --color-accent-lime: #60c655;
   --color-accent-glow: rgba(96, 198, 85, 0.5);
 
+  /* NEW: Tier-specific colors */
+  --color-tier-gold: #FFD700;
+  --color-tier-platinum: #E5E4E2;
+
   /* Glassmorphism (Premium) */
   --glass-bg-subtle: rgba(255, 255, 255, 0.03);
   --glass-border-color: rgba(255, 255, 255, 0.1);
@@ -40,10 +44,6 @@
   --duration-medium: 400ms;
   --duration-slow: 600ms;
 
-  /* Dynamic Properties (Updated by JS) */
-  --fill-width: 0%;
-  --color-tier-current: #6b7280; /* Default gray */
-
   /* Slider Visualization (16 Segments - Robust Calculation) */
   --segment-count: 16;
   --segment-gap: 3px; /* Visible gap between cells */
@@ -61,6 +61,11 @@
   color: var(--color-text-primary);
   padding: var(--space-6) var(--space-4);
   font-family: var(--font-base);
+
+  /* Dynamic variables updated by JS */
+  --fill-width: 0%;
+  --color-tier-current: #6b7280;
+  --tier-glow-color: rgba(107, 114, 128, 0.3);
 }
 
 .bf25-hero__container {
@@ -260,10 +265,11 @@
   width: 100%;
   height: 20px; /* Increased height (Requirement Met) */
   border-radius: 10px;
-  overflow: hidden;
+  overflow: visible; /* CHANGE from 'hidden' to 'visible' for debugging */
   /* Battery Casing */
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0,0,0,0.3);
+  pointer-events: none; /* Ensure it doesn't block input */
 }
 
 /* 5.1 Track (High Contrast Segments) */
@@ -271,6 +277,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  z-index: 1; /* CRITICAL: Track on bottom layer */
   /* Creates 16 visible empty segments */
   background: repeating-linear-gradient(
     to right,
@@ -279,6 +286,7 @@
     transparent var(--segment-width),
     transparent var(--gradient-step-size)
   );
+  pointer-events: none;
 }
 
 /* 5.2 Fill (Energized Lime Green) */
@@ -286,18 +294,18 @@
   position: absolute;
   width: var(--fill-width);
   height: 100%;
-  /* Creates 16 glowing green segments */
-  background: repeating-linear-gradient(
-    to right,
-    var(--color-accent-lime) 0,
-    var(--color-accent-lime) var(--segment-width),
-    transparent var(--segment-width),
-    transparent var(--gradient-step-size)
-  );
-  /* Intense Glow */
-  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 5px var(--color-accent-glow);
+  z-index: 2; /* CRITICAL: Fill on top layer */
+
+  /* DEBUG: Solid bright green (no gradient) */
+  background: #60c655 !important;
+
+  /* High visibility effects */
+  box-shadow: 0 0 30px rgba(96, 198, 85, 0.8) !important;
+  opacity: 1 !important;
+
   transition: width var(--duration-medium) var(--easing-premium);
   will-change: width;
+  pointer-events: none;
 }
 
 /* 5.3 Invisible Input (Accessibility) */
@@ -313,11 +321,50 @@
   -webkit-appearance: none;
   appearance: none;
   touch-action: pan-y;
+  background: transparent;
+  margin: 0; /* CRITICAL: Remove default margins */
 }
 
 .bf25-hero__input:focus { outline: none; }
-.bf25-hero__input::-webkit-slider-thumb { -webkit-appearance: none; }
-.bf25-hero__input::-moz-range-thumb { appearance: none; }
+
+/* CRITICAL FIX 1: Define an interactable, invisible thumb */
+
+/* WebKit/Blink (Chrome, Safari, Edge) */
+.bf25-hero__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;          /* Define a draggable width */
+  height: 44px;         /* Match input height for full vertical interaction area */
+  background: transparent; /* Keep it invisible */
+  border: none;
+  cursor: pointer;
+  pointer-events: auto; /* Explicitly ensure it catches events */
+}
+
+/* Firefox */
+.bf25-hero__input::-moz-range-thumb {
+  appearance: none;
+  width: 24px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-radius: 0; /* Remove Firefox default radius */
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Ensure the track also supports interaction across the full height */
+.bf25-hero__input::-webkit-slider-runnable-track {
+  height: 44px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.bf25-hero__input::-moz-range-track {
+  height: 44px;
+  cursor: pointer;
+  background: transparent;
+}
 
 /* JS-managed focus state */
 .bf25-hero__slider-wrapper.is-focused .bf25-hero__visualization {
@@ -331,6 +378,7 @@
   width: 100%;
   height: 30px;
   margin-top: var(--space-1);
+  pointer-events: none; /* CRITICAL FIX 2: Prevent overlap interference */
 }
 
 .bf25-hero__checkpoint {
@@ -394,8 +442,9 @@
   border: 1px solid var(--color-tier-current);
   border-radius: 16px;
   padding: var(--space-3);
-  transition: border-color var(--duration-medium) var(--easing-premium);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all var(--duration-medium) var(--easing-premium);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 30px var(--tier-glow-color); /* Add tier-specific glow */
   contain: layout paint style;
 }
 
@@ -419,6 +468,51 @@
   color: var(--color-accent-lime);
 }
 
+/* Unlock Preview Section */
+.bf25-hero__unlocks-preview {
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--glass-border-color);
+  border-bottom: 1px solid var(--glass-border-color);
+  margin-bottom: var(--space-3);
+}
+
+.bf25-hero__unlocks-current {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__unlocks-icon {
+  font-size: 18px;
+  transition: transform var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__unlocks-text {
+  color: var(--color-text-subtle);
+  font-weight: 500;
+  transition: color var(--duration-medium) var(--easing-premium);
+}
+
+/* State: Unlocking (when user reaches a tier) */
+.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px var(--color-accent-lime));
+}
+
+.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-text {
+  color: var(--color-accent-lime);
+  font-weight: 600;
+}
+
+@media (min-width: 769px) {
+  .bf25-hero__unlocks-current {
+    font-size: 14px;
+  }
+}
+
 /* Pricing Summary */
 .bf25-hero__pricing-row {
   display: flex;
@@ -435,6 +529,13 @@
 .bf25-hero__pricing-value {
   font-size: 16px;
   font-weight: 700;
+}
+
+.bf25-hero__pricing-row--per-item .bf25-hero__pricing-label,
+.bf25-hero__pricing-row--per-item .bf25-hero__pricing-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-subtle);
 }
 
 .bf25-hero__pricing-row--savings {

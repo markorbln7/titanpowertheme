@@ -1364,12 +1364,20 @@ class VariantModal {
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    if (window.Shopify && window.Shopify.formatMoney && window.theme && window.theme.moneyFormat) {
-      return window.Shopify.formatMoney(cents, window.theme.moneyFormat);
+    // Use Shopify's formatMoney if available
+    if (window.Shopify && window.Shopify.formatMoney) {
+      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
+      return window.Shopify.formatMoney(cents, format);
     }
-    // Fallback - use RSD if Shopify not available
-    const amount = (cents / 100).toFixed(2);
-    return `${amount} RSD`;
+    
+    // Manual fallback using theme money format
+    if (window.theme && window.theme.moneyFormat) {
+      const amount = (cents / 100).toFixed(2);
+      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
+    }
+    
+    console.error('[PowerPairs] Currency formatting not available');
+    return '';
   }
 }
 
@@ -1635,9 +1643,13 @@ class ExpansionManager {
         ${multipliersHTML}
 
       </div>
-      
-      ${ctaHTML}
     `;
+
+    // Render CTA in separate container (outside pp-sheet-body)
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    if (ctaContainer) {
+      ctaContainer.innerHTML = ctaHTML;
+    }
 
     // Re-attach close button listener
     const closeBtn = this.contentArea.querySelector('[data-action="close-sheet"]');
@@ -2145,9 +2157,9 @@ class ExpansionManager {
     }
 
     // Update CTA section
-    const ctaElement = this.contentArea.querySelector('.pp-sheet-cta-fixed');
-    if (ctaElement) {
-      ctaElement.outerHTML = this.renderCTA(bundle, pricing, allComplete);
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    if (ctaContainer) {
+      ctaContainer.innerHTML = this.renderCTA(bundle, pricing, allComplete);
       this.attachCTAListener(); // Re-attach listener
       console.log('[PowerPairs] CTA updated - disabled:', !allComplete);
     } else {
@@ -2167,7 +2179,8 @@ class ExpansionManager {
    * Attach click listener to Add to Cart button
    */
   attachCTAListener() {
-    const ctaButton = this.contentArea.querySelector('[data-action="add-to-cart"]');
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
 
     if (!ctaButton) {
       return;
@@ -2489,14 +2502,20 @@ class ExpansionManager {
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    // Use Shopify's money formatting if available
-    if (window.Shopify && window.Shopify.formatMoney && window.theme && window.theme.moneyFormat) {
-      return window.Shopify.formatMoney(cents, window.theme.moneyFormat);
+    // Use Shopify's formatMoney if available
+    if (window.Shopify && window.Shopify.formatMoney) {
+      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
+      return window.Shopify.formatMoney(cents, format);
     }
-
-    // Fallback formatter
-    const amount = (cents / 100).toFixed(2);
-    return `${amount} RSD`;
+    
+    // Manual fallback using theme money format
+    if (window.theme && window.theme.moneyFormat) {
+      const amount = (cents / 100).toFixed(2);
+      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
+    }
+    
+    console.error('[PowerPairs] Currency formatting not available');
+    return '';
   }
 
   /**

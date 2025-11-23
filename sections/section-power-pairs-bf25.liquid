@@ -24,6 +24,12 @@ Preconnect to Shopify CDN for faster image loading
 {{ 'section-power-pairs-bf25.css' | asset_url | stylesheet_tag }}
 {{ 'section-power-pairs-bf25-redesign.css' | asset_url | stylesheet_tag }}
 {{ 'section-power-pairs-bf25-variant-picker.css' | asset_url | stylesheet_tag }}
+
+<script>
+  window.theme = window.theme || {};
+  window.theme.moneyFormat = {{ shop.money_format | json }};
+</script>
+
 <script src="{{ 'section-power-pairs-bf25.js' | asset_url }}" defer="defer"></script>
 
 {%- comment -%}
@@ -252,6 +258,9 @@ Product Association Test:
     <div class="pp-sheet-body">
       <p class="pp-sheet-placeholder">Loading...</p>
     </div>
+
+    {%- comment -%} CTA container (outside of scrollable body) {%- endcomment -%}
+    <div id="pp-sheet-cta-container"></div>
 
 
     {%- comment -%}

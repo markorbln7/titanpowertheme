@@ -252,6 +252,7 @@
   position: relative;
   width: 100%;
   max-width: 700px;
+  overflow: visible; /* Fix: Allow input to extend beyond wrapper */
 }
 
 .bf25-hero__visualization {
@@ -308,7 +309,7 @@
   height: 44px;
   opacity: 0;
   cursor: pointer;
-  z-index: 10;
+  z-index: 100; /* Increased from 10 to 100 */
   -webkit-appearance: none;
   appearance: none;
   touch-action: pan-y;

@@ -627,6 +627,17 @@
       this.syncTimeout = null;
       this.retryCount = 0;
 
+      // Try loading from cache first for instant render (eliminates flash)
+      const cachedState = this.loadCachedState();
+      if (cachedState) {
+        console.log('[BF25 Cart] Applying cached state for instant render');
+        this.updateVisualization(cachedState.itemCount);
+        if (this.elements.savingsAmount) {
+          this.elements.savingsAmount.textContent = `Save €${cachedState.savings}`;
+        }
+        this.handleEmptyState(cachedState.itemCount);
+      }
+
       // Bind events
       this.bindEvents();
 
@@ -648,7 +659,7 @@
       // Set initial body padding (CLS prevention)
       document.body.style.paddingBottom = '65px';
 
-      // Sync cart on load
+      // Sync cart on load (will update cached data with fresh API data)
       this.syncCart();
 
       console.log('[BF25 Cart] ✓ Ready');
@@ -1201,6 +1212,54 @@
       return Math.round(discountSavings + giftValue);
     }
 
+    // ============================================
+    // CART PERSISTENCE (localStorage Cache)
+    // ============================================
+
+    /**
+     * Load cart state from localStorage for instant render
+     */
+    loadCachedState() {
+      try {
+        const cached = localStorage.getItem('bf25sc_cart_cache');
+        if (!cached) return null;
+
+        const data = JSON.parse(cached);
+        const age = Date.now() - data.timestamp;
+
+        // Cache valid for 30 seconds
+        if (age < 30000) {
+          console.log('[BF25 Cart] Using cached state (age: ' + Math.round(age / 1000) + 's)');
+          return data;
+        }
+
+        // Clear expired cache
+        console.log('[BF25 Cart] Cache expired, clearing');
+        localStorage.removeItem('bf25sc_cart_cache');
+        return null;
+      } catch (error) {
+        console.warn('[BF25 Cart] Cache load failed:', error);
+        return null;
+      }
+    }
+
+    /**
+     * Save cart state to localStorage
+     */
+    saveCachedState(itemCount, savings) {
+      try {
+        const data = {
+          itemCount: itemCount,
+          savings: savings,
+          timestamp: Date.now()
+        };
+        localStorage.setItem('bf25sc_cart_cache', JSON.stringify(data));
+        console.log('[BF25 Cart] State cached:', itemCount, 'items, €' + savings, 'savings');
+      } catch (error) {
+        console.warn('[BF25 Cart] Cache save failed:', error);
+      }
+    }
+
     /**
      * Sync cart data and update UI
      */
@@ -1237,6 +1296,9 @@
 
         // Show/hide cart based on items
         this.handleEmptyState(itemCount);
+
+        // Save to cache for next page load
+        this.saveCachedState(itemCount, savings);
 
         // Set idle state
         this.setState('idle');

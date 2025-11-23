@@ -884,34 +884,62 @@
     }
 
     expandCart() {
+      if (!this.elements.container) return;
+
+      console.log('[BF25 Cart] Expanding cart view');
+
+      // Add expanded class
       this.elements.container.classList.add('is-expanded');
 
+      // Update button
       if (this.elements.btnView) {
         this.elements.btnView.textContent = 'Hide ▲';
         this.elements.btnView.setAttribute('aria-expanded', 'true');
+      }
+
+      // Show expanded section
+      const expanded = document.getElementById('bf25-expanded-cart');
+      if (expanded) {
+        expanded.style.display = 'block';
       }
 
       // Sync body padding (CLS prevention)
       document.body.style.transition = 'padding-bottom 0.3s ease-out';
       document.body.style.paddingBottom = '155px';
 
-      this.announce('Cart expanded');
-      console.log('[BF25 Cart] Expanded');
+      // Announce to screen reader
+      this.announce('Cart expanded. Viewing products.');
     }
 
     collapseCart() {
+      if (!this.elements.container) return;
+
+      console.log('[BF25 Cart] Collapsing cart view');
+
+      // Remove expanded class
       this.elements.container.classList.remove('is-expanded');
 
+      // Update button
       if (this.elements.btnView) {
         this.elements.btnView.textContent = 'View ▼';
         this.elements.btnView.setAttribute('aria-expanded', 'false');
       }
 
+      // Hide expanded section (after transition)
+      const expanded = document.getElementById('bf25-expanded-cart');
+      if (expanded) {
+        setTimeout(() => {
+          if (!this.elements.container.classList.contains('is-expanded')) {
+            expanded.style.display = 'none';
+          }
+        }, 300);
+      }
+
       // Sync body padding
       document.body.style.paddingBottom = '65px';
 
+      // Announce to screen reader
       this.announce('Cart collapsed');
-      console.log('[BF25 Cart] Collapsed');
     }
 
     // ============================================
@@ -1201,6 +1229,9 @@
           this.elements.savingsAmount.textContent = `Save €${savings}`;
         }
 
+        // Render products in expanded view
+        this.renderProducts(cart);
+
         // Show/hide cart based on items
         this.handleEmptyState(itemCount);
 
@@ -1448,6 +1479,139 @@
      */
     wait(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ============================================
+    // EXPANDED CART VIEW
+    // ============================================
+
+    /**
+     * Render products in expanded view
+     */
+    renderProducts(cart) {
+      const scrollContainer = document.getElementById('bf25-product-scroll');
+      const emptyState = document.getElementById('bf25-expanded-empty');
+
+      if (!scrollContainer) return;
+
+      // Clear existing products
+      scrollContainer.innerHTML = '';
+
+      if (!cart || !cart.items || cart.items.length === 0) {
+        // Show empty state
+        if (emptyState) emptyState.style.display = 'flex';
+        return;
+      }
+
+      // Hide empty state
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Gift product handles
+      const giftHandles = [
+        'bf25-free-cable',
+        'bf25-free-case',
+        'bf25-free-magnetic-set',
+        'bf25-free-mystery-box'
+      ];
+
+      // Render each product
+      cart.items.forEach(item => {
+        const isGift = giftHandles.some(handle =>
+          item.handle && item.handle.includes(handle)
+        );
+
+        const card = this.createProductCard(item, isGift);
+        scrollContainer.appendChild(card);
+      });
+
+      console.log(`[BF25 Cart] Rendered ${cart.items.length} products in expanded view`);
+    }
+
+    /**
+     * Create product card element
+     */
+    createProductCard(item, isGift) {
+      const card = document.createElement('div');
+      card.className = `bf25-product-card${isGift ? ' bf25-product-card--gift' : ''}`;
+      card.dataset.variantId = item.variant_id;
+      card.dataset.key = item.key;
+
+      // Thumbnail
+      const thumbnail = document.createElement('img');
+      thumbnail.className = 'bf25-product-card__thumbnail';
+      thumbnail.src = item.featured_image?.url || item.image || '';
+      thumbnail.alt = item.product_title || 'Product';
+      thumbnail.loading = 'lazy';
+      card.appendChild(thumbnail);
+
+      // Quantity Badge
+      if (!isGift) {
+        const quantity = document.createElement('div');
+        quantity.className = 'bf25-product-card__quantity';
+        quantity.textContent = item.quantity;
+        card.appendChild(quantity);
+      }
+
+      // FREE Badge (for gifts)
+      if (isGift) {
+        const badge = document.createElement('div');
+        badge.className = 'bf25-product-card__gift-badge';
+        badge.textContent = 'FREE';
+        card.appendChild(badge);
+      }
+
+      // Remove Button (not for gifts)
+      if (!isGift) {
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'bf25-product-card__remove';
+        removeBtn.textContent = '×';
+        removeBtn.setAttribute('aria-label', `Remove ${item.product_title}`);
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.removeProduct(item.key);
+        });
+        card.appendChild(removeBtn);
+      }
+
+      return card;
+    }
+
+    /**
+     * Remove product from cart
+     */
+    async removeProduct(itemKey) {
+      console.log(`[BF25 Cart] Removing product: ${itemKey}`);
+
+      // Set loading state
+      this.setState('syncing');
+
+      try {
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: itemKey,
+            quantity: 0
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Remove failed: ${response.status}`);
+        }
+
+        console.log(`[BF25 Cart] ✓ Product removed`);
+
+        // Trigger cart:updated event
+        document.dispatchEvent(new CustomEvent('cart:updated'));
+
+        // Sync cart
+        await this.syncCart();
+
+      } catch (error) {
+        this.handleError(error, 'removeProduct');
+      }
     }
 
     // ============================================

@@ -9,6 +9,9 @@
   <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
      <path d="M20 6L9 17l-5-5"/>
   </symbol>
+  <symbol id="icon-benefit-check" viewBox="0 0 20 20" fill="currentColor">
+    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+  </symbol>
 </svg>
 
 <section class="bf25-hero" id="bf25-hero-section">
@@ -24,6 +27,10 @@
     </header>
 
     <div class="bf25-hero__module">
+
+      <div class="bf25-hero__gifts-header">
+        <span class="bf25-hero__gifts-header-text">Slide to unlock Discounts + Free Gifts</span>
+      </div>
 
       <div class="bf25-hero__gifts">
 
@@ -120,6 +127,12 @@
           </div>
         </div>
 
+        <!-- NEW: Benefits Wrapper -->
+        <div class="bf25-hero__benefits-wrapper">
+          <div class="bf25-hero__benefits-list" aria-live="polite">
+          </div>
+        </div>
+
         <div class="bf25-hero__card-footer">
           <div class="bf25-hero__pricing">
             <div class="bf25-hero__pricing-row">
@@ -164,25 +177,29 @@
       "id": "cable",
       "name": "4-in-1 Cable",
       "value": 30.00,
-      "tier": 1
+      "tier": 1,
+      "benefit_text": "FREE 4-in-1 Cable (€30 value)"
     },
     {
       "id": "case",
       "name": "Travel Case + Free Shipping",
       "value": 39.99,
-      "tier": 2
+      "tier": 2,
+      "benefit_text": "FREE Travel Case + Shipping (€39.99 value)"
     },
     {
       "id": "magnetic",
       "name": "Magnetic Cable Set",
       "value": 60.00,
-      "tier": 3
+      "tier": 3,
+      "benefit_text": "FREE Magnetic Cable Set (€60 value)"
     },
     {
       "id": "mystery",
       "name": "Bigfoot Mystery Box",
       "value": 150.00,
-      "tier": 4
+      "tier": 4,
+      "benefit_text": "FREE Bigfoot Mystery Box (€150+ value)"
     }
   ],
   "tiers": [
@@ -193,7 +210,8 @@
       "badge": "Explore Tiers",
       "display_label": "Move the slider",
       "multiplier": 1.0,
-      "color": "#6b7280"
+      "color": "#6b7280",
+      "discount_benefit_text": null
     },
     {
       "id": 1,
@@ -202,7 +220,8 @@
       "badge": "Better Deal",
       "display_label": "60% OFF",
       "multiplier": 0.91,
-      "color": "#60c655"
+      "color": "#60c655",
+      "discount_benefit_text": "60% OFF all items"
     },
     {
       "id": 2,
@@ -211,7 +230,8 @@
       "badge": "Great Deal",
       "display_label": "70% OFF",
       "multiplier": 0.76,
-      "color": "#60c655"
+      "color": "#60c655",
+      "discount_benefit_text": "70% OFF all items"
     },
     {
       "id": 3,
@@ -220,7 +240,8 @@
       "badge": "Best Deal",
       "display_label": "80% OFF",
       "multiplier": 0.65,
-      "color": "#60c655"
+      "color": "#60c655",
+      "discount_benefit_text": "80% OFF all items"
     },
     {
       "id": 4,
@@ -229,7 +250,8 @@
       "badge": "Bigfoot Unlock",
       "display_label": "85% OFF",
       "multiplier": 0.57,
-      "color": "#60c655"
+      "color": "#60c655",
+      "discount_benefit_text": "85% OFF all items"
     }
   ]
 }

@@ -57,7 +57,10 @@ class PowerSlider {
       pricingSavings: this.container.querySelector('[data-price-type="savings"]'),
       pricingPerItem: this.container.querySelector('[data-price-type="per-item"]'),
       unlocksPreview: this.container.querySelector('.bf25-hero__unlocks-current'),
-      unlocksText: this.container.querySelector('.bf25-hero__unlocks-text')
+      unlocksText: this.container.querySelector('.bf25-hero__unlocks-text'),
+      giftsHeaderText: this.container.querySelector('.bf25-hero__gifts-header-text'),
+      benefitsWrapper: this.container.querySelector('.bf25-hero__benefits-wrapper'),
+      benefitsList: this.container.querySelector('.bf25-hero__benefits-list')
     };
   }
 
@@ -93,11 +96,19 @@ class PowerSlider {
     this.currentTier = this.calculateTier(value);
 
     const tierUnlocked = this.currentTier.id > this.previousTier.id;
+    const tierChanged = this.currentTier.id !== this.previousTier.id;
 
     this.updateVisualization();
     this.updateGiftBoxes();
+    this.updateGiftsHeader();
     this.updateCheckpoints();
     this.updateTierCard();
+
+    // Only regenerate benefits list if tier actually changed
+    if (tierChanged) {
+      this.updateBenefitsList();
+    }
+
     this.updateUnlocksPreview();
     this.updatePricing();
     this.updateARIA();
@@ -146,6 +157,22 @@ class PowerSlider {
     });
   }
 
+  // NEW: Update the Gift Header
+  updateGiftsHeader() {
+    if (!this.elements.giftsHeaderText) return;
+
+    if (this.currentTier.id === 0) {
+      this.elements.giftsHeaderText.textContent = "Slide to unlock Discounts + Free Gifts";
+      return;
+    }
+
+    const discount = this.currentTier.display_label;
+    const unlockedCount = this.gifts.filter(g => g.tier <= this.currentTier.id).length;
+    const giftText = unlockedCount === 1 ? "Free Gift" : "Free Gifts";
+
+    this.elements.giftsHeaderText.textContent = `${discount} + ${unlockedCount} ${giftText} Unlocked!`;
+  }
+
   updateCheckpoints() {
     this.elements.checkpoints.forEach(checkpoint => {
       const checkpointValue = parseInt(checkpoint.dataset.value, 10);
@@ -189,6 +216,63 @@ class PowerSlider {
     if (this.elements.discountLabel) {
       this.elements.discountLabel.textContent = this.currentTier.display_label;
     }
+  }
+
+  // NEW: Update the Stacking Benefits List
+  updateBenefitsList() {
+    if (!this.elements.benefitsList || !this.elements.benefitsWrapper) return;
+
+    // Clear existing list
+    this.elements.benefitsList.innerHTML = '';
+
+    if (this.currentTier.id === 0) {
+      // Hide the wrapper when Tier 0 (smooth collapse via CSS Grid)
+      this.elements.benefitsWrapper.classList.remove('is-active');
+      return;
+    }
+
+    // Show the wrapper (smooth expand via CSS Grid)
+    this.elements.benefitsWrapper.classList.add('is-active');
+
+    // 1. Add the Discount benefit (using data from JSON)
+    if (this.currentTier.discount_benefit_text) {
+      const discountItem = this.createBenefitItem(this.currentTier.discount_benefit_text);
+      this.elements.benefitsList.appendChild(discountItem);
+    }
+
+    // 2. Add the cumulative Gift benefits (using data from JSON)
+    const unlockedGifts = this.gifts.filter(g => g.tier <= this.currentTier.id);
+    unlockedGifts.forEach((gift, index) => {
+      if (gift.benefit_text) {
+        const giftItem = this.createBenefitItem(gift.benefit_text);
+        // Staggered animation delay for entrance
+        giftItem.style.animationDelay = `${(index + 1) * 50}ms`;
+        this.elements.benefitsList.appendChild(giftItem);
+      }
+    });
+  }
+
+  // NEW Helper: Create a benefit list item DOM element
+  createBenefitItem(text) {
+    const item = document.createElement('div');
+    item.className = 'bf25-hero__benefit-item';
+
+    // Icon (using the new SVG sprite check)
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.classList.add('bf25-hero__benefit-icon');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-benefit-check');
+    icon.appendChild(use);
+
+    // Text
+    const textSpan = document.createElement('span');
+    textSpan.className = 'bf25-hero__benefit-text';
+    textSpan.textContent = text;
+
+    item.appendChild(icon);
+    item.appendChild(textSpan);
+
+    return item;
   }
 
   updateUnlocksPreview() {

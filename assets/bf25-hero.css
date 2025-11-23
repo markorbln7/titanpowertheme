@@ -105,6 +105,28 @@
   /* Height constraint achieved by component compactness */
 }
 
+/* Gift Box Header */
+.bf25-hero__gifts-header {
+  text-align: center;
+  margin-bottom: calc(var(--space-3) * -1); /* Pull gifts closer */
+}
+
+.bf25-hero__gifts-header-text {
+  display: inline-block;
+  background: var(--glass-bg-subtle);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border: 1px solid var(--glass-border-color);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-accent-lime);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all var(--duration-medium) var(--easing-premium);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    4. GIFT BOXES (4x1 Grid, Blackout & Dramatic Unlock)
    ═══════════════════════════════════════════════════════════════════════ */
@@ -265,7 +287,7 @@
   width: 100%;
   height: 20px; /* Increased height (Requirement Met) */
   border-radius: 10px;
-  overflow: visible; /* CHANGE from 'hidden' to 'visible' for debugging */
+  overflow: hidden; /* RESTORE from 'visible' */
   /* Battery Casing */
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0,0,0,0.3);
@@ -275,6 +297,8 @@
 /* 5.1 Track (High Contrast Segments) */
 .bf25-hero__track {
   position: absolute;
+  top: 0; /* CRITICAL FIX */
+  left: 0; /* CRITICAL FIX */
   width: 100%;
   height: 100%;
   z-index: 1; /* CRITICAL: Track on bottom layer */
@@ -292,17 +316,23 @@
 /* 5.2 Fill (Energized Lime Green) */
 .bf25-hero__fill {
   position: absolute;
+  top: 0; /* CRITICAL FIX */
+  left: 0; /* CRITICAL FIX */
   width: var(--fill-width);
   height: 100%;
   z-index: 2; /* CRITICAL: Fill on top layer */
 
-  /* DEBUG: Solid bright green (no gradient) */
-  background: #60c655 !important;
+  /* Restore gradient visualization */
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-accent-lime) 0,
+    var(--color-accent-lime) var(--segment-width),
+    transparent var(--segment-width),
+    transparent var(--gradient-step-size)
+  );
 
-  /* High visibility effects */
-  box-shadow: 0 0 30px rgba(96, 198, 85, 0.8) !important;
-  opacity: 1 !important;
-
+  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 5px var(--color-accent-glow);
+  opacity: 1;
   transition: width var(--duration-medium) var(--easing-premium);
   will-change: width;
   pointer-events: none;
@@ -466,6 +496,72 @@
   font-size: 18px;
   font-weight: 800;
   color: var(--color-accent-lime);
+}
+
+/* Stacking Benefits List (Grid FR Animation) */
+.bf25-hero__benefits-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-medium) var(--easing-premium),
+              margin-top var(--duration-medium) var(--easing-premium),
+              margin-bottom var(--duration-medium) var(--easing-premium),
+              border-color var(--duration-medium) var(--easing-premium);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.bf25-hero__benefits-wrapper.is-active {
+  grid-template-rows: 1fr;
+  border-top-color: var(--glass-border-color);
+  border-bottom-color: var(--glass-border-color);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.bf25-hero__benefits-list {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+}
+
+.bf25-hero__benefit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: benefitAppear var(--duration-medium) var(--easing-premium) forwards;
+}
+
+.bf25-hero__benefit-item:nth-child(1) { animation-delay: 0.05s; }
+.bf25-hero__benefit-item:nth-child(2) { animation-delay: 0.10s; }
+.bf25-hero__benefit-item:nth-child(3) { animation-delay: 0.15s; }
+.bf25-hero__benefit-item:nth-child(4) { animation-delay: 0.20s; }
+.bf25-hero__benefit-item:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes benefitAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bf25-hero__benefit-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent-lime);
+}
+
+.bf25-hero__benefit-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.4;
 }
 
 /* Unlock Preview Section */

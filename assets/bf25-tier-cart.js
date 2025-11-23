@@ -216,7 +216,7 @@
         return;
       }
 
-      console.log(`[GiftAnimator] Starting 6-frame sequence for tier ${tier}`);
+      console.log(`[GiftAnimator] Starting 6-frame sequence for tier ${tier} (with Value Flash)`);
 
       // Add animating class
       slot.classList.add('is-animating');
@@ -231,18 +231,26 @@
       await this.wait(400);
       slot.classList.remove('is-revealing');
 
-      // FRAME 4: Shine (1.2s)
+      // FRAME 4: Celebrate + Value Flash (0.9s total)
       slot.classList.add('is-celebrating');
 
-      // T=0.8s: Accessibility announcement
-      await this.wait(800);
+      // T=0.8s - 4A: Accessibility announcement
+      await this.wait(200);
       this.announceGift(tier);
 
-      // T=1.2s: Trigger confetti burst
-      await this.wait(400);
+      // T=0.8s - 4B: Trigger Value Flash
+      slot.classList.add('is-flashing');
+      console.log(`[GiftAnimator] Value Flash triggered for tier ${tier}`);
+
+      // T=1.0s - 4C: Trigger confetti (parallel with Value Flash)
+      await this.wait(200);
       this.triggerConfetti(tier, checkpoint);
 
+      // T=1.0-1.7s - 4D: Wait for Value Flash to complete (0.9s animation)
+      await this.wait(500);
+
       slot.classList.remove('is-celebrating');
+      slot.classList.remove('is-flashing');
 
       // FRAME 5: Settle (0.3s)
       slot.classList.add('is-settling');
@@ -253,7 +261,7 @@
       slot.dataset.state = 'claimed';
       slot.classList.remove('is-animating');
 
-      console.log(`[GiftAnimator] ✓ Sequence complete for tier ${tier}`);
+      console.log(`[GiftAnimator] ✓ Sequence complete for tier ${tier} (with Value Flash)`);
     }
 
     /**

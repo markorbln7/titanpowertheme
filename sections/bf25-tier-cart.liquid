@@ -6,8 +6,8 @@
 
 <!-- Sticky Cart Container -->
 <div
-  id="bf25-sticky-cart"
-  class="bf25-sticky-cart"
+  id="bf25sc-sticky-cart"
+  class="bf25sc-sticky-cart"
   data-active-tier="0"
   data-item-count="0"
   data-section-id="{{ section.id }}"
@@ -15,46 +15,65 @@
 >
 
   <!-- Progress Section (28px height) -->
-  <div class="bf25-sticky-cart__progress-wrapper">
+  <div class="bf25sc-sticky-cart__progress-wrapper">
 
     <!-- Tier Labels Row (8px height, above bar) -->
-    <div class="bf25-sticky-cart__tier-labels">
-      <div class="bf25-tier-label" data-tier="0" data-value="1" data-checkpoint="start">
-        <span class="bf25-tier-label__text">50%</span>
+    <div class="bf25sc-sticky-cart__tier-labels">
+      <div class="bf25sc-tier-label" data-tier="0" data-value="1" data-checkpoint="start">
+        <span class="bf25sc-tier-label__text">50%</span>
       </div>
-      <div class="bf25-tier-label" data-tier="1" data-value="4" data-checkpoint="4">
-        <span class="bf25-tier-label__text">60%</span>
+      <div class="bf25sc-tier-label" data-tier="1" data-value="4" data-checkpoint="4">
+        <span class="bf25sc-tier-label__text">60%</span>
       </div>
-      <div class="bf25-tier-label" data-tier="2" data-value="8" data-checkpoint="8">
-        <span class="bf25-tier-label__text">70%</span>
+      <div class="bf25sc-tier-label" data-tier="2" data-value="8" data-checkpoint="8">
+        <span class="bf25sc-tier-label__text">70%</span>
       </div>
-      <div class="bf25-tier-label" data-tier="3" data-value="12" data-checkpoint="12">
-        <span class="bf25-tier-label__text">80%</span>
+      <div class="bf25sc-tier-label" data-tier="3" data-value="12" data-checkpoint="12">
+        <span class="bf25sc-tier-label__text">80%</span>
       </div>
-      <div class="bf25-tier-label" data-tier="4" data-value="16" data-checkpoint="16">
-        <span class="bf25-tier-label__text">85%</span>
+      <div class="bf25sc-tier-label" data-tier="4" data-value="16" data-checkpoint="16">
+        <span class="bf25sc-tier-label__text">85%</span>
+      </div>
+    </div>
+
+    <!-- Item Count Labels (Below Bar) -->
+    <div class="bf25sc-sticky-cart__item-labels">
+      <div class="bf25sc-item-label" data-value="1">
+        <span class="bf25sc-item-label__text">1 item</span>
+      </div>
+      <div class="bf25sc-item-label" data-value="4">
+        <span class="bf25sc-item-label__text">4 items</span>
+      </div>
+      <div class="bf25sc-item-label" data-value="8">
+        <span class="bf25sc-item-label__text">8 items</span>
+      </div>
+      <div class="bf25sc-item-label" data-value="12">
+        <span class="bf25sc-item-label__text">12 items</span>
+      </div>
+      <div class="bf25sc-item-label" data-value="16">
+        <span class="bf25sc-item-label__text">16 items</span>
       </div>
     </div>
 
     <!-- Progress Bar Container (20px height) -->
-    <div class="bf25-progress-bar">
+    <div class="bf25sc-progress-bar">
 
       <!-- 16-Segment Structure (Flexbox Layout) -->
-      <div class="bf25-progress-bar__segments">
+      <div class="bf25sc-progress-bar__segments">
         {% for i in (1..16) %}
         <div
-          class="bf25-progress-bar__segment"
+          class="bf25sc-progress-bar__segment"
           data-segment="{{ i }}"
           data-checkpoint="{% if i == 4 or i == 8 or i == 12 or i == 16 %}true{% else %}false{% endif %}"
         >
           <!-- Gift icon slots at checkpoints (4, 8, 12, 16) -->
           {% if i == 4 or i == 8 or i == 12 or i == 16 %}
-          <div class="bf25-gift-slot" data-checkpoint-value="{{ i }}" data-state="locked" data-tier="{% if i == 4 %}1{% elsif i == 8 %}2{% elsif i == 12 %}3{% elsif i == 16 %}4{% endif %}">
+          <div class="bf25sc-gift-slot" data-checkpoint-value="{{ i }}" data-state="locked" data-tier="{% if i == 4 %}1{% elsif i == 8 %}2{% elsif i == 12 %}3{% elsif i == 16 %}4{% endif %}">
             <!-- Locked Icon (Default) -->
-            <span class="bf25-gift-icon bf25-gift-icon--locked">🎁</span>
+            <span class="bf25sc-gift-icon bf25sc-gift-icon--locked">🎁</span>
 
             <!-- Unlocked Icons (Tier-Specific) -->
-            <span class="bf25-gift-icon bf25-gift-icon--unlocked">
+            <span class="bf25sc-gift-icon bf25sc-gift-icon--unlocked">
               {% if i == 4 %}🔌{% endif %}
               {% if i == 8 %}📦{% endif %}
               {% if i == 12 %}🧲{% endif %}
@@ -62,7 +81,12 @@
             </span>
 
             <!-- Checkmark (Claimed State) -->
-            <span class="bf25-gift-checkmark">✅</span>
+            <span class="bf25sc-gift-checkmark">✅</span>
+
+            <!-- Value Flash Overlay (Gemini Phase 1) -->
+            <span class="bf25sc-value-flash" data-value="{% if i == 4 %}30{% elsif i == 8 %}65{% elsif i == 12 %}125{% elsif i == 16 %}275{% endif %}">
+              +€{% if i == 4 %}30{% elsif i == 8 %}65{% elsif i == 12 %}125{% elsif i == 16 %}275{% endif %} Value
+            </span>
           </div>
           {% endif %}
         </div>
@@ -73,26 +97,26 @@
   </div>
 
   <!-- Action Section (37px height) -->
-  <div class="bf25-sticky-cart__action-section">
+  <div class="bf25sc-sticky-cart__action-section">
 
     <!-- Incentive Message (Left, flexible width) -->
-    <div class="bf25-action-incentive">
-      <span class="bf25-action-incentive__text" id="bf25-incentive-text">
-        Add <strong class="bf25-highlight">4 items</strong> → <strong class="bf25-highlight">🔥 60% OFF</strong>
+    <div class="bf25sc-action-incentive">
+      <span class="bf25sc-action-incentive__text" id="bf25sc-incentive-text">
+        Add <strong class="bf25sc-highlight">4 items</strong> → <strong class="bf25sc-highlight">🔥 60% OFF</strong>
       </span>
     </div>
 
     <!-- Savings Display (Center, 80px fixed) -->
-    <div class="bf25-action-savings">
-      <span class="bf25-action-savings__amount" id="bf25-savings-amount">Save €0</span>
+    <div class="bf25sc-action-savings">
+      <span class="bf25sc-action-savings__amount" id="bf25sc-savings-amount">Save €0</span>
     </div>
 
     <!-- CTAs (Right, 75px total) -->
-    <div class="bf25-action-ctas">
+    <div class="bf25sc-action-ctas">
       <button
         type="button"
-        class="bf25-action-btn bf25-action-btn--view"
-        id="bf25-btn-view"
+        class="bf25sc-action-btn bf25sc-action-btn--view"
+        id="bf25sc-btn-view"
         aria-label="View cart contents"
         aria-expanded="false"
       >
@@ -100,8 +124,8 @@
       </button>
       <button
         type="button"
-        class="bf25-action-btn bf25-action-btn--buy"
-        id="bf25-btn-buy"
+        class="bf25sc-action-btn bf25sc-action-btn--buy"
+        id="bf25sc-btn-buy"
         aria-label="Proceed to checkout"
       >
         Buy Now
@@ -111,31 +135,31 @@
   </div>
 
   <!-- Expanded Cart View (90px, initially hidden) -->
-  <div class="bf25-sticky-cart__expanded" id="bf25-expanded-cart" style="display: none;">
+  <div class="bf25sc-sticky-cart__expanded" id="bf25sc-expanded-cart" style="display: none;">
 
     <!-- Products Carousel -->
-    <div class="bf25-expanded-products" id="bf25-product-carousel">
-      <div class="bf25-expanded-products__scroll" id="bf25-product-scroll">
+    <div class="bf25sc-expanded-products" id="bf25sc-product-carousel">
+      <div class="bf25sc-expanded-products__scroll" id="bf25sc-product-scroll">
         <!-- Products will be inserted here by JavaScript -->
       </div>
     </div>
 
     <!-- Empty State Message -->
-    <div class="bf25-expanded-empty" id="bf25-expanded-empty" style="display: none;">
-      <p class="bf25-expanded-empty__text">Your cart is empty</p>
+    <div class="bf25sc-expanded-empty" id="bf25sc-expanded-empty" style="display: none;">
+      <p class="bf25sc-expanded-empty__text">Your cart is empty</p>
     </div>
 
   </div>
 
   <!-- Confetti Container -->
-  <div class="bf25-confetti-container" id="bf25-confetti-container"></div>
+  <div class="bf25sc-confetti-container" id="bf25sc-confetti-container"></div>
 
 </div>
 
 <!-- Accessibility Announcements -->
 <div
-  id="bf25-cart-announcements"
-  class="bf25-sr-only"
+  id="bf25sc-cart-announcements"
+  class="bf25sc-sr-only"
   aria-live="polite"
   aria-atomic="true"
 ></div>
@@ -148,7 +172,7 @@
 
 <!-- Load Test Suite (Development Only) -->
 {% if section.settings.enable_testing %}
-<script src="{{ 'bf25-tier-cart-tests.js' | asset_url }}" defer></script>
+<script src="{{ 'bf25sc-tier-cart-tests.js' | asset_url }}" defer></script>
 {% endif %}
 
 <!-- Schema for Theme Customizer -->
@@ -156,7 +180,7 @@
 {
   "name": "BF25 Sticky Cart",
   "tag": "section",
-  "class": "bf25-tier-cart-section",
+  "class": "bf25sc-tier-cart-section",
   "settings": [
     {
       "type": "checkbox",

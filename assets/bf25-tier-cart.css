@@ -1068,3 +1068,93 @@
     transition-duration: 0.1s;
   }
 }
+
+/* ====================================
+   CONFETTI PARTICLE SYSTEM
+   ==================================== */
+
+/* Confetti Container (Overlay) */
+.bf25-confetti-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Individual Particle */
+.bf25-confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Particle Shapes */
+.bf25-confetti-particle--square {
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.bf25-confetti-particle--circle {
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.bf25-confetti-particle--triangle {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 8px solid currentColor;
+}
+
+/* Tier-Specific Colors (Green) */
+.bf25-confetti-particle--tier-1,
+.bf25-confetti-particle--tier-2 {
+  color: #60c655;
+}
+
+/* Gold Tier Colors */
+.bf25-confetti-particle--tier-3 {
+  color: #FFD700;
+}
+
+/* Platinum Tier Colors */
+.bf25-confetti-particle--tier-4 {
+  color: #E0F7FF;
+}
+
+/* Color Variants (Subtle Differences) */
+.bf25-confetti-particle[data-variant="1"] {
+  filter: brightness(1.1);
+}
+
+.bf25-confetti-particle[data-variant="2"] {
+  filter: brightness(0.9);
+}
+
+/* Performance Optimizations */
+.bf25-confetti-container {
+  contain: layout paint style;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-confetti-container {
+    display: none !important;
+  }
+}
+
+/* Save Data Support */
+@media (prefers-reduced-data: reduce) {
+  .bf25-confetti-container {
+    display: none !important;
+  }
+}

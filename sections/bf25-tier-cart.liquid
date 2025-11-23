@@ -110,15 +110,18 @@
 
   </div>
 
-  <!-- Accessibility Announcements -->
-  <div
-    id="bf25-cart-announcements"
-    class="bf25-sr-only"
-    aria-live="polite"
-    aria-atomic="true"
-  ></div>
+  <!-- Confetti Container -->
+  <div class="bf25-confetti-container" id="bf25-confetti-container"></div>
 
 </div>
+
+<!-- Accessibility Announcements -->
+<div
+  id="bf25-cart-announcements"
+  class="bf25-sr-only"
+  aria-live="polite"
+  aria-atomic="true"
+></div>
 
 <!-- Load CSS -->
 {{ 'bf25-tier-cart.css' | asset_url | stylesheet_tag }}

@@ -238,7 +238,10 @@
       await this.wait(800);
       this.announceGift(tier);
 
-      await this.wait(400); // Complete shine
+      // T=1.2s: Trigger confetti burst
+      await this.wait(400);
+      this.triggerConfetti(tier, checkpoint);
+
       slot.classList.remove('is-celebrating');
 
       // FRAME 5: Settle (0.3s)
@@ -251,6 +254,24 @@
       slot.classList.remove('is-animating');
 
       console.log(`[GiftAnimator] ✓ Sequence complete for tier ${tier}`);
+    }
+
+    /**
+     * Trigger confetti burst
+     */
+    triggerConfetti(tier, checkpoint) {
+      if (!window.BF25Confetti) {
+        console.warn('[GiftAnimator] ConfettiSystem not initialized');
+        return;
+      }
+
+      // Get trigger position
+      const position = window.BF25Confetti.getTriggerPosition(checkpoint);
+      if (!position) return;
+
+      // Fire confetti
+      window.BF25Confetti.burst(position.x, position.y, tier);
+      console.log(`[GiftAnimator] Confetti triggered for tier ${tier}`);
     }
 
     /**
@@ -291,6 +312,260 @@
       this.celebratedTiers.clear();
       sessionStorage.removeItem('bf25_celebrated_tiers');
       console.log('[GiftAnimator] Celebrations reset');
+    }
+  }
+
+  // ============================================
+  // CONFETTI SYSTEM CLASS
+  // ============================================
+  class ConfettiSystem {
+    constructor() {
+      this.container = document.getElementById('bf25-confetti-container');
+      this.pool = [];
+      this.activeParticles = [];
+      this.maxPoolSize = 20;
+
+      // Detect device capabilities
+      this.particleCount = this.getOptimalParticleCount();
+
+      // Initialize pool
+      this.initializePool();
+
+      console.log(`[ConfettiSystem] Initialized with ${this.particleCount} particles`);
+    }
+
+    /**
+     * Detect optimal particle count based on device
+     */
+    getOptimalParticleCount() {
+      // Check for user preferences
+      if (this.shouldReduceMotion()) {
+        return 0; // No confetti for reduced motion
+      }
+
+      // Check network conditions
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const slowNetwork = connection && /2g|3g|slow-2g/.test(connection.effectiveType);
+      const saveData = connection && connection.saveData;
+
+      // Check CPU cores (proxy for device capability)
+      const cores = navigator.hardwareConcurrency || 4;
+      const lowPower = cores < 4;
+
+      // Adaptive count
+      if (saveData || slowNetwork || lowPower) {
+        return 8; // Reduced for low-end devices
+      }
+
+      return 15; // Full count for capable devices
+    }
+
+    /**
+     * Check if reduced motion is preferred
+     */
+    shouldReduceMotion() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    /**
+     * Initialize particle pool
+     */
+    initializePool() {
+      if (!this.container || this.particleCount === 0) return;
+
+      for (let i = 0; i < this.maxPoolSize; i++) {
+        const particle = this.createParticle();
+        particle.style.display = 'none';
+        this.container.appendChild(particle);
+        this.pool.push(particle);
+      }
+
+      console.log(`[ConfettiSystem] Pool initialized: ${this.pool.length} particles`);
+    }
+
+    /**
+     * Create a single particle element
+     */
+    createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'bf25-confetti-particle';
+      return particle;
+    }
+
+    /**
+     * Get particle from pool
+     */
+    getParticle() {
+      if (this.pool.length === 0) {
+        console.warn('[ConfettiSystem] Pool exhausted, creating new particle');
+        const particle = this.createParticle();
+        this.container.appendChild(particle);
+        return particle;
+      }
+      return this.pool.pop();
+    }
+
+    /**
+     * Return particle to pool
+     */
+    returnParticle(particle) {
+      particle.style.display = 'none';
+      particle.style.opacity = '0';
+      particle.removeAttribute('data-variant');
+      particle.className = 'bf25-confetti-particle';
+
+      // Remove from active list
+      const index = this.activeParticles.indexOf(particle);
+      if (index > -1) {
+        this.activeParticles.splice(index, 1);
+      }
+
+      this.pool.push(particle);
+    }
+
+    /**
+     * Fire confetti burst
+     */
+    burst(x, y, tier) {
+      if (!this.container || this.particleCount === 0) {
+        console.log('[ConfettiSystem] Skipped (reduced motion or no container)');
+        return;
+      }
+
+      console.log(`[ConfettiSystem] Bursting ${this.particleCount} particles at (${x}, ${y}) for tier ${tier}`);
+
+      for (let i = 0; i < this.particleCount; i++) {
+        setTimeout(() => {
+          this.createAndAnimateParticle(x, y, tier);
+        }, i * 50); // Stagger by 50ms for smoother burst
+      }
+    }
+
+    /**
+     * Create and animate a single particle
+     */
+    createAndAnimateParticle(x, y, tier) {
+      const particle = this.getParticle();
+      if (!particle) return;
+
+      // Random shape
+      const shapes = ['square', 'circle', 'triangle'];
+      const weights = [0.4, 0.35, 0.25]; // 40% square, 35% circle, 25% triangle
+      const shape = this.weightedRandom(shapes, weights);
+
+      // Random size
+      const size = Math.random() * 6 + 6; // 6-12px
+
+      // Random color variant
+      const variant = Math.floor(Math.random() * 3); // 0, 1, 2
+
+      // Random rotation
+      const rotationStart = Math.random() * 360;
+      const rotationEnd = rotationStart + 360;
+
+      // Random trajectory
+      const xDrift = (Math.random() - 0.5) * 60; // ±30px
+      const yPeak = -25; // Max height above trigger
+      const yFinal = 15; // Settle below trigger
+
+      // Setup particle
+      particle.className = `bf25-confetti-particle bf25-confetti-particle--${shape} bf25-confetti-particle--tier-${tier}`;
+      particle.dataset.variant = variant;
+      particle.style.width = `${size}px`;
+      particle.style.height = shape === 'triangle' ? 'auto' : `${size}px`;
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      particle.style.display = 'block';
+      particle.style.opacity = '1';
+
+      // Special handling for triangle
+      if (shape === 'triangle') {
+        const halfSize = size / 2;
+        particle.style.borderLeftWidth = `${halfSize}px`;
+        particle.style.borderRightWidth = `${halfSize}px`;
+        particle.style.borderBottomWidth = `${size}px`;
+      }
+
+      // Add to active list
+      this.activeParticles.push(particle);
+
+      // WAAPI Animation
+      const animation = particle.animate([
+        {
+          transform: `translate(0, 0) rotate(${rotationStart}deg)`,
+          opacity: 1,
+          offset: 0
+        },
+        {
+          transform: `translate(${xDrift / 2}px, ${yPeak}px) rotate(${rotationStart + 180}deg)`,
+          opacity: 1,
+          offset: 0.5
+        },
+        {
+          transform: `translate(${xDrift}px, ${yFinal}px) rotate(${rotationEnd}deg)`,
+          opacity: 0,
+          offset: 1
+        }
+      ], {
+        duration: 1500,
+        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)', // Ease-Out Cubic
+        fill: 'forwards'
+      });
+
+      // Cleanup on finish
+      animation.onfinish = () => {
+        this.returnParticle(particle);
+      };
+    }
+
+    /**
+     * Weighted random selection
+     */
+    weightedRandom(items, weights) {
+      const total = weights.reduce((sum, w) => sum + w, 0);
+      let random = Math.random() * total;
+
+      for (let i = 0; i < items.length; i++) {
+        if (random < weights[i]) {
+          return items[i];
+        }
+        random -= weights[i];
+      }
+
+      return items[items.length - 1];
+    }
+
+    /**
+     * Clear all active particles (for cleanup)
+     */
+    clearAll() {
+      this.activeParticles.forEach(particle => {
+        this.returnParticle(particle);
+      });
+      this.activeParticles = [];
+      console.log('[ConfettiSystem] Cleared all particles');
+    }
+
+    /**
+     * Get trigger position (center of gift icon)
+     */
+    getTriggerPosition(checkpoint) {
+      const slot = document.querySelector(
+        `.bf25-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (!slot) {
+        console.warn(`[ConfettiSystem] No slot found for checkpoint ${checkpoint}`);
+        return null;
+      }
+
+      const rect = slot.getBoundingClientRect();
+      const containerRect = this.container.getBoundingClientRect();
+
+      return {
+        x: rect.left - containerRect.left + rect.width / 2,
+        y: rect.top - containerRect.top + rect.height / 2
+      };
     }
   }
 
@@ -360,6 +635,9 @@
 
       // Initialize GiftAnimator
       this.initGiftAnimator();
+
+      // Initialize ConfettiSystem
+      this.initConfettiSystem();
 
       // Initialize keyboard navigation
       this.initKeyboardNav();
@@ -978,6 +1256,14 @@
     initGiftAnimator() {
       this.giftAnimator = new GiftAnimator();
       console.log('[BF25 Cart] GiftAnimator initialized');
+    }
+
+    /**
+     * Initialize ConfettiSystem
+     */
+    initConfettiSystem() {
+      window.BF25Confetti = new ConfettiSystem();
+      console.log('[BF25 Cart] ConfettiSystem initialized');
     }
 
     /**

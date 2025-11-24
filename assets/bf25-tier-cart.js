@@ -11,10 +11,10 @@
   // GIFT VARIANT IDs (Source of Truth)
   // ============================================
   const GIFT_VARIANT_MAP = {
-    CABLE: 8660340179122,      // 4-in-1 Cable (Tier 1+)
-    CASE: 8363826348210,       // Travel Case (Tier 2+)
-    MAGNETIC: 8472093786290,   // Magnetic Cable Set (Tier 3+)
-    MYSTERY: 8660337950898     // Mystery Gift Box (Tier 4)
+    CABLE: 46748253520050,     // titan-100w-4-in-1-free (Tier 1+)
+    CASE: 44929561526450,      // travel-case-free (Tier 2+)
+    MAGNETIC: 45338148798642,  // magnetic-cable-free (Tier 3+)
+    MYSTERY: 46748228190386    // mystery-gift-free (Tier 4)
   };
 
   // ============================================

@@ -310,6 +310,40 @@
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.pp-sheet-cta__button-deal {
+  width: 100%;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(96, 198, 85, 0.8) 0%, rgba(80, 176, 69, 0.8) 100%);
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+  border: 2px solid var(--pp-accent-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(96, 198, 85, 0.3);
+  margin-bottom: 20px;
+}
+
+.pp-sheet-cta__button-deal:not(:disabled):hover {
+  background: linear-gradient(135deg, var(--pp-accent-primary) 0%, #50b045 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(96, 198, 85, 0.5);
+}
+
+.pp-sheet-cta__button-deal:disabled {
+  background: linear-gradient(135deg, rgba(102, 102, 102, 0.3) 0%, rgba(102, 102, 102, 0.2) 100%);
+  border-color: rgba(102, 102, 102, 0.3);
+  color: var(--pp-text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
 .pp-sheet-cta__button-main {
   width: 100%;
   padding: 16px 20px;

@@ -2362,7 +2362,7 @@ class ExpansionManager {
       button.addEventListener('click', (e) => {
         const bundleId = e.currentTarget.getAttribute('data-bundle-id');
         this.open(bundleId);
-      }, { passive: false }); // Need preventDefault capability
+      }, { passive: false });
     });
     console.log(`[PowerPairs] Found ${buttons.length} CTA buttons`);
   }
@@ -3541,10 +3541,20 @@ class ExpansionManager {
     const isDisabled = !allComplete;
     const buttonText = isDisabled
       ? 'Select Variants First'
-      : `Add ${bundle.multiplier}x Kit to Cart`;
+      : `Buy ${bundle.multiplier}x Kit Now`;
 
     return `
       <div class="pp-sheet-cta-fixed">
+        <button
+          class="pp-sheet-cta__button-deal"
+          data-action="add-to-deal"
+          ${isDisabled ? 'disabled' : ''}
+          aria-label="Add ${pricing.totalItems} items to deal"
+        >
+          <span class="pp-cta-icon">➕</span>
+          <span class="pp-cta-text">Add ${pricing.totalItems} Items to Deal</span>
+          <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
+        </button>
         <button
           class="pp-sheet-cta__button-main"
           data-action="add-to-cart"
@@ -3552,7 +3562,7 @@ class ExpansionManager {
           aria-label="${buttonText}"
         >
           <span class="pp-cta-icon">🛒</span>
-          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Add ${pricing.totalItems} Items`}</span>
+          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Buy ${pricing.totalItems} Items Now`}</span>
           <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
           <span class="pp-cta-arrow">→</span>
         </button>
@@ -3694,24 +3704,113 @@ class ExpansionManager {
   }
 
   /**
-   * Attach click listener to Add to Cart button
+   * Attach click listeners to CTA buttons
    */
   attachCTAListener() {
     const ctaContainer = document.getElementById('pp-sheet-cta-container');
-    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
-
-    if (!ctaButton) {
+    if (!ctaContainer) {
       return;
     }
 
-    console.log('[PowerPairs] Attaching listener to CTA button');
+    // Add to Deal button (adds to sticky cart and closes modal)
+    const dealButton = ctaContainer.querySelector('[data-action="add-to-deal"]');
+    if (dealButton) {
+      console.log('[PowerPairs] Attaching listener to Add to Deal button');
+      
+      dealButton.addEventListener('click', (e) => {
+        console.log('[PowerPairs] Add to Deal clicked');
+        this.handleAddToDeal();
+      });
+    }
 
-    ctaButton.addEventListener('click', (e) => {
-      console.log('[PowerPairs] Add to Cart clicked');
+    // Add to Cart button (goes to checkout)
+    const ctaButton = ctaContainer.querySelector('[data-action="add-to-cart"]');
+    if (ctaButton) {
+      console.log('[PowerPairs] Attaching listener to Add to Cart button');
 
-      // Placeholder - will implement in Prompt 12
-      this.handleAddToCart();
-    });
+      ctaButton.addEventListener('click', (e) => {
+        console.log('[PowerPairs] Add to Cart clicked');
+        this.handleAddToCart();
+      });
+    }
+  }
+
+  /**
+   * Handle add to deal (adds to sticky cart and closes modal)
+   */
+  async handleAddToDeal() {
+    console.log('[PowerPairs] Add to Deal initiated');
+
+    const bundle = window.PPState.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs] No active bundle');
+      this.showError('Bundle not found. Please try again.');
+      return;
+    }
+
+    // Double-check variants are complete
+    if (!bundle.variantsComplete) {
+      console.error('[PowerPairs] Variants not complete');
+      this.showError('Please select all product variants first.');
+      return;
+    }
+
+    // Calculate final pricing
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Show loading overlay
+    this.showLoadingOverlay('Adding to deal...', 'Preparing your bundle');
+
+    // Disable both buttons
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    const dealButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-deal"]') : null;
+    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
+    
+    if (dealButton) {
+      dealButton.classList.add('pp-sheet-cta__button--loading');
+      dealButton.disabled = true;
+    }
+    if (ctaButton) {
+      ctaButton.disabled = true;
+    }
+
+    try {
+      // Prepare cart items
+      const cartItems = this.prepareCartItems(bundle, pricing);
+
+      console.log('[PowerPairs] Adding items to deal:', cartItems);
+
+      // Add items to cart (sticky cart will update automatically)
+      await this.addItemsToCart(cartItems);
+
+      console.log('[PowerPairs] Items added to deal successfully');
+
+      // Hide loading overlay
+      this.hideLoadingOverlay();
+
+      // Show brief success message
+      announceToScreenReader(`Added ${pricing.totalItems} items to deal`, 'polite');
+
+      // Close modal after brief delay
+      setTimeout(() => {
+        this.close();
+      }, 500);
+
+    } catch (error) {
+      console.error('[PowerPairs] Add to deal failed:', error);
+      this.hideLoadingOverlay();
+      this.showError(error.message || 'Failed to add to deal. Please try again.');
+
+      // Re-enable buttons
+      if (dealButton) {
+        dealButton.classList.remove('pp-sheet-cta__button--loading');
+        dealButton.disabled = false;
+      }
+      if (ctaButton) {
+        ctaButton.disabled = false;
+      }
+    }
   }
 
   /**
@@ -3741,8 +3840,14 @@ class ExpansionManager {
     // Show loading overlay
     this.showLoadingOverlay('Adding to cart...', 'Preparing your bundle');
 
-    // Disable CTA button
-    const ctaButton = this.contentArea.querySelector('[data-action="add-to-cart"]');
+    // Disable both buttons
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    const dealButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-deal"]') : null;
+    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
+    
+    if (dealButton) {
+      dealButton.disabled = true;
+    }
     if (ctaButton) {
       ctaButton.classList.add('pp-sheet-cta__button--loading');
       ctaButton.disabled = true;
@@ -3775,7 +3880,10 @@ class ExpansionManager {
       this.hideLoadingOverlay();
       this.showError(error.message || 'Failed to add to cart. Please try again.');
 
-      // Re-enable button
+      // Re-enable buttons
+      if (dealButton) {
+        dealButton.disabled = false;
+      }
       if (ctaButton) {
         ctaButton.classList.remove('pp-sheet-cta__button--loading');
         ctaButton.disabled = false;
@@ -4381,3 +4489,4 @@ if (document.readyState === 'loading') {
 }
 
 })();
+

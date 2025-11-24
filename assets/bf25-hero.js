@@ -244,11 +244,29 @@ class PowerSlider {
         // Trigger unlock animation on first unlock
         if (wasLocked && this.currentTier.id === gift.tier) {
           this.triggerGiftUnlockAnimation(box);
+
+          // Special celebration for mystery box
+          if (box.classList.contains('bf25-hero__gift-box--mystery')) {
+            this.triggerMysteryBoxCelebration(box);
+          }
         }
       } else {
         box.classList.remove('is-unlocked');
       }
     });
+  }
+
+  /**
+   * Trigger spectacular celebration animation for mystery box unlock
+   */
+  triggerMysteryBoxCelebration(box) {
+    // Add celebration class for one-time animation
+    box.classList.add('is-celebrating');
+
+    // Remove celebration class after animation completes
+    setTimeout(() => {
+      box.classList.remove('is-celebrating');
+    }, 1000); // Match unlockCelebration animation duration
   }
 
   // NEW: Update the Gift Header

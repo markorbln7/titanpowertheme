@@ -204,9 +204,9 @@
     transform: scale(1.05);
   }
   
-  /* Product Title */
+  /* Product Title - WHITE on Dark Theme */
   .dark-mode .section-collections-with-nav__product-title {
-    color: #ffffff;
+    color: #ffffff !important;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
@@ -216,6 +216,13 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Ensure product titles are white everywhere */
+  .section-collections-with-nav__product-title,
+  h4.section-collections-with-nav__product-title {
+    color: #ffffff !important;
   }
   
   /* Bullet Points - White Text with Glowing Green Ticks */
@@ -375,16 +382,48 @@
   
   @media (max-width: 640px) {
     .dark-mode .products {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px;
+      padding: 0 12px;
     }
-    
+
     .dark-mode .section-collections-with-nav {
       padding: 40px 0;
     }
-    
+
     .dark-mode .section-collections-with-nav__product {
-      padding: 20px;
+      padding: 16px;
+    }
+
+    /* Smaller font sizes for 2-column mobile layout */
+    .dark-mode .section-collections-with-nav__product-title {
+      font-size: 14px !important;
+      min-height: 40px !important;
+    }
+
+    .dark-mode .section-collections-with-nav__product-price {
+      font-size: 20px !important;
+    }
+
+    .dark-mode .metafield-rich_text_field ul li {
+      font-size: 12px !important;
+    }
+
+    .dark-mode .discount_message {
+      font-size: 12px !important;
+      padding: 4px 8px !important;
+    }
+  }
+
+  /* Very small screens - reduce gap further */
+  @media (max-width: 380px) {
+    .dark-mode .products {
+      gap: 8px !important;
+      padding: 0 8px !important;
+    }
+
+    .dark-mode .section-collections-with-nav__product {
+      padding: 12px;
     }
   }
   

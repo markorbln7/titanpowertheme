@@ -77,8 +77,23 @@
             <span class="bf25-hero__gift-label">Magnetic</span>
         </div>
 
-        <div class="bf25-hero__gift-box" data-gift-id="mystery" data-tier="4">
+        <div class="bf25-hero__gift-box bf25-hero__gift-box--mystery" data-gift-id="mystery" data-tier="4">
             <div class="bf25-hero__gift-image-wrapper">
+                <!-- Magical effects container -->
+                <div class="bf25-hero__gift-magic" aria-hidden="true">
+                    <!-- Rotating light rays -->
+                    <div class="bf25-hero__gift-rays"></div>
+                    <!-- Floating sparkles -->
+                    <div class="bf25-hero__gift-sparkles">
+                        <span class="sparkle sparkle-1"></span>
+                        <span class="sparkle sparkle-2"></span>
+                        <span class="sparkle sparkle-3"></span>
+                        <span class="sparkle sparkle-4"></span>
+                    </div>
+                    <!-- Pulsing glow ring -->
+                    <div class="bf25-hero__gift-glow-ring"></div>
+                </div>
+
                 <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_gift_gift_tracker_mystery_3dcb6ddf-e030-4eac-b3c5-b4ee3c82b364.png?v=1763844597" alt="Mystery Box" class="bf25-hero__gift-image" width="80" height="80" loading="lazy"/>
                 <div class="bf25-hero__gift-overlay"></div>
                 <span class="bf25-hero__gift-status-icon" aria-hidden="true">
@@ -113,12 +128,10 @@
           </div>
         </div>
 
-        <!-- NEW: Finger drag indicator -->
+        <!-- Simplified drag indicator -->
         <div class="bf25-hero__drag-indicator" id="bf25-drag-indicator">
-          <svg class="bf25-hero__drag-finger">
-            <use xlink:href="#icon-finger-drag"></use>
-          </svg>
-          <span class="bf25-hero__drag-hint">Drag</span>
+          <div class="bf25-hero__drag-arrow">→</div>
+          <span class="bf25-hero__drag-text">DRAG</span>
         </div>
 
         <!-- UPDATED: Progress Bar (DOM Segments) -->
@@ -161,7 +174,15 @@
             <span class="bf25-hero__tier-badge-text">Explore Tiers</span>
           </div>
           <div class="bf25-hero__discount-display">
-            <span class="bf25-hero__discount-label">Move the slider</span>
+            <!-- Two-line message for tier 0 -->
+            <div class="bf25-hero__default-message">
+              <p class="bf25-hero__default-subtitle">
+                All products <span class="bf25-hero__default-highlight">50% OFF</span>
+              </p>
+              <p class="bf25-hero__default-title">Drag the slider to see more Savings</p>
+            </div>
+            <!-- Normal discount label (hidden at tier 0) -->
+            <span class="bf25-hero__discount-label">60% OFF</span>
           </div>
         </div>
 
@@ -184,7 +205,7 @@
             </div>
 
             <div class="bf25-hero__pricing-row bf25-hero__pricing-row--savings">
-              <span class="bf25-hero__pricing-label">You Save:</span>
+              <span class="bf25-hero__pricing-label">Average Savings:</span>
               <span class="bf25-hero__pricing-value bf25-hero__pricing-value--savings" data-price-type="savings">—</span>
             </div>
           </div>

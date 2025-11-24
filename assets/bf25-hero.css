@@ -402,90 +402,147 @@
 */
 
 /* ═══════════════════════════════════════════════════════════════
-   DRAG INDICATOR (FINGER POINTER)
+   DRAG INDICATOR (SIMPLIFIED)
    ═══════════════════════════════════════════════════════════== */
 
 .bf25-hero__drag-indicator {
   position: absolute;
-  left: -50px;
+  left: -40px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   opacity: 1;
   transition: opacity 400ms ease;
   pointer-events: none;
   z-index: 5;
 }
 
-/* Mobile positioning adjustments */
-@media (max-width: 640px) {
-  .bf25-hero__drag-indicator {
-    left: -35px; /* Closer to bar on mobile */
-    gap: 2px;
-  }
-
-  .bf25-hero__drag-finger {
-    width: 24px;
-    height: 24px;
-  }
-
-  .bf25-hero__drag-hint {
-    font-size: 9px;
-  }
-}
-
-/* Hide only on very narrow screens if needed */
-@media (max-width: 380px) {
-  .bf25-hero__drag-indicator {
-    left: -30px;
-  }
-}
-
-/* Finger icon */
-.bf25-hero__drag-finger {
-  width: 32px;
-  height: 32px;
-  color: rgba(255, 255, 255, 0.6);
-  filter: drop-shadow(0 0 8px rgba(96, 198, 85, 0.3));
-
-  /* Pulsing animation */
-  animation: fingerPulse 2s ease-in-out infinite;
-}
-
-/* "Drag" hint text */
-.bf25-hero__drag-hint {
-  font-size: 11px;
-  font-weight: 600;
+/* Arrow */
+.bf25-hero__drag-arrow {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
   color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  animation: arrowPulse 2s ease-in-out infinite;
 }
 
-/* Pulsing animation */
-@keyframes fingerPulse {
+/* "DRAG" text */
+.bf25-hero__drag-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Simplified pulse animation */
+@keyframes arrowPulse {
   0%, 100% {
-    transform: scale(1) translateX(0);
-    opacity: 0.6;
+    transform: translateX(0);
+    opacity: 0.5;
   }
   50% {
-    transform: scale(1.1) translateX(3px);
+    transform: translateX(4px);
     opacity: 1;
   }
 }
 
-/* Hide indicator after first interaction */
+/* Hide after interaction */
 .bf25-hero__drag-indicator.is-hidden {
   opacity: 0;
-  pointer-events: none;
 }
 
-/* Glow effect when active */
-.bf25-hero__slider-wrapper:hover .bf25-hero__drag-finger {
+/* Hover effect */
+.bf25-hero__slider-wrapper:hover .bf25-hero__drag-arrow {
+  color: rgba(96, 198, 85, 0.8);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .bf25-hero__drag-indicator {
+    left: -32px;
+  }
+
+  .bf25-hero__drag-arrow {
+    font-size: 24px;
+  }
+
+  .bf25-hero__drag-text {
+    font-size: 8px;
+  }
+}
+
+/* Hide on very narrow screens */
+@media (max-width: 380px) {
+  .bf25-hero__drag-indicator {
+    left: -26px;
+  }
+
+  .bf25-hero__drag-arrow {
+    font-size: 20px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DEFAULT MESSAGE (TIER 0)
+   ═══════════════════════════════════════════════════════════== */
+
+.bf25-hero__default-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Subtitle: "All products 50% OFF" */
+.bf25-hero__default-subtitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.01em;
+}
+
+.bf25-hero__default-highlight {
   color: #60c655;
-  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.6));
+  font-weight: 700;
+}
+
+/* Title: "Drag the slider to see more Savings" */
+.bf25-hero__default-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #60c655;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+/* Hide default message when tier > 0 */
+.bf25-hero__card[data-active-tier="1"] .bf25-hero__default-message,
+.bf25-hero__card[data-active-tier="2"] .bf25-hero__default-message,
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__default-message,
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__default-message {
+  display: none;
+}
+
+/* Show normal discount label when tier > 0 */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__discount-label {
+  display: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .bf25-hero__default-subtitle {
+    font-size: 12px;
+  }
+
+  .bf25-hero__default-title {
+    font-size: 16px;
+  }
 }
 
 /* Discount Labels (Above Slider) */
@@ -1036,6 +1093,47 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   HIDE PRICING AND BENEFITS AT TIER 0
+   ═══════════════════════════════════════════════════════════== */
+
+/* Hide pricing at tier 0 */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__pricing {
+  display: none;
+}
+
+/* Pricing visible at tier 1+ */
+.bf25-hero__card[data-active-tier="1"] .bf25-hero__pricing,
+.bf25-hero__card[data-active-tier="2"] .bf25-hero__pricing,
+.bf25-hero__card[data-active-tier="3"] .bf25-hero__pricing,
+.bf25-hero__card[data-active-tier="4"] .bf25-hero__pricing {
+  display: block;
+}
+
+/* Hide benefits list at tier 0 */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__benefits-wrapper {
+  display: none;
+}
+
+/* Tier 0 - Compact card */
+.bf25-hero__card[data-active-tier="0"] {
+  min-height: auto;
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  padding: var(--space-5) var(--space-4);
+  justify-content: center;
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__tier-badge {
+  order: 2;
+  margin-top: var(--space-3);
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__discount-display {
+  order: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    TIER-WIDE COLOR OVERRIDE (All elements match current tier)
    ═══════════════════════════════════════════════════════════== */
 
@@ -1121,7 +1219,206 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   7. CALL TO ACTION & POLISH
+   7. MYSTERY BOX SPECTACULAR ANIMATION
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Mystery box magical effects container */
+.bf25-hero__gift-magic {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+/* Show magic effects when mystery box is unlocked */
+.bf25-hero__gift-box--mystery.is-unlocked .bf25-hero__gift-magic {
+  opacity: 1;
+}
+
+/* Rotating light rays */
+.bf25-hero__gift-rays {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(224, 247, 255, 0.15) 10%,
+    transparent 20%,
+    transparent 30%,
+    rgba(224, 247, 255, 0.15) 40%,
+    transparent 50%,
+    transparent 60%,
+    rgba(224, 247, 255, 0.15) 70%,
+    transparent 80%,
+    transparent 90%,
+    rgba(224, 247, 255, 0.15) 100%
+  );
+  animation: rotateRays 8s linear infinite;
+}
+
+@keyframes rotateRays {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pulsing glow ring */
+.bf25-hero__gift-glow-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  border: 2px solid rgba(224, 247, 255, 0.3);
+  box-shadow: 0 0 20px rgba(224, 247, 255, 0.4),
+              inset 0 0 20px rgba(224, 247, 255, 0.2);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+    box-shadow: 0 0 20px rgba(224, 247, 255, 0.4),
+                inset 0 0 20px rgba(224, 247, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+    box-shadow: 0 0 40px rgba(224, 247, 255, 0.8),
+                inset 0 0 30px rgba(224, 247, 255, 0.4);
+  }
+}
+
+/* Floating sparkles container */
+.bf25-hero__gift-sparkles {
+  position: absolute;
+  inset: 0;
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #E0F7FF;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(224, 247, 255, 0.8);
+  animation: floatSparkle 3s ease-in-out infinite;
+}
+
+.sparkle-1 {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 30%;
+  right: 20%;
+  animation-delay: 0.75s;
+}
+
+.sparkle-3 {
+  bottom: 25%;
+  left: 25%;
+  animation-delay: 1.5s;
+}
+
+.sparkle-4 {
+  bottom: 30%;
+  right: 15%;
+  animation-delay: 2.25s;
+}
+
+@keyframes floatSparkle {
+  0%, 100% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(-2px) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-12px) scale(1.2);
+    opacity: 0.8;
+  }
+  90% {
+    transform: translateY(-20px) scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-24px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Breathing scale animation on entire mystery box */
+.bf25-hero__gift-box--mystery.is-unlocked {
+  animation: breatheScale 3s ease-in-out infinite;
+}
+
+@keyframes breatheScale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Unlock celebration - plays once when first unlocked */
+.bf25-hero__gift-box--mystery.is-celebrating {
+  animation: unlockCelebration 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes unlockCelebration {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(0.95) rotate(-3deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Shimmer sweep effect on unlock */
+.bf25-hero__gift-box--mystery.is-celebrating::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(224, 247, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmerSweep 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes shimmerSweep {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   8. CALL TO ACTION & POLISH
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bf25-hero__cta {
@@ -1152,7 +1449,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   8. ACCESSIBILITY
+   9. ACCESSIBILITY
    ═══════════════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: reduce) {

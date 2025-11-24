@@ -414,7 +414,7 @@ window.productData["{{ product.id }}"] = {
   // Pricing (in cents for precise calculations)
   // ─────────────────────────────────────────────────────────
   basePrice: {{ product.price }},
-  comparePrice: {{ product.compare_at_price | default: product.price }},
+  comparePrice: {{ product.compare_at_price | default: 0 }},
 
   // ─────────────────────────────────────────────────────────
   // Images

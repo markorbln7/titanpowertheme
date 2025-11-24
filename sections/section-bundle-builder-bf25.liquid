@@ -169,28 +169,51 @@
                     grid_2_text: section.settings.add_6_text,
                     grid_3_text: section.settings.add_10_text
                   %}
+                  {%- comment -%} BF25 Product Data Layer - Required for variant selection {%- endcomment -%}
                   <script>
-
+                    // Initialize global objects if not exists
                     window.productVariants = window.productVariants || {};
+                    window.productOptions = window.productOptions || {};
+
+                    // Store variant data for this product
                     window.productVariants[{{ product.id }}] = [
-                      {% for variant in product.variants %}
-                        {% if variant.metafields.custom.popup_image %}
-                          {% assign images = variant.metafields.custom.popup_image | img_url: 'master' %}
-                        {% else %}
-                          {% assign images = variant.image.src | img_url: 'master' %}
-                        {% endif %}
+                      {%- for variant in product.variants -%}
                       {
-                        id: '{{ variant.id }}',
+                        id: {{ variant.id | json }},
+                        title: {{ variant.title | json }},
                         options: [
-                          {% for option in variant.options %}
-                          '{{ option | escape }}' {% unless forloop.last %}, {% endunless %}
-                          {% endfor %}
+                          {%- for option in variant.options -%}
+                          {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
                         ],
-                        image: '{{ images }}',
-                        price: '{{ variant.price | money }}',
-                        compare_at_price: '{{ variant.compare_at_price | money }}',
-                      }{% unless forloop.last %}, {% endunless %}
-                      {% endfor %}
+                        available: {{ variant.available | json }},
+                        price: {{ variant.price | json }},
+                        compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+                        {%- if variant.featured_image -%}
+                        featured_image: {
+                          src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+                          alt: {{ variant.featured_image.alt | default: product.title | json }}
+                        }
+                        {%- else -%}
+                        featured_image: null
+                        {%- endif -%}
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+
+                    // Store option configuration for this product
+                    window.productOptions[{{ product.id }}] = [
+                      {%- for option in product.options_with_values -%}
+                      {
+                        name: {{ option.name | json }},
+                        position: {{ option.position }},
+                        values: [
+                          {%- for value in option.values -%}
+                          {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ]
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
                     ];
                   </script>
 

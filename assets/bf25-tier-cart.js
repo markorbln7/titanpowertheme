@@ -1225,18 +1225,54 @@
       sessionStorage.setItem('bf25-direct-checkout', 'true');
       sessionStorage.setItem('rebuy-disabled', 'true');
 
-      // Method 2: Replace Rebuy object with no-op Proxy
+      // Method 2: Disable Rebuy methods directly (can't replace - it's read-only)
       if (window.Rebuy) {
-        console.log('[BF25 Cart] Found Rebuy object, nullifying...');
-        window._rebuyOriginalBackup = window.Rebuy;
+        console.log('[BF25 Cart] Found Rebuy object, disabling methods...');
 
-        window.Rebuy = new Proxy({}, {
-          get: (target, prop) => {
-            console.log(`[BF25 Cart] Rebuy.${prop} blocked`);
-            return () => {};
-          },
-          set: () => true
-        });
+        try {
+          // Disable SmartCart (the cart drawer)
+          if (window.Rebuy.SmartCart) {
+            window.Rebuy.SmartCart.open = function() {
+              console.log('[BF25 Cart] Rebuy.SmartCart.open blocked');
+            };
+            window.Rebuy.SmartCart.close = function() {
+              console.log('[BF25 Cart] Rebuy.SmartCart.close blocked');
+            };
+            window.Rebuy.SmartCart.show = function() {
+              console.log('[BF25 Cart] Rebuy.SmartCart.show blocked');
+            };
+            window.Rebuy.SmartCart.toggle = function() {
+              console.log('[BF25 Cart] Rebuy.SmartCart.toggle blocked');
+            };
+          }
+
+          // Disable Cart methods
+          if (window.Rebuy.Cart) {
+            window.Rebuy.Cart.open = function() {
+              console.log('[BF25 Cart] Rebuy.Cart.open blocked');
+            };
+            window.Rebuy.Cart.show = function() {
+              console.log('[BF25 Cart] Rebuy.Cart.show blocked');
+            };
+          }
+
+          // Try to disable init/refresh methods
+          if (typeof window.Rebuy.init === 'function') {
+            window.Rebuy.init = function() {
+              console.log('[BF25 Cart] Rebuy.init blocked');
+            };
+          }
+          if (typeof window.Rebuy.refresh === 'function') {
+            window.Rebuy.refresh = function() {
+              console.log('[BF25 Cart] Rebuy.refresh blocked');
+            };
+          }
+
+          console.log('[BF25 Cart] ✅ Rebuy methods disabled');
+        } catch (e) {
+          console.warn('[BF25 Cart] Could not disable some Rebuy methods:', e.message);
+          // Continue anyway - other suppression methods may work
+        }
       }
 
       // Method 3: Prevent Rebuy cart events (capture phase)

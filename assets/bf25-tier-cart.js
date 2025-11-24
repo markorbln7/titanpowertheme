@@ -1232,6 +1232,10 @@
         console.log('[BF25 Cart] BundleManager not found, using Shopify API fallback');
         this.useBundleManager = false;
         this.syncCart(); // Original flow
+
+        // Still mark as initialized and set up scroll observer
+        this.markInitialized();
+        this.initScrollObserver();
         return;
       }
 
@@ -1293,7 +1297,73 @@
       // Initial render from BundleManager
       this.renderFromBundle();
 
+      // Mark cart as initialized (prevents flash)
+      this.markInitialized();
+
+      // Set up scroll observer (show cart after hero)
+      this.initScrollObserver();
+
       console.log('[BF25 Cart] ✓ BundleManager integration active');
+    }
+
+    /**
+     * Mark cart as initialized (CSS reveals it)
+     * This prevents the flash of unstyled content
+     */
+    markInitialized() {
+      if (!this.elements.container) return;
+
+      // Small delay to ensure first render completes
+      requestAnimationFrame(() => {
+        this.elements.container.classList.add('is-initialized');
+        console.log('[BF25 Cart] ✓ Cart initialized (visible)');
+      });
+    }
+
+    /**
+     * Initialize scroll observer to show cart after scrolling past hero
+     * Better UX: Users see products before cart appears
+     */
+    initScrollObserver() {
+      // Find a target element to observe (hero section or first product grid)
+      const observerTarget = document.querySelector(
+        '.bf25-hero, .bf25-hero-section, [class*="hero"], .bf25-product-grid, .bf25-products-section'
+      );
+
+      // Fallback: Show cart immediately if no hero found
+      if (!observerTarget) {
+        console.log('[BF25 Cart] No hero section found, showing cart immediately');
+        this.elements.container?.classList.add('is-scrolled');
+        return;
+      }
+
+      // Create intersection observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Show cart when hero is scrolled out of view (or mostly out)
+            if (!entry.isIntersecting) {
+              this.elements.container?.classList.add('is-scrolled');
+              console.log('[BF25 Cart] Hero scrolled past, showing cart');
+            } else {
+              // Optional: Hide cart when scrolling back to top
+              // Uncomment if you want this behavior:
+              // this.elements.container?.classList.remove('is-scrolled');
+            }
+          });
+        },
+        {
+          root: null, // viewport
+          rootMargin: '-100px 0px 0px 0px', // Trigger when hero is 100px above viewport
+          threshold: 0 // Any visibility change
+        }
+      );
+
+      observer.observe(observerTarget);
+      console.log('[BF25 Cart] ✓ Scroll observer active');
+
+      // Store observer for cleanup if needed
+      this.scrollObserver = observer;
     }
 
     /**

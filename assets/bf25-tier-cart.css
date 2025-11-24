@@ -1982,18 +1982,70 @@
   }
 }
 
-/* ====================================
-   EMPTY STATE
-   ==================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   CART VISIBILITY STATES
+   Prevents flash of progress bar before JS initializes
+   ═══════════════════════════════════════════════════════════════════ */
 
-/* Dim the container when empty */
+/* CRITICAL: Hide cart until JavaScript initializes */
+.bf25sc-sticky-cart:not(.is-initialized) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(100%);
+}
+
+/* Smooth reveal after initialization */
+.bf25sc-sticky-cart.is-initialized {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hide cart until user scrolls past hero (optional enhancement) */
+.bf25sc-sticky-cart.is-initialized:not(.is-scrolled) {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+.bf25sc-sticky-cart.is-initialized.is-scrolled {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   EMPTY STATE (0 items)
+   ─────────────────────────────────────────────────────────────────── */
+
 .bf25sc-sticky-cart.is-empty {
-  opacity: 0.9;
+  /* Keep cart visible but simplified */
+}
+
+/* Hide progress bar components when empty */
+.bf25sc-sticky-cart.is-empty .bf25sc-sticky-cart__progress-wrapper {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+/* Hide tier labels when empty */
+.bf25sc-sticky-cart.is-empty .bf25sc-sticky-cart__tier-labels,
+.bf25sc-sticky-cart.is-empty .bf25sc-sticky-cart__item-labels {
+  display: none;
+}
+
+/* Hide savings when empty */
+.bf25sc-sticky-cart.is-empty .bf25sc-savings-display {
+  display: none;
 }
 
 /* Style disabled buttons */
 .bf25sc-sticky-cart.is-empty .bf25sc-action-btn {
   pointer-events: none;
+  opacity: 0.5;
 }
 
 /* Center and emphasize empty message */
@@ -2010,6 +2062,15 @@
 @keyframes bf25scEmptyPulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   HAS ITEMS STATE (1+ items) - Show progress bar
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-sticky-cart.is-initialized:not(.is-empty) .bf25sc-sticky-cart__progress-wrapper {
+  opacity: 1;
+  max-height: 100px;
 }
 
 /* ====================================

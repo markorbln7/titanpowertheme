@@ -1498,6 +1498,7 @@ class VariantModal {
     // Refresh product grid in expansion manager
     if (window.PPExpansionManager) {
       window.PPExpansionManager.refreshProductGrid();
+      window.PPExpansionManager.refreshBundleCard();
     } else {
       console.error('[PowerPairs Variant Modal] ExpansionManager not found');
     }
@@ -2238,6 +2239,7 @@ class SwapModal {
         window.PPExpansionManager.refreshProductGrid();
         window.PPExpansionManager.refreshMultiplierSection();
         window.PPExpansionManager.refreshPricingHeader();
+        window.PPExpansionManager.refreshBundleCard();
       }
     }, 600);
   }
@@ -2960,6 +2962,7 @@ class ExpansionManager {
           this.refreshProductGrid();
           this.refreshMultiplierSection();
           this.refreshPricingHeader();
+          this.refreshBundleCard();
         } else {
           console.error('[PowerPairs] Failed to remove product');
           announceToScreenReader('Failed to remove product. Please try again.', 'assertive');
@@ -3026,6 +3029,7 @@ class ExpansionManager {
       this.refreshProductGrid();
       this.refreshMultiplierSection();
       this.refreshPricingHeader();
+      this.refreshBundleCard();
     } else {
       console.error('[PowerPairs] Failed to undo remove');
       announceToScreenReader('Failed to restore product. Please try again.', 'assertive');
@@ -3205,6 +3209,7 @@ class ExpansionManager {
           this.refreshProductGrid();
           this.refreshMultiplierSection();
           this.refreshPricingHeader();
+          this.refreshBundleCard();
           
           console.log('[PowerPairs] Undo successful');
         } else {
@@ -3290,6 +3295,9 @@ class ExpansionManager {
       // Also refresh multiplier section and CTA (pricing may have changed)
       this.refreshMultiplierSection();
 
+      // Update bundle card on main page
+      this.refreshBundleCard();
+
       console.log('[PowerPairs] Product grid refreshed successfully');
     }, 200);
   }
@@ -3370,6 +3378,87 @@ class ExpansionManager {
     console.log('[PowerPairs] Pricing header refreshed:', {
       finalPrice: pricing.finalPrice,
       compareAtSubtotal: pricing.compareAtSubtotal,
+      savings: pricing.savings
+    });
+  }
+
+  /**
+   * Update bundle card on main page with current bundle information
+   */
+  refreshBundleCard() {
+    const bundle = window.PPState.getActiveBundle();
+    if (!bundle) {
+      console.warn('[PowerPairs] No active bundle to refresh card');
+      return;
+    }
+
+    // Find bundle card by data-bundle-id
+    const bundleCard = document.querySelector(`.pp-bundle-card[data-bundle-id="${bundle.id}"]`);
+    if (!bundleCard) {
+      console.warn(`[PowerPairs] Bundle card not found for bundle: ${bundle.id}`);
+      return;
+    }
+
+    // Calculate current pricing
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Update item count
+    const itemCountElement = bundleCard.querySelector('.pp-bundle-card__item-count');
+    if (itemCountElement) {
+      itemCountElement.textContent = bundle.baseItemCount;
+    }
+
+    // Update current price
+    const priceElement = bundleCard.querySelector('.pp-bundle-card__price');
+    if (priceElement) {
+      priceElement.textContent = this.formatMoney(pricing.subtotal);
+    }
+
+    // Update compare price
+    const comparePriceElement = bundleCard.querySelector('.pp-bundle-card__compare-price');
+    if (pricing.compareAtSubtotal > pricing.subtotal) {
+      if (comparePriceElement) {
+        comparePriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+        comparePriceElement.style.display = '';
+      } else {
+        // Create compare price element if it doesn't exist
+        const pricesContainer = bundleCard.querySelector('.pp-bundle-card__prices');
+        if (pricesContainer) {
+          const newComparePrice = document.createElement('span');
+          newComparePrice.className = 'pp-bundle-card__compare-price';
+          newComparePrice.textContent = this.formatMoney(pricing.compareAtSubtotal);
+          pricesContainer.appendChild(newComparePrice);
+        }
+      }
+    } else if (comparePriceElement) {
+      comparePriceElement.style.display = 'none';
+    }
+
+    // Update savings
+    const savingsElement = bundleCard.querySelector('.pp-bundle-card__savings');
+    if (pricing.savings > 0) {
+      if (savingsElement) {
+        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+        savingsElement.style.display = '';
+      } else {
+        // Create savings element if it doesn't exist
+        const pricingContainer = bundleCard.querySelector('.pp-bundle-card__pricing');
+        if (pricingContainer) {
+          const newSavings = document.createElement('div');
+          newSavings.className = 'pp-bundle-card__savings';
+          newSavings.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+          pricingContainer.appendChild(newSavings);
+        }
+      }
+    } else if (savingsElement) {
+      savingsElement.style.display = 'none';
+    }
+
+    console.log('[PowerPairs] Bundle card refreshed:', {
+      bundleId: bundle.id,
+      itemCount: bundle.baseItemCount,
+      price: pricing.subtotal,
+      comparePrice: pricing.compareAtSubtotal,
       savings: pricing.savings
     });
   }
@@ -3543,6 +3632,9 @@ class ExpansionManager {
 
     // Refresh multiplier section and CTA
     this.refreshMultiplierSection();
+    
+    // Update bundle card on main page
+    this.refreshBundleCard();
   }
 
   /**

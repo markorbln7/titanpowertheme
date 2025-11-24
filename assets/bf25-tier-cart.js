@@ -59,8 +59,10 @@
 
   // ============================================
   // GIFT VARIANT IDs (Source of Truth)
+  // Now defined in inline script (sections/bf25-tier-cart.liquid)
+  // This is a fallback with legacy format
   // ============================================
-  const GIFT_VARIANT_MAP = {
+  const GIFT_VARIANT_MAP = window.GIFT_VARIANT_MAP || {
     CABLE: 46748253520050,     // titan-100w-4-in-1-free (Tier 1+)
     CASE: 44929561526450,      // travel-case-free (Tier 2+)
     MAGNETIC: 45338148798642,  // magnetic-cable-free (Tier 3+)
@@ -69,8 +71,10 @@
 
   // ============================================
   // TIER CONFIGURATION
+  // Core config now in window.BF25_TIERS (from inline script)
+  // This extends it with UI-specific properties (colors, glows, etc.)
   // ============================================
-  const BF25_TIERS = [
+  const BF25_TIERS = window.BF25_TIERS || [
     {
       id: 0,
       min: 0,
@@ -3006,8 +3010,28 @@
       console.time(`[BF25 Cart] Tier ${tier} API confirmation`);
 
       try {
-        // API-FIRST: Add gift to cart
-        const success = await this.addGiftToCart(newGift.variantId, tier, newGift.name);
+        // Skip legacy gift handling when using BundleManager
+        // Gifts are added during checkout sync, not immediately
+        if (this.useBundleManager) {
+          console.log(`[BF25 Cart] Skipping legacy gift add (BundleManager handles gifts at checkout)`);
+
+          // Clear loading indicator
+          clearTimeout(loadingTimeout);
+          this.hideLoadingIndicator(tier);
+
+          console.timeEnd(`[BF25 Cart] Tier ${tier} API confirmation`);
+
+          // Just trigger animation
+          if (this.giftAnimator) {
+            console.log(`[BF25 Cart] ✓ Triggering celebration for tier ${tier}`);
+            this.giftAnimator.animate(tier);
+          }
+          return;
+        }
+
+        // Legacy flow: Add gift to Shopify cart immediately
+        console.warn('[BF25 Cart] Using legacy flow - addGiftToCart method has been removed');
+        console.warn('[BF25 Cart] Gifts should be handled by BundleManager at checkout');
 
         // Clear loading indicator
         clearTimeout(loadingTimeout);
@@ -3015,29 +3039,9 @@
 
         console.timeEnd(`[BF25 Cart] Tier ${tier} API confirmation`);
 
-        if (success) {
-          // API CONFIRMED: Now celebrate!
-          console.log(`[BF25 Cart] ✓ API confirmed - triggering celebration for tier ${tier}`);
-
-          if (this.giftAnimator) {
-            this.giftAnimator.animate(tier);
-          }
-
-          // Sync cart to update UI with new gift (legacy flow only)
-          if (!this.useBundleManager) {
-            await this.syncCart();
-          }
-
-        } else {
-          // API FAILED: Silent degradation
-          console.warn(`[BF25 Cart] ✗ API failed - no celebration for tier ${tier}`);
-
-          // Update incentive message to encourage retry
-          if (this.elements.incentiveText) {
-            const tierData = BF25_TIERS[tier];
-            this.elements.incentiveText.innerHTML =
-              `Add items to unlock <strong class="bf25sc-highlight">${tierData.badge}</strong>`;
-          }
+        // Trigger animation anyway
+        if (this.giftAnimator) {
+          this.giftAnimator.animate(tier);
         }
 
       } catch (error) {

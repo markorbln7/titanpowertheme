@@ -228,6 +228,28 @@
 <!-- Load CSS -->
 {{ 'bf25-tier-cart.css' | asset_url | stylesheet_tag }}
 
+<!-- CRITICAL: Inline Config (Must load BEFORE deferred scripts) -->
+<script>
+  // Tier configuration (used by BundleManager and CartManager)
+  window.BF25_TIERS = [
+    { id: 0, minItems: 1, maxItems: 3, discount: 50, badge: '50% OFF', multiplier: 0.50 },
+    { id: 1, minItems: 4, maxItems: 7, discount: 60, badge: '60% OFF', multiplier: 0.40 },
+    { id: 2, minItems: 8, maxItems: 11, discount: 70, badge: '70% OFF', multiplier: 0.30 },
+    { id: 3, minItems: 12, maxItems: 15, discount: 80, badge: '80% OFF', multiplier: 0.20 },
+    { id: 4, minItems: 16, maxItems: 16, discount: 85, badge: '85% OFF', multiplier: 0.15 }
+  ];
+
+  // Gift variant IDs (from Shopify admin)
+  window.GIFT_VARIANT_MAP = {
+    4: { variantId: '44595270672594', title: '100W 4-in-1 Cable', value: 3000 },
+    8: { variantId: '44595270705362', title: 'Premium Travel Case', value: 3500 },
+    12: { variantId: '44595270738130', title: 'Magnetic Cable Organizer', value: 6000 },
+    16: { variantId: '44595270770898', title: 'Mystery Power Gift', value: 15000 }
+  };
+
+  console.log('[BF25 Config] ✓ Tier and gift configuration loaded');
+</script>
+
 <!-- Load JavaScript (Order matters: BundleManager → CartManager → Isolation) -->
 <script src="{{ 'bf25-bundle-manager.js' | asset_url }}" defer></script>
 <script src="{{ 'bf25-tier-cart.js' | asset_url }}" defer></script>

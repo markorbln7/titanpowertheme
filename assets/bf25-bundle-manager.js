@@ -27,7 +27,9 @@
   const RETRY_DELAY = 100; // ms
 
   function checkDependencies() {
-    if (typeof BF25_TIERS !== 'undefined' && typeof GIFT_VARIANT_MAP !== 'undefined') {
+    // Check for window globals (set by inline script in Liquid)
+    if (typeof window.BF25_TIERS !== 'undefined' && typeof window.GIFT_VARIANT_MAP !== 'undefined') {
+      console.log('[BF25 BundleManager] ✓ Dependencies found');
       initializeBundleManager();
       return;
     }
@@ -37,7 +39,8 @@
       console.log(`[BF25 BundleManager] Waiting for dependencies... (${dependencyRetries}/${MAX_RETRIES})`);
       setTimeout(checkDependencies, RETRY_DELAY);
     } else {
-      console.error('[BF25 BundleManager] CRITICAL: Dependencies not found after ' + MAX_RETRIES + ' retries. BF25_TIERS and GIFT_VARIANT_MAP must be defined.');
+      console.error('[BF25 BundleManager] CRITICAL: Dependencies not found. Ensure inline config script loads before this file.');
+      console.error('[BF25 BundleManager] Expected: window.BF25_TIERS and window.GIFT_VARIANT_MAP');
     }
   }
 
@@ -55,9 +58,9 @@
       ANIMATION_SESSION_KEY: 'bf25_celebrated_tiers'
     };
 
-    // Reference to tier configuration
-    const TIERS = BF25_TIERS;
-    const GIFTS = GIFT_VARIANT_MAP;
+    // Reference to tier configuration (from window globals)
+    const TIERS = window.BF25_TIERS;
+    const GIFTS = window.GIFT_VARIANT_MAP;
 
     // ============================================
     // BUNDLE MANAGER CLASS

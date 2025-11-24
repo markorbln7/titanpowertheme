@@ -1287,10 +1287,51 @@
         }
       });
 
+      // Check for back button from checkout (session backup exists)
+      this.handleCheckoutReturn();
+
       // Initial render from BundleManager
       this.renderFromBundle();
 
       console.log('[BF25 Cart] ✓ BundleManager integration active');
+    }
+
+    /**
+     * Handle return from checkout (back button pressed)
+     * Restores bundle from sessionStorage and clears Shopify cart
+     */
+    async handleCheckoutReturn() {
+      if (!window.BF25BundleManager) return;
+
+      // Check if there's a session backup (indicates back from checkout)
+      if (!window.BF25BundleManager.hasSessionBackup()) {
+        return;
+      }
+
+      console.log('[BF25 Cart] 🔙 Detected return from checkout (back button)');
+
+      try {
+        // Restore bundle from session backup
+        const restored = window.BF25BundleManager.restoreFromSession();
+
+        if (restored) {
+          // Clear Shopify cart (purchase not completed)
+          await window.BF25BundleManager.clearShopifyCart();
+
+          // Show toast
+          if (window.BF25Toast) {
+            window.BF25Toast.show('Welcome back! Your bundle has been restored.', {
+              type: 'success',
+              duration: 3000
+            });
+          }
+
+          console.log('[BF25 Cart] ✓ Bundle restored, Shopify cart cleared');
+        }
+
+      } catch (error) {
+        console.error('[BF25 Cart] Error handling checkout return:', error);
+      }
     }
 
     /**
@@ -1648,17 +1689,21 @@
     }
 
     /**
-     * Handle checkout with gift validation, reconciliation, and discount application
-     * Final implementation: BF25-CHECKOUT-FINAL
+     * Handle checkout with BundleManager integration
+     * Syncs bundle from localStorage → Shopify cart → Checkout
+     *
+     * Updated: BF25-CHECKOUT-BUNDLEMANAGER
      */
     async handleCheckout() {
-      // Prevent double-click
+      // ─────────────────────────────────────────────────────────────────
+      // PREVENT DOUBLE-CLICK
+      // ─────────────────────────────────────────────────────────────────
       if (this.state !== 'idle') {
         console.warn('[BF25 Cart] Checkout already in progress');
         return;
       }
 
-      // SAFETY: Verify button element exists BEFORE setting state
+      // SAFETY: Verify button element exists
       if (!this.elements?.btnBuy) {
         console.error('[BF25 Cart] Buy button element not found');
         return;
@@ -1676,85 +1721,110 @@
       const DISCOUNT_CODE = 'BF25-FREE';
 
       try {
-        // ─────────────────────────────────────────────────────────────
+        // ─────────────────────────────────────────────────────────────────
         // Step 1: Suppress Rebuy BEFORE any cart operations
-        // ─────────────────────────────────────────────────────────────
+        // ─────────────────────────────────────────────────────────────────
         this.suppressRebuy();
 
-        // ─────────────────────────────────────────────────────────────
-        // Step 2: Validate cart state
-        // ─────────────────────────────────────────────────────────────
-        const validation = await this.validateCheckout();
-        if (!validation) {
-          throw new Error('Unable to validate cart. Please check your connection.');
+        // ─────────────────────────────────────────────────────────────────
+        // Step 2: Check if using BundleManager (new flow) or legacy
+        // ─────────────────────────────────────────────────────────────────
+        if (this.useBundleManager && window.BF25BundleManager) {
+          console.log('[BF25 Cart] 🚀 Using BundleManager checkout flow');
+
+          // Validate bundle has items
+          if (!window.BF25BundleManager.canCheckout()) {
+            throw new Error('Add at least 4 items to checkout with bundle discounts.');
+          }
+
+          // Update button text
+          this.elements.btnBuy.textContent = 'Syncing Bundle...';
+
+          // Sync bundle to Shopify cart
+          const syncResult = await window.BF25BundleManager.syncToShopifyCart();
+
+          if (!syncResult.success) {
+            throw new Error(syncResult.message || 'Failed to sync bundle to cart.');
+          }
+
+          console.log(`[BF25 Cart] ✓ Bundle synced: ${syncResult.itemCount} items + ${syncResult.giftCount} gifts`);
+
+          // Update button before redirect
+          this.elements.btnBuy.textContent = 'Redirecting...';
+
+          // ─────────────────────────────────────────────────────────────────
+          // Step 3: Redirect to checkout with discount code
+          // ─────────────────────────────────────────────────────────────────
+          console.log(`[BF25 Cart] Redirecting to checkout with code: ${DISCOUNT_CODE}`);
+
+          // Set flag for Rebuy suppression on checkout page
+          sessionStorage.setItem('bf25-direct-checkout', 'true');
+
+          // Redirect with discount code
+          window.location.href = `/discount/${DISCOUNT_CODE}?redirect=/checkout`;
+          return;
+
+        } else {
+          // ─────────────────────────────────────────────────────────────────
+          // LEGACY FLOW: Original Shopify cart-based checkout
+          // Fallback when BundleManager is not available
+          // ─────────────────────────────────────────────────────────────────
+          console.log('[BF25 Cart] Using legacy checkout flow (no BundleManager)');
+
+          // Validate cart state
+          const validation = await this.validateCheckout();
+          if (!validation) {
+            throw new Error('Unable to validate cart. Please check your connection.');
+          }
+
+          const { cart, tier, itemCount } = validation;
+
+          // Prevent checkout with empty bundle
+          if (itemCount === 0) {
+            throw new Error('Your bundle is empty. Please add items before checkout.');
+          }
+
+          // Reconcile tier gifts
+          if (tier.gifts && tier.gifts.length > 0) {
+            this.elements.btnBuy.textContent = 'Securing Gifts...';
+          }
+
+          await this.ensureGiftsInCart(tier, cart);
+
+          // Update button before redirect
+          this.elements.btnBuy.textContent = 'Redirecting...';
+
+          // Set flag for Rebuy suppression
+          sessionStorage.setItem('bf25-direct-checkout', 'true');
+
+          // Redirect with discount code
+          window.location.href = `/discount/${DISCOUNT_CODE}?redirect=/checkout`;
+          return;
         }
-
-        const { cart, tier, itemCount } = validation;
-
-        // ─────────────────────────────────────────────────────────────
-        // Step 3: Prevent checkout with empty bundle
-        // ─────────────────────────────────────────────────────────────
-        if (itemCount === 0) {
-          throw new Error('Your bundle is empty. Please add items before checkout.');
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // Step 4: Reconcile tier gifts
-        // ─────────────────────────────────────────────────────────────
-        if (tier.gifts && tier.gifts.length > 0) {
-          this.elements.btnBuy.textContent = 'Securing Gifts...';
-        }
-
-        // ensureGiftsInCart handles adding/removing gifts based on tier
-        // Throws specific errors (e.g., out of stock) which we catch below
-        await this.ensureGiftsInCart(tier, cart);
-
-        // ─────────────────────────────────────────────────────────────
-        // Step 5: IMMEDIATE redirect to checkout (BOGO pattern)
-        // ─────────────────────────────────────────────────────────────
-        this.elements.btnBuy.textContent = 'Redirecting...';
-
-        console.log('[BF25 Cart] ✓ Proceeding to checkout');
-        console.log('[BF25 Cart] ✓ Tier:', tier.id, `(${tier.discount})`);
-        console.log('[BF25 Cart] ✓ Items:', itemCount);
-        console.log('[BF25 Cart] ✓ Gifts:', tier.gifts?.length || 0);
-        console.log('[BF25 Cart] ✓ Discount code:', DISCOUNT_CODE);
-
-        // Build discount URL - this route sets a session cookie for the discount
-        // Then Shopify auto-redirects to checkout with the code applied
-        const discountUrl = `/discount/${encodeURIComponent(DISCOUNT_CODE)}?redirect=/checkout`;
-        console.log('[BF25 Cart] 🚀 Applying discount via /discount/ route:', discountUrl);
-
-        // Use location.replace() for immediate navigation
-        try {
-          window.location.replace(discountUrl);
-        } catch (e) {
-          // Fallback to href if replace fails
-          console.warn('[BF25 Cart] location.replace failed, using href fallback:', e);
-          window.location.href = discountUrl;
-        }
-
-        // Execution stops here due to navigation
 
       } catch (error) {
+        // ─────────────────────────────────────────────────────────────────
+        // ERROR HANDLING
+        // ─────────────────────────────────────────────────────────────────
         console.error('[BF25 Cart] Checkout error:', error);
 
-        // Show specific error message to user
+        // Show user-friendly error
         if (window.BF25Toast) {
-          window.BF25Toast.show(
-            error.message || 'Unable to proceed to checkout. Please try again.',
-            'error',
-            5000
-          );
+          window.BF25Toast.show(error.message || 'Checkout failed. Please try again.', {
+            type: 'error',
+            duration: 5000
+          });
         }
 
-        // Reset button state
-        if (this.elements.btnBuy) {
-          this.elements.btnBuy.textContent = originalText;
-          this.elements.btnBuy.disabled = false;
-        }
+        // Reset button
+        this.elements.btnBuy.textContent = originalText;
+        this.elements.btnBuy.disabled = false;
 
+        // Reset state
         this.setState('idle');
+
+        // Announce error for screen readers
+        this.announce(`Checkout error: ${error.message}`);
       }
     }
 

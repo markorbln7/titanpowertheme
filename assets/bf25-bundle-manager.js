@@ -932,9 +932,304 @@
       // PUBLIC API - CHECKOUT (Placeholder - Prompt 4.1)
       // ============================================
 
+      /**
+       * Sync bundle to Shopify cart for checkout
+       * This is the ONLY time bundle items go to Shopify - at checkout
+       *
+       * Flow:
+       * 1. Backup bundle to sessionStorage (for back button recovery)
+       * 2. Clear or keep existing Shopify cart items based on isolation choice
+       * 3. Add all bundle items to Shopify cart
+       * 4. Add unlocked gift items to Shopify cart
+       *
+       * @returns {Promise} Result with success status and cart data
+       */
       async syncToShopifyCart() {
-        console.log('[BF25 BundleManager] syncToShopifyCart - Placeholder (Prompt 4.1)');
-        return false;
+        console.log('[BF25 BundleManager] 🚀 Syncing bundle to Shopify cart...');
+
+        // ─────────────────────────────────────────────────────────────────
+        // VALIDATION
+        // ─────────────────────────────────────────────────────────────────
+        if (this.bundle.items.length === 0) {
+          console.error('[BF25 BundleManager] Cannot sync: bundle is empty');
+          return { success: false, error: 'EMPTY_BUNDLE', message: 'Bundle is empty' };
+        }
+
+        if (!this.bundle.computed.hasReachedTier1) {
+          console.error('[BF25 BundleManager] Cannot sync: need 4+ items for checkout');
+          return { success: false, error: 'MIN_ITEMS', message: 'Need at least 4 items to checkout' };
+        }
+
+        try {
+          // ─────────────────────────────────────────────────────────────────
+          // STEP 1: Backup bundle to sessionStorage (back button recovery)
+          // ─────────────────────────────────────────────────────────────────
+          this.backupToSession();
+
+          // ─────────────────────────────────────────────────────────────────
+          // STEP 2: Handle existing cart items based on isolation choice
+          // ─────────────────────────────────────────────────────────────────
+          const existingChoice = this.bundle.existingCartChoice;
+
+          if (existingChoice === 'clear') {
+            // User chose to start fresh - clear entire cart first
+            console.log('[BF25 BundleManager] Clearing existing cart (user chose "start fresh")');
+            await this.clearShopifyCart();
+          } else if (existingChoice === 'keep') {
+            // User chose to keep items - we'll add bundle ON TOP
+            console.log('[BF25 BundleManager] Keeping existing cart items (user chose "keep")');
+            // Only clear BF25 bundle items (not their original cart items)
+            await this.clearBundleItemsFromCart();
+          } else {
+            // No choice made (shouldn't happen, but handle gracefully)
+            // Default: clear cart to prevent duplicates
+            console.log('[BF25 BundleManager] No isolation choice, clearing cart');
+            await this.clearShopifyCart();
+          }
+
+          // ─────────────────────────────────────────────────────────────────
+          // STEP 3: Build cart payload - bundle items + gifts
+          // ─────────────────────────────────────────────────────────────────
+          const cartItems = this.buildCheckoutPayload();
+
+          if (cartItems.length === 0) {
+            throw new Error('No items to add to cart');
+          }
+
+          console.log(`[BF25 BundleManager] Adding ${cartItems.length} items to Shopify cart...`);
+
+          // ─────────────────────────────────────────────────────────────────
+          // STEP 4: Add items to Shopify cart (batch request)
+          // ─────────────────────────────────────────────────────────────────
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ items: cartItems })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.description || `Cart add failed: ${response.status}`);
+          }
+
+          const cartData = await response.json();
+          console.log('[BF25 BundleManager] ✓ Bundle synced to Shopify cart:', cartData);
+
+          // ─────────────────────────────────────────────────────────────────
+          // STEP 5: Dispatch success event
+          // ─────────────────────────────────────────────────────────────────
+          this._dispatchEvent('bf25:bundleSynced', {
+            itemCount: this.bundle.computed.itemCount,
+            giftCount: this.bundle.computed.giftsUnlocked.length,
+            tierReached: this.bundle.computed.tierReached
+          });
+
+          return {
+            success: true,
+            data: cartData,
+            itemCount: this.bundle.computed.itemCount,
+            giftCount: this.bundle.computed.giftsUnlocked.length
+          };
+
+        } catch (error) {
+          console.error('[BF25 BundleManager] Sync failed:', error);
+
+          // Dispatch error event
+          this._dispatchEvent('bf25:syncFailed', { error: error.message });
+
+          return {
+            success: false,
+            error: 'SYNC_FAILED',
+            message: error.message
+          };
+        }
+      }
+
+      /**
+       * Build the checkout payload (bundle items + gifts)
+       * @returns {Array} Array of cart item objects for Shopify
+       */
+      buildCheckoutPayload() {
+        const items = [];
+
+        // Add bundle items
+        for (const item of this.bundle.items) {
+          items.push({
+            id: parseInt(item.variantId, 10),
+            quantity: item.quantity,
+            properties: {
+              '_bf25_bundle': 'true',
+              '_bf25_tier': String(this.bundle.computed.tierReached),
+              '_bf25_discount': String(this.bundle.computed.discountPercent)
+            }
+          });
+        }
+
+        // Add unlocked gift items
+        for (const gift of this.bundle.computed.giftsUnlocked) {
+          items.push({
+            id: parseInt(gift.variantId, 10),
+            quantity: 1,
+            properties: {
+              '_bf25_bundle': 'true',
+              '_bf25_gift': 'true',
+              '_bf25_tier': String(this.bundle.computed.tierReached),
+              '_gift_for_checkpoint': String(gift.checkpoint)
+            }
+          });
+        }
+
+        console.log(`[BF25 BundleManager] Checkout payload: ${this.bundle.items.length} products + ${this.bundle.computed.giftsUnlocked.length} gifts`);
+
+        return items;
+      }
+
+      /**
+       * Backup bundle to sessionStorage for back button recovery
+       */
+      backupToSession() {
+        try {
+          const backup = {
+            bundle: this.bundle,
+            timestamp: new Date().toISOString(),
+            version: this.config.SCHEMA_VERSION
+          };
+          sessionStorage.setItem('bf25_checkout_backup', JSON.stringify(backup));
+          console.log('[BF25 BundleManager] ✓ Bundle backed up to sessionStorage');
+        } catch (error) {
+          console.warn('[BF25 BundleManager] Could not backup to sessionStorage:', error);
+        }
+      }
+
+      /**
+       * Restore bundle from sessionStorage (after back button)
+       * @returns {boolean} True if restored successfully
+       */
+      restoreFromSession() {
+        try {
+          const backupStr = sessionStorage.getItem('bf25_checkout_backup');
+          if (!backupStr) return false;
+
+          const backup = JSON.parse(backupStr);
+
+          // Validate backup
+          if (!backup.bundle || backup.version !== this.config.SCHEMA_VERSION) {
+            console.warn('[BF25 BundleManager] Invalid backup, ignoring');
+            sessionStorage.removeItem('bf25_checkout_backup');
+            return false;
+          }
+
+          // Restore bundle
+          this.bundle = backup.bundle;
+          this._saveToStorage();
+
+          console.log('[BF25 BundleManager] ✓ Bundle restored from sessionStorage');
+
+          // Clear backup
+          sessionStorage.removeItem('bf25_checkout_backup');
+
+          // Dispatch event
+          this._dispatchEvent('bf25:bundleRestored', {
+            itemCount: this.bundle.computed.itemCount,
+            source: 'sessionBackup'
+          });
+
+          return true;
+
+        } catch (error) {
+          console.error('[BF25 BundleManager] Error restoring from session:', error);
+          return false;
+        }
+      }
+
+      /**
+       * Check if there's a session backup (indicates back button from checkout)
+       * @returns {boolean}
+       */
+      hasSessionBackup() {
+        return sessionStorage.getItem('bf25_checkout_backup') !== null;
+      }
+
+      /**
+       * Clear entire Shopify cart
+       */
+      async clearShopifyCart() {
+        try {
+          const response = await fetch('/cart/clear.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Cart clear failed: ${response.status}`);
+          }
+
+          console.log('[BF25 BundleManager] ✓ Shopify cart cleared');
+          return true;
+
+        } catch (error) {
+          console.error('[BF25 BundleManager] Error clearing cart:', error);
+          return false;
+        }
+      }
+
+      /**
+       * Clear only BF25 bundle items from Shopify cart (keep user's original items)
+       */
+      async clearBundleItemsFromCart() {
+        try {
+          // Fetch current cart
+          const response = await fetch('/cart.js');
+          const cart = await response.json();
+
+          if (!cart.items || cart.items.length === 0) {
+            return true; // Nothing to clear
+          }
+
+          // Find bundle items (have _bf25_bundle property)
+          const bundleLineItems = cart.items.filter(item => {
+            const props = item.properties || {};
+            return props['_bf25_bundle'] === 'true' || props['_bf25_gift'] === 'true';
+          });
+
+          if (bundleLineItems.length === 0) {
+            console.log('[BF25 BundleManager] No bundle items to clear');
+            return true;
+          }
+
+          // Build updates object to set quantities to 0
+          const updates = {};
+          bundleLineItems.forEach(item => {
+            updates[item.key] = 0;
+          });
+
+          // Send update request
+          const updateResponse = await fetch('/cart/update.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ updates })
+          });
+
+          if (!updateResponse.ok) {
+            throw new Error(`Cart update failed: ${updateResponse.status}`);
+          }
+
+          console.log(`[BF25 BundleManager] ✓ Cleared ${bundleLineItems.length} bundle items from cart`);
+          return true;
+
+        } catch (error) {
+          console.error('[BF25 BundleManager] Error clearing bundle items:', error);
+          return false;
+        }
       }
     }
 

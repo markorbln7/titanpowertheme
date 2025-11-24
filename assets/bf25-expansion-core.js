@@ -1676,6 +1676,14 @@ class CartManager {
 
     // Emit custom event for theme integration
     this.emitCartEvent('bf25:cart:added', data);
+
+    // Close modal after showing success feedback
+    // Delay allows user to see checkmark confirmation
+    setTimeout(() => {
+      if (this.manager && typeof this.manager.close === 'function') {
+        this.manager.close();
+      }
+    }, 800);
   }
 
   /**

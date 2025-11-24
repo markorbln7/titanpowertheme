@@ -494,6 +494,7 @@ window.productData["{{ product.id }}"] = {
     {%- if product.metafields.custom.first_upsell_product.value -%}
       {
         id: "{{ product.metafields.custom.first_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.first_upsell_product.value.selected_or_first_available_variant.id }},
         title: {{ product.metafields.custom.first_upsell_product.value.title | json }},
         handle: "{{ product.metafields.custom.first_upsell_product.value.handle }}",
         price: {{ product.metafields.custom.first_upsell_product.value.price }},
@@ -505,6 +506,7 @@ window.productData["{{ product.id }}"] = {
     {%- if product.metafields.custom.second_upsell_product.value -%}
       {
         id: "{{ product.metafields.custom.second_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.second_upsell_product.value.selected_or_first_available_variant.id }},
         title: {{ product.metafields.custom.second_upsell_product.value.title | json }},
         handle: "{{ product.metafields.custom.second_upsell_product.value.handle }}",
         price: {{ product.metafields.custom.second_upsell_product.value.price }},

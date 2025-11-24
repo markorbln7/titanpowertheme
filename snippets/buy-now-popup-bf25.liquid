@@ -91,43 +91,382 @@
                     {% endfor %}
                   </div>
                 {% endif %}
-                {% if grid_1 %}
-                  <div class="grid-images flex gap-[10px] mb-[20px] cursor-pointer md:max-w-[100%]">
-                      <div data-image-qty="{{ grid_1_text }}" class="grid-images__single js-grid-image w-[33%]">
-                          <img class="w-full" width="100" height="auto" src="{{ grid_1 | img_url: 'master' }}" alt="">
-                      </div>
-                      <div data-image-qty="{{ grid_2_text }}" class="grid-images__single js-grid-image w-[33%]">
-                        <img class="w-full" width="100" height="auto" src="{{ grid_2 | img_url: 'master' }}" alt="">
-                    </div>
-                    <div data-image-qty="{{ grid_3_text }}" class="grid-images__single js-grid-image w-[33%]">
-                      <img class="w-full" width="100" height="auto" src="{{ grid_3 | img_url: 'master' }}" alt="">
-                  </div>
-                  </div>
-                {% endif %}
-                <div class="buy-now-popup__quantity">
-                    <h4 class="text-[16px] font-semibold">Quantity</h4>
-                    <div class="buy-now-popup__quantity mt-[8px] mb-[24px] flex items-center gap-[20px]">
-                        <quantity-input class="quantity cart-quantity">
-                            <button class="quantity__button" name="minus" type="button">
-                              {% render 'icon-minus' %}
-                            </button>
-                            <input
-                              class="quantity__input"
-                              type="number"
-                              value="1"
-                              min="1"
-                            >
-                            <button class="quantity__button" name="plus" type="button">
-                              {% render 'icon-plus' %}
-                            </button>
-                          </quantity-input>
-                          {% if grid_1 %}
-                            <div data-count="4" class="js-buy-more">
-                              Add 4 Save 55%
-                            </div>
-                          {% endif %}
-                    </div>
-                </div>
+{%- comment -%}
+  ============================================
+  BF25 QUANTITY SELECTION SYSTEM
+  Pack buttons (quick presets) + Quantity stepper
+  Both visible simultaneously, synced via JavaScript
+  ============================================
+{%- endcomment -%}
+
+{%- comment -%} Progress Indicator - Tier Preview {%- endcomment -%}
+<div class="bf25-modal-tier-preview mb-[16px]">
+  <div class="bf25-tier-message text-[14px] text-[#60c655] font-semibold flex items-center gap-[6px]">
+    <span class="bf25-tier-icon">🔥</span>
+    <span class="bf25-tier-text js-modal-tier-message">Select quantity to see your savings</span>
+  </div>
+</div>
+
+{%- comment -%} Pack Buttons - Quick Presets {%- endcomment -%}
+<div class="bf25-pack-buttons-container mb-[20px]">
+  <h4 class="text-[14px] font-semibold text-[#333] mb-[10px]">Choose Your Pack:</h4>
+  <div class="bf25-pack-buttons flex flex-wrap gap-[8px]">
+
+    <button type="button"
+            class="bf25-pack-btn js-pack-btn"
+            data-quantity="4"
+            data-tier="1"
+            data-discount="60">
+      <span class="pack-qty">4 ITEMS</span>
+      <span class="pack-discount">60% OFF</span>
+      <span class="pack-gift">+ FREE Cable</span>
+    </button>
+
+    <button type="button"
+            class="bf25-pack-btn js-pack-btn bf25-pack-btn--popular"
+            data-quantity="8"
+            data-tier="2"
+            data-discount="70">
+      <span class="pack-badge">MOST POPULAR</span>
+      <span class="pack-qty">8 ITEMS</span>
+      <span class="pack-discount">70% OFF</span>
+      <span class="pack-gift">+ FREE Case</span>
+    </button>
+
+    <button type="button"
+            class="bf25-pack-btn js-pack-btn"
+            data-quantity="12"
+            data-tier="3"
+            data-discount="80">
+      <span class="pack-qty">12 ITEMS</span>
+      <span class="pack-discount">80% OFF</span>
+      <span class="pack-gift">+ FREE Magnetic Set</span>
+    </button>
+
+    <button type="button"
+            class="bf25-pack-btn js-pack-btn bf25-pack-btn--max"
+            data-quantity="16"
+            data-tier="4"
+            data-discount="85">
+      <span class="pack-badge">MAX SAVINGS</span>
+      <span class="pack-qty">16+ ITEMS</span>
+      <span class="pack-discount">85% OFF</span>
+      <span class="pack-gift">+ Mystery Gift Box</span>
+    </button>
+
+  </div>
+</div>
+
+{%- comment -%} Quantity Stepper - Fine Adjustment {%- endcomment -%}
+<div class="bf25-quantity-section">
+  <h4 class="text-[14px] font-semibold text-[#333] mb-[8px]">Or adjust quantity:</h4>
+  <div class="bf25-quantity-wrapper flex items-center gap-[16px]">
+    <div class="bf25-quantity-stepper flex items-center border border-[#ddd] rounded-[8px] overflow-hidden">
+      <button type="button"
+              class="bf25-qty-btn js-qty-minus w-[44px] h-[44px] flex items-center justify-center bg-[#f5f5f5] hover:bg-[#e5e5e5] transition-colors"
+              aria-label="Decrease quantity">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8H13" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <input type="number"
+             class="bf25-qty-input js-qty-input w-[60px] h-[44px] text-center text-[18px] font-bold border-none outline-none"
+             value="1"
+             min="1"
+             max="99"
+             aria-label="Quantity">
+      <button type="button"
+              class="bf25-qty-btn js-qty-plus w-[44px] h-[44px] flex items-center justify-center bg-[#f5f5f5] hover:bg-[#e5e5e5] transition-colors"
+              aria-label="Increase quantity">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3V13M3 8H13" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <span class="bf25-qty-summary text-[14px] text-[#666] js-qty-summary">1 item selected</span>
+  </div>
+</div>
+
+{%- comment -%} Pack Buttons + Stepper Sync JavaScript {%- endcomment -%}
+<script>
+(function() {
+  'use strict';
+
+  // Wait for DOM to be ready within this modal context
+  const initPackButtons = () => {
+    const modal = document.querySelector('.buy-now-popup[data-product-id="{{ product_id_attr }}"]');
+    if (!modal) return;
+
+    const packButtons = modal.querySelectorAll('.js-pack-btn');
+    const qtyInput = modal.querySelector('.js-qty-input');
+    const qtyMinus = modal.querySelector('.js-qty-minus');
+    const qtyPlus = modal.querySelector('.js-qty-plus');
+    const qtySummary = modal.querySelector('.js-qty-summary');
+    const tierMessage = modal.querySelector('.js-modal-tier-message');
+    const atcButton = modal.querySelector('.js-atc-bf');
+
+    if (!qtyInput) return;
+
+    const PACK_SIZES = [4, 8, 12, 16];
+    const TIER_MESSAGES = {
+      0: { min: 1, max: 3, text: 'Add more items to unlock discounts!', discount: '0%' },
+      1: { min: 4, max: 7, text: '🔥 60% OFF + FREE Cable unlocked!', discount: '60%' },
+      2: { min: 8, max: 11, text: '🎁 70% OFF + FREE Case unlocked!', discount: '70%' },
+      3: { min: 12, max: 15, text: '⚡ 80% OFF + FREE Magnetic Set!', discount: '80%' },
+      4: { min: 16, max: 999, text: '🎉 MAXIMUM 85% OFF + Mystery Box!', discount: '85%' }
+    };
+
+    // Update all UI elements based on quantity
+    function updateUI(qty) {
+      qty = parseInt(qty) || 1;
+      if (qty < 1) qty = 1;
+      if (qty > 99) qty = 99;
+
+      // Update input value
+      qtyInput.value = qty;
+
+      // Update summary text
+      if (qtySummary) {
+        qtySummary.textContent = qty === 1 ? '1 item selected' : `${qty} items selected`;
+      }
+
+      // Update pack button highlights
+      packButtons.forEach(btn => {
+        const packQty = parseInt(btn.dataset.quantity);
+        // Highlight if quantity exactly matches OR if qty >= 16 and this is the 16+ button
+        const isMatch = (packQty === qty) || (packQty === 16 && qty >= 16);
+        btn.classList.toggle('is-selected', isMatch);
+      });
+
+      // Update tier message
+      if (tierMessage) {
+        let currentTier = 0;
+        for (let i = 4; i >= 0; i--) {
+          if (qty >= TIER_MESSAGES[i].min) {
+            currentTier = i;
+            break;
+          }
+        }
+        tierMessage.textContent = TIER_MESSAGES[currentTier].text;
+
+        // Add next tier hint if not at max
+        if (currentTier < 4) {
+          const nextTier = TIER_MESSAGES[currentTier + 1];
+          const itemsNeeded = nextTier.min - qty;
+          if (itemsNeeded > 0 && itemsNeeded <= 4) {
+            tierMessage.textContent += ` Add ${itemsNeeded} more for ${nextTier.discount}!`;
+          }
+        }
+      }
+
+      // Update ATC button data attribute
+      if (atcButton) {
+        atcButton.dataset.quantity = qty;
+      }
+
+      // Dispatch custom event for external listeners
+      modal.dispatchEvent(new CustomEvent('bf25:quantity-changed', {
+        detail: { quantity: qty, productId: '{{ product_id_attr }}' }
+      }));
+    }
+
+    // Pack button click handler
+    packButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const qty = parseInt(btn.dataset.quantity);
+        updateUI(qty);
+      });
+    });
+
+    // Quantity stepper handlers
+    if (qtyMinus) {
+      qtyMinus.addEventListener('click', (e) => {
+        e.preventDefault();
+        const current = parseInt(qtyInput.value) || 1;
+        updateUI(current - 1);
+      });
+    }
+
+    if (qtyPlus) {
+      qtyPlus.addEventListener('click', (e) => {
+        e.preventDefault();
+        const current = parseInt(qtyInput.value) || 1;
+        updateUI(current + 1);
+      });
+    }
+
+    // Input direct change handler
+    qtyInput.addEventListener('change', () => {
+      updateUI(qtyInput.value);
+    });
+
+    qtyInput.addEventListener('input', () => {
+      // Debounced update on typing
+      clearTimeout(qtyInput._debounce);
+      qtyInput._debounce = setTimeout(() => updateUI(qtyInput.value), 300);
+    });
+
+    // Initialize with default value
+    updateUI(1);
+
+    console.log('[BF25] Pack buttons + quantity stepper initialized for modal');
+  };
+
+  // Initialize when modal opens (listen for custom event or mutation)
+  document.addEventListener('bf25:modal-opened', initPackButtons);
+
+  // Also try immediate init in case modal is already open
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPackButtons);
+  } else {
+    initPackButtons();
+  }
+
+})();
+</script>
+
+{%- comment -%} Pack Buttons Styling {%- endcomment -%}
+<style>
+/* BF25 Pack Buttons */
+.bf25-pack-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bf25-pack-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #333;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.bf25-pack-btn:hover {
+  border-color: #60c655;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(96, 198, 85, 0.3);
+}
+
+.bf25-pack-btn.is-selected {
+  border-color: #60c655;
+  background: linear-gradient(135deg, #1a3a1a 0%, #0d2818 100%);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.4);
+}
+
+.bf25-pack-btn .pack-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #60c655;
+  color: #000;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.bf25-pack-btn .pack-qty {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.bf25-pack-btn .pack-discount {
+  font-size: 20px;
+  font-weight: 800;
+  color: #60c655;
+  margin-bottom: 2px;
+}
+
+.bf25-pack-btn .pack-gift {
+  font-size: 10px;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.bf25-pack-btn.is-selected .pack-gift {
+  color: #60c655;
+}
+
+/* Popular variant */
+.bf25-pack-btn--popular {
+  border-color: #60c655;
+}
+
+/* Max savings variant */
+.bf25-pack-btn--max .pack-discount {
+  color: #ffd700;
+}
+
+.bf25-pack-btn--max.is-selected {
+  background: linear-gradient(135deg, #3a2a0a 0%, #2a1a05 100%);
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Tier message */
+.bf25-tier-message {
+  padding: 8px 12px;
+  background: rgba(96, 198, 85, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #60c655;
+}
+
+/* Quantity stepper styling */
+.bf25-quantity-stepper {
+  background: #fff;
+}
+
+.bf25-qty-input {
+  -moz-appearance: textfield;
+}
+
+.bf25-qty-input::-webkit-outer-spin-button,
+.bf25-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .bf25-pack-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .bf25-pack-btn {
+    min-width: unset;
+    padding: 10px 8px;
+  }
+
+  .bf25-pack-btn .pack-qty {
+    font-size: 14px;
+  }
+
+  .bf25-pack-btn .pack-discount {
+    font-size: 16px;
+  }
+
+  .bf25-pack-btn .pack-gift {
+    font-size: 9px;
+  }
+}
+</style>
 
                 {% if upsell_product_one or upsell_product_two %}
                     <div class="buy-now-popup__upsell">

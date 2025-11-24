@@ -1192,12 +1192,168 @@
         });
       }
 
-      // Buy Now (Navigate to Checkout)
+      // Buy Now (Navigate to Checkout) - With gift validation
       if (this.elements.btnBuy) {
-        this.elements.btnBuy.addEventListener('click', () => {
-          window.location.href = '/checkout';
+        this.elements.btnBuy.addEventListener('click', async () => {
+          await this.handleCheckout();
         });
       }
+    }
+
+    /**
+     * Handle checkout with gift validation and addition
+     */
+    async handleCheckout() {
+      // Prevent double-click
+      if (this.state !== 'idle') {
+        console.warn('[BF25 Cart] Checkout already in progress');
+        return;
+      }
+
+      // Update state
+      this.setState('syncing');
+
+      // Show loading indicator
+      const originalText = this.elements.btnBuy.textContent;
+      this.elements.btnBuy.textContent = 'Processing...';
+      this.elements.btnBuy.disabled = true;
+
+      try {
+        // Step 1: Validate cart state
+        const validation = await this.validateCheckout();
+        if (!validation) {
+          throw new Error('Checkout validation failed');
+        }
+
+        const { cart, tier } = validation;
+
+        // Step 2: Ensure tier gifts are in cart
+        const giftsAdded = await this.ensureGiftsInCart(tier, cart);
+        if (!giftsAdded) {
+          throw new Error('Failed to add tier gifts');
+        }
+
+        // Step 3: Navigate to checkout
+        console.log('[BF25 Cart] Proceeding to checkout');
+        window.location.href = '/checkout';
+
+      } catch (error) {
+        console.error('[BF25 Cart] Checkout error:', error);
+
+        // Show error toast to user
+        if (window.BF25Toast) {
+          window.BF25Toast.show(
+            'Unable to proceed to checkout. Please try again.',
+            'error',
+            5000
+          );
+        }
+
+        // Reset button state
+        this.elements.btnBuy.textContent = originalText;
+        this.elements.btnBuy.disabled = false;
+        this.setState('idle');
+      }
+    }
+
+    /**
+     * Validate cart state before checkout
+     * @returns {Promise<{cart: Object, tier: Object, itemCount: number}|null>}
+     */
+    async validateCheckout() {
+      // Prevent checkout if already processing
+      if (this.state !== 'idle') {
+        console.warn('[BF25 Cart] Cannot checkout - operation in progress');
+        return null;
+      }
+
+      // Fetch current cart
+      const cart = await this.fetchCart();
+      if (!cart) {
+        console.error('[BF25 Cart] Cannot checkout - failed to fetch cart');
+        return null;
+      }
+
+      // Recalculate tier from cart
+      const itemCount = this.calculateItemCount(cart);
+      const tier = this.calculateTier(itemCount);
+
+      console.log(`[BF25 Cart] Checkout validation: ${itemCount} items → Tier ${tier.id}`);
+
+      return { cart, tier, itemCount };
+    }
+
+    /**
+     * Ensure all tier gifts are in cart before checkout
+     * @param {Object} tier - Current tier object
+     * @param {Object} cart - Current cart object
+     * @returns {Promise<boolean>} - Success status
+     */
+    async ensureGiftsInCart(tier, cart) {
+      // No gifts for this tier
+      if (!tier || !tier.gifts || tier.gifts.length === 0) {
+        console.log('[BF25 Cart] No gifts required for this tier');
+        return true;
+      }
+
+      // Map gift names to handles
+      const giftHandleMap = {
+        'cable': 'bf25sc-free-cable',
+        'case': 'bf25sc-free-case',
+        'magnetic': 'bf25sc-free-magnetic-set',
+        'magnetic set': 'bf25sc-free-magnetic-set',
+        'mystery': 'bf25sc-free-mystery-box',
+        'mystery box': 'bf25sc-free-mystery-box'
+      };
+
+      // Check which tier gifts are missing
+      const missingGifts = [];
+
+      for (const gift of tier.gifts) {
+        const giftName = gift.name.toLowerCase();
+        let handle = null;
+
+        // Find matching handle
+        for (const [key, value] of Object.entries(giftHandleMap)) {
+          if (giftName.includes(key)) {
+            handle = value;
+            break;
+          }
+        }
+
+        if (!handle) {
+          console.warn(`[BF25 Cart] Unknown gift name: ${gift.name}`);
+          continue;
+        }
+
+        // Check if gift is already in cart
+        const giftInCart = cart.items.some(item =>
+          item.handle && item.handle.includes(handle)
+        );
+
+        if (!giftInCart) {
+          missingGifts.push({ handle, name: gift.name });
+        }
+      }
+
+      // Add missing gifts
+      if (missingGifts.length > 0) {
+        console.log(`[BF25 Cart] Adding ${missingGifts.length} missing gift(s) before checkout:`, missingGifts.map(g => g.name));
+
+        for (const gift of missingGifts) {
+          const success = await this.addGiftToCart(gift.handle, tier.id);
+          if (!success) {
+            console.error(`[BF25 Cart] Failed to add gift: ${gift.name} (${gift.handle})`);
+            return false;
+          }
+        }
+
+        console.log('[BF25 Cart] All missing gifts added successfully');
+      } else {
+        console.log('[BF25 Cart] All tier gifts already in cart');
+      }
+
+      return true;
     }
 
     // ============================================

@@ -1391,6 +1391,154 @@ body.pp-sheet-open {
   outline-offset: 2px;
 }
 
+/* ─────────────────────────────────────────────────────
+   REMOVE PRODUCT BUTTON (Top Right Corner)
+   ───────────────────────────────────────────────────── */
+
+.pp-remove-product-btn {
+  position: absolute;
+  top: var(--pp-space-xs);
+  right: var(--pp-space-xs);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 59, 48, 0.15);
+  border: 2px solid #FF3B30;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 4;
+  padding: 0;
+}
+
+.pp-remove-product-btn:hover {
+  background: rgba(255, 59, 48, 0.25);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.4);
+}
+
+.pp-remove-product-btn:active {
+  transform: scale(0.95);
+}
+
+.pp-remove-product-btn svg {
+  color: #FF3B30;
+  width: 16px;
+  height: 16px;
+}
+
+/* Focus state for accessibility */
+.pp-remove-product-btn:focus-visible {
+  outline: 3px solid #FF3B30;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────
+   UNDO REMOVE NOTIFICATION
+   ───────────────────────────────────────────────────── */
+
+.pp-undo-remove-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.pp-undo-remove-notification.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.pp-undo-remove-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pp-undo-remove-btn {
+  padding: 8px 16px;
+  background: var(--pp-accent-primary);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pp-undo-remove-btn:hover {
+  background: rgba(96, 198, 85, 0.9);
+  transform: scale(1.05);
+}
+
+/* ─────────────────────────────────────────────────────
+   ADD PRODUCT TILE
+   ───────────────────────────────────────────────────── */
+
+.pp-add-product-tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed var(--pp-border-secondary);
+  border-radius: var(--pp-radius-lg);
+  padding: var(--pp-space-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  position: relative;
+}
+
+.pp-add-product-tile:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--pp-accent-primary);
+  border-style: solid;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pp-add-product-tile:active {
+  transform: translateY(0);
+}
+
+.pp-add-product-icon {
+  font-size: 48px;
+  color: var(--pp-accent-primary);
+  margin-bottom: var(--pp-space-sm);
+  transition: transform 0.2s ease;
+}
+
+.pp-add-product-tile:hover .pp-add-product-icon {
+  transform: scale(1.1);
+}
+
+.pp-add-product-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pp-text-primary);
+}
+
+/* Focus state for accessibility */
+.pp-add-product-tile:focus-visible {
+  outline: 3px solid var(--pp-accent-primary);
+  outline-offset: 2px;
+}
+
 /* Pulse animation for incomplete variants */
 .pp-variant-indicator.warning {
   animation: pulse-warning 2s ease-in-out infinite;

@@ -8,37 +8,13 @@
   'use strict';
 
   // ============================================
-  // GIFT PRODUCT CONFIGURATION
+  // GIFT VARIANT IDs (Source of Truth)
   // ============================================
-  const GIFT_PRODUCTS = {
-    cable: {
-      handle: 'bf25sc-free-cable',
-      variantId: null, // Will be fetched dynamically
-      tier: 1,
-      emoji: '🔌',
-      name: 'Premium Cable'
-    },
-    case: {
-      handle: 'bf25sc-free-case',
-      variantId: null,
-      tier: 2,
-      emoji: '📦',
-      name: 'Protective Case'
-    },
-    magnetic: {
-      handle: 'bf25sc-free-magnetic-set',
-      variantId: null,
-      tier: 3,
-      emoji: '🧲',
-      name: 'Magnetic Set'
-    },
-    mystery: {
-      handle: 'bf25sc-free-mystery-box',
-      variantId: null,
-      tier: 4,
-      emoji: '🎁',
-      name: 'Mystery Box'
-    }
+  const GIFT_VARIANT_MAP = {
+    CABLE: 8660340179122,      // 4-in-1 Cable (Tier 1+)
+    CASE: 8363826348210,       // Travel Case (Tier 2+)
+    MAGNETIC: 8472093786290,   // Magnetic Cable Set (Tier 3+)
+    MYSTERY: 8660337950898     // Mystery Gift Box (Tier 4)
   };
 
   // ============================================
@@ -65,7 +41,9 @@
       color: "#60c655",
       glowColor: "#7FFF00",
       glow: "rgba(96, 198, 85, 0.5)",
-      gifts: [{ name: "Cable", emoji: "🔌", value: 30 }]
+      gifts: [
+        { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 }
+      ]
     },
     {
       id: 2,
@@ -77,8 +55,8 @@
       glowColor: "#39FF14",
       glow: "rgba(127, 255, 0, 0.6)",
       gifts: [
-        { name: "Cable", emoji: "🔌", value: 30 },
-        { name: "Case", emoji: "📦", value: 35 }
+        { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 }
       ]
     },
     {
@@ -91,9 +69,9 @@
       glowColor: "#FFF700",
       glow: "rgba(255, 215, 0, 0.7)",
       gifts: [
-        { name: "Cable", emoji: "🔌", value: 30 },
-        { name: "Case", emoji: "📦", value: 35 },
-        { name: "Magnetic Set", emoji: "🧲", value: 60 }
+        { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 }
       ],
       isDecoy: true
     },
@@ -107,10 +85,10 @@
       glowColor: "#FFFFFF",
       glow: "rgba(224, 247, 255, 0.8)",
       gifts: [
-        { name: "Cable", emoji: "🔌", value: 30 },
-        { name: "Case", emoji: "📦", value: 35 },
-        { name: "Magnetic Set", emoji: "🧲", value: 60 },
-        { name: "Mystery Box", emoji: "🎁", value: 150 }
+        { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 },
+        { variantId: GIFT_VARIANT_MAP.MYSTERY, name: "Mystery Box", emoji: "🎁", value: 150 }
       ]
     }
   ];
@@ -1320,43 +1298,26 @@
         return true;
       }
 
-      // Map gift names to handles
-      const giftHandleMap = {
-        'cable': 'bf25sc-free-cable',
-        'case': 'bf25sc-free-case',
-        'magnetic': 'bf25sc-free-magnetic-set',
-        'magnetic set': 'bf25sc-free-magnetic-set',
-        'mystery': 'bf25sc-free-mystery-box',
-        'mystery box': 'bf25sc-free-mystery-box'
-      };
-
-      // Check which tier gifts are missing
+      // Check which tier gifts are missing (using variantId directly)
       const missingGifts = [];
 
       for (const gift of tier.gifts) {
-        const giftName = gift.name.toLowerCase();
-        let handle = null;
-
-        // Find matching handle
-        for (const [key, value] of Object.entries(giftHandleMap)) {
-          if (giftName.includes(key)) {
-            handle = value;
-            break;
-          }
-        }
-
-        if (!handle) {
-          console.warn(`[BF25 Cart] Unknown gift name: ${gift.name}`);
+        if (!gift.variantId) {
+          console.warn(`[BF25 Cart] Gift missing variantId: ${gift.name}`);
           continue;
         }
 
-        // Check if gift is already in cart
+        // Check if gift variant is already in cart
         const giftInCart = cart.items.some(item =>
-          item.handle && item.handle.includes(handle)
+          item.variant_id === gift.variantId
         );
 
         if (!giftInCart) {
-          missingGifts.push({ handle, name: gift.name });
+          missingGifts.push({
+            variantId: gift.variantId,
+            name: gift.name,
+            value: gift.value
+          });
         }
       }
 
@@ -1365,9 +1326,9 @@
         console.log(`[BF25 Cart] Adding ${missingGifts.length} missing gift(s) before checkout:`, missingGifts.map(g => g.name));
 
         for (const gift of missingGifts) {
-          const success = await this.addGiftToCart(gift.handle, tier.id);
+          const success = await this.addGiftToCart(gift.variantId, tier.id, gift.name);
           if (!success) {
-            console.error(`[BF25 Cart] Failed to add gift: ${gift.name} (${gift.handle})`);
+            console.error(`[BF25 Cart] Failed to add gift: ${gift.name} (variant ${gift.variantId})`);
             return false;
           }
         }
@@ -2171,35 +2132,21 @@
     // ============================================
 
     /**
-     * Add a specific gift product to cart via Shopify API
-     * @param {string} handle - Product handle (e.g., 'bf25sc-free-cable')
+     * Add a specific gift product to cart via Shopify API using variant ID
+     * @param {number} variantId - Variant ID (direct from GIFT_VARIANT_MAP)
      * @param {number} tier - Tier number for logging
+     * @param {string} giftName - Gift name for logging
      * @returns {Promise<boolean>} - Success status
      */
-    async addGiftToCart(handle, tier) {
-      console.log(`[BF25 Cart] API: Adding gift for tier ${tier} (${handle})`);
+    async addGiftToCart(variantId, tier, giftName = 'Unknown') {
+      console.log(`[BF25 Cart] API: Adding gift for tier ${tier} - ${giftName} (variant ${variantId})`);
 
       const maxRetries = 3;
       const baseDelay = 100; // Start with 100ms
 
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-          // Fetch product to get variant ID
-          const productResponse = await fetch(`/products/${handle}.js`);
-
-          if (!productResponse.ok) {
-            throw new Error(`Product fetch failed: ${productResponse.status}`);
-          }
-
-          const product = await productResponse.json();
-
-          if (!product.variants || product.variants.length === 0) {
-            throw new Error('No variants found for gift product');
-          }
-
-          const variantId = product.variants[0].id;
-
-          // Add to cart with quantity 1
+          // Add to cart with quantity 1 (no product fetch needed!)
           const addResponse = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -2249,17 +2196,17 @@
     async handleTierUnlock(tier) {
       console.log(`[BF25 Cart] 🎯 Tier ${tier} threshold reached - starting API-first unlock`);
 
-      // Get gift handle for this tier
-      const giftHandles = {
-        1: 'bf25sc-free-cable',
-        2: 'bf25sc-free-case',
-        3: 'bf25sc-free-magnetic-set',
-        4: 'bf25sc-free-mystery-box'
-      };
+      // Get tier configuration
+      const tierConfig = BF25_TIERS.find(t => t.id === tier);
+      if (!tierConfig || !tierConfig.gifts || tierConfig.gifts.length === 0) {
+        console.error(`[BF25 Cart] No gifts configured for tier ${tier}`);
+        return;
+      }
 
-      const handle = giftHandles[tier];
-      if (!handle) {
-        console.error(`[BF25 Cart] No gift handle configured for tier ${tier}`);
+      // Get the last gift for this tier (the newly unlocked one)
+      const newGift = tierConfig.gifts[tierConfig.gifts.length - 1];
+      if (!newGift.variantId) {
+        console.error(`[BF25 Cart] Gift missing variantId for tier ${tier}`);
         return;
       }
 
@@ -2273,7 +2220,7 @@
 
       try {
         // API-FIRST: Add gift to cart
-        const success = await this.addGiftToCart(handle, tier);
+        const success = await this.addGiftToCart(newGift.variantId, tier, newGift.name);
 
         // Clear loading indicator
         clearTimeout(loadingTimeout);
@@ -2436,189 +2383,8 @@
       console.log('[BF25 Cart] ConfettiSystem initialized');
     }
 
-    /**
-     * Get required gifts for current tier
-     */
-    getRequiredGifts(tier) {
-      const giftKeys = {
-        1: ['cable'],
-        2: ['cable', 'case'],
-        3: ['cable', 'case', 'magnetic'],
-        4: ['cable', 'case', 'magnetic', 'mystery']
-      };
-      return giftKeys[tier] || [];
-    }
-
-    /**
-     * Fetch product variant ID by handle
-     */
-    async fetchVariantId(handle) {
-      try {
-        const response = await fetch(`/products/${handle}.js`);
-        if (!response.ok) return null;
-
-        const product = await response.json();
-        return product.variants && product.variants[0]
-          ? product.variants[0].id
-          : null;
-
-      } catch (error) {
-        console.error(`[BF25 Cart] Failed to fetch variant for ${handle}:`, error);
-        return null;
-      }
-    }
-
-    /**
-     * Add gift to cart
-     */
-    async addGiftToCart(giftKey) {
-      const gift = GIFT_PRODUCTS[giftKey];
-      if (!gift) {
-        console.error(`[BF25 Cart] Unknown gift: ${giftKey}`);
-        return false;
-      }
-
-      console.log(`[BF25 Cart] Adding gift: ${gift.name}`);
-
-      try {
-        // Fetch variant ID if not cached
-        if (!gift.variantId) {
-          gift.variantId = await this.fetchVariantId(gift.handle);
-          if (!gift.variantId) {
-            console.error(`[BF25 Cart] Variant not found for ${gift.handle}`);
-            return false;
-          }
-        }
-
-        // Add to cart
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            id: gift.variantId,
-            quantity: 1,
-            properties: {
-              '_bf25_gift': 'true',
-              '_bf25_tier': gift.tier
-            }
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to add gift: ${response.status}`);
-        }
-
-        console.log(`[BF25 Cart] ✓ Gift added: ${gift.name}`);
-        return true;
-
-      } catch (error) {
-        console.error(`[BF25 Cart] Error adding gift ${gift.name}:`, error);
-        return false;
-      }
-    }
-
-    /**
-     * Remove gift from cart
-     */
-    async removeGiftFromCart(giftKey) {
-      const gift = GIFT_PRODUCTS[giftKey];
-      if (!gift) return false;
-
-      console.log(`[BF25 Cart] Removing gift: ${gift.name}`);
-
-      try {
-        // Fetch current cart
-        const cart = await this.fetchCart();
-        if (!cart) return false;
-
-        // Find gift item
-        const giftItem = cart.items.find(item =>
-          item.handle === gift.handle ||
-          (item.properties && item.properties._bf25_gift === 'true')
-        );
-
-        if (!giftItem) {
-          console.log(`[BF25 Cart] Gift not in cart: ${gift.name}`);
-          return false;
-        }
-
-        // Remove via cart update
-        const response = await fetch('/cart/change.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            id: giftItem.key,
-            quantity: 0
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to remove gift: ${response.status}`);
-        }
-
-        console.log(`[BF25 Cart] ✓ Gift removed: ${gift.name}`);
-        return true;
-
-      } catch (error) {
-        console.error(`[BF25 Cart] Error removing gift ${gift.name}:`, error);
-        return false;
-      }
-    }
-
-    /**
-     * Reconcile gifts (add missing, remove excess)
-     */
-    async reconcileGifts(currentTier) {
-      console.log(`[BF25 Cart] Reconciling gifts for tier ${currentTier.id}`);
-
-      const requiredGifts = this.getRequiredGifts(currentTier.id);
-      const cart = await this.fetchCart();
-      if (!cart) return;
-
-      // Find which gifts are currently in cart
-      const currentGifts = cart.items
-        .filter(item =>
-          Object.values(GIFT_PRODUCTS).some(g => g.handle === item.handle)
-        )
-        .map(item => {
-          const giftEntry = Object.entries(GIFT_PRODUCTS).find(
-            ([key, g]) => g.handle === item.handle
-          );
-          return giftEntry ? giftEntry[0] : null;
-        })
-        .filter(Boolean);
-
-      console.log(`[BF25 Cart] Required: [${requiredGifts}], Current: [${currentGifts}]`);
-
-      // Add missing gifts
-      for (const giftKey of requiredGifts) {
-        if (!currentGifts.includes(giftKey)) {
-          await this.addGiftToCart(giftKey);
-          await this.wait(300); // Throttle API calls
-        }
-      }
-
-      // Remove excess gifts
-      for (const giftKey of currentGifts) {
-        if (!requiredGifts.includes(giftKey)) {
-          await this.removeGiftFromCart(giftKey);
-          await this.wait(300);
-        }
-      }
-
-      console.log('[BF25 Cart] ✓ Gift reconciliation complete');
-    }
-
-    /**
-     * Helper: Wait
-     */
-    wait(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    // Dead code removed - old GIFT_PRODUCTS methods no longer needed
+    // Gift management now uses variantId directly from BF25_TIERS configuration
 
     // ============================================
     // EXPANDED CART VIEW

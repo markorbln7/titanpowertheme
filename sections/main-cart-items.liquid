@@ -1,3 +1,35 @@
+{%- comment -%}
+  ============================================
+  BF25 CART PAGE PROTECTION
+  Redirects BF25 users back to bundle builder
+  Prevents Rebuy activation via cart page access
+  Implemented: 2024-11-24
+  ============================================
+{%- endcomment -%}
+<script id="bf25-cart-redirect">
+(function() {
+  'use strict';
+
+  // Check for active BF25 session
+  var isBF25Session = sessionStorage.getItem('bf25_session_active') === 'true';
+
+  if (isBF25Session) {
+    console.log('[BF25] Cart page access detected - redirecting to BF25 page');
+
+    // Determine the correct BF25 page URL
+    // Check if we have a stored return URL, otherwise use default
+    var bf25ReturnUrl = sessionStorage.getItem('bf25_return_url') || '/pages/black-friday-2025';
+
+    // Use replace() to prevent back-button loop
+    // This removes the /cart page from browser history
+    window.location.replace(bf25ReturnUrl);
+
+    // Halt all further execution
+    // This prevents any cart page JS from running
+    throw new Error('[BF25] Redirect initiated - halting cart page execution');
+  }
+})();
+</script>
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}

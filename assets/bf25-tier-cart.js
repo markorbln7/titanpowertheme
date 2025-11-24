@@ -1319,9 +1319,22 @@
      * Falls back to Shopify API sync if BundleManager unavailable.
      */
     initBundleManagerIntegration() {
-      // Check if BundleManager is available
+      // Check if BundleManager is available (with retry for race conditions)
       if (!window.BF25BundleManager) {
-        console.log('[BF25 Cart] BundleManager not found, using Shopify API fallback');
+        // Retry up to 5 times with 100ms delay (covers 500ms window)
+        if (!this._bundleManagerRetries) {
+          this._bundleManagerRetries = 0;
+        }
+
+        if (this._bundleManagerRetries < 5) {
+          this._bundleManagerRetries++;
+          console.log(`[BF25 Cart] BundleManager not ready, retry ${this._bundleManagerRetries}/5...`);
+          setTimeout(() => this.initBundleManagerIntegration(), 100);
+          return;
+        }
+
+        // After 5 retries, fall back to Shopify API
+        console.warn('[BF25 Cart] BundleManager not found after 5 retries, using Shopify API fallback');
         this.useBundleManager = false;
         this.syncCart(); // Original flow
 
@@ -1331,9 +1344,26 @@
         return;
       }
 
+      // Reset retry counter
+      this._bundleManagerRetries = 0;
+
       console.log('[BF25 Cart] 🚀 BundleManager detected - enabling instant mode');
       this.useBundleManager = true;
       this.bundleManagerReady = true;
+
+      // Listen for bundle loaded from storage (page refresh/return)
+      document.addEventListener('bf25:bundleLoaded', (event) => {
+        console.log('[BF25 Cart] Event: bf25:bundleLoaded', event.detail);
+        const { itemCount, tierReached, giftsUnlocked } = event.detail;
+
+        // Render cart from loaded bundle
+        this.renderFromBundle();
+
+        // Update gift slot states to "claimed" for unlocked tiers (no animation on page load)
+        if (tierReached > 0) {
+          this.updateGiftSlotsForTier(tierReached);
+        }
+      });
 
       // Listen for bundle updates (instant re-renders)
       document.addEventListener('bf25:bundleUpdated', (event) => {
@@ -1736,6 +1766,31 @@
       }
 
       this.elements.incentiveText.textContent = message;
+    }
+
+    /**
+     * Update gift slot states for existing tier (no animation)
+     * Used when loading bundle from storage on page refresh
+     */
+    updateGiftSlotsForTier(tierReached) {
+      console.log(`[BF25 Cart] Updating gift slots for tier ${tierReached}`);
+
+      const giftSlots = document.querySelectorAll('.bf25sc-gift-slot');
+      const checkpoints = [4, 8, 12, 16]; // Gift unlock checkpoints
+
+      giftSlots.forEach((slot, index) => {
+        const checkpoint = checkpoints[index];
+        const tierForCheckpoint = index + 1; // Tier 1 = checkpoint 4, etc.
+
+        if (tierForCheckpoint <= tierReached) {
+          // This gift is unlocked - set to claimed state (no animation)
+          slot.dataset.state = 'claimed';
+          console.log(`[BF25 Cart] Gift slot ${tierForCheckpoint} set to claimed`);
+        } else {
+          // This gift is still locked
+          slot.dataset.state = 'locked';
+        }
+      });
     }
 
     /**

@@ -258,6 +258,18 @@
           // Save refreshed state
           this._saveToStorage();
 
+          // Dispatch load event so CartManager can restore UI state
+          // Use setTimeout to ensure all scripts are initialized
+          setTimeout(() => {
+            console.log('[BF25 BundleManager] Dispatching bundle loaded event');
+            this._dispatchEvent('bf25:bundleLoaded', {
+              bundle: this.getBundle(),
+              itemCount: this.bundle.computed.itemCount,
+              tierReached: this.bundle.computed.tierReached,
+              giftsUnlocked: this.bundle.computed.giftsUnlocked
+            });
+          }, 50);
+
         } catch (error) {
           console.error('[BF25 BundleManager] Error loading bundle:', error);
           this.bundle = this._createEmptyBundle();

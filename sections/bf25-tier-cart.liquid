@@ -228,9 +228,9 @@
 <!-- Load CSS -->
 {{ 'bf25-tier-cart.css' | asset_url | stylesheet_tag }}
 
-<!-- Load JavaScript -->
-<script src="{{ 'bf25-tier-cart.js' | asset_url }}" defer></script>
+<!-- Load JavaScript (Order matters: BundleManager → CartManager → Isolation) -->
 <script src="{{ 'bf25-bundle-manager.js' | asset_url }}" defer></script>
+<script src="{{ 'bf25-tier-cart.js' | asset_url }}" defer></script>
 <script src="{{ 'bf25-cart-isolation.js' | asset_url }}" defer></script>
 
 <!-- Load Test Suite (Development Only) -->

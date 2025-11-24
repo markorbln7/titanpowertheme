@@ -1,0 +1,312 @@
+/* ═══════════════════════════════════════════════════════
+   VARIANT PICKER - OPTIMIZED & MODERN
+   ═══════════════════════════════════════════════════════ */
+
+/* Modal Backdrop */
+.pp-variant-modal-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Modal Container */
+.pp-variant-modal {
+  max-width: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: none;
+}
+
+/* Header - Compact & Clean */
+.pp-variant-modal__header {
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--pp-border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pp-variant-modal__title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  color: var(--pp-text-primary);
+}
+
+.pp-variant-modal__close {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--pp-border-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pp-variant-modal__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--pp-border-primary);
+}
+
+/* Content Area */
+.pp-variant-modal__content {
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Variant Options Title */
+.pp-variant-options-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--pp-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Variant Options Grid */
+.pp-variant-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+/* Variant Option Button - REDESIGNED */
+.pp-variant-option-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--pp-border-secondary);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 80px;
+  text-align: center;
+}
+
+.pp-variant-option-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--pp-accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pp-variant-option-btn:active {
+  transform: translateY(0);
+}
+
+/* Selected State - MORE PROMINENT */
+.pp-variant-option-btn--selected {
+  background: linear-gradient(135deg, rgba(96, 198, 85, 0.2) 0%, rgba(96, 198, 85, 0.1) 100%);
+  border-color: var(--pp-accent-primary);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(96, 198, 85, 0.15);
+}
+
+.pp-variant-option-btn--selected:hover {
+  background: linear-gradient(135deg, rgba(96, 198, 85, 0.25) 0%, rgba(96, 198, 85, 0.15) 100%);
+  transform: translateY(-2px);
+}
+
+/* Checkmark - Cleaner Design */
+.pp-variant-option-btn--selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  background: var(--pp-accent-primary);
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(96, 198, 85, 0.4);
+}
+
+/* Unavailable State */
+.pp-variant-option-btn--unavailable {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pp-variant-option-btn--unavailable:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--pp-border-secondary);
+  transform: none;
+  box-shadow: none;
+}
+
+.pp-variant-option-btn--unavailable::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--pp-text-muted);
+  transform: translateY(-50%) rotate(-10deg);
+}
+
+/* Variant Label */
+.pp-variant-option-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pp-text-primary);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.pp-variant-option-btn--selected .pp-variant-option-label {
+  color: var(--pp-accent-primary);
+}
+
+/* Variant Price */
+.pp-variant-option-price {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pp-text-tertiary);
+  line-height: 1;
+}
+
+.pp-variant-option-btn--selected .pp-variant-option-price {
+  color: var(--pp-accent-primary);
+  font-weight: 600;
+}
+
+/* Variant Image - If Present */
+.pp-variant-option-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.pp-variant-option-btn--selected .pp-variant-option-image {
+  border-color: var(--pp-accent-primary);
+}
+
+/* Success Feedback - FIXED POSITIONING */
+.pp-variant-success-feedback {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  background: rgba(96, 198, 85, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pp-variant-success-feedback.active {
+  opacity: 1;
+  pointer-events: none !important;
+}
+
+.pp-variant-success-icon {
+  width: 80px;
+  height: 80px;
+  background: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: var(--pp-accent-primary);
+  margin-bottom: 16px;
+  animation: successPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.pp-variant-success-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile Optimization */
+@media screen and (max-width: 480px) {
+  .pp-variant-modal {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+
+  .pp-variant-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pp-variant-option-btn {
+    min-height: 70px;
+    padding: 12px 8px;
+  }
+
+  .pp-variant-option-label {
+    font-size: 14px;
+  }
+
+  .pp-variant-option-price {
+    font-size: 12px;
+  }
+}
+
+/* Focus States */
+.pp-variant-option-btn:focus-visible {
+  outline: 3px solid var(--pp-accent-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .pp-variant-option-btn,
+  .pp-variant-success-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .pp-variant-option-btn:hover {
+    transform: none;
+  }
+}
+

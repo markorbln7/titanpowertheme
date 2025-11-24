@@ -1065,16 +1065,18 @@ class VariantModal {
           aria-pressed="${isSelected}"
           aria-label="Select ${variant.title}${!isAvailable ? ' (Out of stock)' : ''}"
         >
-          ${variant.image && variant.image !== product.image ? `
-            <img
-              src="${variant.image}"
-              alt="${variant.title}"
-              class="pp-variant-option-image"
-              loading="lazy"
-            >
-          ` : ''}
-          <div class="pp-variant-option-content">
-            <div class="pp-variant-option-label">${variant.title}</div>
+          <div class="pp-variant-option-inner">
+            <div class="pp-variant-option-header">
+              ${variant.image && variant.image !== product.image ? `
+                <img
+                  src="${variant.image}"
+                  alt="${variant.title}"
+                  class="pp-variant-option-image"
+                  loading="lazy"
+                >
+              ` : ''}
+              <div class="pp-variant-option-label">${variant.title}</div>
+            </div>
             <div class="pp-variant-option-price">
               ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
               ${this.formatMoney(variant.price)}

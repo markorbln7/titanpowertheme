@@ -173,80 +173,6 @@
         "section_eyebrow": ""
       }
     },
-    "gift_display_section_bf25_zXdfGr": {
-      "type": "gift-display-section-bf25",
-      "blocks": {
-        "gift_images_p8WriF": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "SHOP TODAY",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_rKPd7B": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_mystery.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
-            "money_product": ""
-          }
-        },
-        "gift_images_4DTz49": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/dock_-_gift.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TURBO DOCK",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "pd",
-            "money_product": ""
-          }
-        },
-        "gift_images_yWcNKm": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free_gift_gift_tracker_casble_1.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "SMART CABLE",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
-            "money_product": ""
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_p8WriF",
-        "gift_images_rKPd7B",
-        "gift_images_4DTz49",
-        "gift_images_yWcNKm"
-      ],
-      "custom_css": [
-        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
-        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
-        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
-        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
-        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        ".mt-\\[20px\\] {margin-top: 30px;}",
-        ".gift-overlay.is-active {background-color: #9df294;}"
-      ],
-      "name": "Gift Display Section bf25",
-      "settings": {
-        "welcome_message": "Stack Deals to Unlock 4 FREE GIFTS!",
-        "set_inactive": false
-      }
-    },
     "scroll_to_button_7LJcTQ": {
       "type": "scroll-to-button",
       "disabled": true,
@@ -325,6 +251,19 @@
       "settings": {
         "text_right": "",
         "countdown_to": "09th December"
+      }
+    },
+    "section_bf25_hero_tLQyNk": {
+      "type": "section-bf25-hero",
+      "name": "BF25 Interactive Hero",
+      "settings": {
+        "heading": "Build Your Black Friday Deal",
+        "subheading": "Slide to unlock bigger discounts + premium gifts",
+        "cta_text": "Start Building Your Deal",
+        "cta_url": "#bf25-products",
+        "avg_price_retail": 40,
+        "avg_price_shopify": 20,
+        "enable_section": true
       }
     },
     "section_bundle_builder_bf25_eMVmtq": {
@@ -952,6 +891,15 @@
         ".product-zig__bigtitle.color-black {display: none;}"
       ],
       "settings": {}
+    },
+    "bf25_tier_cart_YJkXya": {
+      "type": "bf25-tier-cart",
+      "name": "BF25 Sticky Cart",
+      "settings": {
+        "show_by_default": true,
+        "enable_testing": false,
+        "position": "bottom"
+      }
     }
   },
   "order": [
@@ -960,10 +908,10 @@
     "bf_promo_discount_AibFnrK",
     "bf_top_bar_YUNa4V",
     "bf_promo_discount_2025_wVx3tP",
-    "gift_display_section_bf25_zXdfGr",
     "scroll_to_button_7LJcTQ",
     "titan_linked_image_A4GJp6",
     "limited_offers_jKBGqn",
+    "section_bf25_hero_tLQyNk",
     "section_bundle_builder_bf25_eMVmtq",
     "section_collections_with_nav_EzNML8",
     "section_power_pairs_bf25_fmUJY6",
@@ -974,6 +922,7 @@
     "bf_promo_discount_2025_HncBNf",
     "bf_top_bar_hxgfNg",
     "testimonial_slider_XJAQhD",
-    "product_reviews_UYaUdq"
+    "product_reviews_UYaUdq",
+    "bf25_tier_cart_YJkXya"
   ]
 }

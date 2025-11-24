@@ -1541,9 +1541,23 @@
           this.elements.container.setAttribute('data-active-tier', tierReached);
         }
 
-        // Update savings display
+        // Update savings display (BOGO-style format)
         if (this.elements.savingsAmount) {
-          this.elements.savingsAmount.textContent = `Save €${savingsEuros}`;
+          const newText = `€${savingsEuros}`;
+
+          // Only animate if value changed
+          if (this.elements.savingsAmount.textContent !== newText) {
+            this.elements.savingsAmount.classList.add('is-updating');
+            this.elements.savingsAmount.textContent = newText;
+
+            // Remove animation class after it completes
+            setTimeout(() => {
+              this.elements.savingsAmount.classList.remove('is-updating');
+            }, 400);
+          } else {
+            // Same value, just update text without animation
+            this.elements.savingsAmount.textContent = newText;
+          }
         }
 
         // Render products in expanded view
@@ -2519,7 +2533,9 @@
         console.log(`[BF25 Cart] Retrying in ${delay}ms (attempt ${this.retryCount}/3)`);
 
         setTimeout(() => {
-          this.syncCart();
+          if (!this.useBundleManager) {
+            this.syncCart();
+          }
         }, delay);
       } else {
         console.error('[BF25 Cart] Max retries reached, giving up');
@@ -2938,8 +2954,10 @@
             this.giftAnimator.animate(tier);
           }
 
-          // Sync cart to update UI with new gift
-          await this.syncCart();
+          // Sync cart to update UI with new gift (legacy flow only)
+          if (!this.useBundleManager) {
+            await this.syncCart();
+          }
 
         } else {
           // API FAILED: Silent degradation
@@ -3213,8 +3231,10 @@
         // Trigger cart:updated event
         document.dispatchEvent(new CustomEvent('cart:updated'));
 
-        // Sync cart
-        await this.syncCart();
+        // Sync cart (only for legacy flow, BundleManager uses events)
+        if (!this.useBundleManager) {
+          await this.syncCart();
+        }
 
       } catch (error) {
         this.handleError(error, 'removeProduct');
@@ -3252,8 +3272,9 @@
       }
 
       // Fallback: Poll every 5 seconds (safety net)
+      // ONLY for legacy Shopify API flow, not BundleManager
       setInterval(() => {
-        if (this.state === 'idle') {
+        if (this.state === 'idle' && !this.useBundleManager) {
           this.syncCart();
         }
       }, 5000);
@@ -3265,6 +3286,11 @@
      * Debounced sync (prevents rapid API calls)
      */
     debouncedSync() {
+      // Skip if using BundleManager (events handle updates)
+      if (this.useBundleManager) {
+        return;
+      }
+
       clearTimeout(this.syncTimeout);
       this.syncTimeout = setTimeout(() => {
         this.syncCart();

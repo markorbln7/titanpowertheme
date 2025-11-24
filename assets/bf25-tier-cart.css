@@ -237,7 +237,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 :root {
-  --bf25-gift-size: 36px;
+  --bf25-gift-size: 44px;
   --bf25-color-locked: #555555;
   --bf25-color-unlocked: var(--bf25-accent, #60c655);
 }
@@ -617,8 +617,8 @@
    ─────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
-  :root {
-    --bf25-gift-size: 32px;
+  .bf25sc-gift-slot {
+    --bf25-gift-size: 38px;
   }
 
   .bf25sc-product-bubble {
@@ -1045,23 +1045,65 @@
   }
 }
 
-/* ====================================
-   SAVINGS DISPLAY
-   ==================================== */
+/* ═══════════════════════════════════════════════════════════════════
+   SAVINGS DISPLAY - BOGO-Inspired Large Format
+   ═══════════════════════════════════════════════════════════════════ */
+
 .bf25sc-action-savings {
   flex-shrink: 0;
-  width: 80px;
+  min-width: 100px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.bf25sc-action-savings__label {
+  font-family: var(--bf25sc-font-body);
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .bf25sc-action-savings__amount {
   font-family: var(--bf25sc-font-body);
-  font-size: var(--bf25sc-text-lg);
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: 800;
   color: var(--bf25sc-tier-color);
-  text-shadow: 0 0 8px var(--bf25sc-tier-glow);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
+  text-shadow: 0 0 12px var(--bf25sc-tier-glow);
+  transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.3s ease;
   white-space: nowrap;
+  line-height: 1;
+}
+
+/* Pulse animation when savings increase */
+.bf25sc-action-savings__amount.is-updating {
+  animation: bf25SavingsPop 0.4s ease-out;
+}
+
+@keyframes bf25SavingsPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Hide label and increase amount on very small screens */
+@media (max-width: 380px) {
+  .bf25sc-action-savings {
+    min-width: 80px;
+  }
+
+  .bf25sc-action-savings__label {
+    display: none;
+  }
+
+  .bf25sc-action-savings__amount {
+    font-size: 18px;
+  }
 }
 
 /* ====================================

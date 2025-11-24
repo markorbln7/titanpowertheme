@@ -1286,59 +1286,100 @@
     }
 
     /**
-     * Ensure all tier gifts are in cart before checkout
+     * Reconcile gifts in cart: Add missing required gifts and remove invalid gifts (batched).
      * @param {Object} tier - Current tier object
      * @param {Object} cart - Current cart object
-     * @returns {Promise<boolean>} - Success status
+     * @returns {Promise<boolean>} - Success status (Throws error on failure)
      */
     async ensureGiftsInCart(tier, cart) {
-      // No gifts for this tier
-      if (!tier || !tier.gifts || tier.gifts.length === 0) {
-        console.log('[BF25 Cart] No gifts required for this tier');
-        return true;
+      if (!tier) {
+        throw new Error("Invalid tier provided for gift reconciliation.");
       }
 
-      // Check which tier gifts are missing (using variantId directly)
-      const missingGifts = [];
+      const requiredGifts = tier.gifts || [];
+      const requiredGiftIds = new Set(requiredGifts.map(g => g.variantId));
 
-      for (const gift of tier.gifts) {
-        if (!gift.variantId) {
-          console.warn(`[BF25 Cart] Gift missing variantId: ${gift.name}`);
-          continue;
-        }
+      // Identify existing gifts in the cart using the property marker (more robust than handles)
+      const existingGiftItems = cart.items.filter(item =>
+        item.properties && item.properties._is_free_gift === 'true'
+      );
+      const existingGiftIds = new Set(existingGiftItems.map(item => item.variant_id));
 
-        // Check if gift variant is already in cart
-        const giftInCart = cart.items.some(item =>
-          item.variant_id === gift.variantId
-        );
+      const itemsToAdd = [];
+      const updates = {}; // For removals (using /cart/update.js)
 
-        if (!giftInCart) {
-          missingGifts.push({
-            variantId: gift.variantId,
-            name: gift.name,
-            value: gift.value
+      // 1. Identify missing gifts to add
+      requiredGifts.forEach(gift => {
+        if (!existingGiftIds.has(gift.variantId)) {
+          itemsToAdd.push({
+            id: gift.variantId,
+            quantity: 1,
+            properties: {
+              '_gift_tier': String(tier.id),
+              '_is_free_gift': 'true',
+              '_source': 'BF25_BUNDLE_GIFT'
+            }
           });
+          console.log(`[BF25 Cart] Gift to add: ${gift.name} (${gift.variantId})`);
         }
-      }
+      });
 
-      // Add missing gifts
-      if (missingGifts.length > 0) {
-        console.log(`[BF25 Cart] Adding ${missingGifts.length} missing gift(s) before checkout:`, missingGifts.map(g => g.name));
+      // 2. Identify invalid gifts to remove (e.g., user downgraded tier)
+      existingGiftItems.forEach(item => {
+        if (!requiredGiftIds.has(item.variant_id)) {
+          updates[item.key] = 0; // Set quantity to 0 for removal
+          console.log(`[BF25 Cart] Gift to remove: ${item.title} (${item.variant_id})`);
+        }
+      });
 
-        for (const gift of missingGifts) {
-          const success = await this.addGiftToCart(gift.variantId, tier.id, gift.name);
-          if (!success) {
-            console.error(`[BF25 Cart] Failed to add gift: ${gift.name} (variant ${gift.variantId})`);
-            return false;
+      // 3. Perform Cart Operations
+      try {
+        // 3a. Remove invalid gifts (if any)
+        if (Object.keys(updates).length > 0) {
+          console.log(`[BF25 Cart] Removing ${Object.keys(updates).length} invalid gift(s)...`);
+          const removeResponse = await fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ updates })
+          });
+
+          if (!removeResponse.ok) {
+            throw new Error('Failed to remove invalid gifts');
           }
         }
 
-        console.log('[BF25 Cart] All missing gifts added successfully');
-      } else {
-        console.log('[BF25 Cart] All tier gifts already in cart');
-      }
+        // 3b. Add missing gifts (Batched - single API call)
+        if (itemsToAdd.length > 0) {
+          console.log(`[BF25 Cart] Adding ${itemsToAdd.length} gift(s) in batch...`);
+          const addResponse = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: itemsToAdd })
+          });
 
-      return true;
+          if (!addResponse.ok) {
+            const errorData = await addResponse.json().catch(() => ({}));
+            // Handle out of stock errors specifically
+            if (errorData.description && errorData.description.includes("Inventory")) {
+              throw new Error('One or more free gifts are out of stock.');
+            }
+            throw new Error(`Gift addition failed: ${errorData.description || addResponse.statusText}`);
+          }
+
+          console.log('[BF25 Cart] ✓ All gifts added successfully');
+        }
+
+        if (Object.keys(updates).length === 0 && itemsToAdd.length === 0) {
+          console.log('[BF25 Cart] ✓ Gifts already reconciled - no changes needed');
+        }
+
+        return true;
+
+      } catch (error) {
+        console.error('[BF25 Cart] Failed to reconcile gifts:', error.message);
+        // Re-throw the error so handleCheckout can display it to the user
+        throw error;
+      }
     }
 
     // ============================================
@@ -1811,25 +1852,17 @@
 
     /**
      * Calculate non-gift item count
-     * Excludes any items with 'BF25-Gift' tag or in gift list
+     * Excludes items marked with _is_free_gift property.
+     * @param {Object} cart - Cart object from Shopify
+     * @returns {number} - Count of non-gift items
      */
     calculateItemCount(cart) {
       if (!cart || !cart.items) return 0;
 
-      // Gift product handles (to be excluded from count)
-      const giftHandles = [
-        'bf25sc-free-cable',
-        'bf25sc-free-case',
-        'bf25sc-free-magnetic-set',
-        'bf25sc-free-mystery-box'
-      ];
-
       let count = 0;
       cart.items.forEach(item => {
-        // Skip gift items
-        const isGift = giftHandles.some(handle =>
-          item.handle && item.handle.includes(handle)
-        );
+        // Skip items marked as free gifts via properties (more robust than handle matching)
+        const isGift = item.properties && item.properties._is_free_gift === 'true';
 
         if (!isGift) {
           count += item.quantity;
@@ -1841,22 +1874,16 @@
 
     /**
      * Calculate cart subtotal (excluding gifts)
+     * @param {Object} cart - Cart object from Shopify
+     * @returns {number} - Subtotal in euros
      */
     calculateSubtotal(cart) {
       if (!cart || !cart.items) return 0;
 
-      const giftHandles = [
-        'bf25sc-free-cable',
-        'bf25sc-free-case',
-        'bf25sc-free-magnetic-set',
-        'bf25sc-free-mystery-box'
-      ];
-
       let subtotal = 0;
       cart.items.forEach(item => {
-        const isGift = giftHandles.some(handle =>
-          item.handle && item.handle.includes(handle)
-        );
+        // Skip items marked as free gifts via properties
+        const isGift = item.properties && item.properties._is_free_gift === 'true';
 
         if (!isGift) {
           subtotal += item.final_line_price;
@@ -2131,63 +2158,7 @@
     // GIFT MANAGEMENT
     // ============================================
 
-    /**
-     * Add a specific gift product to cart via Shopify API using variant ID
-     * @param {number} variantId - Variant ID (direct from GIFT_VARIANT_MAP)
-     * @param {number} tier - Tier number for logging
-     * @param {string} giftName - Gift name for logging
-     * @returns {Promise<boolean>} - Success status
-     */
-    async addGiftToCart(variantId, tier, giftName = 'Unknown') {
-      console.log(`[BF25 Cart] API: Adding gift for tier ${tier} - ${giftName} (variant ${variantId})`);
-
-      const maxRetries = 3;
-      const baseDelay = 100; // Start with 100ms
-
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-          // Add to cart with quantity 1 (no product fetch needed!)
-          const addResponse = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: variantId,
-              quantity: 1,
-              properties: {
-                '_gift_tier': tier,
-                '_is_free_gift': 'true'
-              }
-            })
-          });
-
-          if (!addResponse.ok) {
-            const errorData = await addResponse.json();
-            throw new Error(`Cart add failed: ${errorData.description || addResponse.status}`);
-          }
-
-          const result = await addResponse.json();
-          console.log(`[BF25 Cart] ✓ Gift added successfully (tier ${tier}): ${result.product_title}`);
-
-          return true; // Success!
-
-        } catch (error) {
-          console.warn(`[BF25 Cart] Gift add attempt ${attempt}/${maxRetries} failed:`, error.message);
-
-          if (attempt < maxRetries) {
-            // Exponential backoff: 100ms, 300ms, 900ms
-            const delay = baseDelay * Math.pow(3, attempt - 1);
-            console.log(`[BF25 Cart] Retrying in ${delay}ms...`);
-            await new Promise(resolve => setTimeout(resolve, delay));
-          } else {
-            // All retries exhausted
-            console.error(`[BF25 Cart] ✗ Failed to add gift after ${maxRetries} attempts`);
-            return false;
-          }
-        }
-      }
-
-      return false;
-    }
+    // Old addGiftToCart method removed - now using batched gift addition in ensureGiftsInCart
 
     /**
      * Handle tier unlock with API-first confirmation

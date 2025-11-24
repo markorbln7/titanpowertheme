@@ -54,40 +54,66 @@ Usage:
   data-tier="{{ tier }}"
 >
 
-  {%- comment -%} CARD HEADER {%- endcomment -%}
-  <div class="pp-bundle-card__header">
-    <h3 class="pp-bundle-card__title">{{ bundle_title }}</h3>
+  {%- comment -%} TOP ROW: Content Left + Image Right {%- endcomment -%}
+  <div class="pp-bundle-card__top-row">
+    
+    {%- comment -%} LEFT: CONTENT {%- endcomment -%}
+    <div class="pp-bundle-card__content">
+      
+      {%- comment -%} CARD HEADER {%- endcomment -%}
+      <div class="pp-bundle-card__header">
+        <h3 class="pp-bundle-card__title">{{ bundle_title }}</h3>
 
-    {% if tier_badge != blank %}
-      <div class="pp-bundle-card__badge pp-bundle-card__badge--tier-{{ tier }}">
-        {{ tier_badge }}
+        {% if tier_badge != blank %}
+          <div class="pp-bundle-card__badge pp-bundle-card__badge--tier-{{ tier }}">
+            {{ tier_badge }}
+          </div>
+        {% endif %}
       </div>
-    {% endif %}
-  </div>
 
-  {%- comment -%} PRICING SECTION {%- endcomment -%}
-  <div class="pp-bundle-card__pricing">
-    <div class="pp-bundle-card__items">
-      <span class="pp-bundle-card__item-count">{{ total_items }}</span>
-      <span class="pp-bundle-card__item-label">items</span>
+      {%- comment -%} PRICING SECTION {%- endcomment -%}
+      <div class="pp-bundle-card__pricing">
+        <div class="pp-bundle-card__items">
+          <span class="pp-bundle-card__item-count">{{ total_items }}</span>
+          <span class="pp-bundle-card__item-label">items</span>
+        </div>
+
+        <div class="pp-bundle-card__prices">
+          <span class="pp-bundle-card__price">{{ total_price | money }}</span>
+
+          {% if total_compare_price > total_price %}
+            <span class="pp-bundle-card__compare-price">{{ total_compare_price | money }}</span>
+          {% endif %}
+        </div>
+
+        {% if savings > 0 %}
+          <div class="pp-bundle-card__savings">
+            Save {{ savings | money }}
+          </div>
+        {% endif %}
+      </div>
+
     </div>
 
-    <div class="pp-bundle-card__prices">
-      <span class="pp-bundle-card__price">{{ total_price | money }}</span>
-
-      {% if total_compare_price > total_price %}
-        <span class="pp-bundle-card__compare-price">{{ total_compare_price | money }}</span>
-      {% endif %}
-    </div>
-
-    {% if savings > 0 %}
-      <div class="pp-bundle-card__savings">
-        Save {{ savings | money }}
+    {%- comment -%} RIGHT: IMAGE {%- endcomment -%}
+    {% if bundle_settings.bundle_image != blank %}
+      <div class="pp-bundle-card__image">
+        <img
+          src="{{ bundle_settings.bundle_image | image_url: width: 600 }}"
+          srcset="{{ bundle_settings.bundle_image | image_url: width: 300 }} 300w,
+                  {{ bundle_settings.bundle_image | image_url: width: 600 }} 600w"
+          sizes="(max-width: 768px) 100vw, 300px"
+          alt="{{ bundle_title }}"
+          width="600"
+          height="600"
+          loading="lazy"
+        >
       </div>
     {% endif %}
+
   </div>
 
-  {%- comment -%} AVATAR TAGS SECTION {%- endcomment -%}
+  {%- comment -%} FULL WIDTH: AVATAR TAGS {%- endcomment -%}
   {% if avatar_tags != blank %}
     <div class="pp-bundle-card__avatars">
       <span class="pp-bundle-card__avatars-label">Built For:</span>
@@ -95,18 +121,7 @@ Usage:
     </div>
   {% endif %}
 
-  {%- comment -%} STATUS INDICATOR {%- endcomment -%}
-  <div class="pp-bundle-card__status">
-    {% if has_products %}
-      <span class="pp-bundle-card__status-icon pp-bundle-card__status-icon--ready">✓</span>
-      <span class="pp-bundle-card__status-text">Ready to customize</span>
-    {% else %}
-      <span class="pp-bundle-card__status-icon pp-bundle-card__status-icon--empty">⚠</span>
-      <span class="pp-bundle-card__status-text">No products configured</span>
-    {% endif %}
-  </div>
-
-  {%- comment -%} CALL TO ACTION {%- endcomment -%}
+  {%- comment -%} FULL WIDTH: CALL TO ACTION {%- endcomment -%}
   <button
     class="pp-bundle-card__cta {% unless has_products %}pp-bundle-card__cta--disabled{% endunless %}"
     data-action="open-sheet"

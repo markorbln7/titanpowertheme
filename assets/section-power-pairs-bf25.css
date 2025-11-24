@@ -421,10 +421,54 @@ Performance Notes:
 .pp-bundle-card {
   display: flex;
   flex-direction: column;
+  gap: var(--pp-space-lg);
   padding: var(--pp-space-lg);
   transition: all var(--pp-transition-base);
   position: relative;
   overflow: hidden;
+}
+
+/* Top row: Content left + Image right */
+.pp-bundle-card__top-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--pp-space-lg);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .pp-bundle-card__top-row {
+    grid-template-columns: 65fr 35fr;
+  }
+}
+
+/* Content area (left side of top row) */
+.pp-bundle-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-space-md);
+}
+
+/* Image area (right side of top row) */
+.pp-bundle-card__image {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pp-bundle-card__image {
+    margin: 0;
+  }
+}
+
+.pp-bundle-card__image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 /* Premium tier styling (Tier 3 & 4) */
@@ -532,10 +576,9 @@ Performance Notes:
    ───────────────────────────────────────────────────── */
 
 .pp-bundle-card__pricing {
-  padding: var(--pp-space-md) 0;
+  padding-top: var(--pp-space-md);
+  padding-bottom: 0;
   border-top: 1px solid var(--pp-border-secondary);
-  border-bottom: 1px solid var(--pp-border-secondary);
-  margin-bottom: var(--pp-space-md);
 }
 
 .pp-bundle-card__items {
@@ -598,6 +641,8 @@ Performance Notes:
   color: var(--pp-text-secondary);
   margin-bottom: var(--pp-space-md);
   line-height: var(--pp-line-height-normal);
+  border-top: 1px solid var(--pp-border-secondary);
+  padding-top: 10px;
 }
 
 .pp-bundle-card__avatars-label {
@@ -832,12 +877,13 @@ Performance Notes:
   transition: transform var(--pp-transition-smooth), opacity var(--pp-transition-base);
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
 
   /* Mobile (default): Bottom sheet - OPTIMIZED */
   bottom: 0;
   left: 0;
   width: 100%;
-  max-height: 70vh;
   border-radius: 24px 24px 0 0;
   transform: translateY(100%);
   opacity: 0;
@@ -857,7 +903,7 @@ Performance Notes:
     bottom: 0;
     width: 480px;
     max-width: 90vw;
-    max-height: 100vh;
+    height: 100vh;
     border-radius: 0;
     transform: translateX(100%);
   }
@@ -925,7 +971,7 @@ body.pp-sheet-open {
 .pp-sheet-body {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1673,9 +1719,9 @@ body.pp-sheet-open {
 
 .pp-variant-option-btn {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: var(--pp-space-md);
   background: rgba(255, 255, 255, 0.03);
   border: 2px solid var(--pp-border-secondary);
@@ -1684,7 +1730,7 @@ body.pp-sheet-open {
   transition: all var(--pp-transition-fast);
   position: relative;
   min-height: 60px;
-  text-align: center;
+  gap: 10px;
 }
 
 .pp-variant-option-btn:hover {
@@ -1707,25 +1753,6 @@ body.pp-sheet-open {
 .pp-variant-option-btn--selected:hover {
   background: rgba(96, 198, 85, 0.2);
   border-color: var(--pp-accent-primary);
-}
-
-/* Selected indicator checkmark */
-.pp-variant-option-btn--selected::after {
-  content: '✓';
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  background: var(--pp-accent-primary);
-  color: #000000;
-  border-radius: var(--pp-radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: var(--pp-font-weight-bold);
-  line-height: 1;
 }
 
 /* Unavailable state */
@@ -1757,11 +1784,18 @@ body.pp-sheet-open {
    VARIANT OPTION CONTENT
    ───────────────────────────────────────────────────── */
 
+.pp-variant-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  text-align: left;
+}
+
 .pp-variant-option-label {
   font-size: var(--pp-font-sm);
   font-weight: var(--pp-font-weight-semibold);
   color: var(--pp-text-primary);
-  margin-bottom: 2px;
   line-height: var(--pp-line-height-tight);
 }
 
@@ -1789,8 +1823,8 @@ body.pp-sheet-open {
   height: 40px;
   object-fit: cover;
   border-radius: var(--pp-radius-sm);
-  margin-bottom: var(--pp-space-xs);
   background: rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
 }
 
 /* ─────────────────────────────────────────────────────
@@ -1905,20 +1939,20 @@ body.pp-sheet-open {
 
 .pp-variant-success-feedback {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 40px;
   background: rgba(96, 198, 85, 0.95);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 200;
   opacity: 0;
   pointer-events: none !important;
   transition: opacity var(--pp-transition-fast);
-  border-radius: inherit;
+  border-radius: var(--pp-radius-md);
 }
 
 .pp-variant-success-feedback.active {
@@ -1927,16 +1961,7 @@ body.pp-sheet-open {
 }
 
 .pp-variant-success-icon {
-  width: 64px;
-  height: 64px;
-  background: #000000;
-  border-radius: var(--pp-radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: var(--pp-accent-primary);
-  margin-bottom: var(--pp-space-md);
+  display: none;
   animation: successPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -3732,9 +3757,14 @@ body:not(.user-is-using-mouse) *:focus {
   .pp-sheet-cta {
     padding-bottom: max(var(--pp-space-lg), env(safe-area-inset-bottom));
   }
+}
 
-  .pp-bottom-sheet {
-    max-height: calc(92vh - env(safe-area-inset-bottom));
+/* iOS safe area for mobile only */
+@media screen and (max-width: 1023px) {
+  @supports (padding: max(0px)) {
+    .pp-bottom-sheet {
+      max-height: calc(92vh - env(safe-area-inset-bottom));
+    }
   }
 }
 
@@ -3749,11 +3779,13 @@ body:not(.user-is-using-mouse) *:focus {
    SAMSUNG INTERNET FIXES
    ───────────────────────────────────────────────────── */
 
-/* Samsung Internet bottom bar handling */
-@supports (-webkit-touch-callout: none) {
-  .pp-bottom-sheet {
-    /* Add extra padding for Samsung Internet's bottom bar */
-    padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+/* Samsung Internet bottom bar handling - Mobile only */
+@media screen and (max-width: 1023px) {
+  @supports (-webkit-touch-callout: none) {
+    .pp-bottom-sheet {
+      /* Add extra padding for Samsung Internet's bottom bar */
+      padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+    }
   }
 }
 
@@ -3931,10 +3963,12 @@ body:not(.user-is-using-mouse) *:focus {
    MOBILE BROWSER FIXES
    ───────────────────────────────────────────────────── */
 
-/* Fix for 100vh on mobile (address bar issues) */
-@supports (-webkit-touch-callout: none) {
-  .pp-bottom-sheet {
-    height: -webkit-fill-available;
+/* Fix for 100vh on mobile (address bar issues) - Mobile only */
+@media screen and (max-width: 1023px) {
+  @supports (-webkit-touch-callout: none) {
+    .pp-bottom-sheet {
+      height: -webkit-fill-available;
+    }
   }
 }
 

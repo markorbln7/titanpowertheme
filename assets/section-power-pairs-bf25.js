@@ -1025,7 +1025,6 @@ class VariantModal {
       ${headerHTML}
       ${variantOptionsHTML}
       <div class="pp-variant-success-feedback">
-        <div class="pp-variant-success-icon">✓</div>
         <p class="pp-variant-success-text">Variant Selected!</p>
       </div>
       <div class="pp-variant-error-message">
@@ -1074,10 +1073,12 @@ class VariantModal {
               loading="lazy"
             >
           ` : ''}
-          <div class="pp-variant-option-label">${variant.title}</div>
-          <div class="pp-variant-option-price">
-            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
-            ${this.formatMoney(variant.price)}
+          <div class="pp-variant-option-content">
+            <div class="pp-variant-option-label">${variant.title}</div>
+            <div class="pp-variant-option-price">
+              ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
+              ${this.formatMoney(variant.price)}
+            </div>
           </div>
         </button>
       `;
@@ -1771,12 +1772,7 @@ class ExpansionManager {
    */
   renderVariantStatusMessage(incompleteCount, allComplete) {
     if (allComplete) {
-      return `
-        <div class="pp-variant-status-message pp-variant-status-message--complete">
-          <span class="pp-variant-status-message__icon">✓</span>
-          <span>All variants selected! Ready to customize multiplier.</span>
-        </div>
-      `;
+      return '';
     }
 
     return `

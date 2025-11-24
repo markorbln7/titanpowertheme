@@ -1,0 +1,1368 @@
+═══════════════════════════════════════════
+BF25 INTERACTIVE HERO - COMPLETE CURRENT STATE
+═══════════════════════════════════════════
+Date: 2025-11-23
+Purpose: Gemini Deep Think analysis - Fill visibility issue
+
+ISSUE: Green battery fill not visible despite:
+- CSS variables working (console shows --fill-width updating)
+- Element exists in DOM
+- JavaScript executing correctly
+- Width property animating
+- Attempted fixes: z-index layering, overflow visible, solid color
+
+CURRENT DEBUG MODE: Using solid #60c655 background instead of gradient
+
+═══════════════════════════════════════════
+FILE 1: LIQUID SECTION (HTML + JSON + SCHEMA)
+═══════════════════════════════════════════
+{% if section.settings.enable_section %}
+{{ 'bf25-hero.css' | asset_url | stylesheet_tag }}
+
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M20 6L9 17l-5-5"/>
+  </symbol>
+</svg>
+
+<section class="bf25-hero" id="bf25-hero-section">
+  <div class="bf25-hero__container">
+
+    <header class="bf25-hero__header">
+      <h1 class="bf25-hero__heading">
+        {{ section.settings.heading | default: "Build Your Black Friday Deal" }}
+      </h1>
+      <h2 class="bf25-hero__subheading">
+        {{ section.settings.subheading | default: "Slide to unlock bigger discounts + premium gifts" }}
+      </h2>
+    </header>
+
+    <div class="bf25-hero__module">
+
+      <div class="bf25-hero__gifts">
+
+        <div class="bf25-hero__gift-box" data-gift-id="cable" data-tier="1">
+          <div class="bf25-hero__gift-image-wrapper">
+            <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_top_image_a895a2f4-c7a7-4e8f-889a-883407938d24.png?v=1763844565" alt="4-in-1 Cable" class="bf25-hero__gift-image" width="80" height="80" loading="lazy"/>
+            <div class="bf25-hero__gift-overlay"></div>
+            <span class="bf25-hero__gift-status-icon" aria-hidden="true">
+                <svg class="icon icon-lock"><use xlink:href="#icon-lock"></use></svg>
+                <svg class="icon icon-check"><use xlink:href="#icon-check"></use></svg>
+            </span>
+          </div>
+          <span class="bf25-hero__gift-label">Cable</span>
+        </div>
+
+        <div class="bf25-hero__gift-box" data-gift-id="case" data-tier="2">
+            <div class="bf25-hero__gift-image-wrapper">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578" alt="Travel Case" class="bf25-hero__gift-image" width="80" height="80" loading="lazy"/>
+                <div class="bf25-hero__gift-overlay"></div>
+                <span class="bf25-hero__gift-status-icon" aria-hidden="true">
+                    <svg class="icon icon-lock"><use xlink:href="#icon-lock"></use></svg>
+                    <svg class="icon icon-check"><use xlink:href="#icon-check"></use></svg>
+                </span>
+            </div>
+            <span class="bf25-hero__gift-label">Case</span>
+        </div>
+
+        <div class="bf25-hero__gift-box" data-gift-id="magnetic" data-tier="3">
+            <div class="bf25-hero__gift-image-wrapper">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Untitled-3.png?v=1763847726" alt="Magnetic Set" class="bf25-hero__gift-image" width="80" height="80" loading="lazy"/>
+                <div class="bf25-hero__gift-overlay"></div>
+                <span class="bf25-hero__gift-status-icon" aria-hidden="true">
+                    <svg class="icon icon-lock"><use xlink:href="#icon-lock"></use></svg>
+                    <svg class="icon icon-check"><use xlink:href="#icon-check"></use></svg>
+                </span>
+            </div>
+            <span class="bf25-hero__gift-label">Magnetic</span>
+        </div>
+
+        <div class="bf25-hero__gift-box" data-gift-id="mystery" data-tier="4">
+            <div class="bf25-hero__gift-image-wrapper">
+                <img src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_gift_gift_tracker_mystery_3dcb6ddf-e030-4eac-b3c5-b4ee3c82b364.png?v=1763844597" alt="Mystery Box" class="bf25-hero__gift-image" width="80" height="80" loading="lazy"/>
+                <div class="bf25-hero__gift-overlay"></div>
+                <span class="bf25-hero__gift-status-icon" aria-hidden="true">
+                    <svg class="icon icon-lock"><use xlink:href="#icon-lock"></use></svg>
+                    <svg class="icon icon-check"><use xlink:href="#icon-check"></use></svg>
+                </span>
+            </div>
+            <span class="bf25-hero__gift-label">Mystery</span>
+        </div>
+      </div>
+
+      <div class="bf25-hero__slider-wrapper">
+        <div class="bf25-hero__visualization">
+          <div class="bf25-hero__track"></div>
+          <div class="bf25-hero__fill"></div>
+        </div>
+
+        <input type="range" min="0" max="16" step="1" value="0" class="bf25-hero__input" id="bf25-hero-slider"
+               aria-label="Select number of items to see tier discounts and unlock gifts"
+               aria-valuemin="0" aria-valuemax="16" aria-valuenow="0" aria-valuetext="0 items selected"/>
+
+        <div class="bf25-hero__checkpoints">
+          <div class="bf25-hero__checkpoint" data-tier="1" data-value="4">
+            <span class="bf25-hero__checkpoint-label">4 <span class="checkpoint-subtext">items</span></span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="2" data-value="8">
+            <span class="bf25-hero__checkpoint-label">8 <span class="checkpoint-subtext">items</span></span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="3" data-value="12">
+            <span class="bf25-hero__checkpoint-label">12 <span class="checkpoint-subtext">items</span></span>
+          </div>
+          <div class="bf25-hero__checkpoint" data-tier="4" data-value="16">
+            <span class="bf25-hero__checkpoint-label">16 <span class="checkpoint-subtext">items</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bf25-hero__card" data-active-tier="0">
+        <div class="bf25-hero__card-header">
+          <div class="bf25-hero__tier-badge">
+            <span class="bf25-hero__tier-badge-text">Explore Tiers</span>
+          </div>
+          <div class="bf25-hero__discount-display">
+            <span class="bf25-hero__discount-label">Move the slider</span>
+          </div>
+        </div>
+
+        <!-- NEW: Unlock Preview Section -->
+        <div class="bf25-hero__unlocks-preview">
+          <div class="bf25-hero__unlocks-current" data-unlock-status="locked">
+            <span class="bf25-hero__unlocks-icon">🎁</span>
+            <span class="bf25-hero__unlocks-text">Slide to unlock gifts + discounts</span>
+          </div>
+        </div>
+
+        <div class="bf25-hero__card-footer">
+          <div class="bf25-hero__pricing">
+            <div class="bf25-hero__pricing-row">
+              <span class="bf25-hero__pricing-label">Est. Total:</span>
+              <span class="bf25-hero__pricing-value" data-price-type="total">—</span>
+            </div>
+
+            <div class="bf25-hero__pricing-row bf25-hero__pricing-row--per-item">
+              <span class="bf25-hero__pricing-label">Per Item:</span>
+              <span class="bf25-hero__pricing-value" data-price-type="per-item">—</span>
+            </div>
+
+            <div class="bf25-hero__pricing-row bf25-hero__pricing-row--savings">
+              <span class="bf25-hero__pricing-label">You Save:</span>
+              <span class="bf25-hero__pricing-value bf25-hero__pricing-value--savings" data-price-type="savings">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bf25-hero__cta">
+      <a href="{{ section.settings.cta_url | default: '#bf25-products' }}" class="bf25-hero__cta-button">
+        {{ section.settings.cta_text | default: "Start Building Your Deal" }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script type="application/json" id="bf25HeroData">
+{
+  "config": {
+    "max_items": 16,
+    "currency_symbol": "{{ cart.currency.symbol | default: '€' }}",
+    "avg_price_retail": {{ section.settings.avg_price_retail | default: 40 | json }},
+    "avg_price_shopify": {{ section.settings.avg_price_shopify | default: 20 | json }}
+  },
+  "gifts": [
+    {
+      "id": "cable",
+      "name": "4-in-1 Cable",
+      "value": 30.00,
+      "tier": 1
+    },
+    {
+      "id": "case",
+      "name": "Travel Case + Free Shipping",
+      "value": 39.99,
+      "tier": 2
+    },
+    {
+      "id": "magnetic",
+      "name": "Magnetic Cable Set",
+      "value": 60.00,
+      "tier": 3
+    },
+    {
+      "id": "mystery",
+      "name": "Bigfoot Mystery Box",
+      "value": 150.00,
+      "tier": 4
+    }
+  ],
+  "tiers": [
+    {
+      "id": 0,
+      "min": 0,
+      "max": 3,
+      "badge": "Explore Tiers",
+      "display_label": "Move the slider",
+      "multiplier": 1.0,
+      "color": "#6b7280"
+    },
+    {
+      "id": 1,
+      "min": 4,
+      "max": 7,
+      "badge": "Better Deal",
+      "display_label": "60% OFF",
+      "multiplier": 0.91,
+      "color": "#60c655"
+    },
+    {
+      "id": 2,
+      "min": 8,
+      "max": 11,
+      "badge": "Great Deal",
+      "display_label": "70% OFF",
+      "multiplier": 0.76,
+      "color": "#60c655"
+    },
+    {
+      "id": 3,
+      "min": 12,
+      "max": 15,
+      "badge": "Best Deal",
+      "display_label": "80% OFF",
+      "multiplier": 0.65,
+      "color": "#60c655"
+    },
+    {
+      "id": 4,
+      "min": 16,
+      "max": 999,
+      "badge": "Bigfoot Unlock",
+      "display_label": "85% OFF",
+      "multiplier": 0.57,
+      "color": "#60c655"
+    }
+  ]
+}
+</script>
+
+<script src="{{ 'bf25-hero.js' | asset_url }}" defer></script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "BF25 Interactive Hero",
+  "tag": "section",
+  "class": "bf25-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📱 Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Headline",
+      "default": "Build Your Black Friday Deal",
+      "info": "Large H1 text (28-40px responsive)"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtitle",
+      "default": "Slide to unlock bigger discounts + premium gifts",
+      "info": "Secondary text below headline"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Start Building Your Deal"
+    },
+    {
+      "type": "text",
+      "id": "cta_url",
+      "label": "CTA Button Link",
+      "default": "#bf25-products",
+      "info": "Can use anchor links like #products or full URLs"
+    },
+    {
+      "type": "header",
+      "content": "💰 Pricing Configuration"
+    },
+    {
+      "type": "paragraph",
+      "content": "These values calculate estimated totals and savings. Retail price is compare_at_price. Base price has tier multipliers applied."
+    },
+    {
+      "type": "number",
+      "id": "avg_price_retail",
+      "label": "Average Retail Price",
+      "default": 40,
+      "info": "Used for savings calculation (e.g., €40)"
+    },
+    {
+      "type": "number",
+      "id": "avg_price_shopify",
+      "label": "Average Base Price",
+      "default": 20,
+      "info": "Price that multipliers apply to (e.g., €20)"
+    },
+    {
+      "type": "header",
+      "content": "🔧 Advanced Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable Hero Section",
+      "default": true,
+      "info": "Toggle section visibility"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BF25 Interactive Hero",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}
+
+═══════════════════════════════════════════
+FILE 2: CSS STYLING
+═══════════════════════════════════════════
+/**
+ * ═══════════════════════════════════════════════════════════════════════
+ * BF25 INTERACTIVE HERO - PREMIUM DESIGN OVERHAUL (CKL-113)
+ * ═══════════════════════════════════════════════════════════════════════
+ *
+ * Goal: Apple/Tesla-level premium aesthetic, compact layout, engaging interactions.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   1. CSS CUSTOM PROPERTIES & DESIGN SYSTEM
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Brand Colors (CKL-113 Refined) */
+  --color-bg-dark: #0a0a0a;
+  --color-text-primary: #ffffff;
+  --color-text-subtle: #a1a1aa;
+  --color-accent-lime: #60c655;
+  --color-accent-glow: rgba(96, 198, 85, 0.5);
+
+  /* NEW: Tier-specific colors */
+  --color-tier-gold: #FFD700;
+  --color-tier-platinum: #E5E4E2;
+
+  /* Glassmorphism (Premium) */
+  --glass-bg-subtle: rgba(255, 255, 255, 0.03);
+  --glass-border-color: rgba(255, 255, 255, 0.1);
+  --glass-filter: blur(20px) saturate(180%);
+
+  /* Typography (Work Sans) */
+  --font-base: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing (8px grid, compact) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Animation */
+  --easing-premium: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --duration-fast: 200ms;
+  --duration-medium: 400ms;
+  --duration-slow: 600ms;
+
+  /* Slider Visualization (16 Segments - Robust Calculation) */
+  --segment-count: 16;
+  --segment-gap: 3px; /* Visible gap between cells */
+  --total-gap-width: calc((var(--segment-count) - 1) * var(--segment-gap));
+  --segment-width: calc((100% - var(--total-gap-width)) / var(--segment-count));
+  --gradient-step-size: calc(var(--segment-width) + var(--segment-gap));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   2. SECTION FOUNDATION & TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero {
+  background: var(--color-bg-dark);
+  color: var(--color-text-primary);
+  padding: var(--space-6) var(--space-4);
+  font-family: var(--font-base);
+
+  /* Dynamic variables updated by JS */
+  --fill-width: 0%;
+  --color-tier-current: #6b7280;
+  --tier-glow-color: rgba(107, 114, 128, 0.3);
+}
+
+.bf25-hero__container {
+  max-width: 980px; /* Compact width */
+  margin: 0 auto;
+}
+
+.bf25-hero__header {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.bf25-hero__heading {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.bf25-hero__subheading {
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 400;
+  color: var(--color-text-subtle);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   3. MAIN MODULE LAYOUT (Centralized & Compact)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__module {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  /* Height constraint achieved by component compactness */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   4. GIFT BOXES (4x1 Grid, Blackout & Dramatic Unlock)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__gifts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4x1 Grid (Requirement Met) */
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 450px;
+}
+
+.bf25-hero__gift-box {
+  position: relative;
+  text-align: center;
+  transition: transform var(--duration-medium) var(--easing-premium);
+  contain: layout paint style;
+}
+
+.bf25-hero__gift-image-wrapper {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  margin-bottom: var(--space-2);
+  border-radius: 12px;
+  overflow: hidden;
+
+  /* Premium Glassmorphism Container */
+  background: var(--glass-bg-subtle);
+  border: 1px solid var(--glass-border-color);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  transition: all var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__gift-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: all var(--duration-slow) var(--easing-premium);
+  will-change: filter, opacity, transform;
+
+  /* LOCKED STATE: Blacked Out Silhouette (Requirement Met) */
+  filter: brightness(0.1) grayscale(100%);
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+/* 4.1 Premium SVG Icons & Status */
+.bf25-hero__gift-status-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icon {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    transition: all var(--duration-medium) var(--easing-premium);
+    top: 50%;
+    left: 50%;
+}
+
+.icon-lock {
+    color: var(--color-text-primary);
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.icon-check {
+    color: var(--color-accent-lime);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+}
+
+.bf25-hero__gift-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-subtle);
+  transition: color var(--duration-medium) var(--easing-premium);
+}
+
+@media (min-width: 769px) {
+    .bf25-hero__gift-label {
+        font-size: 14px;
+    }
+}
+
+/* 4.2 UNLOCKED STATE & Animation */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper {
+  border-color: var(--color-accent-lime);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.3);
+}
+
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
+  filter: brightness(1) grayscale(0%);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+    color: var(--color-text-primary);
+}
+
+/* Icon Transition (Handled by CSS) */
+.bf25-hero__gift-box.is-unlocked .icon-lock {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5); /* Lock bursts away */
+}
+.bf25-hero__gift-box.is-unlocked .icon-check {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Dramatic Unlock Animation (Pop & Glow Burst) */
+@keyframes giftUnlockPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.bf25-hero__gift-box.animate-unlock {
+  animation: giftUnlockPop var(--duration-slow) var(--easing-premium);
+}
+
+/* Color Burst Overlay (Enhances the reveal) */
+.bf25-hero__gift-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent-lime);
+    opacity: 0;
+}
+
+@keyframes colorBurst {
+    0% { opacity: 0; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+.bf25-hero__gift-box.animate-unlock .bf25-hero__gift-overlay {
+    animation: colorBurst var(--duration-slow) var(--easing-premium);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   5. SLIDER VISUALIZATION (Battery Style - High Visibility)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__slider-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  overflow: visible; /* Fix: Allow input to extend beyond wrapper */
+}
+
+.bf25-hero__visualization {
+  position: relative;
+  width: 100%;
+  height: 20px; /* Increased height (Requirement Met) */
+  border-radius: 10px;
+  overflow: visible; /* CHANGE from 'hidden' to 'visible' for debugging */
+  /* Battery Casing */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0,0,0,0.3);
+  pointer-events: none; /* Ensure it doesn't block input */
+}
+
+/* 5.1 Track (High Contrast Segments) */
+.bf25-hero__track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* CRITICAL: Track on bottom layer */
+  /* Creates 16 visible empty segments */
+  background: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.15) 0,
+    rgba(255, 255, 255, 0.15) var(--segment-width),
+    transparent var(--segment-width),
+    transparent var(--gradient-step-size)
+  );
+  pointer-events: none;
+}
+
+/* 5.2 Fill (Energized Lime Green) */
+.bf25-hero__fill {
+  position: absolute;
+  width: var(--fill-width);
+  height: 100%;
+  z-index: 2; /* CRITICAL: Fill on top layer */
+
+  /* DEBUG: Solid bright green (no gradient) */
+  background: #60c655 !important;
+
+  /* High visibility effects */
+  box-shadow: 0 0 30px rgba(96, 198, 85, 0.8) !important;
+  opacity: 1 !important;
+
+  transition: width var(--duration-medium) var(--easing-premium);
+  will-change: width;
+  pointer-events: none;
+}
+
+/* 5.3 Invisible Input (Accessibility) */
+.bf25-hero__input {
+  position: absolute;
+  top: -12px; /* Center 44px target over 20px visualization */
+  left: 0;
+  width: 100%;
+  height: 44px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 100; /* Increased from 10 to 100 */
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: pan-y;
+  background: transparent;
+  margin: 0; /* CRITICAL: Remove default margins */
+}
+
+.bf25-hero__input:focus { outline: none; }
+
+/* CRITICAL FIX 1: Define an interactable, invisible thumb */
+
+/* WebKit/Blink (Chrome, Safari, Edge) */
+.bf25-hero__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;          /* Define a draggable width */
+  height: 44px;         /* Match input height for full vertical interaction area */
+  background: transparent; /* Keep it invisible */
+  border: none;
+  cursor: pointer;
+  pointer-events: auto; /* Explicitly ensure it catches events */
+}
+
+/* Firefox */
+.bf25-hero__input::-moz-range-thumb {
+  appearance: none;
+  width: 24px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-radius: 0; /* Remove Firefox default radius */
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Ensure the track also supports interaction across the full height */
+.bf25-hero__input::-webkit-slider-runnable-track {
+  height: 44px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.bf25-hero__input::-moz-range-track {
+  height: 44px;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* JS-managed focus state */
+.bf25-hero__slider-wrapper.is-focused .bf25-hero__visualization {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 4px;
+}
+
+/* 5.4 Checkpoints (Minimalist & Clear) */
+.bf25-hero__checkpoints {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  margin-top: var(--space-1);
+  pointer-events: none; /* CRITICAL FIX 2: Prevent overlap interference */
+}
+
+.bf25-hero__checkpoint {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.bf25-hero__checkpoint[data-value="4"] { left: 25%; }
+.bf25-hero__checkpoint[data-value="8"] { left: 50%; }
+.bf25-hero__checkpoint[data-value="12"] { left: 75%; }
+.bf25-hero__checkpoint[data-value="16"] { left: 100%; }
+
+.bf25-hero__checkpoint-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-subtle);
+  transition: color var(--duration-medium) var(--easing-premium);
+  text-align: center;
+}
+
+/* Responsive "items" text */
+.checkpoint-subtext {
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .checkpoint-subtext {
+        display: inline;
+    }
+    .bf25-hero__checkpoint-label {
+        font-size: 14px;
+    }
+}
+
+/* REACHED STATE */
+.bf25-hero__checkpoint.is-reached .bf25-hero__checkpoint-label {
+  color: var(--color-accent-lime);
+}
+
+/* Checkpoint Celebration Animation (Subtle Text Pulse) */
+@keyframes celebratePulse {
+  0% { transform: scale(1) translateX(-50%); }
+  50% { transform: scale(1.3) translateX(-50%); text-shadow: 0 0 10px var(--color-accent-lime); }
+  100% { transform: scale(1) translateX(-50%); }
+}
+
+.bf25-hero__checkpoint.animate-celebration {
+  animation: celebratePulse var(--duration-slow) var(--easing-premium);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   6. DYNAMIC TIER CARD (Compact Glassmorphism)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__card {
+  width: 100%;
+  max-width: 700px;
+  background: var(--glass-bg-subtle);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border: 1px solid var(--color-tier-current);
+  border-radius: 16px;
+  padding: var(--space-3);
+  transition: all var(--duration-medium) var(--easing-premium);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 30px var(--tier-glow-color); /* Add tier-specific glow */
+  contain: layout paint style;
+}
+
+.bf25-hero__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.bf25-hero__tier-badge-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-tier-current);
+  transition: color var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__discount-label {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-accent-lime);
+}
+
+/* Unlock Preview Section */
+.bf25-hero__unlocks-preview {
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--glass-border-color);
+  border-bottom: 1px solid var(--glass-border-color);
+  margin-bottom: var(--space-3);
+}
+
+.bf25-hero__unlocks-current {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__unlocks-icon {
+  font-size: 18px;
+  transition: transform var(--duration-medium) var(--easing-premium);
+}
+
+.bf25-hero__unlocks-text {
+  color: var(--color-text-subtle);
+  font-weight: 500;
+  transition: color var(--duration-medium) var(--easing-premium);
+}
+
+/* State: Unlocking (when user reaches a tier) */
+.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px var(--color-accent-lime));
+}
+
+.bf25-hero__unlocks-current[data-unlock-status="unlocking"] .bf25-hero__unlocks-text {
+  color: var(--color-accent-lime);
+  font-weight: 600;
+}
+
+@media (min-width: 769px) {
+  .bf25-hero__unlocks-current {
+    font-size: 14px;
+  }
+}
+
+/* Pricing Summary */
+.bf25-hero__pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
+}
+
+.bf25-hero__pricing-label {
+  font-size: 14px;
+  color: var(--color-text-subtle);
+}
+
+.bf25-hero__pricing-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bf25-hero__pricing-row--per-item .bf25-hero__pricing-label,
+.bf25-hero__pricing-row--per-item .bf25-hero__pricing-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+}
+
+.bf25-hero__pricing-row--savings {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--glass-border-color);
+}
+
+.bf25-hero__pricing-value--savings {
+  color: var(--color-accent-lime);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   7. CALL TO ACTION & POLISH
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__cta {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.bf25-hero__cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 var(--space-4);
+  background: var(--color-accent-lime);
+  color: var(--color-bg-dark);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(96, 198, 85, 0.4);
+  transition: all var(--duration-fast) var(--easing-premium);
+}
+
+.bf25-hero__cta-button:hover {
+  background: #50b045; /* Darker green on hover */
+  box-shadow: 0 6px 30px rgba(96, 198, 85, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   8. ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+═══════════════════════════════════════════
+FILE 3: JAVASCRIPT LOGIC
+═══════════════════════════════════════════
+/**
+ * BF25 Interactive Hero - Premium Redesign
+ * Version: 2.0.0
+ */
+
+'use strict';
+
+class PowerSlider {
+  constructor(containerElement) {
+    console.log('🎯 Container received:', containerElement);
+    this.container = containerElement;
+    this.data = this.loadData();
+    if (!this.data) {
+      console.error('BF25 Hero: Failed to initialize - no data found');
+      return;
+    }
+
+    this.config = this.data.config;
+    this.gifts = this.data.gifts;
+    this.tiers = this.data.tiers;
+
+    this.currentValue = 0;
+    this.currentTier = this.tiers[0];
+    this.previousTier = this.tiers[0];
+
+    this.elements = this.cacheDOM();
+
+    if (!this.elements.sliderInput) {
+      console.error('BF25 Hero: Slider input not found');
+      return;
+    }
+
+    this.init();
+  }
+
+  loadData() {
+    const dataScript = document.getElementById('bf25HeroData');
+    if (!dataScript) return null;
+    try {
+      return JSON.parse(dataScript.textContent);
+    } catch (error) {
+      console.error('BF25 Hero: Failed to parse JSON data', error);
+      return null;
+    }
+  }
+
+  cacheDOM() {
+    return {
+      sliderInput: this.container.querySelector('.bf25-hero__input'),
+      sliderWrapper: this.container.querySelector('.bf25-hero__slider-wrapper'),
+      giftBoxes: this.container.querySelectorAll('.bf25-hero__gift-box'),
+      checkpoints: this.container.querySelectorAll('.bf25-hero__checkpoint'),
+      card: this.container.querySelector('.bf25-hero__card'),
+      tierBadgeText: this.container.querySelector('.bf25-hero__tier-badge-text'),
+      discountLabel: this.container.querySelector('.bf25-hero__discount-label'),
+      pricingTotal: this.container.querySelector('[data-price-type="total"]'),
+      pricingSavings: this.container.querySelector('[data-price-type="savings"]'),
+      pricingPerItem: this.container.querySelector('[data-price-type="per-item"]'),
+      unlocksPreview: this.container.querySelector('.bf25-hero__unlocks-current'),
+      unlocksText: this.container.querySelector('.bf25-hero__unlocks-text')
+    };
+  }
+
+  init() {
+    this.elements.sliderInput.addEventListener('input', (e) => {
+      this.handleSliderInput(parseInt(e.target.value, 10));
+    });
+
+    // Focus management (Accessibility)
+    this.elements.sliderInput.addEventListener('focus', () => {
+      if (this.elements.sliderWrapper) {
+        this.elements.sliderWrapper.classList.add('is-focused');
+      }
+    });
+
+    this.elements.sliderInput.addEventListener('blur', () => {
+      if (this.elements.sliderWrapper) {
+        this.elements.sliderWrapper.classList.remove('is-focused');
+      }
+    });
+
+    this.handleSliderInput(0);
+  }
+
+  handleSliderInput(value) {
+    console.log('🎚️ Slider moved to:', value);
+    console.log('📊 Current tier:', this.calculateTier(value));
+
+    // Optimization: Exit if value didn't change
+    if (this.currentValue === value) return;
+
+    this.currentValue = value;
+    this.currentTier = this.calculateTier(value);
+
+    const tierUnlocked = this.currentTier.id > this.previousTier.id;
+
+    this.updateVisualization();
+    this.updateGiftBoxes();
+    this.updateCheckpoints();
+    this.updateTierCard();
+    this.updateUnlocksPreview();
+    this.updatePricing();
+    this.updateARIA();
+
+    if (tierUnlocked && this.currentValue > 0) {
+      this.triggerCelebration();
+      this.triggerHaptics();
+    }
+
+    this.previousTier = this.currentTier;
+  }
+
+  calculateTier(value) {
+    // Handle max tier correctly (max: 999 in the updated JSON)
+    const tier = this.tiers.find(t => value >= t.min && value <= t.max);
+    return tier || this.tiers[0];
+  }
+
+  updateVisualization() {
+    const percentage = (this.currentValue / this.config.max_items) * 100;
+    const section = document.getElementById('bf25-hero-section') || this.container;
+    section.style.setProperty('--fill-width', `${percentage}%`);
+    console.log('📊 Fill width set to:', percentage + '%');
+  }
+
+  /**
+   * Update gift box unlock states. Icon switching is handled by CSS.
+   */
+  updateGiftBoxes() {
+    this.elements.giftBoxes.forEach((box, index) => {
+      const gift = this.gifts[index];
+      if (!gift) return;
+
+      const isUnlocked = this.currentTier.id >= gift.tier;
+      const wasLocked = !box.classList.contains('is-unlocked');
+
+      if (isUnlocked) {
+        box.classList.add('is-unlocked');
+        // Trigger unlock animation on first unlock
+        if (wasLocked && this.currentTier.id === gift.tier) {
+          this.triggerGiftUnlockAnimation(box);
+        }
+      } else {
+        box.classList.remove('is-unlocked');
+      }
+    });
+  }
+
+  updateCheckpoints() {
+    this.elements.checkpoints.forEach(checkpoint => {
+      const checkpointValue = parseInt(checkpoint.dataset.value, 10);
+      if (this.currentValue >= checkpointValue) {
+        checkpoint.classList.add('is-reached');
+      } else {
+        checkpoint.classList.remove('is-reached');
+      }
+    });
+  }
+
+  updateTierCard() {
+    this.elements.card.dataset.activeTier = this.currentTier.id;
+    const section = document.getElementById('bf25-hero-section') || this.container;
+
+    // Determine tier display color (with gold/platinum for higher tiers)
+    let displayColor = this.currentTier.color;
+    let glowColor = 'rgba(96, 198, 85, 0.3)'; // Default lime green glow
+
+    // Special colors for high tiers
+    if (this.currentTier.id === 3) {
+      // Tier 3 (Best Deal): Gold accent
+      displayColor = '#FFD700'; // Gold
+      glowColor = 'rgba(255, 215, 0, 0.4)';
+    } else if (this.currentTier.id === 4) {
+      // Tier 4 (Bigfoot): Platinum/blue-white
+      displayColor = '#E5E4E2'; // Platinum
+      glowColor = 'rgba(229, 228, 226, 0.5)';
+    }
+
+    section.style.setProperty('--color-tier-current', displayColor);
+    section.style.setProperty('--tier-glow-color', glowColor);
+
+    console.log('✅ Updated tier colors:', displayColor, glowColor);
+
+    if (this.elements.tierBadgeText) {
+      // Badge text is clean (no emojis in the updated JSON)
+      this.elements.tierBadgeText.textContent = this.currentTier.badge;
+    }
+
+    if (this.elements.discountLabel) {
+      this.elements.discountLabel.textContent = this.currentTier.display_label;
+    }
+  }
+
+  updateUnlocksPreview() {
+    if (!this.elements.unlocksPreview || !this.elements.unlocksText) return;
+
+    let message = '';
+    let status = 'locked';
+
+    if (this.currentValue === 0) {
+      message = 'Slide to unlock gifts + discounts';
+      status = 'locked';
+    } else if (this.currentValue < 4) {
+      message = `Unlock ${this.gifts[0].name} at 4 items`;
+      status = 'locked';
+    } else if (this.currentValue >= 4 && this.currentValue < 8) {
+      message = `✓ ${this.gifts[0].name} unlocked! Reach 8 for ${this.gifts[1].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 8 && this.currentValue < 12) {
+      message = `✓ ${this.gifts[0].name} + ${this.gifts[1].name}! Reach 12 for ${this.gifts[2].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 12 && this.currentValue < 16) {
+      message = `✓ 3 gifts unlocked! Reach 16 for ${this.gifts[3].name}`;
+      status = 'unlocking';
+    } else if (this.currentValue >= 16) {
+      message = `🎉 All 4 premium gifts unlocked! (€275+ value)`;
+      status = 'unlocking';
+    }
+
+    this.elements.unlocksText.textContent = message;
+    this.elements.unlocksPreview.setAttribute('data-unlock-status', status);
+  }
+
+  updatePricing() {
+    if (this.currentValue === 0) {
+        this.setPricingText('—', '—', '—');
+        return;
+    }
+
+    const avgShopifyPrice = Number(this.config.avg_price_shopify) || 0;
+    const avgRetailPrice = Number(this.config.avg_price_retail) || 0;
+
+    const estimatedTotal = this.currentValue * avgShopifyPrice * this.currentTier.multiplier;
+    const perItemPrice = estimatedTotal / this.currentValue;
+
+    const retailTotal = this.currentValue * avgRetailPrice;
+
+    // Calculate gift value safely
+    const giftValue = this.gifts.reduce((sum, gift) => {
+        const value = typeof gift.value === 'number' ? gift.value : 0;
+        return this.currentTier.id >= gift.tier ? sum + value : sum;
+    }, 0);
+
+    const totalSavings = (retailTotal - estimatedTotal) + giftValue;
+
+    this.setPricingText(
+      this.formatPrice(estimatedTotal),
+      this.formatPrice(totalSavings),
+      this.formatPrice(perItemPrice)
+    );
+  }
+
+  setPricingText(total, savings, perItem) {
+    if (this.elements.pricingTotal) this.elements.pricingTotal.textContent = total;
+    if (this.elements.pricingSavings) this.elements.pricingSavings.textContent = savings;
+    if (this.elements.pricingPerItem) this.elements.pricingPerItem.textContent = perItem;
+  }
+
+  formatPrice(amount) {
+    // Ensure amount is a number before calling toFixed
+    const numericAmount = typeof amount === 'number' ? amount : 0;
+    return `${this.config.currency_symbol}${numericAmount.toFixed(2)}`;
+  }
+
+  updateARIA() {
+    if (!this.elements.sliderInput) return;
+
+    if (this.currentValue === 0) {
+        this.elements.sliderInput.setAttribute('aria-valuenow', 0);
+        this.elements.sliderInput.setAttribute('aria-valuetext', '0 items selected. Slide to explore savings.');
+        return;
+    }
+
+    // Badge text is clean (no emojis in the updated JSON)
+    const cleanBadge = this.currentTier.badge;
+
+    const unlockedGifts = this.gifts.filter(g => g.tier <= this.currentTier.id);
+    const giftNames = unlockedGifts.map(g => g.name).join(', ');
+
+    // Recalculate savings for ARIA (must match updatePricing)
+    const retailTotal = this.currentValue * this.config.avg_price_retail;
+    const estimatedTotal = this.currentValue * this.config.avg_price_shopify * this.currentTier.multiplier;
+    const giftValue = unlockedGifts.reduce((sum, g) => sum + (typeof g.value === 'number' ? g.value : 0), 0);
+    const totalSavings = (retailTotal - estimatedTotal) + giftValue;
+
+    let announcement = `${this.currentValue} items selected. Tier ${this.currentTier.id}: ${cleanBadge}, ${this.currentTier.display_label}. `;
+    if (unlockedGifts.length > 0) {
+        announcement += `${unlockedGifts.length} free gift${unlockedGifts.length > 1 ? 's' : ''} unlocked: ${giftNames}. `;
+    }
+    announcement += `Estimated savings ${this.config.currency_symbol}${totalSavings.toFixed(2)}.`;
+
+    this.elements.sliderInput.setAttribute('aria-valuenow', this.currentValue);
+    this.elements.sliderInput.setAttribute('aria-valuetext', announcement);
+  }
+
+  /* CELEBRATION & ANIMATION METHODS */
+
+  triggerCelebration() {
+    const checkpoint = Array.from(this.elements.checkpoints).find(
+      cp => parseInt(cp.dataset.tier, 10) === this.currentTier.id
+    );
+    if (checkpoint) this.triggerAnimation(checkpoint, 'animate-celebration');
+  }
+
+  triggerGiftUnlockAnimation(giftBox) {
+    if (giftBox) this.triggerAnimation(giftBox, 'animate-unlock');
+  }
+
+  // Helper function to manage animation classes efficiently
+  triggerAnimation(element, className) {
+    if (!element) return;
+    element.classList.remove(className);
+    void element.offsetWidth; // Force reflow
+    element.classList.add(className);
+    element.addEventListener('animationend', () => {
+        element.classList.remove(className);
+    }, { once: true });
+  }
+
+  triggerHaptics() {
+    if (navigator.vibrate) {
+      // Define vibration patterns: [vibrate_ms, pause_ms, vibrate_ms, ...]
+      let pattern;
+      switch (this.currentTier.id) {
+        case 1:
+          pattern = [50]; // Light tick (T1)
+          break;
+        case 2:
+          pattern = [50, 30, 50]; // Double tick (T2)
+          break;
+        case 3:
+          pattern = [100]; // Stronger buzz (T3)
+          break;
+        case 4:
+          pattern = [100, 50, 150]; // Strong celebration (T4 Bigfoot)
+          break;
+        default:
+          return; // No vibration for T0
+      }
+      navigator.vibrate(pattern);
+    }
+  }
+}
+
+/* AUTO-INITIALIZATION */
+function initPowerSlider() {
+  const heroElement = document.getElementById('bf25-hero-section');
+  if (heroElement) {
+    window.bf25PowerSlider = new PowerSlider(heroElement);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPowerSlider);
+} else {
+  initPowerSlider();
+}
+
+═══════════════════════════════════════════
+FILE STATISTICS
+═══════════════════════════════════════════
+  320 /home/tomo-titan/projects/titanpowertheme/sections/section-bf25-hero.liquid
+  595 /home/tomo-titan/projects/titanpowertheme/assets/bf25-hero.css
+  357 /home/tomo-titan/projects/titanpowertheme/assets/bf25-hero.js
+ 1272 total
+
+═══════════════════════════════════════════
+CRITICAL ISSUE DETAILS
+═══════════════════════════════════════════
+
+PROBLEM: Battery fill (.bf25-hero__fill) not visible on screen
+
+CONFIRMED WORKING:
+✅ JavaScript executes (console logs show slider input events)
+✅ CSS variable updates (--fill-width changes from 0% to 100%)
+✅ Element exists in DOM
+✅ Width property animates (can see in DevTools computed styles)
+
+ATTEMPTED FIXES:
+1. Added z-index: 2 to fill (above track with z-index: 1)
+2. Changed overflow: hidden to overflow: visible on container
+3. Added pointer-events: none to all visualization elements
+4. Replaced gradient with solid #60c655 !important
+5. Added opacity: 1 !important
+6. Increased box-shadow for visibility
+
+CURRENT CSS STRUCTURE:
+.bf25-hero__visualization (container)
+  ├── .bf25-hero__track (z-index: 1, white segment outlines)
+  └── .bf25-hero__fill (z-index: 2, solid green - SHOULD BE VISIBLE)
+
+HTML STRUCTURE:
+<div class="bf25-hero__slider-wrapper">
+  <div class="bf25-hero__visualization">
+    <div class="bf25-hero__track"></div>
+    <div class="bf25-hero__fill"></div>
+  </div>
+  <input type="range" class="bf25-hero__input" ... />
+  <div class="bf25-hero__checkpoints">...</div>
+</div>
+
+DIAGNOSTIC COMMANDS FOR BROWSER CONSOLE:
+```javascript
+// Check element rendering
+const fill = document.querySelector('.bf25-hero__fill');
+console.log('Fill element:', fill);
+console.log('Fill styles:', {
+  width: getComputedStyle(fill).width,
+  height: getComputedStyle(fill).height,
+  background: getComputedStyle(fill).background,
+  zIndex: getComputedStyle(fill).zIndex,
+  opacity: getComputedStyle(fill).opacity,
+  visibility: getComputedStyle(fill).visibility,
+  display: getComputedStyle(fill).display,
+  position: getComputedStyle(fill).position
+});
+console.log('Fill rect:', fill.getBoundingClientRect());
+
+// Check parent
+const viz = document.querySelector('.bf25-hero__visualization');
+console.log('Viz rect:', viz.getBoundingClientRect());
+```
+
+HYPOTHESIS:
+The fill element may be rendering but in an unexpected position, or there's a parent container issue blocking visibility.
+
+═══════════════════════════════════════════

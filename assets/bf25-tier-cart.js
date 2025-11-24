@@ -1270,13 +1270,29 @@
         console.log(`[BF25 Cart] ✓ Gifts: ${tier.gifts?.length || 0}`);
         console.log(`[BF25 Cart] ✓ Discount code: ${DISCOUNT_CODE}`);
 
-        // CRITICAL: Redirect with discount code
-        // - BF25-FREE applies 100% off to gift products
-        // - SupaEasy automatically stacks its tier discount
-        // - Using replace() prevents back-button issues
-        window.location.replace(`/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`);
+        // CRITICAL: Redirect with discount code via form submission
+        // Using form.submit() instead of window.location.replace() because
+        // Rebuy/other scripts intercept location changes but not form submissions
+        console.log('[BF25 Cart] Submitting checkout form...');
 
-        // Execution stops here due to navigation
+        // Create hidden form
+        const checkoutForm = document.createElement('form');
+        checkoutForm.method = 'GET';
+        checkoutForm.action = '/checkout';
+        checkoutForm.style.display = 'none';
+
+        // Add discount code as hidden input
+        const discountInput = document.createElement('input');
+        discountInput.type = 'hidden';
+        discountInput.name = 'discount';
+        discountInput.value = DISCOUNT_CODE;
+        checkoutForm.appendChild(discountInput);
+
+        // Append to body and submit
+        document.body.appendChild(checkoutForm);
+        checkoutForm.submit();
+
+        // Form submission navigates away, execution stops here
 
       } catch (error) {
         console.error('[BF25 Cart] Checkout error:', error);

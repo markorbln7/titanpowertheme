@@ -1422,6 +1422,18 @@ class CartManager {
       const product = window.productData[productId];
       const pricing = this.manager.tierCalculator.calculatePricing();
 
+      // ─────────────────────────────────────────────────────────────────
+      // BUNDLEMANAGER INTEGRATION (Virtual Cart - Instant)
+      // If BundleManager is available, add to localStorage instead of API
+      // ─────────────────────────────────────────────────────────────────
+      if (window.BF25BundleManager) {
+        return await this.addToBundleManager(productId, variantId, quantity, product, pricing);
+      }
+
+      // ─────────────────────────────────────────────────────────────────
+      // FALLBACK: Original Shopify API flow (if BundleManager unavailable)
+      // ─────────────────────────────────────────────────────────────────
+
       // Build cart item object
       const cartItem = this.buildCartItem(variantId, quantity, product, pricing);
 
@@ -1687,6 +1699,215 @@ class CartManager {
         properties: properties
       }]
     };
+  }
+
+  // ============================================================================
+  // BUNDLEMANAGER INTEGRATION (Virtual Cart)
+  // ============================================================================
+
+  /**
+   * Add item to BundleManager instead of Shopify Cart API
+   * This provides instant (<10ms) operations vs 300-600ms API calls
+   *
+   * @param {string} productId - Shopify product ID
+   * @param {string} variantId - Shopify variant ID
+   * @param {number} quantity - Quantity to add
+   * @param {Object} product - Product data from window.productData
+   * @param {Object} pricing - Calculated pricing from tierCalculator
+   * @returns {Promise} Result object with success status
+   */
+  async addToBundleManager(productId, variantId, quantity, product, pricing) {
+    if (this.config.debug) {
+      console.group('🚀 Adding to BundleManager (Instant)');
+      console.log('Product:', product.title);
+      console.log('Variant ID:', variantId);
+      console.log('Quantity:', quantity);
+      console.groupEnd();
+    }
+
+    try {
+      // Find the selected variant to get variant-specific data
+      const variant = product.variants.find(v => String(v.id) === String(variantId));
+
+      if (!variant) {
+        console.error('[BF25 Modal] Variant not found:', variantId);
+        this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
+        return { success: false, error: 'Variant not found' };
+      }
+
+      // Build product data for BundleManager
+      const productData = {
+        variantId: String(variantId),
+        productId: String(productId),
+        title: product.title,
+        variantTitle: variant.title !== 'Default Title' ? variant.title : '',
+        price: variant.price, // Price in cents (Shopify format)
+        image: product.featured_image || product.images?.[0] || '',
+        handle: product.handle || ''
+      };
+
+      // Add to BundleManager
+      const result = window.BF25BundleManager.addItem(productData, quantity);
+
+      if (result.success) {
+        if (this.config.debug) {
+          console.log('✅ Added to bundle:', result);
+        }
+
+        // Handle upsells (also add to BundleManager)
+        await this.addUpsellsToBundleManager(product);
+
+        // Call success handler with adapted data
+        this.handleBundleSuccess(result, product, variant, quantity);
+
+        return { success: true, data: result };
+
+      } else {
+        // Handle BundleManager errors
+        if (this.config.debug) {
+          console.error('❌ BundleManager error:', result.error);
+        }
+
+        // Show appropriate error message
+        if (result.error === 'MAX_ITEMS_REACHED') {
+          this.showError({
+            message: 'Bundle Full',
+            description: `Your bundle has reached the maximum of 16 items. Remove some items to add more.`
+          });
+        } else {
+          this.showError({
+            message: 'Could not add item',
+            description: result.message || 'Please try again.'
+          });
+        }
+
+        return { success: false, error: result.error };
+      }
+
+    } catch (error) {
+      console.error('[BF25 Modal] BundleManager error:', error);
+      this.showError({
+        message: 'Error adding item',
+        description: 'Please try again.'
+      });
+      return { success: false, error: error.message };
+
+    } finally {
+      this.isAddingToCart = false;
+    }
+  }
+
+  /**
+   * Add selected upsells to BundleManager
+   *
+   * @param {Object} mainProduct - The main product being added
+   */
+  async addUpsellsToBundleManager(mainProduct) {
+    const selectedUpsells = this.manager.getSelectedUpsells();
+
+    if (!selectedUpsells || selectedUpsells.length === 0) {
+      return;
+    }
+
+    if (this.config.debug) {
+      console.log(`🛒 Adding ${selectedUpsells.length} upsell(s) to bundle...`);
+    }
+
+    for (const upsell of selectedUpsells) {
+      try {
+        // Build upsell product data
+        const upsellData = {
+          variantId: String(upsell.variantId),
+          productId: String(upsell.productId || ''),
+          title: upsell.title || 'Upsell Item',
+          variantTitle: upsell.variantTitle || '',
+          price: upsell.price || 0,
+          image: upsell.image || '',
+          handle: upsell.handle || ''
+        };
+
+        const result = window.BF25BundleManager.addItem(upsellData, 1);
+
+        if (result.success) {
+          if (this.config.debug) {
+            console.log(`✅ Upsell added to bundle: ${upsell.title}`);
+          }
+        } else {
+          console.warn(`[BF25 Modal] Could not add upsell to bundle: ${upsell.title}`, result.error);
+        }
+
+      } catch (error) {
+        console.error(`[BF25 Modal] Error adding upsell ${upsell.title}:`, error);
+        // Continue with other upsells even if one fails
+      }
+    }
+
+    // Clear upsell selections after adding
+    this.manager.clearUpsellSelections();
+  }
+
+  /**
+   * Handle successful BundleManager addition
+   * Adapted from handleSuccess() to work with BundleManager result format
+   *
+   * @param {Object} result - BundleManager.addItem() result
+   * @param {Object} product - Product data
+   * @param {Object} variant - Selected variant
+   * @param {number} quantity - Quantity added
+   */
+  handleBundleSuccess(result, product, variant, quantity) {
+    // Build data object similar to Shopify cart response for compatibility
+    const data = {
+      id: result.item.variantId,
+      product_id: result.item.productId,
+      title: product.title,
+      variant_title: variant.title,
+      quantity: quantity,
+      price: variant.price,
+      image: product.featured_image || '',
+      // Include bundle-specific data
+      bundleItemCount: result.computed.itemCount,
+      bundleTier: result.computed.tierReached,
+      tierUnlocked: result.tierUnlocked,
+      giftUnlocked: result.giftUnlocked
+    };
+
+    // Show success notification
+    this.showSuccess(data);
+
+    // Update button state temporarily
+    const button = document.querySelector('.bf25-add-to-cart');
+    if (button) {
+      this.setButtonSuccess(button);
+    }
+
+    // Track analytics event (if analytics available)
+    this.trackAddToCart(data);
+
+    // Emit custom event for theme integration
+    this.emitCartEvent('bf25:cart:added', data);
+
+    // Show tier/gift unlock notifications
+    if (result.tierUnlocked) {
+      // Toast is already shown by CartManager's event listener
+      // But we can add extra feedback here if desired
+      if (this.config.debug) {
+        console.log(`🎉 Tier ${result.tierUnlocked} unlocked!`);
+      }
+    }
+
+    if (result.giftUnlocked) {
+      if (this.config.debug) {
+        console.log(`🎁 Gift unlocked: ${result.giftUnlocked.title}`);
+      }
+    }
+
+    // Close modal after showing success feedback
+    setTimeout(() => {
+      if (this.manager && typeof this.manager.close === 'function') {
+        this.manager.close();
+      }
+    }, 800);
   }
 
   /**

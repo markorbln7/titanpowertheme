@@ -2884,24 +2884,28 @@ class ExpansionManager {
         console.log('🔒 Body scroll locked at:', { x: this.scrollX, y: this.scrollY });
       }
     } else {
-      // Unlock scroll
+      // Unlock scroll - FIXED: Restore position BEFORE removing styles
+
+      // Get the stored scroll position
+      const targetX = this.scrollX || 0;
+      const targetY = this.scrollY || 0;
+
+      // CRITICAL: Parse the current top value to get scroll position
+      // This handles cases where scrollY wasn't stored properly
+      const bodyTop = document.body.style.top;
+      const scrollFromTop = bodyTop ? parseInt(bodyTop, 10) * -1 : targetY;
+
+      // Step 1: Remove fixed positioning
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
 
-      // Restore scroll position immediately
-      if (this.scrollY !== undefined || this.scrollX !== undefined) {
-        const targetX = this.scrollX || 0;
-        const targetY = this.scrollY || 0;
+      // Step 2: IMMEDIATELY restore scroll (no RAF delay)
+      // This must happen in the same frame as style removal
+      window.scrollTo(targetX, scrollFromTop);
 
-        // Use requestAnimationFrame to ensure DOM has settled
-        requestAnimationFrame(() => {
-          window.scrollTo(targetX, targetY);
-
-          if (this.config.debug) {
-            console.log('✅ Scroll restored to:', { x: targetX, y: targetY });
-          }
-        });
+      if (this.config.debug) {
+        console.log('✅ Scroll restored to:', { x: targetX, y: scrollFromTop });
       }
 
       // Restore scroll restoration behavior
@@ -2909,6 +2913,10 @@ class ExpansionManager {
         history.scrollRestoration = this.previousScrollRestoration;
         this.previousScrollRestoration = null;
       }
+
+      // Clear stored values
+      this.scrollX = undefined;
+      this.scrollY = undefined;
 
       if (this.config.debug) {
         console.log('🔓 Body scroll unlocked');

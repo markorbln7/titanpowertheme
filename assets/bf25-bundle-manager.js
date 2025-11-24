@@ -389,21 +389,138 @@
       /**
        * Calculate all computed values from items
        * CRITICAL: This runs on every save - must be fast
+       *
+       * Calculation flow:
+       * 1. Count total items
+       * 2. Determine tier (highest where itemCount >= threshold)
+       * 3. Calculate prices based on tier discount
+       * 4. Determine unlocked gifts
+       * 5. Sum total savings (discount + gift value)
        */
       _calculateComputed(items) {
-        // Placeholder - full implementation in Prompt 1.2
+        // ─────────────────────────────────────────────────────
+        // 1. COUNT ITEMS
+        // ─────────────────────────────────────────────────────
         const itemCount = items.reduce((sum, item) => sum + (item.quantity || 0), 0);
 
+        // ─────────────────────────────────────────────────────
+        // 2. DETERMINE TIER
+        // Find highest tier where itemCount >= min threshold
+        // BF25_TIERS is ordered: [0, 4, 8, 12, 16] items
+        // ─────────────────────────────────────────────────────
+        let tierReached = 0;
+        let discountPercent = 50; // Base discount (0-3 items)
+        let tierBadge = '50% OFF';
+
+        // Iterate through tiers to find highest reached
+        for (let i = 0; i < this.tiers.length; i++) {
+          const tier = this.tiers[i];
+          if (itemCount >= tier.min) {
+            tierReached = i;
+            discountPercent = tier.discount;
+            tierBadge = tier.badge || `${tier.discount}% OFF`;
+          } else {
+            // Tiers are ordered, so stop once we exceed threshold
+            break;
+          }
+        }
+
+        // ─────────────────────────────────────────────────────
+        // 3. CALCULATE PRICES
+        // All values in cents (Shopify standard)
+        // ─────────────────────────────────────────────────────
+        const totalOriginalPrice = items.reduce((sum, item) => {
+          return sum + ((item.price || 0) * (item.quantity || 0));
+        }, 0);
+
+        // Apply tier discount
+        const discountMultiplier = 1 - (discountPercent / 100);
+        const totalDiscountedPrice = Math.round(totalOriginalPrice * discountMultiplier);
+        const discountAmount = totalOriginalPrice - totalDiscountedPrice;
+
+        // ─────────────────────────────────────────────────────
+        // 4. DETERMINE UNLOCKED GIFTS
+        // Gifts unlock at checkpoints: 4, 8, 12, 16 items
+        // GIFT_VARIANT_MAP structure: { 4: {...}, 8: {...}, ... }
+        // ─────────────────────────────────────────────────────
+        const giftCheckpoints = [4, 8, 12, 16];
+        const giftsUnlocked = [];
+        let totalGiftValue = 0;
+
+        for (const checkpoint of giftCheckpoints) {
+          if (itemCount >= checkpoint && this.gifts[checkpoint]) {
+            const gift = this.gifts[checkpoint];
+            giftsUnlocked.push({
+              checkpoint: checkpoint,
+              variantId: gift.variantId || gift.variant_id,
+              title: gift.title || gift.name || `Gift at ${checkpoint} items`,
+              price: gift.price || 0,
+              image: gift.image || null
+            });
+            totalGiftValue += gift.price || 0;
+          }
+        }
+
+        // ─────────────────────────────────────────────────────
+        // 5. TOTAL SAVINGS
+        // Savings = discount amount + value of free gifts
+        // ─────────────────────────────────────────────────────
+        const totalSavings = discountAmount + totalGiftValue;
+
+        // ─────────────────────────────────────────────────────
+        // 6. PROGRESS TO NEXT TIER/GIFT
+        // Useful for progress bar and "add X more" messaging
+        // ─────────────────────────────────────────────────────
+        let itemsToNextTier = 0;
+        let nextTierDiscount = null;
+        let itemsToNextGift = 0;
+        let nextGiftCheckpoint = null;
+
+        // Find next tier
+        for (const tier of this.tiers) {
+          if (tier.min > itemCount) {
+            itemsToNextTier = tier.min - itemCount;
+            nextTierDiscount = tier.discount;
+            break;
+          }
+        }
+
+        // Find next gift checkpoint
+        for (const checkpoint of giftCheckpoints) {
+          if (checkpoint > itemCount) {
+            itemsToNextGift = checkpoint - itemCount;
+            nextGiftCheckpoint = checkpoint;
+            break;
+          }
+        }
+
         return {
-          itemCount: itemCount,
-          tierReached: 0,
-          tierBadge: '50% OFF',
-          discountPercent: 50,
-          giftsUnlocked: [],
-          totalOriginalPrice: 0,
-          totalDiscountedPrice: 0,
-          totalSavings: 0,
-          totalGiftValue: 0
+          // Core counts
+          itemCount,
+
+          // Tier info
+          tierReached,
+          tierBadge,
+          discountPercent,
+
+          // Gift info
+          giftsUnlocked,
+          totalGiftValue,
+
+          // Price calculations (all in cents)
+          totalOriginalPrice,
+          totalDiscountedPrice,
+          totalSavings,
+
+          // Progress tracking
+          itemsToNextTier,
+          nextTierDiscount,
+          itemsToNextGift,
+          nextGiftCheckpoint,
+
+          // Quick access booleans
+          hasReachedTier1: itemCount >= 4,
+          hasMaxItems: itemCount >= this.config.MAX_ITEMS
         };
       }
 
@@ -457,19 +574,336 @@
       // PUBLIC API - MODIFIERS (Placeholder - Prompt 1.2)
       // ============================================
 
+      /**
+       * Add a product to the bundle
+       * @param {Object} productData - Product information
+       * @param {string} productData.variantId - Shopify variant ID (required)
+       * @param {string} productData.productId - Shopify product ID
+       * @param {string} productData.title - Product title
+       * @param {string} productData.variantTitle - Variant title (e.g., "Black / USB-C")
+       * @param {number} productData.price - Price in cents
+       * @param {string} productData.image - Product image URL
+       * @param {string} productData.handle - Product handle for URLs
+       * @param {number} quantity - Quantity to add (default: 1)
+       * @returns {Object} Result with success status and details
+       */
       addItem(productData, quantity = 1) {
-        console.log('[BF25 BundleManager] addItem - Placeholder (Prompt 1.2)');
-        return false;
+        // ─────────────────────────────────────────────────────
+        // VALIDATION
+        // ─────────────────────────────────────────────────────
+        if (!productData || !productData.variantId) {
+          console.error('[BF25 BundleManager] addItem failed: variantId required');
+          return {
+            success: false,
+            error: 'MISSING_VARIANT_ID',
+            message: 'Product variant ID is required'
+          };
+        }
+
+        // Normalize variant ID to string
+        const variantId = String(productData.variantId);
+        quantity = Math.max(1, Math.floor(quantity)); // Ensure positive integer
+
+        // ─────────────────────────────────────────────────────
+        // CHECK MAX ITEMS
+        // ─────────────────────────────────────────────────────
+        const currentCount = this.bundle.computed.itemCount;
+        const newTotal = currentCount + quantity;
+
+        if (newTotal > this.config.MAX_ITEMS) {
+          const canAdd = this.config.MAX_ITEMS - currentCount;
+          console.warn(`[BF25 BundleManager] Max items (${this.config.MAX_ITEMS}) would be exceeded. Can add ${canAdd} more.`);
+
+          this._dispatchEvent('bf25:maxItemsReached', {
+            maxItems: this.config.MAX_ITEMS,
+            currentCount,
+            attemptedAdd: quantity,
+            canAdd
+          });
+
+          // If can't add any, return error
+          if (canAdd <= 0) {
+            return {
+              success: false,
+              error: 'MAX_ITEMS_REACHED',
+              message: `Bundle is full (${this.config.MAX_ITEMS} items maximum)`,
+              maxItems: this.config.MAX_ITEMS
+            };
+          }
+
+          // Otherwise, add what we can
+          quantity = canAdd;
+        }
+
+        // ─────────────────────────────────────────────────────
+        // CHECK IF ITEM EXISTS (Update vs Add)
+        // ─────────────────────────────────────────────────────
+        const existingIndex = this.bundle.items.findIndex(
+          item => String(item.variantId) === variantId
+        );
+
+        const previousTier = this.bundle.computed.tierReached;
+        const previousGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+        if (existingIndex !== -1) {
+          // UPDATE existing item quantity
+          this.bundle.items[existingIndex].quantity += quantity;
+          console.log(`[BF25 BundleManager] Updated quantity: ${productData.title} (now ${this.bundle.items[existingIndex].quantity})`);
+        } else {
+          // ADD new item
+          const newItem = {
+            variantId: variantId,
+            productId: String(productData.productId || ''),
+            title: productData.title || 'Unknown Product',
+            variantTitle: productData.variantTitle || '',
+            price: Math.max(0, parseInt(productData.price, 10) || 0),
+            image: productData.image || '',
+            handle: productData.handle || '',
+            quantity: quantity,
+            addedAt: new Date().toISOString()
+          };
+
+          this.bundle.items.push(newItem);
+          console.log(`[BF25 BundleManager] Added item: ${newItem.title} (qty: ${quantity})`);
+        }
+
+        // ─────────────────────────────────────────────────────
+        // REFRESH EXPIRATION & SAVE
+        // ─────────────────────────────────────────────────────
+        this._refreshExpiration();
+        this._saveBundle(true, true);
+
+        // ─────────────────────────────────────────────────────
+        // CHECK FOR TIER/GIFT UNLOCKS
+        // ─────────────────────────────────────────────────────
+        const newTier = this.bundle.computed.tierReached;
+        const newGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+        // Dispatch tier unlock event
+        if (newTier > previousTier) {
+          console.log(`[BF25 BundleManager] 🎉 Tier ${newTier} unlocked!`);
+          this._dispatchEvent('bf25:tierUnlocked', {
+            tier: newTier,
+            discountPercent: this.bundle.computed.discountPercent,
+            tierBadge: this.bundle.computed.tierBadge
+          });
+        }
+
+        // Dispatch gift unlock event
+        if (newGiftCount > previousGiftCount) {
+          const newGift = this.bundle.computed.giftsUnlocked[newGiftCount - 1];
+          console.log(`[BF25 BundleManager] 🎁 Gift unlocked: ${newGift.title}`);
+          this._dispatchEvent('bf25:giftUnlocked', {
+            gift: newGift,
+            totalGifts: newGiftCount
+          });
+        }
+
+        return {
+          success: true,
+          action: existingIndex !== -1 ? 'updated' : 'added',
+          item: existingIndex !== -1 ? this.bundle.items[existingIndex] : this.bundle.items[this.bundle.items.length - 1],
+          computed: this.getComputed(),
+          tierUnlocked: newTier > previousTier ? newTier : null,
+          giftUnlocked: newGiftCount > previousGiftCount ? this.bundle.computed.giftsUnlocked[newGiftCount - 1] : null
+        };
       }
 
+      /**
+       * Remove a product entirely from the bundle
+       * @param {string|number} variantId - Shopify variant ID
+       * @returns {Object} Result with success status and details
+       */
       removeItem(variantId) {
-        console.log('[BF25 BundleManager] removeItem - Placeholder (Prompt 1.2)');
-        return false;
+        // Normalize variant ID
+        variantId = String(variantId);
+
+        // Find item index
+        const index = this.bundle.items.findIndex(
+          item => String(item.variantId) === variantId
+        );
+
+        if (index === -1) {
+          console.warn(`[BF25 BundleManager] removeItem: variant ${variantId} not found`);
+          return {
+            success: false,
+            error: 'ITEM_NOT_FOUND',
+            message: 'Item not found in bundle'
+          };
+        }
+
+        // Store previous state for comparison
+        const previousTier = this.bundle.computed.tierReached;
+        const previousGiftCount = this.bundle.computed.giftsUnlocked.length;
+        const removedItem = { ...this.bundle.items[index] };
+
+        // Remove the item
+        this.bundle.items.splice(index, 1);
+        console.log(`[BF25 BundleManager] Removed: ${removedItem.title}`);
+
+        // Save and recalculate
+        this._saveBundle(true, true);
+
+        // Check for tier/gift downgrades
+        const newTier = this.bundle.computed.tierReached;
+        const newGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+        if (newTier < previousTier) {
+          console.log(`[BF25 BundleManager] ⬇️ Tier dropped to ${newTier}`);
+          this._dispatchEvent('bf25:tierChanged', {
+            previousTier,
+            newTier,
+            direction: 'down'
+          });
+        }
+
+        if (newGiftCount < previousGiftCount) {
+          console.log(`[BF25 BundleManager] ⬇️ Gift lost (now ${newGiftCount})`);
+          this._dispatchEvent('bf25:giftLost', {
+            previousCount: previousGiftCount,
+            newCount: newGiftCount
+          });
+        }
+
+        return {
+          success: true,
+          removedItem,
+          computed: this.getComputed()
+        };
       }
 
+      /**
+       * Update quantity of an existing item
+       * @param {string|number} variantId - Shopify variant ID
+       * @param {number} quantity - New quantity (0 removes item)
+       * @returns {Object} Result with success status and details
+       */
       updateQuantity(variantId, quantity) {
-        console.log('[BF25 BundleManager] updateQuantity - Placeholder (Prompt 1.2)');
-        return false;
+        // Normalize inputs
+        variantId = String(variantId);
+        quantity = Math.max(0, Math.floor(quantity));
+
+        // If quantity is 0, remove the item
+        if (quantity === 0) {
+          return this.removeItem(variantId);
+        }
+
+        // Find item
+        const index = this.bundle.items.findIndex(
+          item => String(item.variantId) === variantId
+        );
+
+        if (index === -1) {
+          console.warn(`[BF25 BundleManager] updateQuantity: variant ${variantId} not found`);
+          return {
+            success: false,
+            error: 'ITEM_NOT_FOUND',
+            message: 'Item not found in bundle'
+          };
+        }
+
+        // Calculate what the new total would be
+        const currentItemQty = this.bundle.items[index].quantity;
+        const otherItemsQty = this.bundle.computed.itemCount - currentItemQty;
+        const newTotal = otherItemsQty + quantity;
+
+        // Check max items
+        if (newTotal > this.config.MAX_ITEMS) {
+          const maxAllowed = this.config.MAX_ITEMS - otherItemsQty;
+          console.warn(`[BF25 BundleManager] Quantity capped at ${maxAllowed} (max ${this.config.MAX_ITEMS} total)`);
+          quantity = maxAllowed;
+
+          this._dispatchEvent('bf25:maxItemsReached', {
+            maxItems: this.config.MAX_ITEMS,
+            requestedQty: quantity,
+            allowedQty: maxAllowed
+          });
+        }
+
+        // Store previous state
+        const previousTier = this.bundle.computed.tierReached;
+        const previousGiftCount = this.bundle.computed.giftsUnlocked.length;
+        const previousQty = this.bundle.items[index].quantity;
+
+        // Update quantity
+        this.bundle.items[index].quantity = quantity;
+        console.log(`[BF25 BundleManager] Updated: ${this.bundle.items[index].title} (${previousQty} → ${quantity})`);
+
+        // Save and recalculate
+        this._refreshExpiration();
+        this._saveBundle(true, true);
+
+        // Check for tier/gift changes
+        const newTier = this.bundle.computed.tierReached;
+        const newGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+        // Dispatch tier change events
+        if (newTier !== previousTier) {
+          const direction = newTier > previousTier ? 'up' : 'down';
+          console.log(`[BF25 BundleManager] ${direction === 'up' ? '🎉' : '⬇️'} Tier ${direction} to ${newTier}`);
+
+          if (direction === 'up') {
+            this._dispatchEvent('bf25:tierUnlocked', {
+              tier: newTier,
+              discountPercent: this.bundle.computed.discountPercent,
+              tierBadge: this.bundle.computed.tierBadge
+            });
+          } else {
+            this._dispatchEvent('bf25:tierChanged', {
+              previousTier,
+              newTier,
+              direction
+            });
+          }
+        }
+
+        // Dispatch gift change events
+        if (newGiftCount > previousGiftCount) {
+          const newGift = this.bundle.computed.giftsUnlocked[newGiftCount - 1];
+          this._dispatchEvent('bf25:giftUnlocked', { gift: newGift, totalGifts: newGiftCount });
+        } else if (newGiftCount < previousGiftCount) {
+          this._dispatchEvent('bf25:giftLost', { previousCount: previousGiftCount, newCount: newGiftCount });
+        }
+
+        return {
+          success: true,
+          item: this.bundle.items[index],
+          previousQty,
+          newQty: quantity,
+          computed: this.getComputed()
+        };
+      }
+
+      /**
+       * Find an item in the bundle by variant ID
+       * @param {string|number} variantId - Shopify variant ID
+       * @returns {Object|null} Item object or null if not found
+       */
+      findItem(variantId) {
+        variantId = String(variantId);
+        const item = this.bundle.items.find(
+          item => String(item.variantId) === variantId
+        );
+        return item ? { ...item } : null;
+      }
+
+      /**
+       * Check if a variant is already in the bundle
+       * @param {string|number} variantId - Shopify variant ID
+       * @returns {boolean}
+       */
+      hasItem(variantId) {
+        return this.findItem(variantId) !== null;
+      }
+
+      /**
+       * Get quantity of a specific variant in bundle
+       * @param {string|number} variantId - Shopify variant ID
+       * @returns {number} Quantity (0 if not in bundle)
+       */
+      getItemQuantity(variantId) {
+        const item = this.findItem(variantId);
+        return item ? item.quantity : 0;
       }
 
       clearBundle() {
@@ -513,15 +947,45 @@
     // Expose debug helper
     window.BF25_DEBUG = window.BF25_DEBUG || false;
     window.debugBF25Bundle = function() {
+      const bm = window.BF25BundleManager;
+      const computed = bm.getComputed();
+
       console.group('🎁 BF25 Bundle Debug');
-      console.log('Bundle:', window.BF25BundleManager.getBundle());
-      console.log('Storage:', window.BF25BundleManager.getStorageType());
-      console.log('Can Checkout:', window.BF25BundleManager.canCheckout());
+      console.log('Storage:', bm.getStorageType());
+      console.log('─────────────────────────────');
+      console.log('Items:', computed.itemCount, '/', bm.config.MAX_ITEMS);
+      console.log('Tier:', computed.tierReached, `(${computed.tierBadge})`);
+      console.log('─────────────────────────────');
+      console.log('Original Price:', '€' + (computed.totalOriginalPrice / 100).toFixed(2));
+      console.log('Discounted:', '€' + (computed.totalDiscountedPrice / 100).toFixed(2));
+      console.log('You Save:', '€' + (computed.totalSavings / 100).toFixed(2));
+      console.log('─────────────────────────────');
+      console.log('Gifts Unlocked:', computed.giftsUnlocked.length);
+      computed.giftsUnlocked.forEach(g => console.log('  🎁', g.title));
+      console.log('─────────────────────────────');
+      console.log('Progress:', computed.itemsToNextGift ? `${computed.itemsToNextGift} more for next gift` : 'All gifts unlocked!');
+      console.log('Can Checkout:', bm.canCheckout() ? '✅ Yes' : '❌ Need 4+ items');
       console.groupEnd();
-      return window.BF25BundleManager.getBundle();
+
+      return bm.getBundle();
     };
 
-    console.log('[BF25 BundleManager] 💡 Type debugBF25Bundle() in console to inspect state');
+    // Quick test helper
+    window.testBF25Add = function(title = 'Test Product', price = 1999) {
+      return window.BF25BundleManager.addItem({
+        variantId: 'test-' + Date.now(),
+        productId: 'test-product',
+        title: title,
+        variantTitle: 'Default',
+        price: price,
+        image: '',
+        handle: 'test-product'
+      }, 1);
+    };
+
+    console.log('[BF25 BundleManager] 💡 Debug helpers:');
+    console.log('  debugBF25Bundle() - View bundle state');
+    console.log('  testBF25Add("Product Name", 1999) - Add test item');
   }
 
   // Start dependency check

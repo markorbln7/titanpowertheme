@@ -1213,6 +1213,13 @@
       // Update state
       this.setState('syncing');
 
+      // Verify button element exists
+      if (!this.elements?.btnBuy) {
+        console.error('[BF25 Cart] Buy button element not found');
+        this.setState('idle');
+        return;
+      }
+
       // Show loading indicator
       const originalText = this.elements.btnBuy.textContent;
       this.elements.btnBuy.textContent = 'Processing...';
@@ -1261,13 +1268,7 @@
      * @returns {Promise<{cart: Object, tier: Object, itemCount: number}|null>}
      */
     async validateCheckout() {
-      // Prevent checkout if already processing
-      if (this.state !== 'idle') {
-        console.warn('[BF25 Cart] Cannot checkout - operation in progress');
-        return null;
-      }
-
-      // Fetch current cart
+      // Fetch current cart (state already validated by caller)
       const cart = await this.fetchCart();
       if (!cart) {
         console.error('[BF25 Cart] Cannot checkout - failed to fetch cart');

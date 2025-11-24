@@ -787,17 +787,15 @@
       this.updateSavings();
       this.updateARIA();
 
-      // Check for tier unlock (trigger animation + gift add)
+      // Check for tier unlock (API-first confirmation)
       if (this.previousTier && this.previousTier.id < this.currentTier.id) {
-        console.log(`[BF25 Cart] 🎉 Tier unlocked: ${this.currentTier.badge}`);
+        console.log(`[BF25 Cart] New tier detected: ${this.previousTier.id} → ${this.currentTier.id}`);
 
-        // Trigger celebration animation
-        if (this.giftAnimator) {
-          this.giftAnimator.animate(this.currentTier.id);
+        // API-FIRST: Handle unlock with confirmation
+        // Unlock all intermediate tiers if user jumped multiple tiers
+        for (let tier = this.previousTier.id + 1; tier <= this.currentTier.id; tier++) {
+          this.handleTierUnlock(tier); // Async, non-blocking
         }
-
-        // Reconcile gifts (add new tier gifts)
-        this.reconcileGifts(this.currentTier);
       }
 
       // Check for tier downgrade (remove excess gifts)
@@ -1504,6 +1502,185 @@
     // ============================================
     // GIFT MANAGEMENT
     // ============================================
+
+    /**
+     * Add a specific gift product to cart via Shopify API
+     * @param {string} handle - Product handle (e.g., 'bf25sc-free-cable')
+     * @param {number} tier - Tier number for logging
+     * @returns {Promise<boolean>} - Success status
+     */
+    async addGiftToCart(handle, tier) {
+      console.log(`[BF25 Cart] API: Adding gift for tier ${tier} (${handle})`);
+
+      const maxRetries = 3;
+      const baseDelay = 100; // Start with 100ms
+
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          // Fetch product to get variant ID
+          const productResponse = await fetch(`/products/${handle}.js`);
+
+          if (!productResponse.ok) {
+            throw new Error(`Product fetch failed: ${productResponse.status}`);
+          }
+
+          const product = await productResponse.json();
+
+          if (!product.variants || product.variants.length === 0) {
+            throw new Error('No variants found for gift product');
+          }
+
+          const variantId = product.variants[0].id;
+
+          // Add to cart with quantity 1
+          const addResponse = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: 1,
+              properties: {
+                '_gift_tier': tier,
+                '_is_free_gift': 'true'
+              }
+            })
+          });
+
+          if (!addResponse.ok) {
+            const errorData = await addResponse.json();
+            throw new Error(`Cart add failed: ${errorData.description || addResponse.status}`);
+          }
+
+          const result = await addResponse.json();
+          console.log(`[BF25 Cart] ✓ Gift added successfully (tier ${tier}): ${result.product_title}`);
+
+          return true; // Success!
+
+        } catch (error) {
+          console.warn(`[BF25 Cart] Gift add attempt ${attempt}/${maxRetries} failed:`, error.message);
+
+          if (attempt < maxRetries) {
+            // Exponential backoff: 100ms, 300ms, 900ms
+            const delay = baseDelay * Math.pow(3, attempt - 1);
+            console.log(`[BF25 Cart] Retrying in ${delay}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+          } else {
+            // All retries exhausted
+            console.error(`[BF25 Cart] ✗ Failed to add gift after ${maxRetries} attempts`);
+            return false;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    /**
+     * Handle tier unlock with API-first confirmation
+     * @param {number} tier - Tier that was unlocked
+     */
+    async handleTierUnlock(tier) {
+      console.log(`[BF25 Cart] 🎯 Tier ${tier} threshold reached - starting API-first unlock`);
+
+      // Get gift handle for this tier
+      const giftHandles = {
+        1: 'bf25sc-free-cable',
+        2: 'bf25sc-free-case',
+        3: 'bf25sc-free-magnetic-set',
+        4: 'bf25sc-free-mystery-box'
+      };
+
+      const handle = giftHandles[tier];
+      if (!handle) {
+        console.error(`[BF25 Cart] No gift handle configured for tier ${tier}`);
+        return;
+      }
+
+      // Show loading indicator if API takes >500ms
+      const loadingTimeout = setTimeout(() => {
+        this.showLoadingIndicator(tier);
+      }, 500);
+
+      // Performance monitoring
+      console.time(`[BF25 Cart] Tier ${tier} API confirmation`);
+
+      try {
+        // API-FIRST: Add gift to cart
+        const success = await this.addGiftToCart(handle, tier);
+
+        // Clear loading indicator
+        clearTimeout(loadingTimeout);
+        this.hideLoadingIndicator(tier);
+
+        console.timeEnd(`[BF25 Cart] Tier ${tier} API confirmation`);
+
+        if (success) {
+          // API CONFIRMED: Now celebrate!
+          console.log(`[BF25 Cart] ✓ API confirmed - triggering celebration for tier ${tier}`);
+
+          if (this.giftAnimator) {
+            this.giftAnimator.animate(tier);
+          }
+
+          // Sync cart to update UI with new gift
+          await this.syncCart();
+
+        } else {
+          // API FAILED: Silent degradation
+          console.warn(`[BF25 Cart] ✗ API failed - no celebration for tier ${tier}`);
+
+          // Update incentive message to encourage retry
+          if (this.elements.incentiveText) {
+            const tierData = BF25_TIERS[tier];
+            this.elements.incentiveText.innerHTML =
+              `Add items to unlock <strong class="bf25sc-highlight">${tierData.badge}</strong>`;
+          }
+        }
+
+      } catch (error) {
+        clearTimeout(loadingTimeout);
+        this.hideLoadingIndicator(tier);
+        console.error(`[BF25 Cart] Tier ${tier} unlock error:`, error);
+      }
+    }
+
+    /**
+     * Show pulsing loading indicator on gift icon
+     */
+    showLoadingIndicator(tier) {
+      const checkpoint = this.getCheckpointForTier(tier);
+      const slot = document.querySelector(
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (slot) {
+        slot.classList.add('is-loading');
+        console.log(`[BF25 Cart] Loading indicator shown for tier ${tier}`);
+      }
+    }
+
+    /**
+     * Hide loading indicator
+     */
+    hideLoadingIndicator(tier) {
+      const checkpoint = this.getCheckpointForTier(tier);
+      const slot = document.querySelector(
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (slot) {
+        slot.classList.remove('is-loading');
+        console.log(`[BF25 Cart] Loading indicator hidden for tier ${tier}`);
+      }
+    }
+
+    /**
+     * Get checkpoint value for tier (helper)
+     */
+    getCheckpointForTier(tier) {
+      const checkpoints = { 1: 4, 2: 8, 3: 12, 4: 16 };
+      return checkpoints[tier] || 4;
+    }
 
     /**
      * Initialize GiftAnimator

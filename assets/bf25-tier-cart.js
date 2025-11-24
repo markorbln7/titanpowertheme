@@ -1203,7 +1203,8 @@
     }
 
     /**
-     * Handle checkout with gift validation and addition
+     * Handle checkout with gift validation, reconciliation, and discount application
+     * Final implementation: BF25-CHECKOUT-FINAL
      */
     async handleCheckout() {
       // Prevent double-click
@@ -1218,48 +1219,83 @@
         return;
       }
 
-      // Update state (now this method exists!)
+      // Update state
       this.setState('syncing');
 
-      // Show loading indicator
+      // Store original button text for reset on error
       const originalText = this.elements.btnBuy.textContent;
       this.elements.btnBuy.textContent = 'Processing...';
       this.elements.btnBuy.disabled = true;
 
+      // Discount code for free gifts
+      const DISCOUNT_CODE = 'BF25-FREE';
+
       try {
+        // ─────────────────────────────────────────────────────────────
         // Step 1: Validate cart state
+        // ─────────────────────────────────────────────────────────────
         const validation = await this.validateCheckout();
         if (!validation) {
-          throw new Error('Checkout validation failed');
+          throw new Error('Unable to validate cart. Please check your connection.');
         }
 
-        const { cart, tier } = validation;
+        const { cart, tier, itemCount } = validation;
 
-        // Step 2: Ensure tier gifts are in cart
-        const giftsAdded = await this.ensureGiftsInCart(tier, cart);
-        if (!giftsAdded) {
-          throw new Error('Failed to add tier gifts');
+        // ─────────────────────────────────────────────────────────────
+        // Step 2: Prevent checkout with empty bundle
+        // ─────────────────────────────────────────────────────────────
+        if (itemCount === 0) {
+          throw new Error('Your bundle is empty. Please add items before checkout.');
         }
 
-        // Step 3: Navigate to checkout
-        console.log('[BF25 Cart] Proceeding to checkout');
-        window.location.href = '/checkout';
+        // ─────────────────────────────────────────────────────────────
+        // Step 3: Reconcile tier gifts
+        // ─────────────────────────────────────────────────────────────
+        if (tier.gifts && tier.gifts.length > 0) {
+          this.elements.btnBuy.textContent = 'Securing Gifts...';
+        }
+
+        // ensureGiftsInCart handles adding/removing gifts based on tier
+        // Throws specific errors (e.g., out of stock) which we catch below
+        await this.ensureGiftsInCart(tier, cart);
+
+        // ─────────────────────────────────────────────────────────────
+        // Step 4: Redirect to checkout with discount code
+        // ─────────────────────────────────────────────────────────────
+        this.elements.btnBuy.textContent = 'Redirecting...';
+
+        console.log(`[BF25 Cart] ✓ Proceeding to checkout`);
+        console.log(`[BF25 Cart] ✓ Tier: ${tier.id} (${tier.discount})`);
+        console.log(`[BF25 Cart] ✓ Items: ${itemCount}`);
+        console.log(`[BF25 Cart] ✓ Gifts: ${tier.gifts?.length || 0}`);
+        console.log(`[BF25 Cart] ✓ Discount code: ${DISCOUNT_CODE}`);
+
+        // CRITICAL: Redirect with discount code
+        // - BF25-FREE applies 100% off to gift products
+        // - SupaEasy automatically stacks its tier discount
+        // - Using replace() prevents back-button issues
+        window.location.replace(`/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`);
+
+        // Execution stops here due to navigation
 
       } catch (error) {
         console.error('[BF25 Cart] Checkout error:', error);
 
-        // Show error toast to user
+        // Show specific error message to user
         if (window.BF25Toast) {
           window.BF25Toast.show(
-            'Unable to proceed to checkout. Please try again.',
+            error.message || 'Unable to proceed to checkout. Please try again.',
             'error',
             5000
           );
         }
 
         // Reset button state
-        this.elements.btnBuy.textContent = originalText;
-        this.elements.btnBuy.disabled = false;
+        if (this.elements.btnBuy) {
+          this.elements.btnBuy.textContent = originalText;
+          this.elements.btnBuy.disabled = false;
+        }
+
         this.setState('idle');
       }
     }

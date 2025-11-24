@@ -1536,6 +1536,11 @@
         // Update progress bar and tier visualization
         this.updateVisualization(itemCount);
 
+        // Update data-active-tier for CSS-based button pulse
+        if (this.elements.container) {
+          this.elements.container.setAttribute('data-active-tier', tierReached);
+        }
+
         // Update savings display
         if (this.elements.savingsAmount) {
           this.elements.savingsAmount.textContent = `Save €${savingsEuros}`;

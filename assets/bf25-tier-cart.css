@@ -1119,13 +1119,20 @@
   transform: scale(0.98);
 }
 
-/* Buy Now Button */
+/* ═══════════════════════════════════════════════════════════════════
+   BUY NOW BUTTON - Tier-Based Pulse Animation
+   Draws attention to checkout when user can purchase (4+ items)
+   ═══════════════════════════════════════════════════════════════════ */
+
 .bf25sc-action-btn--buy {
   width: 75px;
   background: var(--bf25sc-tier-color);
   color: #000;
   font-weight: 700;
   box-shadow: 0 2px 8px var(--bf25sc-tier-glow);
+  position: relative;
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .bf25sc-action-btn--buy:hover {
@@ -1135,6 +1142,136 @@
 
 .bf25sc-action-btn--buy:active {
   transform: translateY(0);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   TIER 0 (0-3 items) - Disabled/Dimmed State
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-sticky-cart[data-active-tier="0"] .bf25sc-action-btn--buy {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.bf25sc-sticky-cart[data-active-tier="0"] .bf25sc-action-btn--buy:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   TIER 1+ (4+ items) - Pulse Animation Active
+   Subtle glow pulse to draw attention
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Tier 1 (4-7 items): Subtle pulse */
+.bf25sc-sticky-cart[data-active-tier="1"] .bf25sc-action-btn--buy {
+  animation: bf25BuyPulse 2.5s ease-in-out infinite;
+  --pulse-intensity: 0.4;
+  --pulse-spread: 8px;
+}
+
+/* Tier 2 (8-11 items): Medium pulse */
+.bf25sc-sticky-cart[data-active-tier="2"] .bf25sc-action-btn--buy {
+  animation: bf25BuyPulse 2.2s ease-in-out infinite;
+  --pulse-intensity: 0.5;
+  --pulse-spread: 12px;
+}
+
+/* Tier 3 (12-15 items): Strong pulse */
+.bf25sc-sticky-cart[data-active-tier="3"] .bf25sc-action-btn--buy {
+  animation: bf25BuyPulse 2s ease-in-out infinite;
+  --pulse-intensity: 0.6;
+  --pulse-spread: 16px;
+}
+
+/* Tier 4 (16 items): Maximum pulse - Best deal! */
+.bf25sc-sticky-cart[data-active-tier="4"] .bf25sc-action-btn--buy {
+  animation: bf25BuyPulseMax 1.8s ease-in-out infinite;
+  --pulse-intensity: 0.7;
+  --pulse-spread: 20px;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   PULSE KEYFRAMES
+   ─────────────────────────────────────────────────────────────────── */
+
+@keyframes bf25BuyPulse {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px var(--bf25sc-tier-glow),
+      0 0 0 0 rgba(var(--bf25sc-tier-color-rgb), var(--pulse-intensity, 0.4));
+  }
+  50% {
+    box-shadow:
+      0 4px 12px var(--bf25sc-tier-glow),
+      0 0 0 var(--pulse-spread, 8px) rgba(var(--bf25sc-tier-color-rgb), 0);
+  }
+}
+
+/* Max tier gets extra ring effect */
+@keyframes bf25BuyPulseMax {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px var(--bf25sc-tier-glow),
+      0 0 0 0 rgba(var(--bf25sc-tier-color-rgb), 0.7),
+      0 0 0 0 rgba(var(--bf25sc-tier-color-rgb), 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 6px 20px var(--bf25sc-tier-glow),
+      0 0 0 10px rgba(var(--bf25sc-tier-color-rgb), 0),
+      0 0 0 20px rgba(var(--bf25sc-tier-color-rgb), 0);
+    transform: scale(1.02);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   HOVER PAUSES PULSE (Better UX)
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-sticky-cart:not([data-active-tier="0"]) .bf25sc-action-btn--buy:hover {
+  animation-play-state: paused;
+  box-shadow:
+    0 6px 20px var(--bf25sc-tier-glow),
+    0 0 0 4px rgba(var(--bf25sc-tier-color-rgb), 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   ACCESSIBILITY - Reduced Motion
+   ─────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .bf25sc-action-btn--buy {
+    animation: none !important;
+  }
+
+  /* Static glow instead of pulse for Tier 1+ */
+  .bf25sc-sticky-cart:not([data-active-tier="0"]) .bf25sc-action-btn--buy {
+    box-shadow:
+      0 2px 8px var(--bf25sc-tier-glow),
+      0 0 0 3px rgba(var(--bf25sc-tier-color-rgb), 0.2);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   MOBILE OPTIMIZATION
+   Slightly smaller pulse on mobile to avoid distraction
+   ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .bf25sc-sticky-cart[data-active-tier="1"] .bf25sc-action-btn--buy,
+  .bf25sc-sticky-cart[data-active-tier="2"] .bf25sc-action-btn--buy,
+  .bf25sc-sticky-cart[data-active-tier="3"] .bf25sc-action-btn--buy {
+    --pulse-spread: 6px;
+  }
+
+  .bf25sc-sticky-cart[data-active-tier="4"] .bf25sc-action-btn--buy {
+    --pulse-spread: 10px;
+    animation-name: bf25BuyPulse; /* Use simpler animation on mobile */
+  }
 }
 
 /* Touch Target Expansion (Mobile) */

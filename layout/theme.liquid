@@ -86,8 +86,241 @@
       {%- endif -%}
 
       {%- render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: oneclickupsellapp -%}
-      <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
-      {% render 'rebuy-smartcart-extensions' %}
+{%- comment -%}
+  ============================================
+  BF25 REBUY SUPPRESSION SYSTEM
+  6-Layer defense for 100% Rebuy blocking on BF25 pages
+  Implemented: 2024-11-24
+  ============================================
+{%- endcomment -%}
+
+{%- comment -%} Layer 1: Server-side page detection {%- endcomment -%}
+{% assign bf25_handles = "black-friday-2025,bf25-bundle-builder,bf25,bf-2025,black-friday" | split: "," %}
+{% assign is_bf25_page = false %}
+{% if template contains 'page' %}
+  {% for handle in bf25_handles %}
+    {% if page.handle == handle %}
+      {% assign is_bf25_page = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if is_bf25_page %}
+  {%- comment -%} ===== BF25 PAGE: FULL REBUY SUPPRESSION ===== {%- endcomment -%}
+
+  {%- comment -%} Layer 3: CSS Hide - Immediate visual suppression {%- endcomment -%}
+  <style id="bf25-rebuy-hide">
+    rebuy-cart,
+    rebuy-smart-cart,
+    [data-rebuy-cart],
+    [data-rebuy-id],
+    .rebuy-cart,
+    .rebuy-smart-cart,
+    .rebuy-cart__flyout,
+    .rebuy-cart__overlay,
+    #rebuy-smart-cart {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      position: absolute !important;
+      left: -9999px !important;
+    }
+  </style>
+
+  {%- comment -%} Layers 2, 4, 5, 6: JavaScript suppression system {%- endcomment -%}
+  <script id="bf25-rebuy-suppression">
+  (function() {
+    'use strict';
+
+    // ==========================================
+    // LAYER 2: Immutable Object Definition
+    // Lock window.Rebuy BEFORE any scripts can set it
+    // ==========================================
+    var RebuyProxy = new Proxy({}, {
+      get: function(target, prop) {
+        // Return no-op functions for any method call
+        return function() {
+          console.log('[BF25] Rebuy method blocked:', prop);
+          return Promise.resolve();
+        };
+      },
+      set: function() { return true; }
+    });
+
+    try {
+      Object.defineProperty(window, 'Rebuy', {
+        value: RebuyProxy,
+        configurable: false,
+        writable: false,
+        enumerable: true
+      });
+      console.log('[BF25] Layer 2: window.Rebuy locked as immutable');
+    } catch (e) {
+      // Fallback if defineProperty fails
+      window.Rebuy = RebuyProxy;
+      console.log('[BF25] Layer 2: window.Rebuy set (fallback mode)');
+    }
+
+    // ==========================================
+    // LAYER 6: Global Flags
+    // Set flags that other scripts check
+    // ==========================================
+    window.TitanContext = window.TitanContext || {};
+    window.TitanContext.isBF25Page = true;
+    window.TitanContext.isCheckout = window.location.pathname.includes('/checkouts/');
+    window.TitanContext.rebuySuppressionActive = true;
+
+    // Flags checked by existing BOGO/BF25 code
+    window.rebuyDisabled = true;
+    window.bf25Active = true;
+
+    // Session flag for cart page protection
+    sessionStorage.setItem('bf25_session_active', 'true');
+    sessionStorage.setItem('bf25_rebuy_suppressed', 'true');
+
+    console.log('[BF25] Layer 6: Global flags set');
+
+    // ==========================================
+    // LAYER 5: Event Blocking
+    // Intercept all Rebuy custom events
+    // ==========================================
+    var rebuyEvents = [
+      'rebuy:cart.open',
+      'rebuy:cart.close',
+      'rebuy:cart.change',
+      'rebuy:cart-open',
+      'rebuy:cart-close',
+      'rebuy:cart-update',
+      'rebuy:checkout',
+      'rebuy:smartcart.open',
+      'rebuy:smartcart.close',
+      'rebuy:item.added',
+      'rebuy:item.removed'
+    ];
+
+    rebuyEvents.forEach(function(eventName) {
+      document.addEventListener(eventName, function(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        console.log('[BF25] Layer 5: Blocked event:', eventName);
+        return false;
+      }, true); // Use capture phase to intercept first
+    });
+
+    // Also block on window
+    rebuyEvents.forEach(function(eventName) {
+      window.addEventListener(eventName, function(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        return false;
+      }, true);
+    });
+
+    console.log('[BF25] Layer 5: Event listeners installed');
+
+    // ==========================================
+    // LAYER 4: MutationObserver Watchdog
+    // Remove Rebuy elements the instant they appear
+    // ==========================================
+    var rebuySelectors = [
+      'rebuy-cart',
+      'rebuy-smart-cart',
+      '[data-rebuy-cart]',
+      '[data-rebuy-id]',
+      '.rebuy-cart',
+      '.rebuy-smart-cart',
+      '#rebuy-smart-cart'
+    ];
+
+    function removeRebuyElement(element) {
+      if (element && element.parentNode) {
+        console.log('[BF25] Layer 4: Removing Rebuy element:', element.tagName || element.className);
+        element.parentNode.removeChild(element);
+      }
+    }
+
+    function isRebuyElement(node) {
+      if (node.nodeType !== Node.ELEMENT_NODE) return false;
+
+      var tagName = (node.tagName || '').toLowerCase();
+      if (tagName === 'rebuy-cart' || tagName === 'rebuy-smart-cart') return true;
+
+      if (node.matches) {
+        for (var i = 0; i < rebuySelectors.length; i++) {
+          try {
+            if (node.matches(rebuySelectors[i])) return true;
+          } catch (e) {}
+        }
+      }
+
+      return false;
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (isRebuyElement(node)) {
+            removeRebuyElement(node);
+          }
+          // Also check children
+          if (node.querySelectorAll) {
+            rebuySelectors.forEach(function(selector) {
+              try {
+                var elements = node.querySelectorAll(selector);
+                elements.forEach(removeRebuyElement);
+              } catch (e) {}
+            });
+          }
+        });
+      });
+    });
+
+    // Start observing as soon as possible
+    if (document.documentElement) {
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+      console.log('[BF25] Layer 4: MutationObserver active');
+    }
+
+    // Also run cleanup on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+      rebuySelectors.forEach(function(selector) {
+        try {
+          document.querySelectorAll(selector).forEach(removeRebuyElement);
+        } catch (e) {}
+      });
+    });
+
+    // ==========================================
+    // FINAL: Confirmation
+    // ==========================================
+    console.log('[BF25] ✅ 6-Layer Rebuy Suppression System Active');
+    console.log('[BF25] Layers: Liquid Block, Immutable Object, CSS Hide, MutationObserver, Event Blocking, Global Flags');
+
+  })();
+  </script>
+
+  {%- comment -%} DO NOT render Rebuy on BF25 pages {%- endcomment -%}
+
+{% else %}
+  {%- comment -%} ===== NON-BF25 PAGE: NORMAL REBUY LOADING ===== {%- endcomment -%}
+
+  <script>
+    // Set context for non-BF25 pages
+    window.TitanContext = window.TitanContext || {};
+    window.TitanContext.isBF25Page = false;
+    window.TitanContext.isCheckout = window.location.pathname.includes('/checkouts/');
+    window.TitanContext.rebuySuppressionActive = false;
+  </script>
+
+  <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
+  {% render 'rebuy-smartcart-extensions' %}
+
+{% endif %}
       <script async data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=HXhrVm"></script>
       {% render 'footer-scripts' %}
 

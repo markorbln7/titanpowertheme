@@ -1416,17 +1416,18 @@
         console.log('[BF25 Cart] ✓ Gifts:', tier.gifts?.length || 0);
         console.log('[BF25 Cart] ✓ Discount code:', DISCOUNT_CODE);
 
-        // Build checkout URL
-        const checkoutUrl = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
-        console.log('[BF25 Cart] 🚀 IMMEDIATE redirect to:', checkoutUrl);
+        // Build discount URL - this route sets a session cookie for the discount
+        // Then Shopify auto-redirects to checkout with the code applied
+        const discountUrl = `/discount/${encodeURIComponent(DISCOUNT_CODE)}?redirect=/checkout`;
+        console.log('[BF25 Cart] 🚀 Applying discount via /discount/ route:', discountUrl);
 
-        // Use location.replace() for immediate navigation (BOGO pattern)
+        // Use location.replace() for immediate navigation
         try {
-          window.location.replace(checkoutUrl);
+          window.location.replace(discountUrl);
         } catch (e) {
           // Fallback to href if replace fails
           console.warn('[BF25 Cart] location.replace failed, using href fallback:', e);
-          window.location.href = checkoutUrl;
+          window.location.href = discountUrl;
         }
 
         // Execution stops here due to navigation

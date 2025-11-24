@@ -8,6 +8,56 @@
   'use strict';
 
   // ============================================
+  // BF25 CROSS-PAGE REBUY PROTECTION
+  // Runs on every page (including checkout)
+  // Replicated from BOGO Builder pattern
+  // ============================================
+  (function preventRebuyInterference() {
+    const isBF25Checkout = sessionStorage.getItem('bf25-direct-checkout');
+
+    if (isBF25Checkout === 'true') {
+      console.log('%c[BF25] 🛡️ Direct checkout detected - preventing cart drawer',
+                  'color: #60c655; font-weight: bold;');
+
+      // Clear the flag (one-time use)
+      sessionStorage.removeItem('bf25-direct-checkout');
+
+      // Disable Rebuy SmartCart methods
+      if (window.Rebuy) {
+        console.log('[BF25] Disabling Rebuy cart drawer...');
+        if (window.Rebuy.SmartCart) {
+          window.Rebuy.SmartCart.close = function() {};
+          window.Rebuy.SmartCart.open = function() {};
+        }
+      }
+
+      // Prevent cart drawer opens for 2 seconds
+      let preventCartDrawer = true;
+      setTimeout(() => { preventCartDrawer = false; }, 2000);
+
+      // Intercept drawer open attempts (capture phase)
+      document.addEventListener('rebuy:cart.open', function(e) {
+        if (preventCartDrawer) {
+          console.log('[BF25] Prevented Rebuy cart drawer from opening');
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      }, true);
+
+      // Also block the alternate event name
+      document.addEventListener('rebuy:cart-open', function(e) {
+        if (preventCartDrawer) {
+          console.log('[BF25] Prevented Rebuy cart-open event');
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      }, true);
+    }
+  })();
+
+  // ============================================
   // GIFT VARIANT IDs (Source of Truth)
   // ============================================
   const GIFT_VARIANT_MAP = {
@@ -1163,6 +1213,61 @@
     }
 
     /**
+     * Suppress Rebuy Smart Cart (replicated from BOGO Builder)
+     * Must be called BEFORE any cart operations during checkout
+     */
+    suppressRebuy() {
+      console.log('[BF25 Cart] 🚫 Suppressing Rebuy Smart Cart...');
+
+      // Method 1: Set global flags
+      window.bf25DirectCheckout = true;
+      window.rebuyDisabled = true;
+      sessionStorage.setItem('bf25-direct-checkout', 'true');
+      sessionStorage.setItem('rebuy-disabled', 'true');
+
+      // Method 2: Replace Rebuy object with no-op Proxy
+      if (window.Rebuy) {
+        console.log('[BF25 Cart] Found Rebuy object, nullifying...');
+        window._rebuyOriginalBackup = window.Rebuy;
+
+        window.Rebuy = new Proxy({}, {
+          get: (target, prop) => {
+            console.log(`[BF25 Cart] Rebuy.${prop} blocked`);
+            return () => {};
+          },
+          set: () => true
+        });
+      }
+
+      // Method 3: Prevent Rebuy cart events (capture phase)
+      const rebuyEvents = [
+        'rebuy:cart.open',
+        'rebuy:cart-open',
+        'rebuy:cart.change',
+        'rebuy:cart-update',
+        'rebuy:checkout'
+      ];
+
+      rebuyEvents.forEach(eventName => {
+        document.addEventListener(eventName, (e) => {
+          console.log(`[BF25 Cart] Blocked Rebuy event: ${eventName}`);
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return false;
+        }, { capture: true, passive: false });
+      });
+
+      // Method 4: Hide Rebuy DOM elements
+      document.querySelectorAll('[data-rebuy], [data-rebuy-cart], rebuy-cart, .rebuy-cart, #rebuy-smart-cart')
+        .forEach(el => {
+          el.style.display = 'none';
+          el.style.pointerEvents = 'none';
+        });
+
+      console.log('[BF25 Cart] ✅ Rebuy suppression complete (4 methods active)');
+    }
+
+    /**
      * Update the state of the CartManager with validation.
      * @param {string} newState - The new state (idle, updating, syncing, animating).
      */
@@ -1232,7 +1337,12 @@
 
       try {
         // ─────────────────────────────────────────────────────────────
-        // Step 1: Validate cart state
+        // Step 1: Suppress Rebuy BEFORE any cart operations
+        // ─────────────────────────────────────────────────────────────
+        this.suppressRebuy();
+
+        // ─────────────────────────────────────────────────────────────
+        // Step 2: Validate cart state
         // ─────────────────────────────────────────────────────────────
         const validation = await this.validateCheckout();
         if (!validation) {
@@ -1242,14 +1352,14 @@
         const { cart, tier, itemCount } = validation;
 
         // ─────────────────────────────────────────────────────────────
-        // Step 2: Prevent checkout with empty bundle
+        // Step 3: Prevent checkout with empty bundle
         // ─────────────────────────────────────────────────────────────
         if (itemCount === 0) {
           throw new Error('Your bundle is empty. Please add items before checkout.');
         }
 
         // ─────────────────────────────────────────────────────────────
-        // Step 3: Reconcile tier gifts
+        // Step 4: Reconcile tier gifts
         // ─────────────────────────────────────────────────────────────
         if (tier.gifts && tier.gifts.length > 0) {
           this.elements.btnBuy.textContent = 'Securing Gifts...';
@@ -1260,39 +1370,30 @@
         await this.ensureGiftsInCart(tier, cart);
 
         // ─────────────────────────────────────────────────────────────
-        // Step 4: Redirect to checkout with discount code
+        // Step 5: IMMEDIATE redirect to checkout (BOGO pattern)
         // ─────────────────────────────────────────────────────────────
         this.elements.btnBuy.textContent = 'Redirecting...';
 
-        console.log(`[BF25 Cart] ✓ Proceeding to checkout`);
-        console.log(`[BF25 Cart] ✓ Tier: ${tier.id} (${tier.discount})`);
-        console.log(`[BF25 Cart] ✓ Items: ${itemCount}`);
-        console.log(`[BF25 Cart] ✓ Gifts: ${tier.gifts?.length || 0}`);
-        console.log(`[BF25 Cart] ✓ Discount code: ${DISCOUNT_CODE}`);
+        console.log('[BF25 Cart] ✓ Proceeding to checkout');
+        console.log('[BF25 Cart] ✓ Tier:', tier.id, `(${tier.discount})`);
+        console.log('[BF25 Cart] ✓ Items:', itemCount);
+        console.log('[BF25 Cart] ✓ Gifts:', tier.gifts?.length || 0);
+        console.log('[BF25 Cart] ✓ Discount code:', DISCOUNT_CODE);
 
-        // CRITICAL: Redirect with discount code via form submission
-        // Using form.submit() instead of window.location.replace() because
-        // Rebuy/other scripts intercept location changes but not form submissions
-        console.log('[BF25 Cart] Submitting checkout form...');
+        // Build checkout URL
+        const checkoutUrl = `/checkout?discount=${encodeURIComponent(DISCOUNT_CODE)}`;
+        console.log('[BF25 Cart] 🚀 IMMEDIATE redirect to:', checkoutUrl);
 
-        // Create hidden form
-        const checkoutForm = document.createElement('form');
-        checkoutForm.method = 'GET';
-        checkoutForm.action = '/checkout';
-        checkoutForm.style.display = 'none';
+        // Use location.replace() for immediate navigation (BOGO pattern)
+        try {
+          window.location.replace(checkoutUrl);
+        } catch (e) {
+          // Fallback to href if replace fails
+          console.warn('[BF25 Cart] location.replace failed, using href fallback:', e);
+          window.location.href = checkoutUrl;
+        }
 
-        // Add discount code as hidden input
-        const discountInput = document.createElement('input');
-        discountInput.type = 'hidden';
-        discountInput.name = 'discount';
-        discountInput.value = DISCOUNT_CODE;
-        checkoutForm.appendChild(discountInput);
-
-        // Append to body and submit
-        document.body.appendChild(checkoutForm);
-        checkoutForm.submit();
-
-        // Form submission navigates away, execution stops here
+        // Execution stops here due to navigation
 
       } catch (error) {
         console.error('[BF25 Cart] Checkout error:', error);

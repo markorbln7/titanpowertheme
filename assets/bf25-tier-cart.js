@@ -381,6 +381,194 @@
   window.BF25Performance = new PerformanceMonitor();
 
   // ============================================
+  // TOAST MANAGER CLASS
+  // ============================================
+  class ToastManager {
+    constructor() {
+      if (ToastManager.instance) {
+        return ToastManager.instance;
+      }
+      ToastManager.instance = this;
+
+      this.container = null;
+      this.activeToasts = [];
+      this.maxToasts = 3;
+      this.defaultDuration = 2000; // 2 seconds
+      this.toastIdCounter = 0;
+    }
+
+    /**
+     * Initialize toast container
+     */
+    init() {
+      this.container = document.getElementById('bf25sc-toast-container');
+
+      if (!this.container) {
+        console.warn('[ToastManager] Toast container not found');
+        return false;
+      }
+
+      console.log('[ToastManager] Initialized');
+      return true;
+    }
+
+    /**
+     * Show a toast notification
+     * @param {string} message - Primary message text
+     * @param {Object} options - Configuration options
+     * @param {string} options.secondary - Secondary message (optional)
+     * @param {string} options.icon - Emoji icon (default: 🎁)
+     * @param {number} options.tier - Tier number for styling (1-4)
+     * @param {string} options.type - Toast type: 'info', 'success', 'warning' (default: 'info')
+     * @param {number} options.duration - Duration in ms (default: 2000)
+     * @param {boolean} options.dismissible - Allow manual dismiss (default: true)
+     */
+    show(message, options = {}) {
+      if (!this.container) {
+        console.warn('[ToastManager] Container not initialized');
+        return null;
+      }
+
+      // Enforce max toast limit
+      if (this.activeToasts.length >= this.maxToasts) {
+        const oldest = this.activeToasts[0];
+        this.dismiss(oldest.element);
+      }
+
+      const config = {
+        secondary: options.secondary || null,
+        icon: options.icon || '🎁',
+        tier: options.tier || 1,
+        type: options.type || 'info',
+        duration: options.duration || this.defaultDuration,
+        dismissible: options.dismissible !== false
+      };
+
+      const toastId = `bf25sc-toast-${++this.toastIdCounter}`;
+      const toast = this.createToast(toastId, message, config);
+
+      // Insert at top (newest first)
+      this.container.insertBefore(toast, this.container.firstChild);
+
+      // Track active toast
+      this.activeToasts.push({
+        id: toastId,
+        element: toast,
+        timeoutId: null
+      });
+
+      // Trigger slide-in animation
+      requestAnimationFrame(() => {
+        toast.classList.add('is-visible');
+      });
+
+      // Auto-dismiss after duration
+      const timeoutId = setTimeout(() => {
+        this.dismiss(toast);
+      }, config.duration);
+
+      this.activeToasts[this.activeToasts.length - 1].timeoutId = timeoutId;
+
+      console.log(`[ToastManager] Toast shown: "${message}" (${config.duration}ms)`);
+
+      return toast;
+    }
+
+    /**
+     * Create toast HTML element
+     */
+    createToast(id, message, config) {
+      const toast = document.createElement('div');
+      toast.id = id;
+      toast.className = `bf25sc-toast bf25sc-toast--${config.type}`;
+      toast.setAttribute('data-tier', config.tier);
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'bf25sc-toast__icon';
+      iconSpan.textContent = config.icon;
+
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'bf25sc-toast__content';
+
+      const primaryP = document.createElement('p');
+      primaryP.className = 'bf25sc-toast__message';
+      primaryP.textContent = message;
+      contentDiv.appendChild(primaryP);
+
+      if (config.secondary) {
+        const secondaryP = document.createElement('p');
+        secondaryP.className = 'bf25sc-toast__secondary';
+        secondaryP.innerHTML = config.secondary; // Allow HTML for <strong> tags
+        contentDiv.appendChild(secondaryP);
+      }
+
+      toast.appendChild(iconSpan);
+      toast.appendChild(contentDiv);
+
+      if (config.dismissible) {
+        const dismissBtn = document.createElement('button');
+        dismissBtn.type = 'button';
+        dismissBtn.className = 'bf25sc-toast__dismiss';
+        dismissBtn.setAttribute('aria-label', 'Dismiss notification');
+        dismissBtn.innerHTML = '&times;';
+        dismissBtn.addEventListener('click', () => {
+          this.dismiss(toast);
+        });
+        toast.appendChild(dismissBtn);
+      }
+
+      return toast;
+    }
+
+    /**
+     * Dismiss a toast notification
+     * @param {HTMLElement} toast - Toast element to dismiss
+     */
+    dismiss(toast) {
+      if (!toast || !toast.parentElement) return;
+
+      const toastData = this.activeToasts.find(t => t.element === toast);
+
+      if (toastData) {
+        // Clear auto-dismiss timeout
+        if (toastData.timeoutId) {
+          clearTimeout(toastData.timeoutId);
+        }
+
+        // Remove from tracking
+        this.activeToasts = this.activeToasts.filter(t => t.element !== toast);
+      }
+
+      // Trigger fade-out animation
+      toast.classList.add('is-dismissed');
+      toast.classList.remove('is-visible');
+
+      // Remove from DOM after animation
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.parentElement.removeChild(toast);
+        }
+      }, 200); // Match CSS transition duration
+
+      console.log('[ToastManager] Toast dismissed');
+    }
+
+    /**
+     * Dismiss all active toasts
+     */
+    dismissAll() {
+      const toasts = [...this.activeToasts];
+      toasts.forEach(t => this.dismiss(t.element));
+      console.log('[ToastManager] All toasts dismissed');
+    }
+  }
+
+  // Initialize global toast manager
+  window.BF25Toast = new ToastManager();
+
+  // ============================================
   // GIFT ANIMATOR CLASS
   // ============================================
   class GiftAnimator {
@@ -976,6 +1164,11 @@
       // Initialize ConfettiSystem
       this.initConfettiSystem();
 
+      // Initialize ToastManager
+      if (window.BF25Toast) {
+        window.BF25Toast.init();
+      }
+
       // Initialize keyboard navigation
       this.initKeyboardNav();
 
@@ -1073,9 +1266,16 @@
         }
       }
 
-      // Check for tier downgrade (remove excess gifts)
+      // Check for tier downgrade with toast notifications
       if (this.previousTier && this.previousTier.id > this.currentTier.id) {
-        console.log(`[BF25 Cart] Tier downgraded to ${this.currentTier.id}`);
+        console.log(`[BF25 Cart] Tier downgrade detected: ${this.previousTier.id} → ${this.currentTier.id}`);
+
+        // Notify user about each removed gift (from highest to lowest)
+        for (let tier = this.previousTier.id; tier > this.currentTier.id; tier--) {
+          this.handleTierDowngrade(tier, this.itemCount);
+        }
+
+        // Reconcile gifts in cart
         this.reconcileGifts(this.currentTier);
       }
 
@@ -1928,6 +2128,77 @@
         clearTimeout(loadingTimeout);
         this.hideLoadingIndicator(tier);
         console.error(`[BF25 Cart] Tier ${tier} unlock error:`, error);
+      }
+    }
+
+    /**
+     * Handle tier downgrade with toast notification
+     * @param {number} tier - Tier that was lost
+     * @param {number} currentItemCount - Current cart item count
+     */
+    handleTierDowngrade(tier, currentItemCount) {
+      console.log(`[BF25 Cart] Handling tier ${tier} downgrade (current items: ${currentItemCount})`);
+
+      // Get tier data
+      const tierData = BF25_TIERS[tier];
+      if (!tierData) {
+        console.warn(`[BF25 Cart] No tier data found for tier ${tier}`);
+        return;
+      }
+
+      // Get gift product info
+      const giftProducts = {
+        1: { title: 'Free USB-C Cable', emoji: '🔌' },
+        2: { title: 'Free Protective Case', emoji: '📦' },
+        3: { title: 'Free Magnetic Set', emoji: '🧲' },
+        4: { title: 'Free Mystery Box', emoji: '🎁' }
+      };
+
+      const giftProduct = giftProducts[tier];
+      if (!giftProduct) {
+        console.warn(`[BF25 Cart] No gift product found for tier ${tier}`);
+        return;
+      }
+
+      // Calculate items needed to re-unlock
+      const itemsNeeded = tierData.min - currentItemCount;
+
+      // Build toast message
+      const primaryMessage = `Gift removed: ${giftProduct.title}`;
+      const secondaryMessage = itemsNeeded > 0
+        ? `Add <strong>${itemsNeeded}</strong> more item${itemsNeeded === 1 ? '' : 's'} to unlock <strong>${tierData.badge}</strong>`
+        : null;
+
+      // Show toast notification
+      if (window.BF25Toast) {
+        window.BF25Toast.show(primaryMessage, {
+          secondary: secondaryMessage,
+          icon: giftProduct.emoji,
+          tier: tier,
+          type: 'info',
+          duration: 2000
+        });
+
+        console.log(`[BF25 Cart] Toast shown for tier ${tier} downgrade`);
+      }
+
+      // Remove from celebrated tiers (allow re-celebration if unlocked again)
+      if (this.giftAnimator) {
+        this.giftAnimator.celebratedTiers.delete(tier);
+        this.giftAnimator.saveCelebratedTiers();
+        console.log(`[BF25 Cart] Tier ${tier} removed from celebrated tiers`);
+      }
+
+      // Reset gift slot visual state to locked
+      const checkpoint = this.getCheckpointForTier(tier);
+      const slot = document.querySelector(
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (slot) {
+        slot.dataset.state = 'locked';
+        slot.classList.remove('is-unlocked', 'is-celebrating', 'is-flashing');
+        console.log(`[BF25 Cart] Gift slot ${checkpoint} reset to locked state`);
       }
     }
 

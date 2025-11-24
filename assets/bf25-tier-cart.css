@@ -1647,3 +1647,202 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+/* ====================================
+   TOAST NOTIFICATION SYSTEM
+   ==================================== */
+
+/* Toast Container - Fixed positioning */
+.bf25sc-toast-container {
+  position: fixed;
+  bottom: 90px; /* Above sticky cart (65px) + 25px spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000; /* Above sticky cart */
+  display: flex;
+  flex-direction: column-reverse; /* Newest toasts appear at bottom */
+  gap: 12px;
+  max-width: 90%;
+  width: 400px;
+  pointer-events: none; /* Allow clicks through container */
+}
+
+/* Individual Toast */
+.bf25sc-toast {
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(96, 198, 85, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(96, 198, 85, 0.1);
+  pointer-events: auto; /* Enable clicks on toasts */
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Visible State (Slide In) */
+.bf25sc-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dismissed State (Fade Out) */
+.bf25sc-toast.is-dismissed {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.2s ease-out;
+}
+
+/* Toast Icon */
+.bf25sc-toast__icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toast Content */
+.bf25sc-toast__content {
+  flex: 1;
+  min-width: 0; /* Allow text wrapping */
+}
+
+/* Primary Message */
+.bf25sc-toast__message {
+  font-family: var(--bf25sc-font-body);
+  font-size: var(--bf25sc-text-base);
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+  margin: 0 0 4px 0;
+}
+
+/* Secondary Message */
+.bf25sc-toast__secondary {
+  font-family: var(--bf25sc-font-body);
+  font-size: var(--bf25sc-text-sm);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.bf25sc-toast__secondary strong {
+  font-weight: 700;
+  color: var(--bf25sc-tier-color);
+}
+
+/* Dismiss Button */
+.bf25sc-toast__dismiss {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.bf25sc-toast__dismiss:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bf25sc-toast__dismiss:focus {
+  outline: 2px solid var(--bf25sc-tier-color);
+  outline-offset: 2px;
+}
+
+/* Tier-Specific Border Colors */
+.bf25sc-toast[data-tier="1"] {
+  border-color: rgba(96, 198, 85, 0.3);
+}
+
+.bf25sc-toast[data-tier="2"] {
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.bf25sc-toast[data-tier="3"] {
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.bf25sc-toast[data-tier="4"] {
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+/* Toast Type Variations */
+.bf25sc-toast--info {
+  /* Default styling already applied */
+}
+
+.bf25sc-toast--success {
+  border-color: rgba(96, 198, 85, 0.4);
+  background: rgba(20, 20, 20, 0.98);
+}
+
+.bf25sc-toast--warning {
+  border-color: rgba(251, 191, 36, 0.4);
+  background: rgba(20, 20, 20, 0.98);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .bf25sc-toast-container {
+    width: calc(100% - 32px);
+    max-width: 100%;
+    bottom: 80px; /* Adjust for mobile sticky cart height */
+  }
+
+  .bf25sc-toast {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .bf25sc-toast__icon {
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .bf25sc-toast__message {
+    font-size: var(--bf25sc-text-sm);
+  }
+
+  .bf25sc-toast__secondary {
+    font-size: var(--bf25sc-text-xs);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bf25sc-toast {
+    transition: opacity 0.2s ease;
+    transform: none;
+  }
+
+  .bf25sc-toast.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bf25sc-toast.is-dismissed {
+    opacity: 0;
+    transform: none;
+  }
+}

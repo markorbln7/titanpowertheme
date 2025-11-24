@@ -1950,3 +1950,334 @@
     opacity: 1;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BF25 CART ISOLATION MODAL
+   Premium glassmorphic design for existing cart detection
+   ═══════════════════════════════════════════════════════════════════ */
+
+.bf25-isolation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  /* Initial state (hidden) */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.bf25-isolation-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.bf25-isolation-modal.is-hiding {
+  opacity: 0;
+}
+
+/* Overlay */
+.bf25-isolation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Content container */
+.bf25-isolation-content {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+
+  /* Premium glassmorphic card */
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+
+  /* Glow effect */
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 80px rgba(96, 198, 85, 0.1);
+
+  /* Animation */
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  overflow: hidden;
+}
+
+.bf25-isolation-modal.is-visible .bf25-isolation-content {
+  transform: translateY(0) scale(1);
+}
+
+.bf25-isolation-modal.is-hiding .bf25-isolation-content {
+  transform: translateY(20px) scale(0.95);
+}
+
+/* Header */
+.bf25-isolation-header {
+  text-align: center;
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bf25-isolation-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.bf25-isolation-header h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bf25-isolation-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--bf25-accent, #60c655);
+  font-weight: 600;
+}
+
+/* Body */
+.bf25-isolation-body {
+  padding: 20px 24px;
+}
+
+.bf25-isolation-body > p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* Items preview */
+.bf25-isolation-items-preview {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.bf25-isolation-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.bf25-isolation-item + .bf25-isolation-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bf25-isolation-item-image {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bf25-isolation-item-placeholder {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.bf25-isolation-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bf25-isolation-item-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bf25-isolation-item-qty {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+.bf25-isolation-more {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+/* Actions */
+.bf25-isolation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.bf25-isolation-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.bf25-isolation-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.bf25-isolation-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bf25-accent, #60c655);
+}
+
+.bf25-isolation-btn-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.bf25-isolation-btn--keep .bf25-isolation-btn-icon {
+  background: rgba(96, 198, 85, 0.2);
+  color: var(--bf25-accent, #60c655);
+}
+
+.bf25-isolation-btn--clear .bf25-isolation-btn-icon {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}
+
+.bf25-isolation-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bf25-isolation-btn-text strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bf25-isolation-btn-text small {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bf25-isolation-btn--keep:hover {
+  border-color: var(--bf25-accent, #60c655);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.2);
+}
+
+.bf25-isolation-btn--clear:hover {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.2);
+}
+
+/* Note */
+.bf25-isolation-note {
+  margin: 0;
+  padding: 16px 24px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .bf25-isolation-modal {
+    padding: 16px;
+    align-items: flex-end;
+  }
+
+  .bf25-isolation-content {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .bf25-isolation-header {
+    padding: 24px 20px 16px;
+  }
+
+  .bf25-isolation-icon {
+    font-size: 40px;
+  }
+
+  .bf25-isolation-header h2 {
+    font-size: 18px;
+  }
+
+  .bf25-isolation-body {
+    padding: 16px 20px;
+  }
+
+  .bf25-isolation-actions {
+    padding: 0 20px 20px;
+  }
+
+  .bf25-isolation-btn {
+    padding: 14px 16px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-isolation-modal,
+  .bf25-isolation-content {
+    transition: opacity 0.2s ease;
+  }
+
+  .bf25-isolation-content {
+    transform: none !important;
+  }
+
+  .bf25-isolation-btn:hover {
+    transform: none;
+  }
+}

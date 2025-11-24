@@ -50,7 +50,9 @@
       STORAGE_KEY: 'bf25_bundle',
       SCHEMA_VERSION: 1,
       EXPIRATION_DAYS: 7,
-      MAX_ITEMS: 16
+      MAX_ITEMS: 16,
+      // Key used by GiftAnimator (must match exactly)
+      ANIMATION_SESSION_KEY: 'bf25_celebrated_tiers'
     };
 
     // Reference to tier configuration
@@ -144,6 +146,21 @@
           setItem: (key, value) => { data[key] = String(value); },
           removeItem: (key) => { delete data[key]; }
         };
+      }
+
+      /**
+       * Clear the animation session state (celebrated tiers).
+       * Called when bundle expires or is cleared to allow new animations.
+       */
+      _clearAnimationSession() {
+        try {
+          if (typeof sessionStorage !== 'undefined') {
+            sessionStorage.removeItem(this.config.ANIMATION_SESSION_KEY);
+            console.log('[BF25 BundleManager] Animation session cleared.');
+          }
+        } catch (e) {
+          console.warn('[BF25 BundleManager] Could not clear animation session:', e);
+        }
       }
 
       // ============================================
@@ -242,6 +259,10 @@
               expiredAt: savedBundle.expiresAt,
               itemCount: savedBundle.computed?.itemCount || 0
             });
+
+            // Clear animation history so new bundle can animate
+            this._clearAnimationSession();
+
             this.bundle = this._createEmptyBundle();
             return;
           }
@@ -284,6 +305,9 @@
       _saveBundle(recalculate = true, notify = true) {
         if (!this.bundle) return;
 
+        // Capture previous state BEFORE recalculation
+        const previousComputed = { ...this.bundle.computed };
+
         // Update computed values
         if (recalculate) {
           this.bundle.computed = this._calculateComputed(this.bundle.items);
@@ -295,6 +319,11 @@
         // Persist to storage
         this._saveToStorage();
 
+        // Detect tier/gift transitions and dispatch events
+        if (recalculate && notify) {
+          this._detectAndDispatchTransitions(previousComputed, this.bundle.computed);
+        }
+
         // Notify listeners
         if (notify) {
           this._dispatchEvent('bf25:bundleUpdated', {
@@ -303,6 +332,88 @@
             tierReached: this.bundle.computed.tierReached
           });
         }
+      }
+
+      /**
+       * Detect tier/gift transitions and dispatch appropriate events
+       * @param {Object} prevState - Previous computed state
+       * @param {Object} currentState - Current computed state
+       */
+      _detectAndDispatchTransitions(prevState, currentState) {
+        const prevTier = prevState.tierReached || 0;
+        const currentTier = currentState.tierReached || 0;
+        const prevGiftCount = prevState.giftsUnlocked?.length || 0;
+        const currentGiftCount = currentState.giftsUnlocked?.length || 0;
+
+        // TIER UNLOCKS (handle multi-tier jumps)
+        if (currentTier > prevTier) {
+          console.log(`[BF25 BundleManager] 🔥 Tier progression: ${prevTier} → ${currentTier}`);
+
+          // Dispatch event for EACH tier jumped (for animation queue)
+          for (let tier = prevTier + 1; tier <= currentTier; tier++) {
+            console.log(`%c[BF25 BundleManager] 🎉 DISPATCHING bf25:tierUnlocked for Tier ${tier}`, 'color: #60c655; font-weight: bold;');
+            this._dispatchEvent('bf25:tierUnlocked', {
+              tier: tier,
+              discountPercent: this._getTierDiscount(tier),
+              tierBadge: this._getTierBadge(tier),
+              previousTier: prevTier,
+              jumpedTiers: currentTier - prevTier
+            });
+          }
+        }
+
+        // TIER DOWNGRADES (item removal)
+        if (currentTier < prevTier) {
+          console.log(`[BF25 BundleManager] ⬇️ Tier downgrade: ${prevTier} → ${currentTier}`);
+          this._dispatchEvent('bf25:tierDowngraded', {
+            previousTier: prevTier,
+            currentTier: currentTier
+          });
+        }
+
+        // GIFT UNLOCKS (new gifts unlocked)
+        if (currentGiftCount > prevGiftCount) {
+          const newGifts = currentState.giftsUnlocked.slice(prevGiftCount);
+          console.log(`[BF25 BundleManager] 🎁 New gifts unlocked:`, newGifts);
+
+          newGifts.forEach((gift, index) => {
+            console.log(`%c[BF25 BundleManager] 🎁 DISPATCHING bf25:giftUnlocked: ${gift.title}`, 'color: #60c655; font-weight: bold;');
+            this._dispatchEvent('bf25:giftUnlocked', {
+              gift: gift,
+              giftIndex: prevGiftCount + index,
+              totalGifts: currentGiftCount
+            });
+          });
+        }
+
+        // GIFT LOSS (item removal causing gift loss)
+        if (currentGiftCount < prevGiftCount) {
+          console.log(`[BF25 BundleManager] 💔 Gifts lost: ${prevGiftCount} → ${currentGiftCount}`);
+          this._dispatchEvent('bf25:giftsLost', {
+            previousCount: prevGiftCount,
+            currentCount: currentGiftCount
+          });
+        }
+      }
+
+      /**
+       * Get discount percentage for a given tier
+       * @param {number} tier - Tier number (0-4)
+       * @returns {number} - Discount percentage
+       */
+      _getTierDiscount(tier) {
+        const tierConfig = this.config.TIERS.find(t => t.id === tier);
+        return tierConfig?.discountPercent || 0;
+      }
+
+      /**
+       * Get tier badge label for a given tier
+       * @param {number} tier - Tier number (0-4)
+       * @returns {string} - Badge label
+       */
+      _getTierBadge(tier) {
+        const tierConfig = this.config.TIERS.find(t => t.id === tier);
+        return tierConfig?.badge || '';
       }
 
       /**
@@ -683,33 +794,13 @@
         // REFRESH EXPIRATION & SAVE
         // ─────────────────────────────────────────────────────
         this._refreshExpiration();
-        this._saveBundle(true, true);
+        this._saveBundle(true, true); // This now handles tier/gift unlock events via _detectAndDispatchTransitions
 
         // ─────────────────────────────────────────────────────
-        // CHECK FOR TIER/GIFT UNLOCKS
+        // RETURN RESULT
         // ─────────────────────────────────────────────────────
         const newTier = this.bundle.computed.tierReached;
         const newGiftCount = this.bundle.computed.giftsUnlocked.length;
-
-        // Dispatch tier unlock event
-        if (newTier > previousTier) {
-          console.log(`[BF25 BundleManager] 🎉 Tier ${newTier} unlocked!`);
-          this._dispatchEvent('bf25:tierUnlocked', {
-            tier: newTier,
-            discountPercent: this.bundle.computed.discountPercent,
-            tierBadge: this.bundle.computed.tierBadge
-          });
-        }
-
-        // Dispatch gift unlock event
-        if (newGiftCount > previousGiftCount) {
-          const newGift = this.bundle.computed.giftsUnlocked[newGiftCount - 1];
-          console.log(`[BF25 BundleManager] 🎁 Gift unlocked: ${newGift.title}`);
-          this._dispatchEvent('bf25:giftUnlocked', {
-            gift: newGift,
-            totalGifts: newGiftCount
-          });
-        }
 
         return {
           success: true,
@@ -920,7 +1011,11 @@
 
       clearBundle() {
         this.bundle = this._createEmptyBundle();
-        this._saveBundle(false, true);
+        this._saveBundle(true, true);
+
+        // Clear animation history so new items can trigger animations
+        this._clearAnimationSession();
+
         console.log('[BF25 BundleManager] Bundle cleared.');
       }
 

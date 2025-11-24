@@ -746,9 +746,11 @@
         return;
       }
 
-      // Prevent re-triggering
-      if (slot.classList.contains('is-celebrating') || slot.dataset.state === 'claimed') {
-        console.log(`[GiftAnimator] Tier ${tier} already animating or claimed, skipping`);
+      // Prevent re-triggering if animation is actively running.
+      // NOTE: We rely on celebratedTiers (checked in animate()) to prevent re-celebrating.
+      // DO NOT check slot.dataset.state here - it causes a race condition with renderFromBundle().
+      if (slot.classList.contains('is-celebrating')) {
+        console.log(`[GiftAnimator] Tier ${tier} already animating, skipping`);
         return;
       }
 
@@ -1362,6 +1364,15 @@
         // Update gift slot states to "claimed" for unlocked tiers (no animation on page load)
         if (tierReached > 0) {
           this.updateGiftSlotsForTier(tierReached);
+
+          // CRITICAL: Mark these tiers as celebrated to prevent re-animation
+          if (this.giftAnimator) {
+            console.log(`[BF25 Cart] Syncing celebratedTiers for loaded bundle (tier ${tierReached})`);
+            for (let tier = 1; tier <= tierReached; tier++) {
+              this.giftAnimator.celebratedTiers.add(tier);
+            }
+            this.giftAnimator.saveCelebratedTiers();
+          }
         }
       });
 
@@ -1373,10 +1384,13 @@
 
       // Listen for tier unlocks (trigger animations)
       document.addEventListener('bf25:tierUnlocked', (event) => {
-        console.log('[BF25 Cart] Event: bf25:tierUnlocked', event.detail);
+        console.log('%c[BF25 Cart] 🎉 RECEIVED bf25:tierUnlocked', 'color: #60c655; font-weight: bold;', event.detail);
         const { tier } = event.detail;
         if (this.giftAnimator && tier > 0) {
+          console.log(`[BF25 Cart] Calling giftAnimator.animate(${tier})`);
           this.giftAnimator.animate(tier);
+        } else {
+          console.warn('[BF25 Cart] GiftAnimator not available or tier is 0');
         }
       });
 

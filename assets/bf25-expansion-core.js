@@ -2884,29 +2884,40 @@ class ExpansionManager {
         console.log('🔒 Body scroll locked at:', { x: this.scrollX, y: this.scrollY });
       }
     } else {
-      // Unlock scroll - FIXED: Restore position BEFORE removing styles
+      // Unlock scroll - Optimized for atomic restoration (BF25-SCROLL-FIX)
 
-      // Get the stored scroll position
       const targetX = this.scrollX || 0;
-      const targetY = this.scrollY || 0;
-
-      // CRITICAL: Parse the current top value to get scroll position
-      // This handles cases where scrollY wasn't stored properly
+      // Use the reliable fallback: parse the current 'top' value
       const bodyTop = document.body.style.top;
-      const scrollFromTop = bodyTop ? parseInt(bodyTop, 10) * -1 : targetY;
+      const scrollFromTop = bodyTop ? parseInt(bodyTop, 10) * -1 : (this.scrollY || 0);
 
-      // Step 1: Remove fixed positioning
+      // --- CRITICAL FIX: Disable smooth scrolling during restoration ---
+
+      // 1. Temporarily disable smooth scrolling globally
+      const htmlEl = document.documentElement;
+      const originalScrollBehavior = htmlEl.style.scrollBehavior;
+      htmlEl.style.scrollBehavior = 'auto'; // 'auto' means instant jump
+
+      // 2. Remove fixed positioning (triggers reflow)
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
 
-      // Step 2: IMMEDIATELY restore scroll (no RAF delay)
-      // This must happen in the same frame as style removal
-      window.scrollTo(targetX, scrollFromTop);
+      // 3. IMMEDIATE restore scroll using explicit 'instant' behavior
+      // This provides explicit instruction to the browser
+      window.scrollTo({
+        top: scrollFromTop,
+        left: targetX,
+        behavior: 'instant'
+      });
 
-      if (this.config.debug) {
-        console.log('✅ Scroll restored to:', { x: targetX, y: scrollFromTop });
-      }
+      // 4. Restore original scroll behavior after execution cycle
+      // setTimeout(0) ensures instant scroll completes first
+      setTimeout(() => {
+        htmlEl.style.scrollBehavior = originalScrollBehavior;
+      }, 0);
+
+      // --- END CRITICAL FIX ---
 
       // Restore scroll restoration behavior
       if ('scrollRestoration' in history && this.previousScrollRestoration) {
@@ -2919,7 +2930,7 @@ class ExpansionManager {
       this.scrollY = undefined;
 
       if (this.config.debug) {
-        console.log('🔓 Body scroll unlocked');
+        console.log('✅ Scroll restored to:', { x: targetX, y: scrollFromTop }, '(instant, no smooth)');
       }
     }
   }

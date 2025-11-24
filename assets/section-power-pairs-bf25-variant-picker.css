@@ -78,10 +78,7 @@
 
 /* Variant Option Button - REDESIGNED */
 .pp-variant-option-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: block;
   padding: 16px 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 2px solid var(--pp-border-secondary);
@@ -90,7 +87,14 @@
   transition: all 0.2s ease;
   position: relative;
   min-height: 80px;
-  text-align: center;
+  text-align: left;
+}
+
+/* Variant Option Inner Wrapper */
+.pp-variant-option-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .pp-variant-option-btn:hover {
@@ -161,30 +165,13 @@
   transform: translateY(-50%) rotate(-10deg);
 }
 
-/* Variant Label */
-.pp-variant-option-label {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--pp-text-primary);
-  margin-bottom: 4px;
-  line-height: 1.2;
-}
-
-.pp-variant-option-btn--selected .pp-variant-option-label {
-  color: var(--pp-accent-primary);
-}
-
-/* Variant Price */
-.pp-variant-option-price {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pp-text-tertiary);
-  line-height: 1;
-}
-
-.pp-variant-option-btn--selected .pp-variant-option-price {
-  color: var(--pp-accent-primary);
-  font-weight: 600;
+/* Variant Option Header - Image + Title Side by Side */
+.pp-variant-option-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  width: 100%;
 }
 
 /* Variant Image - If Present */
@@ -193,14 +180,43 @@
   height: 50px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 8px;
   background: rgba(0, 0, 0, 0.3);
   border: 2px solid transparent;
   transition: border-color 0.2s ease;
+  flex-shrink: 0;
 }
 
 .pp-variant-option-btn--selected .pp-variant-option-image {
   border-color: var(--pp-accent-primary);
+}
+
+/* Variant Label */
+.pp-variant-option-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pp-text-primary);
+  line-height: 1.2;
+  text-align: left;
+  flex: 1;
+}
+
+.pp-variant-option-btn--selected .pp-variant-option-label {
+  color: var(--pp-accent-primary);
+}
+
+/* Variant Price */
+.pp-variant-option-price {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--pp-text-tertiary);
+  line-height: 1;
+  width: 100%;
+  text-align: center;
+}
+
+.pp-variant-option-btn--selected .pp-variant-option-price {
+  color: var(--pp-accent-primary);
+  font-weight: 600;
 }
 
 /* Success Feedback - FIXED POSITIONING */
@@ -212,7 +228,7 @@
   bottom: auto !important;
   transform: translate(-50%, -50%);
   width: 200px;
-  height: 200px;
+  height: 50px;
   background: rgba(96, 198, 85, 0.95);
   display: flex;
   flex-direction: column;
@@ -287,7 +303,12 @@
   }
 
   .pp-variant-option-price {
-    font-size: 12px;
+    font-size: 18px;
+  }
+
+  .pp-variant-option-image {
+    width: 40px;
+    height: 40px;
   }
 }
 

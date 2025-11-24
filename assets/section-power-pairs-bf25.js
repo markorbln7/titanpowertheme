@@ -653,13 +653,17 @@ class PowerPairsState {
         // Default to first variant
         const defaultVariant = product.variants[0];
 
-        return {
+        const processedProduct = {
           ...product,
           selectedVariantId: defaultVariant.id,
           selectedVariant: defaultVariant,
           variantSelected: !product.hasVariants, // Auto-complete if no variants
-          variantSelectionComplete: !product.hasVariants
+          variantSelectionComplete: !product.hasVariants,
+          isSwapped: false, // Track if product has been swapped
+          originalProduct: null // Store original product data for undo
         };
+
+        return processedProduct;
       });
 
       // Check if all variants are selected
@@ -826,6 +830,340 @@ class PowerPairsState {
    */
   getAllBundles() {
     return this.bundles;
+  }
+
+  /**
+   * Swap a product with a new one
+   * @param {number} originalProductId - ID of product to swap out
+   * @param {Object} newProductData - New product data from swap modal
+   */
+  swapProduct(originalProductId, newProductData) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    const productIndex = bundle.products.findIndex(p => p.id == originalProductId);
+
+    if (productIndex === -1) {
+      console.error(`[PowerPairs State] Product not found: ${originalProductId}`);
+      return false;
+    }
+
+    const product = bundle.products[productIndex];
+
+    console.log(`[PowerPairs State] Swapping product: ${product.title} -> ${newProductData.title}`);
+
+    // Store original product data - ALWAYS store it to ensure undo works
+    // If already swapped, preserve the original originalProduct (don't overwrite)
+    if (!product.originalProduct) {
+      product.originalProduct = {
+        id: product.id,
+        title: product.title,
+        handle: product.handle,
+        image: product.image,
+        price: product.price,
+        compareAtPrice: product.compareAtPrice || product.price,
+        variants: product.variants ? [...product.variants] : [],
+        hasVariants: product.hasVariants,
+        selectedVariantId: product.selectedVariantId,
+        selectedVariant: product.selectedVariant ? { ...product.selectedVariant } : null,
+        variantSelectionComplete: product.variantSelectionComplete,
+        quantity: product.quantity,
+        rating: product.rating,
+        reviewCount: product.reviewCount,
+        isBestSeller: product.isBestSeller
+      };
+      
+      console.log('[PowerPairs State] Stored original product data:', {
+        id: product.originalProduct.id,
+        title: product.originalProduct.title,
+        hasSelectedVariant: !!product.originalProduct.selectedVariant
+      });
+    } else {
+      console.log('[PowerPairs State] Original product data already stored, preserving it');
+    }
+
+    // Update product with new data (keeping quantity and other bundle-specific settings)
+    product.id = newProductData.id;
+    product.title = newProductData.title;
+    product.handle = newProductData.handle;
+    product.image = newProductData.image;
+    product.price = newProductData.price;
+    product.compareAtPrice = newProductData.compareAtPrice;
+    product.variants = newProductData.variants;
+    product.hasVariants = newProductData.hasVariants;
+    product.selectedVariantId = newProductData.selectedVariantId;
+    product.selectedVariant = newProductData.selectedVariant;
+    product.variantSelectionComplete = true; // Auto-complete since we selected a product
+    product.isSwapped = true;
+
+    // Validation: Ensure swap state is correct
+    if (!product.originalProduct) {
+      console.error('[PowerPairs State] CRITICAL: originalProduct is missing after swap!');
+      return false;
+    }
+
+    if (!product.isSwapped) {
+      console.error('[PowerPairs State] CRITICAL: isSwapped flag not set after swap!');
+      product.isSwapped = true; // Fix it
+    }
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+
+    console.log('[PowerPairs State] Product swapped successfully', {
+      newProduct: {
+        id: product.id,
+        title: product.title,
+        price: product.price
+      },
+      originalProduct: {
+        id: product.originalProduct.id,
+        title: product.originalProduct.title
+      },
+      isSwapped: product.isSwapped,
+      hasOriginal: !!product.originalProduct,
+      baseSubtotal: bundle.baseSubtotal
+    });
+
+    return true;
+  }
+
+  /**
+   * Undo a product swap and restore original
+   * @param {number|string} currentProductId - ID of current (swapped) product
+   */
+  undoSwap(currentProductId) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    // Try multiple ways to find the product
+    let product = null;
+
+    // Method 1: Find by ID (try both string and number comparison)
+    product = bundle.products.find(p => {
+      return p.id == currentProductId || 
+             p.id === currentProductId || 
+             String(p.id) === String(currentProductId);
+    });
+
+    // Method 2: If not found, try to find any swapped product (fallback)
+    if (!product) {
+      product = bundle.products.find(p => {
+        return (p.isSwapped === true || p.originalProduct) && 
+               (String(p.id) === String(currentProductId) || p.id == currentProductId);
+      });
+    }
+
+    if (!product) {
+      console.error(`[PowerPairs State] Product not found: ${currentProductId}`, {
+        searchedId: currentProductId,
+        availableProducts: bundle.products.map(p => ({
+          id: p.id,
+          title: p.title,
+          isSwapped: p.isSwapped,
+          hasOriginal: !!p.originalProduct
+        }))
+      });
+      return false;
+    }
+
+    // Enhanced validation: Check if product can be undone
+    // Allow undo if originalProduct exists, even if isSwapped flag is inconsistent
+    if (!product.originalProduct) {
+      console.error('[PowerPairs State] Product has no original data to restore:', {
+        productId: product.id,
+        title: product.title,
+        isSwapped: product.isSwapped,
+        hasOriginal: false
+      });
+      return false;
+    }
+
+    // Fix inconsistent state if needed
+    if (!product.isSwapped && product.originalProduct) {
+      console.warn('[PowerPairs State] Fixing inconsistent swap state for:', product.title);
+      product.isSwapped = true;
+    }
+
+    const original = product.originalProduct;
+
+    // Validate original data
+    if (!original.id || !original.title) {
+      console.error('[PowerPairs State] Original product data is invalid:', original);
+      return false;
+    }
+
+    console.log(`[PowerPairs State] Undoing swap: ${product.title} -> ${original.title}`);
+
+    // Restore original product data
+    product.id = original.id;
+    product.title = original.title;
+    product.handle = original.handle || product.handle;
+    product.image = original.image || product.image;
+    product.price = original.price;
+    product.compareAtPrice = original.compareAtPrice || original.price;
+    product.variants = original.variants || product.variants;
+    product.hasVariants = original.hasVariants !== undefined ? original.hasVariants : product.hasVariants;
+    product.selectedVariantId = original.selectedVariantId;
+    product.selectedVariant = original.selectedVariant || product.selectedVariant;
+    product.variantSelectionComplete = original.variantSelectionComplete !== undefined 
+      ? original.variantSelectionComplete 
+      : product.variantSelectionComplete;
+    
+    // Clear swap state
+    product.isSwapped = false;
+    product.originalProduct = null;
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+
+    console.log('[PowerPairs State] Swap undone successfully', {
+      restoredProduct: {
+        id: product.id,
+        title: product.title,
+        price: product.price
+      },
+      baseSubtotal: bundle.baseSubtotal
+    });
+
+    return true;
+  }
+
+  /**
+   * Remove a product from the bundle
+   * @param {number|string} productId - ID of product to remove
+   * @returns {Object|null} Removed product data (for undo) or null if failed
+   */
+  removeProduct(productId) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return null;
+    }
+
+    // Validation: Must keep at least 1 product
+    if (bundle.products.length <= 1) {
+      console.warn('[PowerPairs State] Cannot remove last product. Minimum 1 product required.');
+      return null;
+    }
+
+    // Find product to remove
+    const productIndex = bundle.products.findIndex(p => {
+      return p.id == productId || 
+             p.id === productId || 
+             String(p.id) === String(productId);
+    });
+
+    if (productIndex === -1) {
+      console.error(`[PowerPairs State] Product not found: ${productId}`);
+      return null;
+    }
+
+    const product = bundle.products[productIndex];
+
+    console.log(`[PowerPairs State] Removing product: ${product.title}`);
+
+    // Store removed product data for undo (temporary)
+    const removedProductData = {
+      ...product,
+      index: productIndex
+    };
+
+    // Remove product from array
+    bundle.products.splice(productIndex, 1);
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+    bundle.currentItemCount = bundle.baseItemCount * bundle.multiplier;
+
+    console.log('[PowerPairs State] Product removed successfully', {
+      removedProduct: product.title,
+      remainingProducts: bundle.products.length,
+      baseSubtotal: bundle.baseSubtotal,
+      baseItemCount: bundle.baseItemCount
+    });
+
+    return removedProductData;
+  }
+
+  /**
+   * Add a product to the bundle
+   * @param {Object} productData - Product data from swap modal
+   * @returns {boolean} Success status
+   */
+  addProduct(productData) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    console.log(`[PowerPairs State] Adding product: ${productData.title}`);
+
+    // Create new product object with default quantity of 1
+    const newProduct = {
+      id: productData.id,
+      title: productData.title,
+      handle: productData.handle,
+      image: productData.image,
+      price: productData.price,
+      compareAtPrice: productData.compareAtPrice || productData.price,
+      variants: productData.variants || [],
+      hasVariants: productData.hasVariants || false,
+      selectedVariantId: productData.selectedVariantId,
+      selectedVariant: productData.selectedVariant,
+      variantSelectionComplete: true, // Auto-complete since we selected a product
+      quantity: 1, // Default quantity
+      isSwapped: false,
+      originalProduct: null,
+      rating: productData.rating || 0,
+      reviewCount: productData.reviewCount || 0,
+      isBestSeller: productData.isBestSeller || false
+    };
+
+    // Add product to bundle
+    bundle.products.push(newProduct);
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+    bundle.currentItemCount = bundle.baseItemCount * bundle.multiplier;
+
+    console.log('[PowerPairs State] Product added successfully', {
+      newProduct: newProduct.title,
+      totalProducts: bundle.products.length,
+      baseSubtotal: bundle.baseSubtotal,
+      baseItemCount: bundle.baseItemCount
+    });
+
+    return true;
   }
 }
 
@@ -1065,16 +1403,18 @@ class VariantModal {
           aria-pressed="${isSelected}"
           aria-label="Select ${variant.title}${!isAvailable ? ' (Out of stock)' : ''}"
         >
-          ${variant.image && variant.image !== product.image ? `
-            <img
-              src="${variant.image}"
-              alt="${variant.title}"
-              class="pp-variant-option-image"
-              loading="lazy"
-            >
-          ` : ''}
-          <div class="pp-variant-option-content">
-            <div class="pp-variant-option-label">${variant.title}</div>
+          <div class="pp-variant-option-inner">
+            <div class="pp-variant-option-header">
+              ${variant.image && variant.image !== product.image ? `
+                <img
+                  src="${variant.image}"
+                  alt="${variant.title}"
+                  class="pp-variant-option-image"
+                  loading="lazy"
+                >
+              ` : ''}
+              <div class="pp-variant-option-label">${variant.title}</div>
+            </div>
             <div class="pp-variant-option-price">
               ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
               ${this.formatMoney(variant.price)}
@@ -1158,6 +1498,7 @@ class VariantModal {
     // Refresh product grid in expansion manager
     if (window.PPExpansionManager) {
       window.PPExpansionManager.refreshProductGrid();
+      window.PPExpansionManager.refreshBundleCard();
     } else {
       console.error('[PowerPairs Variant Modal] ExpansionManager not found');
     }
@@ -1384,6 +1725,571 @@ class VariantModal {
 
 /**
  * ═══════════════════════════════════════════════════════════
+ * SWAP MODAL MANAGER
+ * Handles product swap functionality with full-screen modal
+ * ═══════════════════════════════════════════════════════════
+ */
+class SwapModal {
+  constructor() {
+    this.modal = null;
+    this.overlay = null;
+    this.closeButton = null;
+    this.contentArea = null;
+    this.gridContainer = null;
+    this.loadMoreButton = null;
+    
+    this.currentProductId = null;
+    this.mode = 'swap'; // 'swap' or 'add'
+    this.isOpen = false;
+    this.isLoading = false;
+    this.productsData = [];
+    this.displayedCount = 0;
+    this.productsPerLoad = 20;
+    this.previouslyFocusedElement = null;
+
+    this.createModalStructure();
+    this.init();
+  }
+
+  /**
+   * Create modal DOM structure
+   */
+  createModalStructure() {
+    console.log('[PowerPairs Swap] Creating modal structure');
+
+    // Create overlay
+    this.overlay = document.createElement('div');
+    this.overlay.className = 'pp-swap-modal-overlay';
+    this.overlay.id = 'pp-swap-modal-overlay';
+    this.overlay.setAttribute('aria-hidden', 'true');
+
+    // Create modal
+    this.modal = document.createElement('div');
+    this.modal.className = 'pp-swap-modal';
+    this.modal.id = 'pp-swap-modal';
+    this.modal.setAttribute('role', 'dialog');
+    this.modal.setAttribute('aria-modal', 'true');
+    this.modal.setAttribute('aria-labelledby', 'pp-swap-modal-title');
+    this.modal.setAttribute('aria-hidden', 'true');
+
+    // Modal HTML structure
+    this.modal.innerHTML = `
+      <div class="pp-swap-modal__header">
+        <h2 id="pp-swap-modal-title" class="pp-swap-modal__title">
+          Choose Replacement Product
+        </h2>
+        <button class="pp-swap-modal__close" aria-label="Close swap modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="pp-swap-modal__body">
+        <div class="pp-swap-modal__loading">
+          <div class="pp-loading-spinner"></div>
+          <p>Loading products...</p>
+        </div>
+        <div id="pp-swap-products-grid" class="pp-swap-products-grid"></div>
+        <div class="pp-swap-load-more-container">
+          <button id="pp-swap-load-more" class="pp-swap-load-more-btn" style="display: none;">
+            Load More Products
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Append to body
+    document.body.appendChild(this.overlay);
+    document.body.appendChild(this.modal);
+
+    // Store references
+    this.closeButton = this.modal.querySelector('.pp-swap-modal__close');
+    this.contentArea = this.modal.querySelector('.pp-swap-modal__body');
+    this.gridContainer = document.getElementById('pp-swap-products-grid');
+    this.loadMoreButton = document.getElementById('pp-swap-load-more');
+
+    console.log('[PowerPairs Swap] Modal structure created');
+  }
+
+  /**
+   * Initialize event listeners
+   */
+  init() {
+    console.log('[PowerPairs Swap] Initializing');
+
+    // Close button
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', () => this.close(), { passive: true });
+    }
+
+    // Overlay click to close
+    if (this.overlay) {
+      this.overlay.addEventListener('click', () => this.close(), { passive: true });
+    }
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (this.isOpen && (e.key === 'Escape' || e.key === 'Esc')) {
+        console.log('[PowerPairs Swap] ESC key pressed');
+        this.close();
+      }
+    }, { passive: true });
+
+    // Load more button
+    if (this.loadMoreButton) {
+      this.loadMoreButton.addEventListener('click', () => this.loadMoreProducts());
+    }
+
+    console.log('[PowerPairs Swap] Initialized');
+  }
+
+  /**
+   * Open the swap modal
+   * @param {number|null} productId - Product ID to swap (null for add mode)
+   * @param {string} mode - 'swap' or 'add'
+   */
+  async open(productId = null, mode = 'swap') {
+    if (this.isOpen) {
+      console.log('[PowerPairs Swap] Modal already open');
+      return;
+    }
+
+    this.mode = mode;
+    this.currentProductId = productId;
+
+    console.log(`[PowerPairs Swap] Opening modal in ${mode} mode${productId ? ` for product: ${productId}` : ''}`);
+
+    this.previouslyFocusedElement = document.activeElement;
+
+    // Show overlay and modal
+    this.overlay.classList.add('active');
+    this.overlay.setAttribute('aria-hidden', 'false');
+    
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+
+    // Lock scroll
+    document.body.classList.add('pp-swap-modal-open');
+    IOSScrollLock.lock();
+
+    this.isOpen = true;
+
+    // Load products if not already loaded
+    if (this.productsData.length === 0) {
+      await this.loadProducts();
+    } else {
+      // Just render existing products
+      this.renderProducts();
+    }
+
+    // Focus first element
+    setTimeout(() => {
+      this.focusFirstElement();
+      const message = mode === 'add' 
+        ? 'Add product modal opened. Browse products to add to bundle.'
+        : 'Product swap modal opened. Browse replacement products.';
+      announceToScreenReader(message, 'polite');
+    }, 300);
+  }
+
+  /**
+   * Close the swap modal
+   */
+  close() {
+    if (!this.isOpen) {
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Closing modal');
+
+    // Hide modal
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+
+    // Hide overlay
+    this.overlay.classList.remove('active');
+    this.overlay.setAttribute('aria-hidden', 'true');
+
+    // Unlock scroll
+    document.body.classList.remove('pp-swap-modal-open');
+    IOSScrollLock.unlock();
+
+    this.isOpen = false;
+    this.currentProductId = null;
+
+    // Restore focus
+    if (this.previouslyFocusedElement) {
+      this.previouslyFocusedElement.focus();
+      this.previouslyFocusedElement = null;
+    }
+
+    announceToScreenReader('Swap modal closed', 'polite');
+  }
+
+  /**
+   * Load products from Shopify collection
+   */
+  async loadProducts() {
+    console.log('[PowerPairs Swap] Loading products from collection');
+    
+    // Show loading state
+    this.showLoading(true);
+    this.isLoading = true;
+
+    try {
+      // Fetch collection products
+      const response = await fetch('/collections/build-your-own-bundle/products.json?limit=250');
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch products: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      console.log(`[PowerPairs Swap] Fetched ${data.products.length} products`);
+
+      // Process and store products
+      this.productsData = data.products.map(product => {
+        // Get first available variant
+        const firstVariant = product.variants.find(v => v.available) || product.variants[0];
+        
+        // Parse prices - Shopify returns prices as cents (integers)
+        // But products.json returns them as strings like "19.99", so we need to convert to cents
+        const parsePrice = (priceString) => {
+          if (!priceString) return 0;
+          // Convert string price to cents (multiply by 100)
+          const priceFloat = parseFloat(priceString);
+          return Math.round(priceFloat * 100);
+        };
+        
+        return {
+          id: product.id,
+          title: product.title,
+          handle: product.handle,
+          price: parsePrice(firstVariant.price),
+          compareAtPrice: parsePrice(firstVariant.compare_at_price) || parsePrice(firstVariant.price),
+          image: product.images[0]?.src || product.featured_image || '',
+          variants: product.variants.map(v => ({
+            id: v.id,
+            title: v.title,
+            price: parsePrice(v.price),
+            compare_at_price: parsePrice(v.compare_at_price),
+            available: v.available,
+            image: v.featured_image || product.images[0]?.src || ''
+          })),
+          hasVariants: product.variants.length > 1,
+          selectedVariantId: firstVariant.id,
+          selectedVariant: {
+            id: firstVariant.id,
+            title: firstVariant.title,
+            price: parsePrice(firstVariant.price),
+            compare_at_price: parsePrice(firstVariant.compare_at_price),
+            available: firstVariant.available,
+            image: firstVariant.featured_image || product.images[0]?.src || ''
+          }
+        };
+      });
+
+      // Hide loading
+      this.showLoading(false);
+      this.isLoading = false;
+
+      // Render initial products
+      this.displayedCount = 0;
+      this.renderProducts();
+
+      console.log('[PowerPairs Swap] Products loaded successfully');
+
+    } catch (error) {
+      console.error('[PowerPairs Swap] Error loading products:', error);
+      
+      this.showLoading(false);
+      this.isLoading = false;
+      
+      // Show error message
+      this.gridContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+          <p style="color: var(--pp-accent-warning); font-size: 18px; margin-bottom: 12px;">⚠️ Failed to load products</p>
+          <p style="color: var(--pp-text-secondary); margin-bottom: 20px;">${error.message}</p>
+          <button onclick="window.PPSwapModal.loadProducts()" style="padding: 12px 24px; background: var(--pp-accent-primary); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+            Try Again
+          </button>
+        </div>
+      `;
+      
+      announceToScreenReader('Failed to load products. Please try again.', 'assertive');
+    }
+  }
+
+  /**
+   * Render products in grid
+   */
+  renderProducts() {
+    console.log('[PowerPairs Swap] Rendering products');
+
+    // Calculate how many more products to show
+    const endIndex = Math.min(
+      this.displayedCount + this.productsPerLoad,
+      this.productsData.length
+    );
+
+    // Get products to display
+    const productsToShow = this.productsData.slice(0, endIndex);
+
+    console.log(`[PowerPairs Swap] Displaying ${productsToShow.length} of ${this.productsData.length} products`);
+
+    // Generate HTML for product cards
+    const cardsHTML = productsToShow.map(product => {
+      const showComparePrice = product.compareAtPrice && product.compareAtPrice > product.price;
+      
+      return `
+        <div
+          class="pp-swap-product-card"
+          data-product-id="${product.id}"
+          data-action="select-swap-product"
+          role="button"
+          tabindex="0"
+          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+        >
+          <img
+            src="${product.image}"
+            alt="${product.title}"
+            class="pp-swap-product-card__image"
+            loading="lazy"
+          >
+          <h3 class="pp-swap-product-card__title">${product.title}</h3>
+          <div class="pp-swap-product-card__price">
+            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
+            ${this.formatMoney(product.price)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Update grid
+    this.gridContainer.innerHTML = cardsHTML;
+
+    // Update displayed count
+    this.displayedCount = endIndex;
+
+    // Show/hide load more button
+    if (this.displayedCount < this.productsData.length) {
+      this.loadMoreButton.style.display = 'block';
+      this.loadMoreButton.textContent = `Load More Products (${this.productsData.length - this.displayedCount} remaining)`;
+    } else {
+      this.loadMoreButton.style.display = 'none';
+    }
+
+    // Attach click listeners
+    this.attachProductCardListeners();
+  }
+
+  /**
+   * Load more products
+   */
+  loadMoreProducts() {
+    if (this.isLoading || this.displayedCount >= this.productsData.length) {
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Loading more products');
+
+    // Calculate new end index
+    const newEndIndex = Math.min(
+      this.displayedCount + this.productsPerLoad,
+      this.productsData.length
+    );
+
+    // Get additional products
+    const additionalProducts = this.productsData.slice(this.displayedCount, newEndIndex);
+
+    console.log(`[PowerPairs Swap] Adding ${additionalProducts.length} more products`);
+
+    // Generate HTML for new cards
+    const cardsHTML = additionalProducts.map(product => {
+      const showComparePrice = product.compareAtPrice && product.compareAtPrice > product.price;
+      
+      return `
+        <div
+          class="pp-swap-product-card"
+          data-product-id="${product.id}"
+          data-action="select-swap-product"
+          role="button"
+          tabindex="0"
+          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+        >
+          <img
+            src="${product.image}"
+            alt="${product.title}"
+            class="pp-swap-product-card__image"
+            loading="lazy"
+          >
+          <h3 class="pp-swap-product-card__title">${product.title}</h3>
+          <div class="pp-swap-product-card__price">
+            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
+            ${this.formatMoney(product.price)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Append new cards
+    this.gridContainer.insertAdjacentHTML('beforeend', cardsHTML);
+
+    // Update displayed count
+    this.displayedCount = newEndIndex;
+
+    // Update load more button
+    if (this.displayedCount < this.productsData.length) {
+      this.loadMoreButton.textContent = `Load More Products (${this.productsData.length - this.displayedCount} remaining)`;
+    } else {
+      this.loadMoreButton.style.display = 'none';
+    }
+
+    // Attach listeners to new cards
+    this.attachProductCardListeners();
+
+    announceToScreenReader(`Loaded ${additionalProducts.length} more products`, 'polite');
+  }
+
+  /**
+   * Attach click listeners to product cards in swap modal
+   */
+  attachProductCardListeners() {
+    const productCards = this.gridContainer.querySelectorAll('[data-action="select-swap-product"]');
+
+    productCards.forEach(card => {
+      // Remove existing listeners to avoid duplicates
+      const newCard = card.cloneNode(true);
+      card.parentNode.replaceChild(newCard, card);
+
+      // Click listener
+      newCard.addEventListener('click', () => {
+        const productId = newCard.dataset.productId;
+        this.handleProductSelection(productId);
+      });
+
+      // Keyboard support
+      newCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const productId = newCard.dataset.productId;
+          this.handleProductSelection(productId);
+        }
+      });
+    });
+
+    console.log(`[PowerPairs Swap] Attached listeners to ${productCards.length} product cards`);
+  }
+
+  /**
+   * Handle product selection (swap)
+   * @param {number} productId - Selected product ID
+   */
+  handleProductSelection(productId) {
+    console.log(`[PowerPairs Swap] Product selected: ${productId}`);
+    
+    // Find product data
+    const selectedProduct = this.productsData.find(p => p.id == productId);
+    
+    if (!selectedProduct) {
+      console.error('[PowerPairs Swap] Product not found');
+      announceToScreenReader('Error: Product not found', 'assertive');
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Selected product:', selectedProduct.title);
+
+    let success = false;
+    let successMessage = '';
+
+    // Handle based on mode
+    if (this.mode === 'add') {
+      // Add product to bundle
+      success = window.PPState.addProduct(selectedProduct);
+      successMessage = `Added ${selectedProduct.title} to bundle. Price: ${this.formatMoney(selectedProduct.price)}`;
+    } else {
+      // Swap product
+      success = window.PPState.swapProduct(this.currentProductId, selectedProduct);
+      successMessage = `Swapped to ${selectedProduct.title}. Price: ${this.formatMoney(selectedProduct.price)}`;
+    }
+
+    if (!success) {
+      console.error(`[PowerPairs Swap] Failed to ${this.mode} product`);
+      announceToScreenReader(`Failed to ${this.mode} product. Please try again.`, 'assertive');
+      return;
+    }
+
+    // Announce success
+    announceToScreenReader(successMessage, 'polite');
+
+    // Visual feedback - highlight selected card briefly
+    const selectedCard = this.gridContainer.querySelector(`[data-product-id="${productId}"]`);
+    if (selectedCard) {
+      selectedCard.classList.add('pp-swap-product-card--selected');
+    }
+
+    // Close modal after brief delay
+    setTimeout(() => {
+      this.close();
+
+      // Refresh the product grid in expansion manager
+      if (window.PPExpansionManager) {
+        window.PPExpansionManager.refreshProductGrid();
+        window.PPExpansionManager.refreshMultiplierSection();
+        window.PPExpansionManager.refreshPricingHeader();
+        window.PPExpansionManager.refreshBundleCard();
+      }
+    }, 600);
+  }
+
+  /**
+   * Show/hide loading state
+   * @param {boolean} show - Show or hide loading
+   */
+  showLoading(show) {
+    const loadingElement = this.contentArea.querySelector('.pp-swap-modal__loading');
+    if (loadingElement) {
+      loadingElement.style.display = show ? 'flex' : 'none';
+    }
+  }
+
+  /**
+   * Focus first focusable element
+   */
+  focusFirstElement() {
+    const focusableElements = this.modal.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }
+
+  /**
+   * Format money
+   * @param {number} cents - Price in cents
+   * @returns {string} Formatted price
+   */
+  formatMoney(cents) {
+    if (window.Shopify && window.Shopify.formatMoney) {
+      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
+      return window.Shopify.formatMoney(cents, format);
+    }
+    
+    if (window.theme && window.theme.moneyFormat) {
+      const amount = (cents / 100).toFixed(2);
+      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
+    }
+    
+    console.error('[PowerPairs Swap] Currency formatting not available');
+    return '';
+  }
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════
  * EXPANSION MANAGER
  * Handles bottom sheet open/close and content rendering
  * ═══════════════════════════════════════════════════════════
@@ -1456,7 +2362,7 @@ class ExpansionManager {
       button.addEventListener('click', (e) => {
         const bundleId = e.currentTarget.getAttribute('data-bundle-id');
         this.open(bundleId);
-      }, { passive: false }); // Need preventDefault capability
+      }, { passive: false });
     });
     console.log(`[PowerPairs] Found ${buttons.length} CTA buttons`);
   }
@@ -1617,7 +2523,7 @@ class ExpansionManager {
         <div class="pp-pricing-header">
           <div class="pp-pricing-header__row">
             <span class="pp-pricing-header__emoji">💰</span>
-            <span class="pp-pricing-header__current">${this.formatMoney(pricing.finalPrice)}</span>
+            <span class="pp-pricing-header__current">${this.formatMoney(pricing.subtotal)}</span>
             <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
             ${pricing.savings > 0 ? `
               <span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>
@@ -1634,7 +2540,7 @@ class ExpansionManager {
         <div class="pp-products-section-v2">
           <div class="pp-products-section-v2__header">
             <h3 class="pp-products-section-v2__title">📦 Your Bundle</h3>
-            <span class="pp-products-section-v2__count">${bundle.products.length} products</span>
+            <span class="pp-products-section-v2__count">${bundle.baseItemCount} items</span>
           </div>
           <div class="pp-products-grid-v2">
             ${productGridHTML}
@@ -1789,7 +2695,7 @@ class ExpansionManager {
    * @returns {string} HTML string
    */
   renderProductGrid(products) {
-    return products.map(product => {
+    return products.map((product, index) => {
       const indicatorClass = product.variantSelectionComplete ? 'success' : 'warning';
       const indicatorIcon = product.variantSelectionComplete ? '✓' : '!';
       const cardStateClass = product.variantSelectionComplete ?
@@ -1814,6 +2720,8 @@ class ExpansionManager {
         <div
           class="pp-product-compact-card ${cardStateClass}"
           data-product-id="${product.id}"
+          data-product-index="${index}"
+          data-action="select-variant-card"
           role="button"
           tabindex="0"
           aria-label="${statusLabel}"
@@ -1823,6 +2731,54 @@ class ExpansionManager {
           <div class="pp-variant-indicator ${indicatorClass}" role="status" aria-label="${indicatorClass === 'success' ? 'Variant selected' : 'Variant needed'}">
             ${indicatorIcon}
           </div>
+
+          <button
+            class="pp-remove-product-btn"
+            data-action="remove-product"
+            data-product-id="${product.id}"
+            data-product-index="${index}"
+            aria-label="Remove ${product.title} from bundle"
+            title="Remove product"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
+          ${product.isSwapped ? `
+            <button
+              class="pp-undo-swap-btn"
+              data-action="undo-swap"
+              data-product-id="${product.id}"
+              data-product-index="${index}"
+              aria-label="Undo swap and restore ${product.originalProduct?.title || 'original product'}"
+              title="Undo swap"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 7v6h6"></path>
+                <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+              </svg>
+            </button>
+          ` : `
+            <button
+              class="pp-swap-indicator"
+              data-action="swap-product"
+              data-product-id="${product.id}"
+              data-product-index="${index}"
+              aria-label="Swap ${product.title} with another product"
+              title="Swap product"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </button>
+          `}
 
           <img
             src="${product.selectedVariant.image || product.image}"
@@ -1847,7 +2803,18 @@ class ExpansionManager {
           </div>
         </div>
       `;
-    }).join('');
+    }).join('') + `
+      <div
+        class="pp-add-product-tile"
+        data-action="add-product"
+        role="button"
+        tabindex="0"
+        aria-label="Add product to bundle"
+      >
+        <div class="pp-add-product-icon">➕</div>
+        <div class="pp-add-product-text">Add Product</div>
+      </div>
+    `;
   }
 
   /**
@@ -1859,8 +2826,17 @@ class ExpansionManager {
     console.log(`[PowerPairs] Found ${productCards.length} product cards`);
 
     productCards.forEach(card => {
-      // Click listener
+      // Click listener for card (variant selection)
       card.addEventListener('click', (e) => {
+        // Check if click is on swap button, undo button, or remove button
+        const swapButton = e.target.closest('.pp-swap-indicator');
+        const undoButton = e.target.closest('.pp-undo-swap-btn');
+        const removeButton = e.target.closest('.pp-remove-product-btn');
+        
+        if (swapButton || undoButton || removeButton) {
+          return; // Let button handlers handle it
+        }
+
         const productId = card.dataset.productId;
         console.log(`[PowerPairs] Product card clicked: ${productId}`);
 
@@ -1877,6 +2853,368 @@ class ExpansionManager {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           card.click();
+        }
+      });
+    });
+
+    // Attach swap button listeners
+    this.attachSwapButtonListeners();
+
+    // Attach remove button listeners
+    this.attachRemoveButtonListeners();
+
+    // Attach add product tile listener
+    this.attachAddProductTileListener();
+  }
+
+  /**
+   * Attach click listener to add product tile
+   */
+  attachAddProductTileListener() {
+    const addTile = this.contentArea.querySelector('[data-action="add-product"]');
+    
+    if (!addTile) {
+      return;
+    }
+
+    addTile.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      console.log('[PowerPairs] Add product tile clicked');
+
+      // Open swap modal in add mode
+      if (window.PPSwapModal) {
+        window.PPSwapModal.open(null, 'add'); // null productId means add mode
+      } else {
+        console.error('[PowerPairs] Swap modal not initialized');
+        announceToScreenReader('Add product feature not available. Please try again.', 'assertive');
+      }
+    });
+
+    // Keyboard support
+    addTile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        addTile.click();
+      }
+    });
+  }
+
+  /**
+   * Attach click listeners to remove product buttons
+   */
+  attachRemoveButtonListeners() {
+    const removeButtons = this.contentArea.querySelectorAll('[data-action="remove-product"]');
+
+    console.log(`[PowerPairs] Found ${removeButtons.length} remove buttons`);
+
+    removeButtons.forEach(button => {
+      // Remove any existing listeners by cloning
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      newButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        e.preventDefault();
+
+        const productId = newButton.dataset.productId;
+        const productIndex = newButton.dataset.productIndex;
+        
+        console.log(`[PowerPairs] Remove button clicked for product: ${productId}`);
+
+        // Get bundle
+        const bundle = window.PPState.getActiveBundle();
+        if (!bundle) {
+          console.error('[PowerPairs] No active bundle');
+          return;
+        }
+
+        // Validation: Must keep at least 1 product
+        if (bundle.products.length <= 1) {
+          announceToScreenReader('Cannot remove last product. Bundle must have at least 1 product.', 'assertive');
+          return;
+        }
+
+        // Find product
+        const product = bundle.products.find(p => {
+          return p.id == productId || 
+                 p.id === productId || 
+                 String(p.id) === String(productId);
+        });
+
+        if (!product) {
+          console.error('[PowerPairs] Product not found for removal');
+          announceToScreenReader('Product not found. Please try again.', 'assertive');
+          return;
+        }
+
+        // Remove product
+        const removedProductData = window.PPState.removeProduct(productId);
+
+        if (removedProductData) {
+          announceToScreenReader(`${product.title} removed from bundle.`, 'polite');
+          
+          // Show undo notification
+          this.showUndoRemoveNotification(removedProductData);
+          
+          // Refresh UI
+          this.refreshProductGrid();
+          this.refreshMultiplierSection();
+          this.refreshPricingHeader();
+          this.refreshBundleCard();
+        } else {
+          console.error('[PowerPairs] Failed to remove product');
+          announceToScreenReader('Failed to remove product. Please try again.', 'assertive');
+        }
+      });
+    });
+  }
+
+  /**
+   * Show undo notification for removed product
+   * @param {Object} removedProductData - Data of removed product
+   */
+  showUndoRemoveNotification(removedProductData) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'pp-undo-remove-notification';
+    notification.innerHTML = `
+      <span class="pp-undo-remove-text">${removedProductData.title} removed</span>
+      <button class="pp-undo-remove-btn" data-product-data='${JSON.stringify(removedProductData)}'>
+        Undo
+      </button>
+    `;
+
+    // Add to content area
+    this.contentArea.appendChild(notification);
+
+    // Show notification
+    setTimeout(() => {
+      notification.classList.add('active');
+    }, 100);
+
+    // Attach undo button listener
+    const undoBtn = notification.querySelector('.pp-undo-remove-btn');
+    undoBtn.addEventListener('click', () => {
+      this.handleUndoRemove(removedProductData);
+      notification.remove();
+    });
+
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      notification.classList.remove('active');
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 300);
+    }, 5000);
+  }
+
+  /**
+   * Handle undo remove action
+   * @param {Object} removedProductData - Data of removed product
+   */
+  handleUndoRemove(removedProductData) {
+    console.log('[PowerPairs] Undoing product removal:', removedProductData.title);
+
+    // Add product back using addProduct method
+    const success = window.PPState.addProduct(removedProductData);
+
+    if (success) {
+      announceToScreenReader(`${removedProductData.title} restored to bundle.`, 'polite');
+      
+      // Refresh UI
+      this.refreshProductGrid();
+      this.refreshMultiplierSection();
+      this.refreshPricingHeader();
+      this.refreshBundleCard();
+    } else {
+      console.error('[PowerPairs] Failed to undo remove');
+      announceToScreenReader('Failed to restore product. Please try again.', 'assertive');
+    }
+  }
+
+  /**
+   * Attach click listeners to swap and undo buttons
+   */
+  attachSwapButtonListeners() {
+    const swapButtons = this.contentArea.querySelectorAll('[data-action="swap-product"]');
+    const undoButtons = this.contentArea.querySelectorAll('[data-action="undo-swap"]');
+
+    console.log(`[PowerPairs] Found ${swapButtons.length} swap buttons and ${undoButtons.length} undo buttons`);
+
+    // Swap buttons - use event delegation to avoid stale listeners
+    swapButtons.forEach(button => {
+      // Remove any existing listeners by cloning
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      newButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        e.preventDefault();
+
+        const productId = newButton.dataset.productId;
+        console.log(`[PowerPairs] Swap button clicked for product: ${productId}`);
+
+        // Open swap modal with the current product ID
+        if (window.PPSwapModal) {
+          window.PPSwapModal.open(productId);
+        } else {
+          console.warn('[PowerPairs] Swap modal not yet initialized');
+          announceToScreenReader('Product swap feature coming soon', 'polite');
+        }
+      });
+    });
+
+    // Undo buttons - use event delegation to avoid stale listeners
+    undoButtons.forEach(button => {
+      // Remove any existing listeners by cloning
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      newButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        e.preventDefault();
+
+        const swappedProductId = newButton.dataset.productId;
+        const productIndex = newButton.dataset.productIndex;
+        
+        console.log(`[PowerPairs] Undo swap button clicked:`, {
+          swappedProductId,
+          productIndex,
+          button: newButton
+        });
+
+        // Get the bundle
+        const bundle = window.PPState.getActiveBundle();
+        if (!bundle) {
+          console.error('[PowerPairs] No active bundle');
+          announceToScreenReader('Error: Bundle not found. Please try again.', 'assertive');
+          return;
+        }
+
+        // Try multiple methods to find the product
+        let product = null;
+        let foundIndex = -1;
+
+        // Method 1: Use product index if available (most reliable)
+        if (productIndex !== undefined && productIndex !== null) {
+          const index = parseInt(productIndex, 10);
+          if (!isNaN(index) && index >= 0 && index < bundle.products.length) {
+            product = bundle.products[index];
+            foundIndex = index;
+            console.log(`[PowerPairs] Found product by index: ${index}`, product);
+          }
+        }
+
+        // Method 2: Find by ID (fallback)
+        if (!product && swappedProductId) {
+          foundIndex = bundle.products.findIndex(p => {
+            // Try both string and number comparison
+            return p.id == swappedProductId || 
+                   p.id === swappedProductId || 
+                   String(p.id) === String(swappedProductId);
+          });
+          
+          if (foundIndex !== -1) {
+            product = bundle.products[foundIndex];
+            console.log(`[PowerPairs] Found product by ID: ${swappedProductId} at index ${foundIndex}`, product);
+          }
+        }
+
+        // Method 3: Find any swapped product with originalProduct (last resort)
+        if (!product) {
+          foundIndex = bundle.products.findIndex(p => {
+            return p.isSwapped === true && p.originalProduct !== null;
+          });
+          
+          if (foundIndex !== -1) {
+            product = bundle.products[foundIndex];
+            console.log(`[PowerPairs] Found swapped product by fallback at index ${foundIndex}`, product);
+          }
+        }
+
+        // Validate product found
+        if (!product || foundIndex === -1) {
+          console.error('[PowerPairs] Product not found for undo:', {
+            swappedProductId,
+            productIndex,
+            availableProducts: bundle.products.map((p, i) => ({
+              index: i,
+              id: p.id,
+              title: p.title,
+              isSwapped: p.isSwapped,
+              hasOriginal: !!p.originalProduct
+            }))
+          });
+          announceToScreenReader('Failed to find product. Please try again.', 'assertive');
+          return;
+        }
+
+        // Enhanced validation: Check if product can be undone
+        const canUndo = product.isSwapped === true || 
+                       (product.originalProduct !== null && product.originalProduct !== undefined);
+
+        if (!canUndo) {
+          console.warn('[PowerPairs] Product cannot be undone:', {
+            product: product.title,
+            isSwapped: product.isSwapped,
+            hasOriginal: !!product.originalProduct,
+            productData: product
+          });
+          announceToScreenReader('This product has not been swapped or cannot be undone.', 'polite');
+          return;
+        }
+
+        // If isSwapped is false but originalProduct exists, fix the state
+        if (!product.isSwapped && product.originalProduct) {
+          console.warn('[PowerPairs] Fixing inconsistent swap state for:', product.title);
+          product.isSwapped = true;
+        }
+
+        console.log('[PowerPairs] Undoing swap for product:', {
+          index: foundIndex,
+          currentTitle: product.title,
+          originalTitle: product.originalProduct?.title,
+          isSwapped: product.isSwapped
+        });
+
+        // Perform undo - try multiple methods
+        let undoSuccess = false;
+
+        // Try by ID first
+        if (swappedProductId) {
+          undoSuccess = window.PPState.undoSwap(swappedProductId);
+        }
+
+        // If that failed, try by index
+        if (!undoSuccess && foundIndex !== -1) {
+          // Use the product's current ID
+          undoSuccess = window.PPState.undoSwap(product.id);
+        }
+
+        // If still failed, try direct restoration
+        if (!undoSuccess && product.originalProduct) {
+          console.log('[PowerPairs] Attempting direct restoration...');
+          undoSuccess = window.PPState.undoSwap(product.id);
+        }
+
+        if (undoSuccess) {
+          const originalTitle = product.originalProduct?.title || 'Original product';
+          announceToScreenReader(`Swap undone. ${originalTitle} restored.`, 'polite');
+          
+          // Refresh UI
+          this.refreshProductGrid();
+          this.refreshMultiplierSection();
+          this.refreshPricingHeader();
+          this.refreshBundleCard();
+          
+          console.log('[PowerPairs] Undo successful');
+        } else {
+          console.error('[PowerPairs] All undo methods failed');
+          announceToScreenReader('Failed to undo swap. Please refresh the page and try again.', 'assertive');
         }
       });
     });
@@ -1903,6 +3241,9 @@ class ExpansionManager {
 
     // Find the status message container
     const statusContainer = this.contentArea.querySelector('.pp-variant-status-message');
+    
+    // Find the products count element
+    const countElement = this.contentArea.querySelector('.pp-products-section-v2__count');
 
     // Add loading state
     gridContainer.style.opacity = '0.5';
@@ -1910,6 +3251,14 @@ class ExpansionManager {
 
     // Use a short timeout to ensure smooth transition
     setTimeout(() => {
+      // Recalculate baseItemCount to ensure it's accurate
+      bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+      
+      // Update products count
+      if (countElement) {
+        countElement.textContent = `${bundle.baseItemCount} items`;
+      }
+      
       // Update status message
       const incompleteCount = bundle.products.filter(p => !p.variantSelectionComplete).length;
       const allComplete = bundle.variantsComplete;
@@ -1930,6 +3279,9 @@ class ExpansionManager {
       // Re-attach event listeners
       this.attachProductCardListeners();
 
+      // Re-attach add product tile listener
+      this.attachAddProductTileListener();
+
       // Update summary section if exists
       const summaryElement = this.contentArea.querySelector('.pp-sheet-summary');
       if (summaryElement) {
@@ -1937,11 +3289,178 @@ class ExpansionManager {
         summaryElement.outerHTML = this.renderSheetSummary(bundle, pricing);
       }
 
+      // Update pricing header (after swap)
+      this.refreshPricingHeader();
+
       // Also refresh multiplier section and CTA (pricing may have changed)
       this.refreshMultiplierSection();
 
+      // Update bundle card on main page
+      this.refreshBundleCard();
+
       console.log('[PowerPairs] Product grid refreshed successfully');
     }, 200);
+  }
+
+  /**
+   * Refresh pricing header after product changes
+   */
+  refreshPricingHeader() {
+    const bundle = window.PPState.getActiveBundle();
+    if (!bundle) {
+      console.error('[PowerPairs] No active bundle to refresh pricing header');
+      return;
+    }
+
+    const pricingHeader = this.contentArea.querySelector('.pp-pricing-header');
+    if (!pricingHeader) {
+      console.warn('[PowerPairs] Pricing header not found');
+      return;
+    }
+
+    // Recalculate pricing (this also recalculates baseSubtotal internally)
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Manual calculation check for debugging
+    const manualSum = bundle.products.reduce((sum, product) => {
+      if (product.selectedVariant && product.selectedVariant.price) {
+        const productTotal = product.selectedVariant.price * product.quantity;
+        return sum + productTotal;
+      }
+      return sum;
+    }, 0);
+
+    console.log('[PowerPairs Pricing Header Refresh]', {
+      manualSum: manualSum,
+      bundleBaseSubtotal: bundle.baseSubtotal,
+      pricingSubtotal: pricing.subtotal,
+      multiplier: bundle.multiplier,
+      expectedSubtotal: manualSum * bundle.multiplier,
+      match: Math.abs(manualSum * bundle.multiplier - pricing.subtotal) < 1 // Allow 1 cent difference for rounding
+    });
+
+    // Update current price (subtotal before tier discount)
+    const currentPriceElement = pricingHeader.querySelector('.pp-pricing-header__current');
+    if (currentPriceElement) {
+      currentPriceElement.textContent = this.formatMoney(pricing.subtotal);
+    }
+
+    // Update crossed price
+    const crossedPriceElement = pricingHeader.querySelector('.pp-pricing-header__crossed');
+    if (crossedPriceElement) {
+      crossedPriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+    }
+
+    // Update savings
+    const savingsElement = pricingHeader.querySelector('.pp-pricing-header__savings');
+    if (pricing.savings > 0) {
+      if (savingsElement) {
+        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}!`;
+      } else {
+        // Savings element doesn't exist, create it
+        const savingsHTML = `<span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>`;
+        const rowElement = pricingHeader.querySelector('.pp-pricing-header__row');
+        if (rowElement) {
+          rowElement.insertAdjacentHTML('beforeend', savingsHTML);
+        }
+      }
+    } else if (savingsElement) {
+      // Remove savings if it's 0 or negative
+      savingsElement.remove();
+    }
+
+    // Update tier info
+    const tierElement = pricingHeader.querySelector('.pp-pricing-header__tier span:last-child');
+    if (tierElement) {
+      tierElement.textContent = `Tier ${pricing.achievedTier || bundle.tier || 1}: Unlock ${pricing.discountPercent}% OFF (${pricing.totalItems} items)`;
+    }
+
+    console.log('[PowerPairs] Pricing header refreshed:', {
+      finalPrice: pricing.finalPrice,
+      compareAtSubtotal: pricing.compareAtSubtotal,
+      savings: pricing.savings
+    });
+  }
+
+  /**
+   * Update bundle card on main page with current bundle information
+   */
+  refreshBundleCard() {
+    const bundle = window.PPState.getActiveBundle();
+    if (!bundle) {
+      console.warn('[PowerPairs] No active bundle to refresh card');
+      return;
+    }
+
+    // Find bundle card by data-bundle-id
+    const bundleCard = document.querySelector(`.pp-bundle-card[data-bundle-id="${bundle.id}"]`);
+    if (!bundleCard) {
+      console.warn(`[PowerPairs] Bundle card not found for bundle: ${bundle.id}`);
+      return;
+    }
+
+    // Calculate current pricing
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Update item count
+    const itemCountElement = bundleCard.querySelector('.pp-bundle-card__item-count');
+    if (itemCountElement) {
+      itemCountElement.textContent = bundle.baseItemCount;
+    }
+
+    // Update current price
+    const priceElement = bundleCard.querySelector('.pp-bundle-card__price');
+    if (priceElement) {
+      priceElement.textContent = this.formatMoney(pricing.subtotal);
+    }
+
+    // Update compare price
+    const comparePriceElement = bundleCard.querySelector('.pp-bundle-card__compare-price');
+    if (pricing.compareAtSubtotal > pricing.subtotal) {
+      if (comparePriceElement) {
+        comparePriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+        comparePriceElement.style.display = '';
+      } else {
+        // Create compare price element if it doesn't exist
+        const pricesContainer = bundleCard.querySelector('.pp-bundle-card__prices');
+        if (pricesContainer) {
+          const newComparePrice = document.createElement('span');
+          newComparePrice.className = 'pp-bundle-card__compare-price';
+          newComparePrice.textContent = this.formatMoney(pricing.compareAtSubtotal);
+          pricesContainer.appendChild(newComparePrice);
+        }
+      }
+    } else if (comparePriceElement) {
+      comparePriceElement.style.display = 'none';
+    }
+
+    // Update savings
+    const savingsElement = bundleCard.querySelector('.pp-bundle-card__savings');
+    if (pricing.savings > 0) {
+      if (savingsElement) {
+        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+        savingsElement.style.display = '';
+      } else {
+        // Create savings element if it doesn't exist
+        const pricingContainer = bundleCard.querySelector('.pp-bundle-card__pricing');
+        if (pricingContainer) {
+          const newSavings = document.createElement('div');
+          newSavings.className = 'pp-bundle-card__savings';
+          newSavings.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+          pricingContainer.appendChild(newSavings);
+        }
+      }
+    } else if (savingsElement) {
+      savingsElement.style.display = 'none';
+    }
+
+    console.log('[PowerPairs] Bundle card refreshed:', {
+      bundleId: bundle.id,
+      itemCount: bundle.baseItemCount,
+      price: pricing.subtotal,
+      comparePrice: pricing.compareAtSubtotal,
+      savings: pricing.savings
+    });
   }
 
   /**
@@ -2022,10 +3541,20 @@ class ExpansionManager {
     const isDisabled = !allComplete;
     const buttonText = isDisabled
       ? 'Select Variants First'
-      : `Add ${bundle.multiplier}x Kit to Cart`;
+      : `Buy ${bundle.multiplier}x Kit Now`;
 
     return `
       <div class="pp-sheet-cta-fixed">
+        <button
+          class="pp-sheet-cta__button-deal"
+          data-action="add-to-deal"
+          ${isDisabled ? 'disabled' : ''}
+          aria-label="Add ${pricing.totalItems} items to deal"
+        >
+          <span class="pp-cta-icon">➕</span>
+          <span class="pp-cta-text">Add ${pricing.totalItems} Items to Deal</span>
+          <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
+        </button>
         <button
           class="pp-sheet-cta__button-main"
           data-action="add-to-cart"
@@ -2033,7 +3562,7 @@ class ExpansionManager {
           aria-label="${buttonText}"
         >
           <span class="pp-cta-icon">🛒</span>
-          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Add ${pricing.totalItems} Items`}</span>
+          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Buy ${pricing.totalItems} Items Now`}</span>
           <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
           <span class="pp-cta-arrow">→</span>
         </button>
@@ -2113,6 +3642,9 @@ class ExpansionManager {
 
     // Refresh multiplier section and CTA
     this.refreshMultiplierSection();
+    
+    // Update bundle card on main page
+    this.refreshBundleCard();
   }
 
   /**
@@ -2172,24 +3704,113 @@ class ExpansionManager {
   }
 
   /**
-   * Attach click listener to Add to Cart button
+   * Attach click listeners to CTA buttons
    */
   attachCTAListener() {
     const ctaContainer = document.getElementById('pp-sheet-cta-container');
-    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
-
-    if (!ctaButton) {
+    if (!ctaContainer) {
       return;
     }
 
-    console.log('[PowerPairs] Attaching listener to CTA button');
+    // Add to Deal button (adds to sticky cart and closes modal)
+    const dealButton = ctaContainer.querySelector('[data-action="add-to-deal"]');
+    if (dealButton) {
+      console.log('[PowerPairs] Attaching listener to Add to Deal button');
+      
+      dealButton.addEventListener('click', (e) => {
+        console.log('[PowerPairs] Add to Deal clicked');
+        this.handleAddToDeal();
+      });
+    }
 
-    ctaButton.addEventListener('click', (e) => {
-      console.log('[PowerPairs] Add to Cart clicked');
+    // Add to Cart button (goes to checkout)
+    const ctaButton = ctaContainer.querySelector('[data-action="add-to-cart"]');
+    if (ctaButton) {
+      console.log('[PowerPairs] Attaching listener to Add to Cart button');
 
-      // Placeholder - will implement in Prompt 12
-      this.handleAddToCart();
-    });
+      ctaButton.addEventListener('click', (e) => {
+        console.log('[PowerPairs] Add to Cart clicked');
+        this.handleAddToCart();
+      });
+    }
+  }
+
+  /**
+   * Handle add to deal (adds to sticky cart and closes modal)
+   */
+  async handleAddToDeal() {
+    console.log('[PowerPairs] Add to Deal initiated');
+
+    const bundle = window.PPState.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs] No active bundle');
+      this.showError('Bundle not found. Please try again.');
+      return;
+    }
+
+    // Double-check variants are complete
+    if (!bundle.variantsComplete) {
+      console.error('[PowerPairs] Variants not complete');
+      this.showError('Please select all product variants first.');
+      return;
+    }
+
+    // Calculate final pricing
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Show loading overlay
+    this.showLoadingOverlay('Adding to deal...', 'Preparing your bundle');
+
+    // Disable both buttons
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    const dealButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-deal"]') : null;
+    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
+    
+    if (dealButton) {
+      dealButton.classList.add('pp-sheet-cta__button--loading');
+      dealButton.disabled = true;
+    }
+    if (ctaButton) {
+      ctaButton.disabled = true;
+    }
+
+    try {
+      // Prepare cart items
+      const cartItems = this.prepareCartItems(bundle, pricing);
+
+      console.log('[PowerPairs] Adding items to deal:', cartItems);
+
+      // Add items to cart (sticky cart will update automatically)
+      await this.addItemsToCart(cartItems);
+
+      console.log('[PowerPairs] Items added to deal successfully');
+
+      // Hide loading overlay
+      this.hideLoadingOverlay();
+
+      // Show brief success message
+      announceToScreenReader(`Added ${pricing.totalItems} items to deal`, 'polite');
+
+      // Close modal after brief delay
+      setTimeout(() => {
+        this.close();
+      }, 500);
+
+    } catch (error) {
+      console.error('[PowerPairs] Add to deal failed:', error);
+      this.hideLoadingOverlay();
+      this.showError(error.message || 'Failed to add to deal. Please try again.');
+
+      // Re-enable buttons
+      if (dealButton) {
+        dealButton.classList.remove('pp-sheet-cta__button--loading');
+        dealButton.disabled = false;
+      }
+      if (ctaButton) {
+        ctaButton.disabled = false;
+      }
+    }
   }
 
   /**
@@ -2219,8 +3840,14 @@ class ExpansionManager {
     // Show loading overlay
     this.showLoadingOverlay('Adding to cart...', 'Preparing your bundle');
 
-    // Disable CTA button
-    const ctaButton = this.contentArea.querySelector('[data-action="add-to-cart"]');
+    // Disable both buttons
+    const ctaContainer = document.getElementById('pp-sheet-cta-container');
+    const dealButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-deal"]') : null;
+    const ctaButton = ctaContainer ? ctaContainer.querySelector('[data-action="add-to-cart"]') : null;
+    
+    if (dealButton) {
+      dealButton.disabled = true;
+    }
     if (ctaButton) {
       ctaButton.classList.add('pp-sheet-cta__button--loading');
       ctaButton.disabled = true;
@@ -2253,7 +3880,10 @@ class ExpansionManager {
       this.hideLoadingOverlay();
       this.showError(error.message || 'Failed to add to cart. Please try again.');
 
-      // Re-enable button
+      // Re-enable buttons
+      if (dealButton) {
+        dealButton.disabled = false;
+      }
       if (ctaButton) {
         ctaButton.classList.remove('pp-sheet-cta__button--loading');
         ctaButton.disabled = false;
@@ -2272,7 +3902,7 @@ class ExpansionManager {
 
     // Add bundle products with multiplier
     bundle.products.forEach(product => {
-      items.push({
+      const cartItem = {
         id: product.selectedVariantId,
         quantity: product.quantity * bundle.multiplier,
         properties: {
@@ -2281,7 +3911,16 @@ class ExpansionManager {
           '_bundle_tier': pricing.achievedTier,
           '_bundle_multiplier': bundle.multiplier
         }
-      });
+      };
+
+      // Add swap tracking if product was swapped
+      if (product.isSwapped && product.originalProduct) {
+        cartItem.properties['_swapped'] = 'true';
+        cartItem.properties['_original_product_id'] = product.originalProduct.id;
+        cartItem.properties['_original_product_title'] = product.originalProduct.title;
+      }
+
+      items.push(cartItem);
     });
 
     console.log(`[PowerPairs] Prepared ${items.length} bundle items`);
@@ -2570,6 +4209,13 @@ class ExpansionManager {
    * @returns {Object} Pricing details
    */
   calculateBundlePricing(bundle) {
+    // Recalculate baseSubtotal to ensure it's always accurate
+    // This fixes any potential sync issues between state and display
+    bundle.baseSubtotal = window.PPState.calculateBaseSubtotal(bundle.products);
+    
+    // Recalculate baseItemCount to ensure it's always accurate
+    bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+    
     // Calculate total items with multiplier
     const totalItems = bundle.baseItemCount * bundle.multiplier;
 
@@ -2582,17 +4228,33 @@ class ExpansionManager {
     // Calculate compare-at subtotal (for crossed price display)
     const compareAtSubtotal = window.PPState.calculateCompareAtSubtotal(bundle.products) * bundle.multiplier;
     
-    // Calculate regular subtotal (current prices)
+    // Calculate regular subtotal (current prices) - BEFORE tier discount
     const subtotal = bundle.baseSubtotal * bundle.multiplier;
     
     // Calculate final price with tier discount applied to regular price
     const finalPrice = Math.round(subtotal * tierMultiplier);
     
-    // Calculate savings from compare-at price
-    const savings = compareAtSubtotal - finalPrice;
+    // Calculate savings: simply crossed minus current (no tier discount logic)
+    const savings = compareAtSubtotal - subtotal;
 
     // Calculate discount percentage
     const discountPercent = Math.round((1 - tierMultiplier) * 100);
+
+    // Debug logging
+    console.log('[PowerPairs Pricing Debug]', {
+      baseSubtotal: bundle.baseSubtotal,
+      multiplier: bundle.multiplier,
+      subtotal: subtotal,
+      tierMultiplier: tierMultiplier,
+      finalPrice: finalPrice,
+      compareAtSubtotal: compareAtSubtotal,
+      productsPrices: bundle.products.map(p => ({
+        title: p.title,
+        variantPrice: p.selectedVariant.price,
+        quantity: p.quantity,
+        total: p.selectedVariant.price * p.quantity
+      }))
+    });
 
     return {
       totalItems,
@@ -2760,6 +4422,9 @@ function initPowerPairs() {
   // Create global variant modal instance
   window.PPVariantModal = new VariantModal();
 
+  // Create global swap modal instance
+  window.PPSwapModal = new SwapModal();
+
   // Create global expansion manager instance
   window.PPExpansionManager = new ExpansionManager();
 
@@ -2824,3 +4489,4 @@ if (document.readyState === 'loading') {
 }
 
 })();
+

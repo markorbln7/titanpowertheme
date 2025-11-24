@@ -856,25 +856,34 @@ class PowerPairsState {
 
     console.log(`[PowerPairs State] Swapping product: ${product.title} -> ${newProductData.title}`);
 
-    // Store original product data if not already swapped
-    if (!product.isSwapped) {
+    // Store original product data - ALWAYS store it to ensure undo works
+    // If already swapped, preserve the original originalProduct (don't overwrite)
+    if (!product.originalProduct) {
       product.originalProduct = {
         id: product.id,
         title: product.title,
         handle: product.handle,
         image: product.image,
         price: product.price,
-        compareAtPrice: product.compareAtPrice,
-        variants: product.variants,
+        compareAtPrice: product.compareAtPrice || product.price,
+        variants: product.variants ? [...product.variants] : [],
         hasVariants: product.hasVariants,
         selectedVariantId: product.selectedVariantId,
-        selectedVariant: product.selectedVariant,
+        selectedVariant: product.selectedVariant ? { ...product.selectedVariant } : null,
         variantSelectionComplete: product.variantSelectionComplete,
         quantity: product.quantity,
         rating: product.rating,
         reviewCount: product.reviewCount,
         isBestSeller: product.isBestSeller
       };
+      
+      console.log('[PowerPairs State] Stored original product data:', {
+        id: product.originalProduct.id,
+        title: product.originalProduct.title,
+        hasSelectedVariant: !!product.originalProduct.selectedVariant
+      });
+    } else {
+      console.log('[PowerPairs State] Original product data already stored, preserving it');
     }
 
     // Update product with new data (keeping quantity and other bundle-specific settings)
@@ -891,6 +900,17 @@ class PowerPairsState {
     product.variantSelectionComplete = true; // Auto-complete since we selected a product
     product.isSwapped = true;
 
+    // Validation: Ensure swap state is correct
+    if (!product.originalProduct) {
+      console.error('[PowerPairs State] CRITICAL: originalProduct is missing after swap!');
+      return false;
+    }
+
+    if (!product.isSwapped) {
+      console.error('[PowerPairs State] CRITICAL: isSwapped flag not set after swap!');
+      product.isSwapped = true; // Fix it
+    }
+
     // Recalculate bundle completion status
     bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
 
@@ -898,15 +918,27 @@ class PowerPairsState {
     bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
     bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
 
-    console.log('[PowerPairs State] Product swapped successfully');
-    console.log('[PowerPairs State] New base subtotal:', bundle.baseSubtotal);
+    console.log('[PowerPairs State] Product swapped successfully', {
+      newProduct: {
+        id: product.id,
+        title: product.title,
+        price: product.price
+      },
+      originalProduct: {
+        id: product.originalProduct.id,
+        title: product.originalProduct.title
+      },
+      isSwapped: product.isSwapped,
+      hasOriginal: !!product.originalProduct,
+      baseSubtotal: bundle.baseSubtotal
+    });
 
     return true;
   }
 
   /**
    * Undo a product swap and restore original
-   * @param {number} currentProductId - ID of current (swapped) product
+   * @param {number|string} currentProductId - ID of current (swapped) product
    */
   undoSwap(currentProductId) {
     const bundle = this.getActiveBundle();
@@ -916,34 +948,81 @@ class PowerPairsState {
       return false;
     }
 
-    const product = bundle.products.find(p => p.id == currentProductId);
+    // Try multiple ways to find the product
+    let product = null;
+
+    // Method 1: Find by ID (try both string and number comparison)
+    product = bundle.products.find(p => {
+      return p.id == currentProductId || 
+             p.id === currentProductId || 
+             String(p.id) === String(currentProductId);
+    });
+
+    // Method 2: If not found, try to find any swapped product (fallback)
+    if (!product) {
+      product = bundle.products.find(p => {
+        return (p.isSwapped === true || p.originalProduct) && 
+               (String(p.id) === String(currentProductId) || p.id == currentProductId);
+      });
+    }
 
     if (!product) {
-      console.error(`[PowerPairs State] Product not found: ${currentProductId}`);
+      console.error(`[PowerPairs State] Product not found: ${currentProductId}`, {
+        searchedId: currentProductId,
+        availableProducts: bundle.products.map(p => ({
+          id: p.id,
+          title: p.title,
+          isSwapped: p.isSwapped,
+          hasOriginal: !!p.originalProduct
+        }))
+      });
       return false;
     }
 
-    if (!product.isSwapped || !product.originalProduct) {
-      console.log('[PowerPairs State] Product has not been swapped');
+    // Enhanced validation: Check if product can be undone
+    // Allow undo if originalProduct exists, even if isSwapped flag is inconsistent
+    if (!product.originalProduct) {
+      console.error('[PowerPairs State] Product has no original data to restore:', {
+        productId: product.id,
+        title: product.title,
+        isSwapped: product.isSwapped,
+        hasOriginal: false
+      });
       return false;
     }
 
-    console.log(`[PowerPairs State] Undoing swap: ${product.title} -> ${product.originalProduct.title}`);
+    // Fix inconsistent state if needed
+    if (!product.isSwapped && product.originalProduct) {
+      console.warn('[PowerPairs State] Fixing inconsistent swap state for:', product.title);
+      product.isSwapped = true;
+    }
 
     const original = product.originalProduct;
+
+    // Validate original data
+    if (!original.id || !original.title) {
+      console.error('[PowerPairs State] Original product data is invalid:', original);
+      return false;
+    }
+
+    console.log(`[PowerPairs State] Undoing swap: ${product.title} -> ${original.title}`);
 
     // Restore original product data
     product.id = original.id;
     product.title = original.title;
-    product.handle = original.handle;
-    product.image = original.image;
+    product.handle = original.handle || product.handle;
+    product.image = original.image || product.image;
     product.price = original.price;
-    product.compareAtPrice = original.compareAtPrice;
-    product.variants = original.variants;
-    product.hasVariants = original.hasVariants;
+    product.compareAtPrice = original.compareAtPrice || original.price;
+    product.variants = original.variants || product.variants;
+    product.hasVariants = original.hasVariants !== undefined ? original.hasVariants : product.hasVariants;
     product.selectedVariantId = original.selectedVariantId;
-    product.selectedVariant = original.selectedVariant;
-    product.variantSelectionComplete = original.variantSelectionComplete;
+    product.selectedVariant = original.selectedVariant || product.selectedVariant;
+    product.variantSelectionComplete = original.variantSelectionComplete !== undefined 
+      ? original.variantSelectionComplete 
+      : product.variantSelectionComplete;
+    
+    // Clear swap state
     product.isSwapped = false;
     product.originalProduct = null;
 
@@ -954,8 +1033,14 @@ class PowerPairsState {
     bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
     bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
 
-    console.log('[PowerPairs State] Swap undone successfully');
-    console.log('[PowerPairs State] Restored base subtotal:', bundle.baseSubtotal);
+    console.log('[PowerPairs State] Swap undone successfully', {
+      restoredProduct: {
+        id: product.id,
+        title: product.title,
+        price: product.price
+      },
+      baseSubtotal: bundle.baseSubtotal
+    });
 
     return true;
   }
@@ -2313,7 +2398,7 @@ class ExpansionManager {
         <div class="pp-products-section-v2">
           <div class="pp-products-section-v2__header">
             <h3 class="pp-products-section-v2__title">📦 Your Bundle</h3>
-            <span class="pp-products-section-v2__count">${bundle.products.length} products</span>
+            <span class="pp-products-section-v2__count">${bundle.baseItemCount} items</span>
           </div>
           <div class="pp-products-grid-v2">
             ${productGridHTML}
@@ -2649,46 +2734,141 @@ class ExpansionManager {
         e.preventDefault();
 
         const swappedProductId = newButton.dataset.productId;
-        console.log(`[PowerPairs] Undo swap button clicked for swapped product: ${swappedProductId}`);
+        const productIndex = newButton.dataset.productIndex;
+        
+        console.log(`[PowerPairs] Undo swap button clicked:`, {
+          swappedProductId,
+          productIndex,
+          button: newButton
+        });
 
-        // Get the bundle to find the product by position rather than ID
+        // Get the bundle
         const bundle = window.PPState.getActiveBundle();
         if (!bundle) {
           console.error('[PowerPairs] No active bundle');
+          announceToScreenReader('Error: Bundle not found. Please try again.', 'assertive');
           return;
         }
 
-        // Find the product that currently has this ID (the swapped one)
-        const productIndex = bundle.products.findIndex(p => p.id == swappedProductId);
-        
-        if (productIndex === -1) {
-          console.error('[PowerPairs] Product not found with ID:', swappedProductId);
+        // Try multiple methods to find the product
+        let product = null;
+        let foundIndex = -1;
+
+        // Method 1: Use product index if available (most reliable)
+        if (productIndex !== undefined && productIndex !== null) {
+          const index = parseInt(productIndex, 10);
+          if (!isNaN(index) && index >= 0 && index < bundle.products.length) {
+            product = bundle.products[index];
+            foundIndex = index;
+            console.log(`[PowerPairs] Found product by index: ${index}`, product);
+          }
+        }
+
+        // Method 2: Find by ID (fallback)
+        if (!product && swappedProductId) {
+          foundIndex = bundle.products.findIndex(p => {
+            // Try both string and number comparison
+            return p.id == swappedProductId || 
+                   p.id === swappedProductId || 
+                   String(p.id) === String(swappedProductId);
+          });
+          
+          if (foundIndex !== -1) {
+            product = bundle.products[foundIndex];
+            console.log(`[PowerPairs] Found product by ID: ${swappedProductId} at index ${foundIndex}`, product);
+          }
+        }
+
+        // Method 3: Find any swapped product with originalProduct (last resort)
+        if (!product) {
+          foundIndex = bundle.products.findIndex(p => {
+            return p.isSwapped === true && p.originalProduct !== null;
+          });
+          
+          if (foundIndex !== -1) {
+            product = bundle.products[foundIndex];
+            console.log(`[PowerPairs] Found swapped product by fallback at index ${foundIndex}`, product);
+          }
+        }
+
+        // Validate product found
+        if (!product || foundIndex === -1) {
+          console.error('[PowerPairs] Product not found for undo:', {
+            swappedProductId,
+            productIndex,
+            availableProducts: bundle.products.map((p, i) => ({
+              index: i,
+              id: p.id,
+              title: p.title,
+              isSwapped: p.isSwapped,
+              hasOriginal: !!p.originalProduct
+            }))
+          });
           announceToScreenReader('Failed to find product. Please try again.', 'assertive');
           return;
         }
 
-        const product = bundle.products[productIndex];
-        
-        if (!product.isSwapped) {
-          console.warn('[PowerPairs] Product is not swapped:', product.title);
-          announceToScreenReader('This product has not been swapped.', 'polite');
+        // Enhanced validation: Check if product can be undone
+        const canUndo = product.isSwapped === true || 
+                       (product.originalProduct !== null && product.originalProduct !== undefined);
+
+        if (!canUndo) {
+          console.warn('[PowerPairs] Product cannot be undone:', {
+            product: product.title,
+            isSwapped: product.isSwapped,
+            hasOriginal: !!product.originalProduct,
+            productData: product
+          });
+          announceToScreenReader('This product has not been swapped or cannot be undone.', 'polite');
           return;
         }
 
-        console.log('[PowerPairs] Undoing swap for product at index:', productIndex);
+        // If isSwapped is false but originalProduct exists, fix the state
+        if (!product.isSwapped && product.originalProduct) {
+          console.warn('[PowerPairs] Fixing inconsistent swap state for:', product.title);
+          product.isSwapped = true;
+        }
 
-        // Perform undo using the swapped product ID
-        const undoSuccess = window.PPState.undoSwap(swappedProductId);
+        console.log('[PowerPairs] Undoing swap for product:', {
+          index: foundIndex,
+          currentTitle: product.title,
+          originalTitle: product.originalProduct?.title,
+          isSwapped: product.isSwapped
+        });
+
+        // Perform undo - try multiple methods
+        let undoSuccess = false;
+
+        // Try by ID first
+        if (swappedProductId) {
+          undoSuccess = window.PPState.undoSwap(swappedProductId);
+        }
+
+        // If that failed, try by index
+        if (!undoSuccess && foundIndex !== -1) {
+          // Use the product's current ID
+          undoSuccess = window.PPState.undoSwap(product.id);
+        }
+
+        // If still failed, try direct restoration
+        if (!undoSuccess && product.originalProduct) {
+          console.log('[PowerPairs] Attempting direct restoration...');
+          undoSuccess = window.PPState.undoSwap(product.id);
+        }
 
         if (undoSuccess) {
-          announceToScreenReader(`Swap undone. ${product.originalProduct?.title || 'Original product'} restored.`, 'polite');
+          const originalTitle = product.originalProduct?.title || 'Original product';
+          announceToScreenReader(`Swap undone. ${originalTitle} restored.`, 'polite');
           
           // Refresh UI
           this.refreshProductGrid();
           this.refreshMultiplierSection();
+          this.refreshPricingHeader();
+          
+          console.log('[PowerPairs] Undo successful');
         } else {
-          console.error('[PowerPairs] Failed to undo swap');
-          announceToScreenReader('Failed to undo swap. Please try again.', 'assertive');
+          console.error('[PowerPairs] All undo methods failed');
+          announceToScreenReader('Failed to undo swap. Please refresh the page and try again.', 'assertive');
         }
       });
     });
@@ -2715,6 +2895,9 @@ class ExpansionManager {
 
     // Find the status message container
     const statusContainer = this.contentArea.querySelector('.pp-variant-status-message');
+    
+    // Find the products count element
+    const countElement = this.contentArea.querySelector('.pp-products-section-v2__count');
 
     // Add loading state
     gridContainer.style.opacity = '0.5';
@@ -2722,6 +2905,14 @@ class ExpansionManager {
 
     // Use a short timeout to ensure smooth transition
     setTimeout(() => {
+      // Recalculate baseItemCount to ensure it's accurate
+      bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+      
+      // Update products count
+      if (countElement) {
+        countElement.textContent = `${bundle.baseItemCount} items`;
+      }
+      
       // Update status message
       const incompleteCount = bundle.products.filter(p => !p.variantSelectionComplete).length;
       const allComplete = bundle.variantsComplete;
@@ -3477,6 +3668,9 @@ class ExpansionManager {
     // Recalculate baseSubtotal to ensure it's always accurate
     // This fixes any potential sync issues between state and display
     bundle.baseSubtotal = window.PPState.calculateBaseSubtotal(bundle.products);
+    
+    // Recalculate baseItemCount to ensure it's always accurate
+    bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
     
     // Calculate total items with multiplier
     const totalItems = bundle.baseItemCount * bundle.multiplier;

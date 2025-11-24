@@ -1474,6 +1474,45 @@ class CartManager {
                 console.log('✅ Cart response:', data);
               }
 
+              // After main product added, add selected upsells
+              const selectedUpsells = this.manager.getSelectedUpsells();
+              if (selectedUpsells.length > 0) {
+                if (this.config.debug) {
+                  console.log(`🛒 Adding ${selectedUpsells.length} selected upsell(s)...`);
+                }
+
+                const product = window.productData[this.state.get('productId')];
+                for (const upsell of selectedUpsells) {
+                  try {
+                    await fetch('/cart/add.js', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        id: upsell.variantId,
+                        quantity: 1,
+                        properties: {
+                          '_bf25_upsell': 'true',
+                          '_added_with': product.title
+                        }
+                      })
+                    });
+
+                    if (this.config.debug) {
+                      console.log(`✅ Upsell added: ${upsell.title}`);
+                    }
+                  } catch (upsellError) {
+                    console.error(`[BF25 Modal] Failed to add upsell ${upsell.title}:`, upsellError);
+                    // Continue with other upsells even if one fails
+                  }
+                }
+
+                // Clear selections after adding
+                this.manager.clearUpsellSelections();
+              }
+
               this.handleSuccess(data);
               return { success: true, data };
             } else {
@@ -2526,6 +2565,9 @@ class ExpansionManager {
       if (this.config.debug) {
         console.log('🚪 Closing Modal');
       }
+
+      // Clear upsell selections when modal closes
+      this.clearUpsellSelections();
 
       // ─────────────────────────────────────────────────────────────────
       // MEMORY CLEANUP (Prompt 12)
@@ -4226,30 +4268,117 @@ class ExpansionManager {
   }
 
   /**
-   * Bind upsell add button events
-   * Added: BF25-DESC-005
+   * Bind upsell card toggle events
+   * Updated: BF25-UPSELL-TOGGLE - Changed from navigation to selection toggle
    */
   bindUpsellEvents() {
-    const upsellButtons = this.container.querySelectorAll('.bf25-upsell-add');
+    const upsellCards = this.container.querySelectorAll('.bf25-upsell-card');
 
-    upsellButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const upsellUrl = button.dataset.upsellUrl;
+    // Initialize selected upsells tracking
+    if (!this.selectedUpsells) {
+      this.selectedUpsells = new Map();
+    }
 
-        if (upsellUrl) {
-          // Navigate to upsell product page
-          window.location.href = upsellUrl;
+    upsellCards.forEach(card => {
+      // Click handler for entire card
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggleUpsellSelection(card);
+      });
 
-          if (this.config.debug) {
-            console.log('🔗 Navigating to upsell:', upsellUrl);
-          }
+      // Keyboard accessibility (Enter/Space to toggle)
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.toggleUpsellSelection(card);
         }
       });
     });
 
-    if (this.config.debug && upsellButtons.length > 0) {
-      console.log(`✅ ${upsellButtons.length} upsell buttons bound`);
+    if (this.config.debug && upsellCards.length > 0) {
+      console.log(`✅ ${upsellCards.length} upsell cards bound for toggle selection`);
     }
+  }
+
+  /**
+   * Toggle upsell selection state
+   * @param {HTMLElement} card - The upsell card element
+   */
+  toggleUpsellSelection(card) {
+    const variantId = card.dataset.variantId;
+    const productId = card.dataset.productId;
+    const title = card.dataset.upsellTitle;
+    const price = parseInt(card.dataset.upsellPrice, 10);
+
+    if (!variantId) {
+      console.error('[BF25 Modal] No variant ID for upsell:', title);
+      return;
+    }
+
+    const isSelected = card.classList.contains('is-selected');
+
+    if (isSelected) {
+      // Deselect
+      card.classList.remove('is-selected');
+      card.setAttribute('aria-checked', 'false');
+      this.selectedUpsells.delete(variantId);
+
+      if (this.config.debug) {
+        console.log(`❌ Upsell deselected: ${title}`);
+      }
+    } else {
+      // Select
+      card.classList.add('is-selected');
+      card.setAttribute('aria-checked', 'true');
+      this.selectedUpsells.set(variantId, {
+        variantId: parseInt(variantId, 10),
+        productId: parseInt(productId, 10),
+        title: title,
+        price: price
+      });
+
+      if (this.config.debug) {
+        console.log(`✅ Upsell selected: ${title}`);
+      }
+    }
+
+    // Emit event for analytics
+    this.emitCartEvent('bf25:upsell:toggled', {
+      variantId,
+      title,
+      selected: !isSelected,
+      totalSelected: this.selectedUpsells.size
+    });
+
+    if (this.config.debug) {
+      console.log(`📦 Selected upsells (${this.selectedUpsells.size}):`,
+        Array.from(this.selectedUpsells.values()).map(u => u.title)
+      );
+    }
+  }
+
+  /**
+   * Get all selected upsells for cart addition
+   * @returns {Array} Array of selected upsell objects
+   */
+  getSelectedUpsells() {
+    return Array.from(this.selectedUpsells?.values() || []);
+  }
+
+  /**
+   * Clear all upsell selections (called when modal closes)
+   */
+  clearUpsellSelections() {
+    if (this.selectedUpsells) {
+      this.selectedUpsells.clear();
+    }
+
+    // Reset visual state
+    const selectedCards = this.container?.querySelectorAll('.bf25-upsell-card.is-selected');
+    selectedCards?.forEach(card => {
+      card.classList.remove('is-selected');
+      card.setAttribute('aria-checked', 'false');
+    });
   }
 
   // ═══════════════════════════════════════════════════════════════════
@@ -4688,8 +4817,23 @@ class ExpansionManager {
               ? this.formatPrice(upsell.comparePrice)
               : '';
 
+            // Use variantId if available, fallback to id (product ID)
+            const variantId = upsell.variantId || upsell.variant_id || upsell.id;
+
             return `
-              <div class="bf25-upsell-card" data-product-id="${upsell.id}">
+              <div class="bf25-upsell-card"
+                   data-product-id="${upsell.id}"
+                   data-variant-id="${variantId}"
+                   data-upsell-title="${upsell.title}"
+                   data-upsell-price="${upsell.price}"
+                   role="checkbox"
+                   aria-checked="false"
+                   tabindex="0">
+                <div class="bf25-upsell-checkbox">
+                  <svg class="bf25-upsell-check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
                 <div class="bf25-upsell-image">
                   ${discount > 0 ? `<span class="bf25-upsell-badge">${discount}% OFF</span>` : ''}
                   <img src="${upsell.image}" alt="${upsell.title}" loading="lazy">
@@ -4701,19 +4845,13 @@ class ExpansionManager {
                     ${comparePrice ? `<span class="bf25-text-sm bf25-text-tertiary" style="text-decoration: line-through;">${comparePrice}</span>` : ''}
                   </div>
                 </div>
-                <button class="bf25-upsell-add" type="button" data-upsell-url="${upsell.url}">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                  Add
-                </button>
               </div>
             `;
           }).join('');
 
           return `
             <div class="bf25-upsells-section bf25-mb-4 bf25-reveal-stagger-2">
-              <h3 class="bf25-upsells-title bf25-text-md bf25-text-primary bf25-mb-3">You May Also Like</h3>
+              <h3 class="bf25-upsells-title bf25-text-md bf25-text-primary bf25-mb-3">Pairs Well With</h3>
               <div class="bf25-upsells-grid">
                 ${upsellCards}
               </div>

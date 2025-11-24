@@ -158,12 +158,17 @@
     animate(tier) {
       // Skip if already celebrated this session
       if (this.celebratedTiers.has(tier)) {
-        console.log(`[GiftAnimator] Tier ${tier} already celebrated this session`);
+        console.log(`[GiftAnimator] Tier ${tier} already celebrated (skipping)`);
         return;
       }
 
       console.log(`[GiftAnimator] Queueing tier ${tier} for animation`);
       this.queue.add(tier);
+
+      // Log multi-tier queue detection
+      if (this.queue.size > 1) {
+        console.log(`[GiftAnimator] Multi-tier queue detected: ${Array.from(this.queue).sort().join(', ')}`);
+      }
 
       if (!this.isAnimating) {
         this.processQueue();
@@ -171,7 +176,7 @@
     }
 
     /**
-     * Process animation queue
+     * Process animation queue with staged reveal (0.3s stagger)
      */
     async processQueue() {
       if (this.queue.size === 0) {
@@ -179,26 +184,64 @@
         return;
       }
 
-      // Get highest tier (jump to max strategy)
-      const targetTier = Math.max(...Array.from(this.queue));
+      console.log(`[GiftAnimator] Processing queue with ${this.queue.size} tier(s)`);
+
+      // CRITICAL: Get ALL tiers in queue, sorted ascending (Tier 1, 2, 3, 4)
+      const tiersToAnimate = Array.from(this.queue).sort((a, b) => a - b);
       this.queue.clear();
 
-      console.log(`[GiftAnimator] Animating tier ${targetTier}`);
       this.isAnimating = true;
 
-      try {
-        await this.executeSequence(targetTier);
+      // Performance monitoring
+      console.time('[GiftAnimator] Multi-tier sequence');
+      console.log(`[GiftAnimator] Staged Reveal: ${tiersToAnimate.length} tier(s) - ${tiersToAnimate.join(', ')}`);
 
-        // Mark as celebrated
-        this.celebratedTiers.add(targetTier);
+      // Calculate total duration for user feedback
+      const totalDuration = 1.8 + ((tiersToAnimate.length - 1) * 0.3);
+      console.log(`[GiftAnimator] Expected completion: ${totalDuration.toFixed(1)}s`);
+
+      try {
+        // STAGED REVEAL: Launch animations with 0.3s stagger
+        const animationPromises = tiersToAnimate.map((tier, index) => {
+          const staggerDelay = index * 300; // 0ms, 300ms, 600ms, 900ms...
+
+          return new Promise((resolve) => {
+            setTimeout(async () => {
+              console.log(`[GiftAnimator] Starting tier ${tier} animation (stagger: ${staggerDelay}ms)`);
+
+              try {
+                await this.executeSequence(tier);
+                this.celebratedTiers.add(tier);
+                console.log(`[GiftAnimator] ✓ Tier ${tier} complete`);
+                resolve();
+              } catch (error) {
+                console.error(`[GiftAnimator] ✗ Tier ${tier} failed:`, error);
+                resolve(); // Don't block other animations
+              }
+            }, staggerDelay);
+          });
+        });
+
+        // Wait for ALL animations to complete
+        await Promise.all(animationPromises);
+
+        // Save celebrated tiers after all complete
         this.saveCelebratedTiers();
 
+        console.timeEnd('[GiftAnimator] Multi-tier sequence');
+        console.log(`[GiftAnimator] ✓ Staged Reveal complete - ${tiersToAnimate.length} tier(s) animated`);
+
       } catch (error) {
-        console.error('[GiftAnimator] Animation error:', error);
+        console.error('[GiftAnimator] Staged Reveal error:', error);
       }
 
       this.isAnimating = false;
-      this.processQueue(); // Process next in queue
+
+      // Process any new unlocks that were queued during animation
+      if (this.queue.size > 0) {
+        console.log('[GiftAnimator] Processing additional queued tiers...');
+        this.processQueue();
+      }
     }
 
     /**

@@ -726,10 +726,16 @@
     }
 
     /**
-     * Execute 6-frame animation sequence
+     * Execute premium gift unlock animation sequence
+     * Uses CSS-driven animations from Prompt 6.1
+     *
+     * Timeline:
+     * 0-600ms: Shake → Burst (CSS keyframe: bf25GiftUnlockBurst)
+     * 300ms: Trigger electric sparks
+     * 500-3500ms: Product bubble visible (CSS keyframe: bf25BubbleSequence)
+     * 3500ms+: Sustained glow pulse
      */
     async executeSequence(tier) {
-      // Find gift slot for this tier
       const checkpoint = this.getCheckpointForTier(tier);
       const slot = document.querySelector(
         `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
@@ -740,62 +746,148 @@
         return;
       }
 
+      // Prevent re-triggering
+      if (slot.classList.contains('is-celebrating') || slot.dataset.state === 'claimed') {
+        console.log(`[GiftAnimator] Tier ${tier} already animating or claimed, skipping`);
+        return;
+      }
+
       // Performance monitoring
       window.BF25Performance.startOperation(`giftAnimation-tier${tier}`);
       window.BF25Performance.startFPSTracking(`tier-${tier}-unlock`);
-      console.time(`[GiftAnimator] Tier ${tier} animation`);
-      console.log(`[GiftAnimator] Starting optimized sequence for tier ${tier} (1.8s target)`);
+      console.log(`[GiftAnimator] 🎁 Starting celebration for Tier ${tier}`);
 
-      // Add animating class
-      slot.classList.add('is-animating');
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 1: Populate product bubble with gift data
+      // ─────────────────────────────────────────────────────────────────
+      this.populateProductBubble(slot);
 
-      // FRAME 2: Energize (0.3s) - OPTIMIZED from 0.4s
-      slot.classList.add('is-unlocking');
-      await this.wait(300);
-      slot.classList.remove('is-unlocking');
-
-      // FRAME 3: Morph/Burst (0.3s) - OPTIMIZED from 0.4s
-      slot.classList.add('is-revealing');
-      await this.wait(300);
-      slot.classList.remove('is-revealing');
-
-      // FRAME 4: Celebration Peak + Value Flash (0.9s total) - UNCHANGED
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 2: Trigger CSS animation sequence
+      // Adding .is-celebrating triggers:
+      // - bf25GiftUnlockBurst (shake → burst → glow)
+      // - bf25BubbleSequence (fade in → hold → fade out)
+      // ─────────────────────────────────────────────────────────────────
       slot.classList.add('is-celebrating');
+      slot.dataset.state = 'claimed'; // Update state for CSS
 
-      // Brief pause before Value Flash
-      await this.wait(100);
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 3: Trigger effects at key moments
+      // ─────────────────────────────────────────────────────────────────
 
-      // Trigger Value Flash + Announcement
+      // Electric sparks at burst peak (300ms into animation)
+      setTimeout(() => {
+        this.triggerElectricSparks(slot, tier);
+      }, 300);
+
+      // Confetti for Tier 4 MAX celebration
+      if (tier === 4) {
+        setTimeout(() => {
+          this.triggerConfetti(tier, checkpoint);
+        }, 400);
+      }
+
+      // Accessibility announcement
       this.announceGift(tier);
-      slot.classList.add('is-flashing');
-      console.log(`[GiftAnimator] Value Flash + Confetti triggered for tier ${tier}`);
 
-      // Stagger confetti slightly after Value Flash
-      await this.wait(200);
-      this.triggerConfetti(tier, checkpoint);
+      // Value flash (legacy support)
+      setTimeout(() => {
+        slot.classList.add('is-flashing');
+      }, 100);
 
-      // Wait for Value Flash to complete (900ms total for Frame 4)
-      await this.wait(600);
+      setTimeout(() => {
+        slot.classList.remove('is-flashing');
+      }, 1000);
+
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 4: Cleanup after animation completes (3.5s total)
+      // ─────────────────────────────────────────────────────────────────
+      await this.wait(3500);
 
       slot.classList.remove('is-celebrating');
-      slot.classList.remove('is-flashing');
 
-      // FRAME 5: Settle (0.3s) - UNCHANGED
-      slot.classList.add('is-settling');
-      await this.wait(300);
-      slot.classList.remove('is-settling');
+      // Force reflow to ensure glow pulse animation starts correctly
+      const wrapper = slot.querySelector('.bf25sc-gift-icon-wrapper');
+      if (wrapper) {
+        wrapper.style.animation = 'none';
+        void wrapper.offsetHeight; // Trigger reflow
+        wrapper.style.animation = '';
+      }
 
-      // FRAME 6: Claimed (instant)
-      slot.dataset.state = 'claimed';
-      slot.classList.remove('is-animating');
-
-      console.timeEnd(`[GiftAnimator] Tier ${tier} animation`);
-
-      // Stop performance tracking
+      // Performance tracking complete
       const fps = window.BF25Performance.stopFPSTracking();
-      const duration = window.BF25Performance.endOperation(`giftAnimation-tier${tier}`, 1800);
+      const duration = window.BF25Performance.endOperation(`giftAnimation-tier${tier}`, 3500);
 
-      console.log(`[GiftAnimator] ✓ Complete - FPS: ${fps.toFixed(1)}, Duration: ${duration.toFixed(0)}ms`);
+      console.log(`[GiftAnimator] ✓ Tier ${tier} complete - FPS: ${fps.toFixed(1)}, Duration: ${duration.toFixed(0)}ms`);
+    }
+
+    /**
+     * Populate the product bubble with gift data from slot attributes
+     */
+    populateProductBubble(slot) {
+      const bubble = slot.querySelector('.bf25sc-product-bubble');
+      if (!bubble) return;
+
+      const name = slot.dataset.productName;
+      const image = slot.dataset.productImage;
+
+      const titleEl = bubble.querySelector('.bf25sc-bubble-title');
+      if (titleEl && name) {
+        titleEl.textContent = name;
+      }
+
+      const imgEl = bubble.querySelector('.bf25sc-bubble-image');
+      if (imgEl && image) {
+        imgEl.src = image;
+        imgEl.alt = name || 'Free Gift';
+      }
+    }
+
+    /**
+     * Trigger electric spark particle effect (GPU-optimized)
+     * Particles burst outward from the gift icon
+     */
+    triggerElectricSparks(slot, tier) {
+      const container = slot.querySelector('.bf25sc-particle-container');
+      if (!container) return;
+
+      // Intensity scales with tier
+      const sparkCounts = { 1: 12, 2: 18, 3: 25, 4: 40 };
+      const sparkCount = sparkCounts[tier] || 12;
+      const maxDistance = 30 + (tier * 8);
+
+      // Get tier color for sparks
+      const tierColor = getComputedStyle(slot).getPropertyValue('--bf25sc-tier-color') || '#60c655';
+
+      for (let i = 0; i < sparkCount; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'bf25sc-spark';
+
+        // Random angle and distance
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 15 + Math.random() * maxDistance;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const rotation = (angle * 180 / Math.PI) + 90;
+
+        // Set CSS custom properties for animation
+        spark.style.setProperty('--tx', `${tx}px`);
+        spark.style.setProperty('--ty', `${ty}px`);
+        spark.style.setProperty('--rotation', `${rotation}deg`);
+        spark.style.setProperty('--spark-color', tierColor);
+
+        // Stagger start times for more natural effect
+        spark.style.animationDelay = `${Math.random() * 100}ms`;
+
+        container.appendChild(spark);
+      }
+
+      // Cleanup after animation (800ms)
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 900);
+
+      console.log(`[GiftAnimator] ⚡ ${sparkCount} sparks triggered for Tier ${tier}`);
     }
 
     /**

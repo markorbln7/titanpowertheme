@@ -525,6 +525,49 @@
 }
 
 /* ───────────────────────────────────────────────────────────────────
+   ELECTRIC SPARK PARTICLES
+   GPU-accelerated burst effect on gift unlock
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 6px;
+  background: var(--spark-color, var(--bf25-color-unlocked));
+  border-radius: 1px;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px var(--spark-color, var(--bf25-color-unlocked));
+  will-change: transform, opacity;
+  animation: bf25SparkBurst 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bf25SparkBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    filter: brightness(1.5);
+  }
+  30% {
+    filter: brightness(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rotation));
+    filter: brightness(1);
+  }
+}
+
+/* Reduced motion: No particle effects */
+@media (prefers-reduced-motion: reduce) {
+  .bf25sc-spark {
+    display: none !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
    HIDE OLD EMOJI ELEMENTS (backwards compatibility)
    ─────────────────────────────────────────────────────────────────── */
 

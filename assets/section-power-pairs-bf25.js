@@ -653,13 +653,17 @@ class PowerPairsState {
         // Default to first variant
         const defaultVariant = product.variants[0];
 
-        return {
+        const processedProduct = {
           ...product,
           selectedVariantId: defaultVariant.id,
           selectedVariant: defaultVariant,
           variantSelected: !product.hasVariants, // Auto-complete if no variants
-          variantSelectionComplete: !product.hasVariants
+          variantSelectionComplete: !product.hasVariants,
+          isSwapped: false, // Track if product has been swapped
+          originalProduct: null // Store original product data for undo
         };
+
+        return processedProduct;
       });
 
       // Check if all variants are selected
@@ -826,6 +830,134 @@ class PowerPairsState {
    */
   getAllBundles() {
     return this.bundles;
+  }
+
+  /**
+   * Swap a product with a new one
+   * @param {number} originalProductId - ID of product to swap out
+   * @param {Object} newProductData - New product data from swap modal
+   */
+  swapProduct(originalProductId, newProductData) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    const productIndex = bundle.products.findIndex(p => p.id == originalProductId);
+
+    if (productIndex === -1) {
+      console.error(`[PowerPairs State] Product not found: ${originalProductId}`);
+      return false;
+    }
+
+    const product = bundle.products[productIndex];
+
+    console.log(`[PowerPairs State] Swapping product: ${product.title} -> ${newProductData.title}`);
+
+    // Store original product data if not already swapped
+    if (!product.isSwapped) {
+      product.originalProduct = {
+        id: product.id,
+        title: product.title,
+        handle: product.handle,
+        image: product.image,
+        price: product.price,
+        compareAtPrice: product.compareAtPrice,
+        variants: product.variants,
+        hasVariants: product.hasVariants,
+        selectedVariantId: product.selectedVariantId,
+        selectedVariant: product.selectedVariant,
+        variantSelectionComplete: product.variantSelectionComplete,
+        quantity: product.quantity,
+        rating: product.rating,
+        reviewCount: product.reviewCount,
+        isBestSeller: product.isBestSeller
+      };
+    }
+
+    // Update product with new data (keeping quantity and other bundle-specific settings)
+    product.id = newProductData.id;
+    product.title = newProductData.title;
+    product.handle = newProductData.handle;
+    product.image = newProductData.image;
+    product.price = newProductData.price;
+    product.compareAtPrice = newProductData.compareAtPrice;
+    product.variants = newProductData.variants;
+    product.hasVariants = newProductData.hasVariants;
+    product.selectedVariantId = newProductData.selectedVariantId;
+    product.selectedVariant = newProductData.selectedVariant;
+    product.variantSelectionComplete = true; // Auto-complete since we selected a product
+    product.isSwapped = true;
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+
+    console.log('[PowerPairs State] Product swapped successfully');
+    console.log('[PowerPairs State] New base subtotal:', bundle.baseSubtotal);
+
+    return true;
+  }
+
+  /**
+   * Undo a product swap and restore original
+   * @param {number} currentProductId - ID of current (swapped) product
+   */
+  undoSwap(currentProductId) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    const product = bundle.products.find(p => p.id == currentProductId);
+
+    if (!product) {
+      console.error(`[PowerPairs State] Product not found: ${currentProductId}`);
+      return false;
+    }
+
+    if (!product.isSwapped || !product.originalProduct) {
+      console.log('[PowerPairs State] Product has not been swapped');
+      return false;
+    }
+
+    console.log(`[PowerPairs State] Undoing swap: ${product.title} -> ${product.originalProduct.title}`);
+
+    const original = product.originalProduct;
+
+    // Restore original product data
+    product.id = original.id;
+    product.title = original.title;
+    product.handle = original.handle;
+    product.image = original.image;
+    product.price = original.price;
+    product.compareAtPrice = original.compareAtPrice;
+    product.variants = original.variants;
+    product.hasVariants = original.hasVariants;
+    product.selectedVariantId = original.selectedVariantId;
+    product.selectedVariant = original.selectedVariant;
+    product.variantSelectionComplete = original.variantSelectionComplete;
+    product.isSwapped = false;
+    product.originalProduct = null;
+
+    // Recalculate bundle completion status
+    bundle.variantsComplete = this.checkVariantsComplete(bundle.products);
+
+    // Recalculate pricing
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+
+    console.log('[PowerPairs State] Swap undone successfully');
+    console.log('[PowerPairs State] Restored base subtotal:', bundle.baseSubtotal);
+
+    return true;
   }
 }
 
@@ -1386,6 +1518,551 @@ class VariantModal {
 
 /**
  * ═══════════════════════════════════════════════════════════
+ * SWAP MODAL MANAGER
+ * Handles product swap functionality with full-screen modal
+ * ═══════════════════════════════════════════════════════════
+ */
+class SwapModal {
+  constructor() {
+    this.modal = null;
+    this.overlay = null;
+    this.closeButton = null;
+    this.contentArea = null;
+    this.gridContainer = null;
+    this.loadMoreButton = null;
+    
+    this.currentProductId = null;
+    this.isOpen = false;
+    this.isLoading = false;
+    this.productsData = [];
+    this.displayedCount = 0;
+    this.productsPerLoad = 20;
+    this.previouslyFocusedElement = null;
+
+    this.createModalStructure();
+    this.init();
+  }
+
+  /**
+   * Create modal DOM structure
+   */
+  createModalStructure() {
+    console.log('[PowerPairs Swap] Creating modal structure');
+
+    // Create overlay
+    this.overlay = document.createElement('div');
+    this.overlay.className = 'pp-swap-modal-overlay';
+    this.overlay.id = 'pp-swap-modal-overlay';
+    this.overlay.setAttribute('aria-hidden', 'true');
+
+    // Create modal
+    this.modal = document.createElement('div');
+    this.modal.className = 'pp-swap-modal';
+    this.modal.id = 'pp-swap-modal';
+    this.modal.setAttribute('role', 'dialog');
+    this.modal.setAttribute('aria-modal', 'true');
+    this.modal.setAttribute('aria-labelledby', 'pp-swap-modal-title');
+    this.modal.setAttribute('aria-hidden', 'true');
+
+    // Modal HTML structure
+    this.modal.innerHTML = `
+      <div class="pp-swap-modal__header">
+        <h2 id="pp-swap-modal-title" class="pp-swap-modal__title">
+          Choose Replacement Product
+        </h2>
+        <button class="pp-swap-modal__close" aria-label="Close swap modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="pp-swap-modal__body">
+        <div class="pp-swap-modal__loading">
+          <div class="pp-loading-spinner"></div>
+          <p>Loading products...</p>
+        </div>
+        <div id="pp-swap-products-grid" class="pp-swap-products-grid"></div>
+        <div class="pp-swap-load-more-container">
+          <button id="pp-swap-load-more" class="pp-swap-load-more-btn" style="display: none;">
+            Load More Products
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Append to body
+    document.body.appendChild(this.overlay);
+    document.body.appendChild(this.modal);
+
+    // Store references
+    this.closeButton = this.modal.querySelector('.pp-swap-modal__close');
+    this.contentArea = this.modal.querySelector('.pp-swap-modal__body');
+    this.gridContainer = document.getElementById('pp-swap-products-grid');
+    this.loadMoreButton = document.getElementById('pp-swap-load-more');
+
+    console.log('[PowerPairs Swap] Modal structure created');
+  }
+
+  /**
+   * Initialize event listeners
+   */
+  init() {
+    console.log('[PowerPairs Swap] Initializing');
+
+    // Close button
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', () => this.close(), { passive: true });
+    }
+
+    // Overlay click to close
+    if (this.overlay) {
+      this.overlay.addEventListener('click', () => this.close(), { passive: true });
+    }
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (this.isOpen && (e.key === 'Escape' || e.key === 'Esc')) {
+        console.log('[PowerPairs Swap] ESC key pressed');
+        this.close();
+      }
+    }, { passive: true });
+
+    // Load more button
+    if (this.loadMoreButton) {
+      this.loadMoreButton.addEventListener('click', () => this.loadMoreProducts());
+    }
+
+    console.log('[PowerPairs Swap] Initialized');
+  }
+
+  /**
+   * Open the swap modal
+   * @param {number} productId - Product ID to swap
+   */
+  async open(productId) {
+    if (this.isOpen) {
+      console.log('[PowerPairs Swap] Modal already open');
+      return;
+    }
+
+    console.log(`[PowerPairs Swap] Opening modal for product: ${productId}`);
+
+    this.currentProductId = productId;
+    this.previouslyFocusedElement = document.activeElement;
+
+    // Show overlay and modal
+    this.overlay.classList.add('active');
+    this.overlay.setAttribute('aria-hidden', 'false');
+    
+    this.modal.classList.add('active');
+    this.modal.setAttribute('aria-hidden', 'false');
+
+    // Lock scroll
+    document.body.classList.add('pp-swap-modal-open');
+    IOSScrollLock.lock();
+
+    this.isOpen = true;
+
+    // Load products if not already loaded
+    if (this.productsData.length === 0) {
+      await this.loadProducts();
+    } else {
+      // Just render existing products
+      this.renderProducts();
+    }
+
+    // Focus first element
+    setTimeout(() => {
+      this.focusFirstElement();
+      announceToScreenReader('Product swap modal opened. Browse replacement products.', 'polite');
+    }, 300);
+  }
+
+  /**
+   * Close the swap modal
+   */
+  close() {
+    if (!this.isOpen) {
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Closing modal');
+
+    // Hide modal
+    this.modal.classList.remove('active');
+    this.modal.setAttribute('aria-hidden', 'true');
+
+    // Hide overlay
+    this.overlay.classList.remove('active');
+    this.overlay.setAttribute('aria-hidden', 'true');
+
+    // Unlock scroll
+    document.body.classList.remove('pp-swap-modal-open');
+    IOSScrollLock.unlock();
+
+    this.isOpen = false;
+    this.currentProductId = null;
+
+    // Restore focus
+    if (this.previouslyFocusedElement) {
+      this.previouslyFocusedElement.focus();
+      this.previouslyFocusedElement = null;
+    }
+
+    announceToScreenReader('Swap modal closed', 'polite');
+  }
+
+  /**
+   * Load products from Shopify collection
+   */
+  async loadProducts() {
+    console.log('[PowerPairs Swap] Loading products from collection');
+    
+    // Show loading state
+    this.showLoading(true);
+    this.isLoading = true;
+
+    try {
+      // Fetch collection products
+      const response = await fetch('/collections/build-your-own-bundle/products.json?limit=250');
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch products: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      console.log(`[PowerPairs Swap] Fetched ${data.products.length} products`);
+
+      // Process and store products
+      this.productsData = data.products.map(product => {
+        // Get first available variant
+        const firstVariant = product.variants.find(v => v.available) || product.variants[0];
+        
+        // Parse prices - Shopify returns prices as cents (integers)
+        // But products.json returns them as strings like "19.99", so we need to convert to cents
+        const parsePrice = (priceString) => {
+          if (!priceString) return 0;
+          // Convert string price to cents (multiply by 100)
+          const priceFloat = parseFloat(priceString);
+          return Math.round(priceFloat * 100);
+        };
+        
+        return {
+          id: product.id,
+          title: product.title,
+          handle: product.handle,
+          price: parsePrice(firstVariant.price),
+          compareAtPrice: parsePrice(firstVariant.compare_at_price) || parsePrice(firstVariant.price),
+          image: product.images[0]?.src || product.featured_image || '',
+          variants: product.variants.map(v => ({
+            id: v.id,
+            title: v.title,
+            price: parsePrice(v.price),
+            compare_at_price: parsePrice(v.compare_at_price),
+            available: v.available,
+            image: v.featured_image || product.images[0]?.src || ''
+          })),
+          hasVariants: product.variants.length > 1,
+          selectedVariantId: firstVariant.id,
+          selectedVariant: {
+            id: firstVariant.id,
+            title: firstVariant.title,
+            price: parsePrice(firstVariant.price),
+            compare_at_price: parsePrice(firstVariant.compare_at_price),
+            available: firstVariant.available,
+            image: firstVariant.featured_image || product.images[0]?.src || ''
+          }
+        };
+      });
+
+      // Hide loading
+      this.showLoading(false);
+      this.isLoading = false;
+
+      // Render initial products
+      this.displayedCount = 0;
+      this.renderProducts();
+
+      console.log('[PowerPairs Swap] Products loaded successfully');
+
+    } catch (error) {
+      console.error('[PowerPairs Swap] Error loading products:', error);
+      
+      this.showLoading(false);
+      this.isLoading = false;
+      
+      // Show error message
+      this.gridContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+          <p style="color: var(--pp-accent-warning); font-size: 18px; margin-bottom: 12px;">⚠️ Failed to load products</p>
+          <p style="color: var(--pp-text-secondary); margin-bottom: 20px;">${error.message}</p>
+          <button onclick="window.PPSwapModal.loadProducts()" style="padding: 12px 24px; background: var(--pp-accent-primary); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+            Try Again
+          </button>
+        </div>
+      `;
+      
+      announceToScreenReader('Failed to load products. Please try again.', 'assertive');
+    }
+  }
+
+  /**
+   * Render products in grid
+   */
+  renderProducts() {
+    console.log('[PowerPairs Swap] Rendering products');
+
+    // Calculate how many more products to show
+    const endIndex = Math.min(
+      this.displayedCount + this.productsPerLoad,
+      this.productsData.length
+    );
+
+    // Get products to display
+    const productsToShow = this.productsData.slice(0, endIndex);
+
+    console.log(`[PowerPairs Swap] Displaying ${productsToShow.length} of ${this.productsData.length} products`);
+
+    // Generate HTML for product cards
+    const cardsHTML = productsToShow.map(product => {
+      const showComparePrice = product.compareAtPrice && product.compareAtPrice > product.price;
+      
+      return `
+        <div
+          class="pp-swap-product-card"
+          data-product-id="${product.id}"
+          data-action="select-swap-product"
+          role="button"
+          tabindex="0"
+          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+        >
+          <img
+            src="${product.image}"
+            alt="${product.title}"
+            class="pp-swap-product-card__image"
+            loading="lazy"
+          >
+          <h3 class="pp-swap-product-card__title">${product.title}</h3>
+          <div class="pp-swap-product-card__price">
+            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
+            ${this.formatMoney(product.price)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Update grid
+    this.gridContainer.innerHTML = cardsHTML;
+
+    // Update displayed count
+    this.displayedCount = endIndex;
+
+    // Show/hide load more button
+    if (this.displayedCount < this.productsData.length) {
+      this.loadMoreButton.style.display = 'block';
+      this.loadMoreButton.textContent = `Load More Products (${this.productsData.length - this.displayedCount} remaining)`;
+    } else {
+      this.loadMoreButton.style.display = 'none';
+    }
+
+    // Attach click listeners
+    this.attachProductCardListeners();
+  }
+
+  /**
+   * Load more products
+   */
+  loadMoreProducts() {
+    if (this.isLoading || this.displayedCount >= this.productsData.length) {
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Loading more products');
+
+    // Calculate new end index
+    const newEndIndex = Math.min(
+      this.displayedCount + this.productsPerLoad,
+      this.productsData.length
+    );
+
+    // Get additional products
+    const additionalProducts = this.productsData.slice(this.displayedCount, newEndIndex);
+
+    console.log(`[PowerPairs Swap] Adding ${additionalProducts.length} more products`);
+
+    // Generate HTML for new cards
+    const cardsHTML = additionalProducts.map(product => {
+      const showComparePrice = product.compareAtPrice && product.compareAtPrice > product.price;
+      
+      return `
+        <div
+          class="pp-swap-product-card"
+          data-product-id="${product.id}"
+          data-action="select-swap-product"
+          role="button"
+          tabindex="0"
+          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+        >
+          <img
+            src="${product.image}"
+            alt="${product.title}"
+            class="pp-swap-product-card__image"
+            loading="lazy"
+          >
+          <h3 class="pp-swap-product-card__title">${product.title}</h3>
+          <div class="pp-swap-product-card__price">
+            ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
+            ${this.formatMoney(product.price)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Append new cards
+    this.gridContainer.insertAdjacentHTML('beforeend', cardsHTML);
+
+    // Update displayed count
+    this.displayedCount = newEndIndex;
+
+    // Update load more button
+    if (this.displayedCount < this.productsData.length) {
+      this.loadMoreButton.textContent = `Load More Products (${this.productsData.length - this.displayedCount} remaining)`;
+    } else {
+      this.loadMoreButton.style.display = 'none';
+    }
+
+    // Attach listeners to new cards
+    this.attachProductCardListeners();
+
+    announceToScreenReader(`Loaded ${additionalProducts.length} more products`, 'polite');
+  }
+
+  /**
+   * Attach click listeners to product cards in swap modal
+   */
+  attachProductCardListeners() {
+    const productCards = this.gridContainer.querySelectorAll('[data-action="select-swap-product"]');
+
+    productCards.forEach(card => {
+      // Remove existing listeners to avoid duplicates
+      const newCard = card.cloneNode(true);
+      card.parentNode.replaceChild(newCard, card);
+
+      // Click listener
+      newCard.addEventListener('click', () => {
+        const productId = newCard.dataset.productId;
+        this.handleProductSelection(productId);
+      });
+
+      // Keyboard support
+      newCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const productId = newCard.dataset.productId;
+          this.handleProductSelection(productId);
+        }
+      });
+    });
+
+    console.log(`[PowerPairs Swap] Attached listeners to ${productCards.length} product cards`);
+  }
+
+  /**
+   * Handle product selection (swap)
+   * @param {number} productId - Selected product ID
+   */
+  handleProductSelection(productId) {
+    console.log(`[PowerPairs Swap] Product selected: ${productId}`);
+    
+    // Find product data
+    const selectedProduct = this.productsData.find(p => p.id == productId);
+    
+    if (!selectedProduct) {
+      console.error('[PowerPairs Swap] Product not found');
+      announceToScreenReader('Error: Product not found', 'assertive');
+      return;
+    }
+
+    console.log('[PowerPairs Swap] Selected product:', selectedProduct.title);
+
+    // Perform swap in state
+    const swapSuccess = window.PPState.swapProduct(this.currentProductId, selectedProduct);
+
+    if (!swapSuccess) {
+      console.error('[PowerPairs Swap] Failed to swap product');
+      announceToScreenReader('Failed to swap product. Please try again.', 'assertive');
+      return;
+    }
+
+    // Announce success
+    announceToScreenReader(`Swapped to ${selectedProduct.title}. Price: ${this.formatMoney(selectedProduct.price)}`, 'polite');
+
+    // Visual feedback - highlight selected card briefly
+    const selectedCard = this.gridContainer.querySelector(`[data-product-id="${productId}"]`);
+    if (selectedCard) {
+      selectedCard.classList.add('pp-swap-product-card--selected');
+    }
+
+    // Close modal after brief delay
+    setTimeout(() => {
+      this.close();
+
+      // Refresh the product grid in expansion manager
+      if (window.PPExpansionManager) {
+        window.PPExpansionManager.refreshProductGrid();
+        window.PPExpansionManager.refreshMultiplierSection();
+      }
+    }, 600);
+  }
+
+  /**
+   * Show/hide loading state
+   * @param {boolean} show - Show or hide loading
+   */
+  showLoading(show) {
+    const loadingElement = this.contentArea.querySelector('.pp-swap-modal__loading');
+    if (loadingElement) {
+      loadingElement.style.display = show ? 'flex' : 'none';
+    }
+  }
+
+  /**
+   * Focus first focusable element
+   */
+  focusFirstElement() {
+    const focusableElements = this.modal.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }
+
+  /**
+   * Format money
+   * @param {number} cents - Price in cents
+   * @returns {string} Formatted price
+   */
+  formatMoney(cents) {
+    if (window.Shopify && window.Shopify.formatMoney) {
+      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
+      return window.Shopify.formatMoney(cents, format);
+    }
+    
+    if (window.theme && window.theme.moneyFormat) {
+      const amount = (cents / 100).toFixed(2);
+      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
+    }
+    
+    console.error('[PowerPairs Swap] Currency formatting not available');
+    return '';
+  }
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════
  * EXPANSION MANAGER
  * Handles bottom sheet open/close and content rendering
  * ═══════════════════════════════════════════════════════════
@@ -1619,7 +2296,7 @@ class ExpansionManager {
         <div class="pp-pricing-header">
           <div class="pp-pricing-header__row">
             <span class="pp-pricing-header__emoji">💰</span>
-            <span class="pp-pricing-header__current">${this.formatMoney(pricing.finalPrice)}</span>
+            <span class="pp-pricing-header__current">${this.formatMoney(pricing.subtotal)}</span>
             <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
             ${pricing.savings > 0 ? `
               <span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>
@@ -1791,7 +2468,7 @@ class ExpansionManager {
    * @returns {string} HTML string
    */
   renderProductGrid(products) {
-    return products.map(product => {
+    return products.map((product, index) => {
       const indicatorClass = product.variantSelectionComplete ? 'success' : 'warning';
       const indicatorIcon = product.variantSelectionComplete ? '✓' : '!';
       const cardStateClass = product.variantSelectionComplete ?
@@ -1816,6 +2493,8 @@ class ExpansionManager {
         <div
           class="pp-product-compact-card ${cardStateClass}"
           data-product-id="${product.id}"
+          data-product-index="${index}"
+          data-action="select-variant-card"
           role="button"
           tabindex="0"
           aria-label="${statusLabel}"
@@ -1825,6 +2504,40 @@ class ExpansionManager {
           <div class="pp-variant-indicator ${indicatorClass}" role="status" aria-label="${indicatorClass === 'success' ? 'Variant selected' : 'Variant needed'}">
             ${indicatorIcon}
           </div>
+
+          ${product.isSwapped ? `
+            <button
+              class="pp-undo-swap-btn"
+              data-action="undo-swap"
+              data-product-id="${product.id}"
+              data-product-index="${index}"
+              aria-label="Undo swap and restore ${product.originalProduct?.title || 'original product'}"
+              title="Undo swap"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 7v6h6"></path>
+                <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+              </svg>
+            </button>
+          ` : `
+            <button
+              class="pp-swap-indicator"
+              data-action="swap-product"
+              data-product-id="${product.id}"
+              data-product-index="${index}"
+              aria-label="Swap ${product.title} with another product"
+              title="Swap product"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </button>
+          `}
 
           <img
             src="${product.selectedVariant.image || product.image}"
@@ -1861,8 +2574,14 @@ class ExpansionManager {
     console.log(`[PowerPairs] Found ${productCards.length} product cards`);
 
     productCards.forEach(card => {
-      // Click listener
+      // Click listener for card (variant selection)
       card.addEventListener('click', (e) => {
+        // Check if click is on swap button
+        const swapButton = e.target.closest('.pp-swap-indicator');
+        if (swapButton) {
+          return; // Let swap button handler handle it
+        }
+
         const productId = card.dataset.productId;
         console.log(`[PowerPairs] Product card clicked: ${productId}`);
 
@@ -1879,6 +2598,97 @@ class ExpansionManager {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           card.click();
+        }
+      });
+    });
+
+    // Attach swap button listeners
+    this.attachSwapButtonListeners();
+  }
+
+  /**
+   * Attach click listeners to swap and undo buttons
+   */
+  attachSwapButtonListeners() {
+    const swapButtons = this.contentArea.querySelectorAll('[data-action="swap-product"]');
+    const undoButtons = this.contentArea.querySelectorAll('[data-action="undo-swap"]');
+
+    console.log(`[PowerPairs] Found ${swapButtons.length} swap buttons and ${undoButtons.length} undo buttons`);
+
+    // Swap buttons - use event delegation to avoid stale listeners
+    swapButtons.forEach(button => {
+      // Remove any existing listeners by cloning
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      newButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        e.preventDefault();
+
+        const productId = newButton.dataset.productId;
+        console.log(`[PowerPairs] Swap button clicked for product: ${productId}`);
+
+        // Open swap modal with the current product ID
+        if (window.PPSwapModal) {
+          window.PPSwapModal.open(productId);
+        } else {
+          console.warn('[PowerPairs] Swap modal not yet initialized');
+          announceToScreenReader('Product swap feature coming soon', 'polite');
+        }
+      });
+    });
+
+    // Undo buttons - use event delegation to avoid stale listeners
+    undoButtons.forEach(button => {
+      // Remove any existing listeners by cloning
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      newButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        e.preventDefault();
+
+        const swappedProductId = newButton.dataset.productId;
+        console.log(`[PowerPairs] Undo swap button clicked for swapped product: ${swappedProductId}`);
+
+        // Get the bundle to find the product by position rather than ID
+        const bundle = window.PPState.getActiveBundle();
+        if (!bundle) {
+          console.error('[PowerPairs] No active bundle');
+          return;
+        }
+
+        // Find the product that currently has this ID (the swapped one)
+        const productIndex = bundle.products.findIndex(p => p.id == swappedProductId);
+        
+        if (productIndex === -1) {
+          console.error('[PowerPairs] Product not found with ID:', swappedProductId);
+          announceToScreenReader('Failed to find product. Please try again.', 'assertive');
+          return;
+        }
+
+        const product = bundle.products[productIndex];
+        
+        if (!product.isSwapped) {
+          console.warn('[PowerPairs] Product is not swapped:', product.title);
+          announceToScreenReader('This product has not been swapped.', 'polite');
+          return;
+        }
+
+        console.log('[PowerPairs] Undoing swap for product at index:', productIndex);
+
+        // Perform undo using the swapped product ID
+        const undoSuccess = window.PPState.undoSwap(swappedProductId);
+
+        if (undoSuccess) {
+          announceToScreenReader(`Swap undone. ${product.originalProduct?.title || 'Original product'} restored.`, 'polite');
+          
+          // Refresh UI
+          this.refreshProductGrid();
+          this.refreshMultiplierSection();
+        } else {
+          console.error('[PowerPairs] Failed to undo swap');
+          announceToScreenReader('Failed to undo swap. Please try again.', 'assertive');
         }
       });
     });
@@ -1939,11 +2749,94 @@ class ExpansionManager {
         summaryElement.outerHTML = this.renderSheetSummary(bundle, pricing);
       }
 
+      // Update pricing header (after swap)
+      this.refreshPricingHeader();
+
       // Also refresh multiplier section and CTA (pricing may have changed)
       this.refreshMultiplierSection();
 
       console.log('[PowerPairs] Product grid refreshed successfully');
     }, 200);
+  }
+
+  /**
+   * Refresh pricing header after product changes
+   */
+  refreshPricingHeader() {
+    const bundle = window.PPState.getActiveBundle();
+    if (!bundle) {
+      console.error('[PowerPairs] No active bundle to refresh pricing header');
+      return;
+    }
+
+    const pricingHeader = this.contentArea.querySelector('.pp-pricing-header');
+    if (!pricingHeader) {
+      console.warn('[PowerPairs] Pricing header not found');
+      return;
+    }
+
+    // Recalculate pricing (this also recalculates baseSubtotal internally)
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Manual calculation check for debugging
+    const manualSum = bundle.products.reduce((sum, product) => {
+      if (product.selectedVariant && product.selectedVariant.price) {
+        const productTotal = product.selectedVariant.price * product.quantity;
+        return sum + productTotal;
+      }
+      return sum;
+    }, 0);
+
+    console.log('[PowerPairs Pricing Header Refresh]', {
+      manualSum: manualSum,
+      bundleBaseSubtotal: bundle.baseSubtotal,
+      pricingSubtotal: pricing.subtotal,
+      multiplier: bundle.multiplier,
+      expectedSubtotal: manualSum * bundle.multiplier,
+      match: Math.abs(manualSum * bundle.multiplier - pricing.subtotal) < 1 // Allow 1 cent difference for rounding
+    });
+
+    // Update current price (subtotal before tier discount)
+    const currentPriceElement = pricingHeader.querySelector('.pp-pricing-header__current');
+    if (currentPriceElement) {
+      currentPriceElement.textContent = this.formatMoney(pricing.subtotal);
+    }
+
+    // Update crossed price
+    const crossedPriceElement = pricingHeader.querySelector('.pp-pricing-header__crossed');
+    if (crossedPriceElement) {
+      crossedPriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+    }
+
+    // Update savings
+    const savingsElement = pricingHeader.querySelector('.pp-pricing-header__savings');
+    if (pricing.savings > 0) {
+      if (savingsElement) {
+        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}!`;
+      } else {
+        // Savings element doesn't exist, create it
+        const savingsHTML = `<span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>`;
+        const rowElement = pricingHeader.querySelector('.pp-pricing-header__row');
+        if (rowElement) {
+          rowElement.insertAdjacentHTML('beforeend', savingsHTML);
+        }
+      }
+    } else if (savingsElement) {
+      // Remove savings if it's 0 or negative
+      savingsElement.remove();
+    }
+
+    // Update tier info
+    const tierElement = pricingHeader.querySelector('.pp-pricing-header__tier span:last-child');
+    if (tierElement) {
+      tierElement.textContent = `Tier ${pricing.achievedTier || bundle.tier || 1}: Unlock ${pricing.discountPercent}% OFF (${pricing.totalItems} items)`;
+    }
+
+    console.log('[PowerPairs] Pricing header refreshed:', {
+      finalPrice: pricing.finalPrice,
+      compareAtSubtotal: pricing.compareAtSubtotal,
+      savings: pricing.savings
+    });
   }
 
   /**
@@ -2274,7 +3167,7 @@ class ExpansionManager {
 
     // Add bundle products with multiplier
     bundle.products.forEach(product => {
-      items.push({
+      const cartItem = {
         id: product.selectedVariantId,
         quantity: product.quantity * bundle.multiplier,
         properties: {
@@ -2283,7 +3176,16 @@ class ExpansionManager {
           '_bundle_tier': pricing.achievedTier,
           '_bundle_multiplier': bundle.multiplier
         }
-      });
+      };
+
+      // Add swap tracking if product was swapped
+      if (product.isSwapped && product.originalProduct) {
+        cartItem.properties['_swapped'] = 'true';
+        cartItem.properties['_original_product_id'] = product.originalProduct.id;
+        cartItem.properties['_original_product_title'] = product.originalProduct.title;
+      }
+
+      items.push(cartItem);
     });
 
     console.log(`[PowerPairs] Prepared ${items.length} bundle items`);
@@ -2572,6 +3474,10 @@ class ExpansionManager {
    * @returns {Object} Pricing details
    */
   calculateBundlePricing(bundle) {
+    // Recalculate baseSubtotal to ensure it's always accurate
+    // This fixes any potential sync issues between state and display
+    bundle.baseSubtotal = window.PPState.calculateBaseSubtotal(bundle.products);
+    
     // Calculate total items with multiplier
     const totalItems = bundle.baseItemCount * bundle.multiplier;
 
@@ -2584,17 +3490,33 @@ class ExpansionManager {
     // Calculate compare-at subtotal (for crossed price display)
     const compareAtSubtotal = window.PPState.calculateCompareAtSubtotal(bundle.products) * bundle.multiplier;
     
-    // Calculate regular subtotal (current prices)
+    // Calculate regular subtotal (current prices) - BEFORE tier discount
     const subtotal = bundle.baseSubtotal * bundle.multiplier;
     
     // Calculate final price with tier discount applied to regular price
     const finalPrice = Math.round(subtotal * tierMultiplier);
     
-    // Calculate savings from compare-at price
-    const savings = compareAtSubtotal - finalPrice;
+    // Calculate savings: simply crossed minus current (no tier discount logic)
+    const savings = compareAtSubtotal - subtotal;
 
     // Calculate discount percentage
     const discountPercent = Math.round((1 - tierMultiplier) * 100);
+
+    // Debug logging
+    console.log('[PowerPairs Pricing Debug]', {
+      baseSubtotal: bundle.baseSubtotal,
+      multiplier: bundle.multiplier,
+      subtotal: subtotal,
+      tierMultiplier: tierMultiplier,
+      finalPrice: finalPrice,
+      compareAtSubtotal: compareAtSubtotal,
+      productsPrices: bundle.products.map(p => ({
+        title: p.title,
+        variantPrice: p.selectedVariant.price,
+        quantity: p.quantity,
+        total: p.selectedVariant.price * p.quantity
+      }))
+    });
 
     return {
       totalItems,
@@ -2761,6 +3683,9 @@ function initPowerPairs() {
 
   // Create global variant modal instance
   window.PPVariantModal = new VariantModal();
+
+  // Create global swap modal instance
+  window.PPSwapModal = new SwapModal();
 
   // Create global expansion manager instance
   window.PPExpansionManager = new ExpansionManager();

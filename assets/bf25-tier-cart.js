@@ -116,6 +116,271 @@
   ];
 
   // ============================================
+  // PERFORMANCE MONITORING SYSTEM
+  // ============================================
+
+  /**
+   * PerformanceMonitor - Tracks FPS, operation timing, jank detection
+   * Usage: window.BF25Performance.report() for dashboard
+   */
+  class PerformanceMonitor {
+    constructor() {
+      // Singleton pattern
+      if (PerformanceMonitor.instance) {
+        return PerformanceMonitor.instance;
+      }
+      PerformanceMonitor.instance = this;
+
+      // Performance targets (from Gemini + CKL-109)
+      this.targets = {
+        fps: 60,
+        fpsMin: 55, // Alert threshold
+        operationMax: 50, // Max ms for cart operations
+        animationTarget: 1800 // Expected animation duration (ms)
+      };
+
+      // Metrics storage
+      this.metrics = {
+        fps: {
+          samples: [],
+          violations: 0
+        },
+        operations: {},
+        jank: {
+          count: 0,
+          frames: []
+        },
+        violations: []
+      };
+
+      // FPS tracking state
+      this.fpsTracking = {
+        active: false,
+        frameCount: 0,
+        startTime: 0,
+        lastFrameTime: 0
+      };
+
+      // Operation timing storage
+      this.timers = new Map();
+
+      console.log('[Performance] Monitor initialized');
+    }
+
+    /**
+     * Start FPS tracking (call before animations)
+     */
+    startFPSTracking(label = 'animation') {
+      if (this.fpsTracking.active) {
+        console.warn('[Performance] FPS tracking already active');
+        return;
+      }
+
+      this.fpsTracking.active = true;
+      this.fpsTracking.frameCount = 0;
+      this.fpsTracking.startTime = performance.now();
+      this.fpsTracking.lastFrameTime = performance.now();
+      this.fpsTracking.label = label;
+
+      this.trackFrame();
+      console.log(`[Performance] FPS tracking started: ${label}`);
+    }
+
+    /**
+     * Track individual frame (recursive)
+     */
+    trackFrame() {
+      if (!this.fpsTracking.active) return;
+
+      const now = performance.now();
+      const frameDuration = now - this.fpsTracking.lastFrameTime;
+
+      // Jank detection: Frame took >16.67ms (60fps = 16.67ms per frame)
+      if (frameDuration > 16.67) {
+        this.metrics.jank.count++;
+        this.metrics.jank.frames.push({
+          duration: frameDuration,
+          timestamp: now
+        });
+
+        if (frameDuration > 20) {
+          console.warn(`[Performance] ⚠️ Jank detected: ${frameDuration.toFixed(1)}ms frame`);
+        }
+      }
+
+      this.fpsTracking.frameCount++;
+      this.fpsTracking.lastFrameTime = now;
+
+      requestAnimationFrame(() => this.trackFrame());
+    }
+
+    /**
+     * Stop FPS tracking and calculate results
+     */
+    stopFPSTracking() {
+      if (!this.fpsTracking.active) return;
+
+      this.fpsTracking.active = false;
+      const duration = performance.now() - this.fpsTracking.startTime;
+      const fps = (this.fpsTracking.frameCount / duration) * 1000;
+
+      this.metrics.fps.samples.push({
+        label: this.fpsTracking.label,
+        fps: fps,
+        duration: duration,
+        frames: this.fpsTracking.frameCount
+      });
+
+      // Check for FPS violations
+      if (fps < this.targets.fpsMin) {
+        this.metrics.fps.violations++;
+        this.logViolation('FPS', fps, this.targets.fps);
+        console.warn(`[Performance] ✗ FPS violation: ${fps.toFixed(1)} fps (target: ${this.targets.fps})`);
+      } else {
+        console.log(`[Performance] ✓ FPS: ${fps.toFixed(1)} fps (${this.fpsTracking.frameCount} frames in ${duration.toFixed(0)}ms)`);
+      }
+
+      return fps;
+    }
+
+    /**
+     * Start timing an operation
+     */
+    startOperation(name) {
+      this.timers.set(name, performance.now());
+    }
+
+    /**
+     * End timing an operation and check against budget
+     */
+    endOperation(name, target = this.targets.operationMax) {
+      if (!this.timers.has(name)) {
+        console.warn(`[Performance] No start timer for: ${name}`);
+        return;
+      }
+
+      const startTime = this.timers.get(name);
+      const duration = performance.now() - startTime;
+      this.timers.delete(name);
+
+      // Store in metrics
+      if (!this.metrics.operations[name]) {
+        this.metrics.operations[name] = {
+          samples: [],
+          violations: 0,
+          target: target
+        };
+      }
+
+      this.metrics.operations[name].samples.push(duration);
+
+      // Check for violations
+      if (duration > target) {
+        this.metrics.operations[name].violations++;
+        this.logViolation(name, duration, target);
+        console.warn(`[Performance] ✗ ${name}: ${duration.toFixed(1)}ms (target: <${target}ms)`);
+      } else {
+        console.log(`[Performance] ✓ ${name}: ${duration.toFixed(1)}ms`);
+      }
+
+      return duration;
+    }
+
+    /**
+     * Log performance violation
+     */
+    logViolation(metric, actual, target) {
+      this.metrics.violations.push({
+        metric: metric,
+        actual: actual,
+        target: target,
+        timestamp: Date.now()
+      });
+    }
+
+    /**
+     * Generate performance report
+     */
+    report() {
+      const calculateStats = (samples) => {
+        if (samples.length === 0) return { avg: 0, min: 0, max: 0 };
+        return {
+          avg: samples.reduce((a, b) => a + b, 0) / samples.length,
+          min: Math.min(...samples),
+          max: Math.max(...samples),
+          count: samples.length
+        };
+      };
+
+      // FPS stats
+      const fpsSamples = this.metrics.fps.samples.map(s => s.fps);
+      const fpsStats = calculateStats(fpsSamples);
+
+      // Operations stats
+      const operations = {};
+      for (const [name, data] of Object.entries(this.metrics.operations)) {
+        operations[name] = {
+          ...calculateStats(data.samples),
+          target: data.target,
+          violations: data.violations
+        };
+      }
+
+      // Overall budget status
+      const totalViolations = this.metrics.violations.length;
+      const budgetPassed = totalViolations === 0;
+
+      const report = {
+        summary: {
+          budgetPassed: budgetPassed,
+          totalViolations: totalViolations,
+          timestamp: new Date().toISOString()
+        },
+        fps: {
+          ...fpsStats,
+          target: this.targets.fps,
+          violations: this.metrics.fps.violations
+        },
+        operations: operations,
+        jank: {
+          count: this.metrics.jank.count,
+          worstFrame: this.metrics.jank.frames.length > 0
+            ? Math.max(...this.metrics.jank.frames.map(f => f.duration))
+            : 0
+        },
+        violations: this.metrics.violations.slice(-10) // Last 10 violations
+      };
+
+      // Console output
+      console.group('🎯 BF25 Performance Report');
+      console.log('Budget Status:', budgetPassed ? '✓ PASSED' : '✗ FAILED');
+      console.log('Total Violations:', totalViolations);
+      console.log('FPS:', `${fpsStats.avg.toFixed(1)} fps (min: ${fpsStats.min.toFixed(1)}, max: ${fpsStats.max.toFixed(1)})`);
+      console.log('Jank Events:', this.metrics.jank.count);
+      console.table(operations);
+      console.groupEnd();
+
+      return report;
+    }
+
+    /**
+     * Reset all metrics
+     */
+    reset() {
+      this.metrics = {
+        fps: { samples: [], violations: 0 },
+        operations: {},
+        jank: { count: 0, frames: [] },
+        violations: []
+      };
+      console.log('[Performance] Metrics reset');
+    }
+  }
+
+  // Initialize global performance monitor
+  window.BF25Performance = new PerformanceMonitor();
+
+  // ============================================
   // GIFT ANIMATOR CLASS
   // ============================================
   class GiftAnimator {
@@ -260,6 +525,8 @@
       }
 
       // Performance monitoring
+      window.BF25Performance.startOperation(`giftAnimation-tier${tier}`);
+      window.BF25Performance.startFPSTracking(`tier-${tier}-unlock`);
       console.time(`[GiftAnimator] Tier ${tier} animation`);
       console.log(`[GiftAnimator] Starting optimized sequence for tier ${tier} (1.8s target)`);
 
@@ -307,7 +574,12 @@
       slot.classList.remove('is-animating');
 
       console.timeEnd(`[GiftAnimator] Tier ${tier} animation`);
-      console.log(`[GiftAnimator] ✓ Optimized sequence complete for tier ${tier} (1.8s)`);
+
+      // Stop performance tracking
+      const fps = window.BF25Performance.stopFPSTracking();
+      const duration = window.BF25Performance.endOperation(`giftAnimation-tier${tier}`, 1800);
+
+      console.log(`[GiftAnimator] ✓ Complete - FPS: ${fps.toFixed(1)}, Duration: ${duration.toFixed(0)}ms`);
     }
 
     /**
@@ -767,6 +1039,9 @@
     // MAIN UPDATE METHOD
     // ============================================
     updateVisualization(itemCount) {
+      // Start performance tracking
+      window.BF25Performance.startOperation('updateVisualization');
+
       // Clamp to max items
       this.itemCount = Math.min(itemCount, this.maxItems);
 
@@ -803,6 +1078,9 @@
         console.log(`[BF25 Cart] Tier downgraded to ${this.currentTier.id}`);
         this.reconcileGifts(this.currentTier);
       }
+
+      // End performance tracking
+      window.BF25Performance.endOperation('updateVisualization', 50);
     }
 
     // ============================================
@@ -1324,6 +1602,9 @@
     async syncCart() {
       console.log('[BF25 Cart] Syncing with Shopify cart...');
 
+      // Start performance tracking
+      window.BF25Performance.startOperation('cartSync');
+
       // Set loading state
       this.setState('syncing');
 
@@ -1361,11 +1642,17 @@
         // Set idle state
         this.setState('idle');
 
+        // End performance tracking
+        window.BF25Performance.endOperation('cartSync', 100);
+
         return { itemCount, savings };
 
       } catch (error) {
         this.handleError(error, 'syncCart');
         this.setState('error');
+
+        window.BF25Performance.endOperation('cartSync');
+
         return null;
       }
     }
@@ -2127,5 +2414,11 @@
     'color: #60c655; font-weight: normal;'
   );
   console.log('%cRun: window.runBF25Demo()', 'color: #60c655;');
+
+  // Performance monitoring commands
+  console.log('%c🎯 Performance Monitoring Active', 'color: #60c655; font-weight: bold;');
+  console.log('%cCommands:', 'color: #60c655;');
+  console.log('  window.BF25Performance.report() - View performance dashboard');
+  console.log('  window.BF25Performance.reset() - Reset metrics');
 
 })();

@@ -1128,6 +1128,11 @@
       this.itemCount = 0;
       this.previousTier = null;
 
+      // BundleManager Integration (Virtual Cart)
+      // When true, reads from localStorage instead of Shopify API
+      this.useBundleManager = false;
+      this.bundleManagerReady = false;
+
       // Configuration
       this.tiers = BF25_TIERS;
       this.maxItems = 16;
@@ -1206,10 +1211,309 @@
       // Set initial body padding (CLS prevention)
       document.body.style.paddingBottom = '65px';
 
-      // Sync cart on load (will update cached data with fresh API data)
-      this.syncCart();
+      // Initialize BundleManager integration (Virtual Cart)
+      // This replaces slow API calls with instant localStorage reads
+      this.initBundleManagerIntegration();
 
       console.log('[BF25 Cart] ✓ Ready');
+    }
+
+    // ============================================
+    // BUNDLEMANAGER INTEGRATION (Virtual Cart)
+    // ============================================
+
+    /**
+     * Initialize BundleManager integration for instant cart updates.
+     * Falls back to Shopify API sync if BundleManager unavailable.
+     */
+    initBundleManagerIntegration() {
+      // Check if BundleManager is available
+      if (!window.BF25BundleManager) {
+        console.log('[BF25 Cart] BundleManager not found, using Shopify API fallback');
+        this.useBundleManager = false;
+        this.syncCart(); // Original flow
+        return;
+      }
+
+      console.log('[BF25 Cart] 🚀 BundleManager detected - enabling instant mode');
+      this.useBundleManager = true;
+      this.bundleManagerReady = true;
+
+      // Listen for bundle updates (instant re-renders)
+      document.addEventListener('bf25:bundleUpdated', (event) => {
+        console.log('[BF25 Cart] Event: bf25:bundleUpdated', event.detail);
+        this.renderFromBundle();
+      });
+
+      // Listen for tier unlocks (trigger animations)
+      document.addEventListener('bf25:tierUnlocked', (event) => {
+        console.log('[BF25 Cart] Event: bf25:tierUnlocked', event.detail);
+        const { tier } = event.detail;
+        if (this.giftAnimator && tier > 0) {
+          this.giftAnimator.animate(tier);
+        }
+      });
+
+      // Listen for gift unlocks (additional celebration)
+      document.addEventListener('bf25:giftUnlocked', (event) => {
+        console.log('[BF25 Cart] Event: bf25:giftUnlocked', event.detail);
+        const { gift, totalGifts } = event.detail;
+        if (window.BF25Toast) {
+          window.BF25Toast.show(`🎁 FREE ${gift.title} unlocked!`, 'success', 3000);
+        }
+      });
+
+      // Listen for tier downgrades
+      document.addEventListener('bf25:tierChanged', (event) => {
+        console.log('[BF25 Cart] Event: bf25:tierChanged', event.detail);
+        if (event.detail.direction === 'down' && window.BF25Toast) {
+          window.BF25Toast.show(`Tier dropped - add more items to restore your discount!`, 'warning', 3000);
+        }
+      });
+
+      // Listen for gift loss
+      document.addEventListener('bf25:giftLost', (event) => {
+        console.log('[BF25 Cart] Event: bf25:giftLost', event.detail);
+        if (window.BF25Toast) {
+          window.BF25Toast.show(`Add more items to keep your free gifts!`, 'warning', 3000);
+        }
+      });
+
+      // Listen for max items reached
+      document.addEventListener('bf25:maxItemsReached', (event) => {
+        console.log('[BF25 Cart] Event: bf25:maxItemsReached', event.detail);
+        if (window.BF25Toast) {
+          window.BF25Toast.show(`Bundle is full (16 items max)`, 'info', 2000);
+        }
+      });
+
+      // Initial render from BundleManager
+      this.renderFromBundle();
+
+      console.log('[BF25 Cart] ✓ BundleManager integration active');
+    }
+
+    /**
+     * Render cart UI from BundleManager state (INSTANT - no API calls)
+     * This replaces the slow syncCart() → fetchCart() → render flow
+     */
+    renderFromBundle() {
+      if (!window.BF25BundleManager) {
+        console.warn('[BF25 Cart] renderFromBundle called but BundleManager not available');
+        return;
+      }
+
+      console.log('[BF25 Cart] Rendering from BundleManager...');
+      window.BF25Performance.startOperation('bundleRender');
+
+      try {
+        // Get computed values from BundleManager (instant - localStorage)
+        const computed = window.BF25BundleManager.getComputed();
+        const items = window.BF25BundleManager.getItems();
+
+        const {
+          itemCount,
+          tierReached,
+          discountPercent,
+          totalOriginalPrice,
+          totalDiscountedPrice,
+          totalSavings,
+          totalGiftValue,
+          giftsUnlocked,
+          itemsToNextTier,
+          itemsToNextGift,
+          nextGiftCheckpoint
+        } = computed;
+
+        // Calculate savings in euros for display
+        const savingsEuros = (totalSavings / 100).toFixed(0);
+
+        console.log(`[BF25 Cart] Bundle: ${itemCount} items, Tier ${tierReached}, €${savingsEuros} savings`);
+
+        // Update progress bar and tier visualization
+        this.updateVisualization(itemCount);
+
+        // Update savings display
+        if (this.elements.savingsAmount) {
+          this.elements.savingsAmount.textContent = `Save €${savingsEuros}`;
+        }
+
+        // Render products in expanded view
+        this.renderBundleProducts(items, computed);
+
+        // Show/hide cart based on items
+        this.handleEmptyState(itemCount);
+
+        // Update incentive text with progress info
+        this.updateIncentiveFromBundle(computed);
+
+        // Cache state for page reload (instant render on next visit)
+        this.saveCachedState(itemCount, savingsEuros);
+
+        // Set idle state
+        this.setState('idle');
+
+        window.BF25Performance.endOperation('bundleRender', 20); // Target: 20ms
+
+        return { itemCount, savings: savingsEuros };
+
+      } catch (error) {
+        console.error('[BF25 Cart] Error rendering from bundle:', error);
+        this.handleError(error, 'renderFromBundle');
+
+        // Fallback to API sync if bundle render fails
+        console.log('[BF25 Cart] Falling back to API sync...');
+        this.useBundleManager = false;
+        this.syncCart();
+
+        return null;
+      }
+    }
+
+    /**
+     * Render product cards from bundle items
+     * Adapted from renderProducts() to work with BundleManager item format
+     */
+    renderBundleProducts(items, computed) {
+      const scrollContainer = document.getElementById('bf25sc-product-scroll');
+      const emptyState = document.getElementById('bf25sc-expanded-empty');
+
+      if (!scrollContainer) return;
+
+      // Clear existing products
+      scrollContainer.innerHTML = '';
+
+      // Handle empty state
+      if (items.length === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Get current discount for price display
+      const discountMultiplier = 1 - (computed.discountPercent / 100);
+
+      // Render each item
+      items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'bf25sc-product-card';
+        card.setAttribute('data-variant-id', item.variantId);
+        card.setAttribute('data-index', index);
+
+        // Calculate prices
+        const originalPrice = (item.price * item.quantity) / 100;
+        const discountedPrice = (item.price * item.quantity * discountMultiplier) / 100;
+
+        // Build card HTML
+        card.innerHTML = `
+          <div class="bf25sc-product-image-container">
+            ${item.image
+              ? `<img src="${item.image}" alt="${item.title}" class="bf25sc-product-image" width="60" height="60">`
+              : `<div class="bf25sc-product-placeholder">📦</div>`
+            }
+            <span class="bf25sc-product-qty-badge">${item.quantity}</span>
+          </div>
+          <div class="bf25sc-product-info">
+            <h4 class="bf25sc-product-title">${item.title}</h4>
+            ${item.variantTitle ? `<p class="bf25sc-product-variant">${item.variantTitle}</p>` : ''}
+            <div class="bf25sc-product-prices">
+              <span class="bf25sc-price-discounted">€${discountedPrice.toFixed(2)}</span>
+              <span class="bf25sc-price-original">€${originalPrice.toFixed(2)}</span>
+            </div>
+          </div>
+          <div class="bf25sc-product-actions">
+            <button type="button" class="bf25sc-product-remove" aria-label="Remove ${item.title}">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        `;
+
+        // Add remove button handler
+        const removeBtn = card.querySelector('.bf25sc-product-remove');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.handleBundleRemove(item.variantId, item.title);
+          });
+        }
+
+        scrollContainer.appendChild(card);
+      });
+
+      console.log(`[BF25 Cart] Rendered ${items.length} bundle products`);
+    }
+
+    /**
+     * Handle item removal via BundleManager
+     */
+    handleBundleRemove(variantId, title) {
+      if (!window.BF25BundleManager) return;
+
+      console.log(`[BF25 Cart] Removing from bundle: ${title} (${variantId})`);
+
+      // Optimistic UI update - add removing class
+      const card = document.querySelector(`.bf25sc-product-card[data-variant-id="${variantId}"]`);
+      if (card) {
+        card.classList.add('is-removing');
+      }
+
+      // Remove from BundleManager (triggers bf25:bundleUpdated event)
+      const result = window.BF25BundleManager.removeItem(variantId);
+
+      if (result.success) {
+        console.log(`[BF25 Cart] ✓ Removed: ${title}`);
+        // UI will update via bf25:bundleUpdated event
+      } else {
+        console.error(`[BF25 Cart] Failed to remove: ${result.error}`);
+        // Remove the removing class if failed
+        if (card) {
+          card.classList.remove('is-removing');
+        }
+      }
+    }
+
+    /**
+     * Update incentive text based on bundle progress
+     */
+    updateIncentiveFromBundle(computed) {
+      if (!this.elements.incentiveText) return;
+
+      const {
+        itemCount,
+        tierReached,
+        discountPercent,
+        itemsToNextGift,
+        nextGiftCheckpoint,
+        itemsToNextTier,
+        nextTierDiscount,
+        hasMaxItems
+      } = computed;
+
+      let message = '';
+
+      if (itemCount === 0) {
+        message = 'Add items to start building your bundle!';
+      } else if (hasMaxItems) {
+        message = `🎉 Maximum bundle! ${discountPercent}% OFF everything`;
+      } else if (itemsToNextGift > 0 && itemsToNextGift <= 2) {
+        // Close to next gift - emphasize gift
+        message = `Add ${itemsToNextGift} more for FREE gift! 🎁`;
+      } else if (itemsToNextTier > 0 && itemsToNextTier <= 2) {
+        // Close to next tier - emphasize discount
+        message = `Add ${itemsToNextTier} more for ${nextTierDiscount}% OFF! 🔥`;
+      } else if (itemsToNextGift > 0) {
+        message = `Add ${itemsToNextGift} more for your next free gift`;
+      } else if (tierReached === 4) {
+        message = `🏆 MAX TIER! ${discountPercent}% OFF + 4 FREE gifts`;
+      } else {
+        message = `${discountPercent}% OFF · ${itemsToNextTier} more for bigger savings`;
+      }
+
+      this.elements.incentiveText.textContent = message;
     }
 
     /**

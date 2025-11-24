@@ -1846,3 +1846,107 @@
     transform: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BUNDLE PRODUCT CARD STYLES (BundleManager Integration)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Product card remove animation */
+.bf25sc-product-card.is-removing {
+  opacity: 0.5;
+  transform: translateX(-10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Quantity badge on product image */
+.bf25sc-product-qty-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--bf25-accent, #60c655);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Price display in product card */
+.bf25sc-product-prices {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.bf25sc-price-discounted {
+  color: var(--bf25-accent, #60c655);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bf25sc-price-original {
+  color: #888;
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
+/* Product image container positioning */
+.bf25sc-product-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Product placeholder when no image */
+.bf25sc-product-placeholder {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 24px;
+}
+
+/* Remove button styling */
+.bf25sc-product-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: rgba(255, 0, 0, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #ff6b6b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.bf25sc-product-card:hover .bf25sc-product-remove,
+.bf25sc-product-card:focus-within .bf25sc-product-remove {
+  opacity: 1;
+}
+
+.bf25sc-product-remove:hover {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+/* Mobile: Always show remove button */
+@media (max-width: 768px) {
+  .bf25sc-product-remove {
+    opacity: 1;
+  }
+}

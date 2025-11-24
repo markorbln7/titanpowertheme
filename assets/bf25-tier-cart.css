@@ -230,6 +230,370 @@
   user-select: none;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   BF25 PREMIUM GIFT ICONS (Phase 6 - Gemini Design)
+   SVG-based gift icons with locked/unlocked states
+   Scope: BF25 page only (.bf25sc- prefix)
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bf25-gift-size: 36px;
+  --bf25-color-locked: #555555;
+  --bf25-color-unlocked: var(--bf25-accent, #60c655);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   GIFT SLOT BASE - Overlaps Progress Bar Edge
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-gift-slot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--bf25-gift-size);
+  height: var(--bf25-gift-size);
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.bf25sc-gift-icon-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bf25-bg-card, rgba(20, 20, 20, 0.95));
+  border: 2px solid transparent;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.bf25sc-gift-svg {
+  width: 60%;
+  height: 60%;
+  transition: transform 0.3s ease;
+}
+
+/* Lightning bolt glow effect */
+.bf25sc-gift-bolt {
+  transition: filter 0.3s ease;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   LOCKED STATE
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-gift-slot[data-state="locked"] {
+  color: var(--bf25-color-locked);
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0.7;
+}
+
+.bf25sc-gift-slot[data-state="locked"] .bf25sc-gift-icon-wrapper {
+  border-color: var(--bf25-color-locked);
+}
+
+.bf25sc-gift-slot[data-state="locked"] .bf25sc-gift-bolt {
+  opacity: 0.5;
+}
+
+/* Lock icon badge */
+.bf25sc-lock-svg {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  background: var(--bf25-bg-card, rgba(20, 20, 20, 0.95));
+  border-radius: 50%;
+  color: var(--bf25-color-locked);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.bf25sc-gift-slot[data-state="locked"] .bf25sc-lock-svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   UNLOCKED (CLAIMED) STATE
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-gift-slot[data-state="claimed"] {
+  color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.bf25sc-gift-slot[data-state="claimed"] .bf25sc-gift-icon-wrapper {
+  border-color: currentColor;
+  animation: bf25GiftGlowPulse 3s ease-in-out infinite;
+  animation-delay: 3.5s; /* Start after celebration ends */
+}
+
+.bf25sc-gift-slot[data-state="claimed"] .bf25sc-gift-bolt {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.bf25sc-gift-slot[data-state="claimed"] .bf25sc-lock-svg {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* Sustained glow pulse animation */
+@keyframes bf25GiftGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 8px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 16px currentColor, 0 0 24px currentColor;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   CELEBRATION STATE (.is-celebrating)
+   Triggered during unlock animation sequence
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-gift-slot.is-celebrating .bf25sc-gift-icon-wrapper {
+  animation: bf25GiftUnlockBurst 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes bf25GiftUnlockBurst {
+  /* 0-50%: Anticipation Shake */
+  0% {
+    transform: scale(1) rotate(0deg);
+    border-color: var(--bf25-color-locked);
+  }
+  10%, 30% { transform: scale(1) rotate(-5deg); }
+  20%, 40% { transform: scale(1) rotate(5deg); }
+
+  /* 50-100%: Burst */
+  50% {
+    transform: scale(1);
+    border-color: var(--bf25-color-locked);
+  }
+  70% {
+    transform: scale(1.35);
+    border-color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
+    box-shadow: 0 0 40px currentColor;
+  }
+  100% {
+    transform: scale(1.1);
+    border-color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
+    box-shadow: 0 0 15px currentColor;
+  }
+}
+
+/* Hide lock during celebration */
+.bf25sc-gift-slot.is-celebrating .bf25sc-lock-svg {
+  opacity: 0 !important;
+  transform: scale(0) !important;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   PRODUCT BUBBLE (Glassmorphic Reveal)
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-product-bubble {
+  position: absolute;
+  bottom: calc(var(--bf25-gift-size) + 12px);
+  left: 50%;
+  width: 200px;
+
+  /* Glassmorphic styling */
+  background: rgba(30, 30, 30, 0.9);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 20px var(--bf25sc-tier-glow, rgba(96, 198, 85, 0.2));
+
+  padding: 12px;
+  z-index: 100;
+
+  /* Hidden by default */
+  display: none;
+  opacity: 0;
+  transform: translate(-50%, 10px) scale(0.9);
+  pointer-events: none;
+}
+
+/* Bubble animation during celebration */
+.bf25sc-gift-slot.is-celebrating .bf25sc-product-bubble {
+  display: block;
+  animation: bf25BubbleSequence 3.5s ease forwards;
+}
+
+@keyframes bf25BubbleSequence {
+  /* Wait for burst (0-500ms) */
+  0%, 14% {
+    opacity: 0;
+    transform: translate(-50%, 15px) scale(0.85);
+  }
+  /* Appear (500-800ms) */
+  20% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  /* Hold visible (800-2800ms) */
+  80% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  /* Fade out (2800-3500ms) */
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.95);
+  }
+}
+
+/* Bubble content layout */
+.bf25sc-bubble-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bf25sc-bubble-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.bf25sc-bubble-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bf25sc-bubble-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bf25sc-bubble-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Arrow pointing to icon */
+.bf25sc-bubble-arrow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 6px;
+  background: rgba(30, 30, 30, 0.9);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   PARTICLE CONTAINER (for Phase 6.5 electric sparks)
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   HIDE OLD EMOJI ELEMENTS (backwards compatibility)
+   ─────────────────────────────────────────────────────────────────── */
+
+.bf25sc-gift-icon,
+.bf25sc-gift-checkmark {
+  display: none !important;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   ACCESSIBILITY - Reduced Motion
+   ─────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .bf25sc-gift-slot[data-state="claimed"] .bf25sc-gift-icon-wrapper {
+    animation: none !important;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .bf25sc-gift-slot.is-celebrating .bf25sc-gift-icon-wrapper {
+    animation: bf25GiftUnlockSimple 0.3s ease forwards !important;
+  }
+
+  @keyframes bf25GiftUnlockSimple {
+    from {
+      transform: scale(1);
+      border-color: var(--bf25-color-locked);
+    }
+    to {
+      transform: scale(1.1);
+      border-color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
+    }
+  }
+
+  .bf25sc-gift-slot.is-celebrating .bf25sc-product-bubble {
+    animation: bf25BubbleSimple 3s ease forwards !important;
+  }
+
+  @keyframes bf25BubbleSimple {
+    0%, 10% { opacity: 0; transform: translate(-50%, 0); }
+    20%, 80% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, 0); }
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   MOBILE ADJUSTMENTS
+   ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  :root {
+    --bf25-gift-size: 32px;
+  }
+
+  .bf25sc-product-bubble {
+    width: 180px;
+    padding: 10px;
+    bottom: calc(var(--bf25-gift-size) + 10px);
+  }
+
+  .bf25sc-bubble-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bf25sc-bubble-title {
+    font-size: 12px;
+  }
+}
+
 /* ====================================
    LOADING INDICATOR (API Wait State - Phase 4)
    ==================================== */

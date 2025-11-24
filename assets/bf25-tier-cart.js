@@ -1184,6 +1184,30 @@
       console.log('[BF25 Cart] ✓ Ready');
     }
 
+    /**
+     * Update the state of the CartManager with validation.
+     * @param {string} newState - The new state (idle, updating, syncing, animating).
+     */
+    setState(newState) {
+      const validStates = ['idle', 'updating', 'syncing', 'animating'];
+
+      if (!validStates.includes(newState)) {
+        console.error(`[BF25 Cart] Invalid state requested: ${newState}`);
+        return;
+      }
+
+      const previousState = this.state;
+      if (previousState !== newState) {
+        this.state = newState;
+        console.log(`[BF25 Cart] State transition: ${previousState} → ${newState}`);
+
+        // Update DOM attribute for CSS hooks
+        if (this.elements?.container) {
+          this.elements.container.setAttribute('data-state', newState);
+        }
+      }
+    }
+
     bindEvents() {
       // View Cart Toggle
       if (this.elements.btnView) {
@@ -1210,15 +1234,14 @@
         return;
       }
 
-      // Update state
-      this.setState('syncing');
-
-      // Verify button element exists
+      // SAFETY: Verify button element exists BEFORE setting state
       if (!this.elements?.btnBuy) {
         console.error('[BF25 Cart] Buy button element not found');
-        this.setState('idle');
         return;
       }
+
+      // Update state (now this method exists!)
+      this.setState('syncing');
 
       // Show loading indicator
       const originalText = this.elements.btnBuy.textContent;

@@ -1,0 +1,164 @@
+  .card-default-state,
+  .card-variant-state {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    padding: 16px;
+  }
+
+  /* Active state */
+  .card-default-state.active,
+  .card-variant-state.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+    position: relative;
+    inset: auto;
+  }
+
+  /* ========================================
+     DEFAULT STATE STYLING
+     ======================================== */
+
+  .card-default-state {
+    padding: 0; /* Remove padding to preserve existing layout */
+  }
+
+  .product-image-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0; /* Let existing margin handle spacing */
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 400ms ease;
+  }
+
+  /* Info button (product-info-icon already styled above) */
+  .product-info-btn {
+    z-index: 100; /* ✅ Ensure it's above card click area */
+  }
+
+  /* ========================================
+     VARIANT STATE STYLING
+     ======================================== */
+
+  .card-variant-state {
+    gap: 16px;
+    background: rgba(26, 26, 26, 0.95);
+    border: 2px solid rgba(96, 198, 85, 0.5);
+    border-radius: 16px;
+    padding: 10px;
+  }
+
+  .card-variant-state.active {
+    margin-top: 20px;
+  }
+
+  .variant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(96, 198, 85, 0.3);
+  }
+
+  .variant-header h4 {
+    font-size: 15px;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .variant-close-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 300ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -12px;
+    margin-right: -3px;
+  }
+
+  .variant-close-btn:hover {
+    background: rgba(255, 0, 0, 0.8);
+    border-color: #ff0000;
+    transform: rotate(90deg);
+  }
+
+  /* Variant selectors inline */
+  .variant-selectors-inline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+--
+  .product-card.added .card-default-state {
+    background: rgba(96, 198, 85, 0.05);
+  }
+
+  .product-card.added .product-bogo-badge::after {
+    content: ' ✓ Added';
+    animation: checkmarkFadeIn 600ms ease-out;
+  }
+
+  @keyframes checkmarkFadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Pair badge container */
+  .pair-badge-container {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .pair-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #000;
+    font-size: 13px;
+    font-weight: 900;
+    box-shadow: 0 4px 12px rgba(96, 198, 85, 0.6);
+    animation: badgePop 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes badgePop {
+    0% {
+      transform: scale(0) rotate(0deg);

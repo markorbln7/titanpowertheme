@@ -1,0 +1,1205 @@
+=== BF25 VIRTUAL CART - COMPLETE CODE EXTRACTION ===
+
+========================================
+1. INLINE CONFIG (BF25_TIERS + GIFT_VARIANT_MAP)
+========================================
+<!-- CRITICAL: Inline Config (Must load BEFORE deferred scripts) -->
+<script>
+  // Gift variant IDs (from Shopify admin) - Define FIRST so tiers can reference
+  window.GIFT_VARIANT_MAP = {
+    // Numeric keys for BundleManager
+    4: { variantId: '44595270672594', title: '100W 4-in-1 Cable', value: 3000, price: 3000 },
+    8: { variantId: '44595270705362', title: 'Premium Travel Case', value: 3500, price: 3500 },
+    12: { variantId: '44595270738130', title: 'Magnetic Cable Organizer', value: 6000, price: 6000 },
+    16: { variantId: '44595270770898', title: 'Mystery Power Gift', value: 15000, price: 15000 },
+    // Named keys for CartManager legacy code
+    CABLE: '44595270672594',
+    CASE: '44595270705362',
+    MAGNETIC: '44595270738130',
+    MYSTERY: '44595270770898'
+  };
+
+  // Complete tier configuration with all required properties
+  window.BF25_TIERS = [
+    {
+      id: 0,
+      min: 0,
+      max: 3,
+      discount: "50%",
+      badge: "50% OFF",
+      color: "#6b7280",
+      glowColor: "#a1a1aa",
+      glow: "rgba(107, 114, 128, 0.3)",
+      gifts: [],
+      multiplier: 0.50
+    },
+    {
+      id: 1,
+      min: 4,
+      max: 7,
+      discount: "60%",
+      badge: "🔥 60% OFF",
+      color: "#60c655",
+      glowColor: "#7FFF00",
+      glow: "rgba(96, 198, 85, 0.5)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 }
+      ],
+      multiplier: 0.40
+    },
+    {
+      id: 2,
+      min: 8,
+      max: 11,
+      discount: "70%",
+      badge: "⭐ 70% OFF",
+      color: "#60c655",
+      glowColor: "#39FF14",
+      glow: "rgba(127, 255, 0, 0.6)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 }
+      ],
+      multiplier: 0.30
+    },
+    {
+      id: 3,
+      min: 12,
+      max: 15,
+      discount: "80%",
+      badge: "🚀 80% OFF",
+      color: "#FFD700",
+      glowColor: "#FFF700",
+      glow: "rgba(255, 215, 0, 0.7)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 }
+      ],
+      multiplier: 0.20,
+      isDecoy: true
+    },
+    {
+      id: 4,
+      min: 16,
+      max: 999,
+      discount: "85%",
+      badge: "💎 85% OFF",
+      color: "#E0F7FF",
+      glowColor: "#FFFFFF",
+      glow: "rgba(224, 247, 255, 0.8)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 },
+        { variantId: window.GIFT_VARIANT_MAP.MYSTERY, name: "Mystery Box", emoji: "🎁", value: 150 }
+      ],
+      multiplier: 0.15
+    }
+  ];
+
+  console.log('[BF25 Config] ✓ Tier and gift configuration loaded');
+  console.log('[BF25 Config] Tiers:', window.BF25_TIERS.length, '| Gifts defined:', Object.keys(window.GIFT_VARIANT_MAP).length);
+</script>
+
+========================================
+2. BUNDLEMANAGER - INITIALIZATION
+========================================
+  }
+
+  function initializeBundleManager() {
+    // ============================================
+    // CONFIGURATION
+    // ============================================
+
+    const CONFIG = {
+      STORAGE_KEY: 'bf25_bundle',
+      SCHEMA_VERSION: 1,
+      EXPIRATION_DAYS: 7,
+      MAX_ITEMS: 16,
+      // Key used by GiftAnimator (must match exactly)
+      ANIMATION_SESSION_KEY: 'bf25_celebrated_tiers'
+    };
+
+    // Reference to tier configuration (from window globals)
+    const TIERS = window.BF25_TIERS;
+    const GIFTS = window.GIFT_VARIANT_MAP;
+
+    // ============================================
+    // BUNDLE MANAGER CLASS
+    // ============================================
+
+    class BundleManager {
+      constructor() {
+        // Singleton pattern
+        if (BundleManager.instance) {
+          return BundleManager.instance;
+        }
+        BundleManager.instance = this;
+
+        // Configuration
+        this.config = CONFIG;
+        this.tiers = TIERS;
+        this.gifts = GIFTS;
+
+        // Storage provider (determined at init)
+        this.storage = null;
+        this.storageName = null;
+
+        // Current bundle state
+        this.bundle = null;
+
+        // Initialize
+        this._initStorage();
+        this._loadBundle();
+        this._setupTabSync();
+
+        console.log(`[BF25 BundleManager] ✓ Initialized | Storage: ${this.storageName} | Items: ${this.bundle.computed.itemCount}`);
+      }
+
+========================================
+3. BUNDLEMANAGER - CALCULATE COMPUTED (PRICING LOGIC)
+========================================
+       * 1. Count total items
+       * 2. Determine tier (highest where itemCount >= threshold)
+       * 3. Calculate prices based on tier discount
+       * 4. Determine unlocked gifts
+       * 5. Sum total savings (discount + gift value)
+       */
+      _calculateComputed(items) {
+        // ─────────────────────────────────────────────────────
+        // 1. COUNT ITEMS
+        // ─────────────────────────────────────────────────────
+        const itemCount = items.reduce((sum, item) => sum + (item.quantity || 0), 0);
+
+        // ─────────────────────────────────────────────────────
+        // 2. DETERMINE TIER
+        // Find highest tier where itemCount >= min threshold
+        // BF25_TIERS is ordered: [0, 4, 8, 12, 16] items
+        // ─────────────────────────────────────────────────────
+        let tierReached = 0;
+        let discountPercent = 50; // Base discount (0-3 items)
+        let tierBadge = '50% OFF';
+
+        // Iterate through tiers to find highest reached
+        for (let i = 0; i < this.tiers.length; i++) {
+          const tier = this.tiers[i];
+          if (itemCount >= tier.min) {
+            tierReached = i;
+            // Parse discount - handle both "60%" string and 60 number formats
+            discountPercent = typeof tier.discount === 'string'
+              ? parseInt(tier.discount.replace('%', ''), 10)
+              : (tier.discount || 50);
+            tierBadge = tier.badge || `${discountPercent}% OFF`;
+          } else {
+            // Tiers are ordered, so stop once we exceed threshold
+            break;
+          }
+        }
+
+        // ─────────────────────────────────────────────────────
+        // 3. CALCULATE PRICES
+        // All values in cents (Shopify standard)
+        // ─────────────────────────────────────────────────────
+        const totalOriginalPrice = items.reduce((sum, item) => {
+          return sum + ((item.price || 0) * (item.quantity || 0));
+        }, 0);
+
+        // Apply tier discount
+        const discountMultiplier = 1 - (discountPercent / 100);
+        const totalDiscountedPrice = Math.round(totalOriginalPrice * discountMultiplier);
+        const discountAmount = totalOriginalPrice - totalDiscountedPrice;
+
+        // ─────────────────────────────────────────────────────
+        // 4. DETERMINE UNLOCKED GIFTS
+        // Gifts unlock at checkpoints: 4, 8, 12, 16 items
+        // GIFT_VARIANT_MAP structure: { 4: {...}, 8: {...}, ... }
+        // ─────────────────────────────────────────────────────
+        const giftCheckpoints = [4, 8, 12, 16];
+        const giftsUnlocked = [];
+        let totalGiftValue = 0;
+
+        for (const checkpoint of giftCheckpoints) {
+          if (itemCount >= checkpoint && this.gifts[checkpoint]) {
+            const gift = this.gifts[checkpoint];
+            giftsUnlocked.push({
+              checkpoint: checkpoint,
+              variantId: gift.variantId || gift.variant_id,
+              title: gift.title || gift.name || `Gift at ${checkpoint} items`,
+              price: gift.price || 0,
+              image: gift.image || null
+            });
+            totalGiftValue += gift.price || 0;
+          }
+        }
+
+        // ─────────────────────────────────────────────────────
+        // 5. TOTAL SAVINGS
+        // Savings = discount amount + value of free gifts
+        // ─────────────────────────────────────────────────────
+        const totalSavings = discountAmount + totalGiftValue;
+
+        // ─────────────────────────────────────────────────────
+        // 6. PROGRESS TO NEXT TIER/GIFT
+        // Useful for progress bar and "add X more" messaging
+        // ─────────────────────────────────────────────────────
+        let itemsToNextTier = 0;
+        let nextTierDiscount = null;
+        let itemsToNextGift = 0;
+        let nextGiftCheckpoint = null;
+
+        // Find next tier
+        for (const tier of this.tiers) {
+          if (tier.min > itemCount) {
+            itemsToNextTier = tier.min - itemCount;
+            nextTierDiscount = tier.discount;
+            break;
+          }
+        }
+
+        // Find next gift checkpoint
+        for (const checkpoint of giftCheckpoints) {
+          if (checkpoint > itemCount) {
+            itemsToNextGift = checkpoint - itemCount;
+            nextGiftCheckpoint = checkpoint;
+            break;
+          }
+        }
+
+        return {
+          // Core counts
+          itemCount,
+
+          // Tier info
+          tierReached,
+          tierBadge,
+          discountPercent,
+
+          // Gift info
+          giftsUnlocked,
+          totalGiftValue,
+
+          // Price calculations (all in cents)
+          totalOriginalPrice,
+          totalDiscountedPrice,
+          totalSavings,
+
+          // Progress tracking
+          itemsToNextTier,
+          nextTierDiscount,
+          itemsToNextGift,
+          nextGiftCheckpoint,
+
+          // Quick access booleans
+          hasReachedTier1: itemCount >= 4,
+          hasMaxItems: itemCount >= this.config.MAX_ITEMS
+        };
+      }
+
+      // ============================================
+      // PUBLIC API - GETTERS
+      // ============================================
+
+      /**
+       * Get a deep copy of the current bundle (prevents external mutation)
+       */
+      getBundle() {
+        return JSON.parse(JSON.stringify(this.bundle));
+      }
+
+========================================
+4. BUNDLEMANAGER - SAVE & TRANSITION DETECTION
+========================================
+
+        // Capture previous state BEFORE recalculation
+        const previousComputed = { ...this.bundle.computed };
+
+        // Update computed values
+        if (recalculate) {
+          this.bundle.computed = this._calculateComputed(this.bundle.items);
+        }
+
+        // Update activity timestamp
+        this.bundle.lastActivity = new Date().toISOString();
+
+        // Persist to storage
+        this._saveToStorage();
+
+        // Detect tier/gift transitions and dispatch events
+        if (recalculate && notify) {
+          this._detectAndDispatchTransitions(previousComputed, this.bundle.computed);
+        }
+
+        // Notify listeners
+        if (notify) {
+          this._dispatchEvent('bf25:bundleUpdated', {
+            bundle: this.getBundle(),
+            itemCount: this.bundle.computed.itemCount,
+            tierReached: this.bundle.computed.tierReached
+          });
+        }
+      }
+
+      /**
+       * Detect tier/gift transitions and dispatch appropriate events
+       * @param {Object} prevState - Previous computed state
+       * @param {Object} currentState - Current computed state
+       */
+      _detectAndDispatchTransitions(prevState, currentState) {
+        const prevTier = prevState.tierReached || 0;
+        const currentTier = currentState.tierReached || 0;
+        const prevGiftCount = prevState.giftsUnlocked?.length || 0;
+        const currentGiftCount = currentState.giftsUnlocked?.length || 0;
+
+        // TIER UNLOCKS (handle multi-tier jumps)
+        if (currentTier > prevTier) {
+          console.log(`[BF25 BundleManager] 🔥 Tier progression: ${prevTier} → ${currentTier}`);
+
+          // Dispatch event for EACH tier jumped (for animation queue)
+          for (let tier = prevTier + 1; tier <= currentTier; tier++) {
+            console.log(`%c[BF25 BundleManager] 🎉 DISPATCHING bf25:tierUnlocked for Tier ${tier}`, 'color: #60c655; font-weight: bold;');
+            this._dispatchEvent('bf25:tierUnlocked', {
+              tier: tier,
+              discountPercent: this._getTierDiscount(tier),
+              tierBadge: this._getTierBadge(tier),
+              previousTier: prevTier,
+              jumpedTiers: currentTier - prevTier
+            });
+          }
+        }
+
+        // TIER DOWNGRADES (item removal)
+        if (currentTier < prevTier) {
+          console.log(`[BF25 BundleManager] ⬇️ Tier downgrade: ${prevTier} → ${currentTier}`);
+          this._dispatchEvent('bf25:tierDowngraded', {
+            previousTier: prevTier,
+            currentTier: currentTier
+          });
+        }
+
+        // GIFT UNLOCKS (new gifts unlocked)
+        if (currentGiftCount > prevGiftCount) {
+          const newGifts = currentState.giftsUnlocked.slice(prevGiftCount);
+          console.log(`[BF25 BundleManager] 🎁 New gifts unlocked:`, newGifts);
+
+          newGifts.forEach((gift, index) => {
+            console.log(`%c[BF25 BundleManager] 🎁 DISPATCHING bf25:giftUnlocked: ${gift.title}`, 'color: #60c655; font-weight: bold;');
+            this._dispatchEvent('bf25:giftUnlocked', {
+              gift: gift,
+              giftIndex: prevGiftCount + index,
+              totalGifts: currentGiftCount
+            });
+          });
+        }
+
+        // GIFT LOSS (item removal causing gift loss)
+        if (currentGiftCount < prevGiftCount) {
+          console.log(`[BF25 BundleManager] 💔 Gifts lost: ${prevGiftCount} → ${currentGiftCount}`);
+          this._dispatchEvent('bf25:giftsLost', {
+            previousCount: prevGiftCount,
+            currentCount: currentGiftCount
+          });
+        }
+      }
+
+      /**
+       * Get discount percentage for a given tier
+       * @param {number} tier - Tier number (0-4)
+       * @returns {number} - Discount percentage
+       */
+      _getTierDiscount(tier) {
+        const tierConfig = this.tiers.find(t => t.id === tier);
+        return tierConfig?.discount || tierConfig?.discountPercent || 0;
+      }
+
+========================================
+5. BUNDLEMANAGER - ADD ITEM
+========================================
+        }
+
+        // Normalize variant ID to string
+        const variantId = String(productData.variantId);
+        quantity = Math.max(1, Math.floor(quantity)); // Ensure positive integer
+
+        // ─────────────────────────────────────────────────────
+        // CHECK MAX ITEMS
+        // ─────────────────────────────────────────────────────
+        const currentCount = this.bundle.computed.itemCount;
+        const newTotal = currentCount + quantity;
+
+        if (newTotal > this.config.MAX_ITEMS) {
+          const canAdd = this.config.MAX_ITEMS - currentCount;
+          console.warn(`[BF25 BundleManager] Max items (${this.config.MAX_ITEMS}) would be exceeded. Can add ${canAdd} more.`);
+
+          this._dispatchEvent('bf25:maxItemsReached', {
+            maxItems: this.config.MAX_ITEMS,
+            currentCount,
+            attemptedAdd: quantity,
+            canAdd
+          });
+
+          // If can't add any, return error
+          if (canAdd <= 0) {
+            return {
+              success: false,
+              error: 'MAX_ITEMS_REACHED',
+              message: `Bundle is full (${this.config.MAX_ITEMS} items maximum)`,
+              maxItems: this.config.MAX_ITEMS
+            };
+          }
+
+          // Otherwise, add what we can
+          quantity = canAdd;
+        }
+
+        // ─────────────────────────────────────────────────────
+        // CHECK IF ITEM EXISTS (Update vs Add)
+        // ─────────────────────────────────────────────────────
+        const existingIndex = this.bundle.items.findIndex(
+          item => String(item.variantId) === variantId
+        );
+
+        const previousTier = this.bundle.computed.tierReached;
+        const previousGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+        if (existingIndex !== -1) {
+          // UPDATE existing item quantity
+          this.bundle.items[existingIndex].quantity += quantity;
+          console.log(`[BF25 BundleManager] Updated quantity: ${productData.title} (now ${this.bundle.items[existingIndex].quantity})`);
+        } else {
+          // ADD new item
+          const newItem = {
+            variantId: variantId,
+            productId: String(productData.productId || ''),
+            title: productData.title || 'Unknown Product',
+            variantTitle: productData.variantTitle || '',
+            price: Math.max(0, parseInt(productData.price, 10) || 0),
+            image: productData.image || '',
+            handle: productData.handle || '',
+            quantity: quantity,
+            addedAt: new Date().toISOString()
+          };
+
+          this.bundle.items.push(newItem);
+          console.log(`[BF25 BundleManager] Added item: ${newItem.title} (qty: ${quantity})`);
+        }
+
+        // ─────────────────────────────────────────────────────
+        // REFRESH EXPIRATION & SAVE
+        // ─────────────────────────────────────────────────────
+        this._refreshExpiration();
+        this._saveBundle(true, true); // This now handles tier/gift unlock events via _detectAndDispatchTransitions
+
+        // ─────────────────────────────────────────────────────
+        // RETURN RESULT
+        // ─────────────────────────────────────────────────────
+        const newTier = this.bundle.computed.tierReached;
+        const newGiftCount = this.bundle.computed.giftsUnlocked.length;
+
+
+========================================
+6. CARTMANAGER - BUNDLEMANAGER INTEGRATION
+========================================
+      // Initialize ConfettiSystem
+      this.initConfettiSystem();
+
+      // Initialize ToastManager
+      if (window.BF25Toast) {
+        window.BF25Toast.init();
+      }
+
+      // Initialize keyboard navigation
+      this.initKeyboardNav();
+
+      // Handle viewport changes
+      this.handleViewportChange();
+
+      // Set initial body padding (CLS prevention)
+      document.body.style.paddingBottom = '65px';
+
+      // Initialize BundleManager integration (Virtual Cart)
+      // This replaces slow API calls with instant localStorage reads
+      this.initBundleManagerIntegration();
+
+      console.log('[BF25 Cart] ✓ Ready');
+    }
+
+    // ============================================
+    // BUNDLEMANAGER INTEGRATION (Virtual Cart)
+    // ============================================
+
+    /**
+     * Initialize BundleManager integration for instant cart updates.
+     * Falls back to Shopify API sync if BundleManager unavailable.
+     */
+    initBundleManagerIntegration() {
+      // Check if BundleManager is available (with retry for race conditions)
+      if (!window.BF25BundleManager) {
+        // Retry up to 5 times with 100ms delay (covers 500ms window)
+        if (!this._bundleManagerRetries) {
+          this._bundleManagerRetries = 0;
+        }
+
+        if (this._bundleManagerRetries < 5) {
+          this._bundleManagerRetries++;
+          console.log(`[BF25 Cart] BundleManager not ready, retry ${this._bundleManagerRetries}/5...`);
+          setTimeout(() => this.initBundleManagerIntegration(), 100);
+          return;
+        }
+
+        // After 5 retries, fall back to Shopify API
+        console.warn('[BF25 Cart] BundleManager not found after 5 retries, using Shopify API fallback');
+        this.useBundleManager = false;
+        this.syncCart(); // Original flow
+
+        // Still mark as initialized and set up scroll observer
+        this.markInitialized();
+        this.initScrollObserver();
+        return;
+      }
+
+      // Reset retry counter
+      this._bundleManagerRetries = 0;
+
+      console.log('[BF25 Cart] 🚀 BundleManager detected - enabling instant mode');
+      this.useBundleManager = true;
+      this.bundleManagerReady = true;
+
+      // Listen for bundle loaded from storage (page refresh/return)
+      document.addEventListener('bf25:bundleLoaded', (event) => {
+        console.log('[BF25 Cart] Event: bf25:bundleLoaded', event.detail);
+        const { itemCount, tierReached, giftsUnlocked } = event.detail;
+
+        // Render cart from loaded bundle
+        this.renderFromBundle();
+
+        // Update gift slot states to "claimed" for unlocked tiers (no animation on page load)
+        if (tierReached > 0) {
+          this.updateGiftSlotsForTier(tierReached);
+
+          // CRITICAL: Mark these tiers as celebrated to prevent re-animation
+          if (this.giftAnimator) {
+            console.log(`[BF25 Cart] Syncing celebratedTiers for loaded bundle (tier ${tierReached})`);
+            for (let tier = 1; tier <= tierReached; tier++) {
+              this.giftAnimator.celebratedTiers.add(tier);
+            }
+            this.giftAnimator.saveCelebratedTiers();
+          }
+        }
+      });
+
+      // Listen for bundle updates (instant re-renders)
+      document.addEventListener('bf25:bundleUpdated', (event) => {
+        console.log('[BF25 Cart] Event: bf25:bundleUpdated', event.detail);
+        this.renderFromBundle();
+      });
+
+      // Listen for tier unlocks (trigger animations)
+      document.addEventListener('bf25:tierUnlocked', (event) => {
+        console.log('%c[BF25 Cart] 🎉 RECEIVED bf25:tierUnlocked', 'color: #60c655; font-weight: bold;', event.detail);
+        const { tier } = event.detail;
+        if (this.giftAnimator && tier > 0) {
+          console.log(`[BF25 Cart] Calling giftAnimator.animate(${tier})`);
+          this.giftAnimator.animate(tier);
+        } else {
+          console.warn('[BF25 Cart] GiftAnimator not available or tier is 0');
+        }
+      });
+
+      // Listen for gift unlocks (additional celebration)
+      document.addEventListener('bf25:giftUnlocked', (event) => {
+        console.log('[BF25 Cart] Event: bf25:giftUnlocked', event.detail);
+        const { gift, totalGifts } = event.detail;
+        if (window.BF25Toast) {
+          window.BF25Toast.show(`🎁 FREE ${gift.title} unlocked!`, 'success', 3000);
+        }
+      });
+
+      // Listen for tier downgrades (logging only - toast handled by handleTierDowngrade)
+      document.addEventListener('bf25:tierChanged', (event) => {
+        console.log('[BF25 Cart] Event: bf25:tierChanged', event.detail);
+        // Toast removed - handleTierDowngrade shows detailed message
+      });
+
+      // Listen for gift loss (logging only - toast handled by handleTierDowngrade)
+      document.addEventListener('bf25:giftLost', (event) => {
+        console.log('[BF25 Cart] Event: bf25:giftLost', event.detail);
+        // Toast removed - handleTierDowngrade shows detailed message
+      });
+
+      // Listen for max items reached
+      document.addEventListener('bf25:maxItemsReached', (event) => {
+        console.log('[BF25 Cart] Event: bf25:maxItemsReached', event.detail);
+        if (window.BF25Toast) {
+
+========================================
+7. CARTMANAGER - RENDER FROM BUNDLE
+========================================
+      }
+    }
+
+    /**
+     * Render cart UI from BundleManager state (INSTANT - no API calls)
+     * This replaces the slow syncCart() → fetchCart() → render flow
+     */
+    renderFromBundle() {
+      if (!window.BF25BundleManager) {
+        console.warn('[BF25 Cart] renderFromBundle called but BundleManager not available');
+        return;
+      }
+
+      console.log('[BF25 Cart] Rendering from BundleManager...');
+      window.BF25Performance.startOperation('bundleRender');
+
+      try {
+        // Get computed values from BundleManager (instant - localStorage)
+        const computed = window.BF25BundleManager.getComputed();
+        const items = window.BF25BundleManager.getItems();
+
+        const {
+          itemCount,
+          tierReached,
+          discountPercent,
+          totalOriginalPrice,
+          totalDiscountedPrice,
+          totalSavings,
+          totalGiftValue,
+          giftsUnlocked,
+          itemsToNextTier,
+          itemsToNextGift,
+          nextGiftCheckpoint
+        } = computed;
+
+        // Calculate savings in euros for display (guard against NaN)
+        const safeSavings = (typeof totalSavings === 'number' && !isNaN(totalSavings)) ? totalSavings : 0;
+        const giftValueCents = (totalGiftValue || 0);
+        const totalSavingsWithGifts = safeSavings + giftValueCents;
+        const savingsEuros = (totalSavingsWithGifts / 100).toFixed(0);
+
+        console.log(`[BF25 Cart] Bundle: ${itemCount} items, Tier ${tierReached}, €${savingsEuros} savings`);
+
+        // Update progress bar and tier visualization
+        this.updateVisualization(itemCount);
+
+        // Update data-active-tier for CSS-based button pulse
+        if (this.elements.container) {
+          this.elements.container.setAttribute('data-active-tier', tierReached);
+        }
+
+        // Update savings display (BOGO-style format)
+        if (this.elements.savingsAmount) {
+          const newText = `€${savingsEuros}`;
+
+          // Only animate if value changed
+          if (this.elements.savingsAmount.textContent !== newText) {
+            this.elements.savingsAmount.classList.add('is-updating');
+            this.elements.savingsAmount.textContent = newText;
+
+            // Remove animation class after it completes
+            setTimeout(() => {
+              this.elements.savingsAmount.classList.remove('is-updating');
+            }, 400);
+          } else {
+            // Same value, just update text without animation
+            this.elements.savingsAmount.textContent = newText;
+          }
+        }
+
+        // Render products in expanded view
+        this.renderBundleProducts(items, computed);
+
+        // Show/hide cart based on items
+        this.handleEmptyState(itemCount);
+
+
+========================================
+8. CARTMANAGER - RENDER BUNDLE PRODUCTS
+========================================
+     */
+    renderBundleProducts(items, computed) {
+      const scrollContainer = document.getElementById('bf25sc-product-scroll');
+      const emptyState = document.getElementById('bf25sc-expanded-empty');
+
+      if (!scrollContainer) return;
+
+      // Clear existing products
+      scrollContainer.innerHTML = '';
+
+      // Handle empty state
+      if (items.length === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Get current discount for price display
+      const discountMultiplier = 1 - (computed.discountPercent / 100);
+
+      // Render each item
+      items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'bf25sc-product-card';
+        card.setAttribute('data-variant-id', item.variantId);
+        card.setAttribute('data-index', index);
+
+        // Calculate prices
+        const originalPrice = (item.price * item.quantity) / 100;
+        const discountedPrice = (item.price * item.quantity * discountMultiplier) / 100;
+
+        // Build card HTML
+        card.innerHTML = `
+          <div class="bf25sc-product-image-container">
+            ${item.image
+              ? `<img src="${item.image}" alt="${item.title}" class="bf25sc-product-image" width="60" height="60">`
+              : `<div class="bf25sc-product-placeholder">📦</div>`
+            }
+            <span class="bf25sc-product-qty-badge">${item.quantity}</span>
+          </div>
+          <div class="bf25sc-product-info">
+            <h4 class="bf25sc-product-title">${item.title}</h4>
+            ${item.variantTitle ? `<p class="bf25sc-product-variant">${item.variantTitle}</p>` : ''}
+            <div class="bf25sc-product-prices">
+              <span class="bf25sc-price-discounted">€${discountedPrice.toFixed(2)}</span>
+              <span class="bf25sc-price-original">€${originalPrice.toFixed(2)}</span>
+            </div>
+          </div>
+          <div class="bf25sc-product-actions">
+            <button type="button" class="bf25sc-product-remove" aria-label="Remove ${item.title}">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        `;
+
+        // Add remove button handler
+        const removeBtn = card.querySelector('.bf25sc-product-remove');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.handleBundleRemove(item.variantId, item.title);
+          });
+        }
+
+        scrollContainer.appendChild(card);
+      });
+
+      console.log(`[BF25 Cart] Rendered ${items.length} bundle products`);
+    }
+
+    /**
+     * Handle item removal via BundleManager
+     */
+    handleBundleRemove(variantId, title) {
+      if (!window.BF25BundleManager) return;
+
+      console.log(`[BF25 Cart] Removing from bundle: ${title} (${variantId})`);
+
+========================================
+9. GIFT ANIMATOR - ANIMATE METHOD
+========================================
+        const stored = sessionStorage.getItem('bf25_celebrated_tiers');
+        return new Set(stored ? JSON.parse(stored) : []);
+      } catch (error) {
+        console.warn('[GiftAnimator] Failed to load celebrated tiers:', error);
+        return new Set();
+      }
+    }
+
+    /**
+     * Save celebrated tiers to sessionStorage
+     */
+    saveCelebratedTiers() {
+      try {
+        sessionStorage.setItem(
+          'bf25_celebrated_tiers',
+          JSON.stringify(Array.from(this.celebratedTiers))
+        );
+      } catch (error) {
+        console.warn('[GiftAnimator] Failed to save celebrated tiers:', error);
+      }
+    }
+
+    /**
+     * Add tier to animation queue
+     */
+    animate(tier) {
+      // Skip if already celebrated this session
+      if (this.celebratedTiers.has(tier)) {
+        console.log(`[GiftAnimator] Tier ${tier} already celebrated (skipping)`);
+        return;
+      }
+
+      console.log(`[GiftAnimator] Queueing tier ${tier} for animation`);
+      this.queue.add(tier);
+
+      // Log multi-tier queue detection
+      if (this.queue.size > 1) {
+        console.log(`[GiftAnimator] Multi-tier queue detected: ${Array.from(this.queue).sort().join(', ')}`);
+      }
+
+      if (!this.isAnimating) {
+        this.processQueue();
+      }
+    }
+
+    /**
+     * Process animation queue with staged reveal (0.3s stagger)
+     */
+    async processQueue() {
+      if (this.queue.size === 0) {
+        this.isAnimating = false;
+        return;
+      }
+
+      console.log(`[GiftAnimator] Processing queue with ${this.queue.size} tier(s)`);
+
+      // CRITICAL: Get ALL tiers in queue, sorted ascending (Tier 1, 2, 3, 4)
+      const tiersToAnimate = Array.from(this.queue).sort((a, b) => a - b);
+      this.queue.clear();
+
+      this.isAnimating = true;
+
+      // Performance monitoring
+      console.time('[GiftAnimator] Multi-tier sequence');
+      console.log(`[GiftAnimator] Staged Reveal: ${tiersToAnimate.length} tier(s) - ${tiersToAnimate.join(', ')}`);
+
+      // Calculate total duration for user feedback
+      const totalDuration = 1.8 + ((tiersToAnimate.length - 1) * 0.3);
+      console.log(`[GiftAnimator] Expected completion: ${totalDuration.toFixed(1)}s`);
+
+      try {
+        // STAGED REVEAL: Launch animations with 0.3s stagger
+        const animationPromises = tiersToAnimate.map((tier, index) => {
+          const staggerDelay = index * 300; // 0ms, 300ms, 600ms, 900ms...
+
+          return new Promise((resolve) => {
+            setTimeout(async () => {
+              console.log(`[GiftAnimator] Starting tier ${tier} animation (stagger: ${staggerDelay}ms)`);
+
+========================================
+10. GIFT ANIMATOR - EXECUTE SEQUENCE
+========================================
+        console.log(`[GiftAnimator] ✓ Staged Reveal complete - ${tiersToAnimate.length} tier(s) animated`);
+
+      } catch (error) {
+        console.error('[GiftAnimator] Staged Reveal error:', error);
+      }
+
+      this.isAnimating = false;
+
+      // Process any new unlocks that were queued during animation
+      if (this.queue.size > 0) {
+        console.log('[GiftAnimator] Processing additional queued tiers...');
+        this.processQueue();
+      }
+    }
+
+    /**
+     * Execute premium gift unlock animation sequence
+     * Uses CSS-driven animations from Prompt 6.1
+     *
+     * Timeline:
+     * 0-600ms: Shake → Burst (CSS keyframe: bf25GiftUnlockBurst)
+     * 300ms: Trigger electric sparks
+     * 500-3500ms: Product bubble visible (CSS keyframe: bf25BubbleSequence)
+     * 3500ms+: Sustained glow pulse
+     */
+    async executeSequence(tier) {
+      const checkpoint = this.getCheckpointForTier(tier);
+      const slot = document.querySelector(
+        `.bf25sc-gift-slot[data-checkpoint-value="${checkpoint}"]`
+      );
+
+      if (!slot) {
+        console.error(`[GiftAnimator] No slot found for tier ${tier}`);
+        return;
+      }
+
+      // Prevent re-triggering if animation is actively running.
+      // NOTE: We rely on celebratedTiers (checked in animate()) to prevent re-celebrating.
+      // DO NOT check slot.dataset.state here - it causes a race condition with renderFromBundle().
+      if (slot.classList.contains('is-celebrating')) {
+        console.log(`[GiftAnimator] Tier ${tier} already animating, skipping`);
+        return;
+      }
+
+      // Performance monitoring
+      window.BF25Performance.startOperation(`giftAnimation-tier${tier}`);
+      window.BF25Performance.startFPSTracking(`tier-${tier}-unlock`);
+      console.log(`[GiftAnimator] 🎁 Starting celebration for Tier ${tier}`);
+
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 1: Populate product bubble with gift data
+      // ─────────────────────────────────────────────────────────────────
+      this.populateProductBubble(slot);
+
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 2: Trigger CSS animation sequence
+      // Adding .is-celebrating triggers:
+      // - bf25GiftUnlockBurst (shake → burst → glow)
+      // - bf25BubbleSequence (fade in → hold → fade out)
+      // ─────────────────────────────────────────────────────────────────
+      slot.classList.add('is-celebrating');
+      slot.dataset.state = 'claimed'; // Update state for CSS
+
+      // ─────────────────────────────────────────────────────────────────
+      // STEP 3: Trigger effects at key moments
+      // ─────────────────────────────────────────────────────────────────
+
+      // Electric sparks at burst peak (300ms into animation)
+      setTimeout(() => {
+        this.triggerElectricSparks(slot, tier);
+      }, 300);
+
+      // Confetti for Tier 4 MAX celebration
+      if (tier === 4) {
+        setTimeout(() => {
+          this.triggerConfetti(tier, checkpoint);
+        }, 400);
+      }
+
+
+========================================
+11. TOAST MANAGER - SHOW & QUEUE
+========================================
+  class ToastManager {
+    constructor() {
+      if (ToastManager.instance) {
+        return ToastManager.instance;
+      }
+      ToastManager.instance = this;
+
+      this.container = null;
+      this.activeToasts = [];
+      this.maxToasts = 1; // Only show 1 toast at a time
+      this.defaultDuration = 2000; // 2 seconds
+      this.toastIdCounter = 0;
+
+      // Queue for sequential toast display
+      this.queue = [];
+      this.isProcessingQueue = false;
+    }
+
+    /**
+     * Initialize toast container
+     */
+    init() {
+      this.container = document.getElementById('bf25sc-toast-container');
+
+      if (!this.container) {
+        console.warn('[ToastManager] Toast container not found');
+        return false;
+      }
+
+      console.log('[ToastManager] Initialized');
+      return true;
+    }
+
+    /**
+     * Show a toast notification
+     * @param {string} message - Primary message text
+     * @param {Object} options - Configuration options
+     * @param {string} options.secondary - Secondary message (optional)
+     * @param {string} options.icon - Emoji icon (default: 🎁)
+     * @param {number} options.tier - Tier number for styling (1-4)
+     * @param {string} options.type - Toast type: 'info', 'success', 'warning' (default: 'info')
+     * @param {number} options.duration - Duration in ms (default: 2000)
+     * @param {boolean} options.dismissible - Allow manual dismiss (default: true)
+     */
+    show(message, options = {}) {
+      if (!this.container) {
+        console.warn('[ToastManager] Container not initialized');
+        return null;
+      }
+
+      // Queue if already showing a toast
+      if (this.activeToasts.length >= this.maxToasts) {
+        console.log('[ToastManager] Queuing toast:', message);
+        this.queue.push({ message, options });
+        return null;
+      }
+
+      const config = {
+        secondary: options.secondary || null,
+        icon: options.icon || '🎁',
+        tier: options.tier || 1,
+        type: options.type || 'info',
+        duration: options.duration || this.defaultDuration,
+        dismissible: options.dismissible !== false
+      };
+
+      const toastId = `bf25sc-toast-${++this.toastIdCounter}`;
+      const toast = this.createToast(toastId, message, config);
+
+      // Insert at top (newest first)
+      this.container.insertBefore(toast, this.container.firstChild);
+
+      // Track active toast
+      this.activeToasts.push({
+        id: toastId,
+        element: toast,
+        timeoutId: null
+      });
+
+      // Trigger slide-in animation
+      requestAnimationFrame(() => {
+        toast.classList.add('is-visible');
+      });
+
+      // Auto-dismiss after duration, then process queue
+      const timeoutId = setTimeout(() => {
+        this.dismiss(toast);
+        // Process next queued toast after a small delay
+        setTimeout(() => this.processQueue(), 300);
+      }, config.duration);
+
+      this.activeToasts[this.activeToasts.length - 1].timeoutId = timeoutId;
+
+      console.log(`[ToastManager] Toast shown: "${message}" (${config.duration}ms)`);
+
+      return toast;
+    }
+
+    /**
+     * Create toast HTML element
+     */
+    createToast(id, message, config) {
+      const toast = document.createElement('div');
+
+========================================
+12. TOAST MANAGER - PROCESS QUEUE
+========================================
+    /**
+     * Process queued toasts sequentially
+     */
+    processQueue() {
+      if (this.queue.length === 0) {
+        return;
+      }
+
+      // Only process if no active toasts
+      if (this.activeToasts.length > 0) {
+        return;
+      }
+
+      const next = this.queue.shift();
+      console.log('[ToastManager] Processing queued toast:', next.message);
+      this.show(next.message, next.options);
+    }
+
+========================================
+13. EXPANSION CORE - ADD TO BUNDLE MANAGER
+========================================
+   * @param {Object} product - Product data from window.productData
+   * @param {Object} pricing - Calculated pricing from tierCalculator
+   * @returns {Promise} Result object with success status
+   */
+  async addToBundleManager(productId, variantId, quantity, product, pricing) {
+    if (this.config.debug) {
+      console.group('🚀 Adding to BundleManager (Instant)');
+      console.log('Product:', product.title);
+      console.log('Variant ID:', variantId);
+      console.log('Quantity:', quantity);
+      console.groupEnd();
+    }
+
+    try {
+      // Find the selected variant to get variant-specific data
+      // Handle cases where variants might be in different locations
+      const variants = product.variants || product.product?.variants || [];
+
+      if (!variants || variants.length === 0) {
+        console.warn('[BF25 Modal] No variants array found, using fallback data');
+        // Fallback: construct minimal variant data from what we have
+        // Price priority: pricing calculation > product.price > selected variant price
+        let fallbackPrice = 0;
+
+        // Try pricing object first (from tier calculator)
+        if (pricing && pricing.unitPrice) {
+          fallbackPrice = pricing.unitPrice;
+        } else if (pricing && pricing.finalPrice) {
+          fallbackPrice = pricing.finalPrice;
+        } else if (product.basePrice) {
+          // Custom productData uses basePrice
+          fallbackPrice = product.basePrice;
+        } else if (product.price) {
+          // Shopify product.price is in cents
+          fallbackPrice = product.price;
+        } else if (product.variants && product.variants[0]) {
+          fallbackPrice = product.variants[0].price;
+        }
+
+        // Convert to cents if needed (Shopify stores in cents, but sometimes displayed in dollars)
+        if (fallbackPrice > 0 && fallbackPrice < 100) {
+          // Likely in dollars, convert to cents
+          fallbackPrice = Math.round(fallbackPrice * 100);
+        }
+
+        console.log('[BF25 Modal] Fallback price:', fallbackPrice, 'from pricing:', pricing);
+
+        var variant = {
+          id: variantId,
+          title: 'Default Title',
+          price: fallbackPrice
+        };
+      } else {
+        var variant = variants.find(v => String(v.id) === String(variantId));
+
+        if (!variant) {
+          console.error('[BF25 Modal] Variant not found in array:', variantId, 'Available:', variants.map(v => v.id));
+          this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
+          return { success: false, error: 'Variant not found' };
+        }
+      }
+
+      // Build product data for BundleManager
+      const productData = {
+        variantId: String(variantId),
+        productId: String(productId),
+        title: product.title,
+        variantTitle: variant.title !== 'Default Title' ? variant.title : '',
+        // Price priority: variant.price > product.basePrice > pricing.unitPrice > 0
+        price: variant.price || product.basePrice || pricing?.unitPrice || pricing?.finalPrice || 0,
+        // Get image URL - featuredImage is camelCase in window.productData
+        image: product.featuredImage || product.featured_image || product.image || '',
+        handle: product.handle || ''
+      };
+
+      // Add to BundleManager
+      const result = window.BF25BundleManager.addItem(productData, quantity);
+
+      if (result.success) {
+        if (this.config.debug) {
+          console.log('✅ Added to bundle:', result);
+        }
+
+        // Handle upsells (also add to BundleManager)
+        await this.addUpsellsToBundleManager(product);
+
+        // Call success handler with adapted data
+        this.handleBundleSuccess(result, product, variant, quantity);
+
+        return { success: true, data: result };
+
+      } else {
+        // Handle BundleManager errors
+        if (this.config.debug) {
+          console.error('❌ BundleManager error:', result.error);
+        }
+
+========================================
+14. SCRIPT LOAD ORDER (LIQUID)
+========================================
+<!-- CRITICAL: Inline Config (Must load BEFORE deferred scripts) -->
+<script>
+  // Gift variant IDs (from Shopify admin) - Define FIRST so tiers can reference
+  window.GIFT_VARIANT_MAP = {
+    // Numeric keys for BundleManager
+    4: { variantId: '44595270672594', title: '100W 4-in-1 Cable', value: 3000, price: 3000 },
+    8: { variantId: '44595270705362', title: 'Premium Travel Case', value: 3500, price: 3500 },
+    12: { variantId: '44595270738130', title: 'Magnetic Cable Organizer', value: 6000, price: 6000 },
+    16: { variantId: '44595270770898', title: 'Mystery Power Gift', value: 15000, price: 15000 },
+    // Named keys for CartManager legacy code

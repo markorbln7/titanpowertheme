@@ -1,3 +1,9 @@
+# BF25 MODAL & CARD EXTRACTION
+# Generated: Mon Nov 24 23:20:15 GMT 2025
+
+========================================
+FILE: assets/bf25-expansion-core.js
+========================================
 /**
  * ═══════════════════════════════════════════════════════════════════════
  * BF25 EXPANSION MODAL - CORE ARCHITECTURE
@@ -1727,51 +1733,12 @@ class CartManager {
 
     try {
       // Find the selected variant to get variant-specific data
-      // Handle cases where variants might be in different locations
-      const variants = product.variants || product.product?.variants || [];
+      const variant = product.variants.find(v => String(v.id) === String(variantId));
 
-      if (!variants || variants.length === 0) {
-        console.warn('[BF25 Modal] No variants array found, using fallback data');
-        // Fallback: construct minimal variant data from what we have
-        // Price priority: pricing calculation > product.price > selected variant price
-        let fallbackPrice = 0;
-
-        // Try pricing object first (from tier calculator)
-        if (pricing && pricing.unitPrice) {
-          fallbackPrice = pricing.unitPrice;
-        } else if (pricing && pricing.finalPrice) {
-          fallbackPrice = pricing.finalPrice;
-        } else if (product.basePrice) {
-          // Custom productData uses basePrice
-          fallbackPrice = product.basePrice;
-        } else if (product.price) {
-          // Shopify product.price is in cents
-          fallbackPrice = product.price;
-        } else if (product.variants && product.variants[0]) {
-          fallbackPrice = product.variants[0].price;
-        }
-
-        // Convert to cents if needed (Shopify stores in cents, but sometimes displayed in dollars)
-        if (fallbackPrice > 0 && fallbackPrice < 100) {
-          // Likely in dollars, convert to cents
-          fallbackPrice = Math.round(fallbackPrice * 100);
-        }
-
-        console.log('[BF25 Modal] Fallback price:', fallbackPrice, 'from pricing:', pricing);
-
-        var variant = {
-          id: variantId,
-          title: 'Default Title',
-          price: fallbackPrice
-        };
-      } else {
-        var variant = variants.find(v => String(v.id) === String(variantId));
-
-        if (!variant) {
-          console.error('[BF25 Modal] Variant not found in array:', variantId, 'Available:', variants.map(v => v.id));
-          this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
-          return { success: false, error: 'Variant not found' };
-        }
+      if (!variant) {
+        console.error('[BF25 Modal] Variant not found:', variantId);
+        this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
+        return { success: false, error: 'Variant not found' };
       }
 
       // Build product data for BundleManager
@@ -1780,10 +1747,8 @@ class CartManager {
         productId: String(productId),
         title: product.title,
         variantTitle: variant.title !== 'Default Title' ? variant.title : '',
-        // Price priority: variant.price > product.basePrice > pricing.unitPrice > 0
-        price: variant.price || product.basePrice || pricing?.unitPrice || pricing?.finalPrice || 0,
-        // Get image URL - featuredImage is camelCase in window.productData
-        image: product.featuredImage || product.featured_image || product.image || '',
+        price: variant.price, // Price in cents (Shopify format)
+        image: product.featured_image || product.images?.[0] || '',
         handle: product.handle || ''
       };
 
@@ -2012,15 +1977,8 @@ class CartManager {
    * @param {Object} data - Cart data
    */
   showSuccess(data) {
-    const quantity = this.state.get('quantity') || 1;
-    const productId = this.state.get('productId');
-    const product = productId ? window.productData[productId] : null;
-
-    // If no product data (quick-add flow), use generic message
-    if (!product) {
-      this.showNotification('Item added to bundle!', 'success');
-      return;
-    }
+    const quantity = this.state.get('quantity');
+    const product = window.productData[this.state.get('productId')];
 
     const message = quantity === 1
       ? `${product.title} added to cart!`
@@ -2194,16 +2152,10 @@ class CartManager {
    * @param {Object} data - Cart data
    */
   trackAddToCart(data) {
-    const productId = this.state.get('productId');
-    const pricing = productId
-      ? this.manager.tierCalculator.calculatePricing(productId)
-      : null;
-
-    if (!pricing) return;
-
     // Track with Google Analytics (if available)
     if (typeof gtag !== 'undefined') {
-      const product = window.productData[productId];
+      const product = window.productData[this.state.get('productId')];
+      const pricing = this.manager.tierCalculator.calculatePricing();
 
       gtag('event', 'add_to_cart', {
         currency: 'EUR',
@@ -2220,6 +2172,7 @@ class CartManager {
 
     // Track with Facebook Pixel (if available)
     if (typeof fbq !== 'undefined') {
+      const pricing = this.manager.tierCalculator.calculatePricing();
       fbq('track', 'AddToCart', {
         content_ids: [this.state.get('variantId')],
         content_type: 'product',
@@ -2229,7 +2182,8 @@ class CartManager {
     }
 
     // Emit custom event for other integrations
-    const product = window.productData[productId];
+    const product = window.productData[this.state.get('productId')];
+    const pricing = this.manager.tierCalculator.calculatePricing();
     this.emitCartEvent('bf25:analytics:addToCart', {
       product: product,
       variant: this.state.get('variantId'),
@@ -2444,15 +2398,10 @@ class ExpansionManager {
    */
   bindEvents() {
     // ─────────────────────────────────────────────────────────────────
-    // Product Card Clicks (Event Delegation for Performance) - BF25-QUICK-ADD-001
+    // Product Card Clicks (Event Delegation for Performance)
     // ─────────────────────────────────────────────────────────────────
     // Using delegation on document to handle all 27+ cards efficiently
     // ENHANCED: Use capture phase and stop propagation to prevent duplicate handlers
-    // ROUTE PRIORITY:
-    // 1. Info icon → Open modal with full product details
-    // 2. Plus button → Quick-add flow (direct add OR show variant overlay)
-    // 3. Variant overlay elements → Handle variant selection (don't open modal)
-    // 4. Card body → Open modal (default behavior)
     document.addEventListener('click', (e) => {
       const card = e.target.closest('.bf25-product-card');
 
@@ -2461,62 +2410,13 @@ class ExpansionManager {
         return;
       }
 
-      // ═══════════════════════════════════════════════════════════════
-      // PRIORITY 1: Info Icon Click → Always Open Modal
-      // ═══════════════════════════════════════════════════════════════
-      const infoIcon = e.target.closest('.bf25-product-info-icon');
-      if (infoIcon) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-
-        if (this.config.debug) {
-          console.log('ℹ️ Info icon clicked → Opening modal');
-        }
-
-        this.handleCardClick(card);
-        return;
-      }
-
-      // ═══════════════════════════════════════════════════════════════
-      // PRIORITY 2: Plus Button Click → Quick-Add Flow
-      // ═══════════════════════════════════════════════════════════════
-      const plusButton = e.target.closest('.bf25-quick-add-trigger');
-      if (plusButton) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-
-        if (this.config.debug) {
-          console.log('➕ Plus button clicked → Quick-add flow');
-        }
-
-        this.handleQuickAdd(card);
-        return;
-      }
-
-      // ═══════════════════════════════════════════════════════════════
-      // PRIORITY 3: Variant Overlay Clicks → Let Overlay Handle
-      // ═══════════════════════════════════════════════════════════════
-      const variantOverlay = card.querySelector('.bf25-card-variant-state:not([hidden])');
-      if (variantOverlay) {
-        // Variant overlay is showing - let its own handlers deal with clicks
-        // Don't open modal, don't interfere
-        if (this.config.debug) {
-          console.log('🎨 Click inside active variant overlay → Ignoring');
-        }
-        return; // Don't prevent default - let variant buttons work
-      }
-
-      // ═══════════════════════════════════════════════════════════════
-      // PRIORITY 4: Card Body Click → Open Modal (Default Behavior)
-      // ═══════════════════════════════════════════════════════════════
+      // Stop all propagation to prevent other handlers
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
 
       if (this.config.debug) {
-        console.log('🎯 Card body clicked → Opening modal:', {
+        console.log('🎯 Product card click intercepted:', {
           target: e.target.className,
           card: card.className,
           productId: card.dataset.productId
@@ -2958,517 +2858,6 @@ class ExpansionManager {
       this.state.update('isOpen', false);
     }
   }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // QUICK-ADD FUNCTIONALITY (BF25-QUICK-ADD-001)
-  // Added: Part 5 - Nine methods for direct add-to-bundle from product cards
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  /**
-   * 1. Handle quick-add click on plus button
-   * Routes to direct add OR variant overlay based on product type
-   *
-   * @param {HTMLElement} card - Product card element
-   */
-  handleQuickAdd(card) {
-    const productId = card.dataset.productId;
-    const hasVariants = card.dataset.hasVariants === 'true';
-    const defaultVariantId = card.dataset.defaultVariantId;
-
-    if (this.config.debug) {
-      console.log('🚀 Quick-Add Flow Started:', {
-        productId,
-        hasVariants,
-        defaultVariantId
-      });
-    }
-
-    // ─────────────────────────────────────────────────────────────────
-    // Path 1: Single-Variant Product → Direct Add (1 quantity)
-    // ─────────────────────────────────────────────────────────────────
-    if (!hasVariants || hasVariants === 'false') {
-      if (this.config.debug) {
-        console.log('✅ Single variant → Direct add');
-      }
-      this.quickAddToBundle(card, productId, defaultVariantId);
-      return;
-    }
-
-    // ─────────────────────────────────────────────────────────────────
-    // Path 2: Multi-Variant Product → Show Variant Overlay
-    // ─────────────────────────────────────────────────────────────────
-    if (this.config.debug) {
-      console.log('🎨 Multi-variant → Show selector overlay');
-    }
-    this.showVariantOverlay(card);
-  }
-
-  /**
-   * 2. Show variant selector overlay on card
-   * Generates UI dynamically from window.productData
-   *
-   * @param {HTMLElement} card - Product card element
-   */
-  showVariantOverlay(card) {
-    const productId = card.dataset.productId;
-    const variantState = card.querySelector('.bf25-card-variant-state');
-
-    if (!variantState) {
-      console.error('❌ No variant state element found in card');
-      return;
-    }
-
-    // Get product data from window.productData
-    const productData = window.productData?.[productId];
-    if (!productData) {
-      console.error('❌ No product data found for ID:', productId);
-      return;
-    }
-
-    if (this.config.debug) {
-      console.log('🎨 Showing variant overlay for:', productData.title);
-    }
-
-    // Get options from window.productOptions (generated in Liquid)
-    const options = window.productOptions?.[productId];
-    const variants = window.productVariants?.[productId];
-
-    if (!options || !variants) {
-      console.error('❌ No variant data found:', { productId, options, variants });
-      optionsContainer.innerHTML = '<p class="bf25-variant-error">Variant data not available</p>';
-      return;
-    }
-
-    if (this.config.debug) {
-      console.log('📦 Variant data:', { options, variants });
-    }
-
-    // Generate variant selector UI
-    const optionsHTML = this.generateVariantSelectorUI(
-      productId,
-      options,
-      variants
-    );
-
-    // Inject UI into container
-    const optionsContainer = variantState.querySelector('.bf25-variant-options-container');
-    if (optionsContainer) {
-      optionsContainer.innerHTML = optionsHTML;
-    }
-
-    // Show overlay (remove hidden attribute for CSS transition)
-    variantState.removeAttribute('hidden');
-
-    // Bind event handlers for overlay
-    this.bindVariantOverlayEvents(card, productId);
-
-    // Announce to screen readers
-    this.announceToScreenReader(`Variant selection opened for ${productData.title}`, 'polite');
-  }
-
-  /**
-   * 3. Hide variant overlay and clear selections
-   *
-   * @param {HTMLElement} card - Product card element
-   */
-  hideVariantOverlay(card) {
-    const variantState = card.querySelector('.bf25-card-variant-state');
-
-    if (!variantState) {
-      return;
-    }
-
-    if (this.config.debug) {
-      console.log('🎨 Hiding variant overlay');
-    }
-
-    // Hide overlay (set hidden attribute for CSS transition)
-    variantState.setAttribute('hidden', '');
-
-    // Clear selections
-    const pills = variantState.querySelectorAll('.bf25-variant-pill');
-    pills.forEach(pill => pill.classList.remove('is-selected'));
-
-    // Reset add button
-    const addBtn = variantState.querySelector('.bf25-variant-add-btn');
-    if (addBtn) {
-      addBtn.disabled = true;
-      addBtn.classList.remove('is-loading', 'is-success');
-    }
-
-    // Clear options container
-    const optionsContainer = variantState.querySelector('.bf25-variant-options-container');
-    if (optionsContainer) {
-      optionsContainer.innerHTML = '';
-    }
-  }
-
-  /**
-   * 4. Generate variant selector UI HTML
-   * Creates option groups with pills for each value
-   *
-   * @param {string} productId - Product ID
-   * @param {Array} options - Product options (e.g., [{name: "Color", values: ["Red", "Blue"]}])
-   * @param {Array} variants - Product variants array
-   * @returns {string} HTML string for variant selector
-   */
-  generateVariantSelectorUI(productId, options, variants) {
-    if (!options || options.length === 0) {
-      return '<p class="bf25-variant-error">No options available</p>';
-    }
-
-    let html = '';
-
-    options.forEach((option, optionIndex) => {
-      // Skip if no values
-      if (!option.values || option.values.length === 0) {
-        return;
-      }
-
-      html += `
-        <div class="bf25-variant-option-group" data-option-position="${optionIndex + 1}">
-          <label class="bf25-variant-option-label">${option.name}</label>
-          <div class="bf25-variant-pills">
-      `;
-
-      option.values.forEach((value) => {
-        html += `
-          <button
-            type="button"
-            class="bf25-variant-pill"
-            data-option-name="${option.name}"
-            data-option-value="${value}"
-            data-option-position="${optionIndex + 1}"
-            aria-label="Select ${value}"
-          >
-            ${value}
-          </button>
-        `;
-      });
-
-      html += `
-          </div>
-        </div>
-      `;
-    });
-
-    return html;
-  }
-
-  /**
-   * 5. Bind event handlers for variant overlay elements
-   * Handles pill clicks, close button, add button
-   *
-   * @param {HTMLElement} card - Product card element
-   * @param {string} productId - Product ID
-   */
-  bindVariantOverlayEvents(card, productId) {
-    const variantState = card.querySelector('.bf25-card-variant-state');
-
-    if (!variantState) {
-      return;
-    }
-
-    // ─────────────────────────────────────────────────────────────────
-    // Close Button
-    // ─────────────────────────────────────────────────────────────────
-    const closeBtn = variantState.querySelector('.bf25-variant-close');
-    if (closeBtn) {
-      // Remove any existing listeners
-      const newCloseBtn = closeBtn.cloneNode(true);
-      closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
-
-      newCloseBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.hideVariantOverlay(card);
-      });
-    }
-
-    // ─────────────────────────────────────────────────────────────────
-    // Variant Pills (Option Selection)
-    // ─────────────────────────────────────────────────────────────────
-    const pills = variantState.querySelectorAll('.bf25-variant-pill');
-    pills.forEach(pill => {
-      pill.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const optionPosition = pill.dataset.optionPosition;
-        const optionValue = pill.dataset.optionValue;
-
-        // Deselect other pills in same option group
-        const group = pill.closest('.bf25-variant-option-group');
-        const groupPills = group.querySelectorAll('.bf25-variant-pill');
-        groupPills.forEach(p => p.classList.remove('is-selected'));
-
-        // Select this pill
-        pill.classList.add('is-selected');
-
-        if (this.config.debug) {
-          console.log('🎨 Variant option selected:', {
-            position: optionPosition,
-            value: optionValue
-          });
-        }
-
-        // Validate if all options selected
-        this.validateVariantSelection(card, productId);
-      });
-    });
-
-    // ─────────────────────────────────────────────────────────────────
-    // Add to Bundle Button
-    // ─────────────────────────────────────────────────────────────────
-    const addBtn = variantState.querySelector('.bf25-variant-add-btn');
-    if (addBtn) {
-      // Remove any existing listeners
-      const newAddBtn = addBtn.cloneNode(true);
-      addBtn.parentNode.replaceChild(newAddBtn, addBtn);
-
-      newAddBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (newAddBtn.disabled || newAddBtn.classList.contains('is-loading')) {
-          return;
-        }
-
-        this.addSelectedVariantToBundle(card, productId);
-      });
-    }
-  }
-
-  /**
-   * 6. Validate if all variant options are selected
-   * Enables/disables add button based on selection state
-   *
-   * @param {HTMLElement} card - Product card element
-   * @param {string} productId - Product ID
-   * @returns {boolean} True if all options selected
-   */
-  validateVariantSelection(card, productId) {
-    const variantState = card.querySelector('.bf25-card-variant-state');
-    const addBtn = variantState?.querySelector('.bf25-variant-add-btn');
-
-    if (!variantState || !addBtn) {
-      return false;
-    }
-
-    // Get all option groups
-    const optionGroups = variantState.querySelectorAll('.bf25-variant-option-group');
-
-    // Check if each group has a selection
-    let allSelected = true;
-    optionGroups.forEach(group => {
-      const selectedPill = group.querySelector('.bf25-variant-pill.is-selected');
-      if (!selectedPill) {
-        allSelected = false;
-      }
-    });
-
-    // Enable/disable add button
-    addBtn.disabled = !allSelected;
-
-    if (this.config.debug && allSelected) {
-      console.log('✅ All variant options selected');
-    }
-
-    return allSelected;
-  }
-
-  /**
-   * 7. Find matching variant ID based on selected options
-   * Matches by option1, option2, option3 values
-   *
-   * @param {string} productId - Product ID
-   * @param {Object} selections - Selected options {option1: "Red", option2: "Large"}
-   * @returns {string|null} Variant ID or null if no match
-   */
-  findMatchingVariant(productId, selections) {
-    const variants = window.productVariants?.[productId];
-
-    if (!variants) {
-      console.error('❌ No variants found for:', productId);
-      return null;
-    }
-
-    // Find variant matching all selected options
-    const matchingVariant = variants.find(variant => {
-      let matches = true;
-
-      if (selections.option1 && variant.option1 !== selections.option1) {
-        matches = false;
-      }
-      if (selections.option2 && variant.option2 !== selections.option2) {
-        matches = false;
-      }
-      if (selections.option3 && variant.option3 !== selections.option3) {
-        matches = false;
-      }
-
-      return matches;
-    });
-
-    if (matchingVariant) {
-      if (this.config.debug) {
-        console.log('✅ Found matching variant:', {
-          variantId: matchingVariant.id,
-          title: matchingVariant.title,
-          selections
-        });
-      }
-      return matchingVariant.id;
-    }
-
-    console.warn('⚠️ No matching variant found for selections:', selections);
-    return null;
-  }
-
-  /**
-   * 8. Add selected variant to bundle (with loading states)
-   * Gets selections, finds variant, adds to bundle, shows success
-   *
-   * @param {HTMLElement} card - Product card element
-   * @param {string} productId - Product ID
-   */
-  async addSelectedVariantToBundle(card, productId) {
-    const variantState = card.querySelector('.bf25-card-variant-state');
-    const addBtn = variantState?.querySelector('.bf25-variant-add-btn');
-
-    if (!variantState || !addBtn) {
-      return;
-    }
-
-    // Get selected options
-    const selections = {};
-    const selectedPills = variantState.querySelectorAll('.bf25-variant-pill.is-selected');
-
-    selectedPills.forEach(pill => {
-      const position = pill.dataset.optionPosition;
-      const value = pill.dataset.optionValue;
-      selections[`option${position}`] = value;
-    });
-
-    if (this.config.debug) {
-      console.log('🎯 Adding variant with selections:', selections);
-    }
-
-    // Find matching variant
-    const variantId = this.findMatchingVariant(productId, selections);
-
-    if (!variantId) {
-      console.error('❌ Could not find matching variant');
-      return;
-    }
-
-    // Show loading state
-    addBtn.classList.add('is-loading');
-    addBtn.disabled = true;
-    addBtn.textContent = 'Adding...';
-
-    try {
-      // Use existing addToBundleManager method
-      await this.quickAddToBundle(card, productId, variantId);
-
-      // Success state
-      addBtn.classList.remove('is-loading');
-      addBtn.classList.add('is-success');
-      addBtn.textContent = 'Added! ✓';
-
-      // Hide overlay after 800ms
-      setTimeout(() => {
-        this.hideVariantOverlay(card);
-
-        // Reset button state after hiding
-        setTimeout(() => {
-          addBtn.classList.remove('is-success');
-          addBtn.textContent = 'Add to Bundle';
-        }, 300);
-      }, 800);
-
-    } catch (error) {
-      console.error('❌ Error adding variant to bundle:', error);
-
-      // Error state
-      addBtn.classList.remove('is-loading');
-      addBtn.textContent = 'Error - Try Again';
-      addBtn.disabled = false;
-
-      // Reset after 2s
-      setTimeout(() => {
-        addBtn.textContent = 'Add to Bundle';
-      }, 2000);
-    }
-  }
-
-  /**
-   * 9. Quick add to bundle (uses existing addToBundleManager method)
-   * Adds 1 quantity, shows success animation on card
-   *
-   * @param {HTMLElement} card - Product card element
-   * @param {string} productId - Product ID
-   * @param {string} variantId - Variant ID
-   */
-  async quickAddToBundle(card, productId, variantId) {
-    if (this.config.debug) {
-      console.log('➕ Quick-adding to bundle:', { productId, variantId });
-    }
-
-    try {
-      // Get product data from window.productData
-      const product = window.productData[productId];
-
-      if (!product) {
-        console.error('❌ Product data not found for ID:', productId);
-        alert('Could not find product data. Please refresh and try again.');
-        return false;
-      }
-
-      // Use existing method from modal flow with ALL required parameters
-      // Parameters: productId, variantId, quantity, product, pricing
-      const result = await this.cartManager.addToBundleManager(
-        productId,
-        variantId,
-        1,        // Quantity: always 1 for quick-add
-        product,  // Product object from window.productData
-        null      // Pricing: let addToBundleManager calculate
-      );
-
-      if (result.success) {
-        // Success animation on card
-        card.classList.add('bf25-quick-add-success');
-        setTimeout(() => {
-          card.classList.remove('bf25-quick-add-success');
-        }, 600);
-
-        if (this.config.debug) {
-          console.log('✅ Quick-add successful');
-        }
-
-        return true;
-      } else {
-        console.error('❌ Quick-add failed:', result.error);
-
-        if (result.error === 'MAX_ITEMS_REACHED') {
-          alert('Bundle is full (16 items max). Remove items to add more.');
-        } else {
-          alert('Could not add item. Please try again.');
-        }
-
-        return false;
-      }
-
-    } catch (error) {
-      console.error('❌ Quick-add failed:', error);
-      alert('Error adding item. Please try again.');
-      return false;
-    }
-  }
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // END QUICK-ADD FUNCTIONALITY
-  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Animate modal open using FLIP technique
@@ -5861,3 +5250,1049 @@ if (document.readyState === 'loading') {
   // DOM already loaded
   initBF25Expansion();
 }
+
+========================================
+FILE: sections/section-bundle-builder-bf25.liquid
+========================================
+{{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
+{{ 'section-bundle-builder-bf25.css' | asset_url | stylesheet_tag }}
+{{ 'section-explore.css' | asset_url | stylesheet_tag }}
+{{ 'bf25-modal-design.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
+<script src="{{ 'bf25-expansion-core.js' | asset_url }}" defer></script>
+{% comment %} <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> {% endcomment %}
+
+{% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'anniversary' or page.handle == '4thjulysale' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' or page.handle == 'chirstmas-2024' or page.handle == 'christmas-2024' %}
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endif %}
+
+<section class="section-collections-with-nav section-explore dark-mode" data-section="bf25">
+  <div class="gradient-mesh-bg"></div>
+
+   {% if section.blocks.size > 0 %}
+    <nav class="section-collections-with-nav__navigation py-[30px] tp-sticky">
+       <ul class="flex items-center justify-center md:gap-[10px] gap-[10px] max-w-[750px] mx-auto flex-wrap">
+            {% for block in section.blocks  %}
+                {% comment %} {% assign collection_obj = collections[collection.handle] %} {% endcomment %}
+                <li class="{% if forloop.index == 1 %}active {% endif %} lg:min-w-[180px] relative lg:flex-wrap w-[30%] pt-[14px] md:pt-0 !mb-[10px] !md:mb-0">
+                     {% if block.settings.icon != blank %}
+                      <div class="small-icon top-[-18px] md:top-[3px] image md:max-w-[35px] max-w-[25px] absolute md:left-[10px] left-[50%] translate-x-[-50%] translate-y-0 md:transform-none"><img width="100" height="auto" src="{{ block.settings.icon | img_url:'master' }}"></div>
+                     {% endif %}
+                    <a href='{{ block.settings.anchor }}' class="collection-link">{{ block.settings.heading }}</a>
+                </li>
+            {% endfor %}
+       </ul>
+    </nav>
+  {% endif %}
+
+  <div class="filter-pills-container">
+    <div class="filter-pills">
+      <button class="pill active" data-filter="all">All Products</button>
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <button class="pill" data-filter="{{ collection_obj.handle }}">{{ collection_obj.title }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <div class="collection" id="{{ collection_obj.handle  | strip }}">
+          <div class="mb-[16px]">
+            <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[0px] text-center collection-title">{{ collection_obj.title }}</h2>
+            {% if collection_obj.description %}
+              <p class="text-[16px] text-center font-bold">{{ collection_obj.description | strip_html }}</p>
+            {% endif %}
+          </div>
+          <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
+            {% for product in collection_obj.products %}
+              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+                <article class="bf25-product-card section-collections-with-nav__product relative"
+                         data-product-id="{{ product.id }}"
+                         data-section="bf25"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View details for {{ product.title | escape }}">
+                  {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
+                    <div class="absolute left-[10px] top-[10px]">
+                      <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                        <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
+                        <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                      </div>
+                    </div>
+                  {% else %}
+                    {% if product.metafields.custom.new_shop_discount %}
+                      <div class="absolute left-[10px] top-[10px]">
+                        <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                          <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                          <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                  {% if product.metafields.custom.custom_url %}
+                    {% assign url = product.metafields.custom.custom_url %}
+                  {% else %}
+                    {% assign url = product.url %}
+                  {% endif %}
+                  {% if section.settings.use_popup == true %}
+                    <div class="!block absolute w-full h-full top-0 left-0 pointer js-section-explore__buy-now"></div>
+                  {% else %}
+                    <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
+                  {% endif %}
+                      <figure class="section-collections-with-nav__product-image">
+                        {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                          <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
+                          {% if product.metafields.custom.new_shop_image %}
+                            {% assign product_image =  product.metafields.custom.new_shop_image %}
+                            <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                          {% else %}
+                            {% assign product_image = product.featured_image %}
+                            {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                          {% endif %}
+                        {% endif %}
+                      </figure>
+
+                      <div class="section-collections-with-nav__product-details justify-between">
+                          <div class="top-part">
+                            <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
+                            <!-- Reviews Display (BF25-REV-006) -->
+                            <div class="bf25-product-rating-display"
+                                 data-product-id="{{ product.id }}"
+                                 role="button"
+                                 tabindex="0">
+                              <div class="bf25-rating-stars" aria-hidden="true">
+                                <span class="stars-empty">★★★★★</span>
+                                <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                              </div>
+                              <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                            </div>
+
+                            {% if product.metafields.custom.ticks %}
+                              {{product.metafields.custom.ticks | metafield_tag }}
+                            {% endif %}
+                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                              <div clas="prices">
+                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                                {% if product.compare_at_price  %}
+                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                                {% endif %}
+                              </div>
+                              {% if section.settings.use_popup == true %}
+                                <div class="arrow pointer js-section-explore__buy-now">
+                                    +
+                                </div>
+                              {% else %}
+                                <a href="{{ product.url }}" class="arrow">
+                                  <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
+                                </a>
+                              {% endif %}
+                            </div>
+                          </div>
+                      </div>
+                      {% if product.metafields.custom.new_shop_discount_top %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+                      {% else %}
+                        {% assign badge_text = product.metafields.custom.new_shop_discount %}
+                      {% endif %}
+                      {%- comment -%} Modal moved outside article {%- endcomment -%}
+                  </article>
+
+                  {%- comment -%} Modal NOW renders outside article to fix z-index {%- endcomment -%}
+                  {% render 'buy-now-popup-bf25'
+                    product_image: product.featured_image,
+                    price: product.price,
+                    compare_at_price: product.compare_at_price,
+                    title: product.title,
+                    description: product_description,
+                    upsell_product_one: upsell_product_one,
+                    upsell_product_two: upsell_product_two,
+                    product_id: product.selected_or_first_available_variant.id,
+                    product_id_attr: product.id,
+                    quantity: '1',
+                    product: product,
+                    badge_text: badge_text,
+                    grid_1: section.settings.add_4,
+                    grid_2: section.settings.add_6,
+                    grid_3: section.settings.add_10,
+                    grid_1_text: section.settings.add_4_text,
+                    grid_2_text: section.settings.add_6_text,
+                    grid_3_text: section.settings.add_10_text
+                  %}
+                  {%- comment -%} BF25 Product Data Layer - Required for variant selection {%- endcomment -%}
+                  <script>
+                    // Initialize global objects if not exists
+                    window.productVariants = window.productVariants || {};
+                    window.productOptions = window.productOptions || {};
+
+                    // Store variant data for this product
+                    window.productVariants[{{ product.id }}] = [
+                      {%- for variant in product.variants -%}
+                      {
+                        id: {{ variant.id | json }},
+                        title: {{ variant.title | json }},
+                        options: [
+                          {%- for option in variant.options -%}
+                          {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ],
+                        available: {{ variant.available | json }},
+                        price: {{ variant.price | json }},
+                        compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+                        {%- if variant.featured_image -%}
+                        featured_image: {
+                          src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+                          alt: {{ variant.featured_image.alt | default: product.title | json }}
+                        }
+                        {%- else -%}
+                        featured_image: null
+                        {%- endif -%}
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+
+                    // Store option configuration for this product
+                    window.productOptions[{{ product.id }}] = [
+                      {%- for option in product.options_with_values -%}
+                      {
+                        name: {{ option.name | json }},
+                        position: {{ option.position }},
+                        values: [
+                          {%- for value in option.values -%}
+                          {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ]
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+                  </script>
+
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+BF25 MODAL SYSTEM - DOM STRUCTURE
+PROMPT 2: Single Modal Container (Singleton Pattern)
+═══════════════════════════════════════════════════════════
+
+This modal container will be dynamically populated when any product card
+is clicked. Using a singleton pattern prevents DOM bloat (27 cards with
+embedded modals = 10,800+ DOM nodes vs. 1 shared modal = ~400 nodes).
+
+Structure:
+- Container: Fixed positioning, will animate via FLIP (Prompt 5)
+- Content: Populated dynamically from window.productData (Prompt 6)
+- Overlay: Backdrop for focus and dismissal
+{%- endcomment -%}
+
+<!-- MODAL CONTAINER (Singleton) -->
+<div id="bf25-modal-container"
+     class="bf25-modal-container"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="bf25-modal-title"
+     aria-hidden="true"
+     hidden>
+
+  <!-- Close Button -->
+  <button class="bf25-modal-close"
+          aria-label="Close product details"
+          type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Modal Content (Populated Dynamically) -->
+  <div class="bf25-modal-content">
+    {%- comment -%}
+      This will be populated via JavaScript in Prompt 6
+      Content comes from window.productData + window.productVariants
+    {%- endcomment -%}
+  </div>
+
+</div>
+
+<!-- OVERLAY (Backdrop) -->
+<div id="bf25-modal-overlay"
+     class="bf25-modal-overlay"
+     aria-hidden="true"
+     hidden>
+</div>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+BF25 MODAL SYSTEM - DATA LAYER FOUNDATION
+PROMPT 1: Configuration and Product Metadata Output
+═══════════════════════════════════════════════════════════
+
+This script outputs comprehensive product data for instant JavaScript access.
+No AJAX needed = lightning-fast modal experience.
+
+TWO DATA STRUCTURES:
+1. window.bf25Config - Modal behavior and tier configuration
+2. window.productData - Complete product metadata for modal content
+
+PRESERVED STRUCTURE:
+- window.productVariants - Existing variant system (UNTOUCHED)
+{%- endcomment -%}
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STRUCTURE 1: BF25 CONFIGURATION - Protected Initialization
+// Ref: BF25-MODE-002 - Prevent overwrite by other sections
+// ═══════════════════════════════════════════════════════════
+
+(function() {
+  'use strict';
+
+  // Configuration for this section
+  const sectionConfig = {
+    // Display mode from Theme Customizer
+    mode: "{{ section.settings.modal_display_mode | default: 'power_packs' }}",
+
+    // Tier structure for discount calculations (Black Friday 2025)
+    // Thresholds: 4, 8, 12 items (Power Packs mode)
+    tiers: [
+      {
+        min: 1,
+        max: 3,
+        multiplier: 1.0,
+        displayLabel: "Standard",
+        label: "Standard",
+        badge: null
+      },
+      {
+        min: 4,
+        max: 7,
+        multiplier: 0.91,
+        displayLabel: "60% OFF",
+        label: "Better Deal",
+        badge: "⚡ FREE: 4-in-1 Cable"
+      },
+      {
+        min: 8,
+        max: 11,
+        multiplier: 0.76,
+        displayLabel: "70% OFF",
+        label: "Great Deal",
+        badge: "🎁 FREE: Cable + Travel Case"
+      },
+      {
+        min: 12,
+        max: 15,
+        multiplier: 0.65,
+        displayLabel: "80% OFF",
+        label: "Best Deal",
+        badge: "🔥 FREE: Cables + Cases + Pre-Launch Set"
+      },
+      {
+        min: 16,
+        max: 999,
+        multiplier: 0.57,
+        displayLabel: "85% OFF",
+        label: "Bigfoot Unlock",
+        badge: "💎 FREE: Mystery Box + VIP Status"
+      }
+    ],
+
+    // Enhanced features configuration
+    enhancedFeatures: {
+      showReviews: {{ section.settings.show_reviews | default: true }},
+      showStockLevels: {{ section.settings.show_stock_levels | default: true }},
+      showCountdown: {{ section.settings.show_countdown | default: true }},
+      showFeatures: {{ section.settings.show_features | default: true }},
+      showShipping: {{ section.settings.show_shipping | default: true }},
+      enableKeyboardShortcuts: {{ section.settings.enable_keyboard_shortcuts | default: true }},
+      showTrustBadges: {{ section.settings.show_trust_badges | default: true }}
+    },
+
+    // Animation settings
+    animation: {
+      duration: 400,
+      easing: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    },
+
+    // Debug mode
+    debug: true
+  };
+
+  // Initialize or merge configuration
+  if (typeof window.bf25Config === 'undefined') {
+    // First initialization - set everything
+    window.bf25Config = sectionConfig;
+
+    if (sectionConfig.debug) {
+      console.log('🚀 BF25 Config Initialized (Primary Section)');
+      console.log('   Mode:', sectionConfig.mode);
+      console.log('   Source: section-bundle-builder-bf25');
+    }
+  } else {
+    // Config already exists - only merge non-critical settings
+    // NEVER overwrite mode, tiers, or core functionality
+
+    if (sectionConfig.debug) {
+      console.warn('⚠️ BF25 Config already exists - skipping reinit');
+      console.warn('   Existing mode:', window.bf25Config.mode);
+      console.warn('   This section mode:', sectionConfig.mode);
+      console.warn('   Keeping existing configuration');
+    }
+
+    // Only merge enhancedFeatures if they don't exist
+    if (!window.bf25Config.enhancedFeatures) {
+      window.bf25Config.enhancedFeatures = sectionConfig.enhancedFeatures;
+    }
+  }
+
+  // Freeze the mode to prevent accidental changes
+  Object.defineProperty(window.bf25Config, 'mode', {
+    value: window.bf25Config.mode,
+    writable: false,
+    configurable: false
+  });
+
+  if (sectionConfig.debug) {
+    console.log('🔒 Mode locked:', window.bf25Config.mode);
+  }
+})();
+
+// ═══════════════════════════════════════════════════════════
+// STRUCTURE 2: PRODUCT METADATA
+// ═══════════════════════════════════════════════════════════
+window.productData = window.productData || {};
+
+{%- comment -%}
+Loop through collection products and output comprehensive metadata.
+This structure contains everything needed for the modal EXCEPT variant details.
+Variant details remain in window.productVariants (existing, preserved).
+{%- endcomment -%}
+
+{% for collection in section.settings.collections %}
+  {% assign collection_obj = collections[collection.handle] %}
+  {% if collection_obj.products.size > 0 %}
+    {% for product in collection_obj.products %}
+window.productData["{{ product.id }}"] = {
+  // ─────────────────────────────────────────────────────────
+  // Basic Product Info
+  // ─────────────────────────────────────────────────────────
+  id: "{{ product.id }}",
+  handle: "{{ product.handle }}",
+  title: {{ product.title | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Pricing (in cents for precise calculations)
+  // ─────────────────────────────────────────────────────────
+  basePrice: {{ product.price }},
+  comparePrice: {{ product.compare_at_price | default: 0 }},
+
+  // ─────────────────────────────────────────────────────────
+  // Images
+  // ─────────────────────────────────────────────────────────
+  featuredImage: "{{ product.featured_image | img_url: 'master' }}",
+  {% if product.metafields.custom.popup_image %}
+  popupImage: "{{ product.metafields.custom.popup_image | img_url: 'master' }}",
+  {% endif %}
+
+  // ─────────────────────────────────────────────────────────
+  // Content (Rich Text) - BF25-FIX-011
+  // Using metafield_tag to render rich_text_field as HTML string
+  // ─────────────────────────────────────────────────────────
+  {% comment %}
+    Try multiple approaches to get description as string
+    Metafield type: rich_text_field
+  {% endcomment %}
+  {% liquid
+    assign desc_rendered = product.metafields.custom.product_description | metafield_tag
+
+    if desc_rendered == blank
+      assign desc_rendered = product.metafields.custom.product_description.value
+    endif
+
+    if desc_rendered == blank
+      assign desc_rendered = product.description
+    endif
+  %}
+  description: {{ desc_rendered | json }},
+  ticks: {{ product.metafields.custom.ticks | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Reviews (from reviews.* namespace)
+  // ─────────────────────────────────────────────────────────
+  reviewRating: {{ product.metafields.reviews.rating | default: 0 }},
+  reviewCount: {{ product.metafields.reviews.count | default: 0 }},
+
+  // ─────────────────────────────────────────────────────────
+  // Badges & Status Indicators
+  // ─────────────────────────────────────────────────────────
+  isBestseller: {% if product.metafields.custom.is_bestseller %}true{% else %}false{% endif %},
+  discount: {{ product.metafields.custom.new_shop_discount | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Stock & Inventory
+  // ─────────────────────────────────────────────────────────
+  stockLevel: {{ product.selected_or_first_available_variant.inventory_quantity | default: 0 }},
+  available: {{ product.available | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Upsell Products (Full details from metafields)
+  // ─────────────────────────────────────────────────────────
+  upsells: [
+    {%- if product.metafields.custom.first_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.first_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.first_upsell_product.value.selected_or_first_available_variant.id }},
+        title: {{ product.metafields.custom.first_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.first_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.first_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.first_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.first_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.first_upsell_product.value.url }}"
+      }{%- if product.metafields.custom.second_upsell_product.value -%},{%- endif -%}
+    {%- endif -%}
+    {%- if product.metafields.custom.second_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.second_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.second_upsell_product.value.selected_or_first_available_variant.id }},
+        title: {{ product.metafields.custom.second_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.second_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.second_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.second_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.second_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.second_upsell_product.value.url }}"
+      }
+    {%- endif -%}
+  ],
+
+  // ─────────────────────────────────────────────────────────
+  // Product Classification
+  // ─────────────────────────────────────────────────────────
+  productType: {{ product.type | json }},
+  tags: {{ product.tags | json }},
+  vendor: {{ product.vendor | json }}
+};
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+// ═══════════════════════════════════════════════════════════
+// DEBUGGING & VALIDATION
+// ═══════════════════════════════════════════════════════════
+if (window.bf25Config.debug) {
+  console.group('🚀 BF25 Data Layer Initialized - Prompt 1');
+
+  // Configuration check
+  console.log('📋 Configuration:', window.bf25Config);
+  console.log('   Mode:', window.bf25Config.mode);
+  console.log('   Tiers:', window.bf25Config.tiers.length, 'defined');
+
+  // Product data check
+  const productCount = Object.keys(window.productData).length;
+  console.log('📦 Products Loaded:', productCount);
+
+  if (productCount > 0) {
+    const sampleProductId = Object.keys(window.productData)[0];
+    const sampleProduct = window.productData[sampleProductId];
+    console.log('📄 Sample Product:', {
+      id: sampleProduct.id,
+      title: sampleProduct.title,
+      basePrice: sampleProduct.basePrice,
+      reviewRating: sampleProduct.reviewRating,
+      hasDescription: !!sampleProduct.description,
+      hasUpsells: sampleProduct.upsells.length > 0
+    });
+  }
+
+  // Validate existing productVariants preserved
+  if (window.productVariants) {
+    console.log('✅ window.productVariants preserved');
+    console.log('   Variants Loaded:', Object.keys(window.productVariants).length);
+  } else {
+    console.warn('⚠️ window.productVariants not found (may load after this script)');
+  }
+
+  console.groupEnd();
+}
+</script>
+
+</section>
+
+{% comment %} <script>
+    AOS.init();
+    document.addEventListener("shopify:section:load", () => {
+      AOS.init();
+    })
+  </script> {% endcomment %}
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bundle-builder-bf25.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Filter pills functionality
+    const pills = document.querySelectorAll('.filter-pills .pill');
+    const collections = document.querySelectorAll('.collection');
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', function() {
+        // Remove active class from all pills
+        pills.forEach(p => p.classList.remove('active'));
+
+        // Add active class to clicked pill
+        this.classList.add('active');
+
+        // Get filter value
+        const filterValue = this.dataset.filter;
+
+        // Show/hide collections based on filter
+        collections.forEach(collection => {
+          if (filterValue === 'all') {
+            collection.style.display = 'block';
+          } else {
+            if (collection.id === filterValue) {
+              collection.style.display = 'block';
+            } else {
+              collection.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "bundle build bf25",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎛️ Modal Configuration"
+    },
+    {
+      "type": "paragraph",
+      "content": "Configure how products are added to cart in the expansion modal. Power Packs mode emphasizes bulk savings with tier buttons. Individual mode offers traditional quantity selection."
+    },
+    {
+      "type": "select",
+      "id": "modal_display_mode",
+      "label": "Display Mode",
+      "info": "Power Packs: Tier buttons | Individual: Stepper",
+      "options": [
+        {
+          "value": "power_packs",
+          "label": "Power Packs (Tier Buttons)"
+        },
+        {
+          "value": "individual",
+          "label": "Individual (Quantity Stepper)"
+        }
+      ],
+      "default": "power_packs"
+    },
+    {
+      "type": "header",
+      "content": "💰 Tier Discount Structure"
+    },
+    {
+      "type": "paragraph",
+      "content": "The tier percentages below are optimized for Black Friday 2025 and are currently hardcoded in the JavaScript configuration. Future updates can make these Theme Customizer editable if needed."
+    },
+    {
+      "type": "paragraph",
+      "content": "Current structure: Tier 1 (4 items, 60% off) → Tier 2 (8 items, 75% off) → Tier 3 (12 items, 80% off) → Tier 4 (16 items, 85% off)"
+    },
+    {
+      "type": "header",
+      "content": "Legacy Settings"
+    },
+    {
+      "type": "checkbox",
+      "label": "Activate Popups",
+      "id": "use_popup",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "label": "Show Alt Images",
+      "id": "show_alt_images",
+      "default": false
+    },
+    {
+      "type": "collection_list",
+      "label": "Collections",
+      "id": "collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_4",
+      "label": "Add 4 image"
+    },
+    {
+      "type": "text",
+      "id": "add_4_text",
+      "label": "Add 4 Number"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_6",
+      "label": "Add 6 image"
+    },
+    {
+      "type": "text",
+      "id": "add_6_text",
+      "label": "Add 6 Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_10",
+      "label": "Add 10 image"
+    },
+    {
+      "type": "text",
+      "id": "add_10_text",
+      "label": "Add 10 Number"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav",
+      "name": "Nav",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "bundle build bf25"
+    }
+  ]
+}
+{% endschema %}
+========================================
+BOGO REFERENCE: Variant selector patterns
+========================================
+511-})();
+512-
+513-// ===========================================
+514-// PRODUCT FILTER DROPDOWN
+515-// ===========================================
+516-(function() {
+517-  const filterSelect = document.getElementById('category-filter');
+518-  if (!filterSelect) return;
+519-
+520-  filterSelect.addEventListener('change', function(e) {
+521:    const selectedCategory = e.target.value;
+522-    const products = document.querySelectorAll('.section-collections-with-nav__product');
+523-
+524-    products.forEach(product => {
+525:      if (selectedCategory === 'all') {
+526-        product.style.display = 'block';
+527-      } else {
+528-        const productCategory = product.dataset.category;
+529:        product.style.display = productCategory === selectedCategory ? 'block' : 'none';
+530-      }
+531-    });
+532-  });
+533-})();
+534-
+535-// ===========================================
+536-// BOGO PAIR SELECTION SYSTEM - Phase 2
+537-// ===========================================
+538-
+539-/**
+540- * Initialize BOGO state (SH-DISABLE-STATE-RESTORATION-001)
+541- * Always starts fresh - persistence disabled per user requirement
+542- */
+543-(function initBOGOState() {
+544-  // ✅ ALWAYS START FRESH: Clear any saved state on page load
+545-  // User requirement: Don't persist state across navigation - fresh start every time
+546-  // This prevents UI sync bugs from incomplete pairs being restored
+547-  console.log('🔄 Clearing any saved BOGO state - fresh start on page load');
+548-
+549-  // Clear localStorage immediately
+550-  if (typeof clearBOGOState === 'function') {
+551-    clearBOGOState();
+552-  } else {
+553-    // Fallback if function doesn't exist
+554-    localStorage.removeItem('titan-bogo-state');
+555-  }
+556-
+557-  // Always initialize fresh state (skip restoration logic)
+558-  window.bogoState = {
+559-    pairs: [],
+560-    currentPair: {
+561-      slot1: null,
+562-      slot2: null
+563-    },
+564-    activePairNumber: 1
+565-  };
+566-
+567-  console.log('✅ BOGO state initialized (fresh - persistence disabled)');
+568-  console.log('📝 Note: State will NOT persist across page navigations');
+569-
+570-  // No validation needed - state is always fresh
+571-})();
+572-
+573-// ✅ BOGO-INLINE-VARIANTS-044: Enhanced product click handler
+574-function handleProductClick(event, element) {
+575-  // Don't trigger if clicking info icon or close button
+576-  if (event.target.closest('.product-info-icon') ||
+577-      event.target.closest('.product-info-btn') ||
+578:      event.target.closest('.variant-close-btn')) return;
+579-
+580:  // If clicking inside active variant state, let those handlers work
+581:  if (event.target.closest('.card-variant-state.active')) return;
+582-
+583-  const productId = element.dataset.productId;
+584:  const variantId = element.dataset.variantId;
+585-  const hasMultipleVariants = parseInt(element.dataset.hasVariants) > 0;
+586-  const price = parseFloat(element.dataset.price);
+587-  const title = element.querySelector('.section-collections-with-nav__product-title')?.textContent || 'Product';
+588-
+589-  // ✅ FIX: Get main product image with clean URL
+590-  const productImage = element.querySelector('.section-collections-with-nav__product-image img');
+591-  let imageSrc = '';
+592-
+593-  if (productImage) {
+594-    imageSrc = productImage.src.split('?')[0]; // Clean URL parameters
+595-  }
+596-
+597-  // Fallback to srcset or data-src
+598-  if (!imageSrc && productImage) {
+599-    imageSrc = productImage.dataset.src || productImage.srcset?.split(' ')[0] || '';
+600-    imageSrc = imageSrc.split('?')[0]; // Clean fallback too
+601-  }
+602-
+603-  console.log('📦 Product image:', imageSrc);
+604-
+605:  // ✅ BOGO-INLINE-VARIANTS-044: If product has variants, show inline selector
+606-  if (hasMultipleVariants) {
+607-    showInlineVariantSelection(element);
+608-    return;
+609-  }
+610-
+611:  // Single variant - add directly to pair
+612-  addProductToPair({
+613-    productId: productId,
+614:    variantId: variantId,
+615-    price: price,
+616-    title: title,
+617-    image: imageSrc,
+618-    element: element
+619-  });
+620-}
+621-
+622:// ✅ BOGO-INLINE-VARIANTS-059: Show inline variant selection
+623-function showInlineVariantSelection(card) {
+624-  const productId = card.dataset.productId;
+625-
+626-  const defaultState = card.querySelector('.card-default-state');
+627:  const variantState = card.querySelector('.card-variant-state');
+628:  const variantContainer = card.querySelector('.variant-selectors-inline');
+629-
+630:  if (!defaultState || !variantState || !variantContainer) {
+631-    console.error('Missing required elements');
+632-    return;
+633-  }
+634-
+635-  // ✅ Get product options from window.productOptions
+636-  const productOptions = window.productOptions?.[productId];
+637-  if (!productOptions || productOptions.length === 0) {
+638-    console.error('No product options found for product:', productId);
+639-    return;
+640-  }
+641-
+642:  console.log('✅ Showing variant selection for product:', productId);
+643-  console.log('Options:', productOptions);
+644-
+645:  // Generate variant selectors
+646:  variantContainer.innerHTML = '';
+647-
+648-  productOptions.forEach(function(optionData) {
+649:    const selector = document.createElement('div');
+650:    selector.className = 'inline-variant-selector';
+651-
+652-    const label = document.createElement('label');
+653:    label.className = 'inline-variant-label';
+654-    label.textContent = optionData.name;
+655-
+656:    const select = document.createElement('select');
+657:    select.className = 'inline-variant-select';
+658:    select.dataset.optionName = optionData.name;
+659:    select.dataset.optionPosition = optionData.position;
+660-
+661-    // Add placeholder option
+662-    const placeholderOpt = document.createElement('option');
+663-    placeholderOpt.value = '';
+664-    placeholderOpt.textContent = 'Select ' + optionData.name;
+665-    placeholderOpt.disabled = true;
+666:    placeholderOpt.selected = true;
+667:    select.appendChild(placeholderOpt);
+668-
+669-    // Add options
+670-    optionData.values.forEach(function(value) {
+671-      const opt = document.createElement('option');
+672-      opt.value = value;
+673-      opt.textContent = value;
+674:      select.appendChild(opt);
+675-    });
+676-
+677-    // Listen for changes to enable add button
+678:    select.addEventListener('change', function() {
+679-      validateInlineVariantSelection(card);
+680-    });
+681-
+682:    selector.appendChild(label);
+683:    selector.appendChild(select);
+684:    variantContainer.appendChild(selector);
+685-  });
+686-
+687-  // Animate transition
+688-  defaultState.classList.remove('active');
+689-  setTimeout(function() {
+690:    variantState.classList.add('active');
+691-  }, 400);
+692-
+693-  // ✅ BOGO-VARIANT-FIX-062: Add button click handler
+694:  const addBtn = card.querySelector('.btn-add-variant');
+695-  if (addBtn) {
+696-    // Remove any existing listener
+697-    addBtn.replaceWith(addBtn.cloneNode(true));
+698:    const newAddBtn = card.querySelector('.btn-add-variant');
+699-
+700-    newAddBtn.addEventListener('click', function(e) {
+701-      e.stopPropagation();
+702-      console.log('🔘 Add to Pair button clicked');
+703-      addProductWithInlineVariant(card);
+704-    });
+705-  }
+706-
+707-  // ✅ BOGO-VARIANT-FIX-062: Add close button handler
+708:  const closeBtn = card.querySelector('.variant-close-btn');
+709-  if (closeBtn) {
+710-    closeBtn.replaceWith(closeBtn.cloneNode(true));
+711:    const newCloseBtn = card.querySelector('.variant-close-btn');
+712-
+713-    newCloseBtn.addEventListener('click', function(e) {
+714-      e.stopPropagation();
+715:      console.log('❌ Close variant selector');
+716-      hideInlineVariantSelection(card);
+717-    });
+718-  }
+719-
+720:  console.log('✅ Variant selectors displayed');
+721-}
+722-
+723:// ✅ BOGO-INLINE-VARIANTS-044: Hide inline variant selection
+724-function hideInlineVariantSelection(card) {
+725-  const defaultState = card.querySelector('.card-default-state');
+726:  const variantState = card.querySelector('.card-variant-state');
+727:  const variantContainer = card.querySelector('.variant-selectors-inline');
+728-
+729:  if (!defaultState || !variantState) return;
+730-
+731-  // Animate back
+732:  variantState.classList.remove('active');
+733-  setTimeout(function() {
+734-    defaultState.classList.add('active');
+735-
+736:    // Clear variant selectors after animation completes
+737:    if (variantContainer) {
+738:      variantContainer.innerHTML = '';
+739-    }
+740-  }, 400);
+741-}
+742-
+743:// ✅ BOGO-INLINE-VARIANTS-059: Validate inline variant selection
+744-function validateInlineVariantSelection(card) {
+745:  const selects = card.querySelectorAll('.inline-variant-select');
+746:  const addBtn = card.querySelector('.btn-add-variant');
+747-
+748-  if (!addBtn) return false;
+749-
+750-  let allSelected = true;
+751:  selects.forEach(function(select) {
+752:    if (!select.value || select.value === '') {
+753-      allSelected = false;
+754-    }
+755-  });
+756-
+757-  // Enable/disable add button
+758-  addBtn.disabled = !allSelected;
+759-
+760-  if (allSelected) {
+761:    console.log('✅ All variants selected, enabling add button');
+762-  }
+763-
+764-  return allSelected;
+765-}
+766-
+767:// ✅ BOGO-INLINE-VARIANTS-059: Find matching variant based on selected options
+768:function findMatchingVariantByOptions(productId, selectedOptions) {
+769:  const variants = window.productVariants?.[productId];
+770:  if (!variants || !Array.isArray(variants)) {
+771:    console.error('No variants found for product:', productId);
+772-    return null;
+773-  }
+774-
+775:  console.log('Finding variant for options:', selectedOptions);
+776:  console.log('Available variants:', variants);
+777-
+778:  // Find variant that matches all selected options
+779:  const matchingVariant = variants.find(function(variant) {
+780:    return selectedOptions.every(function(optionValue, index) {
+781:      const variantOption = variant['option' + (index + 1)];
+782:      return variantOption === optionValue;
+783-    });
+784-  });
+785-
+786-  if (matchingVariant) {
+787:    console.log('✅ Found matching variant:', matchingVariant);
+788-  } else {
+789:    console.warn('⚠️ No matching variant found, using first variant');
+790-  }
+791-
+792:  return matchingVariant || variants[0];
+793-}
+794-
+795:// ✅ BOGO-INLINE-VARIANTS-044: Add product with inline variant selection
+796:// ✅ BOGO-INLINE-VARIANTS-059: Add product with inline variant selection
+797-function addProductWithInlineVariant(card) {
+798-  const productId = card.dataset.productId;
+799-  const productTitle = card.dataset.productTitle;
+800-
+801:  // Validate all options are selected
+802-  if (!validateInlineVariantSelection(card)) {
+803:    showNotification('⚠️ Please select all variant options', 'warning');
+804-    return;
+805-  }
+806-
+807:  // Get selected variants
+808:  const selects = card.querySelectorAll('.inline-variant-select');
+809:  const selectedOptions = Array.from(selects).map(function(select) {
+810:    return select.value;

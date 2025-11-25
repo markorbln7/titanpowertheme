@@ -707,3 +707,453 @@ aside.buy-now-popup[data-section="bf25"] {
 body.modal-open {
   overflow: hidden !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 PRODUCT INFO ICON (BF25-INFO-ICON-001)
+   Pulsing info button in top-right corner of product cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Info Icon Container */
+.bf25-product-info-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20; /* Above product image but below modals */
+
+  /* Size */
+  width: 36px;
+  height: 36px;
+
+  /* Center the SVG */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+
+  /* Visual */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+
+  /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Smooth transitions */
+  transition: all 200ms ease;
+
+  /* Pulse animation */
+  animation: bf25-info-pulse 2s ease-in-out infinite;
+}
+
+/* Hover State */
+.bf25-product-info-icon:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.4);
+}
+
+/* Active/Click State */
+.bf25-product-info-icon:active {
+  transform: scale(0.95);
+}
+
+/* Focus State (keyboard navigation) */
+.bf25-product-info-icon:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+/* SVG Styling */
+.bf25-product-info-icon svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* Let clicks pass through to parent */
+  display: block; /* Fix alignment issues */
+  overflow: visible; /* Ensure text renders properly */
+}
+
+/* SVG Text Vertical Alignment (BF25-INFO-ICON-FIX) */
+.bf25-product-info-icon svg text {
+  dominant-baseline: central; /* Better centering than 'middle' */
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Pulse Animation Keyframes */
+@keyframes bf25-info-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(96, 198, 85, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 8px rgba(96, 198, 85, 0);
+  }
+
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(96, 198, 85, 0);
+  }
+}
+
+/* Mobile Touch Target Enhancement */
+@media (max-width: 768px) {
+  .bf25-product-info-icon {
+    width: 44px;
+    height: 44px; /* Minimum touch target size */
+  }
+
+  .bf25-product-info-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-product-info-icon {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 QUICK-ADD VARIANT OVERLAY (BF25-QUICK-ADD-001)
+   Card-level variant selection for fast adding
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   Card State Management
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-card-default-state,
+.bf25-card-variant-state {
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.bf25-card-default-state {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bf25-card-variant-state {
+  position: absolute;
+  inset: 0;
+  z-index: 15; /* Above card content, below modal */
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+
+  /* Smooth fade-in animation */
+  transition: opacity 300ms ease, transform 300ms ease;
+
+  /* Dark glassmorphic background */
+  background: rgba(20, 20, 20, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* Match card border radius */
+  border-radius: inherit;
+
+  /* Green glow border */
+  border: 2px solid rgba(96, 198, 85, 0.3);
+  box-shadow:
+    0 0 20px rgba(96, 198, 85, 0.1),
+    inset 0 0 60px rgba(96, 198, 85, 0.03);
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+}
+
+/* Show state when active */
+.bf25-card-variant-state:not([hidden]) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Hide default state when variant overlay showing */
+.bf25-product-card:has(.bf25-card-variant-state:not([hidden])) .bf25-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Overlay Header
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-variant-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.bf25-variant-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  color: #fff;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.bf25-variant-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.bf25-variant-close svg {
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Options Container
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-options-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96, 198, 85, 0.3) transparent;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar-thumb {
+  background: rgba(96, 198, 85, 0.3);
+  border-radius: 2px;
+}
+
+/* Variant Option Group */
+.bf25-variant-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bf25-variant-option-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Variant Pills Grid */
+.bf25-variant-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.bf25-variant-pill {
+  min-height: 44px; /* Touch target */
+  padding: 10px 14px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bf25-variant-pill:hover:not(.is-disabled):not(.is-selected) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.bf25-variant-pill.is-selected {
+  background: #60c655;
+  border-color: #60c655;
+  color: #000;
+  font-weight: 600;
+}
+
+.bf25-variant-pill.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Add to Bundle Button
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-add-btn {
+  width: 100%;
+  min-height: 52px;
+
+  background: #60c655;
+  border: none;
+  border-radius: 12px;
+
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Slight shadow for depth */
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+}
+
+.bf25-variant-add-btn:hover:not(:disabled) {
+  background: #52b047;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(96, 198, 85, 0.4);
+}
+
+.bf25-variant-add-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.bf25-variant-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Loading state */
+.bf25-variant-add-btn.is-loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.bf25-variant-add-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+
+  animation: bf25-spin 0.6s linear infinite;
+}
+
+@keyframes bf25-spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Success state */
+.bf25-variant-add-btn.is-success {
+  background: #2ecc71;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mobile Optimizations
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .bf25-card-variant-state {
+    padding: 16px;
+  }
+
+  .bf25-variant-pills {
+    grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
+  }
+
+  .bf25-variant-pill {
+    font-size: 13px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Accessibility
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-card-default-state,
+  .bf25-card-variant-state,
+  .bf25-variant-pill {
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.bf25-variant-pill:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-close:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-add-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Quick-Add Success Animation
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-quick-add-success {
+  animation: bf25-quick-add-pulse 0.6s ease;
+}
+
+@keyframes bf25-quick-add-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(96, 198, 85, 0.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

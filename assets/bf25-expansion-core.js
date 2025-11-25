@@ -4993,23 +4993,20 @@ class ExpansionManager {
   /**
    * Bind quantity control events
    * Called after UI is injected
+   * BF25-FIX-BIND-ALL-QUANTITY-EVENTS: Always bind all event systems for dual-mode layout
    */
   bindQuantityEvents() {
-    const mode = this.config.mode || 'individual_products';
-
-    // ALWAYS bind both event systems (BF25-PACK-BUTTON-QUANTITY-SYNC)
-    // Pack buttons (.js-pack-btn) from Liquid template
-    this.bindLiquidPackButtonEvents();
-
-    // Mode-specific controls
-    if (mode === 'power_packs') {
-      this.bindPowerPacksEvents();
-    } else {
-      this.bindIndividualProductsEvents();
-    }
+    // Always bind ALL event systems (dual-mode layout shows both controls)
+    this.bindLiquidPackButtonEvents();    // Liquid template pack buttons
+    this.bindPowerPacksEvents();          // JS-generated tier buttons
+    this.bindIndividualProductsEvents();  // Quantity stepper
 
     // Bind action button events (Add to Cart, etc.)
     this.bindActionButtonEvents();
+
+    if (this.config.debug) {
+      console.log('✅ All quantity events bound (pack + tier + stepper)');
+    }
   }
 
   /**

@@ -1,0 +1,611 @@
+{% comment %}
+  BF25 Urgency CTA Section
+  - Battery countdown timer (PST timezone)
+  - Social proof
+  - CTA with confetti
+  - Scroll indicator
+{% endcomment %}
+
+<section class="bf25-urgency-cta" id="bf25-urgency-cta">
+
+  <!-- Urgency Label -->
+  <div class="bf25-urgency-label">
+    <span class="bf25-pulse-dot"></span>
+    <span class="bf25-urgency-text">Black Friday Ends In</span>
+  </div>
+
+  <!-- Battery Timer -->
+  <div class="bf25-battery-timer">
+    <div class="bf25-battery-container">
+      <div class="bf25-battery-body">
+        <div class="bf25-battery-fill" id="bf25-battery-fill"></div>
+        <div class="bf25-battery-text" id="bf25-battery-text">
+          <svg class="bf25-lightning" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+          <span id="bf25-timer-value">Loading...</span>
+          <svg class="bf25-lightning" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="bf25-battery-head"></div>
+    </div>
+  </div>
+
+  <!-- Social Proof -->
+  <div class="bf25-social-proof">
+    <div class="bf25-proof-item">
+      <svg class="bf25-proof-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <span class="bf25-proof-text"><strong>{{ section.settings.social_customers }}</strong> Customers</span>
+    </div>
+    <div class="bf25-proof-item">
+      <svg class="bf25-proof-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+      </svg>
+      <span class="bf25-proof-text"><strong>{{ section.settings.social_reviews }}</strong> 5-Star Reviews</span>
+    </div>
+  </div>
+
+  <!-- CTA Button -->
+  <div class="bf25-cta-wrapper">
+    <button class="bf25-cta-button" id="bf25-cta-button">
+      <span>{{ section.settings.cta_text }}</span>
+      <svg class="bf25-cta-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="bf25-scroll-indicator">
+    <div class="bf25-scroll-text">{{ section.settings.scroll_text }}</div>
+    <div class="bf25-scroll-arrow">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Confetti Container -->
+  <div class="bf25-confetti-container" id="bf25-confetti-container"></div>
+
+</section>
+
+<style>
+/* ========== BF25 URGENCY CTA SECTION ========== */
+
+.bf25-urgency-cta {
+  background: #000;
+  padding: 18px 15px 25px;
+  text-align: center;
+  position: relative;
+}
+
+/* ========== URGENCY LABEL ========== */
+.bf25-urgency-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.bf25-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff4757;
+  border-radius: 50%;
+  animation: bf25PulseDot 1.2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255, 71, 87, 0.6);
+}
+
+@keyframes bf25PulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.bf25-urgency-text {
+  color: #ff4757;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ========== BATTERY TIMER ========== */
+.bf25-battery-timer {
+  max-width: 320px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bf25-battery-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.bf25-battery-body {
+  position: relative;
+  width: 280px;
+  height: 48px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 3px solid #ff4757;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 2px 8px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(255, 71, 87, 0.15);
+}
+
+.bf25-battery-head {
+  width: 10px;
+  height: 24px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 3px solid #ff4757;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 0 15px rgba(255, 71, 87, 0.15);
+}
+
+/* Battery fill - red with subtle breathing */
+.bf25-battery-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg,
+    #cc3344 0%,
+    #ff4757 40%,
+    #ff5a6a 60%,
+    #ff4757 100%
+  );
+  box-shadow:
+    0 0 15px rgba(255, 71, 87, 0.3),
+    inset 0 2px 6px rgba(255, 255, 255, 0.08);
+  transform-origin: left center;
+  transition: transform 0.5s linear;
+  z-index: 1;
+  animation: bf25SubtleBreath 4s ease-in-out infinite;
+}
+
+@keyframes bf25SubtleBreath {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+
+.bf25-battery-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bf25-lightning {
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}
+
+/* ========== SOCIAL PROOF ========== */
+.bf25-social-proof {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bf25-proof-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bf25-proof-icon {
+  width: 16px;
+  height: 16px;
+  fill: #60c655;
+}
+
+.bf25-proof-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.bf25-proof-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ========== CTA BUTTON - PILL SHAPE ========== */
+.bf25-cta-wrapper {
+  padding: 16px 0 10px;
+}
+
+.bf25-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #60c655 0%, #4CAF50 100%);
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 4px 15px rgba(96, 198, 85, 0.35),
+    0 0 25px rgba(96, 198, 85, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.bf25-cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 20px rgba(96, 198, 85, 0.45),
+    0 0 35px rgba(96, 198, 85, 0.2);
+}
+
+.bf25-cta-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.bf25-cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50px;
+}
+
+.bf25-cta-button:hover::before {
+  opacity: 1;
+}
+
+.bf25-cta-arrow {
+  width: 14px;
+  height: 14px;
+  fill: #000;
+  transition: transform 0.2s ease;
+}
+
+.bf25-cta-button:hover .bf25-cta-arrow {
+  transform: translateY(2px);
+}
+
+/* ========== SCROLL INDICATOR ========== */
+.bf25-scroll-indicator {
+  padding: 10px 0 5px;
+  text-align: center;
+}
+
+.bf25-scroll-text {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.bf25-scroll-arrow {
+  animation: bf25ScrollBob 2s ease-in-out infinite;
+}
+
+.bf25-scroll-arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: rgba(96, 198, 85, 0.6);
+}
+
+@keyframes bf25ScrollBob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* ========== CONFETTI ========== */
+.bf25-confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.bf25-confetti {
+  position: absolute;
+  opacity: 0;
+}
+
+.bf25-confetti.active {
+  animation: bf25ConfettiFall 3s ease-out forwards;
+}
+
+@keyframes bf25ConfettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
+
+/* ========== DESKTOP ========== */
+@media (min-width: 769px) {
+  .bf25-urgency-cta {
+    padding: 22px 20px 30px;
+  }
+
+  .bf25-battery-body {
+    width: 340px;
+    height: 52px;
+  }
+
+  .bf25-battery-head {
+    width: 12px;
+    height: 26px;
+  }
+
+  .bf25-battery-text {
+    font-size: 20px;
+  }
+
+  .bf25-lightning {
+    width: 16px;
+    height: 16px;
+  }
+
+  .bf25-social-proof {
+    gap: 40px;
+  }
+
+  .bf25-proof-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .bf25-proof-text {
+    font-size: 12px;
+  }
+
+  .bf25-cta-button {
+    font-size: 14px;
+    padding: 16px 38px;
+  }
+
+  .bf25-scroll-text {
+    font-size: 11px;
+  }
+}
+
+/* ========== HIDDEN STATE (when sale ends) ========== */
+.bf25-urgency-cta.bf25-hidden {
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+  const batteryFill = document.getElementById('bf25-battery-fill');
+  const timerValue = document.getElementById('bf25-timer-value');
+  const ctaButton = document.getElementById('bf25-cta-button');
+  const confettiContainer = document.getElementById('bf25-confetti-container');
+  const section = document.getElementById('bf25-urgency-cta');
+
+  if (!batteryFill || !timerValue) return;
+
+  // ========== TIMER CONFIGURATION (PST) ==========
+  // PST = UTC-8
+  // Friday Nov 28, 2025 11:59:59 PM PST = Nov 29, 2025 07:59:59 UTC
+  // Sunday Nov 30, 2025 11:59:59 PM PST = Dec 1, 2025 07:59:59 UTC
+
+  const FRIDAY_END_UTC = new Date('2025-11-29T07:59:59Z').getTime();
+  const SATURDAY_SHOW_UTC = new Date('2025-11-29T14:00:00Z').getTime(); // 6am PST Saturday
+  const SUNDAY_END_UTC = new Date('2025-12-01T07:59:59Z').getTime();
+
+  // Sale duration for battery calculation (48 hours)
+  const SALE_DURATION = 48 * 60 * 60 * 1000;
+
+  function getTimerState() {
+    const now = Date.now();
+
+    // Before Friday end - countdown to Friday
+    if (now < FRIDAY_END_UTC) {
+      return {
+        show: true,
+        endTime: FRIDAY_END_UTC,
+        startTime: FRIDAY_END_UTC - SALE_DURATION,
+        label: 'Black Friday Ends In'
+      };
+    }
+
+    // Friday ended, before Saturday show time - HIDE
+    if (now >= FRIDAY_END_UTC && now < SATURDAY_SHOW_UTC) {
+      return { show: false };
+    }
+
+    // Saturday show time to Sunday end - countdown to Sunday
+    if (now >= SATURDAY_SHOW_UTC && now < SUNDAY_END_UTC) {
+      return {
+        show: true,
+        endTime: SUNDAY_END_UTC,
+        startTime: SATURDAY_SHOW_UTC,
+        label: 'Sale Ends In'
+      };
+    }
+
+    // Sale completely over
+    return { show: false };
+  }
+
+  function updateCountdown() {
+    const state = getTimerState();
+
+    // Hide section if needed
+    if (!state.show) {
+      section.classList.add('bf25-hidden');
+      return;
+    }
+
+    section.classList.remove('bf25-hidden');
+
+    // Update label if changed
+    const labelEl = document.querySelector('.bf25-urgency-text');
+    if (labelEl && labelEl.textContent !== state.label) {
+      labelEl.textContent = state.label;
+    }
+
+    const now = Date.now();
+    const timeLeft = state.endTime - now;
+
+    if (timeLeft <= 0) {
+      timerValue.textContent = 'ENDED';
+      batteryFill.style.transform = 'scaleX(0)';
+      return;
+    }
+
+    // Format time
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    let display = '';
+    if (days > 0) {
+      display = `${days}d ${hours}h ${minutes}m`;
+    } else if (hours > 0) {
+      display = `${hours}h ${minutes}m ${seconds}s`;
+    } else {
+      display = `${minutes}m ${seconds}s`;
+    }
+
+    timerValue.textContent = display;
+
+    // Calculate battery percentage
+    const totalDuration = state.endTime - state.startTime;
+    const timeElapsed = now - state.startTime;
+    const percentRemaining = Math.max(0, Math.min(100, ((totalDuration - timeElapsed) / totalDuration) * 100));
+
+    batteryFill.style.transform = `scaleX(${percentRemaining / 100})`;
+  }
+
+  // ========== CONFETTI ==========
+  function triggerConfetti() {
+    const colors = ['#60c655', '#7FFF00', '#FFD700', '#ffffff', '#4CAF50'];
+
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'bf25-confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+        confetti.style.height = (Math.random() * 10 + 5) + 'px';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+
+        confettiContainer.appendChild(confetti);
+        requestAnimationFrame(() => confetti.classList.add('active'));
+
+        setTimeout(() => confetti.remove(), 4000);
+      }, i * 15);
+    }
+
+    // Scroll to interactive section (adjust selector as needed)
+    setTimeout(() => {
+      const target = document.getElementById('bf25-interactive') ||
+                     document.querySelector('.bf25-bundle-builder') ||
+                     document.querySelector('[data-section-type="bf25-slider"]');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 600);
+  }
+
+  // ========== INIT ==========
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  if (ctaButton) {
+    ctaButton.addEventListener('click', triggerConfetti);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "BF25 Urgency CTA",
+  "tag": "section",
+  "class": "bf25-urgency-cta-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Unlock 85% OFF"
+    },
+    {
+      "type": "text",
+      "id": "scroll_text",
+      "label": "Scroll Indicator Text",
+      "default": "Explore the deal builder"
+    },
+    {
+      "type": "text",
+      "id": "social_customers",
+      "label": "Customer Count",
+      "default": "1M+"
+    },
+    {
+      "type": "text",
+      "id": "social_reviews",
+      "label": "Review Count",
+      "default": "55K+"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BF25 Urgency CTA"
+    }
+  ]
+}
+{% endschema %}

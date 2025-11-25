@@ -424,9 +424,13 @@
 
       this.container = null;
       this.activeToasts = [];
-      this.maxToasts = 3;
+      this.maxToasts = 1; // Only show 1 toast at a time
       this.defaultDuration = 2000; // 2 seconds
       this.toastIdCounter = 0;
+
+      // Queue for sequential toast display
+      this.queue = [];
+      this.isProcessingQueue = false;
     }
 
     /**
@@ -461,10 +465,11 @@
         return null;
       }
 
-      // Enforce max toast limit
+      // Queue if already showing a toast
       if (this.activeToasts.length >= this.maxToasts) {
-        const oldest = this.activeToasts[0];
-        this.dismiss(oldest.element);
+        console.log('[ToastManager] Queuing toast:', message);
+        this.queue.push({ message, options });
+        return null;
       }
 
       const config = {
@@ -494,9 +499,11 @@
         toast.classList.add('is-visible');
       });
 
-      // Auto-dismiss after duration
+      // Auto-dismiss after duration, then process queue
       const timeoutId = setTimeout(() => {
         this.dismiss(toast);
+        // Process next queued toast after a small delay
+        setTimeout(() => this.processQueue(), 300);
       }, config.duration);
 
       this.activeToasts[this.activeToasts.length - 1].timeoutId = timeoutId;
@@ -585,6 +592,24 @@
       }, 200); // Match CSS transition duration
 
       console.log('[ToastManager] Toast dismissed');
+    }
+
+    /**
+     * Process queued toasts sequentially
+     */
+    processQueue() {
+      if (this.queue.length === 0) {
+        return;
+      }
+
+      // Only process if no active toasts
+      if (this.activeToasts.length > 0) {
+        return;
+      }
+
+      const next = this.queue.shift();
+      console.log('[ToastManager] Processing queued toast:', next.message);
+      this.show(next.message, next.options);
     }
 
     /**
@@ -1407,20 +1432,16 @@
         }
       });
 
-      // Listen for tier downgrades
+      // Listen for tier downgrades (logging only - toast handled by handleTierDowngrade)
       document.addEventListener('bf25:tierChanged', (event) => {
         console.log('[BF25 Cart] Event: bf25:tierChanged', event.detail);
-        if (event.detail.direction === 'down' && window.BF25Toast) {
-          window.BF25Toast.show(`Tier dropped - add more items to restore your discount!`, 'warning', 3000);
-        }
+        // Toast removed - handleTierDowngrade shows detailed message
       });
 
-      // Listen for gift loss
+      // Listen for gift loss (logging only - toast handled by handleTierDowngrade)
       document.addEventListener('bf25:giftLost', (event) => {
         console.log('[BF25 Cart] Event: bf25:giftLost', event.detail);
-        if (window.BF25Toast) {
-          window.BF25Toast.show(`Add more items to keep your free gifts!`, 'warning', 3000);
-        }
+        // Toast removed - handleTierDowngrade shows detailed message
       });
 
       // Listen for max items reached
@@ -1576,8 +1597,11 @@
           nextGiftCheckpoint
         } = computed;
 
-        // Calculate savings in euros for display
-        const savingsEuros = (totalSavings / 100).toFixed(0);
+        // Calculate savings in euros for display (guard against NaN)
+        const safeSavings = (typeof totalSavings === 'number' && !isNaN(totalSavings)) ? totalSavings : 0;
+        const giftValueCents = (totalGiftValue || 0);
+        const totalSavingsWithGifts = safeSavings + giftValueCents;
+        const savingsEuros = (totalSavingsWithGifts / 100).toFixed(0);
 
         console.log(`[BF25 Cart] Bundle: ${itemCount} items, Tier ${tierReached}, €${savingsEuros} savings`);
 

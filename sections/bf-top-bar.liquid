@@ -1,14 +1,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <style>
-/* ========== BF25 ANNOUNCEMENT BAR - DUAL GLOW BORDERS ========== */
+/* ========== BF25 ANNOUNCEMENT BAR - DUAL GLOW BORDERS (SUBTLE PULSE) ========== */
 .bf25-announcement-bar {
-  background: #0d0d0d;
+  background: #000000;
   position: relative;
   overflow: hidden;
 }
 
-/* Top glow border */
+/* Top glow border - subtle pulse/breathe */
 .bf25-announcement-bar::before {
   content: '';
   position: absolute;
@@ -18,16 +18,18 @@
   height: 2px;
   background: linear-gradient(90deg,
     transparent 0%,
-    #60c655 20%,
+    transparent 10%,
+    #60c655 30%,
     #7FFF00 50%,
-    #60c655 80%,
+    #60c655 70%,
+    transparent 90%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  animation: bf25GlowBorder 3s ease-in-out infinite;
+  opacity: 0.7;
+  animation: bf25GlowPulse 4s ease-in-out infinite;
 }
 
-/* Bottom glow border */
+/* Bottom glow border - subtle pulse/breathe */
 .bf25-announcement-bar::after {
   content: '';
   position: absolute;
@@ -37,32 +39,37 @@
   height: 2px;
   background: linear-gradient(90deg,
     transparent 0%,
-    #60c655 20%,
+    transparent 10%,
+    #60c655 30%,
     #7FFF00 50%,
-    #60c655 80%,
+    #60c655 70%,
+    transparent 90%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  animation: bf25GlowBorder 3s ease-in-out infinite reverse;
+  opacity: 0.7;
+  animation: bf25GlowPulse 4s ease-in-out infinite 0.5s;
 }
 
-@keyframes bf25GlowBorder {
+/* Subtle breathing/pulse animation - NO movement, just intensity */
+@keyframes bf25GlowPulse {
   0%, 100% {
-    background-position: -100% 0;
+    opacity: 0.5;
+    filter: blur(0px);
   }
   50% {
-    background-position: 200% 0;
+    opacity: 1;
+    filter: blur(1px);
   }
 }
 
-/* Gradient animated text */
+/* Gradient animated text - slower, more subtle */
 .bf25-announcement-bar .bf-top-bar p {
   background: linear-gradient(90deg, #60c655, #7FFF00, #60c655);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: bf25TextShift 3s ease infinite;
+  animation: bf25TextShift 6s ease-in-out infinite;
   font-weight: 700;
   letter-spacing: 2px;
   margin: 0;

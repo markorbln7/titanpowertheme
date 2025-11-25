@@ -1177,25 +1177,21 @@ class TierCalculator {
       console.log('❌ Compare price not shown (value:', comparePrice, ')');
     }
 
-    // Build new price HTML (BF25-FIX-020)
+    // Build new price HTML (BF25-FIX-020, BF25-INLINE-BADGE)
     const html = `
-      <!-- Main Price Row: Discounted | Original -->
+      <!-- Main Price Row: Discounted | Original | Inline Badge -->
       <div class="bf25-price-main-row">
         <div class="bf25-price-current-group">
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
           <span class="bf25-per-item">per item</span>
           ${compareHtml}
+          ${pricing.hasDiscount && pricing.currentTier ? `
+            <span class="bf25-discount-badge-inline">
+              ${pricing.currentTier.displayLabel}
+            </span>
+          ` : ''}
         </div>
       </div>
-
-      <!-- Discount Badge Row - Show tier displayLabel (BF25-FIX-018) -->
-      ${pricing.hasDiscount && pricing.currentTier ? `
-        <div class="bf25-discount-badge-row">
-          <div class="bf25-discount-badge-prominent">
-            <span>🔥 ${pricing.currentTier.displayLabel}: ${pricing.currentTier.label}</span>
-          </div>
-        </div>
-      ` : ''}
 
       <!-- Total Row - De-emphasized -->
       <div class="bf25-total-row">

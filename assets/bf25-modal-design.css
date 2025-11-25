@@ -1445,7 +1445,8 @@
 
 .bf25-price-current-group {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
   gap: var(--bf25-space-2);
 }
 
@@ -1491,6 +1492,31 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   line-height: 1.2;
+}
+
+/* Inline Discount Badge (BF25-INLINE-BADGE) */
+.bf25-discount-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Sizing */
+  padding: 4px 10px;
+  margin-left: 12px;
+
+  /* Typography */
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #000;
+
+  /* Appearance */
+  background: #60c655;
+  border-radius: 6px;
+
+  /* Prevent wrapping */
+  white-space: nowrap;
 }
 
 /* Total Row - De-emphasized */
@@ -1541,6 +1567,12 @@
   .bf25-discount-badge-prominent {
     font-size: 13px;
     padding: 7px 14px;
+  }
+
+  .bf25-discount-badge-inline {
+    font-size: 11px;
+    padding: 3px 8px;
+    margin-left: 8px;
   }
 
   .bf25-total-amount {

@@ -71,6 +71,7 @@
     font-size: 36px;
     font-weight: 700;
     line-height: 0.8;
+    order: 1; /* Ensure number is first */
   }
 
   /* % and OFF stacked */
@@ -80,6 +81,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding-bottom: 2px;
+    order: 2; /* Ensure suffix is second */
   }
 
   /* Override Tailwind absolute positioning on % */
@@ -217,15 +219,16 @@
             </div>
           {% endif %}
 
-          <h3 class="text-white text-[36px] md:text-[60px] font-sans leading-[1] relative">
-            <div class="text-[24px] md:text-[40px] absolute top-0 right-0">%</div>
-            <span>{{ block.settings.block_title }}</span><span class="text-[10px] md:text-[20px]"> OFF</span>
+          <h3 class="bf25-discount-row text-white font-sans leading-[1]">
+            <span class="bf25-discount-number">{{ block.settings.block_title }}</span>
+            <div class="bf25-discount-suffix">
+              <span class="bf25-percent">%</span>
+              <span class="bf25-off-text">OFF</span>
+            </div>
           </h3>
 
-          <!-- Gift text (BF25-8.10b) -->
-          {% if block.settings.gift_text %}
-            <div class="bf25-gift-text">{{ block.settings.gift_text }}</div>
-          {% endif %}
+          <!-- Gift text with auto-incrementing count (BF25-8.12b) -->
+          <div class="bf25-gift-text">+ {{ forloop.index }} FREE GIFT{% if forloop.index > 1 %}S{% endif %}</div>
 
           {% if block.settings.eyebrow_position %}
             <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mt-2">

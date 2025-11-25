@@ -431,6 +431,9 @@
       // Queue for sequential toast display
       this.queue = [];
       this.isProcessingQueue = false;
+
+      // Pause state (for celebration coordination) - BF25-8.3
+      this.isPaused = false;
     }
 
     /**
@@ -465,8 +468,8 @@
         return null;
       }
 
-      // Queue if already showing a toast
-      if (this.activeToasts.length >= this.maxToasts) {
+      // Queue if paused OR already showing max toasts (BF25-8.3)
+      if (this.isPaused || this.activeToasts.length >= this.maxToasts) {
         console.log('[ToastManager] Queuing toast:', message);
         this.queue.push({ message, options });
         return null;
@@ -602,14 +605,32 @@
         return;
       }
 
-      // Only process if no active toasts
-      if (this.activeToasts.length > 0) {
+      // Only process if no active toasts AND not paused (BF25-8.3)
+      if (this.activeToasts.length > 0 || this.isPaused) {
         return;
       }
 
       const next = this.queue.shift();
       console.log('[ToastManager] Processing queued toast:', next.message);
       this.show(next.message, next.options);
+    }
+
+    /**
+     * Pause toast display (for celebration coordination) - BF25-8.3
+     */
+    pause() {
+      this.isPaused = true;
+      console.log('[ToastManager] Paused (celebration in progress)');
+    }
+
+    /**
+     * Resume toast display and process queue - BF25-8.3
+     */
+    resume() {
+      this.isPaused = false;
+      console.log('[ToastManager] Resumed');
+      // Process any queued toasts
+      this.processQueue();
     }
 
     /**
@@ -1260,6 +1281,11 @@
       this.tiers = BF25_TIERS;
       this.maxItems = 16;
 
+      // Celebration Queue (BF25-8.3)
+      this.celebrationQueue = [];
+      this.isCelebrating = false;
+      this.celebrationDuration = 3000; // 3s per celebration (2.5s show + 0.5s transition)
+
       // DOM Cache
       this.elements = this.cacheDOM();
 
@@ -1428,13 +1454,14 @@
         console.log('[BF25 Cart] Event: bf25:giftUnlocked', event.detail);
         const { gift } = event.detail;
 
-        // Get gift config with image URL
+        // Get gift config with image and value
         const giftConfig = window.GIFT_VARIANT_MAP?.[gift.checkpoint];
         const imageUrl = giftConfig?.image || '';
         const giftTitle = giftConfig?.title || gift.title || 'Free Gift';
+        const giftValue = giftConfig?.value || giftConfig?.price || 0;
 
-        // Show celebration with product image flying to cart
-        this.showGiftCelebration(giftTitle, imageUrl, gift.checkpoint);
+        // Queue the celebration (shows one at a time) - BF25-8.3
+        this.queueGiftCelebration(giftTitle, imageUrl, gift.checkpoint, giftValue);
       });
 
       // Listen for tier downgrades (logging only - toast handled by handleTierDowngrade)
@@ -1813,68 +1840,144 @@
     }
 
     /**
-     * Show premium celebration popup with backdrop (BF25-8.2)
+     * Queue a gift celebration (shows one at a time) (BF25-8.3)
      * @param {string} giftTitle - Gift title
      * @param {string} imageUrl - Gift product image URL
      * @param {number} checkpoint - Tier checkpoint number
+     * @param {number} giftValue - Gift value in cents
      */
-    showGiftCelebration(giftTitle, imageUrl, checkpoint) {
-      // Create backdrop overlay
-      const backdrop = document.createElement('div');
-      backdrop.className = 'bf25sc-celebration-backdrop';
+    queueGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue) {
+      console.log(`[BF25 Cart] Queuing celebration for: ${giftTitle} (checkpoint ${checkpoint})`);
 
-      // Create celebration container
-      const celebration = document.createElement('div');
-      celebration.className = 'bf25sc-gift-celebration';
-      celebration.innerHTML = `
-        <div class="bf25sc-celebration-content">
-          <div class="bf25sc-celebration-glow"></div>
-          <div class="bf25sc-celebration-badge">🎁 FREE GIFT UNLOCKED!</div>
-          <div class="bf25sc-celebration-product">
-            <img src="${imageUrl}" alt="${giftTitle}" class="bf25sc-celebration-image">
+      this.celebrationQueue.push({
+        title: giftTitle,
+        image: imageUrl,
+        checkpoint: checkpoint,
+        value: giftValue
+      });
+
+      // Process queue if not already celebrating
+      if (!this.isCelebrating) {
+        this.processCelebrationQueue();
+      }
+    }
+
+    /**
+     * Process celebration queue sequentially (BF25-8.3)
+     */
+    async processCelebrationQueue() {
+      if (this.celebrationQueue.length === 0) {
+        this.isCelebrating = false;
+        console.log('[BF25 Cart] Celebration queue complete');
+        return;
+      }
+
+      this.isCelebrating = true;
+
+      const celebration = this.celebrationQueue.shift();
+      console.log(`[BF25 Cart] Showing celebration: ${celebration.title}`);
+
+      // Show this celebration
+      await this.showGiftCelebration(
+        celebration.title,
+        celebration.image,
+        celebration.checkpoint,
+        celebration.value
+      );
+
+      // Wait for celebration to complete, then process next
+      await this.delay(this.celebrationDuration);
+
+      // Process next in queue
+      this.processCelebrationQueue();
+    }
+
+    /**
+     * Utility delay function (BF25-8.3)
+     */
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    /**
+     * Show premium celebration popup with backdrop (BF25-8.2/8.3)
+     * Returns Promise for queue coordination
+     * @param {string} giftTitle - Gift title
+     * @param {string} imageUrl - Gift product image URL
+     * @param {number} checkpoint - Tier checkpoint number
+     * @param {number} giftValue - Gift value in cents (optional)
+     */
+    showGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue) {
+      return new Promise((resolve) => {
+        // Pause regular toasts during celebration
+        if (window.BF25Toast) {
+          window.BF25Toast.pause();
+        }
+        // Create backdrop overlay
+        const backdrop = document.createElement('div');
+        backdrop.className = 'bf25sc-celebration-backdrop';
+        backdrop.setAttribute('data-checkpoint', checkpoint);
+
+        // Format gift value for display
+        const valueDisplay = giftValue ? `€${(giftValue / 100).toFixed(2)} value` : '';
+
+        // Create celebration container
+        const celebration = document.createElement('div');
+        celebration.className = 'bf25sc-gift-celebration';
+        celebration.setAttribute('data-checkpoint', checkpoint);
+        celebration.innerHTML = `
+          <div class="bf25sc-celebration-content">
+            <div class="bf25sc-celebration-glow"></div>
+            <div class="bf25sc-celebration-badge">🎁 FREE GIFT UNLOCKED!</div>
+            <div class="bf25sc-celebration-product">
+              <img src="${imageUrl}" alt="${giftTitle}" class="bf25sc-celebration-image">
+            </div>
+            <div class="bf25sc-celebration-title">${giftTitle}</div>
+            ${valueDisplay ? `<div class="bf25sc-celebration-value">${valueDisplay}</div>` : ''}
           </div>
-          <div class="bf25sc-celebration-title">${giftTitle}</div>
-          <div class="bf25sc-celebration-value">Added to your bundle!</div>
-        </div>
-      `;
+        `;
 
-      // Insert backdrop first, then celebration
-      document.body.appendChild(backdrop);
-      document.body.appendChild(celebration);
+        // Insert elements
+        document.body.appendChild(backdrop);
+        document.body.appendChild(celebration);
 
-      // Trigger confetti
-      this.triggerCelebrationConfetti();
+        // Trigger confetti
+        this.triggerCelebrationConfetti();
 
-      // Animate in (staggered for premium feel)
-      requestAnimationFrame(() => {
-        backdrop.classList.add('is-visible');
-        setTimeout(() => {
-          celebration.classList.add('is-visible');
-        }, 100);
+        // Animate in (staggered for premium feel)
+        requestAnimationFrame(() => {
+          backdrop.classList.add('is-visible');
+          setTimeout(() => {
+            celebration.classList.add('is-visible');
+          }, 100);
+        });
+
+        // Cleanup function
+        const cleanup = () => {
+          celebration.classList.remove('is-visible');
+          backdrop.classList.remove('is-visible');
+
+          setTimeout(() => {
+            celebration.remove();
+            backdrop.remove();
+
+            // Resume regular toasts
+            if (window.BF25Toast) {
+              window.BF25Toast.resume();
+            }
+
+            resolve(); // Signal completion for queue
+          }, 400);
+        };
+
+        // Auto-dismiss after 2.5s
+        setTimeout(cleanup, 2500);
+
+        // Click backdrop to dismiss early
+        backdrop.addEventListener('click', cleanup, { once: true });
+
+        console.log('[BF25 Cart] Celebration shown for:', giftTitle);
       });
-
-      // Auto-dismiss after celebration
-      setTimeout(() => {
-        celebration.classList.remove('is-visible');
-        backdrop.classList.remove('is-visible');
-
-        setTimeout(() => {
-          celebration.remove();
-          backdrop.remove();
-        }, 400);
-      }, 2500);
-
-      // Allow click to dismiss early
-      backdrop.addEventListener('click', () => {
-        celebration.classList.remove('is-visible');
-        backdrop.classList.remove('is-visible');
-        setTimeout(() => {
-          celebration.remove();
-          backdrop.remove();
-        }, 400);
-      });
-
-      console.log('[BF25 Cart] Celebration shown for:', giftTitle);
     }
 
     /**

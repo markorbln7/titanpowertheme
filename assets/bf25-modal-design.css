@@ -3765,3 +3765,20 @@ body:has(.bf25-modal-container.is-active) .header__icons .icon-close:not(.bf25-m
  * - Error red text: #FF6B6B on #1a1a1a = 5.4:1 (AA)
  * - Orange warning: #FFB800 on #1a1a1a = 8.9:1 (AA)
  */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Force Quantity Stepper Visibility (BF25-FIX-STEPPER-VISIBILITY)
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+/* Force quantity stepper visible - override any hidden rules */
+.bf25-quantity-stepper {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.bf25-quantity-controls.bf25-individual-mode {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}

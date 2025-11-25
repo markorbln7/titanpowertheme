@@ -134,6 +134,71 @@
     right: auto !important;
   }
 
+  /* ========== DESKTOP TIER BOXES - COMPACT ========== */
+  @media (min-width: 769px) {
+    /* Reduce box padding */
+    .block-item {
+      padding: 15px 10px !important;
+    }
+
+    /* Slightly smaller discount number on desktop */
+    .bf25-discount-number,
+    .block-item .bf25-discount-number,
+    .custom-pack-wrapper .bf25-discount-number {
+      font-size: 48px !important;
+    }
+
+    /* Tighter items label */
+    .bf25-items-label,
+    .block-item .bf25-items-label {
+      font-size: 11px !important;
+      margin-bottom: 3px !important;
+    }
+
+    /* Tighter gift text */
+    .bf25-gift-text,
+    .block-item .bf25-gift-text {
+      font-size: 10px !important;
+      margin-top: 5px !important;
+    }
+
+    /* % size */
+    .bf25-percent,
+    .block-item .bf25-percent,
+    .custom-pack-wrapper .bf25-percent {
+      font-size: 13px !important;
+    }
+
+    .bf25-off-text,
+    .block-item .bf25-off-text,
+    .custom-pack-wrapper .bf25-off-text {
+      font-size: 8px !important;
+    }
+  }
+
+  /* Large desktop - can be slightly bigger */
+  @media (min-width: 1200px) {
+    .block-item {
+      padding: 18px 12px !important;
+    }
+
+    .bf25-discount-number,
+    .block-item .bf25-discount-number,
+    .custom-pack-wrapper .bf25-discount-number {
+      font-size: 52px !important;
+    }
+
+    .bf25-items-label,
+    .block-item .bf25-items-label {
+      font-size: 12px !important;
+    }
+
+    .bf25-gift-text,
+    .block-item .bf25-gift-text {
+      font-size: 11px !important;
+    }
+  }
+
   /* ========== MOBILE - SCALED DOWN ========== */
   @media (max-width: 768px) {
     .custom-pack-wrapper {
@@ -180,10 +245,18 @@
       font-size: 9px !important;
     }
 
+    /* Items label */
+    .bf25-items-label,
+    .block-item .bf25-items-label {
+      font-size: 8px !important;
+      margin-bottom: 2px !important;
+    }
+
     /* Gift text */
     .bf25-gift-text,
     .block-item .bf25-gift-text {
-      font-size: 8px !important;
+      font-size: 7px !important;
+      margin-top: 3px !important;
     }
 
     /* Suffix padding */

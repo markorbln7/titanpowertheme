@@ -1,10 +1,10 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  /* ========== BF25 HERO HEADER - OPTION 2: SUBTLE GLOW + LINES ========== */
+  /* ========== BF25 HERO HEADER - REVISED SIZES ========== */
 
   .bf25-hero-header {
     background: #000;
-    padding: 50px 20px 40px;
+    padding: 40px 20px 30px;
     text-align: center;
     position: relative;
   }
@@ -38,25 +38,16 @@
     align-items: center;
   }
 
-  /* Logo - LARGER SIZE */
+  /* Logo - Desktop */
   .bf25-hero-logo {
     max-width: 550px;
-    width: 90%;
+    width: 80%;
     height: auto;
     filter: drop-shadow(0 0 25px rgba(96, 198, 85, 0.3));
   }
 
-  /* ========== DESKTOP - EVEN LARGER ========== */
+  /* Desktop line widths */
   @media (min-width: 769px) {
-    .bf25-hero-header {
-      padding: 60px 20px 50px;
-    }
-
-    .bf25-hero-logo {
-      max-width: 650px;
-      width: 85%;
-    }
-
     .bf25-hero-line-top {
       width: 250px;
     }
@@ -68,39 +59,40 @@
 
   /* Large desktop */
   @media (min-width: 1200px) {
-    .bf25-hero-logo {
-      max-width: 700px;
-    }
-
     .bf25-hero-line-bottom {
       width: 600px;
     }
   }
 
-  /* ========== MOBILE ========== */
+  /* ========== MOBILE - SMALLER LOGO + TIGHTER PADDING ========== */
   @media (max-width: 768px) {
     .bf25-hero-header {
-      padding: 35px 15px 30px;
+      padding: 20px 15px 15px;
     }
 
     .bf25-hero-logo {
-      max-width: 100%;
-      width: 95%;
+      max-width: 320px;
+      width: 85%;
     }
 
     .bf25-hero-line-top {
-      width: 120px;
+      width: 100px;
     }
 
     .bf25-hero-line-bottom {
-      width: 250px;
+      width: 200px;
     }
   }
 
-  /* Extra small */
+  /* Extra small phones */
   @media (max-width: 400px) {
     .bf25-hero-header {
-      padding: 25px 10px 20px;
+      padding: 15px 10px 12px;
+    }
+
+    .bf25-hero-logo {
+      max-width: 280px;
+      width: 90%;
     }
   }
 

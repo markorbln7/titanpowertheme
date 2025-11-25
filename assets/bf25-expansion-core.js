@@ -1741,6 +1741,9 @@ class CartManager {
           fallbackPrice = pricing.unitPrice;
         } else if (pricing && pricing.finalPrice) {
           fallbackPrice = pricing.finalPrice;
+        } else if (product.basePrice) {
+          // Custom productData uses basePrice
+          fallbackPrice = product.basePrice;
         } else if (product.price) {
           // Shopify product.price is in cents
           fallbackPrice = product.price;
@@ -1777,7 +1780,8 @@ class CartManager {
         productId: String(productId),
         title: product.title,
         variantTitle: variant.title !== 'Default Title' ? variant.title : '',
-        price: variant.price, // Price in cents (Shopify format)
+        // Price priority: variant.price > product.basePrice > pricing.unitPrice > 0
+        price: variant.price || product.basePrice || pricing?.unitPrice || pricing?.finalPrice || 0,
         // Get image URL - featuredImage is camelCase in window.productData
         image: product.featuredImage || product.featured_image || product.image || '',
         handle: product.handle || ''

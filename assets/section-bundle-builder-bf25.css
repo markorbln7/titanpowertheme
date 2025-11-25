@@ -771,6 +771,8 @@ body.modal-open {
 .bf25-product-info-icon svg {
   width: 20px;
   height: 20px;
+  margin-left: 8px;
+  margin-top: 8px;
   pointer-events: none; /* Let clicks pass through to parent */
   display: block; /* Fix alignment issues */
   overflow: visible; /* Ensure text renders properly */
@@ -850,8 +852,12 @@ body.modal-open {
   pointer-events: none;
   transform: translateY(10px);
 
-  /* Smooth fade-in animation */
-  transition: opacity 300ms ease, transform 300ms ease;
+  /* Smooth animation with easing curve */
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Will-change for better performance */
+  will-change: opacity, transform;
 
   /* Dark glassmorphic background */
   background: rgba(20, 20, 20, 0.98);
@@ -872,6 +878,13 @@ body.modal-open {
   flex-direction: column;
   padding: 20px;
   gap: 16px;
+}
+
+/* Ensure hidden attribute doesn't block transition */
+.bf25-card-variant-state[hidden] {
+  display: flex !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Show state when active */

@@ -3854,19 +3854,15 @@ class ExpansionManager {
    * @returns {string} HTML for quantity controls
    */
   generateQuantityControls() {
-    const mode = this.config.mode || 'power_packs';
-
     if (this.config.debug) {
-      console.log('🎮 generateQuantityControls called');
-      console.log('   Mode from config:', this.config.mode);
-      console.log('   Mode being used:', mode);
+      console.log('🎮 generateQuantityControls: Rendering BOTH controls');
     }
 
-    if (mode === 'power_packs') {
-      return this.generatePowerPacksUI();
-    } else {
-      return this.generateIndividualProductsUI();
-    }
+    // Always return BOTH pack buttons AND stepper
+    const packButtonsHTML = this.generatePowerPacksUI();
+    const stepperHTML = this.generateIndividualProductsUI();
+
+    return packButtonsHTML + stepperHTML;
   }
 
   /**

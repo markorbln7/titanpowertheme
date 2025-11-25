@@ -800,17 +800,14 @@
         return;
       }
 
-      // Prevent re-triggering if animation is actively running.
-      // NOTE: We rely on celebratedTiers (checked in animate()) to prevent re-celebrating.
-      // DO NOT check slot.dataset.state here - it causes a race condition with renderFromBundle().
+      // Prevent re-triggering if animation is actively running
       if (slot.classList.contains('is-celebrating')) {
         console.log(`[GiftAnimator] Tier ${tier} already animating, skipping`);
         return;
       }
 
-      // Performance monitoring
-      window.BF25Performance.startOperation(`giftAnimation-tier${tier}`);
-      window.BF25Performance.startFPSTracking(`tier-${tier}-unlock`);
+      // Simplified performance tracking (BF25-8.4 - removed FPS overhead)
+      const startTime = performance.now();
       console.log(`[GiftAnimator] 🎁 Starting celebration for Tier ${tier}`);
 
       // ─────────────────────────────────────────────────────────────────
@@ -819,19 +816,17 @@
       this.populateProductBubble(slot);
 
       // ─────────────────────────────────────────────────────────────────
-      // STEP 2: Trigger CSS animation sequence
-      // Adding .is-celebrating triggers:
-      // - bf25GiftUnlockBurst (shake → burst → glow)
-      // - bf25BubbleSequence (fade in → hold → fade out)
+      // STEP 2: Trigger CSS animation sequence (simplified - BF25-8.4)
+      // Adding .is-celebrating triggers bf25GiftUnlockBurst (0.6s)
       // ─────────────────────────────────────────────────────────────────
       slot.classList.add('is-celebrating');
-      slot.dataset.state = 'claimed'; // Update state for CSS
+      slot.dataset.state = 'claimed';
 
       // ─────────────────────────────────────────────────────────────────
-      // STEP 3: Trigger effects at key moments
+      // STEP 3: Simplified effects (BF25-8.4 - reduced complexity)
       // ─────────────────────────────────────────────────────────────────
 
-      // Electric sparks at burst peak (300ms into animation)
+      // Electric sparks at burst peak
       setTimeout(() => {
         this.triggerElectricSparks(slot, tier);
       }, 300);
@@ -846,38 +841,22 @@
       // Accessibility announcement
       this.announceGift(tier);
 
-      // Value flash (legacy support)
-      setTimeout(() => {
-        slot.classList.add('is-flashing');
-      }, 100);
-
-      setTimeout(() => {
-        slot.classList.remove('is-flashing');
-      }, 1000);
-
       // ─────────────────────────────────────────────────────────────────
-      // STEP 4: Cleanup after animation completes (3.5s total)
+      // STEP 4: Cleanup after animation (600ms - BF25-8.4 simplified)
       // ─────────────────────────────────────────────────────────────────
-      await this.wait(3500);
+      await this.wait(600);
 
       slot.classList.remove('is-celebrating');
 
-      // Force reflow to ensure glow pulse animation starts correctly
+      // Remove will-change after animation complete (BF25-8.4 performance)
       const wrapper = slot.querySelector('.bf25sc-gift-icon-wrapper');
       if (wrapper) {
-        wrapper.style.animation = 'none';
-        void wrapper.offsetHeight; // Trigger reflow
-        wrapper.style.animation = '';
+        wrapper.style.willChange = 'auto';
       }
 
-      // Performance tracking complete (BF25-8.3: guard against undefined)
-      const fps = window.BF25Performance.stopFPSTracking();
-      const duration = window.BF25Performance.endOperation(`giftAnimation-tier${tier}`, 3500);
-
-      const fpsDisplay = (typeof fps === 'number' && !isNaN(fps)) ? fps.toFixed(1) : 'N/A';
-      const durationDisplay = (typeof duration === 'number' && !isNaN(duration)) ? duration.toFixed(0) : 'N/A';
-
-      console.log(`[GiftAnimator] ✓ Tier ${tier} complete - FPS: ${fpsDisplay}, Duration: ${durationDisplay}ms`);
+      // Performance tracking complete (BF25-8.4 - simplified)
+      const duration = performance.now() - startTime;
+      console.log(`[GiftAnimator] ✓ Tier ${tier} complete in ${duration.toFixed(0)}ms`);
     }
 
     /**
@@ -1291,7 +1270,7 @@
       // Celebration Queue (BF25-8.3)
       this.celebrationQueue = [];
       this.isCelebrating = false;
-      this.celebrationDuration = 3000; // 3s per celebration (2.5s show + 0.5s transition)
+      this.celebrationDuration = 1800; // 1.8s per celebration - faster pace (BF25-8.5)
 
       // DOM Cache
       this.elements = this.cacheDOM();
@@ -1483,12 +1462,9 @@
         // Toast removed - handleTierDowngrade shows detailed message
       });
 
-      // Listen for max items reached
+      // Listen for max items reached (BF25-8.5: log only, no toast - unlimited items allowed)
       document.addEventListener('bf25:maxItemsReached', (event) => {
-        console.log('[BF25 Cart] Event: bf25:maxItemsReached', event.detail);
-        if (window.BF25Toast) {
-          window.BF25Toast.show(`Bundle is full (16 items max)`, 'info', 2000);
-        }
+        console.log('[BF25 Cart] Event: bf25:maxItemsReached (ignored - unlimited allowed)', event.detail);
       });
 
       // Check for back button from checkout (session backup exists)

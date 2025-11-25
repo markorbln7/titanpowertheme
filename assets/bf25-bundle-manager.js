@@ -53,7 +53,7 @@
       STORAGE_KEY: 'bf25_bundle',
       SCHEMA_VERSION: 1,
       EXPIRATION_DAYS: 7,
-      MAX_ITEMS: 16,
+      MAX_ITEMS: 999,  // Effectively unlimited (BF25-8.5)
       // Key used by GiftAnimator (must match exactly)
       ANIMATION_SESSION_KEY: 'bf25_celebrated_tiers'
     };
@@ -739,29 +739,9 @@
         const currentCount = this.bundle.computed.itemCount;
         const newTotal = currentCount + quantity;
 
-        if (newTotal > this.config.MAX_ITEMS) {
-          const canAdd = this.config.MAX_ITEMS - currentCount;
-          console.warn(`[BF25 BundleManager] Max items (${this.config.MAX_ITEMS}) would be exceeded. Can add ${canAdd} more.`);
-
-          this._dispatchEvent('bf25:maxItemsReached', {
-            maxItems: this.config.MAX_ITEMS,
-            currentCount,
-            attemptedAdd: quantity,
-            canAdd
-          });
-
-          // If can't add any, return error
-          if (canAdd <= 0) {
-            return {
-              success: false,
-              error: 'MAX_ITEMS_REACHED',
-              message: `Bundle is full (${this.config.MAX_ITEMS} items maximum)`,
-              maxItems: this.config.MAX_ITEMS
-            };
-          }
-
-          // Otherwise, add what we can
-          quantity = canAdd;
+        // No max item blocking - allow unlimited items at Tier 4 discount (BF25-8.5)
+        if (newTotal > 16) {
+          console.log(`[BF25 BundleManager] ${newTotal} items - continuing at Tier 4 (85% OFF)`);
         }
 
         // ─────────────────────────────────────────────────────
@@ -916,17 +896,9 @@
         const otherItemsQty = this.bundle.computed.itemCount - currentItemQty;
         const newTotal = otherItemsQty + quantity;
 
-        // Check max items
-        if (newTotal > this.config.MAX_ITEMS) {
-          const maxAllowed = this.config.MAX_ITEMS - otherItemsQty;
-          console.warn(`[BF25 BundleManager] Quantity capped at ${maxAllowed} (max ${this.config.MAX_ITEMS} total)`);
-          quantity = maxAllowed;
-
-          this._dispatchEvent('bf25:maxItemsReached', {
-            maxItems: this.config.MAX_ITEMS,
-            requestedQty: quantity,
-            allowedQty: maxAllowed
-          });
+        // No max item blocking - allow unlimited items at Tier 4 discount (BF25-8.5)
+        if (newTotal > 16) {
+          console.log(`[BF25 BundleManager] ${newTotal} items - continuing at Tier 4 (85% OFF)`);
         }
 
         // Store previous state

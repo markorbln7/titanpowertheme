@@ -1757,13 +1757,42 @@ class CartManager {
           fallbackPrice = Math.round(fallbackPrice * 100);
         }
 
-        console.log('[BF25 Modal] Fallback price:', fallbackPrice, 'from pricing:', pricing);
+        // Look up image from window.productData (BF25-8.7)
+        let fallbackImage = product.featuredImage || product.featured_image || product.image || '';
+
+        // If no image found, try looking up by handle in productData
+        if (!fallbackImage && product.handle && window.productData && window.productData[product.handle]) {
+          const pdProduct = window.productData[product.handle];
+          fallbackImage = pdProduct.featuredImage || pdProduct.featured_image || pdProduct.image || '';
+          if (this.config.debug && fallbackImage) {
+            console.log('[BF25 Modal] Got fallback image from productData by handle:', product.handle);
+          }
+        }
+
+        // Try searching by variant ID
+        if (!fallbackImage && variantId && window.productData) {
+          for (const [handle, pdProduct] of Object.entries(window.productData)) {
+            const hasVariant = pdProduct.variants?.some(v => String(v.id) === String(variantId));
+            if (hasVariant) {
+              fallbackImage = pdProduct.featuredImage || pdProduct.featured_image || pdProduct.image || '';
+              if (this.config.debug && fallbackImage) {
+                console.log('[BF25 Modal] Got fallback image by variant search:', handle);
+              }
+              break;
+            }
+          }
+        }
+
+        console.log('[BF25 Modal] Fallback price:', fallbackPrice, 'image:', fallbackImage ? 'Found' : 'Missing');
 
         var variant = {
           id: variantId,
           title: 'Default Title',
           price: fallbackPrice
         };
+
+        // Store resolved image for later use
+        product._resolvedImage = fallbackImage;
       } else {
         var variant = variants.find(v => String(v.id) === String(variantId));
 
@@ -1782,8 +1811,8 @@ class CartManager {
         variantTitle: variant.title !== 'Default Title' ? variant.title : '',
         // Price priority: variant.price > product.basePrice > pricing.unitPrice > 0
         price: variant.price || product.basePrice || pricing?.unitPrice || pricing?.finalPrice || 0,
-        // Get image URL - featuredImage is camelCase in window.productData
-        image: product.featuredImage || product.featured_image || product.image || '',
+        // Get image URL - use resolved image from fallback or direct properties (BF25-8.7)
+        image: product._resolvedImage || product.featuredImage || product.featured_image || product.image || '',
         handle: product.handle || ''
       };
 
@@ -4838,16 +4867,14 @@ class ExpansionManager {
     // Update state
     this.state.update('quantity', validQuantity);
 
-    // Update UI if in individual mode
-    if (this.config.mode === 'individual_products') {
-      const input = document.querySelector('.bf25-quantity-input');
-      if (input) {
-        input.value = validQuantity;
-      }
-
-      // Update button disabled states
-      this.updateStepperButtons();
+    // Update quantity stepper (always visible now with dual controls)
+    const input = document.querySelector('.bf25-quantity-input');
+    if (input) {
+      input.value = validQuantity;
     }
+
+    // Update stepper button disabled states
+    this.updateStepperButtons();
 
     // Update tier button selection if in power packs mode
     if (this.config.mode === 'power_packs') {
@@ -5172,6 +5199,7 @@ class ExpansionManager {
     const productId = card.dataset.productId;
     const title = card.dataset.upsellTitle;
     const price = parseInt(card.dataset.upsellPrice, 10);
+    const handle = card.dataset.handle || card.dataset.productHandle;
 
     if (!variantId) {
       console.error('[BF25 Modal] No variant ID for upsell:', title);
@@ -5190,18 +5218,56 @@ class ExpansionManager {
         console.log(`❌ Upsell deselected: ${title}`);
       }
     } else {
-      // Select
+      // Select - look up image from window.productData (BF25-8.7)
+      let imageUrl = '';
+
+      // Method 1: Look up by handle in productData
+      if (handle && window.productData && window.productData[handle]) {
+        const productData = window.productData[handle];
+        imageUrl = productData.featuredImage || productData.featured_image || productData.image || '';
+        if (this.config.debug && imageUrl) {
+          console.log(`[BF25 Modal] Found upsell image in productData by handle: ${handle}`);
+        }
+      }
+
+      // Method 2: Search productData by variant ID
+      if (!imageUrl && variantId && window.productData) {
+        for (const [pdHandle, product] of Object.entries(window.productData)) {
+          const hasVariant = product.variants?.some(v => String(v.id) === String(variantId));
+          if (hasVariant) {
+            imageUrl = product.featuredImage || product.featured_image || product.image || '';
+            if (this.config.debug && imageUrl) {
+              console.log(`[BF25 Modal] Found upsell image by variant search: ${pdHandle}`);
+            }
+            break;
+          }
+        }
+      }
+
+      // Method 3: Get image from card DOM
+      if (!imageUrl) {
+        const imgElement = card.querySelector('img');
+        if (imgElement && imgElement.src) {
+          imageUrl = imgElement.src;
+          if (this.config.debug) {
+            console.log('[BF25 Modal] Got upsell image from DOM element');
+          }
+        }
+      }
+
       card.classList.add('is-selected');
       card.setAttribute('aria-checked', 'true');
       this.selectedUpsells.set(variantId, {
         variantId: parseInt(variantId, 10),
         productId: parseInt(productId, 10),
         title: title,
-        price: price
+        price: price,
+        image: imageUrl,  // Now includes image (BF25-8.7)
+        handle: handle || ''
       });
 
       if (this.config.debug) {
-        console.log(`✅ Upsell selected: ${title}`);
+        console.log(`✅ Upsell selected: ${title}`, { image: imageUrl ? 'Found' : 'Missing' });
       }
     }
 

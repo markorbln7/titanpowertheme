@@ -1709,6 +1709,12 @@
 
       // Render each item
       items.forEach((item, index) => {
+        // Debug logging for image resolution (BF25-8.7)
+        console.log(`[BF25 Cart] Rendering product: ${item.title}`, {
+          hasImage: !!item.image,
+          imageUrl: item.image ? item.image.substring(0, 80) : 'MISSING'
+        });
+
         const card = document.createElement('div');
         card.className = 'bf25sc-product-card';
         card.setAttribute('data-variant-id', item.variantId);

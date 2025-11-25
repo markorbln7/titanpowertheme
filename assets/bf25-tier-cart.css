@@ -3337,6 +3337,16 @@
   /* Hide scrollbar but keep functionality */
   scrollbar-width: none;
   -ms-overflow-style: none;
+
+  /* Prevent orphaned text nodes from showing (BF25-8.7) */
+  font-size: 0;
+  color: transparent;
+}
+
+/* Restore font size and color for child elements */
+#bf25sc-product-scroll > * {
+  font-size: 14px;
+  color: #fff;
 }
 
 #bf25sc-product-scroll::-webkit-scrollbar {

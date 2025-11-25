@@ -31,6 +31,107 @@
   };
 
   // ============================================
+  // REBUY SUPPRESSION (for checkout redirect protection)
+  // ============================================
+
+  // Check if user is in checkout flow (flag set by BF25 cart)
+  const isBF25Checkout = sessionStorage.getItem('bf25-direct-checkout') === 'true';
+
+  if (isBF25Checkout) {
+    console.log('[BF25 Isolation] 🛡️ Checkout mode detected - suppressing Rebuy');
+
+    // Method 1: Disable Rebuy methods immediately
+    function disableRebuy() {
+      if (window.Rebuy) {
+        const noop = function() {
+          console.log('[BF25 Isolation] Blocked Rebuy method');
+          return false;
+        };
+
+        if (window.Rebuy.SmartCart) {
+          window.Rebuy.SmartCart.open = noop;
+          window.Rebuy.SmartCart.close = noop;
+          window.Rebuy.SmartCart.show = noop;
+          window.Rebuy.SmartCart.toggle = noop;
+        }
+
+        if (window.Rebuy.Cart) {
+          window.Rebuy.Cart.open = noop;
+          window.Rebuy.Cart.show = noop;
+        }
+
+        console.log('[BF25 Isolation] ✅ Rebuy methods disabled');
+      }
+    }
+
+    // Run immediately
+    disableRebuy();
+
+    // Run again after DOM loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', disableRebuy);
+    }
+
+    // Run with delays (catch late-loading Rebuy)
+    setTimeout(disableRebuy, 100);
+    setTimeout(disableRebuy, 500);
+    setTimeout(disableRebuy, 1000);
+
+    // Method 2: Block Rebuy events
+    const rebuyEvents = [
+      'rebuy:cart.open',
+      'rebuy:cart-open',
+      'rebuy:cart.change',
+      'rebuy:checkout',
+      'rebuy:smart-cart:open'
+    ];
+
+    rebuyEvents.forEach(eventName => {
+      document.addEventListener(eventName, (e) => {
+        console.log(`[BF25 Isolation] ⛔ Blocked: ${eventName}`);
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        return false;
+      }, { capture: true, passive: false });
+    });
+
+    // Method 3: Hide Rebuy UI
+    function hideRebuyUI() {
+      const selectors = [
+        '[data-rebuy]',
+        '[data-rebuy-cart]',
+        'rebuy-cart',
+        '.rebuy-cart',
+        '#rebuy-smart-cart'
+      ];
+
+      document.querySelectorAll(selectors.join(',')).forEach(el => {
+        el.style.display = 'none';
+        el.style.visibility = 'hidden';
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', hideRebuyUI);
+    } else {
+      hideRebuyUI();
+    }
+
+    setTimeout(hideRebuyUI, 100);
+
+    // Method 4: Clear flag on checkout/thank-you pages
+    if (window.location.pathname.includes('/checkout') ||
+        window.location.pathname.includes('/thank')) {
+      console.log('[BF25 Isolation] ✅ Reached checkout, clearing flag');
+      sessionStorage.removeItem('bf25-direct-checkout');
+    }
+
+    console.log('[BF25 Isolation] ✅ Checkout protection active');
+  }
+
+  // ============================================
   // CART ISOLATION CONTROLLER
   // ============================================
 

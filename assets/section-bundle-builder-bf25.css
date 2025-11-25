@@ -725,9 +725,9 @@ body.modal-open {
   height: 36px;
 
   /* Center the SVG */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
   /* Interaction */
   cursor: pointer;
@@ -747,6 +747,7 @@ body.modal-open {
 
   /* Pulse animation */
   animation: bf25-info-pulse 2s ease-in-out infinite;
+
 }
 
 /* Hover State */

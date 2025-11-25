@@ -334,6 +334,10 @@
   border-color: currentColor;
   animation: bf25GiftGlowPulse 3s ease-in-out infinite;
   animation-delay: 3.5s; /* Start after celebration ends */
+  /* GPU acceleration for smooth animation (BF25-8.0) */
+  will-change: transform, box-shadow;
+  /* Brighter glow (BF25-8.0) */
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.8), 0 0 40px rgba(96, 198, 85, 0.4);
 }
 
 .bf25sc-gift-slot[data-state="claimed"] .bf25sc-gift-bolt {
@@ -365,28 +369,26 @@
 }
 
 @keyframes bf25GiftUnlockBurst {
-  /* 0-50%: Anticipation Shake */
+  /* 0-50%: Anticipation Shake - ENHANCED (BF25-8.0) */
   0% {
     transform: scale(1) rotate(0deg);
     border-color: var(--bf25-color-locked);
   }
-  10%, 30% { transform: scale(1) rotate(-5deg); }
-  20%, 40% { transform: scale(1) rotate(5deg); }
+  15% { transform: scale(1.15) rotate(-12deg); } /* Bigger shake */
+  30% { transform: scale(1.15) rotate(12deg); }
 
-  /* 50-100%: Burst */
-  50% {
-    transform: scale(1);
-    border-color: var(--bf25-color-locked);
-  }
-  70% {
-    transform: scale(1.35);
+  /* 50-100%: Burst - ENHANCED (BF25-8.0) */
+  45% {
+    transform: scale(1.3) rotate(-8deg); /* Bigger burst */
     border-color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
-    box-shadow: 0 0 40px currentColor;
+    box-shadow: 0 0 60px currentColor, 0 0 80px rgba(96, 198, 85, 0.6); /* Brighter burst */
   }
+  60% { transform: scale(1.2) rotate(4deg); }
+  75% { transform: scale(1.1) rotate(-2deg); }
   100% {
-    transform: scale(1.1);
+    transform: scale(1) rotate(0deg);
     border-color: var(--bf25sc-tier-color, var(--bf25-color-unlocked));
-    box-shadow: 0 0 15px currentColor;
+    box-shadow: 0 0 20px currentColor;
   }
 }
 
@@ -2931,5 +2933,368 @@
 
   .bf25-isolation-btn:hover {
     transform: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BF25-8.0: ENHANCEMENTS (Toast, Cart Cards, Gift Cards)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────────────────────────
+   TOAST ENHANCEMENTS
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Larger toast text for better visibility */
+.bf25sc-toast-message {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* Highlighted discount in toast (lime green) */
+.bf25-toast-discount {
+  color: #60c655;
+  font-weight: 700;
+}
+
+/* Highlighted gift name in toast (white bold) */
+.bf25-toast-gift {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   CART PRODUCT CARD ADJUSTMENTS
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Larger product images (60x60 → 80x80) */
+.bf25sc-product-image {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: cover;
+}
+
+/* Reposition quantity badge to prevent clipping */
+.bf25sc-product-qty-badge {
+  top: -6px !important;
+  right: -6px !important;
+}
+
+/* Remove product title (takes too much space) */
+.bf25sc-product-title {
+  display: none !important;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   GIFT CARDS IN CART PANEL (BF25-8.1)
+   Match product card appearance exactly with green glow distinction
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Gift card inherits product card base styles + green glow border */
+.bf25sc-gift-card {
+  border: 1px solid rgba(96, 198, 85, 0.4);
+  box-shadow: 0 0 12px rgba(96, 198, 85, 0.2);
+}
+
+.bf25sc-gift-card:hover {
+  border-color: rgba(96, 198, 85, 0.6);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.3);
+}
+
+/* FREE badge replaces quantity badge */
+.bf25sc-free-badge {
+  background: #60c655 !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  padding: 3px 6px !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Price styling for gifts */
+.bf25sc-price-free {
+  font-size: 16px;
+  font-weight: 700;
+  color: #60c655;
+}
+
+.bf25sc-price-original {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: line-through;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .bf25sc-gift-card {
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.2);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   CELEBRATION ANIMATION (BF25-8.2)
+   Premium celebration with dark backdrop and enhanced glassmorphic popup
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Dark backdrop overlay */
+.bf25sc-celebration-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  z-index: 9999;
+  transition: all 0.4s ease-out;
+  cursor: pointer;
+}
+
+.bf25sc-celebration-backdrop.is-visible {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+/* Celebration popup - centered on screen */
+.bf25sc-gift-celebration {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  z-index: 10000;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bf25sc-gift-celebration.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Premium glassmorphic content card */
+.bf25sc-celebration-content {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 30, 0.95) 0%,
+    rgba(20, 20, 20, 0.98) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(96, 198, 85, 0.4);
+  border-radius: 24px;
+  padding: 32px 48px;
+  text-align: center;
+  box-shadow:
+    0 0 80px rgba(96, 198, 85, 0.3),
+    0 0 120px rgba(96, 198, 85, 0.15),
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+/* Animated glow effect behind content */
+.bf25sc-celebration-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(96, 198, 85, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: bf25CelebrationGlow 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes bf25CelebrationGlow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+}
+
+/* Badge styling with gradient */
+.bf25sc-celebration-badge {
+  position: relative;
+  background: linear-gradient(135deg, #60c655, #7FFF00);
+  color: #000;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  display: inline-block;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 20px rgba(96, 198, 85, 0.5);
+  animation: bf25BadgePulse 1s ease-out;
+}
+
+@keyframes bf25BadgePulse {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.1); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Product image with glow */
+.bf25sc-celebration-product {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.bf25sc-celebration-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(96, 198, 85, 0.6));
+  animation: bf25ProductReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes bf25ProductReveal {
+  0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Title styling */
+.bf25sc-celebration-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.bf25sc-celebration-value {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Flying product animation */
+.bf25sc-flying-product {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(96, 198, 85, 0.4);
+  will-change: transform, opacity;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .bf25sc-celebration-content {
+    padding: 24px 32px;
+    min-width: 280px;
+  }
+
+  .bf25sc-celebration-badge {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .bf25sc-celebration-product {
+    width: 120px;
+    height: 120px;
+  }
+
+  .bf25sc-celebration-title {
+    font-size: 18px;
+  }
+
+  .bf25sc-celebration-value {
+    font-size: 13px;
+  }
+}
+
+/* Reduced motion support (CKL-113) */
+@media (prefers-reduced-motion: reduce) {
+  .bf25sc-celebration-backdrop,
+  .bf25sc-gift-celebration,
+  .bf25sc-celebration-glow,
+  .bf25sc-celebration-badge,
+  .bf25sc-celebration-image {
+    animation: none !important;
+    transition-duration: 0.1s !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   CART PRODUCTS CAROUSEL (BF25-8.2)
+   Horizontal scroll with snap, touch swipe, and mouse drag support
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Cart products scroll container */
+#bf25sc-product-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 4px;
+  margin: 0 -4px;
+
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#bf25sc-product-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each product card snaps */
+.bf25sc-product-card {
+  flex: 0 0 auto;
+  width: 80px;
+  scroll-snap-align: start;
+}
+
+/* Gift cards same sizing */
+.bf25sc-gift-card {
+  flex: 0 0 auto;
+  width: 80px;
+  scroll-snap-align: start;
+}
+
+/* Carousel wrapper with fade indicators */
+.bf25sc-products-wrapper {
+  position: relative;
+}
+
+.bf25sc-products-wrapper::before,
+.bf25sc-products-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.2s;
+}
+
+.bf25sc-products-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(20, 20, 20, 1), transparent);
+  opacity: 0;
+}
+
+.bf25sc-products-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(20, 20, 20, 1), transparent);
+}
+
+/* Show left fade when scrolled */
+.bf25sc-products-wrapper.has-scroll-left::before {
+  opacity: 1;
+}
+
+/* Hide right fade when scrolled to end */
+.bf25sc-products-wrapper.at-scroll-end::after {
+  opacity: 0;
+}
+
+/* Reduced motion for carousel */
+@media (prefers-reduced-motion: reduce) {
+  #bf25sc-product-scroll {
+    scroll-behavior: auto;
   }
 }

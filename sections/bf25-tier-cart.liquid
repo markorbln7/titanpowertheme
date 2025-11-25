@@ -231,12 +231,37 @@
 <!-- CRITICAL: Inline Config (Must load BEFORE deferred scripts) -->
 <script>
   // Gift variant IDs (from Shopify admin) - Define FIRST so tiers can reference
+  // BF25-8.1: Added image URLs for celebration animation
   window.GIFT_VARIANT_MAP = {
     // Numeric keys for BundleManager
-    4: { variantId: '46748253520050', title: '100W 4-in-1 Cable', value: 3000, price: 3000 },
-    8: { variantId: '44929561526450', title: 'Travel Case', value: 3500, price: 3500 },
-    12: { variantId: '45338148798642', title: 'Magnetic Cable', value: 4000, price: 4000 },
-    16: { variantId: '46748228190386', title: 'Bigfoot Mystery Gift', value: 4500, price: 4500 },
+    4: {
+      variantId: '46748253520050',
+      title: '100W 4-in-1 Cable',
+      value: 3000,
+      price: 3000,
+      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_top_image_a895a2f4-c7a7-4e8f-889a-883407938d24.png?v=1763844565'
+    },
+    8: {
+      variantId: '44929561526450',
+      title: 'Travel Case',
+      value: 3500,
+      price: 3500,
+      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578'
+    },
+    12: {
+      variantId: '45338148798642',
+      title: 'Magnetic Cable',
+      value: 4000,
+      price: 4000,
+      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Untitled-3.png?v=1763847726'
+    },
+    16: {
+      variantId: '46748228190386',
+      title: 'Bigfoot Mystery Gift',
+      value: 4500,
+      price: 4500,
+      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/free_gift_gift_tracker_mystery_3dcb6ddf-e030-4eac-b3c5-b4ee3c82b364.png?v=1763844597'
+    },
     // Named keys for CartManager legacy code
     CABLE: '46748253520050',
     CASE: '44929561526450',

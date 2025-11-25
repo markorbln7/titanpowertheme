@@ -1423,13 +1423,18 @@
         }
       });
 
-      // Listen for gift unlocks (additional celebration)
+      // Listen for gift unlocks - CELEBRATION ANIMATION (BF25-8.1)
       document.addEventListener('bf25:giftUnlocked', (event) => {
         console.log('[BF25 Cart] Event: bf25:giftUnlocked', event.detail);
-        const { gift, totalGifts } = event.detail;
-        if (window.BF25Toast) {
-          window.BF25Toast.show(`🎁 FREE ${gift.title} unlocked!`, 'success', 3000);
-        }
+        const { gift } = event.detail;
+
+        // Get gift config with image URL
+        const giftConfig = window.GIFT_VARIANT_MAP?.[gift.checkpoint];
+        const imageUrl = giftConfig?.image || '';
+        const giftTitle = giftConfig?.title || gift.title || 'Free Gift';
+
+        // Show celebration with product image flying to cart
+        this.showGiftCelebration(giftTitle, imageUrl, gift.checkpoint);
       });
 
       // Listen for tier downgrades (logging only - toast handled by handleTierDowngrade)
@@ -1739,6 +1744,272 @@
       });
 
       console.log(`[BF25 Cart] Rendered ${items.length} bundle products`);
+
+      // BF25-8.0: Render gifts after products
+      this.renderBundleGifts(computed);
+
+      // BF25-8.2: If no gifts, init carousel here (otherwise handled in renderBundleGifts)
+      if (!computed.giftsUnlocked || computed.giftsUnlocked.length === 0) {
+        this.initProductCarousel();
+      }
+    }
+
+    /**
+     * Render unlocked gifts in cart panel (BF25-8.1)
+     * Gift cards match product card structure EXACTLY with green glow
+     * @param {Object} computed - Computed state from BundleManager
+     */
+    renderBundleGifts(computed) {
+      const scrollContainer = document.getElementById('bf25sc-product-scroll');
+
+      if (!scrollContainer || !computed.giftsUnlocked || computed.giftsUnlocked.length === 0) {
+        return;
+      }
+
+      console.log(`[BF25 Cart] Rendering ${computed.giftsUnlocked.length} unlocked gifts`);
+
+      // Get gift images from GIFT_VARIANT_MAP
+      const giftMap = window.GIFT_VARIANT_MAP;
+
+      // Render each unlocked gift
+      computed.giftsUnlocked.forEach((gift) => {
+        const card = document.createElement('div');
+        // Same base class + gift modifier for green glow
+        card.className = 'bf25sc-product-card bf25sc-gift-card';
+        card.setAttribute('data-variant-id', gift.variantId);
+        card.setAttribute('data-gift', 'true');
+
+        // Get image from GIFT_VARIANT_MAP using checkpoint
+        const giftConfig = giftMap[gift.checkpoint];
+        const imageUrl = giftConfig?.image || gift.image || '';
+        const giftTitle = giftConfig?.title || gift.title || 'Free Gift';
+        const giftPrice = giftConfig?.price || gift.price || 0;
+
+        // IDENTICAL structure to product cards
+        card.innerHTML = `
+          <div class="bf25sc-product-image-container">
+            ${imageUrl
+              ? `<img src="${imageUrl}" alt="${giftTitle}" class="bf25sc-product-image" width="80" height="80">`
+              : `<div class="bf25sc-product-placeholder">🎁</div>`
+            }
+            <span class="bf25sc-product-qty-badge bf25sc-free-badge">FREE</span>
+          </div>
+          <div class="bf25sc-product-info">
+            <div class="bf25sc-product-prices">
+              <span class="bf25sc-price-free">FREE</span>
+              <span class="bf25sc-price-original">€${(giftPrice / 100).toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+        // NO remove button for gifts (they're locked in)
+
+        scrollContainer.appendChild(card);
+      });
+
+      console.log(`[BF25 Cart] Rendered ${computed.giftsUnlocked.length} gift(s) in cart`);
+
+      // BF25-8.2: Initialize carousel after rendering all products and gifts
+      this.initProductCarousel();
+    }
+
+    /**
+     * Show premium celebration popup with backdrop (BF25-8.2)
+     * @param {string} giftTitle - Gift title
+     * @param {string} imageUrl - Gift product image URL
+     * @param {number} checkpoint - Tier checkpoint number
+     */
+    showGiftCelebration(giftTitle, imageUrl, checkpoint) {
+      // Create backdrop overlay
+      const backdrop = document.createElement('div');
+      backdrop.className = 'bf25sc-celebration-backdrop';
+
+      // Create celebration container
+      const celebration = document.createElement('div');
+      celebration.className = 'bf25sc-gift-celebration';
+      celebration.innerHTML = `
+        <div class="bf25sc-celebration-content">
+          <div class="bf25sc-celebration-glow"></div>
+          <div class="bf25sc-celebration-badge">🎁 FREE GIFT UNLOCKED!</div>
+          <div class="bf25sc-celebration-product">
+            <img src="${imageUrl}" alt="${giftTitle}" class="bf25sc-celebration-image">
+          </div>
+          <div class="bf25sc-celebration-title">${giftTitle}</div>
+          <div class="bf25sc-celebration-value">Added to your bundle!</div>
+        </div>
+      `;
+
+      // Insert backdrop first, then celebration
+      document.body.appendChild(backdrop);
+      document.body.appendChild(celebration);
+
+      // Trigger confetti
+      this.triggerCelebrationConfetti();
+
+      // Animate in (staggered for premium feel)
+      requestAnimationFrame(() => {
+        backdrop.classList.add('is-visible');
+        setTimeout(() => {
+          celebration.classList.add('is-visible');
+        }, 100);
+      });
+
+      // Auto-dismiss after celebration
+      setTimeout(() => {
+        celebration.classList.remove('is-visible');
+        backdrop.classList.remove('is-visible');
+
+        setTimeout(() => {
+          celebration.remove();
+          backdrop.remove();
+        }, 400);
+      }, 2500);
+
+      // Allow click to dismiss early
+      backdrop.addEventListener('click', () => {
+        celebration.classList.remove('is-visible');
+        backdrop.classList.remove('is-visible');
+        setTimeout(() => {
+          celebration.remove();
+          backdrop.remove();
+        }, 400);
+      });
+
+      console.log('[BF25 Cart] Celebration shown for:', giftTitle);
+    }
+
+    /**
+     * Trigger confetti burst for celebration (BF25-8.2)
+     */
+    triggerCelebrationConfetti() {
+      // Use existing confetti system if available
+      if (this.confettiSystem) {
+        this.confettiSystem.burst({
+          particleCount: 50,
+          spread: 70,
+          origin: { x: 0.5, y: 0.4 },
+          colors: ['#60c655', '#7FFF00', '#ffffff', '#FFD700']
+        });
+      }
+      // Confetti is optional - system continues without it
+    }
+
+    /**
+     * Animate product flying from celebration to cart area (BF25-8.1)
+     * @param {HTMLElement} celebration - Celebration element
+     * @param {number} checkpoint - Tier checkpoint number
+     */
+    flyProductToCart(celebration, checkpoint) {
+      const productImg = celebration.querySelector('.bf25sc-celebration-image');
+      const cartArea = document.getElementById('bf25sc-product-scroll');
+
+      if (!productImg || !cartArea) return;
+
+      // Get positions
+      const imgRect = productImg.getBoundingClientRect();
+      const cartRect = cartArea.getBoundingClientRect();
+
+      // Create flying clone
+      const flyingProduct = productImg.cloneNode(true);
+      flyingProduct.className = 'bf25sc-flying-product';
+      flyingProduct.style.cssText = `
+        position: fixed;
+        top: ${imgRect.top}px;
+        left: ${imgRect.left}px;
+        width: ${imgRect.width}px;
+        height: ${imgRect.height}px;
+        z-index: 10001;
+        pointer-events: none;
+      `;
+      document.body.appendChild(flyingProduct);
+
+      // Animate to cart
+      requestAnimationFrame(() => {
+        flyingProduct.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        flyingProduct.style.top = `${cartRect.top + 20}px`;
+        flyingProduct.style.left = `${cartRect.left + 20}px`;
+        flyingProduct.style.width = '60px';
+        flyingProduct.style.height = '60px';
+        flyingProduct.style.opacity = '0';
+      });
+
+      // Cleanup flying element
+      setTimeout(() => {
+        flyingProduct.remove();
+      }, 700);
+    }
+
+    /**
+     * Initialize product carousel with scroll indicators and mouse drag (BF25-8.2)
+     */
+    initProductCarousel() {
+      const scrollContainer = document.getElementById('bf25sc-product-scroll');
+      if (!scrollContainer) return;
+
+      // Ensure wrapper exists for fade indicators
+      let wrapper = scrollContainer.parentElement;
+      if (!wrapper.classList.contains('bf25sc-products-wrapper')) {
+        wrapper = document.createElement('div');
+        wrapper.className = 'bf25sc-products-wrapper';
+        scrollContainer.parentNode.insertBefore(wrapper, scrollContainer);
+        wrapper.appendChild(scrollContainer);
+      }
+
+      // Update fade indicators on scroll
+      const updateScrollIndicators = () => {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+
+        if (scrollLeft > 10) {
+          wrapper.classList.add('has-scroll-left');
+        } else {
+          wrapper.classList.remove('has-scroll-left');
+        }
+
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          wrapper.classList.add('at-scroll-end');
+        } else {
+          wrapper.classList.remove('at-scroll-end');
+        }
+      };
+
+      scrollContainer.addEventListener('scroll', updateScrollIndicators, { passive: true });
+
+      // Initial check
+      updateScrollIndicators();
+
+      // Mouse drag scrolling for desktop
+      let isMouseDown = false;
+      let startX;
+      let scrollLeftStart;
+
+      scrollContainer.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        scrollContainer.style.cursor = 'grabbing';
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeftStart = scrollContainer.scrollLeft;
+      });
+
+      scrollContainer.addEventListener('mouseleave', () => {
+        isMouseDown = false;
+        scrollContainer.style.cursor = 'grab';
+      });
+
+      scrollContainer.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        scrollContainer.style.cursor = 'grab';
+      });
+
+      scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 1.5; // Scroll speed multiplier
+        scrollContainer.scrollLeft = scrollLeftStart - walk;
+      });
+
+      // Set initial cursor
+      scrollContainer.style.cursor = 'grab';
+
+      console.log('[BF25 Cart] Product carousel initialized');
     }
 
     /**

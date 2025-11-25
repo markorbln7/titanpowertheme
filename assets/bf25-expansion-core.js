@@ -1727,12 +1727,25 @@ class CartManager {
 
     try {
       // Find the selected variant to get variant-specific data
-      const variant = product.variants.find(v => String(v.id) === String(variantId));
+      // Handle cases where variants might be in different locations
+      const variants = product.variants || product.product?.variants || [];
 
-      if (!variant) {
-        console.error('[BF25 Modal] Variant not found:', variantId);
-        this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
-        return { success: false, error: 'Variant not found' };
+      if (!variants || variants.length === 0) {
+        console.warn('[BF25 Modal] No variants array found, using fallback data');
+        // Fallback: construct minimal variant data from what we have
+        var variant = {
+          id: variantId,
+          title: 'Default Title',
+          price: product.price || pricing?.unitPrice || 0
+        };
+      } else {
+        var variant = variants.find(v => String(v.id) === String(variantId));
+
+        if (!variant) {
+          console.error('[BF25 Modal] Variant not found in array:', variantId, 'Available:', variants.map(v => v.id));
+          this.showError({ message: 'Variant not found', description: 'Please try selecting the product again.' });
+          return { success: false, error: 'Variant not found' };
+        }
       }
 
       // Build product data for BundleManager

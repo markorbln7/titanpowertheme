@@ -2276,7 +2276,10 @@
         }
 
         // Reconcile gifts in cart
-        this.reconcileGifts(this.currentTier);
+        // Note: When using BundleManager, gifts are synced at checkout, not reconciled here
+        if (!this.useBundleManager && typeof this.reconcileGifts === 'function') {
+          this.reconcileGifts(this.currentTier);
+        }
       }
 
       // End performance tracking

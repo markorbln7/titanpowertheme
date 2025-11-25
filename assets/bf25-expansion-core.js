@@ -3169,6 +3169,11 @@ class ExpansionManager {
       return;
     }
 
+    // Initialize selections storage on card element
+    if (!card._variantSelections) {
+      card._variantSelections = {};
+    }
+
     // ─────────────────────────────────────────────────────────────────
     // Close Button
     // ─────────────────────────────────────────────────────────────────
@@ -3205,10 +3210,15 @@ class ExpansionManager {
         // Select this pill
         pill.classList.add('is-selected');
 
+        // Store the selection using position as key
+        const optionKey = `option${optionPosition}`;
+        card._variantSelections[optionKey] = optionValue;
+
         if (this.config.debug) {
           console.log('🎨 Variant option selected:', {
             position: optionPosition,
-            value: optionValue
+            value: optionValue,
+            allSelections: card._variantSelections
           });
         }
 
@@ -3293,21 +3303,25 @@ class ExpansionManager {
       return null;
     }
 
+    if (this.config.debug) {
+      console.log('🔍 Finding variant for:', { productId, selections, variantsCount: variants.length });
+    }
+
     // Find variant matching all selected options
+    // variants have options: [value1, value2, value3] array
+    // selections have {option1: value1, option2: value2, option3: value3}
     const matchingVariant = variants.find(variant => {
-      let matches = true;
-
-      if (selections.option1 && variant.option1 !== selections.option1) {
-        matches = false;
+      // Check each option position
+      if (selections.option1 && variant.options[0] !== selections.option1) {
+        return false;
       }
-      if (selections.option2 && variant.option2 !== selections.option2) {
-        matches = false;
+      if (selections.option2 && variant.options[1] !== selections.option2) {
+        return false;
       }
-      if (selections.option3 && variant.option3 !== selections.option3) {
-        matches = false;
+      if (selections.option3 && variant.options[2] !== selections.option3) {
+        return false;
       }
-
-      return matches;
+      return true;
     });
 
     if (matchingVariant) {
@@ -3315,6 +3329,7 @@ class ExpansionManager {
         console.log('✅ Found matching variant:', {
           variantId: matchingVariant.id,
           title: matchingVariant.title,
+          options: matchingVariant.options,
           selections
         });
       }
@@ -3436,6 +3451,20 @@ class ExpansionManager {
       );
 
       if (result.success) {
+        // Success feedback on plus button
+        const plusButton = card.querySelector('.bf25-quick-add-trigger');
+        if (plusButton) {
+          plusButton.textContent = '✓';
+          plusButton.style.backgroundColor = '#60c655';
+          plusButton.style.color = '#000';
+
+          setTimeout(() => {
+            plusButton.textContent = '+';
+            plusButton.style.backgroundColor = '';
+            plusButton.style.color = '';
+          }, 1200);
+        }
+
         // Success animation on card
         card.classList.add('bf25-quick-add-success');
         setTimeout(() => {

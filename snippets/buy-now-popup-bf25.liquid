@@ -116,42 +116,46 @@
             class="bf25-pack-btn js-pack-btn"
             data-quantity="4"
             data-tier="1"
-            data-discount="60">
+            data-discount="60"
+            aria-label="Select 4 items with 60% discount">
       <span class="pack-qty">4 ITEMS</span>
       <span class="pack-discount">60% OFF</span>
-      <span class="pack-gift">+ FREE Cable</span>
+      <span class="pack-checkmark">✓</span>
     </button>
 
     <button type="button"
             class="bf25-pack-btn js-pack-btn bf25-pack-btn--popular"
             data-quantity="8"
             data-tier="2"
-            data-discount="70">
+            data-discount="70"
+            aria-label="Select 8 items with 70% discount - Most Popular">
       <span class="pack-badge">MOST POPULAR</span>
       <span class="pack-qty">8 ITEMS</span>
       <span class="pack-discount">70% OFF</span>
-      <span class="pack-gift">+ FREE Case</span>
+      <span class="pack-checkmark">✓</span>
     </button>
 
     <button type="button"
             class="bf25-pack-btn js-pack-btn"
             data-quantity="12"
             data-tier="3"
-            data-discount="80">
+            data-discount="80"
+            aria-label="Select 12 items with 80% discount">
       <span class="pack-qty">12 ITEMS</span>
       <span class="pack-discount">80% OFF</span>
-      <span class="pack-gift">+ FREE Magnetic Set</span>
+      <span class="pack-checkmark">✓</span>
     </button>
 
     <button type="button"
             class="bf25-pack-btn js-pack-btn bf25-pack-btn--max"
             data-quantity="16"
             data-tier="4"
-            data-discount="85">
+            data-discount="85"
+            aria-label="Select 16+ items with 85% discount - Maximum Savings">
       <span class="pack-badge">MAX SAVINGS</span>
       <span class="pack-qty">16+ ITEMS</span>
       <span class="pack-discount">85% OFF</span>
-      <span class="pack-gift">+ Mystery Gift Box</span>
+      <span class="pack-checkmark">✓</span>
     </button>
 
   </div>
@@ -330,8 +334,8 @@
 <style>
 /* BF25 Pack Buttons */
 .bf25-pack-buttons {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
@@ -341,8 +345,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
-  padding: 12px 16px;
+  min-height: 100px;
+  padding: 16px 12px;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   border: 2px solid #333;
   border-radius: 12px;
@@ -379,27 +383,40 @@
 }
 
 .bf25-pack-btn .pack-qty {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
 }
 
 .bf25-pack-btn .pack-discount {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   color: #60c655;
-  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.bf25-pack-btn .pack-gift {
-  font-size: 10px;
-  color: #aaa;
-  white-space: nowrap;
+/* Checkmark indicator */
+.bf25-pack-btn .pack-checkmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: #60c655;
+  border-radius: 50%;
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.bf25-pack-btn.is-selected .pack-gift {
-  color: #60c655;
+.bf25-pack-btn.is-selected .pack-checkmark {
+  display: flex;
 }
 
 /* Popular variant */
@@ -451,19 +468,16 @@
 
   .bf25-pack-btn {
     min-width: unset;
-    padding: 10px 8px;
+    min-height: 90px;
+    padding: 12px 8px;
   }
 
   .bf25-pack-btn .pack-qty {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .bf25-pack-btn .pack-discount {
-    font-size: 16px;
-  }
-
-  .bf25-pack-btn .pack-gift {
-    font-size: 9px;
+    font-size: 14px;
   }
 }
 </style>

@@ -4153,12 +4153,19 @@ class ExpansionManager {
     }
 
     // Check if variants are complete
-    // If not complete, we need to open the modal for variant selection
+    // If not complete, skip products without variants (don't open modal for Quick Add)
     if (!activeBundle.variantsComplete) {
-      console.log('[PowerPairs] Variants not complete, opening modal for selection');
-      // Open the modal so user can select variants
-      this.open(bundleId);
-      return;
+      console.log('[PowerPairs] Variants not complete, skipping incomplete products for Quick Add');
+      // Filter out products without selected variants
+      activeBundle.products = activeBundle.products.filter(product => product.selectedVariantId);
+      
+      if (activeBundle.products.length === 0) {
+        this.showQuickAddError(button, 'Please select product variants first. Use "View & Customize" to choose options.');
+        return;
+      }
+      
+      // Recalculate variantsComplete after filtering
+      activeBundle.variantsComplete = activeBundle.products.every(p => p.selectedVariantId);
     }
 
     // Calculate final pricing
@@ -4182,6 +4189,12 @@ class ExpansionManager {
         
         // Add each product in the bundle to BundleManager
         for (const product of activeBundle.products) {
+          // Skip products without selected variants
+          if (!product.selectedVariantId) {
+            console.warn('[PowerPairs] Skipping product without variant:', product.title);
+            continue;
+          }
+          
           // Get product data from window.productData if available
           const productData = window.productData?.[product.id] || null;
           

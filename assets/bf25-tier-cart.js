@@ -1270,7 +1270,8 @@
       // Celebration Queue (BF25-8.3)
       this.celebrationQueue = [];
       this.isCelebrating = false;
-      this.celebrationDuration = 1800; // 1.8s per celebration - faster pace (BF25-8.5)
+      this._celebrationStarted = false; // Track first celebration delay (BF25-8.6)
+      this.celebrationDuration = 3200; // 3.2s total cycle time per celebration (BF25-8.6)
 
       // DOM Cache
       this.elements = this.cacheDOM();
@@ -1446,8 +1447,11 @@
         const giftTitle = giftConfig?.title || gift.title || 'Free Gift';
         const giftValue = giftConfig?.value || giftConfig?.price || 0;
 
-        // Queue the celebration (shows one at a time) - BF25-8.3
-        this.queueGiftCelebration(giftTitle, imageUrl, gift.checkpoint, giftValue);
+        // Get discount for this checkpoint's tier (BF25-8.6)
+        const discountPercent = this.getDiscountForCheckpoint(gift.checkpoint);
+
+        // Queue the celebration with discount info (shows one at a time)
+        this.queueGiftCelebration(giftTitle, imageUrl, gift.checkpoint, giftValue, discountPercent);
       });
 
       // Listen for tier downgrades (logging only - toast handled by handleTierDowngrade)
@@ -1829,14 +1833,15 @@
      * @param {number} checkpoint - Tier checkpoint number
      * @param {number} giftValue - Gift value in cents
      */
-    queueGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue) {
-      console.log(`[BF25 Cart] Queuing celebration for: ${giftTitle} (checkpoint ${checkpoint})`);
+    queueGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue, discountPercent) {
+      console.log(`[BF25 Cart] Queuing celebration for: ${giftTitle} (checkpoint ${checkpoint}, ${discountPercent}% OFF)`);
 
       this.celebrationQueue.push({
         title: giftTitle,
         image: imageUrl,
         checkpoint: checkpoint,
-        value: giftValue
+        value: giftValue,
+        discountPercent: discountPercent
       });
 
       // Process queue if not already celebrating
@@ -1846,30 +1851,53 @@
     }
 
     /**
+     * Get discount percentage for a gift checkpoint (BF25-8.6)
+     * Checkpoint 4 = Tier 1 (60%), 8 = Tier 2 (70%), 12 = Tier 3 (80%), 16 = Tier 4 (85%)
+     */
+    getDiscountForCheckpoint(checkpoint) {
+      const checkpointToDiscount = {
+        4: 60,
+        8: 70,
+        12: 80,
+        16: 85
+      };
+      return checkpointToDiscount[checkpoint] || 60;
+    }
+
+    /**
      * Process celebration queue sequentially (BF25-8.3)
      */
     async processCelebrationQueue() {
       if (this.celebrationQueue.length === 0) {
         this.isCelebrating = false;
+        this._celebrationStarted = false; // Reset for next batch (BF25-8.6)
         console.log('[BF25 Cart] Celebration queue complete');
         return;
       }
 
       this.isCelebrating = true;
 
-      const celebration = this.celebrationQueue.shift();
-      console.log(`[BF25 Cart] Showing celebration: ${celebration.title}`);
+      // FIRST celebration gets delay to let modal close (BF25-8.6)
+      if (!this._celebrationStarted) {
+        this._celebrationStarted = true;
+        console.log('[BF25 Cart] Waiting 600ms for modal to close...');
+        await this.delay(600);
+      }
 
-      // Show this celebration
+      const celebration = this.celebrationQueue.shift();
+      console.log(`[BF25 Cart] Showing celebration: ${celebration.title} (${celebration.discountPercent}% OFF)`);
+
+      // Show this celebration with discount info
       await this.showGiftCelebration(
         celebration.title,
         celebration.image,
         celebration.checkpoint,
-        celebration.value
+        celebration.value,
+        celebration.discountPercent
       );
 
-      // Wait 1.2s gap between celebrations - faster succession (BF25-8.5)
-      await this.delay(1200);
+      // Wait 2.8s gap between celebrations (BF25-8.6)
+      await this.delay(2800);
 
       // Process next in queue
       this.processCelebrationQueue();
@@ -1883,14 +1911,15 @@
     }
 
     /**
-     * Show premium celebration popup with backdrop (BF25-8.2/8.3)
+     * Show premium celebration popup with backdrop (BF25-8.2/8.3/8.6)
      * Returns Promise for queue coordination
      * @param {string} giftTitle - Gift title
      * @param {string} imageUrl - Gift product image URL
      * @param {number} checkpoint - Tier checkpoint number
      * @param {number} giftValue - Gift value in cents (optional)
+     * @param {number} discountPercent - Discount percentage for this tier
      */
-    showGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue) {
+    showGiftCelebration(giftTitle, imageUrl, checkpoint, giftValue, discountPercent) {
       return new Promise((resolve) => {
         // Pause regular toasts during celebration
         if (window.BF25Toast) {
@@ -1904,18 +1933,29 @@
         // Format gift value for display
         const valueDisplay = giftValue ? `€${(giftValue / 100).toFixed(2)} value` : '';
 
-        // Create celebration container
+        // Create celebration container with DISCOUNT + GIFT messaging (BF25-8.6)
         const celebration = document.createElement('div');
         celebration.className = 'bf25sc-gift-celebration';
         celebration.setAttribute('data-checkpoint', checkpoint);
         celebration.innerHTML = `
           <div class="bf25sc-celebration-content">
             <div class="bf25sc-celebration-glow"></div>
-            <div class="bf25sc-celebration-badge">🎁 FREE GIFT UNLOCKED!</div>
+
+            <!-- DISCOUNT HEADLINE - Big and prominent -->
+            <div class="bf25sc-celebration-discount">${discountPercent}% OFF</div>
+
+            <!-- Plus free gift badge -->
+            <div class="bf25sc-celebration-badge">+ FREE GIFT UNLOCKED!</div>
+
+            <!-- Product image -->
             <div class="bf25sc-celebration-product">
               <img src="${imageUrl}" alt="${giftTitle}" class="bf25sc-celebration-image">
             </div>
+
+            <!-- Gift title -->
             <div class="bf25sc-celebration-title">${giftTitle}</div>
+
+            <!-- Gift value -->
             ${valueDisplay ? `<div class="bf25sc-celebration-value">${valueDisplay}</div>` : ''}
           </div>
         `;
@@ -1953,8 +1993,8 @@
           }, 400);
         };
 
-        // Auto-dismiss after 1.5s - faster pace (BF25-8.5)
-        setTimeout(cleanup, 1500);
+        // Auto-dismiss after 2.5s - longer for readability (BF25-8.6)
+        setTimeout(cleanup, 2500);
 
         // Click backdrop to dismiss early
         backdrop.addEventListener('click', cleanup, { once: true });

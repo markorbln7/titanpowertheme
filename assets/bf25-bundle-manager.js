@@ -405,8 +405,8 @@
        * @returns {number} - Discount percentage
        */
       _getTierDiscount(tier) {
-        const tierConfig = this.config.TIERS.find(t => t.id === tier);
-        return tierConfig?.discountPercent || 0;
+        const tierConfig = this.tiers.find(t => t.id === tier);
+        return tierConfig?.discount || tierConfig?.discountPercent || 0;
       }
 
       /**
@@ -415,7 +415,7 @@
        * @returns {string} - Badge label
        */
       _getTierBadge(tier) {
-        const tierConfig = this.config.TIERS.find(t => t.id === tier);
+        const tierConfig = this.tiers.find(t => t.id === tier);
         return tierConfig?.badge || '';
       }
 

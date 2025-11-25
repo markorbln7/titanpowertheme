@@ -1177,7 +1177,7 @@ class TierCalculator {
       console.log('❌ Compare price not shown (value:', comparePrice, ')');
     }
 
-    // Build new price HTML (BF25-FIX-020, BF25-INLINE-BADGE)
+    // Build new price HTML (BF25-FIX-020, BF25-INLINE-BADGE, BF25-ALWAYS-SHOW-DISCOUNT-BADGE)
     const html = `
       <!-- Main Price Row: Discounted | Original | Inline Badge -->
       <div class="bf25-price-main-row">
@@ -1185,11 +1185,11 @@ class TierCalculator {
           <span class="bf25-price-current">${pricing.formatted.discountedPricePerItem}</span>
           <span class="bf25-per-item">per item</span>
           ${compareHtml}
-          ${pricing.hasDiscount && pricing.currentTier ? `
-            <span class="bf25-discount-badge-inline">
-              ${pricing.currentTier.displayLabel}
-            </span>
-          ` : ''}
+          <span class="bf25-discount-badge-inline">
+            ${pricing.hasDiscount && pricing.currentTier
+              ? pricing.currentTier.displayLabel
+              : '50% OFF'}
+          </span>
         </div>
       </div>
 
@@ -4872,10 +4872,9 @@ class ExpansionManager {
     // Update stepper button disabled states
     this.updateStepperButtons();
 
-    // Update tier button selection if in power packs mode
-    if (this.config.mode === 'power_packs') {
-      this.updateTierButtonSelection();
-    }
+    // Update BOTH button selection systems (BF25-PACK-BUTTON-QUANTITY-SYNC)
+    this.updateTierButtonSelection();   // .bf25-tier-button (if present)
+    this.updatePackButtonSelection();   // .js-pack-btn (Liquid template buttons)
 
     if (this.config.debug) {
       console.log('📦 Quantity updated:', validQuantity);
@@ -4938,12 +4937,44 @@ class ExpansionManager {
   }
 
   /**
+   * Update pack button selection (Liquid template pack buttons)
+   * Syncs .js-pack-btn buttons with current quantity
+   */
+  updatePackButtonSelection() {
+    const currentQuantity = this.state.get('quantity');
+
+    document.querySelectorAll('.js-pack-btn').forEach(button => {
+      const buttonQuantity = parseInt(button.dataset.quantity);
+      const isSelected = buttonQuantity === currentQuantity;
+
+      // Update selected state
+      button.classList.toggle('is-selected', isSelected);
+      button.setAttribute('aria-pressed', isSelected);
+
+      // Checkmark is already in Liquid template, just toggle visibility
+      const checkmark = button.querySelector('.pack-checkmark');
+      if (checkmark) {
+        checkmark.style.opacity = isSelected ? '1' : '0';
+      }
+    });
+
+    if (this.config.debug) {
+      console.log('✅ Pack button selection updated:', currentQuantity);
+    }
+  }
+
+  /**
    * Bind quantity control events
    * Called after UI is injected
    */
   bindQuantityEvents() {
     const mode = this.config.mode || 'individual_products';
 
+    // ALWAYS bind both event systems (BF25-PACK-BUTTON-QUANTITY-SYNC)
+    // Pack buttons (.js-pack-btn) from Liquid template
+    this.bindLiquidPackButtonEvents();
+
+    // Mode-specific controls
     if (mode === 'power_packs') {
       this.bindPowerPacksEvents();
     } else {
@@ -5025,6 +5056,35 @@ class ExpansionManager {
 
     if (this.config.debug) {
       console.log('✅ Individual Products events bound');
+    }
+  }
+
+  /**
+   * Bind Liquid pack button events (.js-pack-btn)
+   * Syncs pack buttons with quantity stepper (BF25-PACK-BUTTON-QUANTITY-SYNC)
+   */
+  bindLiquidPackButtonEvents() {
+    const container = document.querySelector('.bf25-pack-buttons');
+    if (!container) {
+      if (this.config.debug) {
+        console.log('ℹ️ No .bf25-pack-buttons container found');
+      }
+      return;
+    }
+
+    // Event delegation for pack buttons
+    container.addEventListener('click', (e) => {
+      const button = e.target.closest('.js-pack-btn');
+      if (!button) return;
+
+      const quantity = parseInt(button.dataset.quantity);
+      if (!isNaN(quantity)) {
+        this.updateQuantity(quantity);
+      }
+    });
+
+    if (this.config.debug) {
+      console.log('✅ Liquid pack button events bound');
     }
   }
 

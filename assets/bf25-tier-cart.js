@@ -2616,16 +2616,18 @@
       // Start performance tracking
       window.BF25Performance.startOperation('updateVisualization');
 
-      // Clamp to max items
-      this.itemCount = Math.min(itemCount, this.maxItems);
+      // Cap visual progress at 16 for progress bar (BF25-8.5)
+      // But store actual count for tier calculation
+      this.actualItemCount = itemCount;
+      this.itemCount = Math.min(itemCount, 16);
 
       // Store previous tier for comparison
       this.previousTier = this.currentTier;
 
-      // Calculate new tier
-      this.currentTier = this.calculateTier(this.itemCount);
+      // Calculate new tier based on ACTUAL count (not visual cap)
+      this.currentTier = this.calculateTier(this.actualItemCount);
 
-      console.log(`[BF25 Cart] Update: ${this.itemCount} items → Tier ${this.currentTier.id} (${this.currentTier.badge})`);
+      console.log(`[BF25 Cart] Update: ${this.actualItemCount} items → Tier ${this.currentTier.id} (${this.currentTier.badge})`);
 
       // Update all UI components
       this.updateColors();
@@ -2748,7 +2750,7 @@
       if (!this.elements.incentiveText) return;
 
       const nextTier = this.getNextTier();
-      const needed = nextTier ? nextTier.min - this.itemCount : 0;
+      const needed = nextTier ? nextTier.min - this.actualItemCount : 0;
 
       // Use responsive message helper
       const message = this.getResponsiveMessage(nextTier, needed);

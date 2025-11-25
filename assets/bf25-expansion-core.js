@@ -1199,9 +1199,9 @@ class TierCalculator {
           <span class="bf25-per-item">per item</span>
           ${compareHtml}
           <span class="bf25-discount-badge-inline">
-            ${pricing.combinedTier
-              ? pricing.combinedTier.displayLabel
-              : (pricing.currentTier?.displayLabel || '50% OFF')}
+            ${pricing.combinedTier?.displayLabel
+              || pricing.currentTier?.displayLabel
+              || '50% OFF'}
           </span>
         </div>
       </div>
@@ -1241,18 +1241,6 @@ class TierCalculator {
 
     // Generate and inject message
     messageContainer.innerHTML = this.generateUrgencyMessage(pricing);
-
-    // BF25-8.8: Insert quantity stepper after tier messaging (if not already present)
-    let stepperContainer = messageContainer.nextElementSibling;
-    if (!stepperContainer || !stepperContainer.classList.contains('bf25-stepper-wrapper')) {
-      stepperContainer = document.createElement('div');
-      stepperContainer.className = 'bf25-stepper-wrapper bf25-mb-4';
-      stepperContainer.innerHTML = this.manager.generateIndividualProductsUI();
-      messageContainer.insertAdjacentElement('afterend', stepperContainer);
-
-      // Re-bind events for the new stepper
-      this.manager.bindQuantityEvents();
-    }
   }
 
   /**
@@ -2380,6 +2368,18 @@ class CartManager {
    * @returns {number} Total quantity
    */
   getCartQuantity(bf25Only = false) {
+    // PRIMARY: Read from BundleManager (virtual cart) - BF25-FIX-CART-AWARE-USE-BUNDLEMANAGER
+    if (window.BF25BundleManager) {
+      const itemCount = window.BF25BundleManager.bundle?.computed?.itemCount || 0;
+
+      if (this.config?.debug) {
+        console.log('🛒 getCartQuantity from BundleManager:', itemCount);
+      }
+
+      return itemCount;
+    }
+
+    // FALLBACK: Read from Shopify cart state (legacy)
     const cartItems = this.state.get('cartItems');
 
     if (!cartItems || cartItems.length === 0) {
@@ -3901,19 +3901,20 @@ class ExpansionManager {
 
   /**
    * Generate quantity control UI based on mode
-   * BF25-8.8: Returns ONLY pack buttons (stepper moved to tier messaging area)
+   * BF25-RESTORE-QUANTITY-STEPPER: Returns BOTH pack buttons AND stepper
    *
    * @returns {string} HTML for quantity controls
    */
   generateQuantityControls() {
     if (this.config.debug) {
-      console.log('🎮 generateQuantityControls: Rendering pack buttons only');
+      console.log('🎮 generateQuantityControls: Rendering pack buttons + stepper');
     }
 
-    // Return only pack buttons (stepper is inserted separately in updateTierMessaging)
+    // Generate BOTH controls (always show both for dual-mode layout)
     const packButtonsHTML = this.generatePowerPacksUI();
+    const stepperHTML = this.generateIndividualProductsUI();
 
-    return packButtonsHTML;
+    return packButtonsHTML + stepperHTML;
   }
 
   /**

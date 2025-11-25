@@ -1,5 +1,111 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
+  /* ========== BF25 HERO HEADER - OPTION 2: SUBTLE GLOW + LINES ========== */
+
+  .bf25-hero-header {
+    background: #000;
+    padding: 50px 20px 40px;
+    text-align: center;
+    position: relative;
+  }
+
+  /* Top gradient line */
+  .bf25-hero-line-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(96, 198, 85, 0.5), transparent);
+  }
+
+  /* Bottom gradient line */
+  .bf25-hero-line-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(96, 198, 85, 0.3), transparent);
+  }
+
+  /* Logo container */
+  .bf25-hero-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Logo - LARGER SIZE */
+  .bf25-hero-logo {
+    max-width: 550px;
+    width: 90%;
+    height: auto;
+    filter: drop-shadow(0 0 25px rgba(96, 198, 85, 0.3));
+  }
+
+  /* ========== DESKTOP - EVEN LARGER ========== */
+  @media (min-width: 769px) {
+    .bf25-hero-header {
+      padding: 60px 20px 50px;
+    }
+
+    .bf25-hero-logo {
+      max-width: 650px;
+      width: 85%;
+    }
+
+    .bf25-hero-line-top {
+      width: 250px;
+    }
+
+    .bf25-hero-line-bottom {
+      width: 500px;
+    }
+  }
+
+  /* Large desktop */
+  @media (min-width: 1200px) {
+    .bf25-hero-logo {
+      max-width: 700px;
+    }
+
+    .bf25-hero-line-bottom {
+      width: 600px;
+    }
+  }
+
+  /* ========== MOBILE ========== */
+  @media (max-width: 768px) {
+    .bf25-hero-header {
+      padding: 35px 15px 30px;
+    }
+
+    .bf25-hero-logo {
+      max-width: 100%;
+      width: 95%;
+    }
+
+    .bf25-hero-line-top {
+      width: 120px;
+    }
+
+    .bf25-hero-line-bottom {
+      width: 250px;
+    }
+  }
+
+  /* Extra small */
+  @media (max-width: 400px) {
+    .bf25-hero-header {
+      padding: 25px 10px 20px;
+    }
+  }
+
+  /* ========== EXISTING STYLES ========== */
+
    .font-sans {
         font-family: "Work Sans", serif;
         font-weight: 600;
@@ -34,12 +140,28 @@
 </style>
 
 <section class="bg-black text-center">
-  <div class="custom-pack-wrapper">
   {% if section.settings.show_banner %}
-  <div class="max-w-[700px] mx-auto">
-    <img class="w-full" width="100%" height="auto"  src="{{ section.settings.banner_image | img_url:'master' }}">
-  </div>
+  <header class="bf25-hero-header">
+    <!-- Top subtle line -->
+    <div class="bf25-hero-line-top"></div>
+
+    <!-- Logo container -->
+    <div class="bf25-hero-logo-container">
+      <img
+        src="{{ section.settings.banner_image | img_url:'master' }}"
+        alt="Black Friday Power Up Sale"
+        class="bf25-hero-logo"
+        width="700"
+        height="350"
+        loading="eager"
+      >
+    </div>
+
+    <!-- Bottom subtle line -->
+    <div class="bf25-hero-line-bottom"></div>
+  </header>
   {% endif %}
+  <div class="custom-pack-wrapper">
     {% if section.settings.section_title %}
       <h2 class="text-white text-[30px] md:text-[60px] font-sans font-bold relative">
 

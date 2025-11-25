@@ -4,7 +4,7 @@
 
   .bf25-hero-header {
     background: #000;
-    padding: 40px 20px 30px;
+    padding: 35px 20px 25px;
     text-align: center;
     position: relative;
   }
@@ -38,10 +38,10 @@
     align-items: center;
   }
 
-  /* Logo - Desktop */
+  /* Logo - Desktop (10% smaller) */
   .bf25-hero-logo {
-    max-width: 385px;  /* 30% smaller than 550px */
-    width: 56%;  /* 30% smaller than 80% */
+    max-width: 495px;  /* 10% smaller than 550px */
+    width: 75%;  /* 10% smaller than 85% */
     height: auto;
     filter: drop-shadow(0 0 25px rgba(96, 198, 85, 0.3));
   }
@@ -67,12 +67,13 @@
   /* ========== MOBILE - SMALLER LOGO + TIGHTER PADDING ========== */
   @media (max-width: 768px) {
     .bf25-hero-header {
-      padding: 20px 15px 15px;
+      padding: 15px 15px 12px;
     }
 
     .bf25-hero-logo {
-      max-width: 320px;
-      width: 85%;
+      max-width: 260px;  /* 10% smaller than 280px */
+      width: 80%;
+      margin-bottom: 12px;
     }
 
     .bf25-hero-line-top {

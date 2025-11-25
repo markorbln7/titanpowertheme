@@ -135,26 +135,26 @@
   width: 280px;
   height: 48px;
   background: rgba(20, 20, 20, 0.95);
-  border: 3px solid #ff4757;
+  border: 3px solid #cc3344;
   border-radius: 10px;
   overflow: hidden;
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.5),
     inset 0 2px 8px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(255, 71, 87, 0.15);
+    0 0 15px rgba(200, 50, 70, 0.12);
 }
 
 .bf25-battery-head {
   width: 10px;
   height: 24px;
   background: rgba(20, 20, 20, 0.95);
-  border: 3px solid #ff4757;
+  border: 3px solid #cc3344;
   border-left: none;
   border-radius: 0 6px 6px 0;
-  box-shadow: 0 0 15px rgba(255, 71, 87, 0.15);
+  box-shadow: 0 0 10px rgba(200, 50, 70, 0.1);
 }
 
-/* Battery fill - red with subtle breathing */
+/* Battery fill - DARKER RED with overlay */
 .bf25-battery-fill {
   position: absolute;
   left: 0;
@@ -162,18 +162,30 @@
   height: 100%;
   width: 100%;
   background: linear-gradient(90deg,
-    #cc3344 0%,
-    #ff4757 40%,
-    #ff5a6a 60%,
-    #ff4757 100%
+    #8b2233 0%,
+    #a83242 40%,
+    #b84050 60%,
+    #a83242 100%
   );
   box-shadow:
-    0 0 15px rgba(255, 71, 87, 0.3),
-    inset 0 2px 6px rgba(255, 255, 255, 0.08);
+    0 0 10px rgba(255, 71, 87, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.4);
   transform-origin: left center;
   transition: transform 0.5s linear;
   z-index: 1;
   animation: bf25SubtleBreath 4s ease-in-out infinite;
+}
+
+/* Dark overlay effect */
+.bf25-battery-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }
 
 @keyframes bf25SubtleBreath {
@@ -252,27 +264,27 @@
   gap: 8px;
   background: linear-gradient(135deg, #60c655 0%, #4CAF50 100%);
   color: #000;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 14px 30px;
+  letter-spacing: 1px;
+  padding: 15px 32px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow:
-    0 4px 15px rgba(96, 198, 85, 0.35),
-    0 0 25px rgba(96, 198, 85, 0.15);
+    0 4px 18px rgba(96, 198, 85, 0.4),
+    0 0 30px rgba(96, 198, 85, 0.18);
   position: relative;
   overflow: hidden;
 }
 
 .bf25-cta-button:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow:
-    0 6px 20px rgba(96, 198, 85, 0.45),
-    0 0 35px rgba(96, 198, 85, 0.2);
+    0 6px 22px rgba(96, 198, 85, 0.5),
+    0 0 40px rgba(96, 198, 85, 0.25);
 }
 
 .bf25-cta-button:active {
@@ -407,8 +419,9 @@
   }
 
   .bf25-cta-button {
-    font-size: 14px;
-    padding: 16px 38px;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 17px 40px;
   }
 
   .bf25-scroll-text {
@@ -434,15 +447,16 @@
 
   // ========== TIMER CONFIGURATION (PST) ==========
   // PST = UTC-8
+  // Black Friday 2025: Sale starts Wednesday Nov 26, ends Friday Nov 28 midnight PST
   // Friday Nov 28, 2025 11:59:59 PM PST = Nov 29, 2025 07:59:59 UTC
   // Sunday Nov 30, 2025 11:59:59 PM PST = Dec 1, 2025 07:59:59 UTC
 
   const FRIDAY_END_UTC = new Date('2025-11-29T07:59:59Z').getTime();
+  const SALE_START_UTC = new Date('2025-11-26T08:00:00Z').getTime(); // Wednesday 12am PST
+
   const SATURDAY_SHOW_UTC = new Date('2025-11-29T14:00:00Z').getTime(); // 6am PST Saturday
   const SUNDAY_END_UTC = new Date('2025-12-01T07:59:59Z').getTime();
-
-  // Sale duration for battery calculation (48 hours)
-  const SALE_DURATION = 48 * 60 * 60 * 1000;
+  const SUNDAY_START_UTC = new Date('2025-11-29T14:00:00Z').getTime(); // Saturday 6am PST
 
   function getTimerState() {
     const now = Date.now();
@@ -452,7 +466,7 @@
       return {
         show: true,
         endTime: FRIDAY_END_UTC,
-        startTime: FRIDAY_END_UTC - SALE_DURATION,
+        startTime: SALE_START_UTC,
         label: 'Black Friday Ends In'
       };
     }
@@ -462,12 +476,12 @@
       return { show: false };
     }
 
-    // Saturday show time to Sunday end - countdown to Sunday
+    // Saturday to Sunday
     if (now >= SATURDAY_SHOW_UTC && now < SUNDAY_END_UTC) {
       return {
         show: true,
         endTime: SUNDAY_END_UTC,
-        startTime: SATURDAY_SHOW_UTC,
+        startTime: SUNDAY_START_UTC,
         label: 'Sale Ends In'
       };
     }
@@ -519,10 +533,10 @@
 
     timerValue.textContent = display;
 
-    // Calculate battery percentage
+    // FIXED: Battery percentage based on ACTUAL time remaining
     const totalDuration = state.endTime - state.startTime;
-    const timeElapsed = now - state.startTime;
-    const percentRemaining = Math.max(0, Math.min(100, ((totalDuration - timeElapsed) / totalDuration) * 100));
+    const timeRemaining = state.endTime - now;
+    const percentRemaining = Math.max(0, Math.min(100, (timeRemaining / totalDuration) * 100));
 
     batteryFill.style.transform = `scaleX(${percentRemaining / 100})`;
   }

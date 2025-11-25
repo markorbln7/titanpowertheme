@@ -134,68 +134,67 @@
     right: auto !important;
   }
 
-  /* ========== DESKTOP TIER BOXES - COMPACT ========== */
+  /* ========== DESKTOP TIER BOXES - MUCH SMALLER ========== */
   @media (min-width: 769px) {
-    /* Reduce box padding */
-    .block-item {
-      padding: 15px 10px !important;
+    /* Container max-width */
+    .block-items,
+    .custom-pack-wrapper .block-items {
+      max-width: 600px;
+      margin: 0 auto;
+      gap: 10px;
+      padding: 15px 0;
     }
 
-    /* Slightly smaller discount number on desktop */
+    /* Reduce box padding */
+    .block-item {
+      padding: 12px 8px !important;
+    }
+
+    /* Smaller discount number on desktop */
     .bf25-discount-number,
     .block-item .bf25-discount-number,
     .custom-pack-wrapper .bf25-discount-number {
-      font-size: 48px !important;
+      font-size: 42px !important;
     }
 
-    /* Tighter items label */
+    /* Smaller items label */
     .bf25-items-label,
     .block-item .bf25-items-label {
-      font-size: 11px !important;
-      margin-bottom: 3px !important;
+      font-size: 10px !important;
+      margin-bottom: 2px !important;
     }
 
-    /* Tighter gift text */
+    /* Smaller gift text */
     .bf25-gift-text,
     .block-item .bf25-gift-text {
-      font-size: 10px !important;
-      margin-top: 5px !important;
+      font-size: 9px !important;
+      margin-top: 4px !important;
     }
 
-    /* % size */
+    /* Smaller % size */
     .bf25-percent,
     .block-item .bf25-percent,
     .custom-pack-wrapper .bf25-percent {
-      font-size: 13px !important;
+      font-size: 11px !important;
     }
 
     .bf25-off-text,
     .block-item .bf25-off-text,
     .custom-pack-wrapper .bf25-off-text {
-      font-size: 8px !important;
+      font-size: 7px !important;
     }
   }
 
-  /* Large desktop - can be slightly bigger */
+  /* Large desktop - still compact */
   @media (min-width: 1200px) {
-    .block-item {
-      padding: 18px 12px !important;
+    .block-items {
+      max-width: 650px;
     }
 
     .bf25-discount-number,
     .block-item .bf25-discount-number,
     .custom-pack-wrapper .bf25-discount-number {
-      font-size: 52px !important;
-    }
-
-    .bf25-items-label,
-    .block-item .bf25-items-label {
-      font-size: 12px !important;
-    }
-
-    .bf25-gift-text,
-    .block-item .bf25-gift-text {
-      font-size: 11px !important;
+      font-size: 44px !important;
     }
   }
 

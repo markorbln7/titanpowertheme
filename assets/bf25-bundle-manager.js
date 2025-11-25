@@ -543,8 +543,11 @@
           const tier = this.tiers[i];
           if (itemCount >= tier.min) {
             tierReached = i;
-            discountPercent = tier.discount;
-            tierBadge = tier.badge || `${tier.discount}% OFF`;
+            // Parse discount - handle both "60%" string and 60 number formats
+            discountPercent = typeof tier.discount === 'string'
+              ? parseInt(tier.discount.replace('%', ''), 10)
+              : (tier.discount || 50);
+            tierBadge = tier.badge || `${discountPercent}% OFF`;
           } else {
             // Tiers are ordered, so stop once we exceed threshold
             break;

@@ -1733,10 +1733,33 @@ class CartManager {
       if (!variants || variants.length === 0) {
         console.warn('[BF25 Modal] No variants array found, using fallback data');
         // Fallback: construct minimal variant data from what we have
+        // Price priority: pricing calculation > product.price > selected variant price
+        let fallbackPrice = 0;
+
+        // Try pricing object first (from tier calculator)
+        if (pricing && pricing.unitPrice) {
+          fallbackPrice = pricing.unitPrice;
+        } else if (pricing && pricing.finalPrice) {
+          fallbackPrice = pricing.finalPrice;
+        } else if (product.price) {
+          // Shopify product.price is in cents
+          fallbackPrice = product.price;
+        } else if (product.variants && product.variants[0]) {
+          fallbackPrice = product.variants[0].price;
+        }
+
+        // Convert to cents if needed (Shopify stores in cents, but sometimes displayed in dollars)
+        if (fallbackPrice > 0 && fallbackPrice < 100) {
+          // Likely in dollars, convert to cents
+          fallbackPrice = Math.round(fallbackPrice * 100);
+        }
+
+        console.log('[BF25 Modal] Fallback price:', fallbackPrice, 'from pricing:', pricing);
+
         var variant = {
           id: variantId,
           title: 'Default Title',
-          price: product.price || pricing?.unitPrice || 0
+          price: fallbackPrice
         };
       } else {
         var variant = variants.find(v => String(v.id) === String(variantId));

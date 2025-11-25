@@ -2730,8 +2730,8 @@
         discountSavings = fullPrice - subtotal;
       }
 
-      // Gift value savings
-      const giftValue = tier.gifts.reduce((sum, gift) => sum + gift.value, 0);
+      // Gift value savings (handle tiers without gifts array)
+      const giftValue = (tier.gifts || []).reduce((sum, gift) => sum + gift.value, 0);
 
       return Math.round(discountSavings + giftValue);
     }

@@ -3053,9 +3053,9 @@
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Jolt animation - game-like unlock impact (BF25-8.5) */
 .bf25sc-gift-celebration.is-visible {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  animation: bf25CelebrationJolt 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* Premium glassmorphic content card */
@@ -3113,7 +3113,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: 0 4px 20px rgba(96, 198, 85, 0.5);
-  animation: bf25BadgePulse 1s ease-out;
+  animation: bf25BadgeJolt 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
 }
 
 @keyframes bf25BadgePulse {
@@ -3136,12 +3136,65 @@
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 0 30px rgba(96, 198, 85, 0.6));
-  animation: bf25ProductReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  animation: bf25ProductJolt 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
 }
 
 @keyframes bf25ProductReveal {
   0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Jolt animation keyframes - game-like impact (BF25-8.5) */
+@keyframes bf25CelebrationJolt {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5) rotate(-8deg);
+    opacity: 0;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.05) rotate(4deg);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(0.98) rotate(-2deg);
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1.02) rotate(1deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Product image jolt - secondary bounce */
+@keyframes bf25ProductJolt {
+  0% {
+    transform: scale(0.3) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  75% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Badge jolt - snappy entrance */
+@keyframes bf25BadgeJolt {
+  0% {
+    transform: scale(0) rotate(-10deg);
+  }
+  60% {
+    transform: scale(1.15) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 /* Title styling */

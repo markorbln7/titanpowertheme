@@ -1868,8 +1868,8 @@
         celebration.value
       );
 
-      // Wait for celebration to complete, then process next
-      await this.delay(this.celebrationDuration);
+      // Wait 1.2s gap between celebrations - faster succession (BF25-8.5)
+      await this.delay(1200);
 
       // Process next in queue
       this.processCelebrationQueue();
@@ -1953,8 +1953,8 @@
           }, 400);
         };
 
-        // Auto-dismiss after 2.5s
-        setTimeout(cleanup, 2500);
+        // Auto-dismiss after 1.5s - faster pace (BF25-8.5)
+        setTimeout(cleanup, 1500);
 
         // Click backdrop to dismiss early
         backdrop.addEventListener('click', cleanup, { once: true });

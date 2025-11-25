@@ -806,6 +806,51 @@ class PowerPairsState {
   }
 
   /**
+   * Update product quantity
+   * @param {number} productId - Product ID
+   * @param {number} quantity - New quantity (min 1)
+   * @returns {boolean} Success status
+   */
+  updateProductQuantity(productId, quantity) {
+    const bundle = this.getActiveBundle();
+
+    if (!bundle) {
+      console.error('[PowerPairs State] No active bundle');
+      return false;
+    }
+
+    const product = bundle.products.find(p => p.id == productId);
+
+    if (!product) {
+      console.error(`[PowerPairs State] Product not found: ${productId}`);
+      return false;
+    }
+
+    // Validate quantity (minimum 1)
+    const newQuantity = Math.max(1, Math.floor(quantity));
+
+    console.log(`[PowerPairs State] Updating quantity for ${product.title}: ${product.quantity} → ${newQuantity}`);
+
+    // Update product quantity
+    product.quantity = newQuantity;
+
+    // Recalculate bundle totals
+    bundle.baseSubtotal = this.calculateBaseSubtotal(bundle.products);
+    bundle.baseItemCount = bundle.products.reduce((sum, p) => sum + p.quantity, 0);
+    bundle.currentPrice = bundle.baseSubtotal * bundle.multiplier;
+    bundle.currentItemCount = bundle.baseItemCount * bundle.multiplier;
+
+    console.log('[PowerPairs State] Quantity updated successfully', {
+      product: product.title,
+      quantity: newQuantity,
+      baseSubtotal: bundle.baseSubtotal,
+      baseItemCount: bundle.baseItemCount
+    });
+
+    return true;
+  }
+
+  /**
    * Update bundle multiplier
    * @param {number} multiplier - New multiplier value
    */
@@ -2357,6 +2402,7 @@ class ExpansionManager {
   }
 
   bindBundleButtons() {
+    // Bind "View & Customize" buttons
     const buttons = document.querySelectorAll('[data-action="open-sheet"]');
     buttons.forEach(button => {
       button.addEventListener('click', (e) => {
@@ -2365,6 +2411,20 @@ class ExpansionManager {
       }, { passive: false });
     });
     console.log(`[PowerPairs] Found ${buttons.length} CTA buttons`);
+
+    // Bind "Quick Add" buttons
+    const quickAddButtons = document.querySelectorAll('[data-action="quick-add-bundle"]');
+    quickAddButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation(); // Prevent other handlers
+        const bundleId = e.currentTarget.getAttribute('data-bundle-id');
+        this.handleQuickAdd(bundleId, button);
+        return false; // Additional safety
+      }, { passive: false, capture: true }); // Use capture phase to intercept first
+    });
+    console.log(`[PowerPairs] Found ${quickAddButtons.length} Quick Add buttons`);
   }
 
   open(bundleId) {
@@ -2391,10 +2451,19 @@ class ExpansionManager {
     this.overlay.setAttribute('aria-hidden', 'false');
     this.sheet.setAttribute('aria-hidden', 'false');
 
+    // Store scroll position before locking
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+
     // Add active classes
     this.overlay.classList.add('active');
     this.sheet.classList.add('active');
     document.body.classList.add('pp-sheet-open');
+
+    // Set body position to prevent scrolling
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
 
     // Lock scroll on iOS
     IOSScrollLock.lock();
@@ -2521,13 +2590,15 @@ class ExpansionManager {
       <div class="pp-sheet-content-wrapper">
 
         <div class="pp-pricing-header">
+          ${pricing.savings > 0 ? `
+            <div class="pp-pricing-header__savings-row">
+              <span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>
+            </div>
+          ` : ''}
           <div class="pp-pricing-header__row">
             <span class="pp-pricing-header__emoji">💰</span>
             <span class="pp-pricing-header__current">${this.formatMoney(pricing.subtotal)}</span>
             <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
-            ${pricing.savings > 0 ? `
-              <span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>
-            ` : ''}
           </div>
           <div class="pp-pricing-header__tier">
             <span class="pp-pricing-header__tier-icon">⚡</span>
@@ -2746,46 +2817,44 @@ class ExpansionManager {
             </svg>
           </button>
 
-          ${product.isSwapped ? `
-            <button
-              class="pp-undo-swap-btn"
-              data-action="undo-swap"
-              data-product-id="${product.id}"
-              data-product-index="${index}"
-              aria-label="Undo swap and restore ${product.originalProduct?.title || 'original product'}"
-              title="Undo swap"
+          <div class="pp-product-compact-image-wrapper">
+            <img
+              src="${product.selectedVariant.image || product.image}"
+              alt="${product.title}"
+              class="pp-product-compact-image"
+              loading="lazy"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 7v6h6"></path>
-                <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
-              </svg>
-            </button>
-          ` : `
-            <button
-              class="pp-swap-indicator"
-              data-action="swap-product"
-              data-product-id="${product.id}"
-              data-product-index="${index}"
-              aria-label="Swap ${product.title} with another product"
-              title="Swap product"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
-                <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
-                <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-              </svg>
-            </button>
-          `}
-
-          <img
-            src="${product.selectedVariant.image || product.image}"
-            alt="${product.title}"
-            class="pp-product-compact-image"
-            loading="lazy"
-          >
+            ${product.isSwapped ? `
+              <button
+                class="pp-undo-swap-btn"
+                data-action="undo-swap"
+                data-product-id="${product.id}"
+                data-product-index="${index}"
+                aria-label="Undo swap and restore ${product.originalProduct?.title || 'original product'}"
+                title="Undo swap"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7v6h6"></path>
+                  <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+                </svg>
+              </button>
+            ` : `
+              <button
+                class="pp-swap-indicator"
+                data-action="swap-product"
+                data-product-id="${product.id}"
+                data-product-index="${index}"
+                aria-label="Swap ${product.title} with another product"
+                title="Swap product"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 3h5v5"></path>
+                  <path d="M8 21H3v-5"></path>
+                  <path d="M21 3l-7 7M3 21l7-7"></path>
+                </svg>
+              </button>
+            `}
+          </div>
 
           <div class="pp-product-compact-info">
             ${product.isBestSeller ? '<div class="pp-product-badge">BEST SELLER</div>' : ''}
@@ -2796,9 +2865,43 @@ class ExpansionManager {
 
             ${variantText}
 
-            <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${this.formatMoney(product.selectedVariant.price)} each, quantity ${product.quantity}">
-              <span aria-hidden="true">${this.formatMoney(product.selectedVariant.price)}</span>
-              <span class="pp-product-compact-quantity" aria-hidden="true"> × ${product.quantity}</span>
+            <div class="pp-product-compact-price-row">
+              <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${this.formatMoney(product.selectedVariant.price)} each, quantity ${product.quantity}">
+                <span aria-hidden="true">${this.formatMoney(product.selectedVariant.price)}</span>
+              </div>
+              
+              <div class="pp-product-compact-qty-selector" data-product-id="${product.id}" data-product-index="${index}">
+                <button
+                  class="pp-qty-btn pp-qty-btn--minus"
+                  data-action="decrease-qty"
+                  aria-label="Decrease quantity for ${product.title}"
+                  type="button"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+                <input
+                  class="pp-qty-input"
+                  type="number"
+                  min="1"
+                  max="99"
+                  value="${product.quantity}"
+                  aria-label="Quantity for ${product.title}"
+                  data-product-id="${product.id}"
+                />
+                <button
+                  class="pp-qty-btn pp-qty-btn--plus"
+                  data-action="increase-qty"
+                  aria-label="Increase quantity for ${product.title}"
+                  type="button"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2828,12 +2931,13 @@ class ExpansionManager {
     productCards.forEach(card => {
       // Click listener for card (variant selection)
       card.addEventListener('click', (e) => {
-        // Check if click is on swap button, undo button, or remove button
+        // Check if click is on swap button, undo button, remove button, or quantity selector
         const swapButton = e.target.closest('.pp-swap-indicator');
         const undoButton = e.target.closest('.pp-undo-swap-btn');
         const removeButton = e.target.closest('.pp-remove-product-btn');
+        const qtySelector = e.target.closest('.pp-product-compact-qty-selector');
         
-        if (swapButton || undoButton || removeButton) {
+        if (swapButton || undoButton || removeButton || qtySelector) {
           return; // Let button handlers handle it
         }
 
@@ -2863,8 +2967,152 @@ class ExpansionManager {
     // Attach remove button listeners
     this.attachRemoveButtonListeners();
 
+    // Attach quantity selector listeners
+    this.attachQuantitySelectorListeners();
+
     // Attach add product tile listener
     this.attachAddProductTileListener();
+  }
+
+  /**
+   * Attach click listeners to quantity selectors
+   */
+  attachQuantitySelectorListeners() {
+    const qtySelectors = this.contentArea.querySelectorAll('.pp-product-compact-qty-selector');
+
+    console.log(`[PowerPairs] Found ${qtySelectors.length} quantity selectors`);
+
+    qtySelectors.forEach(selector => {
+      const productId = selector.dataset.productId;
+      const minusBtn = selector.querySelector('.pp-qty-btn--minus');
+      const plusBtn = selector.querySelector('.pp-qty-btn--plus');
+      const input = selector.querySelector('.pp-qty-input');
+
+      // Prevent card click when interacting with quantity selector
+      selector.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Minus button
+      if (minusBtn) {
+        minusBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          const currentQty = parseInt(input.value) || 1;
+          const newQty = Math.max(1, currentQty - 1);
+          
+          this.handleQuantityChange(productId, newQty, input);
+        });
+      }
+
+      // Plus button
+      if (plusBtn) {
+        plusBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          const currentQty = parseInt(input.value) || 1;
+          const newQty = Math.min(99, currentQty + 1);
+          
+          this.handleQuantityChange(productId, newQty, input);
+        });
+      }
+
+      // Input change
+      if (input) {
+        input.addEventListener('change', (e) => {
+          e.stopPropagation();
+          
+          const newQty = Math.max(1, Math.min(99, parseInt(input.value) || 1));
+          
+          this.handleQuantityChange(productId, newQty, input);
+        });
+
+        // Prevent card click on input focus
+        input.addEventListener('focus', (e) => {
+          e.stopPropagation();
+        });
+      }
+    });
+  }
+
+  /**
+   * Handle quantity change
+   * @param {number} productId - Product ID
+   * @param {number} newQuantity - New quantity
+   * @param {HTMLElement} inputElement - Input element to update
+   */
+  handleQuantityChange(productId, newQuantity, inputElement) {
+    console.log(`[PowerPairs] Quantity change: product ${productId}, quantity ${newQuantity}`);
+
+    // Update state
+    const success = window.PPState.updateProductQuantity(productId, newQuantity);
+
+    if (!success) {
+      console.error('[PowerPairs] Failed to update quantity in state');
+      return;
+    }
+
+    // Update input value
+    if (inputElement) {
+      inputElement.value = newQuantity;
+    }
+
+    // Get updated bundle
+    const bundle = window.PPState.getActiveBundle();
+    if (!bundle) {
+      console.error('[PowerPairs] No active bundle after quantity update');
+      return;
+    }
+
+    // Recalculate pricing
+    const pricing = this.calculateBundlePricing(bundle);
+
+    // Update product card display
+    this.updateProductCardQuantity(productId, newQuantity, pricing);
+
+    // Update pricing header
+    this.refreshPricingHeader();
+
+    // Update multiplier section
+    this.refreshMultiplierSection();
+
+    // Update bundle card on main page
+    this.refreshBundleCard();
+
+    console.log('[PowerPairs] Quantity updated successfully');
+  }
+
+  /**
+   * Update product card quantity display
+   * @param {number} productId - Product ID
+   * @param {number} quantity - New quantity
+   * @param {Object} pricing - Updated pricing
+   */
+  updateProductCardQuantity(productId, quantity, pricing) {
+    const card = this.contentArea.querySelector(`[data-product-id="${productId}"]`);
+    if (!card) return;
+
+    // Quantity is now handled by the qty-selector input, no need to update separate display
+
+    // Update price display
+    const bundle = window.PPState.getActiveBundle();
+    if (bundle) {
+      const product = bundle.products.find(p => p.id == productId);
+      if (product && product.selectedVariant) {
+        const priceElement = card.querySelector('.pp-product-compact-price span:first-child');
+        if (priceElement) {
+          priceElement.textContent = this.formatMoney(product.selectedVariant.price);
+        }
+
+        // Update aria-label
+        const priceContainer = card.querySelector('.pp-product-compact-price');
+        if (priceContainer) {
+          priceContainer.setAttribute('aria-label', `${product.title}, ${this.formatMoney(product.selectedVariant.price)} each, quantity ${quantity}`);
+        }
+      }
+    }
   }
 
   /**
@@ -3351,22 +3599,22 @@ class ExpansionManager {
       crossedPriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
     }
 
-    // Update savings
-    const savingsElement = pricingHeader.querySelector('.pp-pricing-header__savings');
+    // Update savings row (new structure: savings on top, prices below)
+    const savingsRow = pricingHeader.querySelector('.pp-pricing-header__savings-row');
     if (pricing.savings > 0) {
-      if (savingsElement) {
-        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}!`;
+      const savingsHTML = `<span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>`;
+      if (savingsRow) {
+        savingsRow.innerHTML = savingsHTML;
       } else {
-        // Savings element doesn't exist, create it
-        const savingsHTML = `<span class="pp-pricing-header__savings">Save ${this.formatMoney(pricing.savings)}!</span>`;
-        const rowElement = pricingHeader.querySelector('.pp-pricing-header__row');
-        if (rowElement) {
-          rowElement.insertAdjacentHTML('beforeend', savingsHTML);
+        // Insert savings row before price row
+        const priceRow = pricingHeader.querySelector('.pp-pricing-header__row');
+        if (priceRow) {
+          priceRow.insertAdjacentHTML('beforebegin', `<div class="pp-pricing-header__savings-row">${savingsHTML}</div>`);
         }
       }
-    } else if (savingsElement) {
-      // Remove savings if it's 0 or negative
-      savingsElement.remove();
+    } else if (savingsRow) {
+      // Remove savings row if it's 0 or negative
+      savingsRow.remove();
     }
 
     // Update tier info
@@ -3549,22 +3797,17 @@ class ExpansionManager {
           class="pp-sheet-cta__button-deal"
           data-action="add-to-deal"
           ${isDisabled ? 'disabled' : ''}
-          aria-label="Add ${pricing.totalItems} items to deal"
+          aria-label="Add to the Deal"
         >
-          <span class="pp-cta-icon">➕</span>
-          <span class="pp-cta-text">Add ${pricing.totalItems} Items to Deal</span>
-          <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
+          <span class="pp-cta-text">Add to the Deal</span>
         </button>
         <button
           class="pp-sheet-cta__button-main"
           data-action="add-to-cart"
           ${isDisabled ? 'disabled' : ''}
-          aria-label="${buttonText}"
+          aria-label="${isDisabled ? 'Select Variants First' : 'Buy Now'}"
         >
-          <span class="pp-cta-icon">🛒</span>
-          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : `Buy ${pricing.totalItems} Items Now`}</span>
-          <span class="pp-cta-price">${this.formatMoney(pricing.finalPrice)}</span>
-          <span class="pp-cta-arrow">→</span>
+          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : 'Buy Now'}</span>
         </button>
       </div>
     `;
@@ -3737,6 +3980,7 @@ class ExpansionManager {
 
   /**
    * Handle add to deal (adds to sticky cart and closes modal)
+   * Updated to use BundleManager like bf25-expansion-core.js
    */
   async handleAddToDeal() {
     console.log('[PowerPairs] Add to Deal initiated');
@@ -3776,6 +4020,65 @@ class ExpansionManager {
     }
 
     try {
+      // ─────────────────────────────────────────────────────────────────
+      // BUNDLEMANAGER INTEGRATION (Virtual Cart - Instant)
+      // If BundleManager is available, add to localStorage instead of API
+      // ─────────────────────────────────────────────────────────────────
+      if (window.BF25BundleManager) {
+        console.log('[PowerPairs] Using BundleManager for instant add');
+        
+        // Add each product in the bundle to BundleManager
+        for (const product of bundle.products) {
+          // Get product data from window.productData if available
+          const productData = window.productData?.[product.id] || null;
+          
+          // Build product data for BundleManager
+          const bundleManagerData = {
+            variantId: String(product.selectedVariantId),
+            productId: String(product.id),
+            title: product.title,
+            variantTitle: product.selectedVariant?.title || '',
+            // Price priority: selectedVariant price > product price > 0
+            price: product.selectedVariant?.price || product.price || productData?.basePrice || 0,
+            // Get image URL
+            image: product.image || productData?.featuredImage || productData?.featured_image || '',
+            handle: product.handle || productData?.handle || ''
+          };
+
+          // Add with quantity * multiplier
+          const quantity = product.quantity * bundle.multiplier;
+          const result = window.BF25BundleManager.addItem(bundleManagerData, quantity);
+
+          if (!result.success) {
+            console.error('[PowerPairs] Failed to add product to BundleManager:', product.title, result.error);
+            // Continue with other products even if one fails
+            if (result.error === 'MAX_ITEMS_REACHED') {
+              throw new Error('Bundle has reached maximum items. Remove some items to add more.');
+            }
+          }
+        }
+
+        console.log('[PowerPairs] Items added to BundleManager successfully');
+
+        // Hide loading overlay
+        this.hideLoadingOverlay();
+
+        // Show brief success message
+        announceToScreenReader(`Added ${pricing.totalItems} items to deal`, 'polite');
+
+        // Close modal after brief delay
+        setTimeout(() => {
+          this.close();
+        }, 500);
+
+        return;
+      }
+
+      // ─────────────────────────────────────────────────────────────────
+      // FALLBACK: Original Shopify API flow (if BundleManager unavailable)
+      // ─────────────────────────────────────────────────────────────────
+      console.log('[PowerPairs] Using Shopify API (BundleManager not available)');
+
       // Prepare cart items
       const cartItems = this.prepareCartItems(bundle, pricing);
 
@@ -3811,6 +4114,170 @@ class ExpansionManager {
         ctaButton.disabled = false;
       }
     }
+  }
+
+  /**
+   * Handle quick add from bundle card (adds all items without opening modal)
+   * @param {string} bundleId - Bundle ID
+   * @param {HTMLElement} button - Clicked button element
+   */
+  async handleQuickAdd(bundleId, button) {
+    console.log('[PowerPairs] Quick Add initiated for bundle:', bundleId);
+
+    // Check if state exists
+    if (!window.PPState) {
+      console.error('[PowerPairs] State not initialized');
+      this.showQuickAddError(button, 'Bundle system not ready. Please try again.');
+      return;
+    }
+
+    // Get bundle from state
+    const bundle = window.PPState.getBundleById(bundleId);
+
+    if (!bundle) {
+      console.error('[PowerPairs] Bundle not found:', bundleId);
+      this.showQuickAddError(button, 'Bundle not found. Please try again.');
+      return;
+    }
+
+    // Set as active bundle to ensure we have the latest state (including swaps)
+    window.PPState.setActiveBundle(bundleId);
+
+    // Get the active bundle again to ensure we have latest state
+    const activeBundle = window.PPState.getActiveBundle();
+
+    if (!activeBundle) {
+      console.error('[PowerPairs] Failed to set active bundle');
+      this.showQuickAddError(button, 'Failed to load bundle. Please try again.');
+      return;
+    }
+
+    // Check if variants are complete
+    // If not complete, we need to open the modal for variant selection
+    if (!activeBundle.variantsComplete) {
+      console.log('[PowerPairs] Variants not complete, opening modal for selection');
+      // Open the modal so user can select variants
+      this.open(bundleId);
+      return;
+    }
+
+    // Calculate final pricing
+    const pricing = this.calculateBundlePricing(activeBundle);
+
+    // Show loading state on button
+    const originalText = button.querySelector('.pp-bundle-card__cta-text')?.textContent || 'Quick Add';
+    button.disabled = true;
+    button.classList.add('pp-bundle-card__cta--loading');
+    if (button.querySelector('.pp-bundle-card__cta-text')) {
+      button.querySelector('.pp-bundle-card__cta-text').textContent = 'Adding...';
+    }
+
+    try {
+      // ─────────────────────────────────────────────────────────────────
+      // BUNDLEMANAGER INTEGRATION (Virtual Cart - Instant)
+      // If BundleManager is available, add to localStorage instead of API
+      // ─────────────────────────────────────────────────────────────────
+      if (window.BF25BundleManager) {
+        console.log('[PowerPairs] Using BundleManager for quick add');
+        
+        // Add each product in the bundle to BundleManager
+        for (const product of activeBundle.products) {
+          // Get product data from window.productData if available
+          const productData = window.productData?.[product.id] || null;
+          
+          // Build product data for BundleManager
+          const bundleManagerData = {
+            variantId: String(product.selectedVariantId),
+            productId: String(product.id),
+            title: product.title,
+            variantTitle: product.selectedVariant?.title || '',
+            // Price priority: selectedVariant price > product price > 0
+            price: product.selectedVariant?.price || product.price || productData?.basePrice || 0,
+            // Get image URL
+            image: product.image || productData?.featuredImage || productData?.featured_image || '',
+            handle: product.handle || productData?.handle || ''
+          };
+
+          // Add with quantity * multiplier
+          const quantity = product.quantity * activeBundle.multiplier;
+          const result = window.BF25BundleManager.addItem(bundleManagerData, quantity);
+
+          if (!result.success) {
+            console.error('[PowerPairs] Failed to add product to BundleManager:', product.title, result.error);
+            // Continue with other products even if one fails
+            if (result.error === 'MAX_ITEMS_REACHED') {
+              throw new Error('Bundle has reached maximum items. Remove some items to add more.');
+            }
+          }
+        }
+
+        console.log('[PowerPairs] Items quick added to BundleManager successfully');
+      } else {
+        // ─────────────────────────────────────────────────────────────────
+        // FALLBACK: Original Shopify API flow (if BundleManager unavailable)
+        // ─────────────────────────────────────────────────────────────────
+        console.log('[PowerPairs] Using Shopify API for quick add (BundleManager not available)');
+
+        // Prepare cart items (this handles swapped products automatically)
+        const cartItems = this.prepareCartItems(activeBundle, pricing);
+
+        console.log('[PowerPairs] Quick adding items to cart:', cartItems);
+
+        // Add items to cart (sticky cart will update automatically)
+        await this.addItemsToCart(cartItems);
+
+        console.log('[PowerPairs] Items quick added successfully');
+      }
+
+      // Show success state
+      if (button.querySelector('.pp-bundle-card__cta-text')) {
+        button.querySelector('.pp-bundle-card__cta-text').textContent = 'Added!';
+      }
+      button.classList.add('pp-bundle-card__cta--success');
+
+      // Announce to screen reader
+      announceToScreenReader(`Added ${pricing.totalItems} items to cart`, 'polite');
+
+      // Reset button after delay
+      setTimeout(() => {
+        button.disabled = false;
+        button.classList.remove('pp-bundle-card__cta--loading', 'pp-bundle-card__cta--success');
+        if (button.querySelector('.pp-bundle-card__cta-text')) {
+          button.querySelector('.pp-bundle-card__cta-text').textContent = originalText;
+        }
+      }, 2000);
+
+    } catch (error) {
+      console.error('[PowerPairs] Quick add failed:', error);
+      this.showQuickAddError(button, error.message || 'Failed to add items. Please try again.');
+    }
+  }
+
+  /**
+   * Show error state on quick add button
+   * @param {HTMLElement} button - Button element
+   * @param {string} message - Error message
+   */
+  showQuickAddError(button, message) {
+    const originalText = button.querySelector('.pp-bundle-card__cta-text')?.textContent || 'Quick Add';
+    button.disabled = false;
+    button.classList.remove('pp-bundle-card__cta--loading');
+    button.classList.add('pp-bundle-card__cta--error');
+
+    if (button.querySelector('.pp-bundle-card__cta-text')) {
+      button.querySelector('.pp-bundle-card__cta-text').textContent = 'Error';
+    }
+
+    // Show error message (you could use a toast notification here)
+    console.error('[PowerPairs] Quick Add Error:', message);
+
+    // Reset button after delay
+    setTimeout(() => {
+      button.classList.remove('pp-bundle-card__cta--error');
+      if (button.querySelector('.pp-bundle-card__cta-text')) {
+        button.querySelector('.pp-bundle-card__cta-text').textContent = originalText;
+      }
+    }, 3000);
   }
 
   /**
@@ -4289,6 +4756,9 @@ class ExpansionManager {
 
     console.log('🔒 Closing bottom sheet');
 
+    // Store scroll position before removing fixed positioning
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+
     // Update ARIA attributes
     this.sheet.setAttribute('aria-hidden', 'true');
     this.overlay.setAttribute('aria-hidden', 'true');
@@ -4296,6 +4766,17 @@ class ExpansionManager {
     this.sheet.classList.remove('active');
     this.overlay.classList.remove('active');
     document.body.classList.remove('pp-sheet-open');
+
+    // Restore body styles
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('width');
+    document.body.style.removeProperty('height');
+    document.body.style.removeProperty('overflow');
+
+    // Restore scroll position
+    if (scrollY > 0) {
+      window.scrollTo(0, scrollY);
+    }
 
     // Unlock scroll on iOS
     IOSScrollLock.unlock();

@@ -121,15 +121,26 @@ Usage:
     </div>
   {% endif %}
 
-  {%- comment -%} FULL WIDTH: CALL TO ACTION {%- endcomment -%}
-  <button
-    class="pp-bundle-card__cta {% unless has_products %}pp-bundle-card__cta--disabled{% endunless %}"
-    data-action="open-sheet"
-    data-bundle-id="{{ bundle_id }}"
-    {% unless has_products %}disabled{% endunless %}
-  >
-    <span class="pp-bundle-card__cta-text">View & Customize</span>
-    <span class="pp-bundle-card__cta-icon">→</span>
-  </button>
+  {%- comment -%} FULL WIDTH: CALL TO ACTION BUTTONS {%- endcomment -%}
+  <div class="pp-bundle-card__cta-container">
+    <button
+      class="pp-bundle-card__cta pp-bundle-card__cta--view {% unless has_products %}pp-bundle-card__cta--disabled{% endunless %}"
+      data-action="open-sheet"
+      data-bundle-id="{{ bundle_id }}"
+      {% unless has_products %}disabled{% endunless %}
+    >
+      <span class="pp-bundle-card__cta-text">View & Customize</span>
+      <span class="pp-bundle-card__cta-icon">→</span>
+    </button>
+    <button
+      class="pp-bundle-card__cta pp-bundle-card__cta--quick-add {% unless has_products %}pp-bundle-card__cta--disabled{% endunless %}"
+      data-action="quick-add-bundle"
+      data-bundle-id="{{ bundle_id }}"
+      {% unless has_products %}disabled{% endunless %}
+      aria-label="Quick add all items from kit"
+    >
+      <span class="pp-bundle-card__cta-text">Quick Add</span>
+    </button>
+  </div>
 
 </article>

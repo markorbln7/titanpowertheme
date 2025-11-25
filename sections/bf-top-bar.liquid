@@ -1,4 +1,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+<style>
+/* ========== BF25 ANNOUNCEMENT BAR - DUAL GLOW BORDERS ========== */
+.bf25-announcement-bar {
+  background: #0d0d0d;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top glow border */
+.bf25-announcement-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #60c655 20%,
+    #7FFF00 50%,
+    #60c655 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: bf25GlowBorder 3s ease-in-out infinite;
+}
+
+/* Bottom glow border */
+.bf25-announcement-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #60c655 20%,
+    #7FFF00 50%,
+    #60c655 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: bf25GlowBorder 3s ease-in-out infinite reverse;
+}
+
+@keyframes bf25GlowBorder {
+  0%, 100% {
+    background-position: -100% 0;
+  }
+  50% {
+    background-position: 200% 0;
+  }
+}
+
+/* Gradient animated text */
+.bf25-announcement-bar .bf-top-bar p {
+  background: linear-gradient(90deg, #60c655, #7FFF00, #60c655);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: bf25TextShift 3s ease infinite;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+@keyframes bf25TextShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .bf25-announcement-bar .bf-top-bar {
+    padding: 6px 15px;
+  }
+
+  .bf25-announcement-bar .bf-top-bar p {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Ensure text stays on one line */
+.bf25-announcement-bar .bf-top-bar p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
+
 {% if section.settings.show_banner %}
   <div class="bg-black py-[10px]">
   <div class="max-w-[700px] mx-auto px-[10px]">
@@ -6,14 +100,37 @@
   </div>
   </div>
   {% endif %}
-<div class="bg-[#60c655]">
-  <div class="bf-top-bar bg-[#60c655] md:py-[10px] py-[3px] max-w-[1300px] mx-auto">
+{% liquid
+  assign is_bf25_page = false
+  if template contains 'bf25' or template contains 'black-friday'
+    assign is_bf25_page = true
+  endif
+  if request.path contains 'black-friday' or request.path contains 'bf25' or request.path contains 'power-pairs'
+    assign is_bf25_page = true
+  endif
+%}
+
+{% if is_bf25_page %}
+  <div class="bf25-announcement-bar">
+    <div class="bf-top-bar md:py-[10px] py-[6px] max-w-[1300px] mx-auto">
       {% if section.settings.image != blank %}
-        <img width="100" height="auto" loading="lazy"  src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
+        <img width="100" height="auto" loading="lazy" src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
+      {% endif %}
+      <p class="text-center uppercase md:text-[20px] text-[14px]">
+        {{ section.settings.welcome_message }}
+      </p>
+    </div>
+  </div>
+{% else %}
+  <div class="bg-[#60c655]">
+    <div class="bf-top-bar bg-[#60c655] md:py-[10px] py-[3px] max-w-[1300px] mx-auto">
+      {% if section.settings.image != blank %}
+        <img width="100" height="auto" loading="lazy" src="{{ section.settings.image | img_url: 'master' }}" alt="BF TOP BAR" class="inline-block">
       {% endif %}
       <p class="text-center uppercase md:text-[20px] text-[14px] color-black">{{ section.settings.welcome_message }}</p>
+    </div>
   </div>
-</div>
+{% endif %}
 {% schema %}
 {
     "name": "BF TOP BAR",

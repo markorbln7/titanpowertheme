@@ -78,6 +78,19 @@
                       </div>
                     {% endif %}
                   {% endif %}
+
+                  <!-- Info Icon (top-right corner with pulse animation) -->
+                  <div class="bf25-product-info-icon"
+                       data-product-id="{{ product.id }}"
+                       role="button"
+                       tabindex="0"
+                       aria-label="View product details for {{ product.title | escape }}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
+                      <text x="12" y="17" text-anchor="middle" fill="#60c655" font-size="14" font-weight="700">i</text>
+                    </svg>
+                  </div>
+
                   {% if product.metafields.custom.custom_url %}
                     {% assign url = product.metafields.custom.custom_url %}
                   {% else %}

@@ -707,3 +707,107 @@ aside.buy-now-popup[data-section="bf25"] {
 body.modal-open {
   overflow: hidden !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 PRODUCT INFO ICON (BF25-INFO-ICON-001)
+   Pulsing info button in top-right corner of product cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Info Icon Container */
+.bf25-product-info-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20; /* Above product image but below modals */
+
+  /* Size */
+  width: 36px;
+  height: 36px;
+
+  /* Center the SVG */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+
+  /* Visual */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+
+  /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Smooth transitions */
+  transition: all 200ms ease;
+
+  /* Pulse animation */
+  animation: bf25-info-pulse 2s ease-in-out infinite;
+}
+
+/* Hover State */
+.bf25-product-info-icon:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.4);
+}
+
+/* Active/Click State */
+.bf25-product-info-icon:active {
+  transform: scale(0.95);
+}
+
+/* Focus State (keyboard navigation) */
+.bf25-product-info-icon:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+/* SVG Styling */
+.bf25-product-info-icon svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* Let clicks pass through to parent */
+}
+
+/* Pulse Animation Keyframes */
+@keyframes bf25-info-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(96, 198, 85, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 8px rgba(96, 198, 85, 0);
+  }
+
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 0 0 rgba(96, 198, 85, 0);
+  }
+}
+
+/* Mobile Touch Target Enhancement */
+@media (max-width: 768px) {
+  .bf25-product-info-icon {
+    width: 44px;
+    height: 44px; /* Minimum touch target size */
+  }
+
+  .bf25-product-info-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-product-info-icon {
+    animation: none;
+  }
+}

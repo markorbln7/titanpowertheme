@@ -230,24 +230,101 @@
 
 <!-- CRITICAL: Inline Config (Must load BEFORE deferred scripts) -->
 <script>
-  // Tier configuration (used by BundleManager and CartManager)
-  window.BF25_TIERS = [
-    { id: 0, minItems: 1, maxItems: 3, discount: 50, badge: '50% OFF', multiplier: 0.50 },
-    { id: 1, minItems: 4, maxItems: 7, discount: 60, badge: '60% OFF', multiplier: 0.40 },
-    { id: 2, minItems: 8, maxItems: 11, discount: 70, badge: '70% OFF', multiplier: 0.30 },
-    { id: 3, minItems: 12, maxItems: 15, discount: 80, badge: '80% OFF', multiplier: 0.20 },
-    { id: 4, minItems: 16, maxItems: 16, discount: 85, badge: '85% OFF', multiplier: 0.15 }
-  ];
-
-  // Gift variant IDs (from Shopify admin)
+  // Gift variant IDs (from Shopify admin) - Define FIRST so tiers can reference
   window.GIFT_VARIANT_MAP = {
+    // Numeric keys for BundleManager
     4: { variantId: '44595270672594', title: '100W 4-in-1 Cable', value: 3000 },
     8: { variantId: '44595270705362', title: 'Premium Travel Case', value: 3500 },
     12: { variantId: '44595270738130', title: 'Magnetic Cable Organizer', value: 6000 },
-    16: { variantId: '44595270770898', title: 'Mystery Power Gift', value: 15000 }
+    16: { variantId: '44595270770898', title: 'Mystery Power Gift', value: 15000 },
+    // Named keys for CartManager legacy code
+    CABLE: '44595270672594',
+    CASE: '44595270705362',
+    MAGNETIC: '44595270738130',
+    MYSTERY: '44595270770898'
   };
 
+  // Complete tier configuration with all required properties
+  window.BF25_TIERS = [
+    {
+      id: 0,
+      min: 0,
+      max: 3,
+      discount: "50%",
+      badge: "50% OFF",
+      color: "#6b7280",
+      glowColor: "#a1a1aa",
+      glow: "rgba(107, 114, 128, 0.3)",
+      gifts: [],
+      multiplier: 0.50
+    },
+    {
+      id: 1,
+      min: 4,
+      max: 7,
+      discount: "60%",
+      badge: "🔥 60% OFF",
+      color: "#60c655",
+      glowColor: "#7FFF00",
+      glow: "rgba(96, 198, 85, 0.5)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 }
+      ],
+      multiplier: 0.40
+    },
+    {
+      id: 2,
+      min: 8,
+      max: 11,
+      discount: "70%",
+      badge: "⭐ 70% OFF",
+      color: "#60c655",
+      glowColor: "#39FF14",
+      glow: "rgba(127, 255, 0, 0.6)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 }
+      ],
+      multiplier: 0.30
+    },
+    {
+      id: 3,
+      min: 12,
+      max: 15,
+      discount: "80%",
+      badge: "🚀 80% OFF",
+      color: "#FFD700",
+      glowColor: "#FFF700",
+      glow: "rgba(255, 215, 0, 0.7)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 }
+      ],
+      multiplier: 0.20,
+      isDecoy: true
+    },
+    {
+      id: 4,
+      min: 16,
+      max: 999,
+      discount: "85%",
+      badge: "💎 85% OFF",
+      color: "#E0F7FF",
+      glowColor: "#FFFFFF",
+      glow: "rgba(224, 247, 255, 0.8)",
+      gifts: [
+        { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
+        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 },
+        { variantId: window.GIFT_VARIANT_MAP.MYSTERY, name: "Mystery Box", emoji: "🎁", value: 150 }
+      ],
+      multiplier: 0.15
+    }
+  ];
+
   console.log('[BF25 Config] ✓ Tier and gift configuration loaded');
+  console.log('[BF25 Config] Tiers:', window.BF25_TIERS.length, '| Gifts defined:', Object.keys(window.GIFT_VARIANT_MAP).length);
 </script>
 
 <!-- Load JavaScript (Order matters: BundleManager → CartManager → Isolation) -->

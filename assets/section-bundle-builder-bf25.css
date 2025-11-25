@@ -772,6 +772,15 @@ body.modal-open {
   width: 20px;
   height: 20px;
   pointer-events: none; /* Let clicks pass through to parent */
+  display: block; /* Fix alignment issues */
+  overflow: visible; /* Ensure text renders properly */
+}
+
+/* SVG Text Vertical Alignment (BF25-INFO-ICON-FIX) */
+.bf25-product-info-icon svg text {
+  dominant-baseline: central; /* Better centering than 'middle' */
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* Pulse Animation Keyframes */
@@ -840,6 +849,9 @@ body.modal-open {
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
+
+  /* Smooth fade-in animation */
+  transition: opacity 300ms ease, transform 300ms ease;
 
   /* Dark glassmorphic background */
   background: rgba(20, 20, 20, 0.98);

@@ -58,107 +58,132 @@
                 <article class="bf25-product-card section-collections-with-nav__product relative"
                          data-product-id="{{ product.id }}"
                          data-section="bf25"
+                         data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
+                         data-default-variant-id="{{ product.selected_or_first_available_variant.id }}"
                          role="button"
                          tabindex="0"
                          aria-label="View details for {{ product.title | escape }}">
-                  {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
-                    <div class="absolute left-[10px] top-[10px]">
-                      <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                        <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
-                        <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
-                      </div>
-                    </div>
-                  {% else %}
-                    {% if product.metafields.custom.new_shop_discount %}
+
+                  {%- comment -%} STATE 1: DEFAULT VIEW (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-default-state">
+                    {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
                       <div class="absolute left-[10px] top-[10px]">
                         <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                          <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                          <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
                           <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
                         </div>
                       </div>
+                    {% else %}
+                      {% if product.metafields.custom.new_shop_discount %}
+                        <div class="absolute left-[10px] top-[10px]">
+                          <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
+                            <div>{{ product.metafields.custom.new_shop_discount }}</div>
+                            <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
+                          </div>
+                        </div>
+                      {% endif %}
                     {% endif %}
-                  {% endif %}
 
-                  <!-- Info Icon (top-right corner with pulse animation) -->
-                  <div class="bf25-product-info-icon"
-                       data-product-id="{{ product.id }}"
-                       role="button"
-                       tabindex="0"
-                       aria-label="View product details for {{ product.title | escape }}">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
-                      <text x="12" y="17" text-anchor="middle" fill="#60c655" font-size="14" font-weight="700">i</text>
-                    </svg>
+                    <!-- Info Icon (top-right corner with pulse animation) -->
+                    <div class="bf25-product-info-icon"
+                         data-product-id="{{ product.id }}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View product details for {{ product.title | escape }}">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
+                        <text x="12" y="12" text-anchor="middle" dominant-baseline="central" fill="#60c655" font-size="14" font-weight="700">i</text>
+                      </svg>
+                    </div>
+
+                    <figure class="section-collections-with-nav__product-image">
+                      {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                        <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                      {% else %}
+                        {% if product.metafields.custom.new_shop_image %}
+                          {% assign product_image =  product.metafields.custom.new_shop_image %}
+                          <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
+                          {% assign product_image = product.featured_image %}
+                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                        {% endif %}
+                      {% endif %}
+                    </figure>
+
+                    <div class="section-collections-with-nav__product-details justify-between">
+                      <div class="top-part">
+                        <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
+                        <!-- Reviews Display (BF25-REV-006) -->
+                        <div class="bf25-product-rating-display"
+                             data-product-id="{{ product.id }}"
+                             role="button"
+                             tabindex="0">
+                          <div class="bf25-rating-stars" aria-hidden="true">
+                            <span class="stars-empty">★★★★★</span>
+                            <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                          </div>
+                          <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                        </div>
+
+                        {% if product.metafields.custom.ticks %}
+                          {{product.metafields.custom.ticks | metafield_tag }}
+                        {% endif %}
+                        <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                          <div clas="prices">
+                            <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                            {% if product.compare_at_price  %}
+                                <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                            {% endif %}
+                          </div>
+                          {% if section.settings.use_popup == true %}
+                            <div class="arrow pointer bf25-quick-add-trigger"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="Quick add {{ product.title | escape }} to cart">
+                                +
+                            </div>
+                          {% else %}
+                            <a href="{{ product.url }}" class="arrow">
+                              <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
+                            </a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  {% if product.metafields.custom.custom_url %}
-                    {% assign url = product.metafields.custom.custom_url %}
+                  {%- comment -%} STATE 2: VARIANT SELECTOR OVERLAY (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-variant-state" hidden>
+                    <div class="bf25-variant-header">
+                      <h4 class="bf25-variant-title">Select Options</h4>
+                      <button class="bf25-variant-close"
+                              type="button"
+                              aria-label="Close variant selection">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+
+                    {%- comment -%} Variant options will be populated by JavaScript {%- endcomment -%}
+                    <div class="bf25-variant-options-container">
+                      <!-- JS will inject variant option groups here -->
+                    </div>
+
+                    <button class="bf25-variant-add-btn"
+                            type="button"
+                            disabled>
+                      Add to Bundle
+                    </button>
+                  </div>
+
+                  {% if product.metafields.custom.new_shop_discount_top %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
                   {% else %}
-                    {% assign url = product.url %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount %}
                   {% endif %}
-                  {% if section.settings.use_popup == true %}
-                    <div class="!block absolute w-full h-full top-0 left-0 pointer js-section-explore__buy-now"></div>
-                  {% else %}
-                    <a class="!block absolute w-full h-full top-0 left-0" href="{{ url }}"></a>
-                  {% endif %}
-                      <figure class="section-collections-with-nav__product-image">
-                        {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
-                          <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
-                        {% else %}
-                          {% if product.metafields.custom.new_shop_image %}
-                            {% assign product_image =  product.metafields.custom.new_shop_image %}
-                            <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
-                          {% else %}
-                            {% assign product_image = product.featured_image %}
-                            {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
-                          {% endif %}
-                        {% endif %}
-                      </figure>
-
-                      <div class="section-collections-with-nav__product-details justify-between">
-                          <div class="top-part">
-                            <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
-
-                            <!-- Reviews Display (BF25-REV-006) -->
-                            <div class="bf25-product-rating-display"
-                                 data-product-id="{{ product.id }}"
-                                 role="button"
-                                 tabindex="0">
-                              <div class="bf25-rating-stars" aria-hidden="true">
-                                <span class="stars-empty">★★★★★</span>
-                                <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
-                              </div>
-                              <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
-                            </div>
-
-                            {% if product.metafields.custom.ticks %}
-                              {{product.metafields.custom.ticks | metafield_tag }}
-                            {% endif %}
-                            <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
-                              <div clas="prices">
-                                <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
-                                {% if product.compare_at_price  %}
-                                    <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
-                                {% endif %}
-                              </div>
-                              {% if section.settings.use_popup == true %}
-                                <div class="arrow pointer js-section-explore__buy-now">
-                                    +
-                                </div>
-                              {% else %}
-                                <a href="{{ product.url }}" class="arrow">
-                                  <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
-                                </a>
-                              {% endif %}
-                            </div>
-                          </div>
-                      </div>
-                      {% if product.metafields.custom.new_shop_discount_top %}
-                        {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
-                      {% else %}
-                        {% assign badge_text = product.metafields.custom.new_shop_discount %}
-                      {% endif %}
-                      {%- comment -%} Modal moved outside article {%- endcomment -%}
+                  {%- comment -%} Modal moved outside article {%- endcomment -%}
                   </article>
 
                   {%- comment -%} Modal NOW renders outside article to fix z-index {%- endcomment -%}

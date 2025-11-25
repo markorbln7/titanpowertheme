@@ -9,9 +9,10 @@
    }
   .custom-pack-wrapper {
     max-width: 1000px; /* Reduced from 1400px (BF25-8.10b) */
-    padding: 40px 20px; /* Reduced from 60px (BF25-8.10b) */
+    padding: 40px 15px; /* Adjusted for 4th box visibility */
     margin: 0 auto;
     background: #000000;
+    overflow: visible;
   }
 
   .block-items {
@@ -20,6 +21,8 @@
     max-width: 900px; /* Reduced from 1200px (BF25-8.10b) */
     margin: 0 auto;
     gap: 8px;
+    padding: 0 10px; /* Prevent 4th box cutoff */
+    overflow: visible;
   }
 
   .block-item {
@@ -44,14 +47,14 @@
 
   /* ========== BF25 TIER BOX TEXT STYLING (V4) ========== */
 
-  /* Items label - top */
+  /* Items label - top (desktop slightly bigger) */
   .block-item .bf25-items-label,
   .block-item > div:first-child {
     color: #60c655;
-    font-size: 9px;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 4px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
   }
 
@@ -61,26 +64,26 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
   }
 
   /* Large discount number */
   .block-item .bf25-discount-number,
   .block-item h3 span:first-child {
     color: #fff;
-    font-size: 36px;
+    font-size: 48px;
     font-weight: 700;
-    line-height: 0.8;
+    line-height: 0.85;
     order: 1; /* Ensure number is first */
   }
 
-  /* % and OFF stacked */
+  /* % and OFF stacked - % on TOP, OFF below */
   .block-item .bf25-discount-suffix,
   .block-item h3 > div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
     order: 2; /* Ensure suffix is second */
   }
 
@@ -91,7 +94,7 @@
     right: auto !important;
   }
 
-  /* Percent sign */
+  /* Percent sign - % on TOP (order: 1) */
   .block-item .bf25-percent,
   .block-item h3 .text-\[24px\],
   .block-item h3 .md\:text-\[40px\] {
@@ -99,29 +102,31 @@
     top: auto !important;
     right: auto !important;
     color: #fff;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 1;
+    order: 1; /* First - on top */
   }
 
-  /* OFF text */
+  /* OFF text - below % (order: 2) */
   .block-item .bf25-off-text,
   .block-item h3 span:last-child,
   .block-item h3 .text-\[10px\],
   .block-item h3 .md\:text-\[20px\] {
     color: rgba(255, 255, 255, 0.6);
-    font-size: 8px;
+    font-size: 10px;
     font-weight: 600;
     line-height: 1;
-    margin-top: 1px;
+    margin-top: 2px;
+    order: 2; /* Second - below */
   }
 
   /* Gift text - bigger and prominent */
   .block-item .bf25-gift-text {
     color: #60c655;
-    font-size: 9px;
+    font-size: 13px;
     font-weight: 700;
-    margin-top: 6px;
+    margin-top: 8px;
     text-transform: uppercase;
   }
 
@@ -133,12 +138,13 @@
 
     .block-items {
       grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      gap: 5px;
       max-width: 100%;
+      padding: 0 5px;
     }
 
     .block-item {
-      padding: 8px 4px;
+      padding: 8px 3px;
       min-height: 120px;
       border-radius: 8px;
     }
@@ -147,31 +153,32 @@
     .block-item .bf25-items-label,
     .block-item > div:first-child {
       font-size: 8px;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     /* Discount number */
     .block-item .bf25-discount-number,
     .block-item h3 span:first-child {
-      font-size: 28px;
+      font-size: 26px;
     }
 
-    /* Percent */
+    /* Percent - smaller on mobile */
     .block-item .bf25-percent,
     .block-item h3 .text-\[24px\] {
-      font-size: 12px;
+      font-size: 9px;
     }
 
-    /* OFF */
+    /* OFF - smaller on mobile */
     .block-item .bf25-off-text,
     .block-item h3 span:last-child,
     .block-item h3 .text-\[10px\] {
-      font-size: 7px;
+      font-size: 6px;
+      margin-top: 1px;
     }
 
     /* Gift text */
     .block-item .bf25-gift-text {
-      font-size: 8px;
+      font-size: 7px;
       margin-top: 4px;
     }
   }

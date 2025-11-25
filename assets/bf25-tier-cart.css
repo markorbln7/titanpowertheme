@@ -2301,17 +2301,22 @@
 
 /* Toast Container - Fixed positioning */
 .bf25sc-toast-container {
-  position: fixed;
-  bottom: 90px; /* Above sticky cart (65px) + 25px spacing */
+  position: fixed !important;
+  bottom: 100px !important; /* Increased from 90px for better visibility */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10000; /* Above sticky cart */
+  z-index: 999999 !important; /* Maximum z-index */
   display: flex;
   flex-direction: column-reverse; /* Newest toasts appear at bottom */
   gap: 12px;
   max-width: 90%;
   width: 400px;
   pointer-events: none; /* Allow clicks through container */
+}
+
+/* Ensure sticky cart doesn't clip toasts */
+.bf25sc-sticky-cart {
+  overflow: visible !important;
 }
 
 /* Individual Toast */

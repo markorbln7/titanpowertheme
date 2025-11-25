@@ -155,23 +155,23 @@
   <div class="bf25-quantity-wrapper flex items-center gap-[16px]">
     <div class="bf25-quantity-stepper flex items-center border border-[#ddd] rounded-[8px] overflow-hidden">
       <button type="button"
-              class="bf25-qty-btn js-qty-minus w-[44px] h-[44px] flex items-center justify-center bg-[#f5f5f5] hover:bg-[#e5e5e5] transition-colors"
+              class="bf25-qty-btn js-qty-minus w-[44px] h-[44px] flex items-center justify-center bg-transparent hover:bg-[rgba(255,255,255,0.1)] transition-colors"
               aria-label="Decrease quantity">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8H13" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+          <path d="M3 8H13" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
       <input type="number"
-             class="bf25-qty-input js-qty-input w-[60px] h-[44px] text-center text-[18px] font-bold border-none outline-none"
+             class="bf25-qty-input js-qty-input w-[60px] h-[44px] text-center text-[18px] font-bold border-none outline-none bg-transparent text-white"
              value="1"
              min="1"
              max="99"
              aria-label="Quantity">
       <button type="button"
-              class="bf25-qty-btn js-qty-plus w-[44px] h-[44px] flex items-center justify-center bg-[#f5f5f5] hover:bg-[#e5e5e5] transition-colors"
+              class="bf25-qty-btn js-qty-plus w-[44px] h-[44px] flex items-center justify-center bg-transparent hover:bg-[rgba(255,255,255,0.1)] transition-colors"
               aria-label="Increase quantity">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 3V13M3 8H13" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 3V13M3 8H13" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </button>
     </div>

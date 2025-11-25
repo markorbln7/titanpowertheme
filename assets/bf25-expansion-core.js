@@ -1778,7 +1778,15 @@ class CartManager {
         title: product.title,
         variantTitle: variant.title !== 'Default Title' ? variant.title : '',
         price: variant.price, // Price in cents (Shopify format)
-        image: product.featured_image || product.images?.[0] || '',
+        // Get image URL - handle both string and object formats (Shopify returns objects)
+        image: (typeof product.featured_image === 'string'
+            ? product.featured_image
+            : product.featured_image?.src || product.featured_image?.url)
+          || (typeof product.images?.[0] === 'string'
+            ? product.images[0]
+            : product.images?.[0]?.src || product.images?.[0]?.url)
+          || product.image
+          || '',
         handle: product.handle || ''
       };
 

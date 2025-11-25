@@ -8,8 +8,8 @@
         font-weight: 900;
    }
   .custom-pack-wrapper {
-    max-width: 1400px;
-    padding: 60px 20px;
+    max-width: 1000px; /* Reduced from 1400px (BF25-8.10b) */
+    padding: 40px 20px; /* Reduced from 60px (BF25-8.10b) */
     margin: 0 auto;
     background: #000000;
   }
@@ -17,7 +17,7 @@
   .block-items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1200px;
+    max-width: 900px; /* Reduced from 1200px (BF25-8.10b) */
     margin: 0 auto;
     gap: 8px;
   }
@@ -26,10 +26,10 @@
     background: linear-gradient(135deg, rgba(96, 198, 85, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
     border: 2px solid rgba(96, 198, 85, 0.3);
     border-radius: 16px;
-    padding: 32px 20px;
+    padding: 20px 16px; /* Reduced from 32px 20px (BF25-8.10b) */
     text-align: center;
     transition: all 0.3s ease;
-    min-height: 200px;
+    min-height: 160px; /* Reduced from 200px (BF25-8.10b) */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,22 +42,135 @@
     box-shadow: 0 8px 24px rgba(96, 198, 85, 0.2);
   }
 
-  /* Mobile: 2x2 grid */
+  /* ========== BF25 TIER BOX TEXT STYLING (V4) ========== */
+
+  /* Items label - top */
+  .block-item .bf25-items-label,
+  .block-item > div:first-child {
+    color: #60c655;
+    font-size: 9px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  /* Discount row container - align OFF to bottom of number */
+  .block-item .bf25-discount-row,
+  .block-item h3 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  /* Large discount number */
+  .block-item .bf25-discount-number,
+  .block-item h3 span:first-child {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 0.8;
+  }
+
+  /* % and OFF stacked */
+  .block-item .bf25-discount-suffix,
+  .block-item h3 > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 2px;
+  }
+
+  /* Override Tailwind absolute positioning on % */
+  .block-item h3 .absolute {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+  }
+
+  /* Percent sign */
+  .block-item .bf25-percent,
+  .block-item h3 .text-\[24px\],
+  .block-item h3 .md\:text-\[40px\] {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* OFF text */
+  .block-item .bf25-off-text,
+  .block-item h3 span:last-child,
+  .block-item h3 .text-\[10px\],
+  .block-item h3 .md\:text-\[20px\] {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 8px;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: 1px;
+  }
+
+  /* Gift text - bigger and prominent */
+  .block-item .bf25-gift-text {
+    color: #60c655;
+    font-size: 9px;
+    font-weight: 700;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ========== MOBILE OVERRIDES ========== */
   @media (max-width: 768px) {
     .custom-pack-wrapper {
-      padding: 40px 10px;
+      padding: 20px 8px;
     }
 
     .block-items {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
       max-width: 100%;
     }
 
     .block-item {
-      padding: 20px 12px;
-      min-height: 140px;
-      border-radius: 12px;
+      padding: 8px 4px;
+      min-height: 120px;
+      border-radius: 8px;
+    }
+
+    /* Items label */
+    .block-item .bf25-items-label,
+    .block-item > div:first-child {
+      font-size: 8px;
+      margin-bottom: 3px;
+    }
+
+    /* Discount number */
+    .block-item .bf25-discount-number,
+    .block-item h3 span:first-child {
+      font-size: 28px;
+    }
+
+    /* Percent */
+    .block-item .bf25-percent,
+    .block-item h3 .text-\[24px\] {
+      font-size: 12px;
+    }
+
+    /* OFF */
+    .block-item .bf25-off-text,
+    .block-item h3 span:last-child,
+    .block-item h3 .text-\[10px\] {
+      font-size: 7px;
+    }
+
+    /* Gift text */
+    .block-item .bf25-gift-text {
+      font-size: 8px;
+      margin-top: 4px;
     }
   }
 
@@ -108,6 +221,11 @@
             <div class="text-[24px] md:text-[40px] absolute top-0 right-0">%</div>
             <span>{{ block.settings.block_title }}</span><span class="text-[10px] md:text-[20px]"> OFF</span>
           </h3>
+
+          <!-- Gift text (BF25-8.10b) -->
+          {% if block.settings.gift_text %}
+            <div class="bf25-gift-text">{{ block.settings.gift_text }}</div>
+          {% endif %}
 
           {% if block.settings.eyebrow_position %}
             <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mt-2">
@@ -167,6 +285,12 @@
           "default": "60"
         },
         {
+          "type": "text",
+          "id": "gift_text",
+          "label": "Gift Text",
+          "default": "+ 1 FREE GIFT"
+        },
+        {
           "type": "checkbox",
           "id": "eyebrow_position",
           "label": "Eyebrow below title",
@@ -185,28 +309,32 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "4+ items",
-            "block_title": "60"
+            "block_title": "60",
+            "gift_text": "+ 1 FREE GIFT"
           }
         },
         {
           "type": "block_item",
           "settings": {
             "block_eyebrow": "8+ items",
-            "block_title": "75"
+            "block_title": "70",
+            "gift_text": "+ 2 FREE GIFTS"
           }
         },
         {
           "type": "block_item",
           "settings": {
             "block_eyebrow": "12+ items",
-            "block_title": "80"
+            "block_title": "80",
+            "gift_text": "+ 3 FREE GIFTS"
           }
         },
         {
           "type": "block_item",
           "settings": {
             "block_eyebrow": "16+ items",
-            "block_title": "85"
+            "block_title": "85",
+            "gift_text": "+ 4 FREE GIFTS"
           }
         }
       ]

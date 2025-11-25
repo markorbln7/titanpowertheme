@@ -45,92 +45,96 @@
     box-shadow: 0 8px 24px rgba(96, 198, 85, 0.2);
   }
 
-  /* ========== BF25 TIER BOX TEXT STYLING (V4) ========== */
+  /* ========== BF25 TIER BOX - FORCED INDEPENDENT SIZING ========== */
 
-  /* Items label - top (desktop slightly bigger) */
-  .block-item .bf25-items-label,
-  .block-item > div:first-child {
-    color: #60c655;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  /* Discount row container - align OFF to bottom of number */
-  .block-item .bf25-discount-row,
-  .block-item h3 {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-  }
-
-  /* Large discount number */
+  /* DISCOUNT NUMBER - Large and bold */
+  .bf25-discount-number,
   .block-item .bf25-discount-number,
-  .block-item h3 span:first-child {
-    color: #fff;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 0.85;
-    order: 1; /* Ensure number is first */
+  .custom-pack-wrapper .bf25-discount-number {
+    color: #fff !important;
+    font-size: 52px !important;
+    font-weight: 700 !important;
+    line-height: 0.85 !important;
+    display: inline-block !important;
   }
 
-  /* % and OFF stacked - % on TOP, OFF below */
-  .block-item .bf25-discount-suffix,
-  .block-item h3 > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 3px;
-    order: 2; /* Ensure suffix is second */
+  /* PERCENT SYMBOL - Much smaller */
+  .bf25-percent,
+  .block-item .bf25-percent,
+  .custom-pack-wrapper .bf25-percent {
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    display: block !important;
   }
 
-  /* Override Tailwind absolute positioning on % */
+  /* OFF TEXT - Smallest */
+  .bf25-off-text,
+  .block-item .bf25-off-text,
+  .custom-pack-wrapper .bf25-off-text {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    display: block !important;
+    margin-top: 2px !important;
+  }
+
+  /* ROW CONTAINER */
+  .bf25-discount-row,
+  .block-item .bf25-discount-row {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 3px !important;
+  }
+
+  /* SUFFIX CONTAINER (% and OFF stacked) */
+  .bf25-discount-suffix,
+  .block-item .bf25-discount-suffix {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* ITEMS LABEL */
+  .bf25-items-label,
+  .block-item .bf25-items-label {
+    color: #60c655 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* GIFT TEXT */
+  .bf25-gift-text,
+  .block-item .bf25-gift-text {
+    color: #60c655 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    margin-top: 8px !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Kill any inherited font-size on h3 or parent elements */
+  .block-item h3 {
+    font-size: inherit !important;
+  }
+
+  .block-item h3 span {
+    font-size: inherit !important;
+  }
+
+  /* Override Tailwind classes */
   .block-item h3 .absolute {
     position: relative !important;
     top: auto !important;
     right: auto !important;
   }
 
-  /* Percent sign - % on TOP (order: 1) */
-  .block-item .bf25-percent,
-  .block-item h3 .text-\[24px\],
-  .block-item h3 .md\:text-\[40px\] {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-    order: 1; /* First - on top */
-  }
-
-  /* OFF text - below % (order: 2) */
-  .block-item .bf25-off-text,
-  .block-item h3 span:last-child,
-  .block-item h3 .text-\[10px\],
-  .block-item h3 .md\:text-\[20px\] {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1;
-    margin-top: 2px;
-    order: 2; /* Second - below */
-  }
-
-  /* Gift text - bigger and prominent */
-  .block-item .bf25-gift-text {
-    color: #60c655;
-    font-size: 13px;
-    font-weight: 700;
-    margin-top: 8px;
-    text-transform: uppercase;
-  }
-
-  /* ========== MOBILE OVERRIDES ========== */
+  /* ========== MOBILE - SCALED DOWN ========== */
   @media (max-width: 768px) {
     .custom-pack-wrapper {
       padding: 20px 8px;
@@ -149,37 +153,43 @@
       border-radius: 8px;
     }
 
-    /* Items label */
-    .block-item .bf25-items-label,
-    .block-item > div:first-child {
-      font-size: 8px;
-      margin-bottom: 2px;
-    }
-
-    /* Discount number */
+    /* Discount number - scaled down */
+    .bf25-discount-number,
     .block-item .bf25-discount-number,
-    .block-item h3 span:first-child {
-      font-size: 26px;
+    .custom-pack-wrapper .bf25-discount-number {
+      font-size: 32px !important;
     }
 
-    /* Percent - smaller on mobile */
+    /* Percent - scaled down */
+    .bf25-percent,
     .block-item .bf25-percent,
-    .block-item h3 .text-\[24px\] {
-      font-size: 9px;
+    .custom-pack-wrapper .bf25-percent {
+      font-size: 10px !important;
     }
 
-    /* OFF - smaller on mobile */
+    /* OFF - scaled down */
+    .bf25-off-text,
     .block-item .bf25-off-text,
-    .block-item h3 span:last-child,
-    .block-item h3 .text-\[10px\] {
-      font-size: 6px;
-      margin-top: 1px;
+    .custom-pack-wrapper .bf25-off-text {
+      font-size: 7px !important;
+    }
+
+    /* Items label */
+    .bf25-items-label,
+    .block-item .bf25-items-label {
+      font-size: 9px !important;
     }
 
     /* Gift text */
+    .bf25-gift-text,
     .block-item .bf25-gift-text {
-      font-size: 7px;
-      margin-top: 4px;
+      font-size: 8px !important;
+    }
+
+    /* Suffix padding */
+    .bf25-discount-suffix,
+    .block-item .bf25-discount-suffix {
+      padding-bottom: 2px !important;
     }
   }
 
@@ -221,7 +231,7 @@
       {% for block in section.blocks %}
         <div class="block-item" {{ block.shopify_attributes }}>
           {% if block.settings.eyebrow_position == false %}
-            <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mb-2">
+            <div class="bf25-items-label">
               {{ block.settings.block_eyebrow }}
             </div>
           {% endif %}

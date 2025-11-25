@@ -687,11 +687,15 @@
      * Add tier to animation queue
      */
     animate(tier) {
-      // Skip if already celebrated this session
+      // Skip if already celebrated this session (BF25-8.3: check early)
       if (this.celebratedTiers.has(tier)) {
-        console.log(`[GiftAnimator] Tier ${tier} already celebrated (skipping)`);
+        console.log(`[GiftAnimator] Tier ${tier} already celebrated (skipping queue)`);
         return;
       }
+
+      // Mark as celebrated IMMEDIATELY (before queue) to prevent duplicates - BF25-8.3
+      this.celebratedTiers.add(tier);
+      this.saveCelebratedTiers();
 
       console.log(`[GiftAnimator] Queueing tier ${tier} for animation`);
       this.queue.add(tier);
@@ -742,7 +746,7 @@
 
               try {
                 await this.executeSequence(tier);
-                this.celebratedTiers.add(tier);
+                // Already marked in animate() - BF25-8.3
                 console.log(`[GiftAnimator] ✓ Tier ${tier} complete`);
                 resolve();
               } catch (error) {
@@ -866,11 +870,14 @@
         wrapper.style.animation = '';
       }
 
-      // Performance tracking complete
+      // Performance tracking complete (BF25-8.3: guard against undefined)
       const fps = window.BF25Performance.stopFPSTracking();
       const duration = window.BF25Performance.endOperation(`giftAnimation-tier${tier}`, 3500);
 
-      console.log(`[GiftAnimator] ✓ Tier ${tier} complete - FPS: ${fps.toFixed(1)}, Duration: ${duration.toFixed(0)}ms`);
+      const fpsDisplay = (typeof fps === 'number' && !isNaN(fps)) ? fps.toFixed(1) : 'N/A';
+      const durationDisplay = (typeof duration === 'number' && !isNaN(duration)) ? duration.toFixed(0) : 'N/A';
+
+      console.log(`[GiftAnimator] ✓ Tier ${tier} complete - FPS: ${fpsDisplay}, Duration: ${durationDisplay}ms`);
     }
 
     /**

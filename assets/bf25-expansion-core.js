@@ -1147,6 +1147,7 @@ class TierCalculator {
   /**
    * Update main price display area
    * Updated: BF25-FIX-014 - Prominent discount badge with percentage
+   * Updated: BF25-CART-AWARE-DISCOUNT-BADGE - Uses combinedTier from cart-aware pricing
    */
   updateMainPrice(pricing) {
     const priceContainer = document.querySelector('.bf25-modal-pricing');
@@ -1157,7 +1158,19 @@ class TierCalculator {
     const comparePrice = pricing.comparePrice || 0;
     const basePrice = pricing.basePricePerItem || 0;
 
-    // Debug logging for BF25-FIX-020/022
+    // Debug logging for cart-aware pricing (BF25-CART-AWARE-DISCOUNT-BADGE)
+    if (this.config.debug) {
+      console.log('💰 Cart-Aware Pricing:', {
+        cartQuantity: pricing.cartQuantity,
+        modalQuantity: pricing.modalQuantity,
+        combinedQuantity: pricing.combinedQuantity,
+        currentTier: pricing.currentTier?.label,
+        combinedTier: pricing.combinedTier?.label,
+        badgeWillShow: pricing.combinedTier?.displayLabel || pricing.currentTier?.displayLabel || '50% OFF'
+      });
+    }
+
+    // Debug logging for compare price (BF25-FIX-020/022)
     console.log('🔍 updateMainPrice - Compare Price Debug:', {
       pricingHasCompare: 'comparePrice' in pricing,
       comparePrice: comparePrice,
@@ -1177,7 +1190,7 @@ class TierCalculator {
       console.log('❌ Compare price not shown (value:', comparePrice, ')');
     }
 
-    // Build new price HTML (BF25-FIX-020, BF25-INLINE-BADGE, BF25-ALWAYS-SHOW-DISCOUNT-BADGE)
+    // Build new price HTML (BF25-FIX-020, BF25-INLINE-BADGE, BF25-ALWAYS-SHOW-DISCOUNT-BADGE, BF25-CART-AWARE-DISCOUNT-BADGE)
     const html = `
       <!-- Main Price Row: Discounted | Original | Inline Badge -->
       <div class="bf25-price-main-row">
@@ -1186,9 +1199,9 @@ class TierCalculator {
           <span class="bf25-per-item">per item</span>
           ${compareHtml}
           <span class="bf25-discount-badge-inline">
-            ${pricing.hasDiscount && pricing.currentTier
-              ? pricing.currentTier.displayLabel
-              : '50% OFF'}
+            ${pricing.combinedTier
+              ? pricing.combinedTier.displayLabel
+              : (pricing.currentTier?.displayLabel || '50% OFF')}
           </span>
         </div>
       </div>
@@ -1210,6 +1223,7 @@ class TierCalculator {
 
   /**
    * Update tier messaging area
+   * BF25-8.8: Also inserts quantity stepper after messaging
    */
   updateTierMessaging(pricing) {
     // Find or create tier messaging container
@@ -1227,6 +1241,18 @@ class TierCalculator {
 
     // Generate and inject message
     messageContainer.innerHTML = this.generateUrgencyMessage(pricing);
+
+    // BF25-8.8: Insert quantity stepper after tier messaging (if not already present)
+    let stepperContainer = messageContainer.nextElementSibling;
+    if (!stepperContainer || !stepperContainer.classList.contains('bf25-stepper-wrapper')) {
+      stepperContainer = document.createElement('div');
+      stepperContainer.className = 'bf25-stepper-wrapper bf25-mb-4';
+      stepperContainer.innerHTML = this.manager.generateIndividualProductsUI();
+      messageContainer.insertAdjacentElement('afterend', stepperContainer);
+
+      // Re-bind events for the new stepper
+      this.manager.bindQuantityEvents();
+    }
   }
 
   /**
@@ -3875,19 +3901,19 @@ class ExpansionManager {
 
   /**
    * Generate quantity control UI based on mode
+   * BF25-8.8: Returns ONLY pack buttons (stepper moved to tier messaging area)
    *
    * @returns {string} HTML for quantity controls
    */
   generateQuantityControls() {
     if (this.config.debug) {
-      console.log('🎮 generateQuantityControls: Rendering BOTH controls');
+      console.log('🎮 generateQuantityControls: Rendering pack buttons only');
     }
 
-    // Always return BOTH pack buttons AND stepper
+    // Return only pack buttons (stepper is inserted separately in updateTierMessaging)
     const packButtonsHTML = this.generatePowerPacksUI();
-    const stepperHTML = this.generateIndividualProductsUI();
 
-    return packButtonsHTML + stepperHTML;
+    return packButtonsHTML;
   }
 
   /**

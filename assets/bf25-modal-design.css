@@ -1144,21 +1144,21 @@
 }
 
 .bf25-description-inner {
-  height: 100px;
+  height: 80px; /* Reduced from 100px (BF25-8.9) */
   overflow: hidden;
   position: relative;
   transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Gradient fade when collapsed */
+/* Gradient fade when collapsed - BF25-8.9: Darker fade matching modal bg */
 .bf25-description-inner::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px;
-  background: linear-gradient(to bottom, transparent, var(--bf25-bg-primary));
+  height: 32px; /* Slightly larger for smoother transition */
+  background: linear-gradient(to bottom, transparent, #1a1a1a); /* Darker fade */
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -1174,7 +1174,7 @@
 }
 
 .bf25-description-content {
-  padding: var(--bf25-space-3);
+  padding: var(--bf25-space-2) var(--bf25-space-3) var(--bf25-space-3); /* Reduced top padding (BF25-8.9) */
   background: rgba(255, 255, 255, 0.02);
   border-radius: var(--bf25-radius-md);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -1193,7 +1193,7 @@
   padding-left: var(--bf25-space-3);
   position: relative;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.65); /* Darker/subtler text (BF25-8.9) */
   font-size: 14px;
 }
 

@@ -151,12 +151,16 @@
   /* Premium Product Cards with Green Glow */
   .dark-mode .section-collections-with-nav__product {
     background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
-    border: 2px solid rgba(96, 198, 85, 0.3);
+    border: none;
     border-radius: 24px;
     padding: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to allow glow */
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.35),
+      0 0 0 5px rgba(96, 198, 85, 0.1),
+      0 10px 35px rgba(0, 0, 0, 0.45);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   /* Green Glow Effect on Hover */
@@ -181,13 +185,37 @@
   
   .dark-mode .section-collections-with-nav__product:hover {
     transform: translateY(-8px);
-    border-color: rgba(96, 198, 85, 0.6);
-    box-shadow: 
-      0 0 40px rgba(96, 198, 85, 0.4),
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 0 60px rgba(96, 198, 85, 0.05);
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.5),
+      0 0 0 5px rgba(96, 198, 85, 0.15),
+      0 0 30px rgba(96, 198, 85, 0.3),
+      0 15px 40px rgba(0, 0, 0, 0.4);
   }
-  
+
+  /* S2 Selected State - Strong outer glow */
+  .dark-mode .section-collections-with-nav__product.is-selected,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"] {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.2),
+      0 0 50px rgba(96, 198, 85, 0.5),
+      0 0 80px rgba(96, 198, 85, 0.25),
+      0 15px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+  }
+
+  /* Selected + Hover state */
+  .dark-mode .section-collections-with-nav__product.is-selected:hover,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"]:hover {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.25),
+      0 0 55px rgba(96, 198, 85, 0.55),
+      0 0 90px rgba(96, 198, 85, 0.3),
+      0 18px 45px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+  }
+
   /* Product Image with Glow */
   .dark-mode .section-collections-with-nav__product-image {
     position: relative;
@@ -774,8 +802,8 @@ body.modal-open {
 .bf25-product-info-icon svg {
   width: 20px;
   height: 20px;
-  margin-left: 8px;
-  margin-top: 8px;
+  margin-left: 0px;
+  margin-top: 0px;
   pointer-events: none; /* Let clicks pass through to parent */
   display: block; /* Fix alignment issues */
   overflow: visible; /* Ensure text renders properly */

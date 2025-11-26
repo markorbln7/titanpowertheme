@@ -3705,7 +3705,7 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     padding-bottom: 140px !important;
   }
 
-  /* --- Close Button: Accessible Touch Target --- */
+  /* --- Close Button: Premium Minimal Design --- */
   .buy-now-popup .close-buy-now-popup,
   .bf25-modal-close {
     position: fixed !important;
@@ -3718,12 +3718,32 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-    border: 1px solid rgba(96, 198, 85, 0.5) !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 50% !important;
     z-index: 100002 !important;
     cursor: pointer !important;
     -webkit-tap-highlight-color: transparent !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .buy-now-popup .close-buy-now-popup:hover,
+  .buy-now-popup .close-buy-now-popup:active,
+  .bf25-modal-close:hover,
+  .bf25-modal-close:active {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.05) !important;
+  }
+
+  .buy-now-popup .close-buy-now-popup svg,
+  .bf25-modal-close svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: rgba(255, 255, 255, 0.9) !important;
+    stroke-width: 2 !important;
   }
 
   /* --- Tier Buttons: FORCE 3-Across Horizontal --- */
@@ -3824,6 +3844,92 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     letter-spacing: 0.5px !important;
     margin-bottom: 10px !important;
     display: block !important;
+  }
+
+  /* --- Description: Fix Bullet Formatting --- */
+  .bf25-description-wrapper {
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-description-inner {
+    max-height: 80px !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 500px !important;
+  }
+
+  .bf25-description-content {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    padding: 0 4px !important;
+  }
+
+  /* Fix bullet formatting - keep bold inline with text */
+  .bf25-description-content ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .bf25-description-content li {
+    position: relative !important;
+    padding-left: 20px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+  }
+
+  .bf25-description-content li::before {
+    content: "✓" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: #60c655 !important;
+    font-weight: bold !important;
+  }
+
+  .bf25-description-content li strong {
+    color: #fff !important;
+    font-weight: 600 !important;
+    display: inline !important;
+  }
+
+  /* Learn More button - ensure visible */
+  .bf25-description-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    padding: 8px !important;
+    margin-top: 8px !important;
+    background: rgba(96, 198, 85, 0.1) !important;
+    border: 1px solid rgba(96, 198, 85, 0.3) !important;
+    border-radius: 6px !important;
+    color: #60c655 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .bf25-description-toggle:hover,
+  .bf25-description-toggle:active {
+    background: rgba(96, 198, 85, 0.2) !important;
+  }
+
+  .bf25-description-toggle .bf25-toggle-text {
+    display: inline !important;
+  }
+
+  .bf25-description-arrow {
+    transition: transform 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-arrow {
+    transform: rotate(180deg) !important;
   }
 
   /* --- Upsells Grid: Stack on Mobile --- */

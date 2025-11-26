@@ -1081,8 +1081,10 @@ class TierCalculator {
     // Update cart progress indicator (NEW)
     this.updateCartProgress(pricing);
 
-    // Update U5 Progress Tracker
-    this.updateU5ProgressTracker();
+    // Update U5 tracker via ExpansionManager instance
+    if (window.BF25ExpansionManager?.updateU5ProgressTracker) {
+      window.BF25ExpansionManager.updateU5ProgressTracker();
+    }
   }
 
   /**

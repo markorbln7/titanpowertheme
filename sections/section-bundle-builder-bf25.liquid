@@ -67,19 +67,19 @@
                   {%- comment -%} STATE 1: DEFAULT VIEW (BF25-QUICK-ADD-001) {%- endcomment -%}
                   <div class="bf25-card-default-state">
                     {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
-                      <div class="absolute left-[10px] top-[10px]">
-                        <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                          <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
-                          <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
-                        </div>
+                      <div class="bf25-discount-badge">
+                        <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount_top }}</span>
+                        <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                        </svg>
                       </div>
                     {% else %}
                       {% if product.metafields.custom.new_shop_discount %}
-                        <div class="absolute left-[10px] top-[10px]">
-                          <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                            <div>{{ product.metafields.custom.new_shop_discount }}</div>
-                            <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
-                          </div>
+                        <div class="bf25-discount-badge">
+                          <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount }}</span>
+                          <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                          </svg>
                         </div>
                       {% endif %}
                     {% endif %}

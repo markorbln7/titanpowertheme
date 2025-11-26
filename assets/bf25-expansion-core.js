@@ -1080,6 +1080,9 @@ class TierCalculator {
 
     // Update cart progress indicator (NEW)
     this.updateCartProgress(pricing);
+
+    // Update U5 Progress Tracker
+    this.updateU5ProgressTracker();
   }
 
   /**
@@ -3864,6 +3867,128 @@ class ExpansionManager {
   }
 
   /**
+   * Generate U5 Progress Tracker HTML
+   * Shows: item count, current tier, progress bar with markers, gift icons
+   */
+  generateU5ProgressTracker() {
+    // Get quantities from BundleManager + modal
+    const cartQty = window.BF25BundleManager?.bundle?.computed?.itemCount || 0;
+    const modalQty = this.state.get('quantity') || 1;
+    const totalQty = cartQty + modalQty;
+
+    // Calculate progress (max 16 for visual, but no cap on actual items)
+    const progressPercent = Math.min((totalQty / 16) * 100, 100);
+
+    // Determine tier thresholds
+    const thresholds = [4, 8, 12, 16];
+    const tierDiscounts = ['60%', '70%', '80%', '85%'];
+
+    // Find current tier and next tier
+    let currentTierIndex = -1;
+    for (let i = thresholds.length - 1; i >= 0; i--) {
+      if (totalQty >= thresholds[i]) {
+        currentTierIndex = i;
+        break;
+      }
+    }
+
+    const currentDiscount = currentTierIndex >= 0 ? tierDiscounts[currentTierIndex] : '50%';
+    const nextTierIndex = currentTierIndex + 1;
+    const nextThreshold = nextTierIndex < thresholds.length ? thresholds[nextTierIndex] : null;
+    const nextDiscount = nextTierIndex < thresholds.length ? tierDiscounts[nextTierIndex] : null;
+    const itemsToNext = nextThreshold ? nextThreshold - totalQty : 0;
+
+    // Generate marker and gift states
+    const markerStates = thresholds.map((threshold, i) => {
+      if (totalQty >= threshold) return 'unlocked';
+      if (i === nextTierIndex) return 'next';
+      return '';
+    });
+
+    // Gift SVG template
+    const giftSVG = `<svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2"/><rect x="3" y="6" width="18" height="4" rx="1"/><line x1="12" y1="6" x2="12" y2="21"/></svg>`;
+
+    // Build tier text
+    let tierText = `<span class="bf25-u5-current">${currentDiscount} OFF</span>`;
+    if (nextThreshold && itemsToNext > 0) {
+      tierText += ` · +<strong>${itemsToNext}</strong> → ${nextDiscount}`;
+    } else if (totalQty >= 16) {
+      tierText = `<span class="bf25-u5-current" style="color:#7ddf71;">🎉 MAX 85% OFF</span>`;
+    }
+
+    // Build count text
+    const countText = cartQty > 0
+      ? `<strong>${totalQty}</strong> items (${cartQty} cart + ${modalQty} now)`
+      : `<strong>${totalQty}</strong> item${totalQty !== 1 ? 's' : ''}`;
+
+    return `
+      <div class="bf25-u5-tracker" data-total-qty="${totalQty}">
+        <div class="bf25-u5-header">
+          <span class="bf25-u5-count">${countText}</span>
+          <span class="bf25-u5-tier">${tierText}</span>
+        </div>
+        <div class="bf25-u5-track">
+          <div class="bf25-u5-bar">
+            <div class="bf25-u5-bar-fill" style="width: ${progressPercent}%"></div>
+          </div>
+          <div class="bf25-u5-markers">
+            ${thresholds.map((t, i) => `<div class="bf25-u5-marker ${markerStates[i]}"></div>`).join('')}
+          </div>
+        </div>
+        <div class="bf25-u5-gifts">
+          ${thresholds.map((t, i) => `<div class="bf25-u5-gift ${markerStates[i]}">${giftSVG}</div>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Update U5 Progress Tracker (called on quantity change)
+   */
+  updateU5ProgressTracker() {
+    const container = document.querySelector('.bf25-u5-tracker');
+    if (!container) return;
+
+    const oldTotal = parseInt(container.dataset.totalQty) || 0;
+
+    // Get new quantities
+    const cartQty = window.BF25BundleManager?.bundle?.computed?.itemCount || 0;
+    const modalQty = this.state.get('quantity') || 1;
+    const newTotal = cartQty + modalQty;
+
+    // Check if we crossed a threshold (for jolt animation)
+    const thresholds = [4, 8, 12, 16];
+    let crossedThreshold = null;
+    for (const t of thresholds) {
+      if (oldTotal < t && newTotal >= t) {
+        crossedThreshold = t;
+        break;
+      }
+    }
+
+    // Re-render the tracker
+    const newHTML = this.generateU5ProgressTracker();
+    container.outerHTML = newHTML;
+
+    // Trigger jolt animation if threshold crossed
+    if (crossedThreshold) {
+      const thresholdIndex = thresholds.indexOf(crossedThreshold);
+      setTimeout(() => {
+        const gifts = document.querySelectorAll('.bf25-u5-gift');
+        const markers = document.querySelectorAll('.bf25-u5-marker');
+        if (gifts[thresholdIndex]) {
+          gifts[thresholdIndex].classList.add('just-unlocked');
+          setTimeout(() => gifts[thresholdIndex].classList.remove('just-unlocked'), 500);
+        }
+        if (markers[thresholdIndex]) {
+          markers[thresholdIndex].style.animation = 'bf25-jolt 0.5s ease-out';
+          setTimeout(() => markers[thresholdIndex].style.animation = '', 500);
+        }
+      }, 50);
+    }
+  }
+
+  /**
    * Generate Power Packs mode UI (Tier button selectors)
    * Simplifies choice to 3 pre-set tier quantities
    */
@@ -4002,33 +4127,38 @@ class ExpansionManager {
    * Updated: BF25-FIX-013 - Changed to "ADD TO DEAL"
    */
   generateActionButtons() {
-    return `
-      <div class="bf25-action-buttons">
-        <button
-          type="button"
-          class="bf25-button bf25-add-to-cart"
-          data-action="add-to-cart"
-        >
-          <span class="bf25-button-text">ADD TO DEAL</span>
-          <span class="bf25-button-loader" hidden>
-            <svg class="bf25-spinner" width="20" height="20" viewBox="0 0 20 20">
-              <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="50" stroke-dashoffset="0">
-                <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="1s" repeatCount="indefinite"/>
-              </circle>
-            </svg>
-          </span>
-        </button>
+    const u5Tracker = this.generateU5ProgressTracker();
 
-        <!-- Optional: Buy Now button (commented out for now, can enable later) -->
-        <!--
-        <button
-          type="button"
-          class="bf25-button bf25-buy-now"
-          data-action="buy-now"
-        >
-          <span class="bf25-button-text">Buy Now</span>
-        </button>
-        -->
+    return `
+      <div class="bf25-modal-footer-fixed">
+        ${u5Tracker}
+        <div class="bf25-action-buttons">
+          <button
+            type="button"
+            class="bf25-button bf25-add-to-cart"
+            data-action="add-to-cart"
+          >
+            <span class="bf25-button-text">ADD TO DEAL</span>
+            <span class="bf25-button-loader" hidden>
+              <svg class="bf25-spinner" width="20" height="20" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="50" stroke-dashoffset="0">
+                  <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="1s" repeatCount="indefinite"/>
+                </circle>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Optional: Buy Now button (commented out for now, can enable later) -->
+          <!--
+          <button
+            type="button"
+            class="bf25-button bf25-buy-now"
+            data-action="buy-now"
+          >
+            <span class="bf25-button-text">Buy Now</span>
+          </button>
+          -->
+        </div>
       </div>
     `;
   }
@@ -4858,6 +4988,9 @@ class ExpansionManager {
     // Update BOTH button selection systems (BF25-PACK-BUTTON-QUANTITY-SYNC)
     this.updateTierButtonSelection();   // .bf25-tier-button (if present)
     this.updatePackButtonSelection();   // .js-pack-btn (Liquid template buttons)
+
+    // Update U5 Progress Tracker
+    this.updateU5ProgressTracker();
 
     if (this.config.debug) {
       console.log('📦 Quantity updated:', validQuantity);

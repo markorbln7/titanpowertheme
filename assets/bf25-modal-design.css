@@ -589,16 +589,14 @@
    ═══════════════════════════════════════════════════════════ */
 
 .bf25-modal-footer-fixed {
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--bf25-space-4);
-  background: var(--bf25-bg-primary);
-  border-top: 2px solid rgba(96, 198, 85, 0.3);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  padding: 8px var(--bf25-space-4) var(--bf25-space-4);
+  background: linear-gradient(to top, rgba(20, 20, 20, 1) 80%, rgba(20, 20, 20, 0));
+  z-index: 10;
+  margin-top: auto;
 }
 
 .bf25-modal-footer-fixed .bf25-add-to-cart,
@@ -2559,6 +2557,202 @@
 /* ACTION BUTTONS (Add to Cart, Buy Now) */
 /* ─────────────────────────────────────────────────────────────────── */
 
+/* ========================================
+   U5 Progress Tracker - Sticky Above ATC
+   ======================================== */
+.bf25-u5-tracker {
+  padding: 10px 16px 8px;
+  background: transparent;
+}
+
+.bf25-u5-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.bf25-u5-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bf25-u5-count strong {
+  color: #60c655;
+  font-weight: 700;
+}
+
+.bf25-u5-tier {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bf25-u5-tier strong {
+  color: #60c655;
+}
+
+.bf25-u5-current {
+  color: #60c655;
+  font-weight: 600;
+}
+
+.bf25-u5-track {
+  position: relative;
+  height: 20px;
+}
+
+.bf25-u5-bar {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.bf25-u5-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3d8a36, #60c655);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(96, 198, 85, 0.4);
+  position: relative;
+  transition: width 0.3s ease;
+}
+
+.bf25-u5-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: -2px;
+  width: 8px;
+  height: 8px;
+  background: #60c655;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(96, 198, 85, 0.8);
+}
+
+.bf25-u5-markers {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 calc(25% - 4px);
+}
+
+.bf25-u5-marker {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  position: relative;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+.bf25-u5-marker.unlocked {
+  background: #60c655;
+  box-shadow: 0 0 6px rgba(96, 198, 85, 0.5);
+}
+
+.bf25-u5-marker.next {
+  animation: bf25-pulse-marker 2.5s ease-in-out infinite;
+}
+
+@keyframes bf25-pulse-marker {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(96, 198, 85, 0);
+    background: rgba(96, 198, 85, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.6);
+    background: rgba(96, 198, 85, 0.6);
+  }
+}
+
+.bf25-u5-gifts {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 calc(25% - 6px);
+  margin-top: 2px;
+}
+
+.bf25-u5-gift {
+  opacity: 0.2;
+  transition: all 0.2s ease;
+}
+
+.bf25-u5-gift.unlocked {
+  opacity: 1;
+}
+
+.bf25-u5-gift.next {
+  opacity: 0.5;
+  animation: bf25-pulse-gift 2.5s ease-in-out infinite;
+}
+
+@keyframes bf25-pulse-gift {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+.bf25-u5-gift.just-unlocked {
+  animation: bf25-jolt 0.5s ease-out;
+}
+
+@keyframes bf25-jolt {
+  0% { transform: translateY(0) scale(1); }
+  20% { transform: translateY(-4px) scale(1.2); }
+  40% { transform: translateY(-2px) scale(1.1); }
+  60% { transform: translateY(-1px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.bf25-u5-gift svg {
+  width: 12px;
+  height: 12px;
+}
+
+.bf25-u5-gift svg rect,
+.bf25-u5-gift svg line {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bf25-u5-gift.unlocked svg rect,
+.bf25-u5-gift.unlocked svg line {
+  stroke: #60c655;
+}
+
+.bf25-u5-gift.unlocked svg rect:first-child {
+  fill: rgba(96, 198, 85, 0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .bf25-u5-tracker {
+    padding: 8px 12px 6px;
+  }
+
+  .bf25-u5-count {
+    font-size: 11px;
+  }
+
+  .bf25-u5-tier {
+    font-size: 10px;
+  }
+
+  .bf25-u5-gift svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
 .bf25-action-buttons {
   display: flex;
   flex-direction: column;
@@ -2944,12 +3138,9 @@
   margin-bottom: var(--bf25-space-3);
 }
 
+/* Hide old progress tracker - replaced by U5 */
 .bf25-cart-progress {
-  background: rgba(96, 198, 85, 0.08);
-  border: 1px solid rgba(96, 198, 85, 0.2);
-  border-radius: 12px;
-  padding: var(--bf25-space-3);
-  display: flex;
+  display: none !important;
   flex-direction: column;
   gap: var(--bf25-space-2);
 }

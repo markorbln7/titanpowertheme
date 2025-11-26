@@ -5309,3 +5309,65 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 /* END BF25-MOB-021: DESCRIPTION EXPAND - DETAILS FIX           */
 /* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-022: NUCLEAR SPECIFICITY - DETAILS SECTION HEIGHT   */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* NUCLEAR: Every possible selector combination */
+  .bf25-modal-details-section,
+  .bf25-modal-container .bf25-modal-details-section,
+  .bf25-modal-content .bf25-modal-details-section,
+  .bf25-modal-layout .bf25-modal-details-section,
+  .buy-now-popup .bf25-modal-details-section,
+  .buy-now-popup__wrapper .bf25-modal-details-section,
+  html body .bf25-modal-details-section,
+  html body .bf25-modal-container .bf25-modal-details-section,
+  [class*="modal"] .bf25-modal-details-section {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+  }
+
+  /* NUCLEAR: Modal layout */
+  .bf25-modal-layout,
+  .bf25-modal-container .bf25-modal-layout,
+  html body .bf25-modal-layout {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Keep modal-content scrollable */
+  .bf25-modal-content,
+  .bf25-modal-container .bf25-modal-content,
+  html body .bf25-modal-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Description expand */
+  .bf25-description-inner,
+  .bf25-modal-details-section .bf25-description-inner,
+  html body .bf25-description-inner {
+    max-height: 78px !important;
+    overflow: hidden !important;
+    transition: max-height 0.35s ease-out !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner,
+  html body .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1200px !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-022: NUCLEAR SPECIFICITY                        */
+/* ============================================================ */

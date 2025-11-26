@@ -5191,177 +5191,61 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 
 /* ============================================================ */
-/* BF25-MOB-021: DESCRIPTION EXPAND - LET PARENT GROW           */
+/* BF25-MOB-FINAL-FIX: UNLOCK DOCUMENT FLOW                     */
+/* Root cause: wrapper had fixed 80px height causing overlay    */
+/* Date: 2025-11-26                                             */
 /* ============================================================ */
 
 @media (max-width: 767px) {
 
-  /* Description wrapper - must affect parent's height */
-  .bf25-description-wrapper {
-    position: relative !important;
-    display: block !important;
-    min-height: 0 !important;
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    flex-basis: auto !important;
-  }
-
-  /* Description inner - THIS controls the collapse */
-  .bf25-description-inner {
-    display: block !important;
-    max-height: 78px !important;
-    overflow: hidden !important;
-    transition: max-height 0.35s ease-out !important;
-  }
-
-  .bf25-description-wrapper.expanded .bf25-description-inner {
-    max-height: 1000px !important;
-  }
-
-  /* Sections after description - ensure they're flex items that respond */
-  .bf25-quantity-section,
-  .bf25-quantity-controls,
-  .bf25-upsells-section {
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    flex-basis: auto !important;
-  }
-
-  /* The modal body/content needs to allow growth */
-  .bf25-modal-body,
-  .bf25-modal-content {
-    flex-grow: 1 !important;
-    min-height: 0 !important;
-  }
-
-}
-
-/* ============================================================ */
-/* END BF25-MOB-021: DESCRIPTION EXPAND                         */
-/* ============================================================ */
-
-/* ============================================================ */
-/* BF25-MOB-021: DESCRIPTION EXPAND - FIX DETAILS SECTION       */
-/* Root cause: .bf25-modal-details-section has fixed height     */
-/* ============================================================ */
-
-@media (max-width: 767px) {
-
-  /* CRITICAL: Details section must NOT have fixed height */
-  .bf25-modal-details-section {
+  /* 1. UNLOCK THE WRAPPER (Critical Fix for Overlay Issue) */
+  /* This ensures the wrapper physically grows in the DOM, pushing siblings down */
+  html body .bf25-description-wrapper {
     height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
+    min-height: 80px !important;
     overflow: visible !important;
     flex-shrink: 0 !important;
+    display: block !important;
   }
 
-  /* Modal layout - allow growth, keep scrolling */
-  .bf25-modal-layout {
-    height: auto !important;
-    min-height: 100% !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-
-  /* Modal content - this can scroll */
-  .bf25-modal-content {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  /* Modal container - fixed viewport height, scrollable */
-  .bf25-modal-container {
-    max-height: 100vh !important;
-    max-height: 100dvh !important;
-    overflow: hidden !important;
-  }
-
-  /* Description wrapper - normal flow */
-  .bf25-description-wrapper {
-    position: relative !important;
-    overflow: visible !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Description inner - controlled collapse/expand */
-  .bf25-description-inner {
-    max-height: 78px !important;
-    overflow: hidden !important;
-    transition: max-height 0.35s ease-out !important;
-  }
-
-  .bf25-description-wrapper.expanded .bf25-description-inner {
-    max-height: 1000px !important;
-  }
-
-  /* Sections below description - will now be pushed down */
-  .bf25-quantity-section,
-  .bf25-quantity-controls,
-  .bf25-upsells-section,
-  .bf25-reviews-section {
-    flex-shrink: 0 !important;
-  }
-
-}
-
-/* ============================================================ */
-/* END BF25-MOB-021: DESCRIPTION EXPAND - DETAILS FIX           */
-/* ============================================================ */
-
-/* ============================================================ */
-/* BF25-MOB-022: NUCLEAR SPECIFICITY - DETAILS SECTION HEIGHT   */
-/* ============================================================ */
-
-@media (max-width: 767px) {
-
-  /* NUCLEAR: Every possible selector combination */
-  .bf25-modal-details-section,
-  .bf25-modal-container .bf25-modal-details-section,
-  .bf25-modal-content .bf25-modal-details-section,
-  .bf25-modal-layout .bf25-modal-details-section,
-  .buy-now-popup .bf25-modal-details-section,
-  .buy-now-popup__wrapper .bf25-modal-details-section,
+  /* 2. UNLOCK THE PARENT CONTAINERS */
+  /* Stop flexbox from constraining the height. Convert to block flow. */
   html body .bf25-modal-details-section,
-  html body .bf25-modal-container .bf25-modal-details-section,
-  [class*="modal"] .bf25-modal-details-section {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    overflow-y: visible !important;
-    overflow-x: visible !important;
-  }
-
-  /* NUCLEAR: Modal layout */
-  .bf25-modal-layout,
-  .bf25-modal-container .bf25-modal-layout,
   html body .bf25-modal-layout {
     height: auto !important;
-    min-height: 0 !important;
     max-height: none !important;
+    flex: none !important;
+    display: block !important;
     overflow: visible !important;
   }
 
-  /* Keep modal-content scrollable */
-  .bf25-modal-content,
-  .bf25-modal-container .bf25-modal-content,
+  /* 3. HANDLE SCROLLING AT THE ROOT LEVEL */
+  /* Since we removed internal scrolling, ensure content wrapper scrolls */
   html body .bf25-modal-content {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
+    height: 100% !important;
+    padding-bottom: 160px !important;
   }
 
-  /* Description expand */
-  .bf25-description-inner,
-  .bf25-modal-details-section .bf25-description-inner,
+  /* 4. ENSURE SIBLINGS ARE FLOW AWARE */
+  html body .bf25-quantity-section,
+  html body .bf25-quantity-controls,
+  html body .bf25-upsells-section,
+  html body .bf25-reviews-section {
+    position: relative !important;
+    flex-shrink: 0 !important;
+    transform: none !important;
+    z-index: 1 !important;
+  }
+
+  /* 5. DESCRIPTION INNER - Controlled expand/collapse */
   html body .bf25-description-inner {
     max-height: 78px !important;
     overflow: hidden !important;
     transition: max-height 0.35s ease-out !important;
   }
 
-  .bf25-description-wrapper.expanded .bf25-description-inner,
   html body .bf25-description-wrapper.expanded .bf25-description-inner {
     max-height: 1200px !important;
   }
@@ -5369,5 +5253,5 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 }
 
 /* ============================================================ */
-/* END BF25-MOB-022: NUCLEAR SPECIFICITY                        */
+/* END BF25-MOB-FINAL-FIX                                       */
 /* ============================================================ */

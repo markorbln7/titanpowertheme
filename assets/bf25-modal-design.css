@@ -2620,12 +2620,13 @@
 
 .bf25-u5-track {
   position: relative;
-  height: 32px;
+  height: 28px;
+  margin-top: 4px;
 }
 
 .bf25-u5-bar {
   position: absolute;
-  top: 8px;
+  top: 2px;
   left: 0;
   right: 0;
   height: 4px;
@@ -2656,15 +2657,16 @@
 
 .bf25-u5-markers {
   position: absolute;
-  top: 6px;
+  top: 0;
   left: 0;
   right: 0;
-  display: flex;
+  height: 8px;
   pointer-events: none;
 }
 
 .bf25-u5-marker {
   position: absolute;
+  top: 0;
   width: 8px;
   height: 8px;
   background: rgba(255, 255, 255, 0.12);
@@ -2701,17 +2703,16 @@
 
 .bf25-u5-gifts {
   position: absolute;
-  top: 18px;
+  bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 0;
+  height: 14px;
   pointer-events: none;
 }
 
 .bf25-u5-gift {
   position: absolute;
+  bottom: 0;
   transform: translateX(-50%);
   opacity: 0.2;
   transition: all 0.2s ease;
@@ -2741,11 +2742,11 @@
 }
 
 @keyframes bf25-jolt {
-  0% { transform: translateY(0) scale(1); }
-  20% { transform: translateY(-4px) scale(1.2); }
-  40% { transform: translateY(-2px) scale(1.1); }
-  60% { transform: translateY(-1px) scale(1.05); }
-  100% { transform: translateY(0) scale(1); }
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  20% { transform: translateX(-50%) translateY(-4px) scale(1.2); }
+  40% { transform: translateX(-50%) translateY(-2px) scale(1.1); }
+  60% { transform: translateX(-50%) translateY(-1px) scale(1.05); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
 }
 
 .bf25-u5-gift svg {

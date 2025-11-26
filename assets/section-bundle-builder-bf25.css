@@ -3554,16 +3554,28 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     flex-shrink: 0 !important;
   }
 
+  /* --- Product Image: Reduced size for mobile --- */
   .bf25-modal-image-container {
     width: 100% !important;
-    max-width: 280px !important;
+    max-width: 200px !important;
+    max-height: 180px !important;
     margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .bf25-modal-product-image {
-    width: 100% !important;
+    width: auto !important;
     height: auto !important;
     max-width: 100% !important;
+    max-height: 180px !important;
+    object-fit: contain !important;
+  }
+
+  .bf25-modal-image-section {
+    padding: 8px 0 !important;
+    flex-shrink: 0 !important;
   }
 
   /* --- Details Section: Reset Centering --- */
@@ -3590,7 +3602,7 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     overflow-wrap: break-word !important;
   }
 
-  /* --- Fixed Footer: Full Width, Thumb Zone --- */
+  /* --- Fixed Footer: Dark Glass, Compact Thumb Zone --- */
   .bf25-modal-footer-fixed {
     position: fixed !important;
     bottom: 0 !important;
@@ -3598,12 +3610,28 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     right: 0 !important;
     width: 100vw !important;
     max-width: 100% !important;
-    padding: 12px 16px !important;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-    background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.95) 100%) !important;
-    border-top: 1px solid rgba(96, 198, 85, 0.3) !important;
+    padding: 10px 16px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-top: 1px solid rgba(96, 198, 85, 0.15) !important;
     z-index: 100001 !important;
     box-sizing: border-box !important;
+  }
+
+  /* Progress tracker compact spacing */
+  .bf25-modal-footer-fixed .bf25-u5-tracker {
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-header {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-track {
+    height: 20px !important;
   }
 
   /* --- Add padding to content so footer doesn't cover it --- */

@@ -3886,3 +3886,78 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* ============================================================ */
+/* BF25 MOBILE NUCLEAR OVERRIDES - HIGHEST PRIORITY             */
+/* Added: 2025-11-26 - Must be LAST in file                     */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* --- NUCLEAR: Tier Buttons MUST be horizontal --- */
+  .bf25-tier-buttons,
+  div.bf25-tier-buttons,
+  .bf25-quantity-controls .bf25-tier-buttons,
+  .bf25-power-packs-mode .bf25-tier-buttons,
+  .bf25-modal-content .bf25-tier-buttons,
+  .bf25-modal-details-section .bf25-tier-buttons {
+    display: flex !important;
+    grid-template-columns: unset !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .bf25-tier-button,
+  button.bf25-tier-button,
+  .bf25-tier-buttons .bf25-tier-button,
+  .bf25-tier-buttons > .bf25-tier-button {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 8px !important;
+    min-height: 80px !important;
+  }
+
+  /* --- NUCLEAR: Footer seamless (no border, gradient bg) --- */
+  .bf25-modal-footer-fixed,
+  div.bf25-modal-footer-fixed,
+  .bf25-modal-content .bf25-modal-footer-fixed {
+    border-top: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(26, 26, 26, 0) 0%,
+      rgba(26, 26, 26, 0.85) 30%,
+      rgba(26, 26, 26, 0.98) 100%
+    ) !important;
+    padding-top: 20px !important;
+  }
+
+  /* --- NUCLEAR: Layout height unrestricted --- */
+  .bf25-modal-layout,
+  div.bf25-modal-layout,
+  .bf25-modal-content .bf25-modal-layout {
+    max-height: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    padding-bottom: 180px !important;
+  }
+
+  /* Content scrolls, not layout */
+  .bf25-modal-content,
+  div.bf25-modal-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: 100% !important;
+    height: 100% !important;
+  }
+
+}

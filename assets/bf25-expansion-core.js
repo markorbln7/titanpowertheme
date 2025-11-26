@@ -5419,6 +5419,42 @@ class ExpansionManager {
   }
 
   /**
+   * Creates compact review summary for modal header (stars + count, clickable)
+   * @param {string} productId - Product ID to fetch reviews for
+   * @returns {string} HTML string
+   */
+  createCompactReviewSummary(productId) {
+    // Get review data from PRODUCT_REVIEWS (same source as full reviews)
+    const reviewData = window.PRODUCT_REVIEWS?.[productId];
+
+    if (!reviewData || !reviewData.avgRating || reviewData.totalReviews === 0) {
+      return ''; // Don't show if no reviews
+    }
+
+    const rating = reviewData.avgRating;
+    const count = reviewData.totalReviews;
+
+    // Calculate star fill percentage (e.g., 4.5 = 90%)
+    const fillPercent = (rating / 5) * 100;
+
+    return `
+      <div class="bf25-compact-review-summary"
+           role="button"
+           tabindex="0"
+           aria-label="Rated ${rating.toFixed(1)} out of 5 stars, ${count} reviews. Click to view reviews."
+           onclick="document.querySelector('.bf25-modal-reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' })"
+           onkeydown="if(event.key==='Enter') document.querySelector('.bf25-modal-reviews')?.scrollIntoView({ behavior: 'smooth', block: 'start' })">
+        <div class="bf25-compact-stars" aria-hidden="true">
+          <span class="bf25-stars-empty">★★★★★</span>
+          <span class="bf25-stars-filled" style="width: ${fillPercent}%;">★★★★★</span>
+        </div>
+        <span class="bf25-compact-rating">${rating.toFixed(1)}</span>
+        <span class="bf25-compact-count">(${count.toLocaleString()} reviews)</span>
+      </div>
+    `;
+  }
+
+  /**
    * Get reviews from BOGO database
    * Falls back to empty if not found
    *

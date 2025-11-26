@@ -3794,3 +3794,54 @@ body:has(.bf25-modal-container.is-active) .header__icons .icon-close:not(.bf25-m
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Compact Review Summary - Below Title
+   ═══════════════════════════════════════════════════════════════════════════════*/
+
+.bf25-compact-review-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 0;
+  margin: 8px 0 12px 0;
+  transition: opacity 0.2s ease;
+}
+
+.bf25-compact-review-summary:hover {
+  opacity: 0.8;
+}
+
+.bf25-compact-stars {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.bf25-stars-empty {
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 2px;
+}
+
+.bf25-stars-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #60c655;
+  letter-spacing: 2px;
+}
+
+.bf25-compact-rating {
+  font-size: 14px;
+  font-weight: 600;
+  color: #60c655;
+}
+
+.bf25-compact-count {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}

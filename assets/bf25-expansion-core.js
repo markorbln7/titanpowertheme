@@ -5751,7 +5751,22 @@ class ExpansionManager {
           ${product.title}
         </h2>
 
-        <!-- Description Section (Moved up - BF25-FIX-012) -->
+        <!-- Compact Review Summary (BF25-9.1b) -->
+        ${this.createCompactReviewSummary(product.id)}
+
+        <!-- Price Display (Moved up - BF25-9.1b) -->
+        <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
+          <!-- Main Price Row: Discounted | Original -->
+          <div class="bf25-price-main-row">
+            <div class="bf25-price-current-group">
+              <span class="bf25-price-current">${this.formatPrice(product.comparePrice || product.basePrice)}</span>
+              <span class="bf25-per-item">per item</span>
+              ${initialCompareHtml}
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Section (After price - BF25-9.1b) -->
         ${(() => {
           const description = product.description;
 
@@ -5776,21 +5791,9 @@ class ExpansionManager {
           `;
         })()}
 
-        <!-- Variant Selectors (Moved after description - BF25-FIX-016) -->
+        <!-- Variant Selectors (After description - BF25-9.1b) -->
         <div class="bf25-variant-section bf25-mb-4 bf25-reveal-stagger-2">
           ${this.variantManager.initialize(productId)}
-        </div>
-
-        <!-- Price Display (Updated BF25-FIX-021: Pre-built compare price) -->
-        <div class="bf25-modal-pricing bf25-mb-5 bf25-reveal-stagger-1">
-          <!-- Main Price Row: Discounted | Original -->
-          <div class="bf25-price-main-row">
-            <div class="bf25-price-current-group">
-              <span class="bf25-price-current">${this.formatPrice(product.comparePrice || product.basePrice)}</span>
-              <span class="bf25-per-item">per item</span>
-              ${initialCompareHtml}
-            </div>
-          </div>
         </div>
 
         <!-- Quantity Controls (Tier Buttons) - Moved up per BF25-FIX-007 -->

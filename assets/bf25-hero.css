@@ -1761,3 +1761,254 @@
 }
 
 /* END V4 PROGRESS BAR */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - BENEFITS CARD
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Card Base */
+.bf25-hero__card {
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(96, 198, 85, 0.15);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 24px 16px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card {
+    padding: 14px;
+    margin: 16px 12px 0;
+    border-radius: 12px;
+  }
+}
+
+/* TIER 0 - Collapsed State */
+.bf25-hero__card[data-active-tier="0"] {
+  padding: 0;
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+    padding: 18px 14px;
+  }
+}
+
+/* Restyle Default Message as "Slide" Prompt */
+.bf25-hero__default-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: bf25-subtle-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes bf25-subtle-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Hide the old "All products 50% OFF" and "Drag slider" text */
+.bf25-hero__default-subtitle,
+.bf25-hero__default-title {
+  display: none;
+}
+
+/* Add new "Slide" message via pseudo-element */
+.bf25-hero__default-message::before {
+  content: "→";
+  font-size: 20px;
+  color: #60c655;
+  animation: bf25-slide-arrow 1.2s ease-in-out infinite;
+}
+
+@keyframes bf25-slide-arrow {
+  0%, 100% { transform: translateX(-6px); opacity: 0.5; }
+  50% { transform: translateX(6px); opacity: 1; }
+}
+
+.bf25-hero__default-message::after {
+  content: "Slide bar to explore offers";
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__default-message::before {
+    font-size: 16px;
+  }
+  .bf25-hero__default-message::after {
+    content: "Slide to explore";
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Hide Tier Badge at Tier 0 */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__tier-badge {
+  display: none;
+}
+
+/* ACTIVE TIERS - Expanded Card */
+.bf25-hero__card[data-active-tier="1"],
+.bf25-hero__card[data-active-tier="2"],
+.bf25-hero__card[data-active-tier="3"],
+.bf25-hero__card[data-active-tier="4"] {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="1"],
+  .bf25-hero__card[data-active-tier="2"],
+  .bf25-hero__card[data-active-tier="3"],
+  .bf25-hero__card[data-active-tier="4"] {
+    padding: 14px;
+  }
+}
+
+/* Card Header */
+.bf25-hero__card-header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(96, 198, 85, 0.12);
+  margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card-header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Tier Name */
+.bf25-hero__tier-badge-text {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__tier-badge-text {
+    font-size: 12px;
+  }
+}
+
+/* Discount Value - Pulsing Glow */
+.bf25-hero__discount-label {
+  font-size: 32px;
+  font-weight: 800;
+  color: #60c655;
+  animation: bf25-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes bf25-glow-pulse {
+  0%, 100% { text-shadow: 0 0 25px rgba(96, 198, 85, 0.4); }
+  50% { text-shadow: 0 0 35px rgba(96, 198, 85, 0.6); }
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__discount-label {
+    font-size: 26px;
+  }
+}
+
+/* Benefits List - Tighter Gaps */
+.bf25-hero__benefits-list {
+  gap: 8px;
+  padding: 14px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__benefits-list {
+    gap: 6px;
+    padding: 10px 0;
+  }
+}
+
+.bf25-hero__benefit-item {
+  padding: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__benefit-item {
+    padding: 4px 0;
+  }
+}
+
+/* HIDE Est. Total and Per Item Pricing */
+.bf25-hero__pricing-row:first-child,
+.bf25-hero__pricing-row--per-item {
+  display: none !important;
+}
+
+/* Style Savings Row */
+.bf25-hero__pricing-row--savings {
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(96, 198, 85, 0.12), rgba(96, 198, 85, 0.04));
+  border: 1px solid rgba(96, 198, 85, 0.25);
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__pricing-row--savings {
+    padding: 12px;
+  }
+}
+
+.bf25-hero__pricing-row--savings .bf25-hero__pricing-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: #60c655;
+  text-shadow: 0 0 30px rgba(96, 198, 85, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__pricing-row--savings .bf25-hero__pricing-label {
+    font-size: 10px;
+  }
+  .bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+    font-size: 26px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 - HIDE UNNECESSARY ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Hide CTA Button */
+.bf25-hero__cta {
+  display: none !important;
+}
+
+/* Hide Gifts Header */
+.bf25-hero__gifts-header {
+  display: none !important;
+}
+
+/* Hide Card Footer (pricing wrapper - we styled savings separately) */
+.bf25-hero__card-footer {
+  margin-top: 16px;
+}
+
+/* END V4 CARD + HIDE ELEMENTS */

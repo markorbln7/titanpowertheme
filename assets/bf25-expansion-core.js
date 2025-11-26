@@ -3596,6 +3596,13 @@ class ExpansionManager {
     // ─────────────────────────────────────────────────────────────────
 
     // Container animation (morph shape and position)
+    // Determine if mobile viewport for responsive transform
+    const isMobile = window.innerWidth <= 768;
+    const finalTransform = isMobile
+      ? 'translateZ(0)'  // Mobile: no centering offset, fullscreen positioning
+      : 'translate(-50%, -50%)';  // Desktop: centered with transform
+    const finalTransformOrigin = isMobile ? 'top left' : 'center center';
+
     const containerAnimation = this.container.animate([
       {
         // Start: At card position (inverted)
@@ -3605,9 +3612,9 @@ class ExpansionManager {
         opacity: 0.8
       },
       {
-        // End: At final modal position (centered via CSS)
-        transformOrigin: 'center center',
-        transform: 'translate(-50%, -50%)',
+        // End: At final modal position (responsive based on viewport)
+        transformOrigin: finalTransformOrigin,
+        transform: finalTransform,
         borderRadius: lastRadius,
         opacity: 1
       }
@@ -3708,11 +3715,18 @@ class ExpansionManager {
     // ─────────────────────────────────────────────────────────────────
 
     // Container animation (reverse morph)
+    // Determine if mobile viewport for responsive transform
+    const isMobile = window.innerWidth <= 768;
+    const startTransform = isMobile
+      ? 'translateZ(0)'  // Mobile: no centering offset, fullscreen positioning
+      : 'translate(-50%, -50%)';  // Desktop: centered with transform
+    const startTransformOrigin = isMobile ? 'top left' : 'center center';
+
     const containerAnimation = this.container.animate([
       {
-        // Start: At modal position (centered)
-        transformOrigin: 'center center',
-        transform: 'translate(-50%, -50%)',
+        // Start: At modal position (responsive based on viewport)
+        transformOrigin: startTransformOrigin,
+        transform: startTransform,
         borderRadius: lastRadius,
         opacity: 1
       },

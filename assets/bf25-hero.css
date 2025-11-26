@@ -1493,3 +1493,158 @@
 .bf25-hero__arrow-indicator {
   animation-play-state: running !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - GIFT BOXES
+   Added: 2025-11-26
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Gift Container - Explicit Sizing */
+.bf25-hero__gifts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gifts {
+    gap: 10px;
+    padding: 0 12px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Gift Box - Larger, Explicit Size */
+.bf25-hero__gift-box {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box {
+    width: calc(25% - 7.5px);
+    min-width: 75px;
+  }
+}
+
+/* Image Wrapper - Darker Default State */
+.bf25-hero__gift-image-wrapper {
+  background: rgba(8, 8, 8, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  aspect-ratio: 1;
+  margin-bottom: 0; /* Remove gap - label goes inside */
+  position: relative;
+}
+
+/* Image - Much Darker Default */
+.bf25-hero__gift-image {
+  filter: brightness(0.05) grayscale(100%);
+  opacity: 0.5;
+  padding: 14px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-image {
+    padding: 8px;
+  }
+}
+
+/* Lock Icon - Brighter, Stays Centered */
+.bf25-hero__gift-box .icon-lock {
+  opacity: 0.45;
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-lock {
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+  }
+}
+
+/* Check Icon - MOVE TO TOP-RIGHT CORNER (not centered) */
+.bf25-hero__gift-box .icon-check {
+  top: 8px;
+  left: auto;
+  right: 8px;
+  transform: scale(0); /* Override the translate */
+  width: 26px;
+  height: 26px;
+  background: #60c655;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-check {
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+  }
+}
+
+/* Check Icon - Visible on Unlock */
+.bf25-hero__gift-box.is-unlocked .icon-check {
+  opacity: 1;
+  transform: scale(1); /* No translate needed - positioned with top/right */
+}
+
+/* Unlocked Image Wrapper */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper {
+  background: rgba(15, 15, 15, 0.9);
+  border-color: rgba(96, 198, 85, 0.5);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.15),
+              inset 0 0 30px rgba(96, 198, 85, 0.03);
+}
+
+/* Unlocked Image */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
+  filter: brightness(1) grayscale(0%);
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Gift Label - INSIDE Box at Bottom */
+.bf25-hero__gift-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #60c655;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-label {
+    font-size: 9px;
+    padding: 5px 3px;
+  }
+}
+
+/* Label Visible on Unlock */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* END V4 GIFT BOXES */

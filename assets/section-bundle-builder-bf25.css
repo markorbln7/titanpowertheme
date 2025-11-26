@@ -4115,6 +4115,67 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     margin-top: 4px !important;
   }
 
+  /* --- Tier Button Selected State: Checkmark visible --- */
+  .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-container .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-content .bf25-tier-button.is-selected .bf25-tier-button-check {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    bottom: 6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #60c655 !important;
+    border-radius: 50% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  /* Ensure button has relative positioning for absolute checkmark */
+  .bf25-tier-button.is-selected {
+    position: relative !important;
+    padding-bottom: 30px !important;
+  }
+
+  /* --- Tier Buttons Section: Margin below --- */
+  .bf25-quantity-section,
+  .bf25-quantity-controls.bf25-power-packs-mode {
+    margin-bottom: 20px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* --- Most Popular Badge: Green glow (not gold) --- */
+  .bf25-tier-button-badge,
+  .bf25-tier-button.is-popular .bf25-tier-button-badge {
+    background: #60c655 !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-size: 8px !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(96, 198, 85, 0.4) !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove any gold/yellow styling */
+  .bf25-tier-button.is-popular {
+    border-color: rgba(96, 198, 85, 0.5) !important;
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.2) !important;
+  }
+
   /* --- NUCLEAR: Footer with solid dark background --- */
   .bf25-modal-footer-fixed,
   div.bf25-modal-footer-fixed,
@@ -4135,9 +4196,10 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* Progress tracker more visible */
+  /* Progress tracker transparent - blends with modal */
   .bf25-modal-footer-fixed .bf25-u5-tracker {
-    background: rgba(0, 0, 0, 0.3) !important;
+    background: transparent !important;
+    background: rgba(0, 0, 0, 0) !important;
     border-radius: 8px !important;
     padding: 10px 12px !important;
     margin-bottom: 12px !important;

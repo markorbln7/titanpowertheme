@@ -29,6 +29,9 @@ npm run watch                # Webpack watch mode
 # Production build
 npm run build                # Webpack production build + critical CSS split
 
+# Critical CSS extraction (separate pass)
+npm run build:critical-split # Extracts above-fold CSS to snippets/main-critical-css.liquid
+
 # Deploy to Shopify
 npm run deploy               # Build + push to theme store
 
@@ -55,50 +58,64 @@ shopify theme check
 
 ### Build System
 
-**Webpack Entry Point System**
-- Auto-discovers entry files from `src/scripts/entries/`
-- Main entry: `src/scripts/entries/main.js` → includes `src/styles/main.css`
-- Section entries: `src/scripts/entries/section/*.js` → compiles to `section-*.js`
-- Naming convention: `section-<name>.js` entry → `section-<name>.js` + `section-<name>.css` output
+**Webpack Auto-Discovery Pattern**
+- webpack.config.js recursively scans `src/scripts/entries/` for entry points
+- No manual entry configuration needed - just add files following naming convention
+- Special case: main.js automatically imports `src/styles/main.css` for global styles
+- Section entries: `src/scripts/entries/section/<name>.js` → `section-<name>.js`
+- Direct entries: `src/scripts/entries/<name>.js` → `<name>.js`
 
-**CSS Pipeline (PostCSS)**
-- Main CSS: `src/styles/main.css` → compiled via webpack
-- Critical CSS split: `postcss-critical-split` → outputs `snippets/main-critical-css.liquid`
-- PostCSS plugins: autoprefixer, cssnano, postcss-mixins, postcss-preset-env
+**Two-Phase Critical CSS Pipeline**
+1. Main build: PostCSS with `postcss-critical-split` (output: 'rest') strips critical styles
+2. Critical build: Separate PostCSS pass outputs to `snippets/main-critical-css.liquid`
+- Enables inline critical CSS in `<head>` while maintaining modular development
 
 **Asset Output**
-- All compiled assets → `assets/` directory
-- Filenames include cache-busting: `[name].js?v=[timestamp]`
+- All compiled → `assets/` directory
+- Cache busting: `[name].js?v=[timestamp]` (Shopify-friendly, no hashes)
+- Commons chunk: Shared code from `node_modules/` and `src/scripts/lib/`
 
-### File Structure Pattern
+### Non-Standard Architectural Patterns
 
-**Sections (Shopify OS 2.0)**
-```
-sections/section-<name>.liquid    → Liquid template with {% schema %}
-src/scripts/entries/section/<name>.js    → Entry point
-src/modules/<module-name>/<module-name>.js    → Module logic
-src/modules/<module-name>/<module-name>.css   → Module styles
-```
-
-**Module Initialization Pattern**
+**1. Functional Component Initialization**
 ```javascript
-// Entry file: src/scripts/entries/section/<name>.js
-import { initComponent } from '@scripts/lib/components'
-import ModuleName from '@modules/<module-name>/<module-name>'
-
-initComponent(ModuleName, 'module-name')  // Class-based component
-// OR
-initVueComponent(VueComponent, 'ComponentName', 'component-name')  // Vue component
+// Components are FUNCTIONS, not classes
+const initComponent = (Component, selector) => {
+  document.querySelectorAll(`[data-module="${selector}"]`).forEach(element => {
+    element.removeAttribute('data-module'); // One-time guard, prevents re-init
+    Component(element); // Factory function pattern
+  });
+}
 ```
 
-**Component Registration**
-- `initComponent(Class, selector)` → finds elements with data-component="selector" and instantiates
-- `initVueComponent(Component, name, selector)` → mounts Vue component to data-component="selector"
+**2. Liquid-JavaScript Data Bridge**
+```liquid
+<!-- Server-rendered configuration -->
+<script type="application/json" id="bf25HeroData">
+{
+  "config": {{ section.settings | json }},
+  "tiers": [...]
+}
+</script>
+
+<!-- JavaScript consumption -->
+<script>
+const data = JSON.parse(document.getElementById('bf25HeroData').textContent);
+</script>
+```
+No global variables, type-safe via JSON parsing.
+
+**3. BF25 Monolithic Architecture**
+Large JavaScript files (bogo-builder.js: ~8000 lines) loaded directly to `assets/`:
+- Bypass webpack module system
+- Self-contained functionality
+- No transpilation/minification
+- Defensive duplication across files for reliability
 
 ### Key Files
 
 **Build Configuration**
-- `webpack.config.js` → Main build config, auto-scans src/scripts/entries/
+- `webpack.config.js` → Auto-discovery entry system, commons chunk config
 - `postcss-tasks/` → Critical CSS split configuration
 
 **Theme Structure**
@@ -108,33 +125,60 @@ initVueComponent(VueComponent, 'ComponentName', 'component-name')  // Vue compon
 - `templates/*.liquid` → Page-level templates
 
 **Asset Organization**
-- `assets/` → Compiled CSS/JS output (Webpack generates)
+- `assets/` → Compiled CSS/JS output (Webpack generates) + monolithic BF25 files
 - `src/styles/main.css` → Main stylesheet entry
 - `src/scripts/lib/` → Shared utilities (utils.js, dom.js, components.js, lazy-load.js)
 - `src/modules/` → Individual component modules
 
-### Black Friday 2025 (BF25) Features
+### Black Friday 2025 (BF25) System Architecture
 
-**BF25 Hero Section** (`sections/section-bf25-hero.liquid`)
-- Interactive progress bar with tier-based discounts
-- DOM-based segment filling (16 segments)
-- Tier theming system (gray → green → gold → platinum)
-- JavaScript: `assets/bf25-hero.js` (PowerSlider class)
-- CSS: `assets/bf25-hero.css` (animations, tier theming)
-- Design system documented in: `BF25_PROGRESS_BAR_DESIGN_SYSTEM.md`
+**Tier System Implementation**
+```javascript
+// Centralized tier configuration (duplicated across files)
+const BF25_TIERS = [
+  { id: 0, min: 0, max: 3, discount: "50%", color: "#6b7280" },    // Gray
+  { id: 1, min: 4, max: 7, discount: "60%", color: "#60c655" },    // Green
+  { id: 2, min: 8, max: 11, discount: "70%", color: "#60c655" },   // Green
+  { id: 3, min: 12, max: 15, discount: "80%", color: "#FFD700" },  // Gold
+  { id: 4, min: 16, max: 999, discount: "85%", color: "#E0F7FF" }  // Platinum
+];
+```
 
-**BF25 Bundle Builder** (`sections/section-bundle-builder-bf25.liquid`)
-- Dark mode product grid
-- Mobile: 2-column layout (below 640px)
-- Desktop: 4-column → 3-column → 2-column responsive
-- CSS: `assets/section-bundle-builder-bf25.css`
-- JavaScript: `assets/bogo-builder.js`, `assets/bf25-expansion-core.js`
+**Progress Bar - DOM-Based Segments**
+- 16 real HTML elements (not CSS percentage)
+- Individual segment control: `segment.classList.add('is-filled')`
+- Enables discrete animations and accessibility
+- Design system: `BF25_PROGRESS_BAR_DESIGN_SYSTEM.md`
 
-**BF25 Modal System**
-- White background modal for product quick-view
-- Black text on white (comprehensive color overrides)
-- Z-index management to prevent overlay issues
-- Data attribute: `data-section="bf25"` for scoping
+**Dynamic Theming via CSS Custom Properties**
+```javascript
+// JavaScript sets tier colors
+section.style.setProperty('--color-tier-current', tierColor);
+section.style.setProperty('--pb-glow-color', tierGlow);
+
+// CSS consumes variables
+.is-reached { color: var(--color-tier-current); }
+```
+
+**Currency Conversion Pattern**
+- Base prices stored in EUR cents
+- Client-side conversion using multiple sources (Shopify Currency API, data attributes, fallbacks)
+- Enables static HTML with dynamic currency display
+
+**State Management**
+- LocalStorage: 24-hour cart persistence
+- SessionStorage: Checkout flow flags (prevents Rebuy interference)
+- Global window properties: Cross-file coordination
+- Observer pattern for modal state (explicit listeners vs Proxy)
+
+**Key BF25 Files**
+- `assets/bogo-builder.js` → Main bundle builder (8k lines, monolithic)
+- `assets/bf25-tier-cart.js` → Sticky cart with tier progression
+- `assets/bf25-hero.js` → Interactive hero slider
+- `assets/bf25-expansion-core.js` → Modal expansion system
+- `assets/bf25-tier-pricing.js` → Dynamic upsell pricing
+- `sections/section-bundle-builder-bf25.liquid` → Main BF25 section
+- `sections/bf25-hero-split.liquid` → Hero section with progress bar
 
 ## Critical Development Patterns
 
@@ -334,46 +378,6 @@ Webpack auto-discovers the new entry and compiles:
 - `section-<name>.js` → `assets/section-<name>.js`
 - CSS imported in module → `assets/section-<name>.css`
 
-## Tier System Architecture (BF25)
-
-### Tier Configuration
-```javascript
-// 5 tiers: 0 (gray), 1-2 (green), 3 (gold), 4 (platinum)
-const tiers = [
-  { id: 0, min: 0, max: 3, color: '#6b7280' },      // Gray
-  { id: 1, min: 4, max: 7, color: '#60c655' },      // Green
-  { id: 2, min: 8, max: 11, color: '#60c655' },     // Green (brighter)
-  { id: 3, min: 12, max: 15, color: '#FFD700' },    // Gold
-  { id: 4, min: 16, max: 999, color: '#E0F7FF' }    // Platinum/Ice Blue
-];
-```
-
-### Dynamic CSS Variables
-```javascript
-// Set by JavaScript based on current tier
-section.style.setProperty('--color-tier-current', tierColor);
-section.style.setProperty('--pb-glow-color', tierGlow);
-section.style.setProperty('--color-tier-glow', tierBrightColor);
-```
-
-### Tier Theming
-- All reached checkpoints/labels match current tier color
-- Benefits list icons match current tier color
-- Card border and glow effects use tier color
-- Progress bar segments fill with animated tier gradient
-
-### Discrete Segment Filling
-```javascript
-// DOM-based approach (16 real HTML elements)
-segments.forEach((segment, index) => {
-  if (index < currentValue) {
-    segment.classList.add('is-filled');
-  } else {
-    segment.classList.remove('is-filled');
-  }
-});
-```
-
 ## Important Reminders
 
 ### Code Quality Standards
@@ -392,12 +396,19 @@ From `.cursorrules`:
 - ❌ Complex CSS selectors (keep specificity low)
 - ❌ Missing alt text on images
 - ❌ Forgetting mobile breakpoints
+- ❌ Modifying monolithic BF25 files without understanding dependencies
 
 ### Third-Party App Integration
 - **Privia**: Popup management (lazy load when needed)
-- **Rebuy**: Product recommendations
-- **Currency Converter**: Multi-currency support
+- **Rebuy**: Product recommendations (defensive blocking in BF25 checkout)
+- **Currency Converter**: Multi-currency support (client-side conversion)
 - Load third-party scripts async/defer to prevent blocking
+
+### Known Technical Debt
+- **Duplicated tier configurations** across multiple BF25 files
+- **Monolithic JavaScript files** (bogo-builder.js ~8000 lines)
+- **Global namespace pollution** (multiple window.* properties)
+- **BF25 files bypass webpack** (no transpilation/minification)
 
 ## Testing & Validation
 

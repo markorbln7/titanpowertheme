@@ -3726,20 +3726,29 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     -webkit-tap-highlight-color: transparent !important;
   }
 
-  /* --- Tier Buttons: 3-Across Horizontal --- */
+  /* --- Tier Buttons: FORCE 3-Across Horizontal --- */
+  .bf25-quantity-section .bf25-tier-buttons,
+  .bf25-quantity-controls .bf25-tier-buttons,
+  .bf25-power-packs-mode .bf25-tier-buttons,
   .bf25-tier-buttons {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 6px !important;
+    gap: 8px !important;
     width: 100% !important;
-    justify-content: space-between !important;
+    justify-content: stretch !important;
+    align-items: stretch !important;
   }
 
+  .bf25-quantity-section .bf25-tier-button,
+  .bf25-quantity-controls .bf25-tier-button,
+  .bf25-power-packs-mode .bf25-tier-button,
   .bf25-tier-button {
     flex: 1 1 0 !important;
+    width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
-    padding: 8px 4px !important;
+    padding: 10px 6px !important;
     font-size: 11px !important;
     border-radius: 8px !important;
     display: flex !important;
@@ -3747,19 +3756,24 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     align-items: center !important;
     justify-content: center !important;
     gap: 2px !important;
-    min-height: 70px !important;
+    min-height: 75px !important;
+    max-height: 85px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
   }
 
   .bf25-tier-button-quantity {
-    font-size: 20px !important;
+    font-size: 22px !important;
     font-weight: 700 !important;
     line-height: 1 !important;
+    color: #fff !important;
   }
 
   .bf25-tier-button-label {
-    font-size: 10px !important;
+    font-size: 9px !important;
     text-transform: uppercase !important;
-    opacity: 0.8 !important;
+    letter-spacing: 0.5px !important;
+    opacity: 0.7 !important;
   }
 
   .bf25-tier-button-discount {
@@ -3767,25 +3781,49 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     font-weight: 600 !important;
     color: #60c655 !important;
     margin-top: 2px !important;
+    display: block !important;
   }
 
   .bf25-tier-button-badge {
     position: absolute !important;
-    top: -8px !important;
+    top: -10px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    font-size: 8px !important;
+    font-size: 7px !important;
     padding: 2px 6px !important;
     white-space: nowrap !important;
+    background: #60c655 !important;
+    color: #000 !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
   }
 
   .bf25-tier-button.is-selected {
     border-color: #60c655 !important;
-    box-shadow: 0 0 12px rgba(96, 198, 85, 0.3) !important;
+    background: rgba(96, 198, 85, 0.1) !important;
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.25) !important;
   }
 
   .bf25-tier-button-check {
-    font-size: 14px !important;
+    position: absolute !important;
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    color: #60c655 !important;
+  }
+
+  /* Power Packs mode container */
+  .bf25-quantity-controls.bf25-power-packs-mode {
+    width: 100% !important;
+  }
+
+  .bf25-quantity-controls.bf25-power-packs-mode .bf25-quantity-label {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 10px !important;
+    display: block !important;
   }
 
   /* --- Upsells Grid: Stack on Mobile --- */

@@ -67,19 +67,19 @@
                   {%- comment -%} STATE 1: DEFAULT VIEW (BF25-QUICK-ADD-001) {%- endcomment -%}
                   <div class="bf25-card-default-state">
                     {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
-                      <div class="absolute left-[10px] top-[10px]">
-                        <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                          <div>{{ product.metafields.custom.new_shop_discount_top }}</div>
-                          <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
-                        </div>
+                      <div class="bf25-discount-badge">
+                        <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount_top }}</span>
+                        <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                        </svg>
                       </div>
                     {% else %}
                       {% if product.metafields.custom.new_shop_discount %}
-                        <div class="absolute left-[10px] top-[10px]">
-                          <div class="discount_message relative flex bg-[#60c655] rounded-tl-[20px] md:text-[18px] text-[14px] color-white p-[6px] font-bold pr-[10px]">
-                            <div>{{ product.metafields.custom.new_shop_discount }}</div>
-                            <div class="absolute right-[-25px] md:right-[-40px] md:w-[60px] w-[40px] md:top-[-15px] top-[-8px]"><img width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/lightning_bolt.png?v=1730972558"></div>
-                          </div>
+                        <div class="bf25-discount-badge">
+                          <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount }}</span>
+                          <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                          </svg>
                         </div>
                       {% endif %}
                     {% endif %}
@@ -114,16 +114,25 @@
                       <div class="top-part">
                         <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
 
-                        <!-- Reviews Display (BF25-REV-006) -->
-                        <div class="bf25-product-rating-display"
-                             data-product-id="{{ product.id }}"
-                             role="button"
-                             tabindex="0">
-                          <div class="bf25-rating-stars" aria-hidden="true">
-                            <span class="stars-empty">★★★★★</span>
-                            <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                        <!-- Reviews Display with Stock Indicator (BF25-REV-006) -->
+                        <div class="bf25-card-reviews">
+                          <!-- Stars row -->
+                          <div class="bf25-product-rating-display"
+                               data-product-id="{{ product.id }}"
+                               role="button"
+                               tabindex="0">
+                            <div class="bf25-rating-stars bf25-card-stars" aria-hidden="true">
+                              <span class="stars-empty">★★★★★</span>
+                              <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                            </div>
                           </div>
-                          <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+
+                          <!-- Reviews + Stock row (CSS will handle desktop inline vs mobile stacked) -->
+                          <div class="bf25-reviews-stock-row">
+                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
+                            <span class="bf25-reviews-divider">|</span>
+                            <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
+                          </div>
                         </div>
 
                         {% if product.metafields.custom.ticks %}
@@ -650,6 +659,26 @@ if (window.bf25Config.debug) {
       });
     });
   });
+</script>
+
+<script>
+/* Performance: Only animate info icons when visible */
+(function() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.1, rootMargin: '50px' });
+
+  // Observe all info icons
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.bf25-product-info-icon').forEach(icon => {
+      observer.observe(icon);
+    });
+  });
+})();
 </script>
 
 {% schema %}

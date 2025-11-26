@@ -180,7 +180,7 @@
   height: 100%;
   object-fit: contain;
   transition: all var(--duration-slow) var(--easing-premium);
-  will-change: filter, opacity, transform;
+  /* will-change: filter, opacity, transform; */ /* Removed - gift images don't animate constantly */
 
   /* LOCKED STATE: Blacked Out Silhouette (Requirement Met) */
   filter: brightness(0.1) grayscale(100%);
@@ -383,6 +383,7 @@
   );
   background-size: 200% 100%;
   animation: segmentFlow 2s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
   box-shadow: 0 0 12px var(--pb-glow-color),
               inset 0 0 8px var(--pb-glow-color);
 }
@@ -1256,6 +1257,7 @@
     rgba(224, 247, 255, 0.15) 100%
   );
   animation: rotateRays 8s linear infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes rotateRays {
@@ -1272,6 +1274,7 @@
   box-shadow: 0 0 20px rgba(224, 247, 255, 0.4),
               inset 0 0 20px rgba(224, 247, 255, 0.2);
   animation: pulseGlow 2s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes pulseGlow {
@@ -1303,6 +1306,7 @@
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(224, 247, 255, 0.8);
   animation: floatSparkle 3s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 .sparkle-1 {
@@ -1355,6 +1359,7 @@
 /* Breathing scale animation on entire mystery box */
 .bf25-hero__gift-box--mystery.is-unlocked {
   animation: breatheScale 3s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes breatheScale {
@@ -1459,4 +1464,32 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   10. PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Activate hero animations when gift is revealed or unlocked */
+.bf25-hero__gift-overlay.is-revealed .bf25-hero__gift-rays,
+.bf25-hero__gift-overlay.is-revealed .bf25-hero__gift-glow-ring,
+.bf25-hero__gift-overlay.is-active .bf25-hero__gift-rays,
+.bf25-hero.gift-unlocked .bf25-hero__gift-rays,
+.bf25-hero.gift-unlocked .bf25-hero__gift-glow-ring,
+.bf25-hero__gift-box--mystery.is-unlocked {
+  animation-play-state: running;
+}
+
+/* Activate segment flow when progress bar is being filled */
+.bf25-hero__progress-bar.is-filling .bf25-hero__progress-segment.is-filled,
+.bf25-hero__progress-bar:hover .bf25-hero__progress-segment.is-filled {
+  animation-play-state: running;
+}
+
+/* Keep scroll/drag indicators always running (essential UX) */
+.bf25-hero__drag-arrow,
+.bf25-scroll-arrow,
+.bf25-pulse-dot,
+.bf25-hero__arrow-indicator {
+  animation-play-state: running !important;
 }

@@ -4994,6 +4994,9 @@ class ExpansionManager {
     // Update U5 Progress Tracker
     this.updateU5ProgressTracker();
 
+    // Update upsell pricing based on new tier
+    this.updateUpsellPricing();
+
     if (this.config.debug) {
       console.log('📦 Quantity updated:', validQuantity);
     }
@@ -5481,6 +5484,27 @@ class ExpansionManager {
     });
   }
 
+  /**
+   * Update upsell prices and badges based on current tier
+   */
+  updateUpsellPricing() {
+    const currentDiscount = window.BF25BundleManager?.bundle?.computed?.discountPercent || 50;
+
+    // Update all discount badges
+    document.querySelectorAll('.bf25-upsell-discount-badge').forEach(badge => {
+      badge.textContent = `${currentDiscount}% OFF`;
+    });
+
+    // Update all tier prices
+    document.querySelectorAll('.bf25-upsell-tier-price').forEach(priceEl => {
+      const basePrice = parseInt(priceEl.dataset.basePrice, 10);
+      if (basePrice) {
+        const tierPrice = Math.round(basePrice * (1 - currentDiscount / 100));
+        priceEl.textContent = this.formatPrice(tierPrice);
+      }
+    });
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // CONTENT GENERATION HELPERS
   // ═══════════════════════════════════════════════════════════════════
@@ -5945,15 +5969,17 @@ class ExpansionManager {
           }
 
           const upsellCards = upsells.map(upsell => {
-            // Calculate discount percentage
-            const discount = upsell.comparePrice > upsell.price
-              ? Math.round(((upsell.comparePrice - upsell.price) / upsell.comparePrice) * 100)
-              : 0;
+            // Get current tier discount from BundleManager
+            const currentDiscount = window.BF25BundleManager?.bundle?.computed?.discountPercent || 50;
+
+            // Calculate tier-based price (use compare price as base for discount)
+            const basePrice = upsell.comparePrice || upsell.price;
+            const tierPrice = Math.round(basePrice * (1 - currentDiscount / 100));
 
             // Format prices
-            const price = this.formatPrice(upsell.price);
-            const comparePrice = upsell.comparePrice > upsell.price
-              ? this.formatPrice(upsell.comparePrice)
+            const price = this.formatPrice(tierPrice);
+            const comparePrice = basePrice > tierPrice
+              ? this.formatPrice(basePrice)
               : '';
 
             // Use variantId if available, fallback to id (product ID)
@@ -5965,6 +5991,7 @@ class ExpansionManager {
                    data-variant-id="${variantId}"
                    data-upsell-title="${upsell.title}"
                    data-upsell-price="${upsell.price}"
+                   data-upsell-base-price="${basePrice}"
                    role="checkbox"
                    aria-checked="false"
                    tabindex="0">
@@ -5974,16 +6001,16 @@ class ExpansionManager {
                   </svg>
                 </div>
                 <div class="bf25-upsell-image">
-                  ${discount > 0 ? `<span class="bf25-upsell-badge">${discount}% OFF</span>` : ''}
                   <img src="${upsell.image}" alt="${upsell.title}" loading="lazy">
                 </div>
                 <div class="bf25-upsell-info">
                   <h4 class="bf25-upsell-title bf25-text-sm bf25-text-primary">${upsell.title}</h4>
                   <div class="bf25-upsell-price">
-                    <span class="bf25-text-md bf25-text-accent">${price}</span>
+                    <span class="bf25-text-md bf25-text-accent bf25-upsell-tier-price" data-base-price="${basePrice}">${price}</span>
                     ${comparePrice ? `<span class="bf25-text-sm bf25-text-tertiary" style="text-decoration: line-through;">${comparePrice}</span>` : ''}
                   </div>
                 </div>
+                <span class="bf25-upsell-discount-badge" data-discount-badge>${currentDiscount}% OFF</span>
               </div>
             `;
           }).join('');
@@ -6042,6 +6069,11 @@ class ExpansionManager {
     // STEP 9: Bind upsell add button events
     // ─────────────────────────────────────────────────────────────────
     this.bindUpsellEvents();
+
+    // ─────────────────────────────────────────────────────────────────
+    // STEP 10: Update upsell pricing for current tier
+    // ─────────────────────────────────────────────────────────────────
+    this.updateUpsellPricing();
 
     if (this.config.debug) {
       console.log('✅ Content populated');

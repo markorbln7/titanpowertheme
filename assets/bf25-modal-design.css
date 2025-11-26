@@ -2620,16 +2620,14 @@
 
 .bf25-u5-track {
   position: relative;
-  height: 24px;
+  overflow: visible;
+  padding-bottom: 18px;
   margin-top: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .bf25-u5-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   height: 4px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
@@ -2658,16 +2656,14 @@
 
 .bf25-u5-markers {
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 0;
   right: 0;
-  height: 8px;
   pointer-events: none;
 }
 
 .bf25-u5-marker {
   position: absolute;
-  top: 0;
   width: 8px;
   height: 8px;
   background: rgba(255, 255, 255, 0.12);
@@ -2704,16 +2700,15 @@
 
 .bf25-u5-gifts {
   position: absolute;
-  bottom: 0;
   left: 0;
   right: 0;
+  top: 8px;
   height: 14px;
   pointer-events: none;
 }
 
 .bf25-u5-gift {
   position: absolute;
-  bottom: 0;
   transform: translateX(-50%);
   opacity: 0.2;
   transition: all 0.2s ease;

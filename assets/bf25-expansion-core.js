@@ -3936,9 +3936,9 @@ class ExpansionManager {
           <div class="bf25-u5-markers">
             ${thresholds.map((t, i) => `<div class="bf25-u5-marker ${markerStates[i]}"></div>`).join('')}
           </div>
-        </div>
-        <div class="bf25-u5-gifts">
-          ${thresholds.map((t, i) => `<div class="bf25-u5-gift ${markerStates[i]}">${giftSVG}</div>`).join('')}
+          <div class="bf25-u5-gifts">
+            ${thresholds.map((t, i) => `<div class="bf25-u5-gift ${markerStates[i]}">${giftSVG}</div>`).join('')}
+          </div>
         </div>
       </div>
     `;

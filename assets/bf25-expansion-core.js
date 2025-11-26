@@ -3852,14 +3852,15 @@ class ExpansionManager {
    */
   generateQuantityControls() {
     if (this.config.debug) {
-      console.log('🎮 generateQuantityControls: Rendering pack buttons + stepper');
+      console.log('🎮 generateQuantityControls: Rendering stepper + pack buttons (swapped order)');
     }
 
-    // Generate BOTH controls (always show both for dual-mode layout)
+    // Generate BOTH controls (stepper first, then pack buttons)
     const packButtonsHTML = this.generatePowerPacksUI();
     const stepperHTML = this.generateIndividualProductsUI();
 
-    return packButtonsHTML + stepperHTML;
+    // SWAPPED ORDER: Stepper appears ABOVE pack buttons
+    return stepperHTML + packButtonsHTML;
   }
 
   /**

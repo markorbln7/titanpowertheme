@@ -594,27 +594,6 @@ const TIER_ICONS = {
   4: '💎'
 };
 
-// Free gifts by tier
-const TIER_GIFTS = {
-  1: [
-    { name: '4-in-1 Cable', value: 30 }
-  ],
-  2: [
-    { name: '4-in-1 Cable', value: 30 },
-    { name: 'Medium Travel Case', value: 35 }
-  ],
-  3: [
-    { name: '4-in-1 Cable', value: 30 },
-    { name: 'Medium Travel Case', value: 35 },
-    { name: '🚀 Magnetic Cable Set (Pre-Launch)', value: 60 }
-  ],
-  4: [
-    { name: '4-in-1 Cable', value: 30 },
-    { name: 'Medium Travel Case', value: 35 },
-    { name: 'Magnetic Cable Set', value: 60 },
-    { name: '🦶 BIGFOOT MYSTERY BOX', value: 150 }
-  ]
-};
 
 /**
  * ═══════════════════════════════════════════════════════════
@@ -2521,18 +2500,8 @@ class ExpansionManager {
 
     console.log('[PowerPairs] Bundle data loaded:', bundle);
 
-    // Show loading state briefly
-    this.contentArea.innerHTML = `
-      <div class="pp-bottom-sheet__loading">
-        <div class="pp-loading-spinner"></div>
-        <p>Loading ${bundle.title}...</p>
-      </div>
-    `;
-
-    // Populate with actual data after brief delay
-    setTimeout(() => {
-      this.renderBundleContent(bundle);
-    }, 300);
+    // Render bundle content immediately (no loading state)
+    this.renderBundleContent(bundle);
   }
 
   /**
@@ -3080,6 +3049,9 @@ class ExpansionManager {
 
     // Update bundle card on main page
     this.refreshBundleCard();
+    
+    // Update U5 progress tracker
+    this.updateU5ProgressTracker();
 
     console.log('[PowerPairs] Quantity updated successfully');
   }
@@ -3630,6 +3602,8 @@ class ExpansionManager {
     });
   }
 
+
+
   /**
    * Update bundle card on main page with current bundle information
    */
@@ -3702,9 +3676,12 @@ class ExpansionManager {
       savingsElement.style.display = 'none';
     }
 
+
     console.log('[PowerPairs] Bundle card refreshed:', {
       bundleId: bundle.id,
       itemCount: bundle.baseItemCount,
+      multiplier: bundle.multiplier,
+      totalItems: bundle.baseItemCount * bundle.multiplier,
       price: pricing.subtotal,
       comparePrice: pricing.compareAtSubtotal,
       savings: pricing.savings
@@ -3736,7 +3713,7 @@ class ExpansionManager {
           aria-pressed="${isActive}"
         >
           <div class="pp-pill-multiplier">${multiplier}x</div>
-          <div class="pp-pill-tier">${tierIcon} Tier ${tier}</div>
+          <div class="pp-pill-tier">Tier ${tier}</div>
           <div class="pp-pill-items">${totalItems} items</div>
         </button>
       `;
@@ -3746,36 +3723,140 @@ class ExpansionManager {
     const tierMessage = this.getTierUnlockMessage(pricing.achievedTier);
     const isPremiumTier = pricing.achievedTier >= 3;
 
-    // Get free gifts for current tier
-    const gifts = TIER_GIFTS[pricing.achievedTier] || [];
-    const totalGiftValue = gifts.reduce((sum, g) => sum + g.value, 0);
-
-    const giftsHTML = gifts.length > 0 ? `
-      <div class="pp-free-gifts">
-        <h4 class="pp-free-gifts__title">
-          <span class="pp-free-gifts__icon">🎁</span>
-          Your Free Gifts (${gifts.length})
-        </h4>
-        <ul class="pp-free-gifts__list">
-          ${gifts.map(gift => `
-            <li class="pp-free-gifts__item">
-              <span class="pp-free-gifts__item-icon">✓</span>
-              <span class="pp-free-gifts__item-name">${gift.name}</span>
-              <span class="pp-free-gifts__item-value">$${gift.value} value</span>
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-    ` : '';
-
     return `
       <div class="pp-sheet-multipliers">
-        <h3 class="pp-sheet-multipliers__title">🔢 How many kits?</h3>
+        <h3 class="pp-sheet-multipliers__title">How many kits?</h3>
         <div class="pp-multiplier-pills">
           ${pillsHTML}
         </div>
       </div>
     `;
+  }
+
+  /**
+   * Generate U5 Progress Tracker HTML
+   * @returns {string} HTML string for the tracker
+   */
+  generateU5ProgressTracker() {
+    // Get quantities from BundleManager + modal
+    const cartQty = window.BF25BundleManager?.bundle?.computed?.itemCount || 0;
+    const bundle = window.PPState.getActiveBundle();
+    const modalQty = bundle ? bundle.baseItemCount * bundle.multiplier : 0;
+    const totalQty = cartQty + modalQty;
+    
+    console.log('[PowerPairs] Generating U5 tracker:', { cartQty, modalQty, totalQty });
+
+    // Calculate progress (max 16 for visual, but no cap on actual items)
+    const progressPercent = Math.min((totalQty / 16) * 100, 100);
+
+    // Determine tier thresholds
+    const thresholds = [4, 8, 12, 16];
+    const tierDiscounts = ['60%', '70%', '80%', '85%'];
+
+    // Find current tier and next tier
+    let currentTierIndex = -1;
+    for (let i = thresholds.length - 1; i >= 0; i--) {
+      if (totalQty >= thresholds[i]) {
+        currentTierIndex = i;
+        break;
+      }
+    }
+
+    const currentDiscount = currentTierIndex >= 0 ? tierDiscounts[currentTierIndex] : '50%';
+    const nextTierIndex = currentTierIndex + 1;
+    const nextThreshold = nextTierIndex < thresholds.length ? thresholds[nextTierIndex] : null;
+    const nextDiscount = nextTierIndex < thresholds.length ? tierDiscounts[nextTierIndex] : null;
+    const itemsToNext = nextThreshold ? nextThreshold - totalQty : 0;
+
+    // Generate marker and gift states
+    const markerStates = thresholds.map((threshold, i) => {
+      if (totalQty >= threshold) return 'unlocked';
+      if (i === nextTierIndex) return 'next';
+      return '';
+    });
+
+    // Gift SVG template
+    const giftSVG = `<svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2"/><rect x="3" y="6" width="18" height="4" rx="1"/><line x1="12" y1="6" x2="12" y2="21"/></svg>`;
+
+    // Build tier text
+    let tierText = `<span class="pp-u5-current">${currentDiscount} OFF</span>`;
+    if (nextThreshold && itemsToNext > 0) {
+      tierText += ` · +<strong>${itemsToNext}</strong> → ${nextDiscount}`;
+    } else if (totalQty >= 16) {
+      tierText = `<span class="pp-u5-current" style="color:#7ddf71;">MAX 85% OFF</span>`;
+    }
+
+    // Build count text
+    const countText = cartQty > 0
+      ? `<strong>${totalQty}</strong> items (${cartQty} cart + ${modalQty} now)`
+      : `<strong>${totalQty}</strong> item${totalQty !== 1 ? 's' : ''}`;
+
+    return `
+      <div class="pp-u5-tracker" data-total-qty="${totalQty}">
+        <div class="pp-u5-header">
+          <span class="pp-u5-count">${countText}</span>
+          <span class="pp-u5-tier">${tierText}</span>
+        </div>
+        <div class="pp-u5-track">
+          <div class="pp-u5-bar">
+            <div class="pp-u5-bar-fill" style="width: ${progressPercent}%"></div>
+          </div>
+          <div class="pp-u5-markers">
+            ${thresholds.map((t, i) => `<div class="pp-u5-marker ${markerStates[i]}"></div>`).join('')}
+          </div>
+          <div class="pp-u5-gifts">
+            ${thresholds.map((t, i) => `<div class="pp-u5-gift ${markerStates[i]}">${giftSVG}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * Update U5 Progress Tracker (called on quantity change)
+   */
+  updateU5ProgressTracker() {
+    const container = document.querySelector('.pp-u5-tracker');
+    if (!container) return;
+
+    const oldTotal = parseInt(container.dataset.totalQty) || 0;
+
+    // Get new quantities
+    const cartQty = window.BF25BundleManager?.bundle?.computed?.itemCount || 0;
+    const bundle = window.PPState.getActiveBundle();
+    const modalQty = bundle ? bundle.baseItemCount * bundle.multiplier : 0;
+    const newTotal = cartQty + modalQty;
+
+    // Check if we crossed a threshold (for jolt animation)
+    const thresholds = [4, 8, 12, 16];
+    let crossedThreshold = null;
+    for (const t of thresholds) {
+      if (oldTotal < t && newTotal >= t) {
+        crossedThreshold = t;
+        break;
+      }
+    }
+
+    // Re-render the tracker
+    const newHTML = this.generateU5ProgressTracker();
+    container.outerHTML = newHTML;
+
+    // Trigger jolt animation if threshold crossed
+    if (crossedThreshold) {
+      const thresholdIndex = thresholds.indexOf(crossedThreshold);
+      setTimeout(() => {
+        const gifts = document.querySelectorAll('.pp-u5-gift');
+        const markers = document.querySelectorAll('.pp-u5-marker');
+        if (gifts[thresholdIndex]) {
+          gifts[thresholdIndex].classList.add('just-unlocked');
+          setTimeout(() => gifts[thresholdIndex].classList.remove('just-unlocked'), 500);
+        }
+        if (markers[thresholdIndex]) {
+          markers[thresholdIndex].style.animation = 'pp-jolt 0.5s ease-out';
+          setTimeout(() => markers[thresholdIndex].style.animation = '', 500);
+        }
+      }, 50);
+    }
   }
 
   /**
@@ -3787,28 +3868,29 @@ class ExpansionManager {
    */
   renderCTA(bundle, pricing, allComplete) {
     const isDisabled = !allComplete;
-    const buttonText = isDisabled
-      ? 'Select Variants First'
-      : `Buy ${bundle.multiplier}x Kit Now`;
+    const trackerHTML = this.generateU5ProgressTracker();
 
     return `
       <div class="pp-sheet-cta-fixed">
-        <button
-          class="pp-sheet-cta__button-deal"
-          data-action="add-to-deal"
-          ${isDisabled ? 'disabled' : ''}
-          aria-label="Add to the Deal"
-        >
-          <span class="pp-cta-text">Add to the Deal</span>
-        </button>
-        <button
-          class="pp-sheet-cta__button-main"
-          data-action="add-to-cart"
-          ${isDisabled ? 'disabled' : ''}
-          aria-label="${isDisabled ? 'Select Variants First' : 'Buy Now'}"
-        >
-          <span class="pp-cta-text">${isDisabled ? 'Select Variants First' : 'Buy Now'}</span>
-        </button>
+        ${trackerHTML}
+        <div class="pp-action-buttons">
+          <button
+            class="pp-sheet-cta__button-deal"
+            data-action="add-to-deal"
+            ${isDisabled ? 'disabled' : ''}
+            aria-label="Add to the Deal"
+          >
+            <span class="pp-cta-text">ADD TO DEAL</span>
+          </button>
+          <button
+            class="pp-sheet-cta__button-main"
+            data-action="add-to-cart"
+            ${isDisabled ? 'disabled' : ''}
+            aria-label="Buy Now"
+          >
+            <span class="pp-cta-text">BUY NOW</span>
+          </button>
+        </div>
       </div>
     `;
   }
@@ -3888,6 +3970,9 @@ class ExpansionManager {
     
     // Update bundle card on main page
     this.refreshBundleCard();
+    
+    // Update U5 progress tracker
+    this.updateU5ProgressTracker();
   }
 
   /**
@@ -3936,6 +4021,9 @@ class ExpansionManager {
     } else {
       console.warn('[PowerPairs] CTA element not found for refresh');
     }
+    
+    // Update U5 progress tracker
+    this.updateU5ProgressTracker();
 
     // Update header summary
     const summaryElement = this.contentArea.querySelector('.pp-sheet-summary');
@@ -4617,20 +4705,63 @@ class ExpansionManager {
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
+    // Validate input
+    if (typeof cents !== 'number' || isNaN(cents)) {
+      console.error('[PowerPairs] formatMoney: Invalid input', cents);
+      return '';
+    }
+
     // Use Shopify's formatMoney if available
     if (window.Shopify && window.Shopify.formatMoney) {
-      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
+      // Get format string, ensuring it doesn't contain unprocessed Liquid syntax
+      let format = '{{amount}}';
+      if (window.theme && window.theme.moneyFormat && typeof window.theme.moneyFormat === 'string') {
+        // Remove any unprocessed Liquid syntax (like {{ liquid variable }})
+        format = window.theme.moneyFormat.replace(/\{\{[^}]+\}\}/g, (match) => {
+          // Only keep valid Shopify money format placeholders
+          if (match === '{{amount}}' || match === '{{amount_no_decimals}}' || 
+              match === '{{amount_with_comma_separator}}' || match === '{{amount_no_decimals_with_comma_separator}}') {
+            return match;
+          }
+          // Remove any other Liquid syntax
+          return '';
+        });
+        // If format is empty after cleaning, use default
+        if (!format || format.trim() === '') {
+          format = '{{amount}}';
+        }
+      }
       return window.Shopify.formatMoney(cents, format);
     }
     
     // Manual fallback using theme money format
-    if (window.theme && window.theme.moneyFormat) {
+    if (window.theme && window.theme.moneyFormat && typeof window.theme.moneyFormat === 'string') {
       const amount = (cents / 100).toFixed(2);
-      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
+      let format = window.theme.moneyFormat;
+      
+      // Remove any unprocessed Liquid syntax before replacing placeholders
+      format = format.replace(/\{\{[^}]+\}\}/g, (match) => {
+        // Only keep valid Shopify money format placeholders
+        if (match === '{{amount}}' || match === '{{amount_no_decimals}}' || 
+            match === '{{amount_with_comma_separator}}' || match === '{{amount_no_decimals_with_comma_separator}}') {
+          return match;
+        }
+        // Remove any other Liquid syntax
+        return '';
+      });
+      
+      // Replace valid placeholders
+      format = format.replace('{{amount}}', amount);
+      format = format.replace('{{amount_no_decimals}}', Math.round(cents / 100));
+      format = format.replace('{{amount_with_comma_separator}}', amount.replace('.', ','));
+      format = format.replace('{{amount_no_decimals_with_comma_separator}}', Math.round(cents / 100).toString());
+      
+      return format;
     }
     
-    console.error('[PowerPairs] Currency formatting not available');
-    return '';
+    // Ultimate fallback: simple format
+    const amount = (cents / 100).toFixed(2);
+    return `$${amount}`;
   }
 
   /**
@@ -4755,10 +4886,10 @@ class ExpansionManager {
    */
   getTierUnlockMessage(tier) {
     const messages = {
-      1: '⚡ Tier 1 Unlocked! Free 4-in-1 Cable included',
-      2: '🎁 Tier 2 Unlocked! Free Cable + Travel Case',
-      3: '🔥 Tier 3 Unlocked! Free Magnetic Set (Early Launch)',
-      4: '💎 BIGFOOT UNLOCKED! Free Mystery Box + VIP Status'
+      1: 'Tier 1 Unlocked! Free 4-in-1 Cable included',
+      2: 'Tier 2 Unlocked! Free Cable + Travel Case',
+      3: 'Tier 3 Unlocked! Free Magnetic Set (Early Launch)',
+      4: 'BIGFOOT UNLOCKED! Free Mystery Box + VIP Status'
     };
 
     return messages[tier] || '';
@@ -4767,7 +4898,7 @@ class ExpansionManager {
   close() {
     if (!this.isOpen) return;
 
-    console.log('🔒 Closing bottom sheet');
+    console.log('[PowerPairs] Closing bottom sheet');
 
     // Store scroll position before removing fixed positioning
     const scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -4867,8 +4998,7 @@ class ExpansionManager {
    * @returns {string} Tier icon
    */
   getTierIcon(tier) {
-    const icons = { 1: '⚡', 2: '🎁', 3: '🔥', 4: '💎' };
-    return icons[tier] || '⚡';
+    return '';
   }
 }
 

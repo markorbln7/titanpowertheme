@@ -49,10 +49,7 @@
    ═══════════════════════════════════════════════════════ */
 
 .pp-pricing-header {
-  background: linear-gradient(135deg,
-    rgba(96, 198, 85, 0.1) 0%,
-    rgba(96, 198, 85, 0.05) 100%
-  );
+  background: rgba(255, 255, 255, 0.05);
   border-radius: var(--pp-radius-md);
   padding: 14px 16px;
   margin: 0 0 16px 0;
@@ -292,7 +289,7 @@
 }
 
 .pp-pill-multiplier {
-  font-size: 20px;
+  font-size: 40px;
   font-weight: 800;
   margin-bottom: 4px;
   line-height: 1;

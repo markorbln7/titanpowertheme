@@ -201,7 +201,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 35px;
+  padding: 50px 40px;
   position: relative;
   overflow: hidden;
 }
@@ -225,20 +225,22 @@
 }
 
 .bf25-big-number {
-  font-size: 155px;
-  font-weight: 800;
-  line-height: 0.8;
+  font-size: 150px;
+  font-weight: 700;
+  line-height: 0.85;
   color: #fff;
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: center;
+  letter-spacing: -3px;
 }
 
 .bf25-percent {
-  font-size: 50px;
+  font-size: 70px;
   color: #60c655;
-  margin-top: 18px;
-  margin-left: 4px;
+  margin-left: 2px;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .bf25-big-label {
@@ -511,12 +513,14 @@
   }
 
   .bf25-big-number {
-    font-size: 85px;
+    font-size: 90px;
+    font-weight: 700;
+    letter-spacing: -2px;
   }
 
   .bf25-percent {
-    font-size: 28px;
-    margin-top: 10px;
+    font-size: 40px;
+    margin-left: 2px;
   }
 
   .bf25-big-label {
@@ -862,10 +866,11 @@
       "default": 275
     },
     {
-      "type": "url",
+      "type": "text",
       "id": "cta_link",
       "label": "CTA Button Link",
-      "default": "#bf25-bundle-builder"
+      "default": "#bf25-bundle-builder",
+      "info": "Use # for anchor links or full URL"
     },
     {
       "type": "text",

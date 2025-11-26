@@ -1,23 +1,26 @@
-/* ========================================
-   BUNDLE BUILDER BF25 - PREMIUM DARK THEME
-   ======================================== */
+/* =============================================
+   POWER PACK SECTION - BF25
+   Premium Gold Theme for Bestseller Products
 
-/* Ensure BF25 content sits above snowfall background */
-.section-bundle-builder-bf25,
-.bf25-bundle-builder,
-.bf25-hero,
-.bf25-hero-split {
-  position: relative;
-  z-index: 1;
+   This file inherits from section-bundle-builder-bf25.css patterns
+   but with gold/premium color scheme and carousel layout
+   ============================================= */
+
+/* Color Variables for Power Pack */
+:root {
+  --power-pack-gold: #D4AF37;
+  --power-pack-gold-light: #F4E4BA;
+  --power-pack-gold-dark: #B8962E;
+  --power-pack-gold-glow: rgba(212, 175, 55, 0.6);
+  --power-pack-bg: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+
+  /* Keep original BF25 variables as fallback */
+  --bf-dark-bg: #0a0a0a;
+  --bf-card-bg: #1a1a1a;
+  --bf-accent: #60c655;
+  --bf-text: #ffffff;
+  --bf-text-muted: #808080;
 }
-
-   :root {
-    --bf-dark-bg: #0a0a0a;
-    --bf-card-bg: #1a1a1a;
-    --bf-accent: #60c655;
-    --bf-text: #ffffff;
-    --bf-text-muted: #808080;
-  }
   
   .section-collections-with-nav.dark-mode {
     background: #0a0a0a;
@@ -3042,4 +3045,96 @@ body.modal-open {
 /* Fallback for any rating value - use CSS variable if available */
 .bf25-rating-stars[data-rating] .stars-filled {
   width: var(--star-fill-width, 80%);
+}
+
+/* =============================================
+   POWER PACK COLOR OVERRIDES
+   Gold Theme Customizations for Bestsellers
+   ============================================= */
+
+/* Section background with gold accents */
+.power-pack-section {
+  background: var(--power-pack-bg);
+  position: relative;
+}
+
+.power-pack-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--power-pack-gold),
+    var(--power-pack-gold-light),
+    var(--power-pack-gold),
+    transparent);
+  opacity: 0.8;
+}
+
+/* Card border - gold instead of green */
+.power-pack-section .section-collections-with-nav__product {
+  border-color: var(--power-pack-gold-dark);
+  background: linear-gradient(135deg, #1a1a1a, #141414);
+}
+
+.power-pack-section .section-collections-with-nav__product:hover {
+  border-color: var(--power-pack-gold);
+  box-shadow:
+    0 0 20px var(--power-pack-gold-glow),
+    inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+/* Info icon - gold pulse */
+.power-pack-section .bf25-product-info-icon {
+  background: linear-gradient(135deg, var(--power-pack-gold), var(--power-pack-gold-dark));
+  border-color: var(--power-pack-gold);
+}
+
+/* Price and button colors */
+.power-pack-section .price-primary,
+.power-pack-section .bf25-card-price {
+  color: var(--power-pack-gold-light) !important;
+}
+
+.power-pack-section .bf25-card-add-btn {
+  background: linear-gradient(135deg, var(--power-pack-gold-dark), var(--power-pack-gold));
+  border-color: var(--power-pack-gold);
+}
+
+.power-pack-section .bf25-card-add-btn:hover {
+  background: linear-gradient(135deg, var(--power-pack-gold), var(--power-pack-gold-light));
+  box-shadow: 0 4px 15px var(--power-pack-gold-glow);
+}
+
+/* Stars - gold theme */
+.power-pack-section .bf25-rating-stars .stars-filled {
+  color: var(--power-pack-gold);
+  text-shadow:
+    0 0 2px rgba(212, 175, 55, 0.9),
+    0 0 6px rgba(212, 175, 55, 0.5),
+    0 0 12px rgba(212, 175, 55, 0.3),
+    0 0 20px rgba(212, 175, 55, 0.15),
+    0 0 30px rgba(212, 175, 55, 0.05);
+}
+
+/* Stock indicator - subtle gold */
+.power-pack-section .bf25-stock-indicator {
+  color: var(--power-pack-gold-light);
+  opacity: 0.8;
+}
+
+/* Feature checkmarks - gold */
+.power-pack-section .bf25-card-feature::before {
+  color: var(--power-pack-gold);
+}
+
+/* Title gradient effect on hover */
+.power-pack-section .section-collections-with-nav__product:hover .bf25-card-title {
+  background: linear-gradient(90deg, #fff, var(--power-pack-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

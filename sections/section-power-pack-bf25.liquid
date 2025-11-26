@@ -1,5 +1,5 @@
 {{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
-{{ 'section-bundle-builder-bf25.css' | asset_url | stylesheet_tag }}
+{{ 'section-power-pack-bf25.css' | asset_url | stylesheet_tag }}
 {{ 'section-explore.css' | asset_url | stylesheet_tag }}
 {{ 'bf25-modal-design.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
@@ -11,7 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
 
-<section class="section-collections-with-nav section-explore dark-mode" data-section="bf25">
+<section class="power-pack-section section-collections-with-nav section-explore dark-mode" data-section="bf25">
   <div class="gradient-mesh-bg"></div>
 
    {% if section.blocks.size > 0 %}
@@ -625,8 +625,7 @@ if (window.bf25Config.debug) {
   </script> {% endcomment %}
 <script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'section-bundle-builder-bf25.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'bf25-tier-pricing.js' | asset_url }}" defer></script>
+<script src="{{ 'section-power-pack-bf25.js' | asset_url }}" defer="defer"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -684,7 +683,7 @@ if (window.bf25Config.debug) {
 
 {% schema %}
 {
-  "name": "bundle build bf25",
+  "name": "Power Pack BF25",
   "settings": [
     {
       "type": "header",
@@ -800,7 +799,7 @@ if (window.bf25Config.debug) {
   ],
   "presets": [
     {
-      "name": "bundle build bf25"
+      "name": "power pack bf25"
     }
   ]
 }

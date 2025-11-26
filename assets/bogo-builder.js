@@ -1,3 +1,13 @@
+(function() {
+  'use strict';
+
+  // Prevent duplicate initialization
+  if (window.BOGOBuilderInitialized) {
+    console.log('⚠️ BOGO Builder already initialized, skipping');
+    return;
+  }
+  window.BOGOBuilderInitialized = true;
+
   console.log('%c🚀 BOGO JavaScript Loading...', 'color: #60c655; font-size: 20px; font-weight: bold;');
 
 // ========================================
@@ -327,13 +337,15 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
 (function() {
-  console.log('🌌 Starfield: Initializing...');
+  // Starfield disabled - canvas element removed from template
+  // console.log('🌌 Starfield: Initializing...');
 
-  const canvas = document.getElementById('starfield-canvas-full');
-  if (!canvas) {
-    console.error('❌ Starfield canvas NOT FOUND! Element #starfield-canvas-full missing.');
-    return;
-  }
+  // const canvas = document.getElementById('starfield-canvas-full');
+  // if (!canvas) {
+  //   console.error('❌ Starfield canvas NOT FOUND! Element #starfield-canvas-full missing.');
+  //   return;
+  // }
+  return; // Exit early - starfield not used
 
   console.log('✅ Canvas found:', canvas);
   console.log('Canvas dimensions:', canvas.offsetWidth, 'x', canvas.offsetHeight);
@@ -7969,3 +7981,6 @@ function initImageLightbox() {
 document.addEventListener('DOMContentLoaded', function() {
   initImageLightbox();
 });
+
+  console.log('✅ BOGO Builder initialized');
+})();

@@ -1,0 +1,398 @@
+{% comment %}
+  BF25 Snowfall Background Effect - PERFORMANCE OPTIMIZED
+  - Full page bokeh snow with realistic depth of field
+  - NO blur filter - uses opacity + size for depth effect
+  - Toggleable via section settings for A/B testing
+  - Auto-pauses when not visible for performance
+{% endcomment %}
+
+{%- if section.settings.enable_snowfall -%}
+<div class="bf25-snowfall-wrapper" data-section-id="{{ section.id }}">
+  {%- if section.settings.show_overlay -%}
+  <div class="bf25-snowfall-overlay"></div>
+  {%- endif -%}
+  <canvas id="bf25-snowfall-canvas" aria-hidden="true"></canvas>
+</div>
+
+<style>
+  .bf25-snowfall-wrapper {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2 !important;  /* IN FRONT of content */
+    pointer-events: none;   /* Click through to content */
+    overflow: hidden;
+    contain: strict;
+  }
+
+  .bf25-snowfall-overlay {
+    display: none;  /* No overlay needed when in front */
+  }
+
+  #bf25-snowfall-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;  /* Slightly transparent so content visible */
+  }
+
+  /* Modals MUST be above snow */
+  .bf25-modal-overlay,
+  .bf25-modal-container,
+  [class*="modal"],
+  [class*="drawer"],
+  .rebuy-cart,
+  .rebuy-modal,
+  .buy-now-popup,
+  .buy-now-popup__wrapper {
+    z-index: 1000 !important;
+  }
+
+  /* Header above snow */
+  header,
+  .header-wrapper,
+  #shopify-section-header,
+  .section-group-header-group {
+    position: relative !important;
+    z-index: 100 !important;
+  }
+
+  /* Sticky cart above snow */
+  .bf25-tier-cart,
+  .bf25-sticky-cart {
+    position: fixed !important;
+    z-index: 50 !important;
+  }
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  // Duplicate guard
+  if (window.BF25SnowfallInitialized) {
+    console.warn('⚠️ BF25 Snowfall already initialized');
+    return;
+  }
+  window.BF25SnowfallInitialized = true;
+
+  const canvas = document.getElementById('bf25-snowfall-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  let animationId = null;
+  let snowflakes = [];
+  let isVisible = true;
+  let lastTime = 0;
+
+  // OPTIMIZED config - fewer flakes, no blur
+  const config = {
+    layers: {
+      close: {{ section.settings.close_flakes | default: 6 }},
+      midClose: {{ section.settings.midclose_flakes | default: 8 }},
+      mid: {{ section.settings.mid_flakes | default: 16 }},
+      midFar: {{ section.settings.midfar_flakes | default: 10 }},
+      far: {{ section.settings.far_flakes | default: 10 }}
+    },
+    windSpeed: {{ section.settings.wind_speed | default: 2 }} * 0.06,
+    fallSpeed: {{ section.settings.fall_speed | default: 5 }} * 0.08,
+    maxSize: {{ section.settings.max_size | default: 16 }}
+  };
+
+  // Layer configs - using opacity instead of blur for depth
+  const layerConfigs = {
+    close: {
+      sizeMin: 10, sizeMax: config.maxSize,
+      speedMult: 1.2,
+      opacity: { min: 0.15, max: 0.3 },  // Low opacity = blurry look
+      zIndex: 5
+    },
+    midClose: {
+      sizeMin: 7, sizeMax: 11,
+      speedMult: 1.0,
+      opacity: { min: 0.25, max: 0.4 },
+      zIndex: 4
+    },
+    mid: {
+      sizeMin: 4, sizeMax: 8,
+      speedMult: 0.8,
+      opacity: { min: 0.6, max: 0.9 },  // High opacity = in focus
+      zIndex: 3
+    },
+    midFar: {
+      sizeMin: 2, sizeMax: 4,
+      speedMult: 0.55,
+      opacity: { min: 0.3, max: 0.5 },
+      zIndex: 2
+    },
+    far: {
+      sizeMin: 1, sizeMax: 3,
+      speedMult: 0.35,
+      opacity: { min: 0.15, max: 0.3 },  // Low opacity = distant
+      zIndex: 1
+    }
+  };
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(dpr, dpr);
+
+    if (snowflakes.length === 0) {
+      createAllSnowflakes();
+    }
+  }
+
+  function createSnowflake(layerType, startFromTop) {
+    const cfg = layerConfigs[layerType];
+    const size = Math.random() * (cfg.sizeMax - cfg.sizeMin) + cfg.sizeMin;
+    const opacity = Math.random() * (cfg.opacity.max - cfg.opacity.min) + cfg.opacity.min;
+
+    return {
+      x: Math.random() * window.innerWidth,
+      y: startFromTop ? -size - (Math.random() * 80) : Math.random() * window.innerHeight,
+      size: size,
+      speedY: (0.3 + Math.random() * 0.25) * cfg.speedMult * config.fallSpeed,
+      speedX: config.windSpeed * cfg.speedMult + (Math.random() * 0.06 - 0.03),
+      wobblePhase: Math.random() * Math.PI * 2,
+      wobbleSpeed: 0.015 + Math.random() * 0.01,
+      opacity: opacity,
+      zIndex: cfg.zIndex,
+      layerType: layerType
+    };
+  }
+
+  function createAllSnowflakes() {
+    snowflakes = [];
+    Object.entries(config.layers).forEach(([layerType, count]) => {
+      for (let i = 0; i < count; i++) {
+        snowflakes.push(createSnowflake(layerType, false));
+      }
+    });
+    snowflakes.sort((a, b) => a.zIndex - b.zIndex);
+  }
+
+  function animate(currentTime) {
+    if (!isVisible) {
+      animationId = null;
+      return;
+    }
+
+    // Delta time for smooth animation regardless of frame rate
+    const deltaTime = lastTime ? (currentTime - lastTime) / 16.67 : 1;
+    lastTime = currentTime;
+
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    for (let i = 0; i < snowflakes.length; i++) {
+      const flake = snowflakes[i];
+
+      // Update position with delta time
+      flake.wobblePhase += flake.wobbleSpeed * deltaTime;
+      const wobbleX = Math.sin(flake.wobblePhase) * 0.2;
+
+      flake.y += flake.speedY * deltaTime;
+      flake.x += (flake.speedX + wobbleX) * deltaTime;
+
+      // Respawn at top
+      if (flake.y > height + flake.size) {
+        const newFlake = createSnowflake(flake.layerType, true);
+        newFlake.zIndex = flake.zIndex;
+        snowflakes[i] = newFlake;
+        continue;
+      }
+
+      // Wrap horizontal
+      if (flake.x > width + flake.size) flake.x = -flake.size;
+      if (flake.x < -flake.size) flake.x = width + flake.size;
+
+      // Draw - NO BLUR FILTER (major performance gain)
+      ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+      ctx.beginPath();
+      ctx.arc(flake.x, flake.y, flake.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    animationId = requestAnimationFrame(animate);
+  }
+
+  function start() {
+    if (!animationId && isVisible) {
+      lastTime = 0;
+      animationId = requestAnimationFrame(animate);
+    }
+  }
+
+  function stop() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  // Initialize
+  resizeCanvas();
+  start();
+
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      isVisible = false;
+      stop();
+    } else {
+      isVisible = true;
+      start();
+    }
+  });
+
+  // Debounced resize
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(resizeCanvas, 200);
+  });
+
+  // Public API
+  window.BF25Snowfall = {
+    start: function() { isVisible = true; start(); },
+    stop: function() { isVisible = false; stop(); },
+    isRunning: function() { return !!animationId; },
+    getCount: function() { return snowflakes.length; }
+  };
+
+  console.log('❄️ BF25 Snowfall ready:', snowflakes.length, 'flakes (optimized)');
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "BF25 Snowfall",
+  "tag": "section",
+  "class": "bf25-snowfall-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_snowfall",
+      "label": "Enable Snowfall Effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Dark Overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Darkness",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Snowflakes"
+    },
+    {
+      "type": "range",
+      "id": "close_flakes",
+      "label": "Close (large, soft)",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "midclose_flakes",
+      "label": "Mid-Close",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "mid_flakes",
+      "label": "Middle (sharp)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "midfar_flakes",
+      "label": "Mid-Far",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "far_flakes",
+      "label": "Far (tiny)",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "fall_speed",
+      "label": "Fall Speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "wind_speed",
+      "label": "Wind Speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "max_size",
+      "label": "Max Size (px)",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "BF25 Snowfall",
+      "category": "Black Friday"
+    }
+  ]
+}
+{% endschema %}

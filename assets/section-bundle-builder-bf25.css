@@ -169,27 +169,33 @@
       0 15px 40px rgba(0, 0, 0, 0.4);
   }
 
-  /* S2 Selected State - Strong outer glow */
+  /* S2 Selected State - Strong outer glow - ALL POSSIBLE CLASSES */
   .dark-mode .section-collections-with-nav__product.is-selected,
-  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"] {
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"],
+  .dark-mode .section-collections-with-nav__product.selected,
+  .dark-mode .section-collections-with-nav__product.added,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle {
     box-shadow:
       0 0 0 2px #60c655,
       0 0 0 5px rgba(96, 198, 85, 0.2),
       0 0 50px rgba(96, 198, 85, 0.5),
       0 0 80px rgba(96, 198, 85, 0.25),
-      0 15px 40px rgba(0, 0, 0, 0.4);
+      0 15px 40px rgba(0, 0, 0, 0.4) !important;
     transform: translateY(-6px);
   }
 
   /* Selected + Hover state */
   .dark-mode .section-collections-with-nav__product.is-selected:hover,
-  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"]:hover {
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"]:hover,
+  .dark-mode .section-collections-with-nav__product.selected:hover,
+  .dark-mode .section-collections-with-nav__product.added:hover,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle:hover {
     box-shadow:
       0 0 0 2px #60c655,
       0 0 0 5px rgba(96, 198, 85, 0.25),
       0 0 55px rgba(96, 198, 85, 0.55),
       0 0 90px rgba(96, 198, 85, 0.3),
-      0 18px 45px rgba(0, 0, 0, 0.4);
+      0 18px 45px rgba(0, 0, 0, 0.4) !important;
     transform: translateY(-8px);
   }
 
@@ -232,17 +238,19 @@
     color: #ffffff !important;
   }
   
-  /* Feature List - Glowing Dots */
-  .dark-mode .metafield-rich_text_field ul,
-  .bf25-card-features,
+  /* Feature List - Glowing Dots - ONLY ON PRODUCT CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
   .dark-mode .section-collections-with-nav__product .product-features {
     list-style: none;
     padding: 0;
     margin: 12px 0;
   }
 
-  .dark-mode .metafield-rich_text_field ul li,
-  .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
   .dark-mode .section-collections-with-nav__product .product-feature {
     display: flex;
     align-items: center;
@@ -256,9 +264,10 @@
     position: relative;
   }
 
-  /* Glowing dot - using pseudo-element */
-  .dark-mode .metafield-rich_text_field ul li::before,
-  .bf25-card-feature::before,
+  /* Glowing dot - using pseudo-element - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
   .dark-mode .section-collections-with-nav__product .product-feature::before {
     content: '';
     width: 6px;
@@ -444,17 +453,19 @@
       height: 12px;
     }
 
-    /* Mobile adjustments for glowing dots */
-    .dark-mode .metafield-rich_text_field ul li,
-    .bf25-card-feature,
+    /* Mobile adjustments for glowing dots - ONLY ON CARDS */
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature,
     .dark-mode .section-collections-with-nav__product .product-feature {
       gap: 8px;
       margin-bottom: 5px;
       font-size: 11px;
     }
 
-    .dark-mode .metafield-rich_text_field ul li::before,
-    .bf25-card-feature::before,
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
     .dark-mode .section-collections-with-nav__product .product-feature::before {
       width: 5px;
       height: 5px;
@@ -573,15 +584,17 @@
     gap: 10px !important; /* Slightly tighter */
   }
 
-  /* Features list - tighter */
-  .dark-mode .metafield-rich_text_field ul,
-  .bf25-card-features,
+  /* Features list - tighter - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
   .dark-mode .section-collections-with-nav__product .product-features {
     margin: 8px 0 !important; /* Reduced from 12px */
   }
 
-  .dark-mode .metafield-rich_text_field ul li,
-  .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
   .dark-mode .section-collections-with-nav__product .product-feature {
     margin-bottom: 4px !important; /* Reduced from 6px */
   }
@@ -691,7 +704,8 @@
       font-size: 20px !important;
     }
 
-    .dark-mode .metafield-rich_text_field ul li {
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li {
       font-size: 12px !important;
     }
 
@@ -1478,7 +1492,7 @@ body.modal-open {
   justify-content: center;
 }
 
-/* Review count + Stock row - INLINE */
+/* COMMENTED OUT - Conflicting with existing stock system
 .bf25-review-count-row,
 .dark-mode .section-collections-with-nav__product .review-count-wrapper {
   display: flex;
@@ -1488,14 +1502,6 @@ body.modal-open {
   flex-wrap: nowrap;
 }
 
-/* Review count text */
-.bf25-review-count,
-.dark-mode .section-collections-with-nav__product .review-count {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-/* Divider dot between reviews and stock */
 .bf25-review-stock-divider {
   width: 4px;
   height: 4px;
@@ -1504,21 +1510,15 @@ body.modal-open {
   flex-shrink: 0;
 }
 
-/* Stock indicator - NEXT TO REVIEW COUNT */
-.bf25-card-stock,
-.bf25-stock-indicator,
-.dark-mode .section-collections-with-nav__product .stock-display {
+.bf25-card-stock {
   display: flex !important;
   align-items: center;
   gap: 5px;
   flex-shrink: 0;
-  position: static !important; /* Remove any absolute positioning */
+  position: static !important;
 }
 
-/* Stock dot - with glow */
-.bf25-card-stock .bf25-stock-dot,
-.bf25-stock-indicator .stock-dot,
-.dark-mode .section-collections-with-nav__product .stock-display .stock-dot {
+.bf25-card-stock .bf25-stock-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -1527,48 +1527,103 @@ body.modal-open {
   flex-shrink: 0;
 }
 
-/* Stock count - MUST HAVE COLOR (not white) */
-.bf25-card-stock .bf25-stock-count,
-.bf25-stock-indicator .stock-count,
-.dark-mode .section-collections-with-nav__product .stock-display .stock-count,
-.dark-mode .section-collections-with-nav__product .stock-number {
+.bf25-card-stock .bf25-stock-count {
   font-size: 12px !important;
   font-weight: 500 !important;
-  color: #60c655 !important; /* Force green by default */
-}
-
-/* Stock color states */
-[data-stock-level="high"] .bf25-stock-count,
-[data-stock-level="high"] .stock-count,
-[data-stock-level="high"] .stock-number {
   color: #60c655 !important;
 }
-[data-stock-level="high"] .bf25-stock-dot,
-[data-stock-level="high"] .stock-dot {
-  background: #60c655;
-  box-shadow: 0 0 6px #60c655;
+*/
+
+/* Reviews section - tighter spacing */
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge,
+.dark-mode .section-collections-with-nav__product .product-rating,
+.dark-mode .section-collections-with-nav__product .reviews-wrapper,
+.dark-mode .section-collections-with-nav__product .bf25-card-reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0; /* Remove any gap */
 }
 
-[data-stock-level="medium"] .bf25-stock-count,
-[data-stock-level="medium"] .stock-count,
-[data-stock-level="medium"] .stock-number {
+/* Stars - ensure no bottom margin */
+.dark-mode .section-collections-with-nav__product .jdgm-star,
+.dark-mode .section-collections-with-nav__product .star-rating,
+.dark-mode .section-collections-with-nav__product [class*="stars"],
+.dark-mode .section-collections-with-nav__product .bf25-rating-stars {
+  color: #60c655;
+  text-shadow:
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 16px rgba(96, 198, 85, 0.4);
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+  line-height: 1;
+}
+
+/* Review count text - VERY CLOSE to stars */
+.bf25-review-count,
+.dark-mode .section-collections-with-nav__product .review-count,
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge__text,
+.dark-mode .section-collections-with-nav__product [class*="review-count"] {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0px !important; /* Minimal gap */
+  padding-top: 2px;
+  line-height: 1;
+}
+
+/* STOCK POSITIONING - Try to position next to reviews */
+/* Create flex container for reviews + stock if possible */
+.dark-mode .section-collections-with-nav__product .reviews-stock-wrapper,
+.dark-mode .section-collections-with-nav__product .meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Dynamic Stock Indicator - position inline */
+.bf25-stock-display,
+.stock-indicator,
+.dynamic-stock,
+[class*="stock-number"],
+.dark-mode .section-collections-with-nav__product .stock-wrapper {
+  font-size: 13px;
+  font-weight: 600;
+  /* Try to position inline with reviews */
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center;
+  margin-left: 8px;
+}
+
+/* Add bullet separator before stock if next to reviews */
+.bf25-stock-display::before,
+.stock-indicator::before,
+.dynamic-stock::before {
+  content: '•';
+  color: rgba(255, 255, 255, 0.3);
+  margin-right: 8px;
+  font-size: 10px;
+}
+
+/* Stock color states for EXISTING system */
+.bf25-stock-display.stock-high,
+[data-stock-level="high"] .stock-number,
+.stock-high {
+  color: #60c655 !important;
+}
+
+.bf25-stock-display.stock-medium,
+[data-stock-level="medium"] .stock-number,
+.stock-medium {
   color: #fbbf24 !important;
 }
-[data-stock-level="medium"] .bf25-stock-dot,
-[data-stock-level="medium"] .stock-dot {
-  background: #fbbf24;
-  box-shadow: 0 0 6px #fbbf24;
-}
 
-[data-stock-level="low"] .bf25-stock-count,
-[data-stock-level="low"] .stock-count,
-[data-stock-level="low"] .stock-number {
+.bf25-stock-display.stock-low,
+[data-stock-level="low"] .stock-number,
+.stock-low {
   color: #ef4444 !important;
-}
-[data-stock-level="low"] .bf25-stock-dot,
-[data-stock-level="low"] .stock-dot {
-  background: #ef4444;
-  box-shadow: 0 0 6px #ef4444;
 }
 
 /* === ISSUE 2 FIX: PRICE OVERLAPPING BUTTON === */
@@ -1631,37 +1686,47 @@ body.modal-open {
   flex-shrink: 0 !important;
 }
 
-/* === ISSUE 3 FIX: PRODUCT IMAGES TOO SMALL === */
+/* === PRODUCT IMAGES - BIGGER WITH NATURAL FADING GLOW === */
 
-/* Product Image - LARGER */
+/* Product Image Container - fixed size, allows overflow */
 .dark-mode .section-collections-with-nav__product-image,
 .dark-mode .bf25-card-image-wrapper {
-  height: 160px !important; /* Increased from smaller value */
+  position: relative;
+  height: 160px !important; /* Fixed container height */
   min-height: 160px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   margin-top: 35px !important;
   margin-bottom: 12px !important;
+  overflow: visible !important; /* KEY: allow image to overflow */
 }
 
+/* Product Image - ZOOMED IN with NATURAL FADING GLOW */
 .dark-mode .section-collections-with-nav__product-image img,
 .dark-mode .bf25-card-image img {
-  max-height: 150px !important; /* Increased - was likely 105-120px */
-  max-width: 100% !important;
+  max-height: 180px !important; /* Larger than container = overflow */
+  max-width: 120% !important; /* Allow horizontal overflow too */
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
+  /* NATURAL FADING GLOW - 4 layers for smooth fade */
   filter:
-    drop-shadow(0 0 12px rgba(96, 198, 85, 1))
-    drop-shadow(0 0 25px rgba(127, 255, 0, 0.7))
-    drop-shadow(0 0 45px rgba(96, 198, 85, 0.5)) !important;
-  transition: transform 0.4s ease;
+    drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+    drop-shadow(0 0 20px rgba(96, 198, 85, 0.5))
+    drop-shadow(0 0 40px rgba(96, 198, 85, 0.25))
+    drop-shadow(0 0 60px rgba(96, 198, 85, 0.1)) !important;
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
-/* Hover - slight scale */
+/* Hover - slightly enhanced glow */
 .dark-mode .section-collections-with-nav__product:hover .section-collections-with-nav__product-image img {
   transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 10px rgba(96, 198, 85, 1))
+    drop-shadow(0 0 25px rgba(96, 198, 85, 0.6))
+    drop-shadow(0 0 50px rgba(96, 198, 85, 0.3))
+    drop-shadow(0 0 70px rgba(96, 198, 85, 0.15)) !important;
 }
 
 /* ===================================================
@@ -1675,9 +1740,16 @@ body.modal-open {
     border-radius: 22px;
   }
 
-  /* Slightly smaller image on tablet */
+  /* Mobile image container - proportionally smaller */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 140px;
+    min-height: 140px;
+  }
+
+  /* Mobile images - still zoomed but proportional */
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 120px !important;
+    max-height: 160px !important; /* Still larger than container */
+    max-width: 115% !important;
   }
 
   /* Button size */
@@ -1707,11 +1779,20 @@ body.modal-open {
     margin-bottom: 10px !important;
   }
 
+  /* Mobile image container */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 140px !important;
+    min-height: 140px !important;
+  }
+
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 120px !important;
+    max-height: 160px !important; /* Still zoomed */
+    max-width: 115% !important;
+    /* Mobile-optimized glow */
     filter:
-      drop-shadow(0 0 10px rgba(96, 198, 85, 0.9))
-      drop-shadow(0 0 18px rgba(96, 198, 85, 0.5)) !important;
+      drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+      drop-shadow(0 0 18px rgba(96, 198, 85, 0.5))
+      drop-shadow(0 0 30px rgba(96, 198, 85, 0.2)) !important;
   }
   .dark-mode .section-collections-with-nav__product {
     padding: 14px !important;
@@ -1829,22 +1910,25 @@ body.modal-open {
     font-size: 10px !important;
   }
 
-  /* Features - compact */
-  .dark-mode .metafield-rich_text_field ul,
-  .bf25-card-features,
+  /* Features - compact - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
   .dark-mode .section-collections-with-nav__product .product-features {
     margin: 6px 0 !important;
   }
 
-  .dark-mode .metafield-rich_text_field ul li,
-  .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
   .dark-mode .section-collections-with-nav__product .product-feature {
     gap: 8px !important;
     margin-bottom: 4px !important;
   }
 
-  .dark-mode .metafield-rich_text_field ul li::before,
-  .bf25-card-feature::before,
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
   .dark-mode .section-collections-with-nav__product .product-feature::before {
     width: 5px !important;
     height: 5px !important;
@@ -1892,15 +1976,17 @@ body.modal-open {
 
 /* ===== SMALL MOBILE (max-width: 374px) ===== */
 @media (max-width: 374px) {
-  /* LAYOUT FIX: Still decent size on small screens */
+  /* Small mobile image container */
   .dark-mode .section-collections-with-nav__product-image,
   .dark-mode .bf25-card-image-wrapper {
-    height: 110px !important;
-    min-height: 110px !important;
+    height: 120px !important;
+    min-height: 120px !important;
   }
 
+  /* Still zoomed on small screens */
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 100px !important;
+    max-height: 140px !important; /* Still larger than container */
+    max-width: 110% !important;
   }
   .dark-mode .section-collections-with-nav__product {
     padding: 12px !important;
@@ -1985,8 +2071,152 @@ body.modal-open {
     font-size: 18px !important;
   }
 
-  /* Further reduce image for tiny screens */
+  /* Tiny screens - still maintain zoom effect */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 80px !important;
+    max-height: 115px !important; /* Still zoomed even on tiny screens */
+    max-width: 105% !important;
+  }
+}
+
+/* ===================================================
+   BF25 MODAL DESCRIPTION - CLEAN SENTENCE FORMAT
+   =================================================== */
+
+/* Reset any flex/grid layout in modal descriptions */
+.bf25-modal-description,
+.bf25-product-modal .product-description,
+.bf25-card-variant-state .product-description,
+.bf25-modal .description-content,
+[class*="modal"] .metafield-rich_text_field ul,
+[class*="variant-state"] .metafield-rich_text_field ul,
+[class*="modal"] .product-features,
+[class*="modal"] .product-description {
+  /* Reset any 2-column or flex layout */
+  display: block !important;
+  columns: unset !important;
+  grid-template-columns: unset !important;
+}
+
+/* Modal feature/description items - clean single lines */
+.bf25-modal-description li,
+.bf25-modal-description p,
+.bf25-product-modal .product-description li,
+.bf25-product-modal .feature-item,
+.bf25-card-variant-state .description-item,
+[class*="modal"] .metafield-rich_text_field ul li,
+[class*="variant-state"] .metafield-rich_text_field ul li,
+[class*="modal"] .product-features li,
+[class*="modal"] .feature-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  text-align: left !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+}
+
+/* Modal bullet/tick - simple green tick, NO GLOW */
+.bf25-modal-description li::before,
+.bf25-product-modal .product-description li::before,
+[class*="modal"] .metafield-rich_text_field ul li::before,
+[class*="variant-state"] .metafield-rich_text_field ul li::before,
+[class*="modal"] .product-features li::before {
+  content: '✓' !important;
+  color: #60c655 !important;
+  font-weight: 600 !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  /* Remove any glow effects in modal */
+  text-shadow: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  position: static !important;
+  display: inline !important;
+}
+
+/* Modal description text - clean, readable */
+.bf25-modal-description span,
+.bf25-modal-description .feature-text,
+.bf25-product-modal .product-description .feature-text,
+[class*="modal"] .metafield-rich_text_field ul li span,
+[class*="variant-state"] .metafield-rich_text_field ul li span,
+[class*="modal"] .feature-name,
+[class*="modal"] .feature-description {
+  display: inline !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.5 !important;
+}
+
+/* Remove any bold/label styling that created 2-column look */
+.bf25-modal-description .feature-name,
+.bf25-modal-description strong,
+[class*="modal"] .feature-label,
+[class*="modal"] .metafield-rich_text_field ul li strong,
+[class*="variant-state"] .metafield-rich_text_field ul li strong {
+  font-weight: 600 !important;
+  color: #fff !important;
+  display: inline !important;
+  width: auto !important;
+  min-width: unset !important;
+}
+
+/* Ensure colon appears naturally after bold text */
+.bf25-modal-description .feature-name::after,
+[class*="modal"] .metafield-rich_text_field ul li strong:first-child::after {
+  content: ': ';
+}
+
+/* Remove 2-column grid if present */
+[class*="modal"] .features-grid,
+[class*="modal"] .description-grid,
+.bf25-modal .feature-list,
+[class*="variant-state"] .features-grid {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+/* Remove definition list styling if present */
+[class*="modal"] dl,
+[class*="modal"] dt,
+[class*="modal"] dd {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+[class*="modal"] dt {
+  display: inline;
+  font-weight: 600;
+}
+
+[class*="modal"] dt::after {
+  content: ': ';
+}
+
+[class*="modal"] dd {
+  display: inline;
+  margin-left: 0;
+}
+
+/* Mobile modal */
+@media (max-width: 767px) {
+  .bf25-modal-description li,
+  .bf25-product-modal .product-description li,
+  [class*="modal"] .metafield-rich_text_field ul li,
+  [class*="variant-state"] .metafield-rich_text_field ul li,
+  [class*="modal"] .product-features li {
+    margin-bottom: 10px !important;
+    font-size: 13px !important;
   }
 }

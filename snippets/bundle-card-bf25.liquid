@@ -73,9 +73,10 @@ Usage:
 
       {%- comment -%} PRICING SECTION {%- endcomment -%}
       <div class="pp-bundle-card__pricing">
-        <div class="pp-bundle-card__items">
-          <span class="pp-bundle-card__item-count">{{ total_items }}</span>
-          <span class="pp-bundle-card__item-label">items</span>
+        <div class="pp-bundle-card__items" data-bundle-id="{{ bundle_id }}">
+          <span class="pp-bundle-card__item-count">{{ bundle_settings.number_of_items | default: total_items }}</span>
+          <span class="pp-bundle-card__item-label">Items</span>
+          <span class="pp-bundle-card__gifts-text">+ <span class="pp-bundle-card__gifts-count">{{ bundle_settings.number_of_gifts | default: 0 }}</span> gifts</span>
         </div>
 
         <div class="pp-bundle-card__prices">

@@ -619,6 +619,18 @@ Performance Notes:
   font-weight: var(--pp-font-weight-medium);
 }
 
+.pp-bundle-card__gifts-text {
+  font-size: var(--pp-font-base);
+  font-weight: var(--pp-font-weight-medium);
+}
+
+.pp-bundle-card__gifts-count {
+  font-size: calc(var(--pp-font-2xl) - 2px);
+  font-weight: var(--pp-font-weight-bold);
+  color: var(--pp-accent-primary);
+  line-height: 1;
+}
+
 .pp-bundle-card__prices {
   display: flex;
   align-items: baseline;
@@ -729,7 +741,9 @@ Performance Notes:
   );
   color: #000000;
   font-size: var(--pp-font-base);
-  font-weight: var(--pp-font-weight-bold);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
+  max-height: 48px;
   border: none;
   border-radius: var(--pp-radius-md);
   cursor: pointer;
@@ -1325,7 +1339,7 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--pp-border-secondary);
   border-radius: var(--pp-radius-md);
-  padding: var(--pp-space-sm);
+  padding: var(--pp-space-xs);
   transition: all var(--pp-transition-fast);
   cursor: pointer;
   overflow: hidden;
@@ -1369,11 +1383,11 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
 
 .pp-product-compact-image-wrapper {
   position: relative;
-  width: 100%;
+  width: 60%;
   aspect-ratio: 1;
   border-radius: var(--pp-radius-sm);
   overflow: hidden;
-  margin-bottom: var(--pp-space-xs);
+  margin: 0 auto 15px;
   background: rgba(0, 0, 0, 0.3);
 }
 

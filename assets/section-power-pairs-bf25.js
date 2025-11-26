@@ -3605,6 +3605,19 @@ class ExpansionManager {
 
 
   /**
+   * Calculate gift count based on total item count
+   * @param {number} totalItems - Total item count
+   * @returns {number} Gift count
+   */
+  calculateGiftCount(totalItems) {
+    if (totalItems >= 4 && totalItems <= 7) return 1;
+    if (totalItems >= 8 && totalItems <= 11) return 2;
+    if (totalItems >= 12 && totalItems <= 15) return 3;
+    if (totalItems >= 16) return 4;
+    return 0;
+  }
+
+  /**
    * Update bundle card on main page with current bundle information
    */
   refreshBundleCard() {
@@ -3624,10 +3637,20 @@ class ExpansionManager {
     // Calculate current pricing
     const pricing = this.calculateBundlePricing(bundle);
 
+    // Calculate total items (base count * multiplier)
+    const totalItems = bundle.baseItemCount * bundle.multiplier;
+
     // Update item count
     const itemCountElement = bundleCard.querySelector('.pp-bundle-card__item-count');
     if (itemCountElement) {
-      itemCountElement.textContent = bundle.baseItemCount;
+      itemCountElement.textContent = totalItems;
+    }
+
+    // Calculate and update gift count
+    const giftCount = this.calculateGiftCount(totalItems);
+    const giftCountElement = bundleCard.querySelector('.pp-bundle-card__gifts-count');
+    if (giftCountElement) {
+      giftCountElement.textContent = giftCount;
     }
 
     // Update current price
@@ -3687,6 +3710,7 @@ class ExpansionManager {
       savings: pricing.savings
     });
   }
+
 
   /**
    * Render multiplier controls

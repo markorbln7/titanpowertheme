@@ -4979,3 +4979,213 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 /* END BF25-MOB-017: DESCRIPTION EXPAND                         */
 /* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-018: COMPREHENSIVE POLISH - ALL REMAINING ISSUES    */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* ============================================================ */
+  /* 1. DESCRIPTION EXPAND - Force normal document flow           */
+  /* ============================================================ */
+
+  /* Modal body must allow content to grow */
+  .bf25-modal-body,
+  .bf25-modal-content,
+  .bf25-modal-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Description section in normal flow */
+  .bf25-description-wrapper,
+  .bf25-product-description-section {
+    position: relative !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-description-inner {
+    max-height: 80px !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 2000px !important;
+  }
+
+  /* Sections below - must NOT be absolutely positioned */
+  .bf25-quantity-section,
+  .bf25-quantity-controls,
+  .bf25-upsells-section,
+  .bf25-reviews-section {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ============================================================ */
+  /* 2. PRICE - Smaller to fit discount on same line              */
+  /* ============================================================ */
+
+  .bf25-modal-content .bf25-price-current,
+  .bf25-modal-content .bf25-sale-price,
+  .bf25-pricing-card .bf25-price-current {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+
+  .bf25-modal-content .bf25-price-per-item {
+    font-size: 13px !important;
+  }
+
+  .bf25-modal-content .bf25-price-compare,
+  .bf25-modal-content .bf25-compare-price {
+    font-size: 14px !important;
+  }
+
+  .bf25-modal-content .bf25-discount-badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Price row - ensure everything fits on one line */
+  .bf25-price-row,
+  .bf25-pricing-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* ============================================================ */
+  /* 3. PRODUCT IMAGE - Bigger (~2x)                              */
+  /* ============================================================ */
+
+  .bf25-modal-product-image,
+  .bf25-modal-content .bf25-product-image-container {
+    max-width: 280px !important;
+    max-height: 220px !important;
+    margin: 0 auto 16px !important;
+  }
+
+  .bf25-modal-product-image img,
+  .bf25-modal-content .bf25-product-image-container img {
+    max-height: 220px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* ============================================================ */
+  /* 4. "PAIRS WELL WITH" - More visible text                     */
+  /* ============================================================ */
+
+  .bf25-upsells-title,
+  .bf25-upsells-section h3,
+  .bf25-upsells-section .section-title {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ============================================================ */
+  /* 5. UPSELL PRODUCT IMAGES - Bigger                            */
+  /* ============================================================ */
+
+  .bf25-upsell-card,
+  .bf25-upsell-item {
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+
+  .bf25-upsell-image,
+  .bf25-upsell-card .product-image,
+  .bf25-upsell-item img {
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px !important;
+    min-height: 70px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .bf25-upsell-info {
+    flex: 1 !important;
+  }
+
+  .bf25-upsell-title,
+  .bf25-upsell-card .product-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    color: #fff !important;
+  }
+
+  .bf25-upsell-price {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #60c655 !important;
+  }
+
+  /* ============================================================ */
+  /* 6. PROGRESS TRACKER - Reduce gap above                       */
+  /* ============================================================ */
+
+  .bf25-modal-footer-fixed {
+    padding-top: 10px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-tracker {
+    margin-bottom: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-action-buttons {
+    margin-top: 8px !important;
+  }
+
+  /* ============================================================ */
+  /* 7. REVIEW STARS - Closer to product name                     */
+  /* ============================================================ */
+
+  .bf25-modal-content .bf25-product-title,
+  .bf25-modal-content .bf25-modal-title {
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-modal-content .bf25-rating,
+  .bf25-modal-content .bf25-reviews-summary,
+  .bf25-modal-content .bf25-star-rating {
+    margin-top: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ============================================================ */
+  /* 8. REMOVE EXTRA COLON - ::after on strong                    */
+  /* ============================================================ */
+
+  /* Remove the colon added by ::after pseudo-element */
+  .bf25-description-content li strong::after,
+  .bf25-description-content .metafield-rich_text_field li strong::after,
+  [class*="modal"] .metafield-rich_text_field ul li strong::after,
+  .bf25-modal-description li strong::after {
+    content: none !important;
+    display: none !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-018: COMPREHENSIVE POLISH                       */
+/* ============================================================ */

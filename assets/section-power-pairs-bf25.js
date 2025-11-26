@@ -405,6 +405,59 @@
   }
 
   /**
+   * ROCK SOLID MONEY FORMATTER
+   * Handles all Shopify money format placeholders
+   * @param {number} cents - Price in cents
+   * @returns {string} Formatted price string
+   */
+  function formatMoneyRockSolid(cents) {
+    // Validate input - must be a number
+    if (typeof cents !== 'number' || isNaN(cents)) {
+      console.warn('[PowerPairs] formatMoneyRockSolid: Invalid input, defaulting to 0', cents);
+      cents = 0;
+    }
+
+    // Convert cents to amount
+    const amountFloat = cents / 100;
+    const amountFixed = amountFloat.toFixed(2);
+    const amountNoDecimals = Math.round(amountFloat).toString();
+    const amountWithComma = amountFixed.replace('.', ',');
+    const amountNoDecimalsWithComma = amountNoDecimals;
+
+    // Get money format from theme
+    let format = '';
+    if (window.theme && window.theme.moneyFormat && typeof window.theme.moneyFormat === 'string') {
+      format = window.theme.moneyFormat;
+    }
+
+    // If no format or empty, use simple fallback
+    if (!format || format.trim() === '') {
+      return `€${amountFixed}`;
+    }
+
+    // Replace ALL possible Shopify money placeholders
+    // Order matters: replace longer placeholders first to avoid partial matches
+    let result = format;
+    result = result.replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amountWithComma);
+    result = result.replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, amountNoDecimalsWithComma);
+    result = result.replace(/\{\{\s*amount_no_decimals\s*\}\}/g, amountNoDecimals);
+    result = result.replace(/\{\{\s*amount\s*\}\}/g, amountFixed);
+
+    // Safety check: if any {{ }} placeholders remain, they're invalid - strip them
+    if (result.includes('{{') && result.includes('}}')) {
+      console.warn('[PowerPairs] formatMoneyRockSolid: Unhandled placeholder in format', format);
+      result = result.replace(/\{\{[^}]*\}\}/g, '');
+    }
+
+    // If result is empty after all processing, use fallback
+    if (!result || result.trim() === '') {
+      return `€${amountFixed}`;
+    }
+
+    return result;
+  }
+
+  /**
    * Request idle callback polyfill
    * @param {Function} callback - Function to run when idle
    */
@@ -1725,25 +1778,12 @@ class VariantModal {
   }
 
   /**
-   * Format money
+   * Format money - uses global rock solid formatter
    * @param {number} cents - Price in cents
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    // Use Shopify's formatMoney if available
-    if (window.Shopify && window.Shopify.formatMoney) {
-      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
-      return window.Shopify.formatMoney(cents, format);
-    }
-    
-    // Manual fallback using theme money format
-    if (window.theme && window.theme.moneyFormat) {
-      const amount = (cents / 100).toFixed(2);
-      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
-    }
-    
-    console.error('[PowerPairs] Currency formatting not available');
-    return '';
+    return formatMoneyRockSolid(cents);
   }
 }
 
@@ -2292,23 +2332,12 @@ class SwapModal {
   }
 
   /**
-   * Format money
+   * Format money - uses global rock solid formatter
    * @param {number} cents - Price in cents
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    if (window.Shopify && window.Shopify.formatMoney) {
-      const format = window.theme && window.theme.moneyFormat ? window.theme.moneyFormat : '{{amount}}';
-      return window.Shopify.formatMoney(cents, format);
-    }
-    
-    if (window.theme && window.theme.moneyFormat) {
-      const amount = (cents / 100).toFixed(2);
-      return window.theme.moneyFormat.replace('{{amount}}', amount).replace('{{amount_no_decimals}}', Math.round(cents / 100));
-    }
-    
-    console.error('[PowerPairs Swap] Currency formatting not available');
-    return '';
+    return formatMoneyRockSolid(cents);
   }
 }
 
@@ -2544,6 +2573,21 @@ class ExpansionManager {
     // Generate CTA section
     const ctaHTML = this.renderCTA(bundle, pricing, allComplete);
 
+    // Render learn more section if text exists
+    const learnMoreHTML = bundle.learnMoreText ? `
+      <div class="pp-learn-more-section">
+        <div class="pp-learn-more-text" data-collapsed="true">
+          <p class="pp-learn-more-content">${bundle.learnMoreText}</p>
+        </div>
+        <button class="pp-learn-more-toggle" data-action="toggle-learn-more" style="display: none;">
+          <span class="pp-learn-more-toggle-text">Learn More</span>
+          <svg class="pp-learn-more-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+      </div>
+    ` : '';
+
     // Render complete content structure - REDESIGNED
     this.contentArea.innerHTML = `
       <div class="pp-sheet-header-custom">
@@ -2582,6 +2626,7 @@ class ExpansionManager {
             <h3 class="pp-products-section-v2__title">📦 Your Bundle</h3>
             <span class="pp-products-section-v2__count">${bundle.baseItemCount} items</span>
           </div>
+          ${learnMoreHTML}
           <div class="pp-products-grid-v2">
             ${productGridHTML}
           </div>
@@ -2612,6 +2657,9 @@ class ExpansionManager {
 
     // Attach CTA listener
     this.attachCTAListener();
+    
+    // Setup learn more toggle
+    this.setupLearnMoreToggle();
 
     perfMark('pp-render-bundle-end');
     perfMeasure('pp-render-bundle', 'pp-render-bundle-start', 'pp-render-bundle-end');
@@ -2628,6 +2676,52 @@ class ExpansionManager {
     });
 
     console.log('[PowerPairs] Content rendered successfully');
+  }
+
+  /**
+   * Setup learn more toggle functionality
+   */
+  setupLearnMoreToggle() {
+    const learnMoreSection = this.contentArea.querySelector('.pp-learn-more-section');
+    if (!learnMoreSection) return;
+
+    const textContainer = learnMoreSection.querySelector('.pp-learn-more-text');
+    const content = learnMoreSection.querySelector('.pp-learn-more-content');
+    const toggleBtn = learnMoreSection.querySelector('.pp-learn-more-toggle');
+
+    if (!textContainer || !content || !toggleBtn) return;
+
+    // Check if text is long enough to need truncation (more than ~3 lines)
+    // We use scrollHeight vs clientHeight comparison after applying collapsed styles
+    requestAnimationFrame(() => {
+      const lineHeight = parseFloat(getComputedStyle(content).lineHeight) || 20;
+      const maxHeight = lineHeight * 3; // 3 lines
+      
+      if (content.scrollHeight > maxHeight + 5) {
+        // Text is long enough, show the toggle button
+        toggleBtn.style.display = 'flex';
+        textContainer.setAttribute('data-collapsed', 'true');
+        
+        // Attach click listener
+        toggleBtn.addEventListener('click', () => {
+          const isCollapsed = textContainer.getAttribute('data-collapsed') === 'true';
+          
+          if (isCollapsed) {
+            textContainer.setAttribute('data-collapsed', 'false');
+            toggleBtn.querySelector('.pp-learn-more-toggle-text').textContent = 'Show Less';
+            toggleBtn.classList.add('pp-learn-more-toggle--expanded');
+          } else {
+            textContainer.setAttribute('data-collapsed', 'true');
+            toggleBtn.querySelector('.pp-learn-more-toggle-text').textContent = 'Learn More';
+            toggleBtn.classList.remove('pp-learn-more-toggle--expanded');
+          }
+        });
+      } else {
+        // Text is short enough, no toggle needed
+        textContainer.setAttribute('data-collapsed', 'false');
+        toggleBtn.style.display = 'none';
+      }
+    });
   }
 
   /**
@@ -4724,68 +4818,12 @@ class ExpansionManager {
   }
 
   /**
-   * Format price from cents to currency
+   * Format price from cents to currency - uses global rock solid formatter
    * @param {number} cents - Price in cents
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
-    // Validate input
-    if (typeof cents !== 'number' || isNaN(cents)) {
-      console.error('[PowerPairs] formatMoney: Invalid input', cents);
-      return '';
-    }
-
-    // Use Shopify's formatMoney if available
-    if (window.Shopify && window.Shopify.formatMoney) {
-      // Get format string, ensuring it doesn't contain unprocessed Liquid syntax
-      let format = '{{amount}}';
-      if (window.theme && window.theme.moneyFormat && typeof window.theme.moneyFormat === 'string') {
-        // Remove any unprocessed Liquid syntax (like {{ liquid variable }})
-        format = window.theme.moneyFormat.replace(/\{\{[^}]+\}\}/g, (match) => {
-          // Only keep valid Shopify money format placeholders
-          if (match === '{{amount}}' || match === '{{amount_no_decimals}}' || 
-              match === '{{amount_with_comma_separator}}' || match === '{{amount_no_decimals_with_comma_separator}}') {
-            return match;
-          }
-          // Remove any other Liquid syntax
-          return '';
-        });
-        // If format is empty after cleaning, use default
-        if (!format || format.trim() === '') {
-          format = '{{amount}}';
-        }
-      }
-      return window.Shopify.formatMoney(cents, format);
-    }
-    
-    // Manual fallback using theme money format
-    if (window.theme && window.theme.moneyFormat && typeof window.theme.moneyFormat === 'string') {
-      const amount = (cents / 100).toFixed(2);
-      let format = window.theme.moneyFormat;
-      
-      // Remove any unprocessed Liquid syntax before replacing placeholders
-      format = format.replace(/\{\{[^}]+\}\}/g, (match) => {
-        // Only keep valid Shopify money format placeholders
-        if (match === '{{amount}}' || match === '{{amount_no_decimals}}' || 
-            match === '{{amount_with_comma_separator}}' || match === '{{amount_no_decimals_with_comma_separator}}') {
-          return match;
-        }
-        // Remove any other Liquid syntax
-        return '';
-      });
-      
-      // Replace valid placeholders
-      format = format.replace('{{amount}}', amount);
-      format = format.replace('{{amount_no_decimals}}', Math.round(cents / 100));
-      format = format.replace('{{amount_with_comma_separator}}', amount.replace('.', ','));
-      format = format.replace('{{amount_no_decimals_with_comma_separator}}', Math.round(cents / 100).toString());
-      
-      return format;
-    }
-    
-    // Ultimate fallback: simple format
-    const amount = (cents / 100).toFixed(2);
-    return `$${amount}`;
+    return formatMoneyRockSolid(cents);
   }
 
   /**

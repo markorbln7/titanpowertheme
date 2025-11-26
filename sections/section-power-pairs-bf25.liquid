@@ -337,6 +337,7 @@ Product Association Test:
           "tierBadgeText": {{ bundle_block.settings.tier_badge_text | strip_html | json }},
           "avatarTags": {{ bundle_block.settings.avatar_tags | json }},
           "multipliers": {{ bundle_block.settings.multipliers | split: ',' | json }},
+          "learnMoreText": {{ bundle_block.settings.learn_more_text | json }},
           "products": [
             {%- liquid
               assign product_count = 0
@@ -665,6 +666,12 @@ Product Association Test:
           "label": "Number of Gifts",
           "default": 0,
           "info": "Initial number of gifts to display"
+        },
+        {
+          "type": "textarea",
+          "id": "learn_more_text",
+          "label": "Learn More Text",
+          "info": "Description text shown below bundle title in modal. If longer than 3 lines, a 'Learn More' button will appear."
         }
       ]
     },

@@ -2389,7 +2389,14 @@
   letter-spacing: var(--bf25-tracking-wider);
 }
 
-/* Tier Button Discount Badge */
+/* Tier Button Discount Badge - HIDDEN (redundant with inline message) */
+.bf25-tier-button-discount,
+.bf25-pack-btn .pack-discount,
+.js-pack-btn .pack-discount {
+  display: none !important;  /* Hiding discount badges - redundant with inline tier message */
+}
+
+/* Original styles preserved for reference/reversal
 .bf25-tier-button-discount {
   display: inline-block;
   padding: var(--bf25-space-1) var(--bf25-space-2);
@@ -2399,7 +2406,7 @@
   font-weight: 700;
   border-radius: 8px;
   margin-top: var(--bf25-space-1);
-}
+} */
 
 /* Tier Button Check (Selected Indicator) */
 .bf25-tier-button-check {

@@ -2012,3 +2012,64 @@
 }
 
 /* END V4 CARD + HIDE ELEMENTS */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 - SCROLL HINT
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__scroll-hint {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.bf25-hero__scroll-hint.is-visible {
+  opacity: 1;
+}
+
+.bf25-hero__scroll-hint__text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.bf25-hero__scroll-hint__arrow {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(96, 198, 85, 0.08);
+  border: 1px solid rgba(96, 198, 85, 0.2);
+  border-radius: 50%;
+  color: #60c655;
+  font-size: 18px;
+  animation: bf25-bounce 2s ease-in-out infinite;
+}
+
+@keyframes bf25-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__scroll-hint {
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .bf25-hero__scroll-hint__text {
+    font-size: 10px;
+  }
+  .bf25-hero__scroll-hint__arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
+/* END V4 SCROLL HINT */

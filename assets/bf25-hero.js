@@ -549,3 +549,35 @@ if (document.readyState === 'loading') {
 } else {
   initPowerSlider();
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// V4 SCROLL HINT - Shows after slider interaction
+// ═══════════════════════════════════════════════════════════════════════
+(function() {
+  'use strict';
+
+  const section = document.getElementById('bf25-hero-section');
+  if (!section) return;
+
+  const container = section.querySelector('.bf25-hero__container');
+  const slider = section.querySelector('.bf25-hero__input');
+  if (!container || !slider) return;
+
+  // Create scroll hint element
+  const hint = document.createElement('div');
+  hint.className = 'bf25-hero__scroll-hint';
+  hint.innerHTML = `
+    <p class="bf25-hero__scroll-hint__text">Scroll to start building</p>
+    <div class="bf25-hero__scroll-hint__arrow">↓</div>
+  `;
+  container.appendChild(hint);
+
+  // Show hint when slider value > 0
+  slider.addEventListener('input', function() {
+    if (parseInt(this.value, 10) > 0) {
+      hint.classList.add('is-visible');
+    } else {
+      hint.classList.remove('is-visible');
+    }
+  });
+})();

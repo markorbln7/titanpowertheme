@@ -42,9 +42,10 @@
         height="auto"
       >
 
-      <!-- Headline with energy animation -->
+      <!-- Headline with energy animation - "Exist." on separate line -->
       <h1 class="bf25-hero-headline">
-        {{ headline_start }} <span class="bf25-energy-text">{{ headline_energy }}</span>
+        {{ headline_start }}<br>
+        <span class="bf25-energy-text">{{ headline_energy }}</span>
       </h1>
 
       <!-- Subline with currency-aware gift value -->
@@ -56,8 +57,8 @@
           </span>
         </span>
         in free gifts.
-        <span class="bf25-cheeky">(We did this to ourselves.)</span>
       </p>
+      <p class="bf25-cheeky">(We did this to ourselves.)</p>
 
       <!-- Steps -->
       <div class="bf25-hero-steps">
@@ -139,7 +140,7 @@
    ======================================== */
 
 .bf25-hero-split {
-  background: #000;
+  background: transparent;
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
@@ -169,9 +170,10 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 900;
-  filter: drop-shadow(0 0 4px rgba(96, 198, 85, 0.5));
+  filter: drop-shadow(0 0 6px rgba(96, 198, 85, 0.6));
   animation: bf25EnergyFlow 3000ms linear infinite;
   display: inline-block;
+  font-size: 1.1em;
 }
 
 @keyframes bf25Pulse {
@@ -184,6 +186,30 @@
   50% { opacity: 0.85; }
 }
 
+/* Confetti animation */
+@keyframes bf25ConfettiFall {
+  0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.bf25-confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.bf25-confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: bf25ConfettiFall 3s ease-out forwards;
+}
+
 /* ========================================
    HERO GRID - DESKTOP
    ======================================== */
@@ -191,17 +217,17 @@
 .bf25-hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 360px;
+  min-height: 420px;
 }
 
-/* LEFT: Visual Side */
+/* LEFT: Visual Side - CENTERED */
 .bf25-hero-visual {
-  background: linear-gradient(135deg, #030303 0%, #080808 100%);
+  background: linear-gradient(135deg, rgba(3, 3, 3, 0.95) 0%, rgba(8, 8, 8, 0.95) 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px 40px;
+  padding: 50px 60px;
   position: relative;
   overflow: hidden;
 }
@@ -212,9 +238,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(96, 198, 85, 0.08) 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(96, 198, 85, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -222,40 +248,45 @@
   position: relative;
   z-index: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* 85% NUMBER - PROPERLY CENTERED WITH INLINE % */
 .bf25-big-number {
-  font-size: 150px;
+  font-size: 180px;
   font-weight: 700;
-  line-height: 0.85;
+  line-height: 1;
   color: #fff;
-  display: flex;
+  display: inline-flex;
   align-items: baseline;
   justify-content: center;
-  letter-spacing: -3px;
+  letter-spacing: -6px;
 }
 
 .bf25-percent {
-  font-size: 70px;
+  font-size: 72px;
   color: #60c655;
-  margin-left: 2px;
   font-weight: 700;
   letter-spacing: 0;
+  margin-left: 4px;
 }
 
 .bf25-big-label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #60c655;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
   text-transform: uppercase;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
-/* RIGHT: Content Side */
+/* RIGHT: Content Side - TRANSPARENT BACKGROUND */
 .bf25-hero-content {
-  background: #000;
-  padding: 35px 40px 32px;
+  background: transparent;
+  padding: 45px 50px 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -264,58 +295,62 @@
 .bf25-hero-logo {
   max-width: 200px;
   height: auto;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
+/* HEADLINE - EXIST ON SEPARATE LINE */
 .bf25-hero-headline {
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 800;
-  line-height: 1.15;
-  margin: 0 0 6px 0;
+  line-height: 1.1;
+  margin: 0 0 12px 0;
   color: #fff;
 }
 
 .bf25-hero-subline {
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  margin: 0 0 18px 0;
-  line-height: 1.5;
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 8px 0;
+  line-height: 1.6;
 }
 
+/* CHEEKY - SEPARATE LINE */
 .bf25-cheeky {
   color: rgba(255,255,255,0.4);
   font-style: italic;
+  font-size: 14px;
+  margin: 0 0 20px 0;
 }
 
 /* Steps */
 .bf25-hero-steps {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .bf25-hero-step {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 8px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.4;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
 }
 
 .bf25-step-num {
-  width: 22px;
-  height: 22px;
-  background: rgba(96, 198, 85, 0.12);
-  border: 1px solid rgba(96, 198, 85, 0.4);
+  width: 24px;
+  height: 24px;
+  background: rgba(96, 198, 85, 0.15);
+  border: 1px solid rgba(96, 198, 85, 0.5);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #60c655;
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .bf25-hero-step strong {
@@ -331,36 +366,36 @@
 .bf25-cta-row {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
 }
 
 .bf25-cta-button {
   background: linear-gradient(180deg, #6dd56d 0%, #60c655 50%, #4CAF50 100%);
   color: #000;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
-  padding: 14px 30px;
+  padding: 16px 36px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   text-decoration: none;
   display: inline-block;
   box-shadow:
-    0 0 20px rgba(96, 198, 85, 0.4),
-    0 4px 15px rgba(96, 198, 85, 0.3),
+    0 0 25px rgba(96, 198, 85, 0.45),
+    0 4px 20px rgba(96, 198, 85, 0.35),
     0 2px 4px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.15s ease;
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
 }
 
 .bf25-cta-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow:
-    0 0 28px rgba(96, 198, 85, 0.5),
-    0 6px 20px rgba(96, 198, 85, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    0 0 35px rgba(96, 198, 85, 0.55),
+    0 8px 25px rgba(96, 198, 85, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   color: #000;
   text-decoration: none;
 }
@@ -368,70 +403,70 @@
 .bf25-timer-inline {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.45);
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
 }
 
 .bf25-pulse-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: #ff4757;
   border-radius: 50%;
   animation: bf25Pulse 1.5s infinite;
 }
 
 /* ========================================
-   URGENCY STRIP
+   URGENCY STRIP - NO RED BORDER
    ======================================== */
 
 .bf25-urgency-strip {
-  background: rgba(12, 12, 12, 0.98);
-  border-top: 1px solid rgba(255, 71, 87, 0.12);
-  padding: 12px 35px;
+  background: rgba(8, 8, 8, 0.95);
+  border-top: none;
+  padding: 16px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 28px;
+  gap: 40px;
 }
 
 .bf25-urgency-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .bf25-urgency-label {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  color: #ff4757;
+  gap: 6px;
+  font-size: 11px;
+  color: #ff6b7a;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
 }
 
-/* Battery */
+/* Battery - LIGHTER RED */
 .bf25-battery-container {
   display: flex;
   align-items: center;
 }
 
 .bf25-battery-body {
-  width: 155px;
-  height: 28px;
-  background: rgba(18, 18, 18, 0.95);
-  border: 2px solid #883344;
-  border-radius: 5px;
+  width: 160px;
+  height: 30px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid #cc5566;
+  border-radius: 6px;
   position: relative;
   overflow: hidden;
 }
 
 .bf25-battery-cap {
-  width: 5px;
-  height: 12px;
-  background: #883344;
+  width: 6px;
+  height: 14px;
+  background: #cc5566;
   border-radius: 0 3px 3px 0;
 }
 
@@ -441,8 +476,8 @@
   top: 2px;
   bottom: 2px;
   width: 35%;
-  background: linear-gradient(90deg, #662233, #883344, #772233);
-  border-radius: 3px;
+  background: linear-gradient(90deg, #884455, #aa5566, #995566);
+  border-radius: 4px;
   animation: bf25BatteryPulse 3s ease-in-out infinite;
   transition: width 1s ease;
 }
@@ -452,34 +487,34 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 5px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  gap: 6px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
   white-space: nowrap;
 }
 
 .bf25-bolt-icon {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   fill: #fff;
 }
 
-/* Social Items - hide on desktop in urgency strip */
+/* Social Items */
 .bf25-urgency-strip > .bf25-social-item {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
 }
 
 .bf25-social-item svg {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   fill: #60c655;
 }
 
@@ -503,138 +538,125 @@
   }
 
   .bf25-hero-visual {
-    padding: 20px 16px 15px;
+    padding: 25px 20px 20px;
     order: 1;
   }
 
   .bf25-hero-visual::before {
-    width: 250px;
-    height: 250px;
+    width: 280px;
+    height: 280px;
   }
 
   .bf25-big-number {
-    font-size: 90px;
-    font-weight: 700;
-    letter-spacing: -2px;
+    font-size: 100px;
+    letter-spacing: -3px;
   }
 
   .bf25-percent {
-    font-size: 40px;
-    margin-left: 2px;
+    font-size: 42px;
+    margin-left: 3px;
   }
 
   .bf25-big-label {
-    font-size: 9px;
-    letter-spacing: 2px;
-    margin-top: 5px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-top: 8px;
   }
 
   .bf25-hero-content {
-    padding: 16px 16px 18px;
+    padding: 20px 18px 24px;
     order: 2;
     text-align: center;
   }
 
   .bf25-hero-logo {
-    max-width: 140px;
-    margin: 0 auto 10px;
+    max-width: 150px;
+    margin: 0 auto 16px;
   }
 
   .bf25-hero-headline {
-    font-size: 19px;
-    margin-bottom: 5px;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
 
   .bf25-hero-subline {
-    font-size: 11px;
-    margin-bottom: 4px;
+    font-size: 12px;
+    margin-bottom: 6px;
   }
 
-  /* Cheeky on separate line on mobile */
   .bf25-cheeky {
-    display: block;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    font-size: 10px;
+    font-size: 11px;
+    margin-bottom: 16px;
   }
 
   .bf25-hero-steps {
     text-align: left;
-    margin-bottom: 14px;
-    padding: 0 5px;
+    margin-bottom: 18px;
+    padding: 0 8px;
   }
 
   .bf25-hero-step {
-    font-size: 10px;
-    margin-bottom: 5px;
-    gap: 8px;
+    font-size: 11px;
+    margin-bottom: 7px;
+    gap: 10px;
   }
 
   .bf25-step-num {
-    width: 18px;
-    height: 18px;
-    font-size: 9px;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
   }
 
   .bf25-cta-row {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 
   .bf25-cta-button {
-    font-size: 12px;
-    padding: 12px 24px;
-    width: 100%;
-    max-width: 240px;
+    font-size: 13px;
+    padding: 14px 28px;
+    width: auto;
+    min-width: 200px;
   }
 
   .bf25-timer-inline {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   /* Mobile Urgency Strip */
   .bf25-urgency-strip {
     flex-direction: column;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 12px;
+    padding: 14px 16px;
   }
 
   .bf25-urgency-group {
-    width: 100%;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .bf25-urgency-label {
-    font-size: 8px;
-  }
-
-  .bf25-urgency-label span:last-child {
-    display: none; /* Hide "Black Friday Ends" text */
-  }
-
-  .bf25-urgency-label::after {
-    content: 'Ends';
+    font-size: 9px;
   }
 
   .bf25-battery-body {
-    width: 100px;
-    height: 22px;
+    width: 110px;
+    height: 24px;
   }
 
   .bf25-battery-cap {
-    width: 4px;
-    height: 9px;
+    width: 5px;
+    height: 11px;
   }
 
   .bf25-battery-text {
-    font-size: 9px;
-    gap: 3px;
+    font-size: 10px;
+    gap: 4px;
   }
 
   .bf25-bolt-icon {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
   }
 
   /* Hide social items in urgency strip on mobile */
@@ -642,93 +664,88 @@
     display: none;
   }
 
-  /* Show social row on mobile - more visible */
+  /* Show social row on mobile */
   .bf25-social-row-mobile {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     width: 100%;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 
   .bf25-social-row-mobile .bf25-social-item {
     display: flex;
-    font-size: 11px;
-  }
-
-  .bf25-social-row-mobile .bf25-social-item svg {
-    width: 12px;
-    height: 12px;
+    font-size: 12px;
   }
 }
 
 /* Extra small screens */
 @media (max-width: 375px) {
   .bf25-big-number {
-    font-size: 75px;
+    font-size: 85px;
   }
 
   .bf25-percent {
-    font-size: 24px;
+    font-size: 36px;
   }
 
   .bf25-hero-headline {
-    font-size: 17px;
+    font-size: 20px;
   }
 
   .bf25-hero-step {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 
 /* Tablet */
 @media (min-width: 769px) and (max-width: 1024px) {
   .bf25-hero-grid {
-    min-height: 320px;
+    min-height: 360px;
   }
 
   .bf25-big-number {
-    font-size: 120px;
+    font-size: 140px;
   }
 
   .bf25-percent {
-    font-size: 40px;
+    font-size: 56px;
   }
 
   .bf25-hero-content {
-    padding: 30px 30px 28px;
+    padding: 35px 35px 38px;
   }
 
   .bf25-hero-headline {
-    font-size: 26px;
+    font-size: 30px;
   }
 }
 
 /* Large desktop */
 @media (min-width: 1200px) {
   .bf25-hero-grid {
-    min-height: 400px;
+    min-height: 450px;
   }
 
   .bf25-big-number {
-    font-size: 170px;
+    font-size: 200px;
   }
 
   .bf25-percent {
-    font-size: 55px;
+    font-size: 80px;
   }
 
   .bf25-hero-content {
-    padding: 40px 50px 38px;
+    padding: 50px 60px 55px;
   }
 
   .bf25-hero-headline {
-    font-size: 34px;
+    font-size: 42px;
   }
 
   .bf25-hero-subline {
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 </style>
@@ -739,61 +756,40 @@
 
   // Timer configuration (PST timezone)
   const FRIDAY_END_UTC = new Date('{{ end_date_friday }}').getTime();
-  const SATURDAY_SHOW_UTC = new Date('2025-11-29T14:00:00Z').getTime(); // Saturday 6:00 AM PST
+  const SATURDAY_SHOW_UTC = new Date('2025-11-29T14:00:00Z').getTime();
   const SUNDAY_END_UTC = new Date('{{ end_date_sunday }}').getTime();
-  const SALE_START_UTC = new Date('2025-11-26T08:00:00Z').getTime(); // Wednesday 12:00 AM PST
+  const SALE_START_UTC = new Date('2025-11-26T08:00:00Z').getTime();
 
   function getTimerState() {
     const now = Date.now();
-
-    // Before Friday end
     if (now < FRIDAY_END_UTC) {
-      return {
-        endTime: FRIDAY_END_UTC,
-        startTime: SALE_START_UTC,
-        show: true
-      };
+      return { endTime: FRIDAY_END_UTC, startTime: SALE_START_UTC, show: true };
     }
-
-    // Friday ended, before Saturday 6am - hide timer
     if (now < SATURDAY_SHOW_UTC) {
       return { show: false };
     }
-
-    // Saturday 6am onwards until Sunday end
     if (now < SUNDAY_END_UTC) {
-      return {
-        endTime: SUNDAY_END_UTC,
-        startTime: SATURDAY_SHOW_UTC,
-        show: true
-      };
+      return { endTime: SUNDAY_END_UTC, startTime: SATURDAY_SHOW_UTC, show: true };
     }
-
-    // Sale ended
     return { show: false, ended: true };
   }
 
   function formatTime(ms) {
     if (ms <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
     const seconds = Math.floor((ms / 1000) % 60);
     const minutes = Math.floor((ms / (1000 * 60)) % 60);
     const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
     const days = Math.floor(ms / (1000 * 60 * 60 * 24));
-
     return { days, hours, minutes, seconds };
   }
 
   function updateCountdown() {
     const state = getTimerState();
     const section = document.querySelector('.bf25-hero-split');
-
     if (!section) return;
 
     if (!state.show) {
-      if (state.ended) {
-        section.style.display = 'none';
-      }
+      if (state.ended) section.style.display = 'none';
       return;
     }
 
@@ -801,19 +797,12 @@
     const timeRemaining = state.endTime - now;
     const time = formatTime(timeRemaining);
 
-    // Update countdown displays
     const shortDisplay = section.querySelector('.bf25-countdown-short');
     const batteryDisplay = section.querySelector('.bf25-countdown-battery');
 
-    if (shortDisplay) {
-      shortDisplay.textContent = `${time.days}d ${time.hours}h`;
-    }
+    if (shortDisplay) shortDisplay.textContent = `${time.days}d ${time.hours}h`;
+    if (batteryDisplay) batteryDisplay.textContent = `${time.days}d ${time.hours}h ${time.minutes}m`;
 
-    if (batteryDisplay) {
-      batteryDisplay.textContent = `${time.days}d ${time.hours}h ${time.minutes}m`;
-    }
-
-    // Update battery fill based on time remaining
     const batteryFill = section.querySelector('.bf25-battery-fill');
     if (batteryFill) {
       const totalDuration = state.endTime - state.startTime;
@@ -822,12 +811,71 @@
     }
   }
 
+  // CONFETTI FUNCTION
+  function triggerConfetti() {
+    const container = document.createElement('div');
+    container.className = 'bf25-confetti';
+    document.body.appendChild(container);
+
+    const colors = ['#60c655', '#6dd56d', '#4CAF50', '#7FFF00', '#39FF14', '#fff', '#FFD700'];
+    const shapes = ['square', 'circle'];
+
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'bf25-confetti-piece';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)] === 'circle' ? '50%' : '2px';
+      piece.style.width = (Math.random() * 8 + 6) + 'px';
+      piece.style.height = (Math.random() * 8 + 6) + 'px';
+      piece.style.animationDelay = Math.random() * 0.5 + 's';
+      piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      container.appendChild(piece);
+    }
+
+    setTimeout(() => container.remove(), 4000);
+  }
+
+  // SMOOTH SCROLL FUNCTION
+  function smoothScrollTo(target) {
+    const element = document.querySelector(target);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   // Initialize
   document.addEventListener('DOMContentLoaded', function() {
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Trigger currency converter if available
+    // CTA Button - Confetti + Smooth Scroll
+    const ctaButton = document.querySelector('.bf25-cta-button');
+    if (ctaButton) {
+      ctaButton.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+
+        // If it's an anchor link
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          triggerConfetti();
+
+          // Delay scroll slightly for confetti impact
+          setTimeout(() => {
+            smoothScrollTo(href);
+          }, 300);
+        }
+      });
+    }
+
+    // Currency converter
     if (typeof Currency !== 'undefined' && Currency.convertAll) {
       setTimeout(function() {
         Currency.convertAll(Currency.currentCurrency, Currency.currentCurrency);

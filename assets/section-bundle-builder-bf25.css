@@ -3043,3 +3043,84 @@ body.modal-open {
 .bf25-rating-stars[data-rating] .stars-filled {
   width: var(--star-fill-width, 80%);
 }
+
+/* =============================================
+   BF25 MODAL - MOBILE RESPONSIVE FIX
+   Targeting actual class: .buy-now-popup__wrapper
+   ============================================= */
+
+/* Tablet - Adjust modal width */
+@media (max-width: 991px) {
+  .buy-now-popup__wrapper {
+    width: 90vw !important;
+    max-width: 700px !important;
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+}
+
+/* Mobile - Full screen modal */
+@media (max-width: 767px) {
+  .buy-now-popup__wrapper {
+    position: fixed !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    height: 100vh !important; /* fallback */
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Modal content area - ensure scrollability */
+  .buy-now-popup__wrapper .modal-content,
+  .buy-now-popup__wrapper > div {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 20px !important;
+    padding-top: 60px !important; /* Space for close button */
+    padding-bottom: env(safe-area-inset-bottom, 20px) !important;
+  }
+
+  /* Close button positioning on mobile */
+  .buy-now-popup__wrapper .close-button,
+  .buy-now-popup__wrapper [data-modal-close],
+  .buy-now-popup__wrapper .modal-close {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 100 !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Prevent body scroll when modal is open */
+  body.modal-open,
+  body.has-modal-open,
+  body.bf25-modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 374px) {
+  .buy-now-popup__wrapper .modal-content,
+  .buy-now-popup__wrapper > div {
+    padding: 15px !important;
+    padding-top: 55px !important;
+  }
+}

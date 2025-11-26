@@ -7,6 +7,9 @@
 
 {%- if section.settings.enable_snowfall -%}
 <div class="bf25-snowfall-wrapper" data-section-id="{{ section.id }}">
+  {%- if section.settings.show_overlay -%}
+  <div class="bf25-snowfall-overlay"></div>
+  {%- endif -%}
   <canvas id="bf25-snowfall-canvas" aria-hidden="true"></canvas>
 </div>
 
@@ -17,229 +20,267 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -1; /* BEHIND everything */
     pointer-events: none;
+    overflow: hidden;
   }
-
+  
+  /* Subtle dark overlay to reduce distraction */
+  .bf25-snowfall-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 | default: 0.3 }});
+    z-index: 1;
+  }
+  
   #bf25-snowfall-canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 0;
   }
-
-  /* Ensure content sits above snowfall */
-  .section-bundle-builder-bf25,
-  .bf25-bundle-builder,
-  .bf25-hero,
-  .bf25-hero-split,
-  .power-pack-section,
+  
+  /* Ensure ALL content sits above snowfall */
   .shopify-section {
     position: relative;
     z-index: 1;
+  }
+  
+  /* Specific BF25 sections */
+  .section-bundle-builder-bf25,
+  .bf25-hero,
+  .bf25-modal-overlay,
+  .bf25-modal-container,
+  header,
+  footer,
+  .header-wrapper,
+  .announcement-bar {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Modals should be way above */
+  .bf25-modal-overlay,
+  .bf25-modal-container {
+    z-index: 1000 !important;
   }
 </style>
 
 <script>
 (function() {
   'use strict';
-
-  const canvas = document.getElementById('bf25-snowfall-canvas');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d', { alpha: true });
-  let animationId = null;
-  let snowflakes = [];
-  let isVisible = true;
-  let isInitialized = false;
-
-  // Configuration
-  const config = {
-    layers: {
-      close: {{ section.settings.close_flakes | default: 10 }},
-      midClose: {{ section.settings.midclose_flakes | default: 12 }},
-      mid: {{ section.settings.mid_flakes | default: 22 }},
-      midFar: {{ section.settings.midfar_flakes | default: 14 }},
-      far: {{ section.settings.far_flakes | default: 12 }}
-    },
-    windSpeed: {{ section.settings.wind_speed | default: 0.12 }},
-    wobbleAmount: 0.25,
-    maxSize: {{ section.settings.max_size | default: 16 }}
-  };
-
-  // Layer configurations - realistic DOF (max 16px)
-  const layerConfigs = {
-    close: {
-      sizeMin: 12, sizeMax: config.maxSize,
-      speedMult: 1.2,
-      opacity: { min: 0.4, max: 0.6 },
-      blur: { min: 3, max: 5 },
-      zIndex: 5
-    },
-    midClose: {
-      sizeMin: 8, sizeMax: 12,
-      speedMult: 1.0,
-      opacity: { min: 0.5, max: 0.7 },
-      blur: { min: 1, max: 2 },
-      zIndex: 4
-    },
-    mid: {
-      sizeMin: 5, sizeMax: 10,
-      speedMult: 0.8,
-      opacity: { min: 0.7, max: 0.95 },
-      blur: { min: 0, max: 0 },
-      zIndex: 3
-    },
-    midFar: {
-      sizeMin: 3, sizeMax: 5,
-      speedMult: 0.55,
-      opacity: { min: 0.4, max: 0.6 },
-      blur: { min: 0.5, max: 1 },
-      zIndex: 2
-    },
-    far: {
-      sizeMin: 2, sizeMax: 4,
-      speedMult: 0.35,
-      opacity: { min: 0.2, max: 0.4 },
-      blur: { min: 1, max: 2 },
-      zIndex: 1
-    }
-  };
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    if (!isInitialized) {
-      initSnowflakes();
-      isInitialized = true;
-    }
+  
+  // Wait for DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSnowfall);
+  } else {
+    initSnowfall();
   }
-
-  function createSnowflake(layerType, startFromTop) {
-    const cfg = layerConfigs[layerType];
-    const size = Math.random() * (cfg.sizeMax - cfg.sizeMin) + cfg.sizeMin;
-    const blur = Math.random() * (cfg.blur.max - cfg.blur.min) + cfg.blur.min;
-    const opacity = Math.random() * (cfg.opacity.max - cfg.opacity.min) + cfg.opacity.min;
-
-    return {
-      x: Math.random() * canvas.width,
-      y: startFromTop ? -size - (Math.random() * 150) : (Math.random() * canvas.height * 1.5) - (canvas.height * 0.5),
-      size: size,
-      speedY: (0.3 + Math.random() * 0.2) * cfg.speedMult,
-      speedX: config.windSpeed * cfg.speedMult + (Math.random() * 0.08 - 0.04),
-      wobblePhase: Math.random() * Math.PI * 2,
-      wobbleSpeed: 0.015 + Math.random() * 0.01,
-      opacity: opacity,
-      blur: blur,
-      zIndex: cfg.zIndex,
-      layerType: layerType
+  
+  function initSnowfall() {
+    const canvas = document.getElementById('bf25-snowfall-canvas');
+    if (!canvas) {
+      console.warn('❄️ Snowfall canvas not found');
+      return;
+    }
+    
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let animationId = null;
+    let snowflakes = [];
+    let isVisible = true;
+    let isInitialized = false;
+    
+    // Configuration from section settings
+    const config = {
+      layers: {
+        close: {{ section.settings.close_flakes | default: 10 }},
+        midClose: {{ section.settings.midclose_flakes | default: 12 }},
+        mid: {{ section.settings.mid_flakes | default: 22 }},
+        midFar: {{ section.settings.midfar_flakes | default: 14 }},
+        far: {{ section.settings.far_flakes | default: 12 }}
+      },
+      windSpeed: {{ section.settings.wind_speed | default: 2 }} * 0.08, // Fixed multiplier
+      fallSpeed: {{ section.settings.fall_speed | default: 5 }} * 0.1,  // New fall speed control
+      wobbleAmount: 0.25,
+      maxSize: {{ section.settings.max_size | default: 16 }}
     };
-  }
-
-  function initSnowflakes() {
-    snowflakes = [];
-    Object.entries(config.layers).forEach(([layerType, count]) => {
-      for (let i = 0; i < count; i++) {
-        snowflakes.push(createSnowflake(layerType, false));
+    
+    // Layer configurations - realistic DOF (max 16px)
+    const layerConfigs = {
+      close: {
+        sizeMin: 12, sizeMax: config.maxSize,
+        speedMult: 1.2,
+        opacity: { min: 0.4, max: 0.6 },
+        blur: { min: 3, max: 5 },
+        zIndex: 5
+      },
+      midClose: {
+        sizeMin: 8, sizeMax: 12,
+        speedMult: 1.0,
+        opacity: { min: 0.5, max: 0.7 },
+        blur: { min: 1, max: 2 },
+        zIndex: 4
+      },
+      mid: {
+        sizeMin: 5, sizeMax: 10,
+        speedMult: 0.8,
+        opacity: { min: 0.7, max: 0.95 },
+        blur: { min: 0, max: 0 },
+        zIndex: 3
+      },
+      midFar: {
+        sizeMin: 3, sizeMax: 5,
+        speedMult: 0.55,
+        opacity: { min: 0.4, max: 0.6 },
+        blur: { min: 0.5, max: 1 },
+        zIndex: 2
+      },
+      far: {
+        sizeMin: 2, sizeMax: 4,
+        speedMult: 0.35,
+        opacity: { min: 0.2, max: 0.4 },
+        blur: { min: 1, max: 2 },
+        zIndex: 1
+      }
+    };
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      if (!isInitialized) {
+        createAllSnowflakes();
+        isInitialized = true;
+      }
+    }
+    
+    function createSnowflake(layerType, startFromTop) {
+      const cfg = layerConfigs[layerType];
+      const size = Math.random() * (cfg.sizeMax - cfg.sizeMin) + cfg.sizeMin;
+      const blur = Math.random() * (cfg.blur.max - cfg.blur.min) + cfg.blur.min;
+      const opacity = Math.random() * (cfg.opacity.max - cfg.opacity.min) + cfg.opacity.min;
+      
+      return {
+        x: Math.random() * canvas.width,
+        y: startFromTop ? -size - (Math.random() * 100) : Math.random() * canvas.height,
+        size: size,
+        speedY: (0.4 + Math.random() * 0.3) * cfg.speedMult * config.fallSpeed, // Uses fall speed
+        speedX: config.windSpeed * cfg.speedMult + (Math.random() * 0.1 - 0.05),
+        wobblePhase: Math.random() * Math.PI * 2,
+        wobbleSpeed: 0.02 + Math.random() * 0.015,
+        opacity: opacity,
+        blur: blur,
+        zIndex: cfg.zIndex,
+        layerType: layerType
+      };
+    }
+    
+    function createAllSnowflakes() {
+      snowflakes = [];
+      Object.entries(config.layers).forEach(([layerType, count]) => {
+        for (let i = 0; i < count; i++) {
+          snowflakes.push(createSnowflake(layerType, false));
+        }
+      });
+      // Sort once at creation
+      snowflakes.sort((a, b) => a.zIndex - b.zIndex);
+    }
+    
+    function animate() {
+      if (!isVisible) {
+        animationId = null;
+        return;
+      }
+      
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = 0; i < snowflakes.length; i++) {
+        const flake = snowflakes[i];
+        
+        // Update wobble
+        flake.wobblePhase += flake.wobbleSpeed;
+        const wobbleX = Math.sin(flake.wobblePhase) * config.wobbleAmount;
+        
+        // Move snowflake DOWN
+        flake.y += flake.speedY;
+        flake.x += flake.speedX + wobbleX;
+        
+        // Respawn at top when off screen
+        if (flake.y > canvas.height + flake.size + 10) {
+          const newFlake = createSnowflake(flake.layerType, true);
+          newFlake.zIndex = flake.zIndex; // Keep same z-index
+          snowflakes[i] = newFlake;
+          continue;
+        }
+        
+        // Wrap horizontal
+        if (flake.x > canvas.width + flake.size) flake.x = -flake.size;
+        if (flake.x < -flake.size) flake.x = canvas.width + flake.size;
+        
+        // Draw snowflake
+        ctx.save();
+        if (flake.blur > 0) {
+          ctx.filter = `blur(${flake.blur}px)`;
+        }
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    }
+    
+    function startAnimation() {
+      if (!animationId && isVisible) {
+        animationId = requestAnimationFrame(animate);
+      }
+    }
+    
+    function stopAnimation() {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    }
+    
+    // Initialize immediately
+    resizeCanvas();
+    startAnimation();
+    
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        isVisible = false;
+        stopAnimation();
+      } else {
+        isVisible = true;
+        startAnimation();
       }
     });
+    
+    // Debounced resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(resizeCanvas, 200);
+    });
+    
+    // Expose for debugging
+    window.BF25Snowfall = {
+      start: function() { isVisible = true; startAnimation(); },
+      stop: function() { isVisible = false; stopAnimation(); },
+      isRunning: function() { return !!animationId; },
+      getConfig: function() { return config; }
+    };
+    
+    console.log('❄️ BF25 Snowfall ready:', snowflakes.length, 'flakes');
   }
-
-  function animate() {
-    if (!isVisible) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    snowflakes.sort((a, b) => a.zIndex - b.zIndex);
-
-    for (let i = 0; i < snowflakes.length; i++) {
-      const flake = snowflakes[i];
-
-      flake.wobblePhase += flake.wobbleSpeed;
-      const wobbleX = Math.sin(flake.wobblePhase) * config.wobbleAmount * (flake.zIndex / 3);
-
-      flake.y += flake.speedY;
-      flake.x += flake.speedX + wobbleX;
-
-      if (flake.y > canvas.height + flake.size + 10) {
-        snowflakes[i] = createSnowflake(flake.layerType, true);
-        continue;
-      }
-
-      if (flake.x > canvas.width + flake.size) flake.x = -flake.size;
-      if (flake.x < -flake.size) flake.x = canvas.width + flake.size;
-
-      ctx.save();
-      if (flake.blur > 0) {
-        ctx.filter = `blur(${flake.blur}px)`;
-      }
-      ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
-      ctx.beginPath();
-      ctx.arc(flake.x, flake.y, flake.size / 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    animationId = requestAnimationFrame(animate);
-  }
-
-  function startAnimation() {
-    if (!animationId && isVisible) {
-      animate();
-    }
-  }
-
-  function stopAnimation() {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
-    }
-  }
-
-  // Initialize
-  resizeCanvas();
-  startAnimation();
-
-  // Visibility observer - pause when tab is hidden
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden) {
-      stopAnimation();
-    } else {
-      isVisible = true;
-      startAnimation();
-    }
-  });
-
-  // IntersectionObserver - pause when scrolled far past
-  if ('IntersectionObserver' in window) {
-    const wrapper = document.querySelector('.bf25-snowfall-wrapper');
-    const observer = new IntersectionObserver((entries) => {
-      isVisible = entries[0].isIntersecting;
-      if (isVisible) {
-        startAnimation();
-      } else {
-        stopAnimation();
-      }
-    }, { threshold: 0 });
-
-    observer.observe(wrapper);
-  }
-
-  // Debounced resize
-  let resizeTimeout;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(resizeCanvas, 250);
-  });
-
-  // Expose for debugging
-  window.BF25Snowfall = {
-    start: startAnimation,
-    stop: stopAnimation,
-    isRunning: () => !!animationId
-  };
-
-  console.log('❄️ BF25 Snowfall initialized:', Object.values(config.layers).reduce((a,b) => a+b, 0), 'flakes');
 })();
 </script>
 {%- endif -%}
@@ -256,6 +297,28 @@
       "label": "Enable Snowfall Effect",
       "default": true,
       "info": "Toggle for A/B testing"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Dark Overlay",
+      "default": true,
+      "info": "Adds subtle darkening to reduce distraction"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Darkness",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "%",
+      "info": "0% = No overlay, 50% = Very dark"
     },
     {
       "type": "header",
@@ -309,6 +372,16 @@
     {
       "type": "header",
       "content": "Animation Settings"
+    },
+    {
+      "type": "range",
+      "id": "fall_speed",
+      "label": "Fall Speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "info": "1 = Very slow, 10 = Fast"
     },
     {
       "type": "range",

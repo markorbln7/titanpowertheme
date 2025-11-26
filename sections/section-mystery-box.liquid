@@ -148,9 +148,10 @@ Clean, simple implementation with Tailwind CSS
                 type="button"
                 class="mystery-box__add-to-cart"
                 data-variant-id="{{ main_variant.id }}"
-                data-action="add-to-cart"
+                data-product-id="{{ master_product.id }}"
+                data-action="add-to-deal"
               >
-                <span data-button-text>Add to Cart</span>
+                <span data-button-text>Add to Deal</span>
               </button>
 
               <button
@@ -183,6 +184,76 @@ PRODUCT DATA FOR HOTSPOTS - Same format as section-bundle-builder-bf25
   window.productData = window.productData || {};
   window.productVariants = window.productVariants || {};
   window.productOptions = window.productOptions || {};
+
+  {%- comment -%} Master Product Data for Add to Deal {%- endcomment -%}
+  {%- if master_product != blank -%}
+    {%- liquid
+      assign desc_rendered = master_product.metafields.custom.product_description | metafield_tag
+      if desc_rendered == blank
+        assign desc_rendered = master_product.description
+      endif
+    -%}
+  // ─────────────────────────────────────────────────────────
+  // Master Product: {{ master_product.title }}
+  // ─────────────────────────────────────────────────────────
+  window.productData["{{ master_product.id }}"] = {
+    id: "{{ master_product.id }}",
+    handle: "{{ master_product.handle }}",
+    title: {{ master_product.title | json }},
+    basePrice: {{ master_product.price }},
+    comparePrice: {{ master_product.compare_at_price | default: 0 }},
+    featuredImage: "{{ master_product.featured_image | image_url: width: 800 }}",
+    description: {{ desc_rendered | json }},
+    ticks: {{ master_product.metafields.custom.ticks | json }},
+    reviewRating: {{ master_product.metafields.reviews.rating | default: 0 }},
+    reviewCount: {{ master_product.metafields.reviews.count | default: 0 }},
+    isBestseller: {% if master_product.metafields.custom.is_bestseller %}true{% else %}false{% endif %},
+    discount: {{ master_product.metafields.custom.new_shop_discount | json }},
+    stockLevel: {{ main_variant.inventory_quantity | default: 0 }},
+    available: {{ master_product.available | json }},
+    upsells: [],
+    productType: {{ master_product.type | json }},
+    tags: {{ master_product.tags | json }},
+    vendor: {{ master_product.vendor | json }}
+  };
+
+  // Variants for {{ master_product.title }}
+  window.productVariants[{{ master_product.id }}] = [
+    {%- for variant in master_product.variants -%}
+    {
+      id: {{ variant.id | json }},
+      title: {{ variant.title | json }},
+      options: [
+        {%- for option in variant.options -%}
+        {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      available: {{ variant.available | json }},
+      price: {{ variant.price | json }},
+      compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+      {%- if variant.featured_image -%}
+      featured_image: {
+        src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+        alt: {{ variant.featured_image.alt | default: master_product.title | json }}
+      }
+      {%- else -%}
+      featured_image: null
+      {%- endif -%}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+
+  // Options for {{ master_product.title }}
+  window.productOptions[{{ master_product.id }}] = [
+    {%- for option in master_product.options_with_values -%}
+    {
+      name: {{ option.name | json }},
+      position: {{ option.position }},
+      values: {{ option.values | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+  {%- endif -%}
 
   {%- for block in section.blocks -%}
     {%- liquid
@@ -264,7 +335,7 @@ PRODUCT DATA FOR HOTSPOTS - Same format as section-bundle-builder-bf25
     {%- endif -%}
   {%- endfor -%}
 
-  console.log('[MysteryBox] Product data loaded for hotspots:', Object.keys(window.productData).length, 'products');
+  console.log('[MysteryBox] Product data loaded:', Object.keys(window.productData).length, 'products');
 })();
 </script>
 

@@ -63,6 +63,8 @@
   padding-right: 0 !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Vertical spacing for grid wrapper */
@@ -129,6 +131,25 @@
   .bogo-hero-content {
     padding-left: 20px;
     padding-right: 20px;
+  }
+}
+
+/* Mobile: Prevent overflow */
+@media (max-width: 768px) {
+  .section-collections-with-nav__wrapper {
+    padding: var(--space-lg) 16px calc(120px + var(--space-xl)) 16px !important; /* Override all padding including shorthand */
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+    gap: 20px !important; /* Override Tailwind gap-[40px] on mobile */
+  }
+  
+  /* Also ensure parent section doesn't overflow */
+  .section-collections-with-nav {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -2213,6 +2234,18 @@
     max-width: 1400px !important;
     margin: 0 auto !important;
     padding: 0px 10px !important;
+  }
+  
+  /* Mobile override for wrapper - must come after the rule above */
+  @media (max-width: 768px) {
+    .section-collections-with-nav__wrapper {
+      padding: var(--space-lg) 16px calc(120px + var(--space-xl)) 16px !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden;
+      gap: 20px !important; /* Override Tailwind gap-[40px] on mobile */
+    }
   }
 
   {%- comment -%} ✅ BOGO-GLOW-STOCK-FIX-051: Product Cards - NO glow on border {%- endcomment -%}

@@ -227,25 +227,61 @@ Performance Notes:
    BUNDLE GRID LAYOUT
    ═══════════════════════════════════════════════════════ */
 
+/* Mobile: Horizontal slider with 1.2 cards visible */
 .pp-bundles-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--pp-space-lg);
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* Mobile: 10px gap */
   margin-bottom: var(--pp-space-2xl);
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding-bottom: var(--pp-space-md);
+  /* Show 1.2 cards - add padding to reveal part of second card */
+  padding-right: 10px;
 }
 
-/* Tablet: 2 columns */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.pp-bundles-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Bundle cards in slider - show 1.2 cards (each card is ~83.33% of container) */
+.pp-bundles-grid > * {
+  flex: 0 0 calc((100% - 10px) / 1.2);
+  min-width: calc((100% - 10px) / 1.2);
+  max-width: calc((100% - 10px) / 1.2);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Tablet and Desktop: 2x2 grid */
 @media (min-width: 768px) {
   .pp-bundles-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--pp-space-xl);
+    gap: 24px; /* Desktop: 24px gap */
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .pp-bundles-grid > * {
+    flex: none;
+    min-width: auto;
+    max-width: none;
+    scroll-snap-align: none;
   }
 }
 
 /* Desktop: Keep 2 columns for better readability (max 4 bundles) */
 @media (min-width: 1024px) {
   .pp-bundles-grid {
-    gap: var(--pp-space-xl);
+    gap: 24px; /* Desktop: 24px gap */
   }
 }
 
@@ -724,9 +760,18 @@ Performance Notes:
 
 .pp-bundle-card__cta-container {
   display: flex;
-  gap: 10px;
+  flex-direction: column; /* Mobile: Stack vertically */
+  gap: 10px; /* Mobile: 10px gap between buttons */
   margin-top: auto; /* Push to bottom of card */
   width: 100%;
+}
+
+/* Desktop: Horizontal layout (side by side) */
+@media (min-width: 768px) {
+  .pp-bundle-card__cta-container {
+    flex-direction: row; /* Desktop: Side by side */
+    gap: var(--pp-space-md);
+  }
 }
 
 /* ─────────────────────────────────────────────────────
@@ -757,18 +802,35 @@ Performance Notes:
   overflow: hidden;
 }
 
-/* View & Customize button - 2/3 width */
+/* View & Customize button - full width on mobile */
 .pp-bundle-card__cta--view {
-  flex: 2;
-  min-width: 0; /* Allow flex shrinking */
+  flex: none;
+  width: 100%;
 }
 
-/* Quick Add button - 1/3 width */
+/* Quick Add button - full width on mobile */
 .pp-bundle-card__cta--quick-add {
-  flex: 1;
-  min-width: 0; /* Allow flex shrinking */
+  flex: none;
+  width: 100%;
   font-size: var(--pp-font-sm);
   padding: var(--pp-space-md) var(--pp-space-md);
+}
+
+/* Desktop: Original horizontal layout */
+@media (min-width: 768px) {
+  /* View & Customize button - 2/3 width */
+  .pp-bundle-card__cta--view {
+    flex: 2;
+    width: auto;
+    min-width: 0; /* Allow flex shrinking */
+  }
+
+  /* Quick Add button - 1/3 width */
+  .pp-bundle-card__cta--quick-add {
+    flex: 1;
+    width: auto;
+    min-width: 0; /* Allow flex shrinking */
+  }
 }
 
 .pp-bundle-card__cta::before {
@@ -980,12 +1042,12 @@ Performance Notes:
   max-height: 100vh;
   color: #ffffff;
 
-  /* Mobile (default): Bottom sheet - OPTIMIZED */
-  bottom: 0;
+  /* Mobile (default): Full screen from top */
+  top: 0;
   left: 0;
   width: 100%;
-  border-radius: 24px 24px 0 0;
-  transform: translateY(100%);
+  border-radius: 0;
+  transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -998,6 +1060,8 @@ Performance Notes:
   pointer-events: auto;
   display: flex !important; /* Override BF25 modal hiding rules */
   z-index: 100001 !important; /* Ensure it's above BF25 modal */
+  height: 100vh !important;
+  max-height: 100vh !important;
 }
 
 /* Desktop: Side panel from right */
@@ -1042,6 +1106,8 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
   pointer-events: auto !important;
   z-index: 100001 !important;
 }
@@ -1097,10 +1163,11 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
    ───────────────────────────────────────────────────── */
 
 .pp-sheet-body {
-  flex: 1;
+  flex: 1 1 auto;
   overflow-y: auto;
   padding: 0 20px 20px 20px;
   -webkit-overflow-scrolling: touch;
+  min-height: 0; /* Allow flex child to shrink below content size */
 }
 
 .pp-sheet-placeholder {
@@ -2052,7 +2119,8 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
    ───────────────────────────────────────────────────── */
 
 .pp-variant-modal-overlay {
-  position: absolute;
+  /* Mobile: Fixed position to cover entire viewport */
+  position: fixed !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -2060,15 +2128,18 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  z-index: 100;
+  z-index: 100001 !important; /* Just below variant modal (100002) */
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--pp-transition-base);
+  visibility: hidden;
+  display: block !important;
 }
 
 .pp-variant-modal-overlay.active {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible !important;
 }
 
 /* ─────────────────────────────────────────────────────
@@ -2076,49 +2147,48 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
    ───────────────────────────────────────────────────── */
 
 .pp-variant-modal {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  max-height: 70vh;
-  z-index: 101;
-  transform: translateY(100%);
-  transition: transform var(--pp-transition-base);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: var(--pp-radius-xl);
-  border-top-right-radius: var(--pp-radius-xl);
-  display: flex;
+  /* Mobile & Desktop: Centered modal */
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  z-index: 100002 !important; /* Above bottom sheet (100001) */
+  transform: translate(-50%, -50%) scale(0.95);
+  opacity: 0;
+  border-radius: var(--pp-radius-xl);
+  display: none; /* Hidden by default */
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.8);
+  background: rgba(26, 26, 26, 0.98);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--pp-transition-base),
+              opacity var(--pp-transition-base);
 }
 
 .pp-variant-modal.active {
-  transform: translateY(0);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  display: flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
-/* Desktop: centered modal instead of bottom sheet */
+/* Desktop: slightly larger width */
 @media (min-width: 768px) {
-  .pp-variant-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    right: auto;
-    bottom: auto;
-    width: 400px;
-    max-height: 80vh;
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0;
-    border-radius: var(--pp-radius-xl);
-    transition: transform var(--pp-transition-base),
-                opacity var(--pp-transition-base);
+  .pp-variant-modal-overlay {
+    position: fixed !important; /* Keep fixed on desktop too for proper overlay */
   }
 
-  .pp-variant-modal.active {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    display: flex;
+  .pp-variant-modal {
+    width: 400px;
   }
 }
 
@@ -2901,11 +2971,23 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
    ADD TO CART CTA SECTION (Match BF25 Footer)
    ───────────────────────────────────────────────────── */
 
+/* CTA Container - Stuck to bottom of modal */
+#pp-sheet-cta-container {
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 100%;
+  padding: 0;
+  margin-top: auto; /* Push to bottom in flex container */
+  position: relative;
+  z-index: 10;
+}
+
 .pp-sheet-cta-fixed {
-  position: sticky;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
   background: linear-gradient(
     to bottom,
     rgba(26, 26, 26, 0) 0%,
@@ -2913,27 +2995,26 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
     rgba(26, 26, 26, 0.95) 40%,
     rgba(26, 26, 26, 1) 100%
   );
+  padding: 16px 20px;
   padding-top: 10px;
-  margin-top: -10px;
-  padding-bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
+  margin: 0;
   z-index: 10;
   border: none;
-  border-top: none;
+  border-top: 1px solid var(--pp-border-secondary);
 }
 
 .pp-sheet-cta {
-  position: sticky;
-  bottom: 0;
+  position: relative;
+  bottom: auto;
   left: 0;
   right: 0;
+  width: 100%;
   padding: var(--pp-space-lg);
   background: rgba(26, 26, 26, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--pp-border-secondary);
-  margin: 0 calc(var(--pp-space-lg) * -1) calc(var(--pp-space-lg) * -1);
+  margin: 0;
   z-index: 50;
 }
 
@@ -3031,7 +3112,7 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
 }
 
 .pp-sheet-cta-fixed .pp-cta-text {
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing: 1.5px;
   font-weight: 800;
 }

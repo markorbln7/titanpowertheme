@@ -3523,7 +3523,7 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     box-sizing: border-box !important;
   }
 
-  /* --- Layout: Force Single Column, Constrain Width --- */
+  /* --- Layout: Optimized Mobile Spacing --- */
   .bf25-modal-layout {
     width: 100% !important;
     max-width: 100% !important;
@@ -3536,8 +3536,9 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 16px !important;
-    padding: 16px !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+    padding-bottom: 160px !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
   }
@@ -3930,6 +3931,62 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 
   .bf25-description-wrapper.expanded .bf25-description-arrow {
     transform: rotate(180deg) !important;
+  }
+
+  /* --- Reviews Section: Spacing & Compact Layout --- */
+  .bf25-modal-reviews {
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .bf25-modal-reviews-section {
+    padding: 0 !important;
+  }
+
+  .bf25-reviews-header {
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-reviews-header h3 {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-reviews-scroll-area {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .bf25-review-card {
+    padding: 12px !important;
+    margin-bottom: 8px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 8px !important;
+  }
+
+  .bf25-review-content {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* --- Upsells: Compact Mobile Layout --- */
+  .bf25-upsells-section {
+    margin-top: 12px !important;
+  }
+
+  .bf25-upsells-title {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-upsells-grid {
+    gap: 8px !important;
+  }
+
+  .bf25-upsell-card {
+    padding: 10px !important;
   }
 
   /* --- Upsells Grid: Stack on Mobile --- */

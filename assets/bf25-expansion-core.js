@@ -1016,80 +1016,18 @@ class TierCalculator {
   generateUrgencyMessage(pricing) {
     if (!pricing) return '';
 
-    const { hasCart, cartQuantity, modalQuantity, combinedQuantity, combinedTier, nextTierCombined, itemsToNextTierCombined, willUnlockTier } = pricing;
+    const { nextTierCombined, itemsToNextTierCombined } = pricing;
 
-    // Scenario 1: At max tier with combined quantity
+    // At max tier (16+ items, 85% OFF)
     if (!nextTierCombined) {
-      return `
-        <div class="bf25-tier-message bf25-tier-max">
-          <span class="bf25-tier-icon">🎉</span>
-          <span class="bf25-tier-text">
-            <strong>Best Deal Unlocked!</strong>
-            ${hasCart ? `Your ${combinedQuantity} items get ` : ''}
-            ${pricing.combinedDiscount}% off (saving ${pricing.formattedCombined.combinedSavings})
-          </span>
-        </div>
-      `;
+      return `<span class="bf25-tier-hint" style="font-size:13px; color:#60c655;">🎉 Maximum discount unlocked!</span>`;
     }
 
-    // Scenario 2: Has cart items and will unlock better tier by adding
-    if (hasCart && willUnlockTier) {
-      const itemWord = modalQuantity === 1 ? 'item' : 'items';
-      return `
-        <div class="bf25-tier-message bf25-tier-unlock">
-          <span class="bf25-tier-icon">⚡</span>
-          <span class="bf25-tier-text">
-            <strong>Unlock ${combinedTier.discount}% off!</strong>
-            You have ${cartQuantity} in cart. Add these ${modalQuantity} ${itemWord} = ${combinedQuantity} total
-            (${combinedTier.label})
-          </span>
-        </div>
-      `;
-    }
-
-    // Scenario 3: Has cart, at a tier, show next tier incentive
-    if (hasCart && nextTierCombined && itemsToNextTierCombined > 0) {
-      const itemWord = itemsToNextTierCombined === 1 ? 'item' : 'items';
-      const nextTierLabel = nextTierCombined.displayLabel || (nextTierCombined.multiplier ? Math.round((1 - nextTierCombined.multiplier) * 100) + '% off' : 'next tier');
-      return `
-        <div class="bf25-tier-message bf25-tier-next">
-          <span class="bf25-tier-icon">🎯</span>
-          <span class="bf25-tier-text">
-            You have ${cartQuantity} in cart${modalQuantity > 0 ? ` + ${modalQuantity} now = ${combinedQuantity} total` : ''}.
-            <strong>Add ${itemsToNextTierCombined} more ${itemWord}</strong>
-            to unlock ${nextTierLabel}!
-          </span>
-        </div>
-      `;
-    }
-
-    // Scenario 4: No cart, show standard next tier message
-    if (!hasCart && nextTierCombined && itemsToNextTierCombined > 0) {
-      const itemWord = itemsToNextTierCombined === 1 ? 'item' : 'items';
-      const nextTierLabel = nextTierCombined.displayLabel || (nextTierCombined.multiplier ? Math.round((1 - nextTierCombined.multiplier) * 100) + '% off' : 'next tier');
-      return `
-        <div class="bf25-tier-message bf25-tier-start">
-          <span class="bf25-tier-icon">🎯</span>
-          <span class="bf25-tier-text">
-            Add ${itemsToNextTierCombined} more ${itemWord}
-            to unlock ${nextTierLabel}
-          </span>
-        </div>
-      `;
-    }
-
-    // Scenario 5: Has discount, show savings
-    if (pricing.combinedDiscount > 0) {
-      return `
-        <div class="bf25-tier-message bf25-tier-active">
-          <span class="bf25-tier-icon">✓</span>
-          <span class="bf25-tier-text">
-            <strong>${combinedTier.label}:</strong>
-            Saving ${pricing.formattedCombined.combinedSavings} (${pricing.combinedDiscount}% off)
-            ${hasCart ? ` on ${combinedQuantity} items` : ''}
-          </span>
-        </div>
-      `;
+    // Has next tier to unlock
+    if (nextTierCombined && itemsToNextTierCombined > 0) {
+      const nextTierLabel = nextTierCombined.displayLabel ||
+                           (nextTierCombined.multiplier ? Math.round((1 - nextTierCombined.multiplier) * 100) + '% OFF' : 'next tier');
+      return `<span class="bf25-tier-hint" style="font-size:13px; color:rgba(255,255,255,0.8);">Add <span style="color:#60c655; font-weight:600;">${itemsToNextTierCombined}</span> more for <span style="color:#60c655; font-weight:600;">${nextTierLabel}</span></span>`;
     }
 
     return '';
@@ -1226,21 +1164,28 @@ class TierCalculator {
    * BF25-8.8: Also inserts quantity stepper after messaging
    */
   updateTierMessaging(pricing) {
-    // Find or create tier messaging container
-    let messageContainer = document.querySelector('.bf25-tier-messaging');
-
-    if (!messageContainer) {
-      // Create container after pricing
-      const pricingSection = document.querySelector('.bf25-modal-pricing');
-      if (!pricingSection) return;
-
-      messageContainer = document.createElement('div');
-      messageContainer.className = 'bf25-tier-messaging bf25-mb-4';
-      pricingSection.insertAdjacentElement('afterend', messageContainer);
+    // DISABLED: Tier messaging now inline with stepper (BF25-8.15)
+    // Remove old message container if it exists
+    const messageContainer = document.querySelector('.bf25-tier-messaging');
+    if (messageContainer) {
+      messageContainer.remove();
     }
 
-    // Generate and inject message
-    messageContainer.innerHTML = this.generateUrgencyMessage(pricing);
+    // Update inline tier hint (next to stepper)
+    const tierHintContainer = document.querySelector('.bf25-stepper-row');
+    if (!tierHintContainer) return;
+
+    // Find existing tier hint or create placeholder
+    let tierHint = tierHintContainer.querySelector('.bf25-tier-hint');
+    const newHintHTML = this.generateUrgencyMessage(pricing);
+
+    if (tierHint) {
+      // Replace existing hint
+      tierHint.outerHTML = newHintHTML;
+    } else if (newHintHTML) {
+      // Append new hint after stepper
+      tierHintContainer.insertAdjacentHTML('beforeend', newHintHTML);
+    }
   }
 
   /**
@@ -3999,43 +3944,53 @@ class ExpansionManager {
     const minQuantity = 1;
     const maxQuantity = 99;
 
+    // Get tier hint for inline display
+    const pricing = this.tierCalculator.calculateCartAwarePricing(
+      this.state.get('selectedProduct'),
+      currentQuantity
+    );
+    const tierHint = this.tierCalculator.generateUrgencyMessage(pricing);
+
     return `
       <div class="bf25-quantity-controls bf25-individual-mode">
         <label class="bf25-quantity-label bf25-text-sm bf25-text-secondary">
           Quantity:
         </label>
 
-        <div class="bf25-quantity-stepper">
-          <button
-            type="button"
-            class="bf25-quantity-button bf25-quantity-minus"
-            aria-label="Decrease quantity"
-            ${currentQuantity <= minQuantity ? 'disabled' : ''}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
+        <div class="bf25-stepper-row" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <div class="bf25-quantity-stepper">
+            <button
+              type="button"
+              class="bf25-quantity-button bf25-quantity-minus"
+              aria-label="Decrease quantity"
+              ${currentQuantity <= minQuantity ? 'disabled' : ''}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
 
-          <input
-            type="number"
-            class="bf25-quantity-input"
-            value="${currentQuantity}"
-            min="${minQuantity}"
-            max="${maxQuantity}"
-            aria-label="Quantity"
-          />
+            <input
+              type="number"
+              class="bf25-quantity-input"
+              value="${currentQuantity}"
+              min="${minQuantity}"
+              max="${maxQuantity}"
+              aria-label="Quantity"
+            />
 
-          <button
-            type="button"
-            class="bf25-quantity-button bf25-quantity-plus"
-            aria-label="Increase quantity"
-            ${currentQuantity >= maxQuantity ? 'disabled' : ''}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
+            <button
+              type="button"
+              class="bf25-quantity-button bf25-quantity-plus"
+              aria-label="Increase quantity"
+              ${currentQuantity >= maxQuantity ? 'disabled' : ''}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          ${tierHint}
         </div>
       </div>
     `;

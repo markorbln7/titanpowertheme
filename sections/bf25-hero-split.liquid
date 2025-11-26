@@ -222,7 +222,7 @@
 
 /* LEFT: Visual Side - CENTERED */
 .bf25-hero-visual {
-  background: linear-gradient(135deg, rgba(3, 3, 3, 0.95) 0%, rgba(8, 8, 8, 0.95) 100%);
+  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -267,7 +267,7 @@
 }
 
 .bf25-percent {
-  font-size: 72px;
+  font-size: 50px;  /* Base size - will be overridden by media queries */
   color: #60c655;
   font-weight: 700;
   letter-spacing: 0;
@@ -285,7 +285,7 @@
 
 /* RIGHT: Content Side - TRANSPARENT BACKGROUND */
 .bf25-hero-content {
-  background: transparent;
+  background: #000;
   padding: 45px 50px 50px;
   display: flex;
   flex-direction: column;
@@ -730,10 +730,18 @@
 
   .bf25-big-number {
     font-size: 200px;
+    margin-left: 300px;
   }
 
   .bf25-percent {
-    font-size: 80px;
+    font-size: 50px !important;  /* Force 50px as requested */
+  }
+
+  .bf25-big-label {
+    margin-left: 315px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 18px;
   }
 
   .bf25-hero-content {

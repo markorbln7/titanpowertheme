@@ -4867,3 +4867,115 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 /* END BF25-MOB-016: FINAL POLISH                               */
 /* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-017: DESCRIPTION EXPAND - PUSH CONTENT DOWN         */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* Description wrapper - must be in normal flow, not positioned */
+  .bf25-description-wrapper {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+  }
+
+  /* Description inner - use height transition, not max-height with overflow */
+  .bf25-description-inner {
+    position: relative !important;
+    display: block !important;
+    overflow: hidden !important;
+    max-height: 75px !important;
+    transition: max-height 0.4s ease-out !important;
+  }
+
+  /* When expanded - allow full height */
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1000px !important;
+    overflow: visible !important;
+  }
+
+  /* Description content - normal flow */
+  .bf25-description-content {
+    position: relative !important;
+    display: block !important;
+  }
+
+  /* Fade effect at bottom when collapsed */
+  .bf25-description-inner::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 30px !important;
+    background: linear-gradient(to bottom, transparent, rgba(26, 26, 26, 1)) !important;
+    pointer-events: none !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Hide fade when expanded */
+  .bf25-description-wrapper.expanded .bf25-description-inner::after {
+    opacity: 0 !important;
+  }
+
+  /* Learn More toggle - in normal flow below description */
+  .bf25-description-toggle {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 8px !important;
+    padding: 6px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #60c655 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+  }
+
+  .bf25-description-toggle svg,
+  .bf25-description-toggle .bf25-description-arrow {
+    width: 14px !important;
+    height: 14px !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-toggle svg,
+  .bf25-description-wrapper.expanded .bf25-description-arrow {
+    transform: rotate(180deg) !important;
+  }
+
+  /* Change text when expanded */
+  .bf25-description-wrapper.expanded .bf25-toggle-text {
+    /* JS should change this to "Show Less" */
+  }
+
+  /* ============================================================ */
+  /* SECTIONS BELOW DESCRIPTION - Ensure they're in normal flow   */
+  /* ============================================================ */
+
+  .bf25-quantity-section,
+  .bf25-quantity-controls {
+    position: relative !important;
+    display: block !important;
+    z-index: 1 !important;
+  }
+
+  .bf25-upsells-section {
+    position: relative !important;
+    display: block !important;
+    z-index: 1 !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-017: DESCRIPTION EXPAND                         */
+/* ============================================================ */

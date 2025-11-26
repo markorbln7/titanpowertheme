@@ -593,10 +593,19 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 8px var(--bf25-space-4) var(--bf25-space-4);
-  background: linear-gradient(to top, rgba(20, 20, 20, 1) 80%, rgba(20, 20, 20, 0));
+  background: transparent;
+  padding: 0;
   z-index: 10;
-  margin-top: auto;
+}
+
+.bf25-modal-footer-fixed .bf25-action-buttons {
+  padding: 4px 16px 8px;
+  margin: 0;
+  background: transparent;
+}
+
+.bf25-modal-footer-fixed .bf25-button.bf25-add-to-cart {
+  padding: 14px 24px;
 }
 
 .bf25-modal-footer-fixed .bf25-add-to-cart,
@@ -2561,7 +2570,7 @@
    U5 Progress Tracker - Sticky Above ATC
    ======================================== */
 .bf25-u5-tracker {
-  padding: 10px 16px 8px;
+  padding: 6px 16px 4px;
   background: transparent;
 }
 
@@ -2736,7 +2745,7 @@
 /* Mobile adjustments */
 @media (max-width: 480px) {
   .bf25-u5-tracker {
-    padding: 8px 12px 6px;
+    padding: 4px 12px 2px;
   }
 
   .bf25-u5-count {
@@ -2750,6 +2759,14 @@
   .bf25-u5-gift svg {
     width: 10px;
     height: 10px;
+  }
+
+  .bf25-modal-footer-fixed .bf25-action-buttons {
+    padding: 2px 12px 6px;
+  }
+
+  .bf25-modal-footer-fixed .bf25-button.bf25-add-to-cart {
+    padding: 12px 20px;
   }
 }
 
@@ -2774,21 +2791,9 @@
   box-shadow: 0 -20px 30px 15px var(--bf25-bg-primary);
 }
 
-/* Add gradient fade above action buttons */
+/* Removed gradient fade - interferes with U5 tracker visibility */
 .bf25-action-buttons::before {
-  content: '';
-  position: absolute;
-  top: -40px;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--bf25-bg-primary, #1a1a1a)
-  );
-  pointer-events: none;
-  z-index: 99;
+  display: none;
 }
 
 .bf25-button {

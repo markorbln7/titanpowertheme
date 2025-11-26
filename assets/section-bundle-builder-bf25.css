@@ -3444,3 +3444,227 @@ html body .buy-now-popup .buy-now-popup__wrapper.bf25-modal-fixed {
 html body #bf25-modal-overlay.bf25-overlay-fixed {
   z-index: 999 !important;
 }
+
+/* =================================================== */
+/* BF25 MODAL - MOBILE FIX v2.0 (Root Cause Fix)       */
+/* Issue: Content overflow causing left-shift           */
+/* Date: 2025-11-26                                     */
+/* =================================================== */
+
+/* --- Fix Overlay Blocking (Must be BELOW modal) --- */
+#bf25-modal-overlay,
+.bf25-modal-overlay {
+  z-index: 99998 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure modal is ABOVE overlay */
+.buy-now-popup {
+  z-index: 99999 !important;
+}
+
+.buy-now-popup__wrapper {
+  z-index: 100000 !important;
+}
+
+/* =================================================== */
+/* MOBILE FIXES (max-width: 767px)                     */
+/* =================================================== */
+
+@media (max-width: 767px) {
+
+  /* --- Parent Aside: Force Full Width --- */
+  aside.buy-now-popup,
+  .buy-now-popup {
+    width: 100vw !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* --- Wrapper: Ensure Full Coverage --- */
+  .buy-now-popup__wrapper {
+    width: 100vw !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    height: 100vh !important; /* Fallback */
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* --- Content Container: Constrain to Viewport --- */
+  .bf25-modal-content {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- Layout: Force Single Column, Constrain Width --- */
+  .bf25-modal-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* --- Image Section: Full Width --- */
+  .bf25-modal-image-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+
+  .bf25-modal-image-container {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+  }
+
+  .bf25-modal-product-image {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
+
+  /* --- Details Section: Full Width, Prevent Overflow --- */
+  .bf25-modal-details-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- Description: Prevent Text Overflow --- */
+  .bf25-description-content,
+  .bf25-description-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* --- Fixed Footer: Full Width, Thumb Zone --- */
+  .bf25-modal-footer-fixed {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    padding: 12px 16px !important;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.95) 100%) !important;
+    border-top: 1px solid rgba(96, 198, 85, 0.3) !important;
+    z-index: 100001 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- Add padding to content so footer doesn't cover it --- */
+  .bf25-modal-content {
+    padding-bottom: 140px !important;
+  }
+
+  /* --- Close Button: Accessible Touch Target --- */
+  .buy-now-popup .close-buy-now-popup,
+  .bf25-modal-close {
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
+    right: 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: 1px solid rgba(96, 198, 85, 0.5) !important;
+    border-radius: 50% !important;
+    z-index: 100002 !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* --- Tier Buttons: Prevent Horizontal Overflow --- */
+  .bf25-tier-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .bf25-tier-button {
+    flex: 1 1 calc(33% - 8px) !important;
+    min-width: 90px !important;
+    max-width: 120px !important;
+  }
+
+  /* --- Upsells Grid: Stack on Mobile --- */
+  .bf25-upsells-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .bf25-upsell-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* --- Reviews: Horizontal Scroll --- */
+  .bf25-reviews-scroll-area {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+  }
+
+  /* --- Body Scroll Lock (When Modal Open) --- */
+  body.modal-open,
+  body.bf25-modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none !important;
+  }
+}
+
+/* =================================================== */
+/* TABLET ADJUSTMENTS (768px - 991px)                  */
+/* =================================================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .bf25-modal-content {
+    max-width: 700px !important;
+    margin: 0 auto !important;
+  }
+
+  .bf25-modal-layout {
+    padding: 24px 32px !important;
+  }
+}

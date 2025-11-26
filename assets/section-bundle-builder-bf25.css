@@ -3510,7 +3510,14 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     max-width: 100vw !important;
     min-width: 0 !important;
     margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     padding: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: relative !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     box-sizing: border-box !important;
@@ -3521,6 +3528,12 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
@@ -3529,10 +3542,15 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     overflow-x: hidden !important;
   }
 
-  /* --- Image Section: Full Width --- */
+  /* --- Image Section: Reset Centering --- */
   .bf25-modal-image-section {
     width: 100% !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
     flex-shrink: 0 !important;
   }
 
@@ -3548,11 +3566,16 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
     max-width: 100% !important;
   }
 
-  /* --- Details Section: Full Width, Prevent Overflow --- */
+  /* --- Details Section: Reset Centering --- */
   .bf25-modal-details-section {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
     overflow-x: hidden !important;
     box-sizing: border-box !important;
   }
@@ -3667,4 +3690,20 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
   .bf25-modal-layout {
     padding: 24px 32px !important;
   }
+}
+
+/* === OVERLAY FIX - FORCE BELOW MODAL === */
+#bf25-modal-overlay,
+.bf25-modal-overlay,
+[class*="modal-overlay"] {
+  z-index: 99998 !important;
+  pointer-events: auto !important;
+}
+
+/* When modal is NOT active, hide overlay completely */
+.buy-now-popup:not(.active) ~ #bf25-modal-overlay,
+#bf25-modal-overlay:not(.active) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }

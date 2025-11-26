@@ -4057,35 +4057,62 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 
 @media (max-width: 767px) {
 
-  /* --- NUCLEAR: Tier Buttons MUST be horizontal --- */
+  /* --- NUCLEAR: Tier Buttons FORCE 3-across (grid IS fine, just ensure columns) --- */
   .bf25-tier-buttons,
   div.bf25-tier-buttons,
+  .bf25-modal-container .bf25-tier-buttons,
+  .bf25-modal-content .bf25-tier-buttons,
+  .bf25-modal-details-section .bf25-tier-buttons,
   .bf25-quantity-controls .bf25-tier-buttons,
   .bf25-power-packs-mode .bf25-tier-buttons,
-  .bf25-modal-content .bf25-tier-buttons,
-  .bf25-modal-details-section .bf25-tier-buttons {
-    display: flex !important;
-    grid-template-columns: unset !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
+  html body .bf25-tier-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: auto !important;
     gap: 8px !important;
     width: 100% !important;
   }
 
+  /* Ensure buttons don't span multiple columns */
   .bf25-tier-button,
   button.bf25-tier-button,
   .bf25-tier-buttons .bf25-tier-button,
-  .bf25-tier-buttons > .bf25-tier-button {
-    flex: 1 1 0 !important;
-    width: auto !important;
+  .bf25-tier-buttons > .bf25-tier-button,
+  .bf25-modal-container .bf25-tier-button,
+  .bf25-modal-content .bf25-tier-button,
+  html body .bf25-tier-button {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 12px 8px !important;
-    min-height: 80px !important;
+    padding: 10px 6px !important;
+    min-height: 75px !important;
+    position: relative !important;
+  }
+
+  .bf25-tier-button-quantity {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  .bf25-tier-button-label {
+    font-size: 9px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    opacity: 0.7 !important;
+    margin-top: 2px !important;
+  }
+
+  .bf25-tier-button-discount {
+    font-size: 10px !important;
+    color: #60c655 !important;
+    margin-top: 4px !important;
   }
 
   /* --- NUCLEAR: Footer with solid dark background --- */

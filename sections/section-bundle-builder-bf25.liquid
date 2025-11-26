@@ -661,6 +661,26 @@ if (window.bf25Config.debug) {
   });
 </script>
 
+<script>
+/* Performance: Only animate info icons when visible */
+(function() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.1, rootMargin: '50px' });
+
+  // Observe all info icons
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.bf25-product-info-icon').forEach(icon => {
+      observer.observe(icon);
+    });
+  });
+})();
+</script>
+
 {% schema %}
 {
   "name": "bundle build bf25",

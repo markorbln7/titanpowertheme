@@ -1874,7 +1874,7 @@
   height: 8px;
   pointer-events: none;
   opacity: 0;
-  will-change: transform, opacity;
+  /* will-change: transform, opacity; */ /* Removed - confetti is short-lived */
 }
 
 /* Particle Shapes */

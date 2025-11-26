@@ -18,25 +18,12 @@
     min-height: 100vh;
   }
   
-  /* Gradient Mesh Background */
-  .gradient-mesh-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-  }
-  
-  /* Gradient mesh removed for performance - solid background */
+  /* Gradient mesh removed for performance */
   .gradient-mesh-bg::before,
   .gradient-mesh-bg::after {
-    display: none;
+    display: none !important;
+    animation: none !important;
   }
-
-  /* @keyframes float removed - no longer needed */
   
   /* Filter Pills */
   .filter-pills-container {
@@ -1045,9 +1032,17 @@ body.modal-open {
   /* Smooth transitions */
   transition: all 200ms ease;
 
-  /* Pulse animation - Optimized: slower duration for performance */
-  animation: bf25-info-pulse 4s ease-in-out infinite;
+  /* Pulse animation - Optimized: paused by default for performance */
+  animation: bf25-info-pulse 5s ease-in-out infinite;
+  animation-play-state: paused;
+}
 
+/* Play info pulse on hover or when in viewport */
+.bf25-product-card:hover .bf25-product-info-icon,
+.dark-mode .section-collections-with-nav__product:hover .bf25-product-info-icon,
+.bf25-product-card:focus-within .bf25-product-info-icon,
+.bf25-product-info-icon.in-view {
+  animation-play-state: running;
 }
 
 /* Hover State */
@@ -1087,15 +1082,13 @@ body.modal-open {
 }
 
 /* Pulse Animation Keyframes - GPU-accelerated with transform + opacity */
+/* Lighter info pulse animation - 30% less intensive */
 @keyframes bf25-info-pulse {
   0%, 100% {
-    transform: scale(1);
-    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(96, 198, 85, 0);
   }
-
   50% {
-    transform: scale(1.05);
-    opacity: 0.9;
+    box-shadow: 0 0 8px 2px rgba(96, 198, 85, 0.35);
   }
 }
 
@@ -1152,8 +1145,8 @@ body.modal-open {
   transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
               transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Will-change for better performance */
-  will-change: opacity, transform;
+  /* will-change removed for better performance - only use on actively animating elements */
+  /* will-change: opacity, transform; */
 
   /* Dark glassmorphic background */
   background: rgba(20, 20, 20, 0.98);
@@ -2768,14 +2761,102 @@ body.modal-open {
   }
 }
 
+/* ===== CARD LAYOUT - PIN PRICE TO BOTTOM ===== */
+
+/* Card container - flex column, full height */
+.dark-mode .section-collections-with-nav__product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Default state wrapper - flex column, grow to fill */
+.bf25-card-default-state {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+/* Top part (image, title, reviews, features) - grows to push price down */
+.bf25-card-default-state .top-part,
+.section-collections-with-nav__product-details .top-part {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Features list - allow to grow/shrink */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Price row - ALWAYS at bottom, no grow */
+.dark-mode .section-collections-with-nav__product .price-row,
+.dark-mode .section-collections-with-nav__product .product-price-wrapper,
+.dark-mode .section-collections-with-nav__product .bf25-card-price-row,
+.section-collections-with-nav__product-prices {
+  margin-top: auto !important; /* Push to bottom */
+  flex-shrink: 0;
+  padding-top: 12px;
+}
+
+/* Compare price - ALWAYS reserve space even if empty */
+.dark-mode .section-collections-with-nav__product .price-compare,
+.dark-mode .section-collections-with-nav__product .compare-price,
+.dark-mode .section-collections-with-nav__product .compare-at-price {
+  min-height: 18px; /* Reserve space even when empty */
+  display: block;
+}
+
+/* If compare price is in a wrapper, ensure wrapper has min-height */
+.dark-mode .section-collections-with-nav__product .price-compare-wrapper {
+  min-height: 18px;
+}
+
+/* Ensure all cards in a row have same height */
+.section-collections-with-nav__products,
+.bf25-products-grid,
+[class*="product-grid"] {
+  display: grid;
+  align-items: stretch; /* All cards same height */
+}
+
+.section-collections-with-nav__products .section-collections-with-nav__product,
+.bf25-products-grid .bf25-product-card {
+  height: 100%;
+}
+
+/* Mobile - same principle */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .price-row,
+  .section-collections-with-nav__product-prices {
+    margin-top: auto !important;
+    padding-top: 10px;
+  }
+
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    min-height: 16px;
+  }
+}
+
 /* ===== STAR RATING - SMOOTH FADING GLOW ===== */
 
-/* Stars container */
+/* Stars container - allow glow to extend */
+.bf25-product-rating-display,
 .bf25-rating-stars,
 .bf25-card-stars {
   position: relative;
   display: inline-flex;
   line-height: 1;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 2px 4px;
 }
 
 /* Empty stars (background) */
@@ -2795,14 +2876,13 @@ body.modal-open {
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  /* Smooth, spread-out glow that fades into background */
+  /* Smooth, multi-layer glow that fades gradually */
   text-shadow:
-    0 0 4px rgba(96, 198, 85, 0.6),
-    0 0 8px rgba(96, 198, 85, 0.4),
-    0 0 16px rgba(96, 198, 85, 0.2),
-    0 0 24px rgba(96, 198, 85, 0.1);
-  /* Alternative: Use filter for softer glow */
-  filter: drop-shadow(0 0 3px rgba(96, 198, 85, 0.5));
+    0 0 2px rgba(96, 198, 85, 0.9),
+    0 0 6px rgba(96, 198, 85, 0.5),
+    0 0 12px rgba(96, 198, 85, 0.3),
+    0 0 20px rgba(96, 198, 85, 0.15),
+    0 0 30px rgba(96, 198, 85, 0.05);
 }
 
 /* Remove any background or border that might contain the glow */
@@ -2817,10 +2897,11 @@ body.modal-open {
 /* Hover - slightly enhanced glow */
 .dark-mode .section-collections-with-nav__product:hover .bf25-rating-stars .stars-filled {
   text-shadow:
-    0 0 5px rgba(96, 198, 85, 0.7),
-    0 0 10px rgba(96, 198, 85, 0.5),
-    0 0 20px rgba(96, 198, 85, 0.25),
-    0 0 30px rgba(96, 198, 85, 0.1);
+    0 0 3px rgba(96, 198, 85, 1),
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 15px rgba(96, 198, 85, 0.4),
+    0 0 25px rgba(96, 198, 85, 0.2),
+    0 0 35px rgba(96, 198, 85, 0.08);
 }
 
 /* Mobile - slightly reduced glow for performance */
@@ -2837,4 +2918,119 @@ body.modal-open {
       0 0 8px rgba(96, 198, 85, 0.3),
       0 0 14px rgba(96, 198, 85, 0.15);
   }
+}
+
+/* ===== PARTIAL STAR FILL BASED ON RATING ===== */
+
+/* 5.0 stars = 100% width */
+.bf25-rating-stars[data-rating="5.0"] .stars-filled,
+.bf25-rating-stars[data-rating="5"] .stars-filled {
+  width: 100%;
+}
+
+/* 4.9 stars = 98% width */
+.bf25-rating-stars[data-rating="4.9"] .stars-filled {
+  width: 98%;
+}
+
+/* 4.8 stars = 96% width */
+.bf25-rating-stars[data-rating="4.8"] .stars-filled {
+  width: 96%;
+}
+
+/* 4.7 stars = 94% width */
+.bf25-rating-stars[data-rating="4.7"] .stars-filled {
+  width: 94%;
+}
+
+/* 4.6 stars = 92% width */
+.bf25-rating-stars[data-rating="4.6"] .stars-filled {
+  width: 92%;
+}
+
+/* 4.5 stars = 90% width */
+.bf25-rating-stars[data-rating="4.5"] .stars-filled {
+  width: 90%;
+}
+
+/* 4.4 stars = 88% width */
+.bf25-rating-stars[data-rating="4.4"] .stars-filled {
+  width: 88%;
+}
+
+/* 4.3 stars = 86% width */
+.bf25-rating-stars[data-rating="4.3"] .stars-filled {
+  width: 86%;
+}
+
+/* 4.2 stars = 84% width */
+.bf25-rating-stars[data-rating="4.2"] .stars-filled {
+  width: 84%;
+}
+
+/* 4.1 stars = 82% width */
+.bf25-rating-stars[data-rating="4.1"] .stars-filled {
+  width: 82%;
+}
+
+/* 4.0 stars = 80% width */
+.bf25-rating-stars[data-rating="4.0"] .stars-filled,
+.bf25-rating-stars[data-rating="4"] .stars-filled {
+  width: 80%;
+}
+
+/* 3.9 stars = 78% width */
+.bf25-rating-stars[data-rating="3.9"] .stars-filled {
+  width: 78%;
+}
+
+/* 3.8 stars = 76% width */
+.bf25-rating-stars[data-rating="3.8"] .stars-filled {
+  width: 76%;
+}
+
+/* 3.7 stars = 74% width */
+.bf25-rating-stars[data-rating="3.7"] .stars-filled {
+  width: 74%;
+}
+
+/* 3.6 stars = 72% width */
+.bf25-rating-stars[data-rating="3.6"] .stars-filled {
+  width: 72%;
+}
+
+/* 3.5 stars = 70% width */
+.bf25-rating-stars[data-rating="3.5"] .stars-filled {
+  width: 70%;
+}
+
+/* 3.4 stars = 68% width */
+.bf25-rating-stars[data-rating="3.4"] .stars-filled {
+  width: 68%;
+}
+
+/* 3.3 stars = 66% width */
+.bf25-rating-stars[data-rating="3.3"] .stars-filled {
+  width: 66%;
+}
+
+/* 3.2 stars = 64% width */
+.bf25-rating-stars[data-rating="3.2"] .stars-filled {
+  width: 64%;
+}
+
+/* 3.1 stars = 62% width */
+.bf25-rating-stars[data-rating="3.1"] .stars-filled {
+  width: 62%;
+}
+
+/* 3.0 stars = 60% width */
+.bf25-rating-stars[data-rating="3.0"] .stars-filled,
+.bf25-rating-stars[data-rating="3"] .stars-filled {
+  width: 60%;
+}
+
+/* Fallback for any rating value - use CSS variable if available */
+.bf25-rating-stars[data-rating] .stars-filled {
+  width: var(--star-fill-width, 80%);
 }

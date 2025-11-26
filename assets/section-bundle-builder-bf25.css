@@ -5189,3 +5189,53 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 /* END BF25-MOB-018: COMPREHENSIVE POLISH                       */
 /* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-021: DESCRIPTION EXPAND - LET PARENT GROW           */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* Description wrapper - must affect parent's height */
+  .bf25-description-wrapper {
+    position: relative !important;
+    display: block !important;
+    min-height: 0 !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    flex-basis: auto !important;
+  }
+
+  /* Description inner - THIS controls the collapse */
+  .bf25-description-inner {
+    display: block !important;
+    max-height: 78px !important;
+    overflow: hidden !important;
+    transition: max-height 0.35s ease-out !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1000px !important;
+  }
+
+  /* Sections after description - ensure they're flex items that respond */
+  .bf25-quantity-section,
+  .bf25-quantity-controls,
+  .bf25-upsells-section {
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    flex-basis: auto !important;
+  }
+
+  /* The modal body/content needs to allow growth */
+  .bf25-modal-body,
+  .bf25-modal-content {
+    flex-grow: 1 !important;
+    min-height: 0 !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-021: DESCRIPTION EXPAND                         */
+/* ============================================================ */

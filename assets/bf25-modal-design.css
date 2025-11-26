@@ -1194,10 +1194,10 @@
 
 .bf25-description-content {
   padding: var(--bf25-space-2) var(--bf25-space-3) var(--bf25-space-3); /* Reduced top padding (BF25-8.9) */
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(255 255 255 / 0%);
   border-radius: var(--bf25-radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  margin: 0; /* Fix gap at top - BF25-FIX-012 */
+  border: 1px solid rgb(255 255 255 / 0%);
+  margin-top: -10px;
 }
 
 /* Style description content */
@@ -1470,7 +1470,7 @@
 }
 
 .bf25-price-current {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--bf25-accent);
   line-height: 1;
@@ -2620,7 +2620,7 @@
 
 .bf25-u5-track {
   position: relative;
-  height: 20px;
+  height: 32px;
 }
 
 .bf25-u5-bar {
@@ -2660,19 +2660,24 @@
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between;
-  padding: 0 calc(25% - 4px);
+  pointer-events: none;
 }
 
 .bf25-u5-marker {
+  position: absolute;
   width: 8px;
   height: 8px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 50%;
-  position: relative;
   z-index: 3;
   transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
+
+.bf25-u5-marker:nth-child(1) { left: 25%; }
+.bf25-u5-marker:nth-child(2) { left: 50%; }
+.bf25-u5-marker:nth-child(3) { left: 75%; }
+.bf25-u5-marker:nth-child(4) { left: 100%; transform: translateX(-100%); }
 
 .bf25-u5-marker.unlocked {
   background: #60c655;
@@ -2695,17 +2700,27 @@
 }
 
 .bf25-u5-gifts {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 calc(25% - 6px);
-  margin-top: 2px;
-  margin-bottom: 10px;
+  padding: 0;
+  pointer-events: none;
 }
 
 .bf25-u5-gift {
+  position: absolute;
+  transform: translateX(-50%);
   opacity: 0.2;
   transition: all 0.2s ease;
 }
+
+.bf25-u5-gift:nth-child(1) { left: 25%; }
+.bf25-u5-gift:nth-child(2) { left: 50%; }
+.bf25-u5-gift:nth-child(3) { left: 75%; }
+.bf25-u5-gift:nth-child(4) { left: 100%; transform: translateX(-100%); }
 
 .bf25-u5-gift.unlocked {
   opacity: 1;
@@ -2776,8 +2791,8 @@
     height: 10px;
   }
 
-  .bf25-u5-gifts {
-    margin-bottom: 8px;
+  .bf25-u5-track {
+    height: 28px;
   }
 
   .bf25-modal-footer-fixed .bf25-action-buttons {

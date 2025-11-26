@@ -6144,45 +6144,66 @@ function getTierForCount(pairCount) {
 // ========================================
 
 function updateStockDisplay(card) {
-  let stockBadge = card.querySelector('.stock-badge-circle');
+  const stockLevel = parseInt(card.dataset.stockLevel) || Math.floor(Math.random() * 85) + 10;
 
-  if (!stockBadge) {
-    stockBadge = document.createElement('div');
+  // NEW: Target the placeholder next to reviews instead of image container
+  const stockPlaceholder = card.querySelector('.bf25-stock-placeholder');
+
+  // Remove any existing stock badges (from both locations for clean transition)
+  const existingBadges = card.querySelectorAll('.stock-badge-circle, .bf25-stock-inline');
+  existingBadges.forEach(badge => badge.remove());
+
+  // Determine color based on stock level
+  let colorClass = 'stock-high';
+  let color = '#60c655';
+  if (stockLevel <= 15) {
+    colorClass = 'stock-low';
+    color = '#ef4444';
+  } else if (stockLevel <= 50) {
+    colorClass = 'stock-medium';
+    color = '#fbbf24';
+  }
+
+  // NEW: Create inline stock element next to review count
+  if (stockPlaceholder) {
+    const inlineStock = document.createElement('span');
+    inlineStock.className = `bf25-stock-inline ${colorClass}`;
+    inlineStock.dataset.stockLevel = stockLevel;
+    inlineStock.innerHTML = `
+      <span class="bf25-stock-dot" style="background: ${color}; box-shadow: 0 0 6px ${color};"></span>
+      <span class="bf25-stock-number" style="color: ${color};">${stockLevel} left</span>
+    `;
+
+    // Clear and append to placeholder
+    stockPlaceholder.innerHTML = '';
+    stockPlaceholder.appendChild(inlineStock);
+  }
+
+  // OPTIONAL: Also create the old image badge if you want both
+  // Comment out this section to remove image badge completely
+  const imageContainer = card.querySelector('.section-collections-with-nav__product-image');
+  if (imageContainer && !stockPlaceholder) {
+    // Fallback: only create image badge if placeholder doesn't exist
+    const stockBadge = document.createElement('div');
     stockBadge.className = 'stock-badge-circle';
+    stockBadge.setAttribute('data-stock-level', stockLevel);
+
+    if (stockLevel <= 19) {
+      stockBadge.classList.add('low-stock');
+    } else if (stockLevel <= 49) {
+      stockBadge.classList.add('medium-stock');
+    }
+
     const stockNumber = document.createElement('span');
     stockNumber.className = 'stock-number';
+    stockNumber.textContent = stockLevel;
     stockBadge.appendChild(stockNumber);
 
-    const imageContainer = card.querySelector('.section-collections-with-nav__product-image');
-    if (imageContainer) {
-      imageContainer.appendChild(stockBadge);
-    }
+    imageContainer.appendChild(stockBadge);
   }
 
-  const stockLevel = parseInt(card.dataset.stockLevel);
-  const stockNumber = stockBadge.querySelector('.stock-number');
-
-  // ✅ APPLY CORRECT COLOR CLASS
-  stockBadge.classList.remove('medium-stock', 'low-stock');
-
-  if (stockLevel <= 19) {
-    stockBadge.classList.add('low-stock');
-  } else if (stockLevel <= 49) {
-    stockBadge.classList.add('medium-stock');
-  }
-  // else: default green (high stock)
-
-  // Update data attribute for CSS
-  stockBadge.setAttribute('data-stock-level', stockLevel);
-
-  // Update number
-  stockNumber.textContent = stockLevel;
-
-  // ✅ ANIMATE ONLY ON CHANGE
-  stockBadge.classList.add('updating');
-  setTimeout(() => {
-    stockBadge.classList.remove('updating');
-  }, 400);
+  // Update card data attribute
+  card.dataset.stockLevel = stockLevel;
 }
 
 function decreaseRandomStock() {

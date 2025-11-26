@@ -1534,40 +1534,57 @@ body.modal-open {
 }
 */
 
-/* Reviews section - tighter spacing */
+/* ===== REVIEWS - MINIMAL GAP BETWEEN STARS AND COUNT ===== */
+
+/* Reviews container - no gap */
+.bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .bf25-card-reviews,
 .dark-mode .section-collections-with-nav__product .jdgm-prev-badge,
 .dark-mode .section-collections-with-nav__product .product-rating,
-.dark-mode .section-collections-with-nav__product .reviews-wrapper,
-.dark-mode .section-collections-with-nav__product .bf25-card-reviews {
+.dark-mode .section-collections-with-nav__product .reviews-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0; /* Remove any gap */
+  gap: 0 !important;
+  margin: 6px 0;
 }
 
-/* Stars - ensure no bottom margin */
+/* Stars wrapper - no bottom margin/padding */
+.bf25-product-rating-display,
+.bf25-rating-stars,
+.bf25-card-stars {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1;
+}
+
+/* Stars themselves */
+.bf25-rating-stars .stars-empty,
+.bf25-rating-stars .stars-filled,
 .dark-mode .section-collections-with-nav__product .jdgm-star,
 .dark-mode .section-collections-with-nav__product .star-rating,
-.dark-mode .section-collections-with-nav__product [class*="stars"],
-.dark-mode .section-collections-with-nav__product .bf25-rating-stars {
+.dark-mode .section-collections-with-nav__product [class*="stars"] {
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 1;
   color: #60c655;
   text-shadow:
     0 0 8px rgba(96, 198, 85, 0.6),
     0 0 16px rgba(96, 198, 85, 0.4);
   margin-bottom: 0 !important;
-  padding-bottom: 0;
-  line-height: 1;
+  padding-bottom: 0 !important;
 }
 
-/* Review count text - VERY CLOSE to stars */
+/* Review count - VERY CLOSE to stars */
+.bf25-rating-count,
 .bf25-review-count,
 .dark-mode .section-collections-with-nav__product .review-count,
 .dark-mode .section-collections-with-nav__product .jdgm-prev-badge__text,
 .dark-mode .section-collections-with-nav__product [class*="review-count"] {
+  margin-top: 2px !important;
+  padding-top: 0 !important;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.55);
-  margin-top: 0px !important; /* Minimal gap */
-  padding-top: 2px;
   line-height: 1;
 }
 
@@ -1686,14 +1703,14 @@ body.modal-open {
   flex-shrink: 0 !important;
 }
 
-/* === PRODUCT IMAGES - BIGGER WITH NATURAL FADING GLOW === */
+/* === PRODUCT IMAGES - MUCH BIGGER (50% LARGER) WITH NATURAL FADING GLOW === */
 
 /* Product Image Container - fixed size, allows overflow */
 .dark-mode .section-collections-with-nav__product-image,
 .dark-mode .bf25-card-image-wrapper {
   position: relative;
-  height: 160px !important; /* Fixed container height */
-  min-height: 160px !important;
+  height: 180px !important; /* Container height increased for larger images */
+  min-height: 180px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1702,11 +1719,11 @@ body.modal-open {
   overflow: visible !important; /* KEY: allow image to overflow */
 }
 
-/* Product Image - ZOOMED IN with NATURAL FADING GLOW */
+/* Product Image - MUCH LARGER (50% BIGGER) with NATURAL FADING GLOW */
 .dark-mode .section-collections-with-nav__product-image img,
 .dark-mode .bf25-card-image img {
-  max-height: 180px !important; /* Larger than container = overflow */
-  max-width: 120% !important; /* Allow horizontal overflow too */
+  max-height: 200px !important; /* Was ~130px, now 200px = ~50% bigger */
+  max-width: 130% !important; /* Allow more horizontal overflow */
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
@@ -1740,16 +1757,16 @@ body.modal-open {
     border-radius: 22px;
   }
 
-  /* Mobile image container - proportionally smaller */
+  /* Tablet image container - proportionally sized for 50% bigger images */
   .dark-mode .section-collections-with-nav__product-image {
-    height: 140px;
-    min-height: 140px;
+    height: 160px !important;
+    min-height: 160px !important;
   }
 
-  /* Mobile images - still zoomed but proportional */
+  /* Tablet images - proportionally larger */
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 160px !important; /* Still larger than container */
-    max-width: 115% !important;
+    max-height: 180px !important; /* Proportional to desktop 200px */
+    max-width: 120% !important;
   }
 
   /* Button size */
@@ -1770,24 +1787,18 @@ body.modal-open {
 
 /* ===== MOBILE (max-width: 767px) ===== */
 @media (max-width: 767px) {
-  /* LAYOUT FIX: Larger images on mobile */
+  /* MOBILE: Proportionally larger images (50% bigger) */
   .dark-mode .section-collections-with-nav__product-image,
   .dark-mode .bf25-card-image-wrapper {
-    height: 130px !important;
-    min-height: 130px !important;
+    height: 150px !important;  /* Increased proportionally */
+    min-height: 150px !important;
     margin-top: 32px !important;
     margin-bottom: 10px !important;
   }
 
-  /* Mobile image container */
-  .dark-mode .section-collections-with-nav__product-image {
-    height: 140px !important;
-    min-height: 140px !important;
-  }
-
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 160px !important; /* Still zoomed */
-    max-width: 115% !important;
+    max-height: 170px !important; /* Proportionally larger for mobile */
+    max-width: 125% !important;
     /* Mobile-optimized glow */
     filter:
       drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
@@ -1976,17 +1987,17 @@ body.modal-open {
 
 /* ===== SMALL MOBILE (max-width: 374px) ===== */
 @media (max-width: 374px) {
-  /* Small mobile image container */
+  /* Small mobile image container - proportionally larger */
   .dark-mode .section-collections-with-nav__product-image,
   .dark-mode .bf25-card-image-wrapper {
-    height: 120px !important;
-    min-height: 120px !important;
+    height: 140px !important;  /* Increased proportionally */
+    min-height: 140px !important;
   }
 
-  /* Still zoomed on small screens */
+  /* Still zoomed on small screens - proportionally larger */
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 140px !important; /* Still larger than container */
-    max-width: 110% !important;
+    max-height: 160px !important; /* Proportionally increased */
+    max-width: 115% !important;
   }
   .dark-mode .section-collections-with-nav__product {
     padding: 12px !important;
@@ -2218,5 +2229,131 @@ body.modal-open {
   [class*="modal"] .product-features li {
     margin-bottom: 10px !important;
     font-size: 13px !important;
+  }
+}
+
+/* ===================================================
+   BF25 INLINE STOCK INDICATOR - NEXT TO REVIEWS
+   =================================================== */
+
+/* Reviews + Stock row container - REFINED WITH DIVIDER */
+.bf25-reviews-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px !important;
+  margin-bottom: 12px !important; /* More space before bullet points */
+  padding-top: 0 !important;
+  flex-wrap: nowrap;
+}
+
+/* Review count */
+.bf25-reviews-stock-row .bf25-rating-count,
+.bf25-reviews-stock-row .bf25-review-count {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Vertical divider */
+.bf25-reviews-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0 2px;
+}
+
+/* Stock placeholder */
+.bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+}
+
+/* Inline stock indicator */
+.bf25-stock-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bf25-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.bf25-stock-number {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+/* Color states (backup if inline styles don't apply) */
+.bf25-stock-inline.stock-high .bf25-stock-dot {
+  background: #60c655;
+  box-shadow: 0 0 6px #60c655;
+}
+.bf25-stock-inline.stock-high .bf25-stock-number {
+  color: #60c655;
+}
+
+.bf25-stock-inline.stock-medium .bf25-stock-dot {
+  background: #fbbf24;
+  box-shadow: 0 0 6px #fbbf24;
+}
+.bf25-stock-inline.stock-medium .bf25-stock-number {
+  color: #fbbf24;
+}
+
+.bf25-stock-inline.stock-low .bf25-stock-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+.bf25-stock-inline.stock-low .bf25-stock-number {
+  color: #ef4444;
+}
+
+/* HIDE old image badge - no longer needed */
+.section-collections-with-nav__product-image .stock-badge-circle {
+  display: none !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    gap: 6px;
+    margin-bottom: 10px !important;
+  }
+
+  .bf25-reviews-stock-row .bf25-rating-count,
+  .bf25-stock-number {
+    font-size: 11px;
+  }
+
+  .bf25-reviews-divider {
+    font-size: 11px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 374px) {
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
   }
 }

@@ -114,16 +114,33 @@
                       <div class="top-part">
                         <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
 
-                        <!-- Reviews Display (BF25-REV-006) -->
-                        <div class="bf25-product-rating-display"
-                             data-product-id="{{ product.id }}"
-                             role="button"
-                             tabindex="0">
-                          <div class="bf25-rating-stars" aria-hidden="true">
-                            <span class="stars-empty">★★★★★</span>
-                            <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                        <!-- Reviews Display with Stock Indicator (BF25-REV-006) -->
+                        <div class="bf25-card-reviews">
+                          <!-- Stars row -->
+                          <div class="bf25-product-rating-display"
+                               data-product-id="{{ product.id }}"
+                               role="button"
+                               tabindex="0">
+                            <div class="bf25-rating-stars bf25-card-stars" aria-hidden="true">
+                              <span class="stars-empty">★★★★★</span>
+                              <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                            </div>
                           </div>
-                          <span class="bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+
+                          <!-- Review count + Stock row -->
+                          <div class="bf25-review-count-row">
+                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
+
+                            {%- assign stock_level = product.selected_or_first_available_variant.inventory_quantity | default: 0 -%}
+                            {%- if stock_level > 0 -%}
+                              <span class="bf25-review-stock-divider">•</span>
+                              <div class="bf25-card-stock"
+                                   data-stock-level="{% if stock_level > 50 %}high{% elsif stock_level > 15 %}medium{% else %}low{% endif %}">
+                                <span class="bf25-stock-dot"></span>
+                                <span class="bf25-stock-count">{{ stock_level }}</span>
+                              </div>
+                            {%- endif -%}
+                          </div>
                         </div>
 
                         {% if product.metafields.custom.ticks %}

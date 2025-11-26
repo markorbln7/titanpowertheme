@@ -5239,3 +5239,73 @@ html body #bf25-modal-overlay.bf25-overlay-fixed {
 /* ============================================================ */
 /* END BF25-MOB-021: DESCRIPTION EXPAND                         */
 /* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-021: DESCRIPTION EXPAND - FIX DETAILS SECTION       */
+/* Root cause: .bf25-modal-details-section has fixed height     */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* CRITICAL: Details section must NOT have fixed height */
+  .bf25-modal-details-section {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Modal layout - allow growth, keep scrolling */
+  .bf25-modal-layout {
+    height: auto !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Modal content - this can scroll */
+  .bf25-modal-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* Modal container - fixed viewport height, scrollable */
+  .bf25-modal-container {
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  /* Description wrapper - normal flow */
+  .bf25-description-wrapper {
+    position: relative !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Description inner - controlled collapse/expand */
+  .bf25-description-inner {
+    max-height: 78px !important;
+    overflow: hidden !important;
+    transition: max-height 0.35s ease-out !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1000px !important;
+  }
+
+  /* Sections below description - will now be pushed down */
+  .bf25-quantity-section,
+  .bf25-quantity-controls,
+  .bf25-upsells-section,
+  .bf25-reviews-section {
+    flex-shrink: 0 !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-021: DESCRIPTION EXPAND - DETAILS FIX           */
+/* ============================================================ */

@@ -1,3 +1,13 @@
+(function() {
+  'use strict';
+
+  // Prevent duplicate initialization
+  if (window.BF25ExpansionInitialized) {
+    console.log('⚠️ BF25 Expansion already initialized, skipping');
+    return;
+  }
+  window.BF25ExpansionInitialized = true;
+
 /**
  * ═══════════════════════════════════════════════════════════════════════
  * BF25 EXPANSION MODAL - CORE ARCHITECTURE
@@ -6194,3 +6204,6 @@ if (document.readyState === 'loading') {
   // DOM already loaded
   initBF25Expansion();
 }
+
+  console.log('✅ BF25 Expansion initialized');
+})();

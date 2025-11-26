@@ -2478,18 +2478,18 @@ body.modal-open {
     height: 16px !important;
   }
 
-  /* PRODUCT IMAGES - 300% BIGGER */
+  /* PRODUCT IMAGES - 200% BIGGER (reduced from 300%) */
   .dark-mode .section-collections-with-nav__product-image {
-    min-height: 200px !important;
-    height: 200px !important;
+    min-height: 150px !important;
+    height: 150px !important;
     margin-top: 30px;
     margin-bottom: 12px;
     overflow: visible !important;
   }
 
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 220px !important; /* Was ~70-80px, now 220px */
-    max-width: 150% !important;
+    max-height: 160px !important; /* Was ~70-80px, now 160px = 200% bigger */
+    max-width: 130% !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain !important;
@@ -2557,12 +2557,13 @@ body.modal-open {
   }
 
   .dark-mode .section-collections-with-nav__product-image {
-    min-height: 170px !important;
-    height: 170px !important;
+    min-height: 130px !important;
+    height: 130px !important;
   }
 
   .dark-mode .section-collections-with-nav__product-image img {
-    max-height: 190px !important;
+    max-height: 140px !important;
+    max-width: 125% !important;
   }
 
   .dark-mode .section-collections-with-nav__product .arrow,
@@ -2633,11 +2634,207 @@ body.modal-open {
   }
 }
 
-/* HIDE old inline row if still present */
+/* ===== REVIEWS + STOCK - RESPONSIVE LAYOUT ===== */
+
+/* Desktop: Inline row */
 .bf25-reviews-stock-row {
-  display: none !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
 }
 
+/* Divider - visible on desktop */
 .bf25-reviews-divider {
-  display: none !important;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    flex-direction: column;
+    gap: 8px; /* More space between reviews and stock */
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  /* Hide divider on mobile */
+  .bf25-reviews-divider {
+    display: none;
+  }
+
+  /* Review count - add bottom spacing */
+  .bf25-reviews-stock-row .bf25-rating-count {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  /* Stock placeholder - add top padding */
+  .bf25-stock-placeholder {
+    padding-top: 2px;
+  }
+
+  /* Stock row - slightly smaller on mobile */
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== BULLET POINTS - AUTO-SCALE TO PREVENT WRAP ===== */
+
+/* Features container */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  margin: 8px 0;
+}
+
+/* Each feature item - prevent wrap, scale text */
+.dark-mode .section-collections-with-nav__product .product-feature,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature,
+.bf25-card-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Feature text - responsive sizing */
+.dark-mode .section-collections-with-nav__product .product-feature span,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature span,
+.bf25-card-feature-text {
+  font-size: clamp(9px, 2.8vw, 13px); /* Auto-scale: min 9px, prefer 2.8vw, max 13px */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tablet - slightly smaller */
+@media (max-width: 991px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(9px, 2.5vw, 12px);
+  }
+}
+
+/* Mobile - scale based on viewport */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(8px, 3vw, 11px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+
+  /* Dot slightly smaller too */
+  .dark-mode .section-collections-with-nav__product .product-feature::before,
+  .bf25-card-feature::before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Small mobile - even smaller */
+@media (max-width: 374px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(7px, 3.2vw, 10px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 5px;
+  }
+}
+
+/* ===== STAR RATING - SMOOTH FADING GLOW ===== */
+
+/* Stars container */
+.bf25-rating-stars,
+.bf25-card-stars {
+  position: relative;
+  display: inline-flex;
+  line-height: 1;
+}
+
+/* Empty stars (background) */
+.bf25-rating-stars .stars-empty {
+  color: rgba(96, 198, 85, 0.2);
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+/* Filled stars - smooth spread glow */
+.bf25-rating-stars .stars-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #60c655;
+  letter-spacing: 2px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  /* Smooth, spread-out glow that fades into background */
+  text-shadow:
+    0 0 4px rgba(96, 198, 85, 0.6),
+    0 0 8px rgba(96, 198, 85, 0.4),
+    0 0 16px rgba(96, 198, 85, 0.2),
+    0 0 24px rgba(96, 198, 85, 0.1);
+  /* Alternative: Use filter for softer glow */
+  filter: drop-shadow(0 0 3px rgba(96, 198, 85, 0.5));
+}
+
+/* Remove any background or border that might contain the glow */
+.bf25-product-rating-display,
+.bf25-rating-stars {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  overflow: visible !important;
+}
+
+/* Hover - slightly enhanced glow */
+.dark-mode .section-collections-with-nav__product:hover .bf25-rating-stars .stars-filled {
+  text-shadow:
+    0 0 5px rgba(96, 198, 85, 0.7),
+    0 0 10px rgba(96, 198, 85, 0.5),
+    0 0 20px rgba(96, 198, 85, 0.25),
+    0 0 30px rgba(96, 198, 85, 0.1);
+}
+
+/* Mobile - slightly reduced glow for performance */
+@media (max-width: 767px) {
+  .bf25-rating-stars .stars-empty,
+  .bf25-rating-stars .stars-filled {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .bf25-rating-stars .stars-filled {
+    text-shadow:
+      0 0 3px rgba(96, 198, 85, 0.5),
+      0 0 8px rgba(96, 198, 85, 0.3),
+      0 0 14px rgba(96, 198, 85, 0.15);
+  }
 }

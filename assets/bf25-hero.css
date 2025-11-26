@@ -1648,3 +1648,116 @@
 }
 
 /* END V4 GIFT BOXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - PROGRESS BAR
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Bar Container - Slightly Brighter Border */
+.progress-bar {
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 768px) {
+  .progress-bar {
+    height: 24px;
+    border-radius: 12px;
+    padding: 4px;
+  }
+}
+
+/* Segments Container */
+.progress-bar__segments {
+  gap: 4px;
+}
+
+/* Individual Segment - BRIGHTER Default */
+.progress-bar__segment {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+/* FIRST SEGMENT FLASH - When slider at 0 */
+@keyframes bf25-first-cell-flash {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.3);
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.3);
+  }
+  50% {
+    background: rgba(96, 198, 85, 0.7);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+}
+
+/* Flash first segment when NOT filled */
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-first-cell-flash 1.5s ease-in-out infinite;
+}
+
+/* Stop flashing when filled */
+.progress-bar__segment.is-filled {
+  animation: none;
+  background: linear-gradient(180deg, #7ed671, #60c655);
+  box-shadow: 0 0 8px rgba(96, 198, 85, 0.5);
+}
+
+/* Preserve tier-based colors for filled segments */
+.progress-bar__segment.is-filled {
+  background: linear-gradient(
+    90deg,
+    var(--color-tier-current, #60c655) 0%,
+    var(--color-tier-glow, #7ed671) 50%,
+    var(--color-tier-current, #60c655) 100%
+  );
+}
+
+/* Discount Labels - Dim by Default */
+.bf25-hero__discount-labels {
+  margin-bottom: 10px;
+}
+
+.bf25-hero__discount-label-item .bf25-hero__discount-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__discount-label-item .bf25-hero__discount-text {
+    font-size: 11px;
+  }
+}
+
+/* Active Discount Label */
+.bf25-hero__discount-label-item.is-active .bf25-hero__discount-text {
+  color: #60c655;
+  text-shadow: 0 0 12px rgba(96, 198, 85, 0.6);
+}
+
+/* Checkpoints */
+.bf25-hero__checkpoint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__checkpoint {
+    font-size: 10px;
+  }
+}
+
+.bf25-hero__checkpoint.is-active {
+  color: #60c655;
+}
+
+/* Hide Old Drag Indicator */
+.bf25-hero__drag-indicator {
+  display: none !important;
+}
+
+/* END V4 PROGRESS BAR */

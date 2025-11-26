@@ -4,6 +4,7 @@ Clean, simple implementation with Tailwind CSS
 {%- endcomment -%}
 
 {{ 'section-mystery-box.css' | asset_url | stylesheet_tag }}
+{{ 'bf25-modal-design.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'section-mystery-box.js' | asset_url }}" defer></script>
 
 {%- liquid
@@ -47,7 +48,7 @@ Clean, simple implementation with Tailwind CSS
             >
           {%- endif -%}
 
-          {%- comment -%} Hotspots {%- endcomment -%}
+          {%- comment -%} Hotspots - wrapped in bf25-product-card for modal compatibility {%- endcomment -%}
           {%- if section.blocks.size > 0 -%}
             {%- for block in section.blocks -%}
               {%- liquid
@@ -59,9 +60,17 @@ Clean, simple implementation with Tailwind CSS
                 endif
               -%}
               
-              <div
-                class="mystery-box__hotspot absolute"
+              {%- comment -%} bf25-product-card wrapper enables modal event delegation {%- endcomment -%}
+              <article
+                class="mystery-box__hotspot bf25-product-card absolute"
                 {{ block.shopify_attributes }}
+                data-product-id="{{ hotspot_product.id }}"
+                data-section="mystery-box"
+                data-has-variants="{% if hotspot_product.variants.size > 1 %}true{% else %}false{% endif %}"
+                data-default-variant-id="{{ hotspot_variant.id }}"
+                role="button"
+                tabindex="0"
+                aria-label="View {{ hotspot_product.title }} details"
                 style="
                   --desktop-top: {{ block.settings.position_desktop_top }}%;
                   --desktop-left: {{ block.settings.position_desktop_left }}%;
@@ -85,7 +94,7 @@ Clean, simple implementation with Tailwind CSS
                 
                 {%- comment -%} Pointer Line {%- endcomment -%}
                 <div class="mystery-box__hotspot-line"></div>
-              </div>
+              </article>
             {%- endfor -%}
           {%- endif -%}
         </div>
@@ -160,6 +169,104 @@ Clean, simple implementation with Tailwind CSS
     </div>
   </div>
 </section>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+PRODUCT DATA FOR HOTSPOTS - Same format as section-bundle-builder-bf25
+═══════════════════════════════════════════════════════════
+{%- endcomment -%}
+<script>
+(function() {
+  'use strict';
+
+  // Initialize data containers if they don't exist
+  window.productData = window.productData || {};
+  window.productVariants = window.productVariants || {};
+  window.productOptions = window.productOptions || {};
+
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign hotspot_product = block.settings.product
+      if hotspot_product != blank
+        assign hotspot_variant = hotspot_product.selected_or_first_available_variant
+        if hotspot_variant == blank
+          assign hotspot_variant = hotspot_product.variants.first
+        endif
+        
+        assign desc_rendered = hotspot_product.metafields.custom.product_description | metafield_tag
+        if desc_rendered == blank
+          assign desc_rendered = hotspot_product.description
+        endif
+      endif
+    -%}
+    
+    {%- if hotspot_product != blank -%}
+  // ─────────────────────────────────────────────────────────
+  // Product: {{ hotspot_product.title }}
+  // ─────────────────────────────────────────────────────────
+  window.productData["{{ hotspot_product.id }}"] = {
+    id: "{{ hotspot_product.id }}",
+    handle: "{{ hotspot_product.handle }}",
+    title: {{ hotspot_product.title | json }},
+    basePrice: {{ hotspot_product.price }},
+    comparePrice: {{ hotspot_product.compare_at_price | default: 0 }},
+    featuredImage: "{{ hotspot_product.featured_image | image_url: width: 800 }}",
+    description: {{ desc_rendered | json }},
+    ticks: {{ hotspot_product.metafields.custom.ticks | json }},
+    reviewRating: {{ hotspot_product.metafields.reviews.rating | default: 0 }},
+    reviewCount: {{ hotspot_product.metafields.reviews.count | default: 0 }},
+    isBestseller: {% if hotspot_product.metafields.custom.is_bestseller %}true{% else %}false{% endif %},
+    discount: {{ hotspot_product.metafields.custom.new_shop_discount | json }},
+    stockLevel: {{ hotspot_variant.inventory_quantity | default: 0 }},
+    available: {{ hotspot_product.available | json }},
+    upsells: [],
+    productType: {{ hotspot_product.type | json }},
+    tags: {{ hotspot_product.tags | json }},
+    vendor: {{ hotspot_product.vendor | json }}
+  };
+
+  // Variants for {{ hotspot_product.title }}
+  window.productVariants[{{ hotspot_product.id }}] = [
+    {%- for variant in hotspot_product.variants -%}
+    {
+      id: {{ variant.id | json }},
+      title: {{ variant.title | json }},
+      options: [
+        {%- for option in variant.options -%}
+        {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      available: {{ variant.available | json }},
+      price: {{ variant.price | json }},
+      compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+      {%- if variant.featured_image -%}
+      featured_image: {
+        src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+        alt: {{ variant.featured_image.alt | default: hotspot_product.title | json }}
+      }
+      {%- else -%}
+      featured_image: null
+      {%- endif -%}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+
+  // Options for {{ hotspot_product.title }}
+  window.productOptions[{{ hotspot_product.id }}] = [
+    {%- for option in hotspot_product.options_with_values -%}
+    {
+      name: {{ option.name | json }},
+      position: {{ option.position }},
+      values: {{ option.values | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+    {%- endif -%}
+  {%- endfor -%}
+
+  console.log('[MysteryBox] Product data loaded for hotspots:', Object.keys(window.productData).length, 'products');
+})();
+</script>
 
 {% schema %}
 {
@@ -311,4 +418,3 @@ Clean, simple implementation with Tailwind CSS
   ]
 }
 {% endschema %}
-

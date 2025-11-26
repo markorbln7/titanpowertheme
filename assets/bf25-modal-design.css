@@ -2304,9 +2304,9 @@
   justify-content: center;
   gap: var(--bf25-space-1);
 
-  /* Sizing (touch-optimized) */
-  min-height: 120px;
-  padding: var(--bf25-space-4);
+  /* Sizing (reduced but still touch-friendly) */
+  min-height: 75px;
+  padding: 12px 16px;
 
   /* Appearance */
   background: rgba(255, 255, 255, 0.05);
@@ -2367,9 +2367,9 @@
   white-space: nowrap;
 }
 
-/* Tier Button Quantity (Large Number) */
+/* Tier Button Quantity (Reduced 15%) */
 .bf25-tier-button-quantity {
-  font-size: 48px;
+  font-size: 40px;  /* Reduced from 48px */
   font-weight: 700;
   line-height: 1;
   color: var(--bf25-text-primary);
@@ -2454,6 +2454,11 @@
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   max-width: 180px;
+}
+
+/* Add gap below stepper row when followed by pack buttons */
+.bf25-stepper-row {
+  margin-bottom: 12px;
 }
 
 /* Stepper Buttons */
@@ -2691,7 +2696,7 @@
     }
 
     .bf25-tier-button {
-      min-height: 100px;
+      min-height: 70px;  /* Reduced from 100px */
     }
   }
 

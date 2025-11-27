@@ -89,25 +89,7 @@
               </button>
               
               <div class="ppc-product-image">
-                {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.top_new_shop_image | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% elsif product.metafields.custom.new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.new_shop_image | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% else %}
-                  <img src="{{ product.featured_image | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% endif %}
+                <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
               </div>
               
               <h3 class="ppc-product-title">{{ product.title }}</h3>

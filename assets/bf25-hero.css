@@ -2073,3 +2073,135 @@
 }
 
 /* END V4 SCROLL HINT */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIXES - Visual Polish
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* FIX 1: Checkmark - Move to TOP-LEFT, BLACK tick */
+.bf25-hero__gift-box .icon-check {
+  top: 8px !important;
+  left: 8px !important;
+  right: auto !important;
+  transform: scale(0) !important;
+  color: #000 !important; /* Black tick */
+}
+
+.bf25-hero__gift-box.is-unlocked .icon-check {
+  transform: scale(1) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-check {
+    top: 4px !important;
+    left: 4px !important;
+  }
+}
+
+/* FIX 2: Padlock - Center properly and BRIGHTEN */
+.bf25-hero__gift-status-icon {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 5;
+}
+
+.bf25-hero__gift-box .icon-lock {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  opacity: 0.7 !important; /* Brighter */
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* FIX 3: Hide black lip/gradient when NOT unlocked */
+.bf25-hero__gift-box:not(.is-unlocked) .bf25-hero__gift-label {
+  opacity: 0 !important;
+  background: transparent !important;
+}
+
+/* FIX 4: First cell flash - BRIGHTER */
+@keyframes bf25-first-cell-flash {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.5) !important;
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.5) !important;
+  }
+  50% {
+    background: rgba(96, 198, 85, 0.9) !important;
+    box-shadow: 0 0 20px rgba(96, 198, 85, 0.8) !important;
+  }
+}
+
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-first-cell-flash 1.5s ease-in-out infinite !important;
+}
+
+/* FIX 5: "Slide bar" message - BRIGHTER with UP arrow */
+.bf25-hero__default-message::before {
+  content: "↑" !important; /* Arrow pointing UP to bar */
+  font-size: 24px !important;
+  color: #60c655 !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+  animation: bf25-bounce-up 1s ease-in-out infinite !important;
+}
+
+@keyframes bf25-bounce-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.bf25-hero__default-message::after {
+  content: "SLIDE BAR TO EXPLORE OFFERS" !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.85) !important; /* Brighter */
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+/* Make the card collapsed strip brighter */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+}
+
+/* FIX 6: Remove white glow from card */
+.bf25-hero__card {
+  box-shadow: none !important;
+}
+
+.bf25-hero__card[data-active-tier="1"],
+.bf25-hero__card[data-active-tier="2"],
+.bf25-hero__card[data-active-tier="3"],
+.bf25-hero__card[data-active-tier="4"] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important; /* Subtle dark shadow only */
+}
+
+/* FIX 7: Gold/Platinum overlay - ADD border-radius */
+.bf25-hero__gift-overlay {
+  border-radius: 12px !important; /* Match gift box corners */
+}
+
+/* Also fix the image wrapper overlay for tier colors */
+.bf25-hero__gift-box[data-gift-id="magnetic"].is-unlocked .bf25-hero__gift-image-wrapper::before,
+.bf25-hero__gift-box[data-gift-id="mystery"].is-unlocked .bf25-hero__gift-image-wrapper::before {
+  border-radius: 11px !important; /* Slightly less to fit inside border */
+}
+
+/* FIX 8: Gift image wrapper - ensure overflow hidden */
+.bf25-hero__gift-image-wrapper {
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+/* FIX 9: Unlocked gifts - clean label styling */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+  opacity: 1 !important;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9)) !important;
+  padding: 20px 6px 8px !important; /* More padding top for gradient */
+  font-weight: 700 !important;
+}
+
+/* END V4 FIXES */

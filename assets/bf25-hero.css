@@ -4181,3 +4181,88 @@ body.show-sticky-cart .bf25-sticky-cart {
 }
 
 /* END SOCIAL PROOF CLOSER */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - POLISH (Transparency, Rotation, Mobile)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* 80% opacity (20% transparent) + soft green glow */
+.bf25-hero-split .bf25-floating-product {
+  opacity: 0.8 !important;
+  filter: 
+    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 12px rgba(96, 198, 85, 0.12)) !important;
+}
+
+/* Cable - ROTATED 30 degrees */
+.bf25-hero-split .bf25-floating-cable {
+  transform-origin: center center !important;
+}
+
+@keyframes bf25-float-rotate-1 {
+  0%, 100% { transform: translateY(0) rotate(25deg); }
+  50% { transform: translateY(-10px) rotate(30deg); }
+}
+
+.bf25-hero-split .bf25-floating-cable {
+  animation: bf25-float-rotate-1 8s ease-in-out infinite !important;
+}
+
+/* ===== MOBILE - Bigger products, moved in ===== */
+@media (max-width: 768px) {
+  /* Cable - BIGGER, rotated, moved in */
+  .bf25-hero-split .bf25-floating-cable {
+    width: 85px !important; /* Was 75px */
+    top: 8% !important;
+    left: 5% !important;
+  }
+
+  /* Earbuds - BIGGER, moved in */
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 80px !important; /* Was 70px */
+    bottom: 5% !important;
+    right: 3% !important;
+  }
+
+  /* BLACK FRIDAY LOGO - CENTERED */
+  .bf25-hero-split .bf25-hero-content {
+    text-align: center !important;
+  }
+
+  .bf25-hero-split .bf25-hero-logo {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 75px !important;
+    top: 6% !important;
+    left: 3% !important;
+  }
+
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 70px !important;
+    bottom: 3% !important;
+    right: 2% !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    top: 5% !important;
+    left: 2% !important;
+  }
+
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 60px !important;
+    bottom: 2% !important;
+    right: 1% !important;
+  }
+}
+
+/* END FLOATING PRODUCTS POLISH */

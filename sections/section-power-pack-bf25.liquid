@@ -63,7 +63,7 @@
       {%- assign variant = product.selected_or_first_available_variant -%}
       {%- assign stock_level = variant.inventory_quantity | default: 0 -%}
       {%- assign review_count = product.metafields.reviews.rating_count | default: product.metafields.loox.num_reviews | default: '1,000+' -%}
-      {%- assign description_raw = product.metafields.custom.short_features | default: product.description | strip_html | truncate: 100 -%}
+      
       {%- assign description_parts = description_raw | split: '|' -%}
       {%- assign is_center = false -%}
       {%- if forloop.index == 3 -%}{%- assign is_center = true -%}{%- endif -%}
@@ -87,40 +87,30 @@
                 <span>UP TO 85% OFF</span>
               </div>
               
-              <button type="button" class="ppc-info-icon js-ppc-info-modal" data-product-id="{{ product.id }}" aria-label="View {{ product.title }} details">
+              <button type="button" class="ppc-info-icon bf25-product-info-icon" data-product-id="{{ product.id }}" aria-label="View {{ product.title }} details">
                 <span>ⓘ</span>
               </button>
               
               <div class="ppc-product-image">
                 <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
-                {% if product.tags contains 'bestseller' or forloop.index <= 4 %}
-                  <div class="ppc-bestseller-badge">
-                    <img src="{{ 'bestseller-badge.png' | asset_url }}" alt="Best Seller" width="45" height="45">
-                  </div>
-                {% endif %}
               </div>
               
               <h3 class="ppc-product-title">{{ product.title }}</h3>
               
               <div class="ppc-reviews-row">
                 <span class="ppc-stars">★★★★★</span>
-                <span class="ppc-reviews-count">{{ review_count }} reviews</span>
+                <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
                 <span class="ppc-reviews-divider">|</span>
                 <span class="ppc-stock-indicator">
                   <span class="ppc-stock-dot"></span>
-                  <span class="ppc-stock-text">{{ stock_level }} left</span>
+                  <span class="ppc-stock-text bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
                 </span>
               </div>
-              
               <div class="ppc-bullet-points">
-                <div class="ppc-bullet-list">
-                  {% for feature in description_parts limit: 3 %}
-                    <div class="ppc-bullet-item">
-                      <span class="ppc-bullet-icon">⚡</span>
-                      <span>{{ feature | strip }}</span>
-                    </div>
-                  {% endfor %}
-                </div>
+                {% if product.metafields.custom.ticks %}
+                  {{ product.metafields.custom.ticks | metafield_tag }}
+                {% endif %}
+              </div>
               </div>
               
               <div class="ppc-price-section">
@@ -144,6 +134,7 @@
                 <p>Select options & pack size</p>
               </div>
               
+              {% if product.variants.size > 1 %}
               <div class="ppc-variant-row">
                 {% for option in product.options_with_values limit: 2 %}
                   <select class="ppc-variant-dropdown js-ppc-variant-select" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name }}">
@@ -152,7 +143,8 @@
                     {% endfor %}
                   </select>
                 {% endfor %}
-                {% if product.options_with_values.size < 2 %}
+                {% endif %}
+              {% if product.options_with_values.size < 2 %}
                   <select class="ppc-variant-dropdown" disabled style="visibility: hidden;"><option>-</option></select>
                 {% endif %}
               </div>

@@ -1,0 +1,4157 @@
+/* =============================================
+   POWER PACK SECTION - BF25
+   Premium Gold Theme for Bestseller Products
+
+   This file inherits from section-bundle-builder-bf25.css patterns
+   but with gold/premium color scheme and carousel layout
+   ============================================= */
+
+/* Color Variables for Power Pack */
+:root {
+  --power-pack-gold: #D4AF37;
+  --power-pack-gold-light: #F4E4BA;
+  --power-pack-gold-dark: #B8962E;
+  --power-pack-gold-glow: rgba(212, 175, 55, 0.6);
+  --power-pack-bg: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+
+  /* Keep original BF25 variables as fallback */
+  --bf-dark-bg: #0a0a0a;
+  --bf-card-bg: #1a1a1a;
+  --bf-accent: #60c655;
+  --bf-text: #ffffff;
+  --bf-text-muted: #808080;
+}
+  
+  .section-collections-with-nav.dark-mode {
+    background: #0a0a0a;
+    color: #ffffff;
+    position: relative;
+    padding: 60px 0;
+    min-height: 100vh;
+  }
+  
+  /* Gradient mesh removed for performance */
+  .gradient-mesh-bg::before,
+  .gradient-mesh-bg::after {
+    display: none !important;
+    animation: none !important;
+  }
+  
+  /* Filter Pills */
+  .filter-pills-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+  }
+  
+  .filter-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 12px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+  }
+  
+  .filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .filter-pills .pill {
+    flex-shrink: 0;
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 2px solid rgba(96, 198, 85, 0.3);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 48px;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .filter-pills .pill:hover {
+    border-color: rgba(96, 198, 85, 0.6);
+    background: rgba(96, 198, 85, 0.15);
+    box-shadow: 0 0 20px rgba(96, 198, 85, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .filter-pills .pill.active {
+    background: #60c655;
+    color: #000000;
+    border-color: #60c655;
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.4),
+                0 4px 8px rgba(96, 198, 85, 0.25);
+  }
+  
+  /* Collection Titles */
+  .dark-mode .collection {
+    margin-bottom: 60px;
+  }
+  
+  .dark-mode .collection-title {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  .dark-mode .collection p {
+    color: #e0e0e0;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Product Grid */
+  .dark-mode .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Premium Product Cards with Green Glow */
+  .dark-mode .section-collections-with-nav__product {
+    background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
+    border: none;
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    overflow: visible; /* Changed from hidden to allow glow */
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.35),
+      0 0 0 5px rgba(96, 198, 85, 0.1),
+      0 10px 35px rgba(0, 0, 0, 0.45);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Green Glow Effect on Hover */
+  .dark-mode .section-collections-with-nav__product::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(96, 198, 85, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .dark-mode .section-collections-with-nav__product:hover::before {
+    opacity: 1;
+  }
+  
+  .dark-mode .section-collections-with-nav__product:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.5),
+      0 0 0 5px rgba(96, 198, 85, 0.15),
+      0 0 30px rgba(96, 198, 85, 0.3),
+      0 15px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* S2 Selected State - Strong outer glow - ALL POSSIBLE CLASSES */
+  .dark-mode .section-collections-with-nav__product.is-selected,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"],
+  .dark-mode .section-collections-with-nav__product.selected,
+  .dark-mode .section-collections-with-nav__product.added,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.2),
+      0 0 50px rgba(96, 198, 85, 0.5),
+      0 0 80px rgba(96, 198, 85, 0.25),
+      0 15px 40px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-6px);
+  }
+
+  /* Selected + Hover state */
+  .dark-mode .section-collections-with-nav__product.is-selected:hover,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"]:hover,
+  .dark-mode .section-collections-with-nav__product.selected:hover,
+  .dark-mode .section-collections-with-nav__product.added:hover,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle:hover {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.25),
+      0 0 55px rgba(96, 198, 85, 0.55),
+      0 0 90px rgba(96, 198, 85, 0.3),
+      0 18px 45px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-8px);
+  }
+
+  /* Product Image with Glow */
+  .dark-mode .section-collections-with-nav__product-image {
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 1;
+  }
+  
+  .dark-mode .section-collections-with-nav__product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    transition: transform 0.4s ease;
+  }
+  
+  .dark-mode .section-collections-with-nav__product:hover .section-collections-with-nav__product-image img {
+    transform: scale(1.05);
+  }
+  
+  /* Product Title - WHITE on Dark Theme */
+  .dark-mode .section-collections-with-nav__product-title {
+    color: #ffffff !important;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Ensure product titles are white everywhere */
+  .section-collections-with-nav__product-title,
+  h4.section-collections-with-nav__product-title {
+    color: #ffffff !important;
+  }
+  
+  /* Feature List - Glowing Dots - ONLY ON PRODUCT CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0;
+    position: relative;
+  }
+
+  /* Glowing dot - using pseudo-element - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+  .dark-mode .section-collections-with-nav__product .product-feature::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60c655;
+    box-shadow:
+      0 0 8px rgba(96, 198, 85, 0.8),
+      0 0 16px rgba(96, 198, 85, 0.4);
+    flex-shrink: 0;
+    position: static;
+  }
+
+  /* Feature text */
+  .bf25-card-feature-text,
+  .dark-mode .section-collections-with-nav__product .product-feature span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+  }
+
+  /* Hide old checkmark icons if present */
+  .bf25-card-feature .checkmark,
+  .bf25-card-feature svg.check-icon,
+  .bf25-card-feature .tick,
+  .dark-mode .section-collections-with-nav__product .product-feature .checkmark,
+  .dark-mode .section-collections-with-nav__product .product-feature svg {
+    display: none !important;
+  }
+  
+  /* Price Display */
+  .dark-mode .section-collections-with-nav__product-prices {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  
+  .dark-mode .section-collections-with-nav__product-price {
+    color: #60c655;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(96, 198, 85, 0.3);
+  }
+  
+  .dark-mode .section-collections-with-nav__product-price-compared {
+    color: #666666;
+    font-size: 18px;
+    text-decoration: line-through;
+  }
+  
+  /* Circle CTA Button */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #60c655 0%, #4db348 100%);
+    color: #000;
+    font-size: 26px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 4px 18px rgba(96, 198, 85, 0.45),
+      0 0 25px rgba(96, 198, 85, 0.2);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+    z-index: 2;
+  }
+
+  /* Fix plus sign vertical centering */
+  .dark-mode .section-collections-with-nav__product .arrow span,
+  .dark-mode .bf25-card-add-btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -2px; /* Optical centering for + character */
+  }
+
+  /* Hover state */
+  .dark-mode .section-collections-with-nav__product .arrow:hover,
+  .dark-mode .bf25-card-add-btn:hover {
+    background: linear-gradient(135deg, #70d665 0%, #60c655 100%);
+    transform: scale(1.1);
+    box-shadow:
+      0 6px 24px rgba(96, 198, 85, 0.55),
+      0 0 35px rgba(96, 198, 85, 0.3);
+  }
+
+  /* Active/pressed state */
+  .dark-mode .section-collections-with-nav__product .arrow:active,
+  .dark-mode .bf25-card-add-btn:active {
+    transform: scale(1.05);
+  }
+  
+  /* Discount Badge - Enhanced Glow */
+  .dark-mode .discount_message {
+    background: linear-gradient(135deg, #60c655 0%, #50b045 100%);
+    color: #000000;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow:
+      0 0 20px rgba(96, 198, 85, 0.6),
+      0 4px 12px rgba(96, 198, 85, 0.3);
+    animation: badge-glow 6s ease-in-out infinite;
+    animation-play-state: paused; /* Paused by default for performance */
+  }
+
+  /* Activate badge glow on card hover */
+  .dark-mode .section-collections-with-nav__product:hover .discount_message,
+  .dark-mode .section-collections-with-nav__product:hover .bf25-discount-badge {
+    animation-play-state: running;
+  }
+  
+  /* Optimized badge-glow using opacity (GPU-accelerated) */
+  @keyframes badge-glow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+
+  /* Discount Badge with Inline SVG Lightning */
+  .bf25-discount-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #60c655 0%, #4db348 100%);
+    padding: 7px 12px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(96, 198, 85, 0.45);
+    z-index: 10;
+  }
+
+  .bf25-discount-text {
+    font-weight: 700;
+    font-size: 13px;
+    color: #000;
+    line-height: 1;
+  }
+
+  .bf25-lightning-svg {
+    width: 14px;
+    height: 14px;
+    color: #000;
+    flex-shrink: 0;
+  }
+
+  /* Mobile adjustments for new badge */
+  @media (max-width: 767px) {
+    .bf25-discount-badge {
+      padding: 6px 10px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+
+    .bf25-discount-text {
+      font-size: 11px;
+    }
+
+    .bf25-lightning-svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Mobile adjustments for glowing dots - ONLY ON CARDS */
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+    .dark-mode .section-collections-with-nav__product .product-feature {
+      gap: 8px;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+    .dark-mode .section-collections-with-nav__product .product-feature::before {
+      width: 5px;
+      height: 5px;
+    }
+
+    .bf25-card-feature-text,
+    .dark-mode .section-collections-with-nav__product .product-feature span {
+      font-size: 11px;
+    }
+  }
+
+  /* ===== STOCK INDICATOR RESTYLE ===== */
+  /* Container - inline with reviews */
+  .bf25-card-stock,
+  .bf25-stock-indicator,
+  [class*="stock-indicator"],
+  [class*="inventory-display"] {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  /* Stock dot */
+  .bf25-card-stock .bf25-stock-dot,
+  .bf25-stock-indicator .stock-dot,
+  [class*="stock-indicator"] span:first-child {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60c655;
+    box-shadow: 0 0 6px #60c655;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  /* Stock count text */
+  .bf25-card-stock .bf25-stock-count,
+  .bf25-stock-indicator .stock-count,
+  [class*="stock-indicator"] span:last-child {
+    font-size: 11px;
+    color: #60c655;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+
+  /* Color states - High (green) >50 */
+  [data-stock-level="high"] .bf25-stock-dot,
+  [data-stock-level="high"] .stock-dot {
+    background: #60c655;
+    box-shadow: 0 0 6px #60c655;
+  }
+  [data-stock-level="high"] .bf25-stock-count,
+  [data-stock-level="high"] .stock-count {
+    color: #60c655;
+  }
+
+  /* Color states - Medium (amber) 16-50 */
+  [data-stock-level="medium"] .bf25-stock-dot,
+  [data-stock-level="medium"] .stock-dot {
+    background: #fbbf24;
+    box-shadow: 0 0 6px #fbbf24;
+  }
+  [data-stock-level="medium"] .bf25-stock-count,
+  [data-stock-level="medium"] .stock-count {
+    color: #fbbf24;
+  }
+
+  /* Color states - Low (red) ≤15 */
+  [data-stock-level="low"] .bf25-stock-dot,
+  [data-stock-level="low"] .stock-dot {
+    background: #ef4444;
+    box-shadow: 0 0 6px #ef4444;
+  }
+  [data-stock-level="low"] .bf25-stock-count,
+  [data-stock-level="low"] .stock-count {
+    color: #ef4444;
+  }
+
+  /* ===== OPTIMIZED CARD SPACING ===== */
+
+  /* Reduce internal padding slightly */
+  .dark-mode .section-collections-with-nav__product {
+    padding: 18px !important; /* Reduced from 24px */
+  }
+
+  /* Tighter image container */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    margin-top: 32px !important; /* Reduced from 38px - still clears discount badge */
+    margin-bottom: 8px !important; /* Reduced from 10px */
+  }
+
+  /* Product image - SLIGHTLY LARGER */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 130px !important; /* Increased from ~115-120px */
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Tighter title spacing */
+  .dark-mode .section-collections-with-nav__product .product-title,
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .bf25-card-title {
+    margin-bottom: 2px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    min-height: 38px !important; /* Reduced from 50px */
+  }
+
+  /* Reviews/meta row - compact */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-row {
+    margin: 4px 0 !important; /* Reduced from 6px */
+    gap: 10px !important; /* Slightly tighter */
+  }
+
+  /* Features list - tighter - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
+    margin: 8px 0 !important; /* Reduced from 12px */
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    margin-bottom: 4px !important; /* Reduced from 6px */
+  }
+
+  /* Price row - compact */
+  .bf25-card-price-row,
+  .dark-mode .section-collections-with-nav__product-prices,
+  .dark-mode .section-collections-with-nav__product .price-row {
+    margin-top: 10px !important; /* Reduced from 14px */
+    margin-bottom: 8px !important;
+  }
+
+  /* Price size - slightly smaller to save space */
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current,
+  .dark-mode .section-collections-with-nav__product .product-price {
+    font-size: 26px !important; /* Reduced from 28px */
+    line-height: 1 !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 14px !important; /* Reduced from 18px */
+  }
+
+  /* ===== PREVENT META ROW WRAPPING ===== */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-stock-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap !important; /* CRITICAL - prevent wrapping */
+    overflow: hidden; /* Hide if too wide rather than wrap */
+  }
+
+  /* Divider between reviews and stock */
+  .bf25-meta-divider,
+  .bf25-card-meta-row > .divider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  /* Ensure stock doesn't wrap internally */
+  .bf25-card-stock,
+  [class*="stock-indicator"] {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Responsive Grid */
+  @media (max-width: 1024px) {
+    .dark-mode .products {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .dark-mode .collection-title {
+      font-size: 36px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dark-mode .products {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .dark-mode .collection-title {
+      font-size: 32px;
+    }
+    
+    .dark-mode .section-collections-with-nav__product-price {
+      font-size: 24px;
+    }
+    
+    .filter-pills .pill {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .dark-mode .products {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px;
+      padding: 0 12px;
+    }
+
+    .dark-mode .section-collections-with-nav {
+      padding: 40px 0;
+    }
+
+    .dark-mode .section-collections-with-nav__product {
+      padding: 14px !important; /* Even tighter on mobile */
+    }
+
+    /* Smaller font sizes for 2-column mobile layout */
+    .dark-mode .section-collections-with-nav__product-title {
+      font-size: 14px !important;
+      min-height: 40px !important;
+    }
+
+    .dark-mode .section-collections-with-nav__product-price {
+      font-size: 20px !important;
+    }
+
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li {
+      font-size: 12px !important;
+    }
+
+    .dark-mode .discount_message {
+      font-size: 12px !important;
+      padding: 4px 8px !important;
+    }
+  }
+
+  /* Very small screens - reduce gap further */
+  @media (max-width: 380px) {
+    .dark-mode .products {
+      gap: 8px !important;
+      padding: 0 8px !important;
+    }
+
+    .dark-mode .section-collections-with-nav__product {
+      padding: 12px;
+    }
+  }
+  
+  /* Ensure content stays above background */
+  .dark-mode .section-collections-with-nav__wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========================================
+   FIX: Product Image Glow + Modal Issues
+   ======================================== */
+
+/* Add Green Glow to Product Images */
+.dark-mode .section-collections-with-nav__product-image img {
+    filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.6))
+            drop-shadow(0 0 24px rgba(96, 198, 85, 0.4))
+            drop-shadow(0 0 40px rgba(96, 198, 85, 0.2));
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+  
+  .dark-mode .section-collections-with-nav__product:hover .section-collections-with-nav__product-image img {
+    filter: drop-shadow(0 0 16px rgba(96, 198, 85, 0.8))
+            drop-shadow(0 0 32px rgba(96, 198, 85, 0.6))
+            drop-shadow(0 0 48px rgba(96, 198, 85, 0.4));
+    transform: scale(1.05);
+  }
+  
+  /* Remove Pulse Animation from Discount Badge */
+  .dark-mode .discount_message {
+    animation: none !important;
+  }
+  
+  /* Fix: Remove Contained Green Glow Behind Product (Bad Hover Effect) */
+  .dark-mode .section-collections-with-nav__product::before {
+    display: none !important;
+  }
+  
+  /* Fix: Modal Z-Index - Must Appear Above Everything */
+  .buy-now-popup-overlay,
+  .buy-now-popup {
+    position: fixed !important;
+    z-index: 9999 !important;
+    inset: 0;
+  }
+  
+  .buy-now-popup__wrapper {
+    position: fixed !important;
+    z-index: 10000 !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  /* Prevent Card from Creating Stacking Context */
+  .dark-mode .section-collections-with-nav__product {
+    isolation: auto !important;
+    transform: none;
+  }
+  
+  .dark-mode .section-collections-with-nav__product:hover {
+    transform: translateY(-8px);
+  }
+  
+  /* Fix: Modal Text Colors for White Background */
+  .buy-now-popup__wrapper {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  .buy-now-popup__wrapper h4,
+  .buy-now-popup__wrapper p,
+  .buy-now-popup__wrapper span,
+  .buy-now-popup__wrapper a,
+  .buy-now-popup__wrapper div {
+    color: #000000 !important;
+  }
+  
+  .buy-now-popup__wrapper .modal-price {
+    color: #60c655 !important;
+  }
+  
+  .buy-now-popup__wrapper .modal-compare-price {
+    color: #999999 !important;
+  }
+  
+  /* Prevent Flickering - Ensure Modal Stays Fixed */
+  .buy-now-popup-overlay.active,
+  .buy-now-popup.active {
+    display: block !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Ensure Plus Button Works */
+  .dark-mode .arrow,
+  .dark-mode .js-section-explore__buy-now {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+  }
+
+/* ========================================
+   BF25 MODAL - Black Text on White Background (COMPREHENSIVE)
+   ======================================== */
+
+/* Ensure BF25 modal wrapper has white background */
+[data-section="bf25"].buy-now-popup .buy-now-popup__wrapper,
+aside[data-section="bf25"] .buy-now-popup__wrapper {
+  background: #ffffff !important;
+}
+
+/* All text in BF25 modal should be black by default */
+[data-section="bf25"] .buy-now-popup__wrapper *,
+[data-section="bf25"] .buy-now-popup__wrapper * * {
+  color: #000000 !important;
+}
+
+/* Product Title - Black */
+[data-section="bf25"] .buy-now-popup__wrapper a,
+[data-section="bf25"] .buy-now-popup__content h4,
+[data-section="bf25"] .buy-now-popup__content .text-\[21px\] {
+  color: #000000 !important;
+}
+
+/* Prices - Green */
+[data-section="bf25"] .buy-now-popup__wrapper .modal-price,
+[data-section="bf25"] .buy-now-popup__wrapper .js-variant-price,
+[data-section="bf25"] .buy-now-popup__wrapper .js-variant-price-2,
+[data-section="bf25"] .buy-now-popup__wrapper .text-\[#60c655\],
+[data-section="bf25"] .buy-now-popup__wrapper .text-\[21px\].text-\[#60c655\] {
+  color: #60c655 !important;
+}
+
+/* Compare Prices - Gray strikethrough */
+[data-section="bf25"] .buy-now-popup__wrapper .modal-compare-price,
+[data-section="bf25"] .buy-now-popup__wrapper .js-variant-compare-price,
+[data-section="bf25"] .buy-now-popup__wrapper .js-variant-compare-price-2,
+[data-section="bf25"] .buy-now-popup__wrapper .crossed,
+[data-section="bf25"] .buy-now-popup__wrapper .text-\[#999\] {
+  color: #999999 !important;
+  text-decoration: line-through !important;
+}
+
+/* Discount badge - green background with white/black text */
+[data-section="bf25"] .buy-now-popup__wrapper .discount_message {
+  background: #60c655 !important;
+  color: #000000 !important;
+}
+
+[data-section="bf25"] .buy-now-popup__wrapper .discount_message div {
+  color: #000000 !important;
+}
+
+/* Add to Cart button - green with white text */
+[data-section="bf25"] .buy-now-popup__wrapper .buy-now-popup__atc,
+[data-section="bf25"] .buy-now-popup__wrapper .js-atc-bf {
+  background: #60c655 !important;
+  color: #ffffff !important;
+}
+
+/* Description text - black */
+[data-section="bf25"] .buy-now-popup__description,
+[data-section="bf25"] .buy-now-popup__description * {
+  color: #000000 !important;
+}
+
+/* Quantity section - black text */
+[data-section="bf25"] .buy-now-popup__quantity h4,
+[data-section="bf25"] .buy-now-popup__quantity * {
+  color: #000000 !important;
+}
+
+/* Upsell section - black text */
+[data-section="bf25"] .buy-now-popup__upsell h4,
+[data-section="bf25"] .buy-now-popup__upsell-box *,
+[data-section="bf25"] .buy-now-popup__upsell .text-\[#000\] {
+  color: #000000 !important;
+}
+
+/* Upsell prices - specific colors */
+[data-section="bf25"] .buy-now-popup__upsell-box .font-semibold.mr-\[6px\] {
+  color: #000000 !important;
+}
+
+[data-section="bf25"] .buy-now-popup__upsell-box .line-through {
+  color: #777777 !important;
+}
+
+/* Variant selectors - black text */
+[data-section="bf25"] .variant-option-label,
+[data-section="bf25"] .variant-button {
+  color: #000000 !important;
+}
+
+/* Learn More link - green */
+[data-section="bf25"] .buy-now-popup__expand-desc,
+[data-section="bf25"] .color-titan-green,
+[data-section="bf25"] .color-\[#60c655\] {
+  color: #60c655 !important;
+}
+
+/* Ensure modal is above everything */
+[data-section="bf25"].buy-now-popup,
+aside[data-section="bf25"] {
+  position: fixed !important;
+  z-index: 99999 !important;
+  inset: 0 !important;
+}
+
+[data-section="bf25"] .buy-now-popup__wrapper {
+  position: fixed !important;
+  z-index: 100000 !important;
+  background: #ffffff !important;
+}
+
+/* Footer prices - green and gray */
+[data-section="bf25"] .buy-now-popup__footer .buy-now-popup__price span:first-child,
+[data-section="bf25"] .buy-now-popup__footer .font-bold {
+  color: #60c655 !important;
+}
+
+[data-section="bf25"] .buy-now-popup__footer .crossed {
+  color: #999999 !important;
+}
+
+/* ========================================
+   CRITICAL: Modal Z-Index Fix - Appear Above ALL Content
+   ======================================== */
+
+/* Force modal overlay to top of stacking order */
+.buy-now-popup,
+.buy-now-popup-overlay,
+aside.buy-now-popup[data-section="bf25"] {
+  position: fixed !important;
+  z-index: 999999 !important;
+  inset: 0 !important;
+  isolation: isolate !important;
+}
+
+/* Modal wrapper must be on absolute top */
+.buy-now-popup__wrapper {
+  position: fixed !important;
+  z-index: 1000000 !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  isolation: isolate !important;
+}
+
+/* Prevent any parent from creating competing stacking context */
+.dark-mode .section-collections-with-nav__product,
+.dark-mode .products,
+.dark-mode .section-collections-with-nav__wrapper {
+  isolation: auto !important;
+  z-index: auto !important;
+}
+
+/* Product cards should have low z-index */
+.dark-mode .section-collections-with-nav__product {
+  position: relative;
+  z-index: 1 !important;
+  isolation: auto !important;
+}
+
+/* Ensure no section creates competing stacking context */
+.section-collections-with-nav,
+.section-collections-with-nav__wrapper,
+.products {
+  position: relative;
+  z-index: auto !important;
+  isolation: auto !important;
+}
+
+/* Ensure modal content is above everything */
+.buy-now-popup__wrapper * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Body overflow hidden when modal open */
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 PRODUCT INFO ICON (BF25-INFO-ICON-001)
+   Pulsing info button in top-right corner of product cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Info Icon Container */
+.bf25-product-info-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20; /* Above product image but below modals */
+
+  /* Size */
+  width: 36px;
+  height: 36px;
+
+  /* Center the SVG */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+
+  /* Visual */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+
+  /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Smooth transitions */
+  transition: all 200ms ease;
+
+  /* Pulse animation - Optimized: paused by default for performance */
+  animation: bf25-info-pulse 5s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+/* Play info pulse on hover or when in viewport */
+.bf25-product-card:hover .bf25-product-info-icon,
+.dark-mode .section-collections-with-nav__product:hover .bf25-product-info-icon,
+.bf25-product-card:focus-within .bf25-product-info-icon,
+.bf25-product-info-icon.in-view {
+  animation-play-state: running;
+}
+
+/* Hover State */
+.bf25-product-info-icon:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.4);
+}
+
+/* Active/Click State */
+.bf25-product-info-icon:active {
+  transform: scale(0.95);
+}
+
+/* Focus State (keyboard navigation) */
+.bf25-product-info-icon:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+/* SVG Styling */
+.bf25-product-info-icon svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+  margin-top: 0px;
+  pointer-events: none; /* Let clicks pass through to parent */
+  display: block; /* Fix alignment issues */
+  overflow: visible; /* Ensure text renders properly */
+}
+
+/* SVG Text Vertical Alignment (BF25-INFO-ICON-FIX) */
+.bf25-product-info-icon svg text {
+  dominant-baseline: central; /* Better centering than 'middle' */
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Pulse Animation Keyframes - GPU-accelerated with transform + opacity */
+/* Lighter info pulse animation - 30% less intensive */
+@keyframes bf25-info-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(96, 198, 85, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px 2px rgba(96, 198, 85, 0.35);
+  }
+}
+
+/* Mobile Touch Target Enhancement */
+@media (max-width: 768px) {
+  .bf25-product-info-icon {
+    width: 44px;
+    height: 44px; /* Minimum touch target size */
+  }
+
+  .bf25-product-info-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-product-info-icon {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 QUICK-ADD VARIANT OVERLAY (BF25-QUICK-ADD-001)
+   Card-level variant selection for fast adding
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   Card State Management
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-card-default-state,
+.bf25-card-variant-state {
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.bf25-card-default-state {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bf25-card-variant-state {
+  position: absolute;
+  inset: 0;
+  z-index: 15; /* Above card content, below modal */
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+
+  /* Smooth animation with easing curve */
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* will-change removed for better performance - only use on actively animating elements */
+  /* will-change: opacity, transform; */
+
+  /* Dark glassmorphic background */
+  background: rgba(20, 20, 20, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* Match card border radius */
+  border-radius: inherit;
+
+  /* Green glow border */
+  border: 2px solid rgba(96, 198, 85, 0.3);
+  box-shadow:
+    0 0 20px rgba(96, 198, 85, 0.1),
+    inset 0 0 60px rgba(96, 198, 85, 0.03);
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+}
+
+/* Ensure hidden attribute doesn't block transition */
+.bf25-card-variant-state[hidden] {
+  display: flex !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Show state when active */
+.bf25-card-variant-state:not([hidden]) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Hide default state when variant overlay showing */
+.bf25-product-card:has(.bf25-card-variant-state:not([hidden])) .bf25-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Overlay Header
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-variant-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.bf25-variant-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  color: #fff;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.bf25-variant-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.bf25-variant-close svg {
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Options Container
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-options-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96, 198, 85, 0.3) transparent;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar-thumb {
+  background: rgba(96, 198, 85, 0.3);
+  border-radius: 2px;
+}
+
+/* Variant Option Group */
+.bf25-variant-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bf25-variant-option-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Variant Pills Grid */
+.bf25-variant-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.bf25-variant-pill {
+  min-height: 44px; /* Touch target */
+  padding: 10px 14px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bf25-variant-pill:hover:not(.is-disabled):not(.is-selected) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.bf25-variant-pill.is-selected {
+  background: #60c655;
+  border-color: #60c655;
+  color: #000;
+  font-weight: 600;
+}
+
+.bf25-variant-pill.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Add to Bundle Button
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-add-btn {
+  width: 100%;
+  min-height: 52px;
+
+  background: #60c655;
+  border: none;
+  border-radius: 12px;
+
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Slight shadow for depth */
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+}
+
+.bf25-variant-add-btn:hover:not(:disabled) {
+  background: #52b047;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(96, 198, 85, 0.4);
+}
+
+.bf25-variant-add-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.bf25-variant-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Loading state */
+.bf25-variant-add-btn.is-loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.bf25-variant-add-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+
+  animation: bf25-spin 0.6s linear infinite;
+}
+
+@keyframes bf25-spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Success state */
+.bf25-variant-add-btn.is-success {
+  background: #2ecc71;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mobile Optimizations
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .bf25-card-variant-state {
+    padding: 16px;
+  }
+
+  .bf25-variant-pills {
+    grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
+  }
+
+  .bf25-variant-pill {
+    font-size: 13px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Accessibility
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-card-default-state,
+  .bf25-card-variant-state,
+  .bf25-variant-pill {
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.bf25-variant-pill:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-close:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-add-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Quick-Add Success Animation
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-quick-add-success {
+  animation: bf25-quick-add-pulse 0.6s ease;
+}
+
+@keyframes bf25-quick-add-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(96, 198, 85, 0.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===================================================
+   BF25 CRITICAL LAYOUT FIXES
+   =================================================== */
+
+/* === ISSUE 1 FIX: STOCK INDICATOR POSITION & COLOR === */
+
+/* Reviews row - keep stars and count on same line with stock */
+.bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .product-rating,
+.dark-mode .section-collections-with-nav__product .reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+/* Stars row */
+.bf25-card-stars,
+.dark-mode .section-collections-with-nav__product .star-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* COMMENTED OUT - Conflicting with existing stock system
+.bf25-review-count-row,
+.dark-mode .section-collections-with-nav__product .review-count-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.bf25-review-stock-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.bf25-card-stock {
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  position: static !important;
+}
+
+.bf25-card-stock .bf25-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #60c655;
+  box-shadow: 0 0 6px #60c655;
+  flex-shrink: 0;
+}
+
+.bf25-card-stock .bf25-stock-count {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #60c655 !important;
+}
+*/
+
+/* ===== REVIEWS - MINIMAL GAP BETWEEN STARS AND COUNT ===== */
+
+/* Reviews container - no gap */
+.bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge,
+.dark-mode .section-collections-with-nav__product .product-rating,
+.dark-mode .section-collections-with-nav__product .reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0 !important;
+  margin: 6px 0;
+}
+
+/* Stars wrapper - no bottom margin/padding */
+.bf25-product-rating-display,
+.bf25-rating-stars,
+.bf25-card-stars {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1;
+}
+
+/* Stars themselves */
+.bf25-rating-stars .stars-empty,
+.bf25-rating-stars .stars-filled,
+.dark-mode .section-collections-with-nav__product .jdgm-star,
+.dark-mode .section-collections-with-nav__product .star-rating,
+.dark-mode .section-collections-with-nav__product [class*="stars"] {
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: #60c655;
+  text-shadow:
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 16px rgba(96, 198, 85, 0.4);
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Review count - VERY CLOSE to stars */
+.bf25-rating-count,
+.bf25-review-count,
+.dark-mode .section-collections-with-nav__product .review-count,
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge__text,
+.dark-mode .section-collections-with-nav__product [class*="review-count"] {
+  margin-top: 2px !important;
+  padding-top: 0 !important;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+}
+
+/* STOCK POSITIONING - Try to position next to reviews */
+/* Create flex container for reviews + stock if possible */
+.dark-mode .section-collections-with-nav__product .reviews-stock-wrapper,
+.dark-mode .section-collections-with-nav__product .meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Dynamic Stock Indicator - position inline */
+.bf25-stock-display,
+.stock-indicator,
+.dynamic-stock,
+[class*="stock-number"],
+.dark-mode .section-collections-with-nav__product .stock-wrapper {
+  font-size: 13px;
+  font-weight: 600;
+  /* Try to position inline with reviews */
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center;
+  margin-left: 8px;
+}
+
+/* Add bullet separator before stock if next to reviews */
+.bf25-stock-display::before,
+.stock-indicator::before,
+.dynamic-stock::before {
+  content: '•';
+  color: rgba(255, 255, 255, 0.3);
+  margin-right: 8px;
+  font-size: 10px;
+}
+
+/* Stock color states for EXISTING system */
+.bf25-stock-display.stock-high,
+[data-stock-level="high"] .stock-number,
+.stock-high {
+  color: #60c655 !important;
+}
+
+.bf25-stock-display.stock-medium,
+[data-stock-level="medium"] .stock-number,
+.stock-medium {
+  color: #fbbf24 !important;
+}
+
+.bf25-stock-display.stock-low,
+[data-stock-level="low"] .stock-number,
+.stock-low {
+  color: #ef4444 !important;
+}
+
+/* === ISSUE 2 FIX: PRICE OVERLAPPING BUTTON === */
+
+/* Price + Button Row - SPACE BETWEEN, not centered */
+.bf25-card-price-row,
+.dark-mode .section-collections-with-nav__product .price-row,
+.dark-mode .section-collections-with-nav__product .product-price-wrapper,
+.dark-mode .section-collections-with-nav__product-prices,
+.dark-mode .section-collections-with-nav__product .price-action-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important; /* KEY: pushes price left, button right */
+  gap: 12px !important;
+  margin-top: 12px !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+  position: relative !important;
+}
+
+/* Price group - LEFT aligned */
+.bf25-card-price-group,
+.dark-mode .section-collections-with-nav__product .price-group,
+.dark-mode .section-collections-with-nav__product .prices {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  text-align: left !important;
+}
+
+/* Current price */
+.bf25-card-price-current,
+.dark-mode .section-collections-with-nav__product-price,
+.dark-mode .section-collections-with-nav__product .price-current,
+.dark-mode .section-collections-with-nav__product .product-price {
+  color: #60c655 !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.3) !important;
+  line-height: 1 !important;
+  text-align: left !important;
+}
+
+/* Compare price - sits NEXT to current price, not behind button */
+.bf25-card-price-compare,
+.dark-mode .section-collections-with-nav__product-price-compared,
+.dark-mode .section-collections-with-nav__product .price-compare,
+.dark-mode .section-collections-with-nav__product .compare-price {
+  color: #555 !important;
+  font-size: 14px !important;
+  text-decoration: line-through !important;
+  text-align: left !important;
+}
+
+/* Button stays RIGHT - and NOT absolutely positioned */
+.dark-mode .section-collections-with-nav__product .arrow,
+.dark-mode .bf25-card-add-btn {
+  position: static !important; /* Remove absolute positioning */
+  margin-left: auto !important; /* Push to right */
+  flex-shrink: 0 !important;
+}
+
+/* === PRODUCT IMAGES - MUCH BIGGER (50% LARGER) WITH NATURAL FADING GLOW === */
+
+/* Product Image Container - fixed size, allows overflow */
+.dark-mode .section-collections-with-nav__product-image,
+.dark-mode .bf25-card-image-wrapper {
+  position: relative;
+  height: 180px !important; /* Container height increased for larger images */
+  min-height: 180px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 35px !important;
+  margin-bottom: 12px !important;
+  overflow: visible !important; /* KEY: allow image to overflow */
+}
+
+/* Product Image - MUCH LARGER (50% BIGGER) with NATURAL FADING GLOW */
+.dark-mode .section-collections-with-nav__product-image img,
+.dark-mode .bf25-card-image img {
+  max-height: 200px !important; /* Was ~130px, now 200px = ~50% bigger */
+  max-width: 130% !important; /* Allow more horizontal overflow */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  /* NATURAL FADING GLOW - 4 layers for smooth fade */
+  filter:
+    drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+    drop-shadow(0 0 20px rgba(96, 198, 85, 0.5))
+    drop-shadow(0 0 40px rgba(96, 198, 85, 0.25))
+    drop-shadow(0 0 60px rgba(96, 198, 85, 0.1)) !important;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Hover - slightly enhanced glow */
+.dark-mode .section-collections-with-nav__product:hover .section-collections-with-nav__product-image img {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 10px rgba(96, 198, 85, 1))
+    drop-shadow(0 0 25px rgba(96, 198, 85, 0.6))
+    drop-shadow(0 0 50px rgba(96, 198, 85, 0.3))
+    drop-shadow(0 0 70px rgba(96, 198, 85, 0.15)) !important;
+}
+
+/* ===================================================
+   BF25 CARD RESPONSIVE STYLES
+   =================================================== */
+
+/* ===== TABLET (max-width: 991px) ===== */
+@media (max-width: 991px) {
+  .dark-mode .section-collections-with-nav__product {
+    padding: 16px !important;
+    border-radius: 22px;
+  }
+
+  /* Tablet image container - proportionally sized for 50% bigger images */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 160px !important;
+    min-height: 160px !important;
+  }
+
+  /* Tablet images - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 180px !important; /* Proportional to desktop 200px */
+    max-width: 120% !important;
+  }
+
+  /* Button size */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    font-size: 24px;
+  }
+
+  /* Price */
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 24px !important;
+  }
+}
+
+/* ===== MOBILE (max-width: 767px) ===== */
+@media (max-width: 767px) {
+  /* MOBILE: Proportionally larger images (50% bigger) */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    height: 150px !important;  /* Increased proportionally */
+    min-height: 150px !important;
+    margin-top: 32px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 170px !important; /* Proportionally larger for mobile */
+    max-width: 125% !important;
+    /* Mobile-optimized glow */
+    filter:
+      drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+      drop-shadow(0 0 18px rgba(96, 198, 85, 0.5))
+      drop-shadow(0 0 30px rgba(96, 198, 85, 0.2)) !important;
+  }
+  .dark-mode .section-collections-with-nav__product {
+    padding: 14px !important;
+    border-radius: 20px;
+    /* Slightly reduced double frame for mobile */
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.3),
+      0 0 0 4px rgba(96, 198, 85, 0.08),
+      0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .dark-mode .section-collections-with-nav__product:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.45),
+      0 0 0 4px rgba(96, 198, 85, 0.12),
+      0 0 20px rgba(96, 198, 85, 0.25),
+      0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Selected state - reduced glow for performance */
+  .dark-mode .section-collections-with-nav__product.is-selected,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"] {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 4px rgba(96, 198, 85, 0.15),
+      0 0 30px rgba(96, 198, 85, 0.35),
+      0 10px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+  }
+
+  /* Discount badge */
+  .bf25-discount-badge {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 5px 10px !important;
+    border-radius: 12px;
+    gap: 4px !important;
+  }
+
+  .bf25-discount-text {
+    font-size: 11px !important;
+  }
+
+  .bf25-lightning-svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Image container */
+  .dark-mode .section-collections-with-nav__product-image {
+    margin-top: 30px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Image size - still visible but compact */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 105px !important;
+    /* Reduced glow for mobile performance */
+    filter:
+      drop-shadow(0 0 8px rgba(96, 198, 85, 0.8))
+      drop-shadow(0 0 16px rgba(96, 198, 85, 0.4));
+  }
+
+  /* Title */
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+    min-height: 32px !important;
+  }
+
+  /* ===== CRITICAL: Reviews + Stock row - NEVER WRAP ===== */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-stock-row,
+  .dark-mode .section-collections-with-nav__product .reviews-row {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    margin: 4px 0 !important;
+  }
+
+  /* Smaller stars on mobile */
+  .dark-mode .section-collections-with-nav__product .star-rating {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  /* Review count */
+  .dark-mode .section-collections-with-nav__product .review-count {
+    font-size: 10px;
+  }
+
+  /* Divider */
+  .bf25-meta-divider {
+    height: 12px !important;
+  }
+
+  /* Stock indicator - compact */
+  .bf25-card-stock,
+  [class*="stock-indicator"] {
+    gap: 4px !important;
+  }
+
+  .bf25-stock-dot,
+  [class*="stock-indicator"] .stock-dot,
+  [class*="stock-indicator"] span:first-child {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .bf25-stock-count,
+  [class*="stock-indicator"] .stock-count,
+  [class*="stock-indicator"] span:last-child {
+    font-size: 10px !important;
+  }
+
+  /* Features - compact - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
+    margin: 6px 0 !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    gap: 8px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+  .dark-mode .section-collections-with-nav__product .product-feature::before {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .bf25-card-feature-text,
+  .dark-mode .section-collections-with-nav__product .product-feature span {
+    font-size: 11px !important;
+  }
+
+  /* Price row - compact */
+  .bf25-card-price-row,
+  .dark-mode .section-collections-with-nav__product-prices,
+  .dark-mode .section-collections-with-nav__product .price-row {
+    margin-top: 8px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 22px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 12px !important;
+  }
+
+  /* Button */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 22px !important;
+  }
+
+  /* Info icon - stays in position */
+  .bf25-product-info-icon {
+    top: 10px !important;
+    right: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* ===== SMALL MOBILE (max-width: 374px) ===== */
+@media (max-width: 374px) {
+  /* Small mobile image container - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    height: 140px !important;  /* Increased proportionally */
+    min-height: 140px !important;
+  }
+
+  /* Still zoomed on small screens - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 160px !important; /* Proportionally increased */
+    max-width: 115% !important;
+  }
+  .dark-mode .section-collections-with-nav__product {
+    padding: 12px !important;
+    border-radius: 18px;
+  }
+
+  .bf25-discount-badge {
+    padding: 4px 8px !important;
+    border-radius: 10px;
+  }
+
+  .bf25-discount-text {
+    font-size: 10px !important;
+  }
+
+  .bf25-lightning-svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 90px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    font-size: 13px !important;
+  }
+
+  /* Even tighter meta row */
+  .bf25-card-meta-row {
+    gap: 6px !important;
+  }
+
+  .bf25-stock-count,
+  [class*="stock-indicator"] .stock-count {
+    font-size: 9px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 20px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 11px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    font-size: 20px !important;
+  }
+
+  .bf25-product-info-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .bf25-product-info-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* ===== EXTRA SMALL (max-width: 320px) ===== */
+@media (max-width: 320px) {
+  .dark-mode .section-collections-with-nav__product {
+    padding: 10px !important;
+  }
+
+  /* Hide review count to save space, keep stars */
+  .dark-mode .section-collections-with-nav__product .review-count {
+    display: none;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 18px !important;
+  }
+
+  /* Tiny screens - still maintain zoom effect */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 115px !important; /* Still zoomed even on tiny screens */
+    max-width: 105% !important;
+  }
+}
+
+/* ===================================================
+   BF25 MODAL DESCRIPTION - CLEAN SENTENCE FORMAT
+   =================================================== */
+
+/* Reset any flex/grid layout in modal descriptions */
+.bf25-modal-description,
+.bf25-product-modal .product-description,
+.bf25-card-variant-state .product-description,
+.bf25-modal .description-content,
+[class*="modal"] .metafield-rich_text_field ul,
+[class*="variant-state"] .metafield-rich_text_field ul,
+[class*="modal"] .product-features,
+[class*="modal"] .product-description {
+  /* Reset any 2-column or flex layout */
+  display: block !important;
+  columns: unset !important;
+  grid-template-columns: unset !important;
+}
+
+/* Modal feature/description items - clean single lines */
+.bf25-modal-description li,
+.bf25-modal-description p,
+.bf25-product-modal .product-description li,
+.bf25-product-modal .feature-item,
+.bf25-card-variant-state .description-item,
+[class*="modal"] .metafield-rich_text_field ul li,
+[class*="variant-state"] .metafield-rich_text_field ul li,
+[class*="modal"] .product-features li,
+[class*="modal"] .feature-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  text-align: left !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+}
+
+/* Modal bullet/tick - simple green tick, NO GLOW */
+.bf25-modal-description li::before,
+.bf25-product-modal .product-description li::before,
+[class*="modal"] .metafield-rich_text_field ul li::before,
+[class*="variant-state"] .metafield-rich_text_field ul li::before,
+[class*="modal"] .product-features li::before {
+  content: '✓' !important;
+  color: #60c655 !important;
+  font-weight: 600 !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  /* Remove any glow effects in modal */
+  text-shadow: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  position: static !important;
+  display: inline !important;
+}
+
+/* Modal description text - clean, readable */
+.bf25-modal-description span,
+.bf25-modal-description .feature-text,
+.bf25-product-modal .product-description .feature-text,
+[class*="modal"] .metafield-rich_text_field ul li span,
+[class*="variant-state"] .metafield-rich_text_field ul li span,
+[class*="modal"] .feature-name,
+[class*="modal"] .feature-description {
+  display: inline !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.5 !important;
+}
+
+/* Remove any bold/label styling that created 2-column look */
+.bf25-modal-description .feature-name,
+.bf25-modal-description strong,
+[class*="modal"] .feature-label,
+[class*="modal"] .metafield-rich_text_field ul li strong,
+[class*="variant-state"] .metafield-rich_text_field ul li strong {
+  font-weight: 600 !important;
+  color: #fff !important;
+  display: inline !important;
+  width: auto !important;
+  min-width: unset !important;
+}
+
+/* Ensure colon appears naturally after bold text */
+.bf25-modal-description .feature-name::after,
+[class*="modal"] .metafield-rich_text_field ul li strong:first-child::after {
+  content: ': ';
+}
+
+/* Remove 2-column grid if present */
+[class*="modal"] .features-grid,
+[class*="modal"] .description-grid,
+.bf25-modal .feature-list,
+[class*="variant-state"] .features-grid {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+/* Remove definition list styling if present */
+[class*="modal"] dl,
+[class*="modal"] dt,
+[class*="modal"] dd {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+[class*="modal"] dt {
+  display: inline;
+  font-weight: 600;
+}
+
+[class*="modal"] dt::after {
+  content: ': ';
+}
+
+[class*="modal"] dd {
+  display: inline;
+  margin-left: 0;
+}
+
+/* Mobile modal */
+@media (max-width: 767px) {
+  .bf25-modal-description li,
+  .bf25-product-modal .product-description li,
+  [class*="modal"] .metafield-rich_text_field ul li,
+  [class*="variant-state"] .metafield-rich_text_field ul li,
+  [class*="modal"] .product-features li {
+    margin-bottom: 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ===================================================
+   BF25 INLINE STOCK INDICATOR - NEXT TO REVIEWS
+   =================================================== */
+
+/* Reviews + Stock row container - REFINED WITH DIVIDER */
+.bf25-reviews-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px !important;
+  margin-bottom: 12px !important; /* More space before bullet points */
+  padding-top: 0 !important;
+  flex-wrap: nowrap;
+}
+
+/* Review count */
+.bf25-reviews-stock-row .bf25-rating-count,
+.bf25-reviews-stock-row .bf25-review-count {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Vertical divider */
+.bf25-reviews-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0 2px;
+}
+
+/* Stock placeholder */
+.bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+}
+
+/* Inline stock indicator */
+.bf25-stock-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bf25-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.bf25-stock-number {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+/* Color states (backup if inline styles don't apply) */
+.bf25-stock-inline.stock-high .bf25-stock-dot {
+  background: #60c655;
+  box-shadow: 0 0 6px #60c655;
+}
+.bf25-stock-inline.stock-high .bf25-stock-number {
+  color: #60c655;
+}
+
+.bf25-stock-inline.stock-medium .bf25-stock-dot {
+  background: #fbbf24;
+  box-shadow: 0 0 6px #fbbf24;
+}
+.bf25-stock-inline.stock-medium .bf25-stock-number {
+  color: #fbbf24;
+}
+
+.bf25-stock-inline.stock-low .bf25-stock-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+.bf25-stock-inline.stock-low .bf25-stock-number {
+  color: #ef4444;
+}
+
+/* HIDE old image badge - no longer needed */
+.section-collections-with-nav__product-image .stock-badge-circle {
+  display: none !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    gap: 6px;
+    margin-bottom: 10px !important;
+  }
+
+  .bf25-reviews-stock-row .bf25-rating-count,
+  .bf25-stock-number {
+    font-size: 11px;
+  }
+
+  .bf25-reviews-divider {
+    font-size: 11px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 374px) {
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== MODAL DESCRIPTION - FORCE INLINE SENTENCES ===== */
+
+/* Target the modal/popup description area */
+.bf25-modal-description,
+.bf25-product-modal .product-description,
+.bf25-card-variant-state .product-description,
+.mfp-content .product-description,
+.modal-content .product-description,
+[class*="modal"] .bf25-description,
+[class*="popup"] .product-description {
+  display: block !important;
+}
+
+/* Each feature/benefit row - MUST be single line with tick + inline text */
+.bf25-modal-description > div,
+.bf25-modal-description .feature-row,
+.bf25-modal-description .benefit-item,
+.bf25-product-modal .product-description > div,
+.bf25-card-variant-state .description-item,
+[class*="modal"] .product-description > div,
+[class*="modal"] .feature-item {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  margin-bottom: 16px !important;
+  text-align: left !important;
+}
+
+/* The tick/checkmark */
+.bf25-modal-description > div > span:first-child,
+.bf25-modal-description .feature-row > span:first-child,
+.bf25-modal-description .tick,
+.bf25-modal-description .checkmark,
+[class*="modal"] .product-description .tick {
+  flex-shrink: 0 !important;
+  width: auto !important;
+  min-width: unset !important;
+  color: #60c655 !important;
+  margin-right: 10px !important;
+}
+
+/* Feature name (bold part) - MUST BE INLINE, not block */
+.bf25-modal-description strong,
+.bf25-modal-description b,
+.bf25-modal-description .feature-name,
+.bf25-modal-description > div > span:nth-child(2),
+[class*="modal"] .product-description strong,
+[class*="modal"] .feature-name {
+  display: inline !important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  flex: none !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  white-space: normal !important;
+  margin-right: 0 !important;
+}
+
+/* Description text - MUST FLOW INLINE after the bold text */
+.bf25-modal-description .feature-description,
+.bf25-modal-description > div > span:last-child,
+[class*="modal"] .product-description .feature-text,
+[class*="modal"] .feature-description {
+  display: inline !important;
+  width: auto !important;
+  flex: none !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* If using definition lists (dl, dt, dd) */
+[class*="modal"] dl {
+  display: block !important;
+}
+
+[class*="modal"] dt {
+  display: inline !important;
+  float: none !important;
+  width: auto !important;
+  font-weight: 600 !important;
+}
+
+[class*="modal"] dt::after {
+  content: ' ';
+}
+
+[class*="modal"] dd {
+  display: inline !important;
+  margin-left: 0 !important;
+  margin-inline-start: 0 !important;
+}
+
+/* Remove any grid or table display */
+[class*="modal"] .product-description,
+[class*="modal"] .features-list,
+[class*="modal"] .benefits-list {
+  display: block !important;
+  grid-template-columns: unset !important;
+  columns: unset !important;
+}
+
+/* ===== MOBILE FIXES ===== */
+
+@media (max-width: 767px) {
+
+  /* INFO ICON - CLOSER TO CORNER */
+  .bf25-product-info-icon {
+    top: 6px !important;
+    right: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .bf25-product-info-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* PRODUCT IMAGES - 200% BIGGER (reduced from 300%) */
+  .dark-mode .section-collections-with-nav__product-image {
+    min-height: 150px !important;
+    height: 150px !important;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    overflow: visible !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 160px !important; /* Was ~70-80px, now 160px = 200% bigger */
+    max-width: 130% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Button - FORCE PERFECT CIRCLE */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Price row - more space above, push down to fill space */
+  .dark-mode .section-collections-with-nav__product .price-row,
+  .dark-mode .section-collections-with-nav__product .product-price-wrapper,
+  .bf25-card-price-row {
+    margin-top: 16px !important;
+    padding-top: 8px;
+  }
+
+  /* Features/bullet points - more space below */
+  .dark-mode .section-collections-with-nav__product .product-features,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features {
+    margin-bottom: 12px;
+  }
+
+  /* Reduce gap between title and stars */
+  .dark-mode .section-collections-with-nav__product .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-card-reviews {
+    margin-top: 2px !important;
+  }
+
+  /* Discount badge - slightly smaller on mobile */
+  .bf25-discount-badge {
+    top: 8px !important;
+    left: 8px !important;
+    padding: 5px 10px !important;
+  }
+
+  .bf25-discount-text {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  /* Extra small mobile */
+
+  .bf25-product-info-icon {
+    top: 5px !important;
+    right: 5px !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image {
+    min-height: 130px !important;
+    height: 130px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 140px !important;
+    max-width: 125% !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+  }
+}
+
+/* ===== STOCK - BELOW REVIEWS (SEPARATE ROW) ===== */
+
+/* Stock row - centered below review count */
+.bf25-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
+/* Stock placeholder */
+.bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stock inline - smaller, subtle */
+.bf25-stock-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Stock dot - smaller */
+.bf25-stock-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Stock text - smaller */
+.bf25-stock-number {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* Mobile - even smaller */
+@media (max-width: 767px) {
+  .bf25-stock-row {
+    margin-top: 2px;
+    margin-bottom: 8px;
+  }
+
+  .bf25-stock-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== REVIEWS + STOCK - RESPONSIVE LAYOUT ===== */
+
+/* Desktop: Inline row */
+.bf25-reviews-stock-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+}
+
+/* Divider - visible on desktop */
+.bf25-reviews-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    flex-direction: column;
+    gap: 8px; /* More space between reviews and stock */
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  /* Hide divider on mobile */
+  .bf25-reviews-divider {
+    display: none;
+  }
+
+  /* Review count - add bottom spacing */
+  .bf25-reviews-stock-row .bf25-rating-count {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  /* Stock placeholder - add top padding */
+  .bf25-stock-placeholder {
+    padding-top: 2px;
+  }
+
+  /* Stock row - slightly smaller on mobile */
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== BULLET POINTS - AUTO-SCALE TO PREVENT WRAP ===== */
+
+/* Features container */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  margin: 8px 0;
+}
+
+/* Each feature item - prevent wrap, scale text */
+.dark-mode .section-collections-with-nav__product .product-feature,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature,
+.bf25-card-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Feature text - responsive sizing */
+.dark-mode .section-collections-with-nav__product .product-feature span,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature span,
+.bf25-card-feature-text {
+  font-size: clamp(9px, 2.8vw, 13px); /* Auto-scale: min 9px, prefer 2.8vw, max 13px */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tablet - slightly smaller */
+@media (max-width: 991px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(9px, 2.5vw, 12px);
+  }
+}
+
+/* Mobile - scale based on viewport */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(8px, 3vw, 11px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+
+  /* Dot slightly smaller too */
+  .dark-mode .section-collections-with-nav__product .product-feature::before,
+  .bf25-card-feature::before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Small mobile - even smaller */
+@media (max-width: 374px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(7px, 3.2vw, 10px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 5px;
+  }
+}
+
+/* ===== CARD LAYOUT - PIN PRICE TO BOTTOM ===== */
+
+/* Card container - flex column, full height */
+.dark-mode .section-collections-with-nav__product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Default state wrapper - flex column, grow to fill */
+.bf25-card-default-state {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+/* Top part (image, title, reviews, features) - grows to push price down */
+.bf25-card-default-state .top-part,
+.section-collections-with-nav__product-details .top-part {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Features list - allow to grow/shrink */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Price row - ALWAYS at bottom, no grow */
+.dark-mode .section-collections-with-nav__product .price-row,
+.dark-mode .section-collections-with-nav__product .product-price-wrapper,
+.dark-mode .section-collections-with-nav__product .bf25-card-price-row,
+.section-collections-with-nav__product-prices {
+  margin-top: auto !important; /* Push to bottom */
+  flex-shrink: 0;
+  padding-top: 12px;
+}
+
+/* Compare price - ALWAYS reserve space even if empty */
+.dark-mode .section-collections-with-nav__product .price-compare,
+.dark-mode .section-collections-with-nav__product .compare-price,
+.dark-mode .section-collections-with-nav__product .compare-at-price {
+  min-height: 18px; /* Reserve space even when empty */
+  display: block;
+}
+
+/* If compare price is in a wrapper, ensure wrapper has min-height */
+.dark-mode .section-collections-with-nav__product .price-compare-wrapper {
+  min-height: 18px;
+}
+
+/* Ensure all cards in a row have same height */
+.section-collections-with-nav__products,
+.bf25-products-grid,
+[class*="product-grid"] {
+  display: grid;
+  align-items: stretch; /* All cards same height */
+}
+
+.section-collections-with-nav__products .section-collections-with-nav__product,
+.bf25-products-grid .bf25-product-card {
+  height: 100%;
+}
+
+/* Mobile - same principle */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .price-row,
+  .section-collections-with-nav__product-prices {
+    margin-top: auto !important;
+    padding-top: 10px;
+  }
+
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    min-height: 16px;
+  }
+}
+
+/* ===== STAR RATING - SMOOTH FADING GLOW ===== */
+
+/* Stars container - allow glow to extend */
+.bf25-product-rating-display,
+.bf25-rating-stars,
+.bf25-card-stars {
+  position: relative;
+  display: inline-flex;
+  line-height: 1;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 2px 4px;
+}
+
+/* Empty stars (background) */
+.bf25-rating-stars .stars-empty {
+  color: rgba(96, 198, 85, 0.2);
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+/* Filled stars - smooth spread glow */
+.bf25-rating-stars .stars-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #60c655;
+  letter-spacing: 2px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  /* Smooth, multi-layer glow that fades gradually */
+  text-shadow:
+    0 0 2px rgba(96, 198, 85, 0.9),
+    0 0 6px rgba(96, 198, 85, 0.5),
+    0 0 12px rgba(96, 198, 85, 0.3),
+    0 0 20px rgba(96, 198, 85, 0.15),
+    0 0 30px rgba(96, 198, 85, 0.05);
+}
+
+/* Remove any background or border that might contain the glow */
+.bf25-product-rating-display,
+.bf25-rating-stars {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  overflow: visible !important;
+}
+
+/* Hover - slightly enhanced glow */
+.dark-mode .section-collections-with-nav__product:hover .bf25-rating-stars .stars-filled {
+  text-shadow:
+    0 0 3px rgba(96, 198, 85, 1),
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 15px rgba(96, 198, 85, 0.4),
+    0 0 25px rgba(96, 198, 85, 0.2),
+    0 0 35px rgba(96, 198, 85, 0.08);
+}
+
+/* Mobile - slightly reduced glow for performance */
+@media (max-width: 767px) {
+  .bf25-rating-stars .stars-empty,
+  .bf25-rating-stars .stars-filled {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .bf25-rating-stars .stars-filled {
+    text-shadow:
+      0 0 3px rgba(96, 198, 85, 0.5),
+      0 0 8px rgba(96, 198, 85, 0.3),
+      0 0 14px rgba(96, 198, 85, 0.15);
+  }
+}
+
+/* ===== PARTIAL STAR FILL BASED ON RATING ===== */
+
+/* 5.0 stars = 100% width */
+.bf25-rating-stars[data-rating="5.0"] .stars-filled,
+.bf25-rating-stars[data-rating="5"] .stars-filled {
+  width: 100%;
+}
+
+/* 4.9 stars = 98% width */
+.bf25-rating-stars[data-rating="4.9"] .stars-filled {
+  width: 98%;
+}
+
+/* 4.8 stars = 96% width */
+.bf25-rating-stars[data-rating="4.8"] .stars-filled {
+  width: 96%;
+}
+
+/* 4.7 stars = 94% width */
+.bf25-rating-stars[data-rating="4.7"] .stars-filled {
+  width: 94%;
+}
+
+/* 4.6 stars = 92% width */
+.bf25-rating-stars[data-rating="4.6"] .stars-filled {
+  width: 92%;
+}
+
+/* 4.5 stars = 90% width */
+.bf25-rating-stars[data-rating="4.5"] .stars-filled {
+  width: 90%;
+}
+
+/* 4.4 stars = 88% width */
+.bf25-rating-stars[data-rating="4.4"] .stars-filled {
+  width: 88%;
+}
+
+/* 4.3 stars = 86% width */
+.bf25-rating-stars[data-rating="4.3"] .stars-filled {
+  width: 86%;
+}
+
+/* 4.2 stars = 84% width */
+.bf25-rating-stars[data-rating="4.2"] .stars-filled {
+  width: 84%;
+}
+
+/* 4.1 stars = 82% width */
+.bf25-rating-stars[data-rating="4.1"] .stars-filled {
+  width: 82%;
+}
+
+/* 4.0 stars = 80% width */
+.bf25-rating-stars[data-rating="4.0"] .stars-filled,
+.bf25-rating-stars[data-rating="4"] .stars-filled {
+  width: 80%;
+}
+
+/* 3.9 stars = 78% width */
+.bf25-rating-stars[data-rating="3.9"] .stars-filled {
+  width: 78%;
+}
+
+/* 3.8 stars = 76% width */
+.bf25-rating-stars[data-rating="3.8"] .stars-filled {
+  width: 76%;
+}
+
+/* 3.7 stars = 74% width */
+.bf25-rating-stars[data-rating="3.7"] .stars-filled {
+  width: 74%;
+}
+
+/* 3.6 stars = 72% width */
+.bf25-rating-stars[data-rating="3.6"] .stars-filled {
+  width: 72%;
+}
+
+/* 3.5 stars = 70% width */
+.bf25-rating-stars[data-rating="3.5"] .stars-filled {
+  width: 70%;
+}
+
+/* 3.4 stars = 68% width */
+.bf25-rating-stars[data-rating="3.4"] .stars-filled {
+  width: 68%;
+}
+
+/* 3.3 stars = 66% width */
+.bf25-rating-stars[data-rating="3.3"] .stars-filled {
+  width: 66%;
+}
+
+/* 3.2 stars = 64% width */
+.bf25-rating-stars[data-rating="3.2"] .stars-filled {
+  width: 64%;
+}
+
+/* 3.1 stars = 62% width */
+.bf25-rating-stars[data-rating="3.1"] .stars-filled {
+  width: 62%;
+}
+
+/* 3.0 stars = 60% width */
+.bf25-rating-stars[data-rating="3.0"] .stars-filled,
+.bf25-rating-stars[data-rating="3"] .stars-filled {
+  width: 60%;
+}
+
+/* Fallback for any rating value - use CSS variable if available */
+.bf25-rating-stars[data-rating] .stars-filled {
+  width: var(--star-fill-width, 80%);
+}
+
+/* =============================================
+   POWER PACK COLOR OVERRIDES
+   Gold Theme Customizations for Bestsellers
+   ============================================= */
+
+/* Section background with gold accents */
+.power-pack-section {
+  background: var(--power-pack-bg);
+  position: relative;
+}
+
+.power-pack-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--power-pack-gold),
+    var(--power-pack-gold-light),
+    var(--power-pack-gold),
+    transparent);
+  opacity: 0.8;
+}
+
+/* Card border - gold instead of green */
+.power-pack-section .section-collections-with-nav__product {
+  border-color: var(--power-pack-gold-dark);
+  background: linear-gradient(135deg, #1a1a1a, #141414);
+}
+
+.power-pack-section .section-collections-with-nav__product:hover {
+  border-color: var(--power-pack-gold);
+  box-shadow:
+    0 0 20px var(--power-pack-gold-glow),
+    inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+/* Info icon - gold pulse */
+.power-pack-section .bf25-product-info-icon {
+  background: linear-gradient(135deg, var(--power-pack-gold), var(--power-pack-gold-dark));
+  border-color: var(--power-pack-gold);
+}
+
+/* Price and button colors */
+.power-pack-section .price-primary,
+.power-pack-section .bf25-card-price {
+  color: var(--power-pack-gold-light) !important;
+}
+
+.power-pack-section .bf25-card-add-btn {
+  background: linear-gradient(135deg, var(--power-pack-gold-dark), var(--power-pack-gold));
+  border-color: var(--power-pack-gold);
+}
+
+.power-pack-section .bf25-card-add-btn:hover {
+  background: linear-gradient(135deg, var(--power-pack-gold), var(--power-pack-gold-light));
+  box-shadow: 0 4px 15px var(--power-pack-gold-glow);
+}
+
+/* Stars - gold theme */
+.power-pack-section .bf25-rating-stars .stars-filled {
+  color: var(--power-pack-gold);
+  text-shadow:
+    0 0 2px rgba(212, 175, 55, 0.9),
+    0 0 6px rgba(212, 175, 55, 0.5),
+    0 0 12px rgba(212, 175, 55, 0.3),
+    0 0 20px rgba(212, 175, 55, 0.15),
+    0 0 30px rgba(212, 175, 55, 0.05);
+}
+
+/* Stock indicator - subtle gold */
+.power-pack-section .bf25-stock-indicator {
+  color: var(--power-pack-gold-light);
+  opacity: 0.8;
+}
+
+/* Feature checkmarks - gold */
+.power-pack-section .bf25-card-feature::before {
+  color: var(--power-pack-gold);
+}
+
+/* Title gradient effect on hover */
+.power-pack-section .section-collections-with-nav__product:hover .bf25-card-title {
+  background: linear-gradient(90deg, #fff, var(--power-pack-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* ============================================
+   POWER PACK COVERFLOW CAROUSEL - GOLD THEME
+   All styles scoped to .power-pack-section
+   ============================================ */
+
+/* CSS Custom Properties - Scoped */
+.power-pack-section {
+  --ppc-gold: #D4AF37;
+  --ppc-gold-light: #F4E4BA;
+  --ppc-gold-dark: #B8962E;
+  --ppc-gold-glow: rgba(212, 175, 55, 0.6);
+  --ppc-gold-glow-subtle: rgba(212, 175, 55, 0.25);
+  --ppc-bg-dark: #0a0a0a;
+  --ppc-card-bg: linear-gradient(145deg, #1a1a1a 0%, #111 100%);
+  --ppc-text: #ffffff;
+  --ppc-text-muted: rgba(255, 255, 255, 0.6);
+  --ppc-cyan: #7DD3FC;
+}
+
+/* Hide navigation pills and filter pills */
+.power-pack-section .section-collections-with-nav__navigation {
+  display: none !important;
+}
+
+.power-pack-section .filter-pills-container {
+  display: none !important;
+}
+
+/* Coverflow Stage */
+.power-pack-section .ppc-coverflow-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+  perspective: 1000px;
+  position: relative;
+  overflow: visible;
+  padding: 40px 0;
+}
+
+.power-pack-section .ppc-coverflow-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card Wrapper - 3D Positioning */
+.power-pack-section .ppc-card-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -125px;
+  margin-top: -220px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.power-pack-section .ppc-card-wrapper.active {
+  z-index: 10;
+}
+
+/* Card Container for Flip */
+.power-pack-section .ppc-card-container {
+  width: 250px;
+  height: 440px;
+  perspective: 1000px;
+}
+
+/* Flip Card */
+.power-pack-section .ppc-flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.power-pack-section .ppc-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.power-pack-section .ppc-card-front,
+.power-pack-section .ppc-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Card Front Styling */
+.power-pack-section .ppc-card-front {
+  background: var(--ppc-card-bg);
+  padding: 16px;
+  border: 1px solid var(--ppc-gold-glow-subtle);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.power-pack-section .ppc-card-wrapper.active .ppc-card-front {
+  border-color: var(--ppc-gold);
+  box-shadow: 
+    0 0 0 1px var(--ppc-gold),
+    0 0 60px var(--ppc-gold-glow),
+    0 25px 60px rgba(0,0,0,0.5);
+}
+
+/* Card Back Styling */
+.power-pack-section .ppc-card-back {
+  background: linear-gradient(145deg, #1a1815 0%, #0d0b09 100%);
+  transform: rotateY(180deg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--ppc-gold);
+  box-shadow: 0 0 50px var(--ppc-gold-glow);
+}
+
+/* Card Reflection (Desktop Only) */
+.power-pack-section .ppc-card-reflection {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotateX(180deg) translateY(-10px);
+  opacity: 0.12;
+  mask-image: linear-gradient(transparent 50%, black);
+  -webkit-mask-image: linear-gradient(transparent 50%, black);
+  pointer-events: none;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Navigation Controls */
+.power-pack-section .ppc-nav-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.power-pack-section .ppc-nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--ppc-gold);
+  background: transparent;
+  color: var(--ppc-gold);
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.power-pack-section .ppc-nav-btn:hover {
+  background: var(--ppc-gold);
+  color: #000;
+  transform: scale(1.1);
+}
+
+.power-pack-section .ppc-nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* Dot Navigation */
+.power-pack-section .ppc-dot-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.power-pack-section .ppc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ppc-gold-glow-subtle);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+}
+
+.power-pack-section .ppc-dot.active {
+  width: 28px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--ppc-gold), var(--ppc-gold-dark));
+}
+
+/* ============================================
+   CARD FRONT ELEMENTS
+   ============================================ */
+
+/* Discount Badge - Top Left */
+.power-pack-section .ppc-discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, var(--ppc-gold), var(--ppc-gold-dark));
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--ppc-gold-glow);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.power-pack-section .ppc-discount-badge span {
+  color: #000;
+  font-weight: 800;
+  font-size: 10px;
+}
+
+.power-pack-section .ppc-discount-badge svg {
+  width: 10px;
+  height: 10px;
+  fill: #000;
+}
+
+/* Info Icon - Top Right */
+.power-pack-section .ppc-info-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--ppc-gold-glow-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ppc-gold);
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.power-pack-section .ppc-info-icon:hover {
+  background: var(--ppc-gold);
+  color: #000;
+}
+
+/* Product Image */
+.power-pack-section .ppc-product-image {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px 0 12px;
+  position: relative;
+}
+
+.power-pack-section .ppc-product-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px var(--ppc-gold-glow)) drop-shadow(0 0 40px var(--ppc-gold-glow-subtle));
+  transition: transform 0.4s ease;
+}
+
+.power-pack-section .ppc-card-wrapper.active:hover .ppc-product-image img {
+  transform: scale(1.08);
+}
+
+/* Best Seller Badge */
+.power-pack-section .ppc-bestseller-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  width: 45px;
+  height: 45px;
+}
+
+.power-pack-section .ppc-bestseller-badge img {
+  width: 100%;
+  height: 100%;
+  filter: none;
+}
+
+/* Product Title */
+.power-pack-section .ppc-product-title {
+  color: var(--ppc-text);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Reviews Row with Stock */
+.power-pack-section .ppc-reviews-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.power-pack-section .ppc-stars {
+  color: var(--ppc-gold);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-reviews-count {
+  color: var(--ppc-text-muted);
+  font-size: 10px;
+}
+
+.power-pack-section .ppc-reviews-divider {
+  color: var(--ppc-text-muted);
+  font-size: 10px;
+}
+
+.power-pack-section .ppc-stock-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+}
+
+.power-pack-section .ppc-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pp-stock-pulse 2s infinite;
+}
+
+.power-pack-section .ppc-stock-text {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+@keyframes pp-stock-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Bullet Points - Centered Block */
+.power-pack-section .ppc-bullet-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 auto;
+  padding: 0;
+}
+
+.power-pack-section .ppc-bullet-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.power-pack-section .ppc-bullet-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+}
+
+.power-pack-section .ppc-bullet-icon {
+  color: var(--ppc-gold);
+  font-size: 11px;
+  text-shadow: 0 0 8px var(--ppc-gold-glow), 0 0 15px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Price Section */
+.power-pack-section .ppc-price-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.power-pack-section .ppc-price-current {
+  color: var(--ppc-gold);
+  font-size: 26px;
+  font-weight: 800;
+  text-shadow: 0 0 15px var(--ppc-gold-glow-subtle);
+}
+
+.power-pack-section .ppc-price-compare {
+  color: #555;
+  font-size: 13px;
+  text-decoration: line-through;
+}
+
+/* Add Packs CTA Button */
+.power-pack-section .ppc-flip-cta {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--ppc-gold), var(--ppc-gold-dark));
+  border: none;
+  border-radius: 22px;
+  padding: 11px 18px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--ppc-gold-glow);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.power-pack-section .ppc-flip-cta:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 30px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-flip-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   CARD BACK ELEMENTS
+   ============================================ */
+
+/* Back Header */
+.power-pack-section .ppc-back-header {
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ppc-gold-glow-subtle);
+  margin-bottom: 10px;
+}
+
+.power-pack-section .ppc-back-header img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.power-pack-section .ppc-back-header h3 {
+  color: var(--ppc-gold);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.power-pack-section .ppc-back-header p {
+  color: var(--ppc-text-muted);
+  font-size: 10px;
+  margin: 0;
+}
+
+/* Variant Dropdowns Row - No Labels */
+.power-pack-section .ppc-variant-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.power-pack-section .ppc-variant-dropdown {
+  flex: 1;
+  padding: 9px 28px 9px 12px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--ppc-gold-glow-subtle);
+  border-radius: 10px;
+  color: var(--ppc-text);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23D4AF37' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.3s ease;
+}
+
+.power-pack-section .ppc-variant-dropdown:focus {
+  border-color: var(--ppc-gold);
+  outline: none;
+}
+
+.power-pack-section .ppc-variant-dropdown:hover {
+  border-color: var(--ppc-gold);
+}
+
+/* Pack Title */
+.power-pack-section .ppc-pack-title {
+  color: var(--ppc-gold);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  margin: 6px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Pack Grid - 2x2 */
+.power-pack-section .ppc-pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  flex: 1;
+}
+
+.power-pack-section .ppc-pack-btn {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid var(--ppc-gold-glow-subtle);
+  border-radius: 10px;
+  padding: 10px 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.power-pack-section .ppc-pack-btn:hover,
+.power-pack-section .ppc-pack-btn.selected {
+  border-color: var(--ppc-gold);
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-1px);
+}
+
+.power-pack-section .ppc-pack-btn.popular {
+  border-color: var(--ppc-gold);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+/* BEST Badge - No Emoji */
+.power-pack-section .ppc-pack-btn.popular::before {
+  content: 'BEST';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--ppc-gold), var(--ppc-gold-dark));
+  color: #000;
+  font-size: 7px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.power-pack-section .ppc-pack-qty {
+  display: block;
+  color: var(--ppc-text);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.power-pack-section .ppc-pack-discount {
+  display: block;
+  color: var(--ppc-gold);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.power-pack-section .ppc-pack-gifts {
+  display: block;
+  color: var(--ppc-cyan);
+  font-size: 9px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+/* Add to Bundle Button */
+.power-pack-section .ppc-add-to-bundle {
+  margin-top: 10px;
+  background: linear-gradient(135deg, var(--ppc-gold), var(--ppc-gold-dark));
+  border: none;
+  border-radius: 20px;
+  padding: 12px 16px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.power-pack-section .ppc-add-to-bundle:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 25px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-add-to-bundle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Back Link */
+.power-pack-section .ppc-back-link {
+  text-align: center;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.power-pack-section .ppc-back-link button {
+  background: transparent;
+  border: none;
+  color: var(--ppc-text-muted);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 4px 10px;
+  transition: color 0.3s ease;
+}
+
+.power-pack-section .ppc-back-link button:hover {
+  color: var(--ppc-gold);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+/* Tablet and below */
+@media (max-width: 991px) {
+  .power-pack-section .ppc-coverflow-stage {
+    min-height: 480px;
+    padding: 30px 0;
+  }
+  
+  .power-pack-section .ppc-card-container {
+    width: 230px;
+    height: 420px;
+  }
+  
+  .power-pack-section .ppc-card-wrapper {
+    margin-left: -115px;
+    margin-top: -210px;
+  }
+  
+  .power-pack-section .ppc-card-reflection {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .power-pack-section .ppc-coverflow-stage {
+    min-height: 440px;
+    padding: 25px 0;
+  }
+  
+  .power-pack-section .ppc-card-container {
+    width: 190px;
+    height: 370px;
+  }
+  
+  .power-pack-section .ppc-card-wrapper {
+    margin-left: -95px;
+    margin-top: -185px;
+  }
+  
+  /* Card Front Mobile */
+  .power-pack-section .ppc-card-front {
+    padding: 12px;
+  }
+  
+  .power-pack-section .ppc-discount-badge {
+    top: 8px;
+    left: 8px;
+    padding: 4px 7px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .ppc-discount-badge span {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .ppc-info-icon {
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  .power-pack-section .ppc-product-image {
+    height: 85px;
+    margin: 22px 0 8px;
+  }
+  
+  .power-pack-section .ppc-bestseller-badge {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .power-pack-section .ppc-product-title {
+    font-size: 13px;
+  }
+  
+  .power-pack-section .ppc-reviews-row {
+    margin-bottom: 6px;
+    gap: 5px;
+  }
+  
+  .power-pack-section .ppc-stars {
+    font-size: 10px;
+  }
+  
+  .power-pack-section .ppc-reviews-count,
+  .power-pack-section .ppc-reviews-divider,
+  .power-pack-section .ppc-stock-text {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .ppc-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .power-pack-section .ppc-bullet-item {
+    font-size: 9px;
+    margin-bottom: 2px;
+    gap: 5px;
+  }
+  
+  .power-pack-section .ppc-bullet-icon {
+    font-size: 9px;
+  }
+  
+  .power-pack-section .ppc-price-section {
+    margin: 6px 0;
+  }
+  
+  .power-pack-section .ppc-price-current {
+    font-size: 20px;
+  }
+  
+  .power-pack-section .ppc-price-compare {
+    font-size: 11px;
+  }
+  
+  .power-pack-section .ppc-flip-cta {
+    padding: 9px 14px;
+    font-size: 10px;
+    border-radius: 18px;
+  }
+  
+  /* Card Back Mobile */
+  .power-pack-section .ppc-card-back {
+    padding: 10px;
+  }
+  
+  .power-pack-section .ppc-back-header {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .power-pack-section .ppc-back-header img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .power-pack-section .ppc-back-header h3 {
+    font-size: 11px;
+  }
+  
+  .power-pack-section .ppc-back-header p {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .ppc-variant-row {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .power-pack-section .ppc-variant-dropdown {
+    padding: 7px 24px 7px 8px;
+    font-size: 10px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .ppc-pack-title {
+    font-size: 8px;
+    margin: 4px 0 6px;
+  }
+  
+  .power-pack-section .ppc-pack-grid {
+    gap: 5px;
+  }
+  
+  .power-pack-section .ppc-pack-btn {
+    padding: 8px 4px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .ppc-pack-btn.popular::before {
+    font-size: 6px;
+    padding: 2px 5px;
+    top: -5px;
+  }
+  
+  .power-pack-section .ppc-pack-qty {
+    font-size: 14px;
+  }
+  
+  .power-pack-section .ppc-pack-discount {
+    font-size: 9px;
+  }
+  
+  .power-pack-section .ppc-pack-gifts {
+    font-size: 7px;
+  }
+  
+  .power-pack-section .ppc-add-to-bundle {
+    margin-top: 8px;
+    padding: 10px 12px;
+    font-size: 10px;
+    border-radius: 16px;
+  }
+  
+  .power-pack-section .ppc-back-link button {
+    font-size: 8px;
+  }
+  
+  /* Navigation Mobile - WCAG Touch Targets */
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 12px;
+    gap: 14px;
+  }
+  
+  .power-pack-section .ppc-nav-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  .power-pack-section .ppc-dot-nav {
+    margin-top: 8px;
+    gap: 6px;
+  }
+  
+  .power-pack-section .ppc-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .power-pack-section .ppc-dot.active {
+    width: 22px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 374px) {
+  .power-pack-section .ppc-card-container {
+    width: 170px;
+    height: 350px;
+  }
+  
+  .power-pack-section .ppc-card-wrapper {
+    margin-left: -85px;
+    margin-top: -175px;
+  }
+  
+  .power-pack-section .ppc-product-image {
+    height: 70px;
+  }
+  
+  .power-pack-section .ppc-product-title {
+    font-size: 12px;
+  }
+  
+  .power-pack-section .ppc-price-current {
+    font-size: 18px;
+  }
+}
+
+/* HIDE OLD PRODUCT GRID - Show only coverflow */
+.power-pack-section .section-collections-with-nav__wrapper {
+  display: none !important;
+}
+
+/* Fix: Center section header */
+.power-pack-section .ppc-section-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.power-pack-section .ppc-title {
+  color: var(--ppc-gold);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-subtitle {
+  color: var(--ppc-text);
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Fix: Center back card header image */
+.power-pack-section .ppc-back-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.power-pack-section .ppc-back-header img {
+  margin: 0 auto 8px;
+}
+
+/* Fix: Style ticks metafield output */
+.power-pack-section .ppc-bullet-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.power-pack-section .ppc-bullet-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+}
+
+.power-pack-section .ppc-bullet-points li::before {
+  content: '⚡';
+  color: var(--ppc-gold);
+  text-shadow: 0 0 8px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Fix: Center section header */
+.power-pack-section .ppc-section-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.power-pack-section .ppc-title {
+  color: var(--ppc-gold);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-subtitle {
+  color: var(--ppc-text);
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Fix: Center back card header image */
+.power-pack-section .ppc-back-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.power-pack-section .ppc-back-header img {
+  margin: 0 auto 8px;
+}
+
+/* Fix: Style ticks metafield output */
+.power-pack-section .ppc-bullet-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.power-pack-section .ppc-bullet-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+}
+
+.power-pack-section .ppc-bullet-points li::before {
+  content: '⚡';
+  color: var(--ppc-gold);
+  text-shadow: 0 0 8px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Fix: Hide variant row when not needed */
+.power-pack-section .ppc-variant-row:empty {
+  display: none;
+}

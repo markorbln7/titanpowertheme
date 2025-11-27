@@ -4155,3 +4155,32 @@ body.modal-open {
 .power-pack-section .ppc-variant-row:empty {
   display: none;
 }
+
+/* Fix: Style ticks metafield bullet output */
+.power-pack-section .ppc-bullet-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.power-pack-section .ppc-bullet-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+  line-height: 1.3;
+}
+
+.power-pack-section .ppc-bullet-points li::before {
+  content: "⚡";
+  color: var(--ppc-gold);
+  text-shadow: 0 0 8px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Fix: Hide empty variant row */
+.power-pack-section .ppc-variant-row:empty {
+  display: none;
+}

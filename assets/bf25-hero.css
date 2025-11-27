@@ -3666,3 +3666,90 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
 }
 
 /* END COMPREHENSIVE FIX */
+
+/* ---------------------------------------------------------------------
+   FINAL POLISH FIXES - BF25 Hero Split
+   --------------------------------------------------------------------- */
+
+/* FIX 1: Social Items CLOSER to Battery Pill (25px gap) */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    gap: 25px !important; /* Reduced from 35px */
+  }
+}
+
+/* FIX 2: Logo MUCH BIGGER (500px+) and Shifted Left */
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 500px !important; /* Increased from 380px */
+  width: 100% !important;
+  height: auto !important;
+  margin-left: -20px !important; /* Shift left for better balance */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 320px !important; /* Proportionally bigger on mobile too */
+    margin-left: 0 !important;
+  }
+}
+
+/* FIX 3: 'Exist.' Energy Animation - WORKING VERSION */
+@keyframes bf25-energy-flow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.bf25-hero-split .bf25-energy-text {
+  background: linear-gradient(
+    90deg,
+    #60c655 0%,
+    #60c655 25%,
+    rgba(150, 255, 130, 1) 45%,
+    rgba(200, 255, 180, 1) 50%,
+    rgba(150, 255, 130, 1) 55%,
+    #60c655 75%,
+    #60c655 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* FIX 4: Slider Header - More Minimal Subheader */
+.bf25-hero .bf25-hero__subheading {
+  font-size: 13px !important; /* Even smaller */
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: rgba(255, 255, 255, 0.3) !important; /* More subtle */
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important; /* All caps for minimal tech look */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero .bf25-hero__subheading {
+    font-size: 11px !important;
+  }
+}
+
+/* FIX 5: Sticky Cart - Hidden Until Scrolled Past Interactive Section */
+.bf25-sticky-cart {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(100%) !important;
+  transition: all 0.3s ease-out !important;
+}
+
+body.show-sticky-cart .bf25-sticky-cart {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+/* END FINAL POLISH FIXES */

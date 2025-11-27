@@ -3193,7 +3193,7 @@ body.modal-open {
   align-items: center;
 }
 
-/* Card Wrapper - 3D Positioning */
+/* Card Wrapper - Handles Coverflow Transforms Only */
 .power-pack-section .ppc-card-wrapper {
   position: absolute;
   left: 50%;
@@ -3201,8 +3201,12 @@ body.modal-open {
   transform-origin: center center;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Specify transition properties for stability */
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s ease,
+              filter 0.5s ease;
   z-index: 1;
+  /* No width/height/margins here - container handles sizing */
 }
 
 .power-pack-section .ppc-card-wrapper.active {
@@ -3214,13 +3218,14 @@ body.modal-open {
   /* Card stays in place when flipped */
 }
 
-/* Card Container for Flip */
+/* Card Container - Handles Sizing and Centering */
 .power-pack-section .ppc-card-container {
   width: 280px;
   height: 520px;
-  perspective: 1000px;
-  margin-left: -140px;
-  margin-top: -260px;
+  /* Center via transform instead of margins - keeps everything in transform stack */
+  transform: translate(-50%, -50%);
+  position: relative;
+  /* Remove nested perspective - stage provides it */
 }
 
 /* Flip Card */
@@ -4455,6 +4460,202 @@ body.modal-open {
 .power-pack-section .ppc-variant-row select {
   flex: 1 1 50%;
   max-width: calc(50% - 5px);
+}
+
+/* ============================================
+   POWER PACK ENHANCEMENTS - BF25
+   ============================================ */
+
+/* --- Issue 2: Header Overlap Fix --- */
+.power-pack-section .ppc-coverflow-stage {
+  min-height: 650px;
+  padding: 80px 0 100px;
+  margin-top: 30px;
+}
+
+/* --- Issue 9: Nav Arrow Placement --- */
+.power-pack-section .ppc-nav-controls {
+  margin-top: 20px;
+}
+
+/* --- Issue 10: Nav Arrow Centering --- */
+.power-pack-section .ppc-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.power-pack-section .ppc-nav-btn span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* --- Issues 6, 11: Stock Styling --- */
+.power-pack-section .ppc-stock-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.power-pack-section .ppc-stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: ppc-stock-pulse 2s infinite;
+}
+
+.power-pack-section .ppc-stock-high { color: #22c55e; }
+.power-pack-section .ppc-stock-high .ppc-stock-dot { background: #22c55e; }
+
+.power-pack-section .ppc-stock-medium { color: #f59e0b; }
+.power-pack-section .ppc-stock-medium .ppc-stock-dot { background: #f59e0b; }
+
+.power-pack-section .ppc-stock-low { color: #ef4444; }
+.power-pack-section .ppc-stock-low .ppc-stock-dot { background: #ef4444; }
+
+@keyframes ppc-stock-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* --- Issue 12: Info Icon Styling --- */
+.power-pack-section .ppc-info-icon,
+.power-pack-section .bf25-product-info-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid var(--ppc-gold, #D4AF37);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.3s ease;
+  /* Prevent wobble */
+  transform: translateZ(1px);
+  will-change: transform;
+}
+
+.power-pack-section .ppc-info-icon:hover,
+.power-pack-section .bf25-product-info-icon:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateZ(1px) scale(1.05);
+}
+
+.power-pack-section .ppc-info-icon svg circle,
+.power-pack-section .bf25-product-info-icon svg circle {
+  stroke: var(--ppc-gold, #D4AF37) !important;
+}
+
+.power-pack-section .ppc-info-icon svg text,
+.power-pack-section .bf25-product-info-icon svg text {
+  fill: var(--ppc-gold, #D4AF37) !important;
+}
+
+/* Pulse on active card */
+.power-pack-section .ppc-card-wrapper.active .ppc-info-icon,
+.power-pack-section .ppc-card-wrapper.active .bf25-product-info-icon {
+  animation: ppc-info-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes ppc-info-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+}
+
+/* --- Issue 13: Product Image Size --- */
+.power-pack-section .ppc-product-image {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.power-pack-section .ppc-product-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* --- Issues 7, 8: Variant Dropdown Styling --- */
+.power-pack-section .ppc-variant-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.power-pack-section .ppc-dropdown-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.power-pack-section .ppc-dropdown-wrapper::after {
+  content: '▼';
+  font-size: 10px;
+  color: var(--ppc-gold, #D4AF37);
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.power-pack-section .ppc-variant-dropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--ppc-gold, #D4AF37);
+  border: 1px solid var(--ppc-gold, #D4AF37);
+  border-radius: 8px;
+  padding: 10px 30px 10px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.power-pack-section .ppc-variant-dropdown:hover,
+.power-pack-section .ppc-variant-dropdown:focus {
+  background: rgba(212, 175, 55, 0.1);
+  outline: none;
+}
+
+.power-pack-section .ppc-variant-dropdown option {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* --- Issue 16: Pack Button Selection --- */
+.power-pack-section .ppc-pack-btn {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.power-pack-section .ppc-pack-btn.selected {
+  background: linear-gradient(135deg, var(--ppc-gold, #D4AF37), #B8960C);
+  border-color: var(--ppc-gold, #D4AF37);
+  color: #000;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  transform: scale(1.03);
+}
+
+.power-pack-section .ppc-pack-btn.selected .ppc-pack-qty,
+.power-pack-section .ppc-pack-btn.selected .ppc-pack-discount,
+.power-pack-section .ppc-pack-btn.selected .ppc-pack-gifts {
+  color: #000;
 }
 
 /* END VARIANT DROPDOWN PREMIUM STYLING */

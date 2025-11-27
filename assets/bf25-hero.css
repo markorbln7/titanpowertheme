@@ -4562,3 +4562,62 @@ body.show-sticky-cart .bf25-sticky-cart {
     left: 2% !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 POLISH - Cable, Transparency, Header Size, Slider Box
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Cable - 10px more left */
+.bf25-hero-split .bf25-floating-cable {
+  left: calc(3% - 10px) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: calc(2% - 5px) !important;
+  }
+}
+
+/* Both products - 50% transparent */
+.bf25-hero-split .bf25-floating-product {
+  opacity: 0.5 !important;
+}
+
+/* ---------------------------------------------------------------------
+   Slider Section Header - 30% Bigger
+   --------------------------------------------------------------------- */
+
+.bf25-hero__heading {
+  font-size: 42px !important; /* ~30% bigger than ~32px */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__heading {
+    font-size: 28px !important; /* Fits on one line */
+  }
+}
+
+@media (max-width: 375px) {
+  .bf25-hero__heading {
+    font-size: 24px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Slider Box - Smaller (SAFE: padding only, no height override)
+   --------------------------------------------------------------------- */
+
+.bf25-hero__card {
+  padding: 24px 20px !important; /* Reduced from larger padding */
+}
+
+.bf25-hero__card p,
+.bf25-hero__card .bf25-slide-text {
+  margin: 8px 0 0 0 !important; /* Tighter margins */
+}
+
+/* Arrow spacing */
+.bf25-hero__card svg,
+.bf25-hero__card .arrow {
+  margin-bottom: 4px !important;
+}

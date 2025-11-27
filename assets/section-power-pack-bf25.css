@@ -4188,3 +4188,120 @@ body.modal-open {
 .power-pack-section .ppc-variant-row:empty {
   display: none;
 }
+
+
+/* ============================================
+   POWER PACK INTEGRATION FIXES
+   ============================================ */
+
+/* FIX 1: Increase stage height to prevent card/title overlap */
+.power-pack-section .ppc-coverflow-stage {
+  min-height: 600px !important;
+  padding: 60px 0 80px !important;
+}
+
+/* Adjust mobile stage height */
+@media (max-width: 767px) {
+  .power-pack-section .ppc-coverflow-stage {
+    min-height: 500px !important;
+    padding: 40px 0 60px !important;
+  }
+}
+
+/* FIX 2: Variant dropdowns - ensure 50% width each */
+.power-pack-section .ppc-variant-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.power-pack-section .ppc-variant-dropdown {
+  flex: 1;
+  width: calc(50% - 4px);
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--ppc-gold-glow-subtle);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.power-pack-section .ppc-variant-dropdown:hover {
+  border-color: var(--ppc-gold);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.power-pack-section .ppc-variant-dropdown:focus {
+  outline: none;
+  border-color: var(--ppc-gold);
+  box-shadow: 0 0 0 2px var(--ppc-gold-glow-subtle);
+}
+
+/* FIX 3: Ensure arrows don't overlap cards */
+.power-pack-section .ppc-nav-arrow {
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+}
+
+.power-pack-section .ppc-nav-arrow.prev {
+  left: 20px;
+}
+
+.power-pack-section .ppc-nav-arrow.next {
+  right: 20px;
+}
+
+@media (max-width: 767px) {
+  .power-pack-section .ppc-nav-arrow.prev {
+    left: 10px;
+  }
+  
+  .power-pack-section .ppc-nav-arrow.next {
+    right: 10px;
+  }
+}
+
+/* FIX 4: Stock dot styling to match Bundle Builder */
+.power-pack-section .ppc-stock-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-right: 4px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+/* FIX 5: Ensure info icon is clickable and visible */
+.power-pack-section .bf25-product-info-icon {
+  position: relative;
+  z-index: 15;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.power-pack-section .bf25-product-info-icon:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* FIX 6: Card position adjustments for better centering */
+.power-pack-section .ppc-card-wrapper {
+  margin-top: -240px !important; /* Slight adjustment up */
+}
+
+@media (max-width: 767px) {
+  .power-pack-section .ppc-card-wrapper {
+    margin-top: -200px !important;
+  }
+}
+
+/* END POWER PACK INTEGRATION FIXES */

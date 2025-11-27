@@ -134,17 +134,6 @@
         "section_eyebrow": ""
       }
     },
-    "section_mystery_box_JT4Pf3": {
-      "type": "section-mystery-box",
-      "name": "Mystery Box",
-      "settings": {
-        "master_product": "mistery-box-1",
-        "title": "Tech Essentials Box",
-        "subtitle": "Includes 1 Random Item or Bundle per Box",
-        "note": "Note: Colors are random and bundles may ship separately",
-        "image_desktop": "shopify://shop_images/Mystery_box.jpg"
-      }
-    },
     "bf_top_bar_YUNa4V": {
       "type": "bf-top-bar",
       "custom_css": [
@@ -312,6 +301,36 @@
         "avg_price_retail": 40,
         "avg_price_shopify": 20,
         "enable_section": true
+      }
+    },
+    "section_mystery_box_JT4Pf3": {
+      "type": "section-mystery-box",
+      "blocks": {
+        "hotspot_V3CV7B": {
+          "type": "hotspot",
+          "settings": {
+            "eyebrow": "5% change to win",
+            "hotspot_title": "Titan Smart Buds",
+            "product": "titan-buds-pro",
+            "position_desktop_top": 27,
+            "position_desktop_left": 9,
+            "position_mobile_top": 50,
+            "position_mobile_left": 52,
+            "line_width_desktop": "",
+            "line_width_mobile": "0"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_V3CV7B"
+      ],
+      "name": "Mystery Box",
+      "settings": {
+        "master_product": "mistery-box-1",
+        "title": "Tech Essentials Box",
+        "subtitle": "Includes 1 Random Item or Bundle per Box",
+        "note": "Note: Colors are random and bundles may ship separately",
+        "image_desktop": "shopify://shop_images/Mystery_box.jpg"
       }
     },
     "section_bundle_builder_bf25_eMVmtq": {

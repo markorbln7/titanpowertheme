@@ -93,3 +93,298 @@ document.addEventListener('DOMContentLoaded', function () {
     section: bundleSection
   });
 });
+
+/* ============================================
+   POWER PACK COVERFLOW ENGINE
+   Prefix: ppc- (avoids conflict with Power Pairs pp-)
+   ============================================ */
+
+(function() {
+  'use strict';
+
+  const section = document.querySelector('.power-pack-section');
+  if (!section) return;
+
+  const track = section.querySelector('.ppc-coverflow-track');
+  if (!track) return;
+
+  const CONFIG = {
+    translateX: 170,
+    translateZ: 100,
+    rotateY: -50,
+    scaleActive: 1.1,
+    scaleInactive: 0.8,
+    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+  };
+
+  let state = {
+    activeIndex: 2,
+    totalCards: 0,
+    isAnimating: false,
+    isDragging: false,
+    startX: 0,
+    currentX: 0
+  };
+
+  const cards = section.querySelectorAll('.ppc-card-wrapper');
+  const dots = section.querySelectorAll('.ppc-dot');
+  const prevBtn = section.querySelector('.js-ppc-nav-prev');
+  const nextBtn = section.querySelector('.js-ppc-nav-next');
+
+  if (cards.length === 0) return;
+  state.totalCards = cards.length;
+
+  function updatePositions() {
+    cards.forEach((card, index) => {
+      const diff = index - state.activeIndex;
+      const isActive = index === state.activeIndex;
+
+      const translateX = diff * CONFIG.translateX;
+      const translateZ = isActive ? CONFIG.translateZ : -CONFIG.translateZ;
+      const rotateY = diff * CONFIG.rotateY;
+      const scale = isActive ? CONFIG.scaleActive : CONFIG.scaleInactive;
+
+      let opacity = Math.abs(diff) > 2 ? 0 : 1 - (Math.abs(diff) * 0.2);
+      let brightness = isActive ? 1 : 0.7;
+      const zIndex = isActive ? 10 : 10 - Math.abs(diff);
+
+      card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.filter = `brightness(${brightness})`;
+      card.style.zIndex = zIndex;
+      card.style.transition = CONFIG.transition;
+
+      card.classList.toggle('active', isActive);
+
+      if (!isActive) {
+        const flipCard = card.querySelector('.ppc-flip-card');
+        if (flipCard) flipCard.classList.remove('flipped');
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === state.activeIndex);
+    });
+  }
+
+  function goTo(index) {
+    if (state.isAnimating) return;
+    if (index < 0 || index >= state.totalCards) return;
+
+    state.isAnimating = true;
+    state.activeIndex = index;
+    updatePositions();
+
+    setTimeout(() => { state.isAnimating = false; }, 500);
+  }
+
+  function navigate(direction) {
+    goTo(state.activeIndex + direction);
+  }
+
+  // Arrow navigation
+  if (prevBtn) prevBtn.addEventListener('click', () => navigate(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => navigate(1));
+
+  // Dot navigation
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goTo(index));
+  });
+
+  // Click adjacent cards to navigate
+  cards.forEach((card, index) => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.js-ppc-flip-trigger') ||
+          e.target.closest('.js-ppc-info-modal') ||
+          e.target.closest('.ppc-card-back')) {
+        return;
+      }
+      if (index !== state.activeIndex) goTo(index);
+    });
+  });
+
+  // Touch support
+  track.addEventListener('touchstart', (e) => {
+    state.isDragging = true;
+    state.startX = e.touches[0].clientX;
+  }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    if (state.isDragging) state.currentX = e.touches[0].clientX;
+  }, { passive: true });
+
+  track.addEventListener('touchend', () => {
+    if (!state.isDragging) return;
+    state.isDragging = false;
+    const diff = state.startX - state.currentX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  });
+
+  // Mouse drag
+  track.addEventListener('mousedown', (e) => {
+    state.isDragging = true;
+    state.startX = e.clientX;
+    track.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (state.isDragging) state.currentX = e.clientX;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!state.isDragging) return;
+    state.isDragging = false;
+    track.style.cursor = 'grab';
+    const diff = state.startX - state.currentX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  });
+
+  // Keyboard
+  section.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+
+  // Initialize positions
+  updatePositions();
+  track.style.cursor = 'grab';
+
+  /* ============================================
+     CARD FLIP & PACK SELECTION
+     ============================================ */
+
+  const selectedPacks = new Map();
+
+  // Flip triggers (ADD PACKS button)
+  section.querySelectorAll('.js-ppc-flip-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.ppc-card-wrapper');
+      if (!card.classList.contains('active')) return;
+      const flipCard = card.querySelector('.ppc-flip-card');
+      if (flipCard) flipCard.classList.add('flipped');
+    });
+  });
+
+  // Back buttons
+  section.querySelectorAll('.js-ppc-flip-back').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const flipCard = btn.closest('.ppc-flip-card');
+      if (flipCard) flipCard.classList.remove('flipped');
+    });
+  });
+
+  // Info icon - open modal
+  section.querySelectorAll('.js-ppc-info-modal').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const productId = btn.dataset.productId;
+      // Use existing modal system
+      if (window.openProductModal) {
+        window.openProductModal(productId);
+      } else if (window.bf25OpenModal) {
+        window.bf25OpenModal(productId);
+      } else {
+        // Fallback: trigger existing buy-now button for this product
+        const existingBtn = document.querySelector(`.bf25-product-card[data-product-id="${productId}"] .js-section-explore__buy-now`);
+        if (existingBtn) existingBtn.click();
+      }
+    });
+  });
+
+  // Pack selection
+  section.querySelectorAll('.js-ppc-pack-select').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const grid = btn.closest('.ppc-pack-grid');
+      const card = btn.closest('.ppc-card-wrapper');
+      const productId = card.dataset.productId;
+      const quantity = parseInt(btn.dataset.quantity);
+
+      grid.querySelectorAll('.ppc-pack-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+
+      selectedPacks.set(productId, { quantity, variantId: card.dataset.variantId });
+
+      const addBtn = card.querySelector('.ppc-add-to-bundle');
+      if (addBtn) addBtn.disabled = false;
+    });
+  });
+
+  // Variant selection
+  section.querySelectorAll('.js-ppc-variant-select').forEach(select => {
+    select.addEventListener('change', (e) => {
+      e.stopPropagation();
+      const card = select.closest('.ppc-card-wrapper');
+      const productId = card.dataset.productId;
+
+      // Get all selected options
+      const selects = card.querySelectorAll('.js-ppc-variant-select');
+      const selectedOptions = Array.from(selects).map(s => s.value);
+
+      // Find matching variant from window.productVariants if available
+      if (window.productVariants && window.productVariants[productId]) {
+        const variants = window.productVariants[productId];
+        const match = variants.find(v => 
+          selectedOptions.every((opt, i) => v.options && v.options[i] === opt)
+        );
+        if (match) {
+          card.dataset.variantId = match.id;
+        }
+      }
+    });
+  });
+
+  // Add to bundle
+  section.querySelectorAll('.js-ppc-add-to-bundle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.ppc-card-wrapper');
+      const productId = card.dataset.productId;
+      const variantId = card.dataset.variantId;
+      const selection = selectedPacks.get(productId);
+
+      if (!selection) return;
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Adding...';
+
+      // Try BundleManager first, then fallback to cart
+      const addPromise = window.BF25BundleManager 
+        ? window.BF25BundleManager.addItem(variantId, selection.quantity)
+        : fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(variantId), quantity: selection.quantity })
+          }).then(r => r.json());
+
+      addPromise
+        .then(() => {
+          btn.textContent = '✓ Added!';
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            // Reset selection
+            card.querySelectorAll('.ppc-pack-btn').forEach(b => b.classList.remove('selected'));
+            selectedPacks.delete(productId);
+            // Flip back
+            const flipCard = card.querySelector('.ppc-flip-card');
+            if (flipCard) flipCard.classList.remove('flipped');
+          }, 1500);
+        })
+        .catch((err) => {
+          console.error('Add to bundle failed:', err);
+          btn.textContent = 'Error - Retry';
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+          }, 2000);
+        });
+    });
+  });
+
+  console.log('PPC Coverflow initialized:', { cards: cards.length, activeIndex: state.activeIndex });
+
+})();

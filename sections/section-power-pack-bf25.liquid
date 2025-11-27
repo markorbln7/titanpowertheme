@@ -50,266 +50,225 @@
               <p class="text-[16px] text-center font-bold">{{ collection_obj.description | strip_html }}</p>
             {% endif %}
           </div>
-          {%- comment -%} COVERFLOW CAROUSEL STRUCTURE {%- endcomment -%}
-          <div class="pp-coverflow-stage">
-            <div class="pp-coverflow-track" data-product-count="{{ collection_obj.products.size }}">
-              {% for product in collection_obj.products limit: 8 %}
-                {% assign variant = product.selected_or_first_available_variant %}
-                {% assign stock_level = variant.inventory_quantity | default: 0 %}
-                {% assign review_count = product.metafields.reviews.rating_count | default: 0 %}
-                {% assign review_rating = product.metafields.reviews.rating.value | default: 0 %}
-                {% assign description_parts = product.metafields.custom.product_description | split: '|' %}
-                {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
-                {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
-                {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+          <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
+            {% for product in collection_obj.products %}
+              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+                <article class="bf25-product-card section-collections-with-nav__product relative"
+                         data-product-id="{{ product.id }}"
+                         data-section="bf25"
+                         data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
+                         data-default-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View details for {{ product.title | escape }}">
 
-                <div class="pp-card-wrapper {% if forloop.index == 3 %}active{% endif %}"
-                     data-index="{{ forloop.index0 }}"
-                     data-product-id="{{ product.id }}"
-                     data-variant-id="{{ variant.id }}"
-                     data-product-handle="{{ product.handle }}">
-
-                  <div class="pp-card-container">
-                    <div class="pp-flip-card" data-flippable="true">
-
-                      {%- comment -%} CARD FRONT {%- endcomment -%}
-                      <div class="pp-card-front">
-                        {%- comment -%} Discount Badge with Lightning {%- endcomment -%}
-                        <div class="pp-discount-badge">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  {%- comment -%} STATE 1: DEFAULT VIEW (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-default-state">
+                    {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
+                      <div class="bf25-discount-badge">
+                        <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount_top }}</span>
+                        <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                        </svg>
+                      </div>
+                    {% else %}
+                      {% if product.metafields.custom.new_shop_discount %}
+                        <div class="bf25-discount-badge">
+                          <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount }}</span>
+                          <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
                           </svg>
-                          <span>UP TO 85% OFF</span>
                         </div>
+                      {% endif %}
+                    {% endif %}
 
-                        {%- comment -%} Info Icon - Opens Modal {%- endcomment -%}
-                        <button class="pp-info-icon js-pp-info-modal"
-                                data-product-id="{{ product.id }}"
-                                aria-label="View {{ product.title }} details">
-                          ⓘ
-                        </button>
+                    <!-- Info Icon (top-right corner with pulse animation) -->
+                    <div class="bf25-product-info-icon"
+                         data-product-id="{{ product.id }}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View product details for {{ product.title | escape }}">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
+                        <text x="12" y="12" text-anchor="middle" dominant-baseline="central" fill="#60c655" font-size="14" font-weight="700">i</text>
+                      </svg>
+                    </div>
 
-                        {%- comment -%} Product Image {%- endcomment -%}
-                        <div class="pp-product-image">
-                          <img src="{{ product.featured_image | image_url: width: 300 }}"
-                               alt="{{ product.title }}"
-                               loading="lazy"
-                               width="150"
-                               height="150">
-                          {% if product.tags contains 'bestseller' %}
-                            <div class="pp-bestseller-badge">
-                              <img src="{{ 'bestseller-badge.png' | asset_url }}" alt="Best Seller">
+                    <figure class="section-collections-with-nav__product-image">
+                      {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                        <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                      {% else %}
+                        {% if product.metafields.custom.new_shop_image %}
+                          {% assign product_image =  product.metafields.custom.new_shop_image %}
+                          <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
+                          {% assign product_image = product.featured_image %}
+                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                        {% endif %}
+                      {% endif %}
+                    </figure>
+
+                    <div class="section-collections-with-nav__product-details justify-between">
+                      <div class="top-part">
+                        <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
+                        <!-- Reviews Display with Stock Indicator (BF25-REV-006) -->
+                        <div class="bf25-card-reviews">
+                          <!-- Stars row -->
+                          <div class="bf25-product-rating-display"
+                               data-product-id="{{ product.id }}"
+                               role="button"
+                               tabindex="0">
+                            <div class="bf25-rating-stars bf25-card-stars" aria-hidden="true">
+                              <span class="stars-empty">★★★★★</span>
+                              <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
                             </div>
-                          {% endif %}
-                        </div>
+                          </div>
 
-                        {%- comment -%} Product Title {%- endcomment -%}
-                        <h3 class="pp-product-title">{{ product.title }}</h3>
-
-                        {%- comment -%} Reviews Row with Stock {%- endcomment -%}
-                        <div class="pp-reviews-row">
-                          <span class="pp-stars">★★★★★</span>
-                          <span class="pp-reviews-count">{{ review_count | default: '1,000+' }} reviews</span>
-                          <span class="pp-reviews-divider">|</span>
-                          <span class="pp-stock-indicator">
-                            <span class="pp-stock-dot"></span>
-                            <span class="pp-stock-text">{{ stock_level }} left</span>
-                          </span>
-                        </div>
-
-                        {%- comment -%} Bullet Points {%- endcomment -%}
-                        <div class="pp-bullet-points">
-                          <div class="pp-bullet-list">
-                            {% for feature in description_parts limit: 3 %}
-                              <div class="pp-bullet-item">
-                                <span class="pp-bullet-icon">⚡</span>
-                                <span>{{ feature | strip }}</span>
-                              </div>
-                            {% endfor %}
+                          <!-- Reviews + Stock row (CSS will handle desktop inline vs mobile stacked) -->
+                          <div class="bf25-reviews-stock-row">
+                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
+                            <span class="bf25-reviews-divider">|</span>
+                            <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
                           </div>
                         </div>
 
-                        {%- comment -%} Price Section {%- endcomment -%}
-                        <div class="pp-price-section">
-                          <span class="pp-price-current">{{ variant.price | money }}</span>
-                          {% if variant.compare_at_price > variant.price %}
-                            <span class="pp-price-compare">{{ variant.compare_at_price | money }}</span>
+                        {% if product.metafields.custom.ticks %}
+                          {{product.metafields.custom.ticks | metafield_tag }}
+                        {% endif %}
+                        <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                          <div clas="prices">
+                            <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                            {% if product.compare_at_price  %}
+                                <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                            {% endif %}
+                          </div>
+                          {% if section.settings.use_popup == true %}
+                            <div class="arrow pointer bf25-quick-add-trigger"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="Quick add {{ product.title | escape }} to cart">
+                                +
+                            </div>
+                          {% else %}
+                            <a href="{{ product.url }}" class="arrow">
+                              <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
+                            </a>
                           {% endif %}
                         </div>
-
-                        {%- comment -%} Add Packs CTA {%- endcomment -%}
-                        <button class="pp-flip-cta js-pp-flip-trigger">
-                          ADD PACKS →
-                        </button>
-                      </div>
-
-                      {%- comment -%} CARD BACK {%- endcomment -%}
-                      <div class="pp-card-back">
-                        {%- comment -%} Back Header {%- endcomment -%}
-                        <div class="pp-back-header">
-                          <img src="{{ product.featured_image | image_url: width: 80 }}" alt="">
-                          <h3>{{ product.title }}</h3>
-                          <p>Select options & pack size</p>
-                        </div>
-
-                        {%- comment -%} Variant Dropdowns {%- endcomment -%}
-                        <div class="pp-variant-row">
-                          {% for option in product.options_with_values limit: 2 %}
-                            <select class="pp-variant-dropdown js-pp-variant-select"
-                                    data-option-index="{{ forloop.index0 }}"
-                                    data-option-name="{{ option.name }}">
-                              {% for value in option.values %}
-                                <option value="{{ value }}" {% if value == option.selected_value %}selected{% endif %}>
-                                  {{ value }}
-                                </option>
-                              {% endfor %}
-                            </select>
-                          {% endfor %}
-                        </div>
-
-                        {%- comment -%} Pack Title {%- endcomment -%}
-                        <div class="pp-pack-title">Choose Pack Size</div>
-
-                        {%- comment -%} Pack Grid {%- endcomment -%}
-                        <div class="pp-pack-grid">
-                          <button class="pp-pack-btn js-pp-pack-select" data-quantity="4">
-                            <span class="pp-pack-qty">×4</span>
-                            <span class="pp-pack-discount">60% OFF</span>
-                            <span class="pp-pack-gifts">+1 Gift</span>
-                          </button>
-                          <button class="pp-pack-btn popular js-pp-pack-select" data-quantity="8">
-                            <span class="pp-pack-qty">×8</span>
-                            <span class="pp-pack-discount">70% OFF</span>
-                            <span class="pp-pack-gifts">+2 Gifts</span>
-                          </button>
-                          <button class="pp-pack-btn js-pp-pack-select" data-quantity="12">
-                            <span class="pp-pack-qty">×12</span>
-                            <span class="pp-pack-discount">80% OFF</span>
-                            <span class="pp-pack-gifts">+3 Gifts</span>
-                          </button>
-                          <button class="pp-pack-btn js-pp-pack-select" data-quantity="16">
-                            <span class="pp-pack-qty">×16</span>
-                            <span class="pp-pack-discount">85% OFF</span>
-                            <span class="pp-pack-gifts">+4 Gifts</span>
-                          </button>
-                        </div>
-
-                        {%- comment -%} Add to Bundle Button {%- endcomment -%}
-                        <button class="pp-add-to-bundle js-pp-add-to-bundle" disabled>
-                          ADD TO BUNDLE
-                        </button>
-
-                        {%- comment -%} Back Link {%- endcomment -%}
-                        <div class="pp-back-link">
-                          <button class="js-pp-flip-back">← Back</button>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-
-                  {%- comment -%} Card Reflection (Desktop) {%- endcomment -%}
-                  <div class="pp-card-reflection" aria-hidden="true">
-                    <div class="pp-card-front">
-                      <div class="pp-product-image">
-                        <img src="{{ product.featured_image | image_url: width: 300 }}" alt="">
                       </div>
                     </div>
                   </div>
 
-                </div>
+                  {%- comment -%} STATE 2: VARIANT SELECTOR OVERLAY (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-variant-state" hidden>
+                    <div class="bf25-variant-header">
+                      <h4 class="bf25-variant-title">Select Options</h4>
+                      <button class="bf25-variant-close"
+                              type="button"
+                              aria-label="Close variant selection">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
 
-                {%- comment -%} Keep modal rendering for compatibility {%- endcomment -%}
-                {% if product.metafields.custom.new_shop_discount_top %}
-                  {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
-                {% else %}
-                  {% assign badge_text = product.metafields.custom.new_shop_discount %}
-                {% endif %}
+                    {%- comment -%} Variant options will be populated by JavaScript {%- endcomment -%}
+                    <div class="bf25-variant-options-container">
+                      <!-- JS will inject variant option groups here -->
+                    </div>
 
-                {% render 'buy-now-popup-bf25'
-                  product_image: product.featured_image,
-                  price: product.price,
-                  compare_at_price: product.compare_at_price,
-                  title: product.title,
-                  description: product_description,
-                  upsell_product_one: upsell_product_one,
-                  upsell_product_two: upsell_product_two,
-                  product_id: product.selected_or_first_available_variant.id,
-                  product_id_attr: product.id,
-                  quantity: '1',
-                  product: product,
-                  badge_text: badge_text,
-                  grid_1: section.settings.add_4,
-                  grid_2: section.settings.add_6,
-                  grid_3: section.settings.add_10,
-                  grid_1_text: section.settings.add_4_text,
-                  grid_2_text: section.settings.add_6_text,
-                  grid_3_text: section.settings.add_10_text
-                %}
+                    <button class="bf25-variant-add-btn"
+                            type="button"
+                            disabled>
+                      Add to Bundle
+                    </button>
+                  </div>
 
-                {%- comment -%} Keep variant data script for compatibility {%- endcomment -%}
-                <script>
-                  window.productVariants = window.productVariants || {};
-                  window.productOptions = window.productOptions || {};
+                  {% if product.metafields.custom.new_shop_discount_top %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+                  {% else %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount %}
+                  {% endif %}
+                  {%- comment -%} Modal moved outside article {%- endcomment -%}
+                  </article>
 
-                  window.productVariants[{{ product.id }}] = [
-                    {%- for variant in product.variants -%}
-                    {
-                      id: {{ variant.id | json }},
-                      title: {{ variant.title | json }},
-                      options: [
-                        {%- for option in variant.options -%}
-                        {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
-                        {%- endfor -%}
-                      ],
-                      available: {{ variant.available | json }},
-                      price: {{ variant.price | json }},
-                      compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
-                      {%- if variant.featured_image -%}
-                      featured_image: {
-                        src: {{ variant.featured_image.src | image_url: width: 800 | json }},
-                        alt: {{ variant.featured_image.alt | default: product.title | json }}
-                      }
-                      {%- else -%}
-                      featured_image: null
-                      {%- endif -%}
-                    }{%- unless forloop.last -%},{%- endunless -%}
-                    {%- endfor -%}
-                  ];
+                  {%- comment -%} Modal NOW renders outside article to fix z-index {%- endcomment -%}
+                  {% render 'buy-now-popup-bf25'
+                    product_image: product.featured_image,
+                    price: product.price,
+                    compare_at_price: product.compare_at_price,
+                    title: product.title,
+                    description: product_description,
+                    upsell_product_one: upsell_product_one,
+                    upsell_product_two: upsell_product_two,
+                    product_id: product.selected_or_first_available_variant.id,
+                    product_id_attr: product.id,
+                    quantity: '1',
+                    product: product,
+                    badge_text: badge_text,
+                    grid_1: section.settings.add_4,
+                    grid_2: section.settings.add_6,
+                    grid_3: section.settings.add_10,
+                    grid_1_text: section.settings.add_4_text,
+                    grid_2_text: section.settings.add_6_text,
+                    grid_3_text: section.settings.add_10_text
+                  %}
+                  {%- comment -%} BF25 Product Data Layer - Required for variant selection {%- endcomment -%}
+                  <script>
+                    // Initialize global objects if not exists
+                    window.productVariants = window.productVariants || {};
+                    window.productOptions = window.productOptions || {};
 
-                  window.productOptions[{{ product.id }}] = [
-                    {%- for option in product.options_with_values -%}
-                    {
-                      name: {{ option.name | json }},
-                      position: {{ option.position }},
-                      values: [
-                        {%- for value in option.values -%}
-                        {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
-                        {%- endfor -%}
-                      ]
-                    }{%- unless forloop.last -%},{%- endunless -%}
-                    {%- endfor -%}
-                  ];
-                </script>
+                    // Store variant data for this product
+                    window.productVariants[{{ product.id }}] = [
+                      {%- for variant in product.variants -%}
+                      {
+                        id: {{ variant.id | json }},
+                        title: {{ variant.title | json }},
+                        options: [
+                          {%- for option in variant.options -%}
+                          {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ],
+                        available: {{ variant.available | json }},
+                        price: {{ variant.price | json }},
+                        compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+                        {%- if variant.featured_image -%}
+                        featured_image: {
+                          src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+                          alt: {{ variant.featured_image.alt | default: product.title | json }}
+                        }
+                        {%- else -%}
+                        featured_image: null
+                        {%- endif -%}
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
 
-              {% endfor %}
-            </div>
-          </div>
+                    // Store option configuration for this product
+                    window.productOptions[{{ product.id }}] = [
+                      {%- for option in product.options_with_values -%}
+                      {
+                        name: {{ option.name | json }},
+                        position: {{ option.position }},
+                        values: [
+                          {%- for value in option.values -%}
+                          {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ]
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+                  </script>
 
-          {%- comment -%} Navigation Controls {%- endcomment -%}
-          <div class="pp-nav-controls">
-            <button class="pp-nav-btn js-pp-nav-prev" aria-label="Previous product">←</button>
-            <button class="pp-nav-btn js-pp-nav-next" aria-label="Next product">→</button>
-          </div>
-
-          {%- comment -%} Dot Navigation {%- endcomment -%}
-          <div class="pp-dot-nav">
-            {% for product in collection_obj.products limit: 8 %}
-              <button class="pp-dot js-pp-dot {% if forloop.index == 3 %}active{% endif %}"
-                      data-index="{{ forloop.index0 }}"
-                      aria-label="Go to product {{ forloop.index }}"></button>
             {% endfor %}
-          </div>  </div>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
 
 {%- comment -%}
 ═══════════════════════════════════════════════════════════

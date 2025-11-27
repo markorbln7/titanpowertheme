@@ -2445,3 +2445,32 @@
 }
 
 /* END V4 SURGICAL FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIX - First Cell Flash BOOSTED
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Override with much more dramatic flash */
+@keyframes bf25-cell-pulse-boost {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.2);
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.2);
+  }
+  50% {
+    background: rgba(96, 198, 85, 1);
+    box-shadow:
+      0 0 30px rgba(96, 198, 85, 1),
+      0 0 60px rgba(96, 198, 85, 0.5),
+      inset 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* High specificity to ensure override */
+.bf25-hero .bf25-hero__slider-wrapper .progress-bar .progress-bar__segments .progress-bar__segment[data-segment="1"]:not(.is-filled),
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-cell-pulse-boost 1s ease-in-out infinite !important;
+  background: rgba(96, 198, 85, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+/* END FLASH BOOST */

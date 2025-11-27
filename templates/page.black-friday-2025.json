@@ -365,6 +365,56 @@
         "image_desktop": "shopify://shop_images/Mystery_box.jpg"
       }
     },
+    "section_bundle_builder_bf25_eMVmtq": {
+      "type": "section-bundle-builder-bf25",
+      "custom_css": [
+        ".section-collections-with-nav__navigation li {box-shadow: 0 0 10px #b5b5b5;}",
+        ".section-collections-with-nav__navigation li {font-size: 16px; font-weight: 400; line-height: 120%; letter-spacing: 1px; padding: 8px 20px; border-radius: 10px; transition: all 0.3s ease; color: #575757; justify-content: center;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}",
+        ".js-buy-more {display: none;}"
+      ],
+      "name": "bundle build bf25",
+      "settings": {
+        "modal_display_mode": "power_packs",
+        "use_popup": true,
+        "show_alt_images": true,
+        "collections": [
+          "power-pairs"
+        ],
+        "add_4_text": "4",
+        "add_6_text": "8",
+        "add_10_text": "12"
+      }
+    },
+    "section_collections_with_nav_EzNML8": {
+      "type": "section-collections-with-nav",
+      "disabled": true,
+      "custom_css": [
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".js-buy-more {color: #000; font-weight: 700;}",
+        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
+        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
+        ".arrow {color: #fff; background: #60c655;}",
+        ".section-collections-with-nav__product-price {color: #000000;}",
+        ".md\\:top-\\[-15px\\] {display: NONE;}",
+        ".variant-selector {color: #313131;}",
+        ".quantity__input {font-size: 20px; margin-top: 10px;}"
+      ],
+      "settings": {
+        "use_popup": true,
+        "show_alt_images": true,
+        "collections": [
+          "power-pairs"
+        ],
+        "add_4": "shopify://shop_images/DISCOUNT_BOX_GET_3.png",
+        "add_4_text": "3",
+        "add_6": "shopify://shop_images/DISCOUNT_BOX_GET_7.png",
+        "add_6_text": "7",
+        "add_10": "shopify://shop_images/DISCOUNT_BOX_GET_10.png",
+        "add_10_text": "10"
+      }
+    },
     "section_power_pairs_bf25_fmUJY6": {
       "type": "section-power-pairs-bf25",
       "blocks": {
@@ -372,15 +422,7 @@
           "type": "bundle_product",
           "settings": {
             "parent_bundle_id": "bundle-1",
-            "product": "copy-of-the-titan-5-2a-fast-car-charger™-bundle-offer",
-            "quantity": 1
-          }
-        },
-        "bundle_product_fB9pQn": {
-          "type": "bundle_product",
-          "settings": {
-            "parent_bundle_id": "bundle-1",
-            "product": "",
+            "product": "smartcablenewbb",
             "quantity": 1
           }
         },
@@ -388,7 +430,7 @@
           "type": "bundle_product",
           "settings": {
             "parent_bundle_id": "bundle-1",
-            "product": "titan-45w-nano-pd-plug™",
+            "product": "titan-100w-multi-cable™",
             "quantity": 1
           }
         },
@@ -396,8 +438,16 @@
           "type": "bundle_product",
           "settings": {
             "parent_bundle_id": "bundle-1",
-            "product": "1xfoldablecharger",
-            "quantity": 2
+            "product": "4-in-1-cable",
+            "quantity": 1
+          }
+        },
+        "bundle_product_rymEaw": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-1",
+            "product": "titan-45w-nano-pd-plug™",
+            "quantity": 1
           }
         },
         "bundle_mUkcBd": {
@@ -413,38 +463,6 @@
             "number_of_items": 4,
             "number_of_gifts": 1,
             "learn_more_text": "Three cables that cover every device, plus the 45W plug that works in 200+ countries. Home, office, travel — sorted."
-          }
-        },
-        "bundle_product_qptQDA": {
-          "type": "bundle_product",
-          "settings": {
-            "parent_bundle_id": "bundle-1",
-            "product": "120w-magtech-cable™-1",
-            "quantity": 1
-          }
-        },
-        "bundle_product_wFqJFg": {
-          "type": "bundle_product",
-          "settings": {
-            "parent_bundle_id": "bundle-1",
-            "product": "1-x-4-in-1-dock-pro-copy",
-            "quantity": 1
-          }
-        },
-        "bundle_product_hGhYLQ": {
-          "type": "bundle_product",
-          "settings": {
-            "parent_bundle_id": "bundle-1",
-            "product": "4-in-1-keychain-cable-copy-1",
-            "quantity": 1
-          }
-        },
-        "bundle_product_L4XAG8": {
-          "type": "bundle_product",
-          "settings": {
-            "parent_bundle_id": "bundle-1",
-            "product": "4-in-1-retractable-pd-car-charger™-byob",
-            "quantity": 1
           }
         },
         "bundle_teEpeh": {
@@ -492,14 +510,10 @@
       },
       "block_order": [
         "bundle_product_QBNFy3",
-        "bundle_product_fB9pQn",
         "bundle_product_brY7gz",
         "bundle_product_4iFxyq",
+        "bundle_product_rymEaw",
         "bundle_mUkcBd",
-        "bundle_product_qptQDA",
-        "bundle_product_wFqJFg",
-        "bundle_product_hGhYLQ",
-        "bundle_product_L4XAG8",
         "bundle_teEpeh",
         "bundle_PjXpWX",
         "bundle_rPYTmN"
@@ -525,6 +539,85 @@
         "satisfaction_rate": "98",
         "enable_performance_optimizations": true,
         "defer_bottom_sheet_js": true
+      }
+    },
+    "section_product_zigzag_bf_2025_NgGNnM": {
+      "type": "section-product-zigzag-bf-2025",
+      "blocks": {
+        "upsell_product_repeater_edgdyc": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "4-in-1cable",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "4-in-1 Cable"
+          }
+        },
+        "upsell_product_repeater_YgHARB": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-cube™",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "Travel Cube",
+            "product_upsell_image": "shopify://shop_images/cube_45026eb8-5d21-4f0f-8cbe-20d8cb073bdd.png"
+          }
+        },
+        "upsell_product_repeater_jDfpt9": {
+          "type": "upsell_product_repeater",
+          "settings": {
+            "product_upsell": "titan-m-travel-case™-1",
+            "product_upsell_qty": "1",
+            "product_upsell_title": "Tech Travel Case",
+            "product_upsell_image": "shopify://shop_images/Free_case_gift.png"
+          }
+        },
+        "icons_repeater_3YzibB": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Fast Charging",
+            "icon": "shopify://shop_images/icons8-lightning-100_3652dbfc-8b9a-4d1a-bff4-c6d8d4463a85.png"
+          }
+        },
+        "icons_repeater_P3UrXM": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Ultra-Durable Design",
+            "icon": "shopify://shop_images/icons8-muscle-100.webp"
+          }
+        },
+        "icons_repeater_EagFUg": {
+          "type": "icons_repeater",
+          "settings": {
+            "text": "Travel Ready",
+            "icon": "shopify://shop_images/icons8-plane-100_b6a84b36-05d1-4985-893a-bde1c1eeef87.png"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_product_repeater_edgdyc",
+        "upsell_product_repeater_YgHARB",
+        "upsell_product_repeater_jDfpt9",
+        "icons_repeater_3YzibB",
+        "icons_repeater_P3UrXM",
+        "icons_repeater_EagFUg"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".product-zigzag__buttons button,.product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px;}",
+        ".w-100 {width: 90% !important; align-items: center; margin-left: auto; margin-right: auto;}",
+        "button.js-add-to-cart-zig.product-zigzag__atc.bold.uppercase {height: 50px; width: 230px; margin-top: -5px;}"
+      ],
+      "name": "Product Zigzag Section bf25",
+      "settings": {
+        "top_title": "POWER PAIRS",
+        "section_subtitle": "These hand picked staff favourites count as multiple items towards your discount-shop smarter!",
+        "product": "",
+        "section_title": "The Adventurer Kit",
+        "product_image": "shopify://shop_images/Power_pairs_-_travel_kit.png",
+        "product_label": "Power anywhere. Charge everything. Fly stress-free.",
+        "discount_text": "3 Items 55% OFF",
+        "reverse_layout": true
       }
     },
     "bf_top_bar_8RrMkH": {
@@ -907,7 +1000,10 @@
     "section_bf25_hero_tLQyNk",
     "section_power_pack_bf25_mLajpe",
     "section_mystery_box_JT4Pf3",
+    "section_bundle_builder_bf25_eMVmtq",
+    "section_collections_with_nav_EzNML8",
     "section_power_pairs_bf25_fmUJY6",
+    "section_product_zigzag_bf_2025_NgGNnM",
     "bf_top_bar_8RrMkH",
     "bf_promo_discount_2025_8j4wb6",
     "section_bundle_builder_bf25_EPy4QM",

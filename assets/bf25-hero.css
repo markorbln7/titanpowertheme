@@ -4423,3 +4423,110 @@ body.show-sticky-cart .bf25-sticky-cart {
 }
 
 /* END STEPS TIMELINE */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - REPOSITIONED (Safe Version)
+   Cable: bottom-left | Buds: top-right (moved down slightly)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Base */
+.bf25-hero-split .bf25-floating-product {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  opacity: 0.75 !important;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5)) !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  overflow: visible !important;
+}
+
+/* Animations - Cable keeps original angle */
+@keyframes bf25-float-cable {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(-3deg); }
+}
+
+@keyframes bf25-float-buds {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* DESKTOP - Cable bottom-left, Buds top-right (lowered) */
+.bf25-hero-split .bf25-floating-cable {
+  width: 120px !important;
+  bottom: 18% !important;
+  left: 5% !important;
+  top: auto !important;
+  animation: bf25-float-cable 8s ease-in-out infinite !important;
+}
+
+.bf25-hero-split .bf25-floating-earbuds {
+  width: 105px !important;
+  top: 25% !important;
+  right: 6% !important;
+  bottom: auto !important;
+  animation: bf25-float-buds 10s ease-in-out infinite !important;
+}
+
+/* Large desktop 1400+ */
+@media (min-width: 1400px) {
+  .bf25-hero-split .bf25-floating-cable { width: 130px !important; left: 4% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 115px !important; top: 22% !important; right: 5% !important; }
+}
+
+/* Medium desktop */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .bf25-hero-split .bf25-floating-cable { width: 100px !important; left: 3% !important; bottom: 20% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 90px !important; top: 28% !important; right: 4% !important; }
+}
+
+/* Tablet */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .bf25-hero-split .bf25-floating-cable { width: 85px !important; left: 2% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 75px !important; top: 30% !important; right: 3% !important; }
+}
+
+/* MOBILE - Bigger, on-screen */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    bottom: 8% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 60px !important;
+    top: 5% !important;
+    right: 5% !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable { width: 55px !important; left: 3% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 50px !important; right: 3% !important; }
+}
+
+/* Extra small */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable { width: 48px !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 45px !important; }
+}
+
+/* Energy text for "You Save" - matches "Exist." */
+.bf25-energy-text {
+  color: #60c655 !important;
+  background: linear-gradient(90deg, #60c655 0%, #60c655 35%, #90ff80 45%, #c0ffc0 50%, #90ff80 55%, #60c655 65%, #60c655 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 15px rgba(96, 198, 85, 0.7)) !important;
+}
+
+@keyframes bf25-energy-flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}

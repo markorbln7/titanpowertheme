@@ -1,0 +1,985 @@
+{{ 'section-collections-with-nav.css' | asset_url | stylesheet_tag }}
+{{ 'section-power-pack-bf25.css' | asset_url | stylesheet_tag }}
+{{ 'section-explore.css' | asset_url | stylesheet_tag }}
+{{ 'bf25-modal-design.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bogo-builder.js' | asset_url }}" defer></script>
+<script src="{{ 'bf25-expansion-core.js' | asset_url }}" defer></script>
+{% comment %} <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> {% endcomment %}
+
+{% if page.handle == 'test-sections' or page.handle == 'shop-1' or page.handle == 'anniversary' or page.handle == '4thjulysale' or page.handle == 'shop' or page.handle == 'titan-shop' or page.handle == 'black-friday-2024' or page.handle == 'chirstmas-2024' or page.handle == 'christmas-2024' %}
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endif %}
+
+<section class="power-pack-section section-collections-with-nav section-explore dark-mode" data-section="bf25">
+  <div class="gradient-mesh-bg"></div>
+
+   {% if section.blocks.size > 0 %}
+    <nav class="section-collections-with-nav__navigation py-[30px] tp-sticky">
+       <ul class="flex items-center justify-center md:gap-[10px] gap-[10px] max-w-[750px] mx-auto flex-wrap">
+            {% for block in section.blocks  %}
+                {% comment %} {% assign collection_obj = collections[collection.handle] %} {% endcomment %}
+                <li class="{% if forloop.index == 1 %}active {% endif %} lg:min-w-[180px] relative lg:flex-wrap w-[30%] pt-[14px] md:pt-0 !mb-[10px] !md:mb-0">
+                     {% if block.settings.icon != blank %}
+                      <div class="small-icon top-[-18px] md:top-[3px] image md:max-w-[35px] max-w-[25px] absolute md:left-[10px] left-[50%] translate-x-[-50%] translate-y-0 md:transform-none"><img width="100" height="auto" src="{{ block.settings.icon | img_url:'master' }}"></div>
+                     {% endif %}
+                    <a href='{{ block.settings.anchor }}' class="collection-link">{{ block.settings.heading }}</a>
+                </li>
+            {% endfor %}
+       </ul>
+    </nav>
+  {% endif %}
+
+  <div class="filter-pills-container">
+    <div class="filter-pills">
+      <button class="pill active" data-filter="all">All Products</button>
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <button class="pill" data-filter="{{ collection_obj.handle }}">{{ collection_obj.title }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+{%- comment -%}
+  ============================================
+  POWER PACK COVERFLOW CAROUSEL
+  Prefix: ppc- (to avoid conflict with Power Pairs pp-)
+  ============================================
+{%- endcomment -%}
+
+{%- assign pp_collection = section.settings.collections[0] -%}
+{%- assign pp_collection_obj = collections[pp_collection.handle] -%}
+
+<div class="ppc-section-header">
+  <h2 class="ppc-title">⭐ POWER PACKS</h2>
+  <p class="ppc-subtitle">Up to 85% OFF</p>
+</div>
+
+<div class="ppc-coverflow-stage">
+  <div class="ppc-coverflow-track" data-product-count="{{ pp_collection_obj.products.size }}">
+    
+    {% for product in pp_collection_obj.products limit: 8 %}
+      {%- assign variant = product.selected_or_first_available_variant -%}
+      {%- assign stock_level = variant.inventory_quantity | default: 0 -%}
+      {%- assign review_count = product.metafields.reviews.rating_count | default: product.metafields.loox.num_reviews | default: '1,000+' -%}
+      {%- assign description_raw = product.metafields.custom.product_description | default: '' -%}
+      {%- assign description_parts = description_raw | split: '|' -%}
+      {%- assign is_center = false -%}
+      {%- if forloop.index == 3 -%}{%- assign is_center = true -%}{%- endif -%}
+      
+      <div class="ppc-card-wrapper {% if is_center %}active{% endif %}"
+           data-index="{{ forloop.index0 }}"
+           data-product-id="{{ product.id }}"
+           data-variant-id="{{ variant.id }}"
+           data-product-handle="{{ product.handle }}">
+        
+        <div class="ppc-card-container">
+          <div class="ppc-flip-card" data-flippable="true">
+            
+            <!-- CARD FRONT -->
+            <div class="ppc-card-front">
+              
+              <div class="ppc-discount-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <span>UP TO 85% OFF</span>
+              </div>
+              
+              <button type="button" class="ppc-info-icon js-ppc-info-modal" data-product-id="{{ product.id }}" aria-label="View {{ product.title }} details">
+                <span>ⓘ</span>
+              </button>
+              
+              <div class="ppc-product-image">
+                <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
+                {% if product.tags contains 'bestseller' or forloop.index <= 4 %}
+                  <div class="ppc-bestseller-badge">
+                    <img src="{{ 'bestseller-badge.png' | asset_url }}" alt="Best Seller" width="45" height="45">
+                  </div>
+                {% endif %}
+              </div>
+              
+              <h3 class="ppc-product-title">{{ product.title }}</h3>
+              
+              <div class="ppc-reviews-row">
+                <span class="ppc-stars">★★★★★</span>
+                <span class="ppc-reviews-count">{{ review_count }} reviews</span>
+                <span class="ppc-reviews-divider">|</span>
+                <span class="ppc-stock-indicator">
+                  <span class="ppc-stock-dot"></span>
+                  <span class="ppc-stock-text">{{ stock_level }} left</span>
+                </span>
+              </div>
+              
+              <div class="ppc-bullet-points">
+                <div class="ppc-bullet-list">
+                  {% for feature in description_parts limit: 3 %}
+                    <div class="ppc-bullet-item">
+                      <span class="ppc-bullet-icon">⚡</span>
+                      <span>{{ feature | strip }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <div class="ppc-price-section">
+                <span class="ppc-price-current">{{ variant.price | money }}</span>
+                {% if variant.compare_at_price > variant.price %}
+                  <span class="ppc-price-compare">{{ variant.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+              
+              <button type="button" class="ppc-flip-cta js-ppc-flip-trigger">ADD PACKS →</button>
+              
+            </div>
+            <!-- END CARD FRONT -->
+            
+            <!-- CARD BACK -->
+            <div class="ppc-card-back">
+              
+              <div class="ppc-back-header">
+                <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" width="40" height="40">
+                <h3>{{ product.title }}</h3>
+                <p>Select options & pack size</p>
+              </div>
+              
+              <div class="ppc-variant-row">
+                {% for option in product.options_with_values limit: 2 %}
+                  <select class="ppc-variant-dropdown js-ppc-variant-select" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name }}">
+                    {% for value in option.values %}
+                      <option value="{{ value }}" {% if value == option.selected_value %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                {% endfor %}
+                {% if product.options_with_values.size < 2 %}
+                  <select class="ppc-variant-dropdown" disabled style="visibility: hidden;"><option>-</option></select>
+                {% endif %}
+              </div>
+              
+              <div class="ppc-pack-title">Choose Pack Size</div>
+              
+              <div class="ppc-pack-grid">
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="4" data-discount="60">
+                  <span class="ppc-pack-qty">×4</span>
+                  <span class="ppc-pack-discount">60% OFF</span>
+                  <span class="ppc-pack-gifts">+1 Gift</span>
+                </button>
+                <button type="button" class="ppc-pack-btn popular js-ppc-pack-select" data-quantity="8" data-discount="70">
+                  <span class="ppc-pack-qty">×8</span>
+                  <span class="ppc-pack-discount">70% OFF</span>
+                  <span class="ppc-pack-gifts">+2 Gifts</span>
+                </button>
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="12" data-discount="80">
+                  <span class="ppc-pack-qty">×12</span>
+                  <span class="ppc-pack-discount">80% OFF</span>
+                  <span class="ppc-pack-gifts">+3 Gifts</span>
+                </button>
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="16" data-discount="85">
+                  <span class="ppc-pack-qty">×16</span>
+                  <span class="ppc-pack-discount">85% OFF</span>
+                  <span class="ppc-pack-gifts">+4 Gifts</span>
+                </button>
+              </div>
+              
+              <button type="button" class="ppc-add-to-bundle js-ppc-add-to-bundle" disabled>ADD TO BUNDLE</button>
+              
+              <div class="ppc-back-link">
+                <button type="button" class="js-ppc-flip-back">← Back</button>
+              </div>
+              
+            </div>
+            <!-- END CARD BACK -->
+            
+          </div>
+        </div>
+        
+        <div class="ppc-card-reflection" aria-hidden="true">
+          <div class="ppc-reflection-inner">
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="">
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+    
+  </div>
+</div>
+
+<div class="ppc-nav-controls">
+  <button type="button" class="ppc-nav-btn js-ppc-nav-prev" aria-label="Previous product"><span>←</span></button>
+  <button type="button" class="ppc-nav-btn js-ppc-nav-next" aria-label="Next product"><span>→</span></button>
+</div>
+
+<div class="ppc-dot-nav">
+  {%- for i in (1..8) -%}
+    <button type="button" class="ppc-dot js-ppc-dot {% if i == 3 %}active{% endif %}" data-index="{{ i | minus: 1 }}" aria-label="Go to product {{ i }}"></button>
+  {%- endfor -%}
+</div>
+
+{%- comment -%} END POWER PACK COVERFLOW {%- endcomment -%}
+
+
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
+      {% for collection in section.settings.collections %}
+        {% assign collection_obj = collections[collection.handle] %}
+        <div class="collection" id="{{ collection_obj.handle  | strip }}">
+          <div class="mb-[16px]">
+            <h2 class="!lg:text-[54px] !md:text-[54px] font-semibold text-black mb-[0px] text-center collection-title">{{ collection_obj.title }}</h2>
+            {% if collection_obj.description %}
+              <p class="text-[16px] text-center font-bold">{{ collection_obj.description | strip_html }}</p>
+            {% endif %}
+          </div>
+          <div class="products grid grid-cols-4 md:gap-[20px] gap-[10px] px-[20px]">
+            {% for product in collection_obj.products %}
+              {% assign product_description = product.metafields.custom.product_description | metafield_tag %}
+              {% assign upsell_product_one = product.metafields.custom.first_upsell_product %}
+              {% assign upsell_product_two = product.metafields.custom.second_upsell_product %}
+                <article class="bf25-product-card section-collections-with-nav__product relative"
+                         data-product-id="{{ product.id }}"
+                         data-section="bf25"
+                         data-has-variants="{% if product.variants.size > 1 %}true{% else %}false{% endif %}"
+                         data-default-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View details for {{ product.title | escape }}">
+
+                  {%- comment -%} STATE 1: DEFAULT VIEW (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-default-state">
+                    {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
+                      <div class="bf25-discount-badge">
+                        <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount_top }}</span>
+                        <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                        </svg>
+                      </div>
+                    {% else %}
+                      {% if product.metafields.custom.new_shop_discount %}
+                        <div class="bf25-discount-badge">
+                          <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount }}</span>
+                          <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
+                          </svg>
+                        </div>
+                      {% endif %}
+                    {% endif %}
+
+                    <!-- Info Icon (top-right corner with pulse animation) -->
+                    <div class="bf25-product-info-icon"
+                         data-product-id="{{ product.id }}"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View product details for {{ product.title | escape }}">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="#60c655" stroke-width="2"/>
+                        <text x="12" y="12" text-anchor="middle" dominant-baseline="central" fill="#60c655" font-size="14" font-weight="700">i</text>
+                      </svg>
+                    </div>
+
+                    <figure class="section-collections-with-nav__product-image">
+                      {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                        <img src="{{ product.metafields.custom.top_new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                      {% else %}
+                        {% if product.metafields.custom.new_shop_image %}
+                          {% assign product_image =  product.metafields.custom.new_shop_image %}
+                          <img src="{{ product.metafields.custom.new_shop_image | image_url}}" width="360" height="auto" class="object-cover">
+                        {% else %}
+                          {% assign product_image = product.featured_image %}
+                          {{ product.featured_image | image_url: width: 360 | image_tag: height: 360 }}
+                        {% endif %}
+                      {% endif %}
+                    </figure>
+
+                    <div class="section-collections-with-nav__product-details justify-between">
+                      <div class="top-part">
+                        <h4 class="section-collections-with-nav__product-title text-center min-h-[50px]">{{ product.title }}</h4>
+
+                        <!-- Reviews Display with Stock Indicator (BF25-REV-006) -->
+                        <div class="bf25-card-reviews">
+                          <!-- Stars row -->
+                          <div class="bf25-product-rating-display"
+                               data-product-id="{{ product.id }}"
+                               role="button"
+                               tabindex="0">
+                            <div class="bf25-rating-stars bf25-card-stars" aria-hidden="true">
+                              <span class="stars-empty">★★★★★</span>
+                              <span class="stars-filled" data-product-id="{{ product.id }}">★★★★★</span>
+                            </div>
+                          </div>
+
+                          <!-- Reviews + Stock row (CSS will handle desktop inline vs mobile stacked) -->
+                          <div class="bf25-reviews-stock-row">
+                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
+                            <span class="bf25-reviews-divider">|</span>
+                            <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
+                          </div>
+                        </div>
+
+                        {% if product.metafields.custom.ticks %}
+                          {{product.metafields.custom.ticks | metafield_tag }}
+                        {% endif %}
+                        <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
+                          <div clas="prices">
+                            <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                            {% if product.compare_at_price  %}
+                                <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
+                            {% endif %}
+                          </div>
+                          {% if section.settings.use_popup == true %}
+                            <div class="arrow pointer bf25-quick-add-trigger"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="Quick add {{ product.title | escape }} to cart">
+                                +
+                            </div>
+                          {% else %}
+                            <a href="{{ product.url }}" class="arrow">
+                              <img class="max-w-[14px] w-full ml-[1px]" width="100" height="auto" src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Arrow.png?v=1730800298" loading="lazy">
+                            </a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {%- comment -%} STATE 2: VARIANT SELECTOR OVERLAY (BF25-QUICK-ADD-001) {%- endcomment -%}
+                  <div class="bf25-card-variant-state" hidden>
+                    <div class="bf25-variant-header">
+                      <h4 class="bf25-variant-title">Select Options</h4>
+                      <button class="bf25-variant-close"
+                              type="button"
+                              aria-label="Close variant selection">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                          <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+
+                    {%- comment -%} Variant options will be populated by JavaScript {%- endcomment -%}
+                    <div class="bf25-variant-options-container">
+                      <!-- JS will inject variant option groups here -->
+                    </div>
+
+                    <button class="bf25-variant-add-btn"
+                            type="button"
+                            disabled>
+                      Add to Bundle
+                    </button>
+                  </div>
+
+                  {% if product.metafields.custom.new_shop_discount_top %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount_top %}
+                  {% else %}
+                    {% assign badge_text = product.metafields.custom.new_shop_discount %}
+                  {% endif %}
+                  {%- comment -%} Modal moved outside article {%- endcomment -%}
+                  </article>
+
+                  {%- comment -%} Modal NOW renders outside article to fix z-index {%- endcomment -%}
+                  {% render 'buy-now-popup-bf25'
+                    product_image: product.featured_image,
+                    price: product.price,
+                    compare_at_price: product.compare_at_price,
+                    title: product.title,
+                    description: product_description,
+                    upsell_product_one: upsell_product_one,
+                    upsell_product_two: upsell_product_two,
+                    product_id: product.selected_or_first_available_variant.id,
+                    product_id_attr: product.id,
+                    quantity: '1',
+                    product: product,
+                    badge_text: badge_text,
+                    grid_1: section.settings.add_4,
+                    grid_2: section.settings.add_6,
+                    grid_3: section.settings.add_10,
+                    grid_1_text: section.settings.add_4_text,
+                    grid_2_text: section.settings.add_6_text,
+                    grid_3_text: section.settings.add_10_text
+                  %}
+                  {%- comment -%} BF25 Product Data Layer - Required for variant selection {%- endcomment -%}
+                  <script>
+                    // Initialize global objects if not exists
+                    window.productVariants = window.productVariants || {};
+                    window.productOptions = window.productOptions || {};
+
+                    // Store variant data for this product
+                    window.productVariants[{{ product.id }}] = [
+                      {%- for variant in product.variants -%}
+                      {
+                        id: {{ variant.id | json }},
+                        title: {{ variant.title | json }},
+                        options: [
+                          {%- for option in variant.options -%}
+                          {{ option | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ],
+                        available: {{ variant.available | json }},
+                        price: {{ variant.price | json }},
+                        compare_at_price: {{ variant.compare_at_price | default: 'null' | json }},
+                        {%- if variant.featured_image -%}
+                        featured_image: {
+                          src: {{ variant.featured_image.src | image_url: width: 800 | json }},
+                          alt: {{ variant.featured_image.alt | default: product.title | json }}
+                        }
+                        {%- else -%}
+                        featured_image: null
+                        {%- endif -%}
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+
+                    // Store option configuration for this product
+                    window.productOptions[{{ product.id }}] = [
+                      {%- for option in product.options_with_values -%}
+                      {
+                        name: {{ option.name | json }},
+                        position: {{ option.position }},
+                        values: [
+                          {%- for value in option.values -%}
+                          {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
+                          {%- endfor -%}
+                        ]
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ];
+                  </script>
+
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+BF25 MODAL SYSTEM - DOM STRUCTURE
+PROMPT 2: Single Modal Container (Singleton Pattern)
+═══════════════════════════════════════════════════════════
+
+This modal container will be dynamically populated when any product card
+is clicked. Using a singleton pattern prevents DOM bloat (27 cards with
+embedded modals = 10,800+ DOM nodes vs. 1 shared modal = ~400 nodes).
+
+Structure:
+- Container: Fixed positioning, will animate via FLIP (Prompt 5)
+- Content: Populated dynamically from window.productData (Prompt 6)
+- Overlay: Backdrop for focus and dismissal
+{%- endcomment -%}
+
+<!-- MODAL CONTAINER (Singleton) -->
+<div id="bf25-modal-container"
+     class="bf25-modal-container"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="bf25-modal-title"
+     aria-hidden="true"
+     hidden>
+
+  <!-- Close Button -->
+  <button class="bf25-modal-close"
+          aria-label="Close product details"
+          type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Modal Content (Populated Dynamically) -->
+  <div class="bf25-modal-content">
+    {%- comment -%}
+      This will be populated via JavaScript in Prompt 6
+      Content comes from window.productData + window.productVariants
+    {%- endcomment -%}
+  </div>
+
+</div>
+
+<!-- OVERLAY (Backdrop) -->
+<div id="bf25-modal-overlay"
+     class="bf25-modal-overlay"
+     aria-hidden="true"
+     hidden>
+</div>
+
+{%- comment -%}
+═══════════════════════════════════════════════════════════
+BF25 MODAL SYSTEM - DATA LAYER FOUNDATION
+PROMPT 1: Configuration and Product Metadata Output
+═══════════════════════════════════════════════════════════
+
+This script outputs comprehensive product data for instant JavaScript access.
+No AJAX needed = lightning-fast modal experience.
+
+TWO DATA STRUCTURES:
+1. window.bf25Config - Modal behavior and tier configuration
+2. window.productData - Complete product metadata for modal content
+
+PRESERVED STRUCTURE:
+- window.productVariants - Existing variant system (UNTOUCHED)
+{%- endcomment -%}
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STRUCTURE 1: BF25 CONFIGURATION - Protected Initialization
+// Ref: BF25-MODE-002 - Prevent overwrite by other sections
+// ═══════════════════════════════════════════════════════════
+
+(function() {
+  'use strict';
+
+  // Configuration for this section
+  const sectionConfig = {
+    // Display mode from Theme Customizer
+    mode: "{{ section.settings.modal_display_mode | default: 'power_packs' }}",
+
+    // Tier structure for discount calculations (Black Friday 2025)
+    // Thresholds: 4, 8, 12 items (Power Packs mode)
+    tiers: [
+      {
+        min: 1,
+        max: 3,
+        multiplier: 1.0,
+        displayLabel: "50% OFF",
+        label: "Standard",
+        badge: null
+      },
+      {
+        min: 4,
+        max: 7,
+        multiplier: 0.91,
+        displayLabel: "60% OFF",
+        label: "Better Deal",
+        badge: "⚡ FREE: 4-in-1 Cable"
+      },
+      {
+        min: 8,
+        max: 11,
+        multiplier: 0.76,
+        displayLabel: "70% OFF",
+        label: "Great Deal",
+        badge: "🎁 FREE: Cable + Travel Case"
+      },
+      {
+        min: 12,
+        max: 15,
+        multiplier: 0.65,
+        displayLabel: "80% OFF",
+        label: "Best Deal",
+        badge: "🔥 FREE: Cables + Cases + Pre-Launch Set"
+      },
+      {
+        min: 16,
+        max: 999,
+        multiplier: 0.57,
+        displayLabel: "85% OFF",
+        label: "Bigfoot Unlock",
+        badge: "💎 FREE: Mystery Box + VIP Status"
+      }
+    ],
+
+    // Enhanced features configuration
+    enhancedFeatures: {
+      showReviews: {{ section.settings.show_reviews | default: true }},
+      showStockLevels: {{ section.settings.show_stock_levels | default: true }},
+      showCountdown: {{ section.settings.show_countdown | default: true }},
+      showFeatures: {{ section.settings.show_features | default: true }},
+      showShipping: {{ section.settings.show_shipping | default: true }},
+      enableKeyboardShortcuts: {{ section.settings.enable_keyboard_shortcuts | default: true }},
+      showTrustBadges: {{ section.settings.show_trust_badges | default: true }}
+    },
+
+    // Animation settings
+    animation: {
+      duration: 400,
+      easing: 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    },
+
+    // Debug mode
+    debug: true
+  };
+
+  // Initialize or merge configuration
+  if (typeof window.bf25Config === 'undefined') {
+    // First initialization - set everything
+    window.bf25Config = sectionConfig;
+
+    if (sectionConfig.debug) {
+      console.log('🚀 BF25 Config Initialized (Primary Section)');
+      console.log('   Mode:', sectionConfig.mode);
+      console.log('   Source: section-bundle-builder-bf25');
+    }
+  } else {
+    // Config already exists - only merge non-critical settings
+    // NEVER overwrite mode, tiers, or core functionality
+
+    if (sectionConfig.debug) {
+      console.warn('⚠️ BF25 Config already exists - skipping reinit');
+      console.warn('   Existing mode:', window.bf25Config.mode);
+      console.warn('   This section mode:', sectionConfig.mode);
+      console.warn('   Keeping existing configuration');
+    }
+
+    // Only merge enhancedFeatures if they don't exist
+    if (!window.bf25Config.enhancedFeatures) {
+      window.bf25Config.enhancedFeatures = sectionConfig.enhancedFeatures;
+    }
+  }
+
+  // Freeze the mode to prevent accidental changes
+  Object.defineProperty(window.bf25Config, 'mode', {
+    value: window.bf25Config.mode,
+    writable: false,
+    configurable: false
+  });
+
+  if (sectionConfig.debug) {
+    console.log('🔒 Mode locked:', window.bf25Config.mode);
+  }
+})();
+
+// ═══════════════════════════════════════════════════════════
+// STRUCTURE 2: PRODUCT METADATA
+// ═══════════════════════════════════════════════════════════
+window.productData = window.productData || {};
+
+{%- comment -%}
+Loop through collection products and output comprehensive metadata.
+This structure contains everything needed for the modal EXCEPT variant details.
+Variant details remain in window.productVariants (existing, preserved).
+{%- endcomment -%}
+
+{% for collection in section.settings.collections %}
+  {% assign collection_obj = collections[collection.handle] %}
+  {% if collection_obj.products.size > 0 %}
+    {% for product in collection_obj.products %}
+window.productData["{{ product.id }}"] = {
+  // ─────────────────────────────────────────────────────────
+  // Basic Product Info
+  // ─────────────────────────────────────────────────────────
+  id: "{{ product.id }}",
+  handle: "{{ product.handle }}",
+  title: {{ product.title | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Pricing (in cents for precise calculations)
+  // ─────────────────────────────────────────────────────────
+  basePrice: {{ product.price }},
+  comparePrice: {{ product.compare_at_price | default: 0 }},
+
+  // ─────────────────────────────────────────────────────────
+  // Images
+  // ─────────────────────────────────────────────────────────
+  featuredImage: "{{ product.featured_image | img_url: 'master' }}",
+  {% if product.metafields.custom.popup_image %}
+  popupImage: "{{ product.metafields.custom.popup_image | img_url: 'master' }}",
+  {% endif %}
+
+  // ─────────────────────────────────────────────────────────
+  // Content (Rich Text) - BF25-FIX-011
+  // Using metafield_tag to render rich_text_field as HTML string
+  // ─────────────────────────────────────────────────────────
+  {% comment %}
+    Try multiple approaches to get description as string
+    Metafield type: rich_text_field
+  {% endcomment %}
+  {% liquid
+    assign desc_rendered = product.metafields.custom.product_description | metafield_tag
+
+    if desc_rendered == blank
+      assign desc_rendered = product.metafields.custom.product_description.value
+    endif
+
+    if desc_rendered == blank
+      assign desc_rendered = product.description
+    endif
+  %}
+  description: {{ desc_rendered | json }},
+  ticks: {{ product.metafields.custom.ticks | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Reviews (from reviews.* namespace)
+  // ─────────────────────────────────────────────────────────
+  reviewRating: {{ product.metafields.reviews.rating | default: 0 }},
+  reviewCount: {{ product.metafields.reviews.count | default: 0 }},
+
+  // ─────────────────────────────────────────────────────────
+  // Badges & Status Indicators
+  // ─────────────────────────────────────────────────────────
+  isBestseller: {% if product.metafields.custom.is_bestseller %}true{% else %}false{% endif %},
+  discount: {{ product.metafields.custom.new_shop_discount | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Stock & Inventory
+  // ─────────────────────────────────────────────────────────
+  stockLevel: {{ product.selected_or_first_available_variant.inventory_quantity | default: 0 }},
+  available: {{ product.available | json }},
+
+  // ─────────────────────────────────────────────────────────
+  // Upsell Products (Full details from metafields)
+  // ─────────────────────────────────────────────────────────
+  upsells: [
+    {%- if product.metafields.custom.first_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.first_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.first_upsell_product.value.selected_or_first_available_variant.id }},
+        title: {{ product.metafields.custom.first_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.first_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.first_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.first_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.first_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.first_upsell_product.value.url }}"
+      }{%- if product.metafields.custom.second_upsell_product.value -%},{%- endif -%}
+    {%- endif -%}
+    {%- if product.metafields.custom.second_upsell_product.value -%}
+      {
+        id: "{{ product.metafields.custom.second_upsell_product.value.id }}",
+        variantId: {{ product.metafields.custom.second_upsell_product.value.selected_or_first_available_variant.id }},
+        title: {{ product.metafields.custom.second_upsell_product.value.title | json }},
+        handle: "{{ product.metafields.custom.second_upsell_product.value.handle }}",
+        price: {{ product.metafields.custom.second_upsell_product.value.price }},
+        comparePrice: {{ product.metafields.custom.second_upsell_product.value.compare_at_price | default: 0 }},
+        image: "{{ product.metafields.custom.second_upsell_product.value.featured_image | img_url: '400x400' }}",
+        url: "{{ product.metafields.custom.second_upsell_product.value.url }}"
+      }
+    {%- endif -%}
+  ],
+
+  // ─────────────────────────────────────────────────────────
+  // Product Classification
+  // ─────────────────────────────────────────────────────────
+  productType: {{ product.type | json }},
+  tags: {{ product.tags | json }},
+  vendor: {{ product.vendor | json }}
+};
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+// ═══════════════════════════════════════════════════════════
+// DEBUGGING & VALIDATION
+// ═══════════════════════════════════════════════════════════
+if (window.bf25Config.debug) {
+  console.group('🚀 BF25 Data Layer Initialized - Prompt 1');
+
+  // Configuration check
+  console.log('📋 Configuration:', window.bf25Config);
+  console.log('   Mode:', window.bf25Config.mode);
+  console.log('   Tiers:', window.bf25Config.tiers.length, 'defined');
+
+  // Product data check
+  const productCount = Object.keys(window.productData).length;
+  console.log('📦 Products Loaded:', productCount);
+
+  if (productCount > 0) {
+    const sampleProductId = Object.keys(window.productData)[0];
+    const sampleProduct = window.productData[sampleProductId];
+    console.log('📄 Sample Product:', {
+      id: sampleProduct.id,
+      title: sampleProduct.title,
+      basePrice: sampleProduct.basePrice,
+      reviewRating: sampleProduct.reviewRating,
+      hasDescription: !!sampleProduct.description,
+      hasUpsells: sampleProduct.upsells.length > 0
+    });
+  }
+
+  // Validate existing productVariants preserved
+  if (window.productVariants) {
+    console.log('✅ window.productVariants preserved');
+    console.log('   Variants Loaded:', Object.keys(window.productVariants).length);
+  } else {
+    console.warn('⚠️ window.productVariants not found (may load after this script)');
+  }
+
+  console.groupEnd();
+}
+</script>
+
+</section>
+
+{% comment %} <script>
+    AOS.init();
+    document.addEventListener("shopify:section:load", () => {
+      AOS.init();
+    })
+  </script> {% endcomment %}
+<script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-bf.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'section-power-pack-bf25.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Filter pills functionality
+    const pills = document.querySelectorAll('.filter-pills .pill');
+    const collections = document.querySelectorAll('.collection');
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', function() {
+        // Remove active class from all pills
+        pills.forEach(p => p.classList.remove('active'));
+
+        // Add active class to clicked pill
+        this.classList.add('active');
+
+        // Get filter value
+        const filterValue = this.dataset.filter;
+
+        // Show/hide collections based on filter
+        collections.forEach(collection => {
+          if (filterValue === 'all') {
+            collection.style.display = 'block';
+          } else {
+            if (collection.id === filterValue) {
+              collection.style.display = 'block';
+            } else {
+              collection.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<script>
+/* Performance: Only animate info icons when visible */
+(function() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.1, rootMargin: '50px' });
+
+  // Observe all info icons
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.bf25-product-info-icon').forEach(icon => {
+      observer.observe(icon);
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Power Pack BF25",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎛️ Modal Configuration"
+    },
+    {
+      "type": "paragraph",
+      "content": "Configure how products are added to cart in the expansion modal. Power Packs mode emphasizes bulk savings with tier buttons. Individual mode offers traditional quantity selection."
+    },
+    {
+      "type": "select",
+      "id": "modal_display_mode",
+      "label": "Display Mode",
+      "info": "Power Packs: Tier buttons | Individual: Stepper",
+      "options": [
+        {
+          "value": "power_packs",
+          "label": "Power Packs (Tier Buttons)"
+        },
+        {
+          "value": "individual",
+          "label": "Individual (Quantity Stepper)"
+        }
+      ],
+      "default": "power_packs"
+    },
+    {
+      "type": "header",
+      "content": "💰 Tier Discount Structure"
+    },
+    {
+      "type": "paragraph",
+      "content": "The tier percentages below are optimized for Black Friday 2025 and are currently hardcoded in the JavaScript configuration. Future updates can make these Theme Customizer editable if needed."
+    },
+    {
+      "type": "paragraph",
+      "content": "Current structure: Tier 1 (4 items, 60% off) → Tier 2 (8 items, 75% off) → Tier 3 (12 items, 80% off) → Tier 4 (16 items, 85% off)"
+    },
+    {
+      "type": "header",
+      "content": "Legacy Settings"
+    },
+    {
+      "type": "checkbox",
+      "label": "Activate Popups",
+      "id": "use_popup",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "label": "Show Alt Images",
+      "id": "show_alt_images",
+      "default": false
+    },
+    {
+      "type": "collection_list",
+      "label": "Collections",
+      "id": "collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_4",
+      "label": "Add 4 image"
+    },
+    {
+      "type": "text",
+      "id": "add_4_text",
+      "label": "Add 4 Number"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_6",
+      "label": "Add 6 image"
+    },
+    {
+      "type": "text",
+      "id": "add_6_text",
+      "label": "Add 6 Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "add_10",
+      "label": "Add 10 image"
+    },
+    {
+      "type": "text",
+      "id": "add_10_text",
+      "label": "Add 10 Number"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav",
+      "name": "Nav",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "power pack bf25"
+    }
+  ]
+}
+{% endschema %}

@@ -2512,3 +2512,626 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
 }
 
 /* END BRIGHTER FLASH */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - SCALE UP OVERRIDES
+   Making 85% and "This Shouldn't Exist" more impactful
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   85% NUMBER - MASSIVE WITH GREEN GLOW
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-big-number {
+  font-size: 280px !important;
+  font-weight: 900 !important;
+  line-height: 0.85 !important;
+  letter-spacing: -8px !important;
+  text-shadow:
+    0 0 80px rgba(96, 198, 85, 0.3),
+    0 0 120px rgba(96, 198, 85, 0.15) !important;
+}
+
+/* % Symbol - Smaller, positioned nicely */
+.bf25-hero-split .bf25-percent {
+  font-size: 70px !important;
+  margin-left: 8px !important;
+  vertical-align: top !important;
+  margin-top: 30px !important;
+  display: inline-block !important;
+  text-shadow: 0 0 30px rgba(96, 198, 85, 0.5) !important;
+}
+
+/* Maximum Savings label */
+.bf25-hero-split .bf25-big-label {
+  font-size: 18px !important;
+  letter-spacing: 8px !important;
+  margin-top: 20px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.4) !important;
+}
+
+/* Visual container - more padding for bigger number */
+.bf25-hero-split .bf25-hero-visual {
+  padding: 60px 40px !important;
+}
+
+/* Glow background - bigger for larger number */
+.bf25-hero-split .bf25-hero-visual::before {
+  width: 500px !important;
+  height: 500px !important;
+  background: radial-gradient(circle, rgba(96, 198, 85, 0.15) 0%, transparent 70%) !important;
+}
+
+/* ---------------------------------------------------------------------
+   HEADLINE - "This Shouldn't Exist" BIGGER
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-headline {
+  font-size: 52px !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+  margin-bottom: 16px !important;
+}
+
+/* "Exist." - Enhanced glow */
+.bf25-hero-split .bf25-energy-text {
+  font-size: 1.15em !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* Subline - slightly larger */
+.bf25-hero-split .bf25-hero-subline {
+  font-size: 17px !important;
+  margin-bottom: 10px !important;
+}
+
+/* Steps - slightly larger */
+.bf25-hero-split .bf25-hero-step {
+  font-size: 15px !important;
+  margin-bottom: 12px !important;
+}
+
+.bf25-hero-split .bf25-step-num {
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 13px !important;
+}
+
+/* ---------------------------------------------------------------------
+   TABLET - 769px to 1024px
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 200px !important;
+    letter-spacing: -6px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 55px !important;
+    margin-top: 20px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 15px !important;
+    letter-spacing: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 40px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   LARGE DESKTOP - 1200px+
+   --------------------------------------------------------------------- */
+
+@media (min-width: 1200px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 320px !important;
+    letter-spacing: -10px !important;
+    margin-left: 0 !important; /* Remove the weird offset */
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 80px !important;
+    margin-top: 40px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 20px !important;
+    letter-spacing: 10px !important;
+    margin-left: 0 !important; /* Remove offset */
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 58px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 18px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 600px !important;
+    height: 600px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE - 768px and below
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 160px !important;
+    letter-spacing: -5px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 45px !important;
+    margin-top: 15px !important;
+    margin-left: 4px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+    margin-top: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 36px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-energy-text {
+    font-size: 1.1em !important;
+  }
+
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 14px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 11px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 350px !important;
+    height: 350px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   EXTRA SMALL - 375px and below
+   --------------------------------------------------------------------- */
+
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 130px !important;
+    letter-spacing: -4px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 38px !important;
+    margin-top: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 10px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 30px !important;
+  }
+}
+
+/* END HERO SPLIT SCALE UP */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - COMPREHENSIVE FIXES V2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FIX 1: DESKTOP - Contain 85% so it doesn't drift left
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-grid {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.bf25-hero-split .bf25-hero-visual-content {
+  margin-left: 0 !important;
+  text-align: center !important;
+}
+
+/* Remove the weird left margin on large screens */
+@media (min-width: 1200px) {
+  .bf25-hero-split .bf25-big-number {
+    margin-left: 0 !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    margin-left: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 2: URGENCY BAR - Redesigned Layout (Desktop)
+   "BLACK FRIDAY ENDS" on top, social proof on sides
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 20px 40px !important;
+    background: rgba(5, 5, 5, 0.98) !important;
+  }
+
+  /* Top row: BLACK FRIDAY ENDS label */
+  .bf25-hero-split .bf25-urgency-label {
+    order: -1 !important;
+    font-size: 12px !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Main row: Social + Battery + Social */
+  .bf25-hero-split .bf25-urgency-group {
+    display: contents !important;
+  }
+
+  /* Create a flex row for battery and social */
+  .bf25-hero-split .bf25-urgency-strip::before {
+    content: none !important;
+  }
+
+  /* Battery - Darker red, more prominent */
+  .bf25-hero-split .bf25-battery-body {
+    width: 200px !important;
+    height: 38px !important;
+    border-color: #993344 !important;
+    background: rgba(15, 10, 10, 0.98) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-cap {
+    background: #993344 !important;
+    height: 18px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-fill {
+    background: linear-gradient(90deg, #662233, #883344, #773344) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+  }
+
+  /* Social items - ensure visible */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    display: flex !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Desktop urgency layout - horizontal with social on sides */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: 12px 30px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-group {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    order: 0 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-container {
+    order: 1 !important;
+  }
+
+  /* Social items in row below */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:first-of-type {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:last-of-type {
+    grid-column: 3 !important;
+    grid-row: 2 !important;
+    justify-self: start !important;
+  }
+
+  /* Empty middle for spacing */
+  .bf25-hero-split .bf25-urgency-strip::after {
+    content: '' !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 200px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 3: MOBILE - Compress vertical space
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  /* Tighter visual section */
+  .bf25-hero-split .bf25-hero-visual {
+    padding: 20px 16px 15px !important;
+    min-height: auto !important;
+  }
+
+  /* Smaller glow */
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 280px !important;
+    height: 280px !important;
+  }
+
+  /* Tighter label spacing */
+  .bf25-hero-split .bf25-big-label {
+    margin-top: 8px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Tighter content section */
+  .bf25-hero-split .bf25-hero-content {
+    padding: 16px 16px 20px !important;
+  }
+
+  /* Smaller logo */
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 130px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Headline tighter */
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 32px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Subline - shorter for mobile */
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Cheeky line tighter */
+  .bf25-hero-split .bf25-cheeky {
+    font-size: 11px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Steps - compress to fit on one line each */
+  .bf25-hero-split .bf25-hero-steps {
+    margin-bottom: 14px !important;
+    padding: 0 4px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    font-size: 10px !important;
+  }
+
+  /* Hide detail text on mobile to prevent wrapping */
+  .bf25-hero-split .bf25-step-detail {
+    display: none !important;
+  }
+
+  /* CTA row tighter */
+  .bf25-hero-split .bf25-cta-row {
+    gap: 8px !important;
+  }
+
+  .bf25-hero-split .bf25-cta-button {
+    padding: 12px 24px !important;
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-timer-inline {
+    font-size: 11px !important;
+  }
+
+  /* Mobile urgency bar - label above timer */
+  .bf25-hero-split .bf25-urgency-strip {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-group {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    font-size: 10px !important;
+    order: -1 !important;
+  }
+
+  /* Bigger timer on mobile */
+  .bf25-hero-split .bf25-battery-body {
+    width: 140px !important;
+    height: 30px !important;
+    border-color: #993344 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-cap {
+    background: #993344 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-fill {
+    background: linear-gradient(90deg, #662233, #883344) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-visual {
+    padding: 16px 12px 12px !important;
+  }
+
+  .bf25-hero-split .bf25-big-number {
+    font-size: 120px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 35px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-content {
+    padding: 14px 14px 18px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 28px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 10px !important;
+  }
+}
+
+/* END HERO SPLIT FIXES V2 */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 SLIDER HEADER - MINIMAL RESTYLE
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Main heading - cleaner, bolder */
+.bf25-hero__heading {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin-bottom: 8px !important;
+  letter-spacing: -0.5px !important;
+}
+
+/* Subheading - minimal, muted */
+.bf25-hero__subheading {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  margin-bottom: 28px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__heading {
+    font-size: 22px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .bf25-hero__subheading {
+    font-size: 13px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Hide the gifts header text (we have the subheading) */
+.bf25-hero__gifts-header {
+  display: none !important;
+}
+
+/* END SLIDER HEADER RESTYLE */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - BACKGROUND & CONTAINMENT FIXES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Ensure full black background on the section wrapper */
+.bf25-hero-split {
+  background: #000 !important;
+}
+
+/* Hero grid - also black */
+.bf25-hero-split .bf25-hero-grid {
+  background: #000 !important;
+}
+
+/* Visual side - ensure no gaps */
+.bf25-hero-split .bf25-hero-visual {
+  background: #000 !important;
+}
+
+/* Content side - ensure no gaps */
+.bf25-hero-split .bf25-hero-content {
+  background: #000 !important;
+}
+
+/* Urgency strip - also needs containment */
+.bf25-hero-split .bf25-urgency-strip {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  background: #000 !important;
+}
+
+/* Social items - keep close to battery, don't drift */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px 40px !important;
+    padding: 18px 40px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Ensure social items stay near center */
+  .bf25-hero-split .bf25-urgency-strip::before,
+  .bf25-hero-split .bf25-urgency-strip::after {
+    content: none !important;
+  }
+}
+
+/* END BACKGROUND FIXES */

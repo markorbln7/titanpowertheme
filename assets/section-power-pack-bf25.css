@@ -3577,3 +3577,201 @@ body.modal-open {
   cursor: not-allowed;
   transform: none;
 }
+
+/* ============================================
+   CARD BACK ELEMENTS
+   ============================================ */
+
+/* Back Header */
+.power-pack-section .pp-back-header {
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--pp-gold-glow-subtle);
+  margin-bottom: 10px;
+}
+
+.power-pack-section .pp-back-header img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.power-pack-section .pp-back-header h3 {
+  color: var(--pp-gold);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.power-pack-section .pp-back-header p {
+  color: var(--pp-text-muted);
+  font-size: 10px;
+  margin: 0;
+}
+
+/* Variant Dropdowns Row - No Labels */
+.power-pack-section .pp-variant-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.power-pack-section .pp-variant-dropdown {
+  flex: 1;
+  padding: 9px 28px 9px 12px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--pp-gold-glow-subtle);
+  border-radius: 10px;
+  color: var(--pp-text);
+  font-size: 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23D4AF37' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.3s ease;
+}
+
+.power-pack-section .pp-variant-dropdown:focus {
+  border-color: var(--pp-gold);
+  outline: none;
+}
+
+.power-pack-section .pp-variant-dropdown:hover {
+  border-color: var(--pp-gold);
+}
+
+/* Pack Title */
+.power-pack-section .pp-pack-title {
+  color: var(--pp-gold);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  margin: 6px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Pack Grid - 2x2 */
+.power-pack-section .pp-pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  flex: 1;
+}
+
+.power-pack-section .pp-pack-btn {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid var(--pp-gold-glow-subtle);
+  border-radius: 10px;
+  padding: 10px 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.power-pack-section .pp-pack-btn:hover,
+.power-pack-section .pp-pack-btn.selected {
+  border-color: var(--pp-gold);
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-1px);
+}
+
+.power-pack-section .pp-pack-btn.popular {
+  border-color: var(--pp-gold);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+/* BEST Badge - No Emoji */
+.power-pack-section .pp-pack-btn.popular::before {
+  content: 'BEST';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--pp-gold), var(--pp-gold-dark));
+  color: #000;
+  font-size: 7px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.power-pack-section .pp-pack-qty {
+  display: block;
+  color: var(--pp-text);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.power-pack-section .pp-pack-discount {
+  display: block;
+  color: var(--pp-gold);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.power-pack-section .pp-pack-gifts {
+  display: block;
+  color: var(--pp-cyan);
+  font-size: 9px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+/* Add to Bundle Button */
+.power-pack-section .pp-add-to-bundle {
+  margin-top: 10px;
+  background: linear-gradient(135deg, var(--pp-gold), var(--pp-gold-dark));
+  border: none;
+  border-radius: 20px;
+  padding: 12px 16px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.power-pack-section .pp-add-to-bundle:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 25px var(--pp-gold-glow);
+}
+
+.power-pack-section .pp-add-to-bundle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Back Link */
+.power-pack-section .pp-back-link {
+  text-align: center;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.power-pack-section .pp-back-link button {
+  background: transparent;
+  border: none;
+  color: var(--pp-text-muted);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 4px 10px;
+  transition: color 0.3s ease;
+}
+
+.power-pack-section .pp-back-link button:hover {
+  color: var(--pp-gold);
+}

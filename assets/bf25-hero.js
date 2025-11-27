@@ -581,3 +581,49 @@ if (document.readyState === 'loading') {
     }
   });
 })();
+
+// ═══════════════════════════════════════════════════════════════════════
+// STICKY CART OBSERVER - Shows cart after scrolling past hero section
+// ═══════════════════════════════════════════════════════════════════════
+(function() {
+  'use strict';
+
+  function initStickyCartObserver() {
+    // Find the hero section to observe
+    const heroSection = document.querySelector('.bf25-hero-split, .bf25-hero');
+    const stickyCart = document.querySelector('.bf25-sticky-cart');
+
+    if (!heroSection || !stickyCart) {
+      console.log('Sticky cart observer: Missing hero section or sticky cart');
+      return;
+    }
+
+    // Create intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // When hero section is completely out of view (scrolled past)
+        if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+          document.body.classList.add('show-sticky-cart');
+        } else {
+          document.body.classList.remove('show-sticky-cart');
+        }
+      });
+    }, {
+      // Small negative margin to trigger slightly before hero is completely out of view
+      rootMargin: '-100px 0px 0px 0px',
+      threshold: 0
+    });
+
+    // Start observing the hero section
+    observer.observe(heroSection);
+
+    console.log('Sticky cart observer initialized');
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStickyCartObserver);
+  } else {
+    initStickyCartObserver();
+  }
+})();

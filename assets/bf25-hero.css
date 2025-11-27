@@ -4621,3 +4621,130 @@ body.show-sticky-cart .bf25-sticky-cart {
 .bf25-hero__card .arrow {
   margin-bottom: 4px !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 SLIDER SECTION FIXES - HIGH SPECIFICITY OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   1. HEADER - 30% Bigger (Force Override)
+   --------------------------------------------------------------------- */
+
+section.bf25-hero .bf25-hero__heading,
+.bf25-hero .bf25-hero__container .bf25-hero__heading,
+#bf25-hero-section .bf25-hero__heading {
+  font-size: 42px !important;
+  line-height: 1.15 !important;
+}
+
+@media (max-width: 768px) {
+  section.bf25-hero .bf25-hero__heading,
+  .bf25-hero .bf25-hero__container .bf25-hero__heading,
+  #bf25-hero-section .bf25-hero__heading {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  section.bf25-hero .bf25-hero__heading,
+  .bf25-hero .bf25-hero__container .bf25-hero__heading,
+  #bf25-hero-section .bf25-hero__heading {
+    font-size: 24px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   2. SLIDER CARD - 50% Shorter Height (Force Override)
+   --------------------------------------------------------------------- */
+
+section.bf25-hero .bf25-hero__card,
+.bf25-hero .bf25-hero__module .bf25-hero__card,
+#bf25-hero-section .bf25-hero__card {
+  min-height: auto !important;
+  max-height: 280px !important;
+  padding: 20px 20px !important;
+}
+
+/* Make tier 0 (instruction state) even smaller */
+section.bf25-hero .bf25-hero__card[data-active-tier="0"],
+.bf25-hero .bf25-hero__module .bf25-hero__card[data-active-tier="0"],
+#bf25-hero-section .bf25-hero__card[data-active-tier="0"] {
+  max-height: 180px !important;
+  padding: 15px 20px !important;
+}
+
+/* Compress internal spacing */
+section.bf25-hero .bf25-hero__card-header,
+#bf25-hero-section .bf25-hero__card-header {
+  margin-bottom: 12px !important;
+}
+
+section.bf25-hero .bf25-hero__card-content,
+#bf25-hero-section .bf25-hero__card-content {
+  padding: 8px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__card-footer,
+#bf25-hero-section .bf25-hero__card-footer {
+  margin-top: 12px !important;
+}
+
+/* Make default message smaller */
+section.bf25-hero .bf25-hero__default-message,
+#bf25-hero-section .bf25-hero__default-message {
+  margin: 8px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__default-title,
+#bf25-hero-section .bf25-hero__default-title {
+  font-size: 14px !important;
+  margin: 4px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__default-subtitle,
+#bf25-hero-section .bf25-hero__default-subtitle {
+  font-size: 13px !important;
+  margin: 4px 0 !important;
+}
+
+/* Reduce benefit list spacing */
+section.bf25-hero .bf25-hero__benefits,
+#bf25-hero-section .bf25-hero__benefits {
+  gap: 6px !important;
+  margin: 10px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__benefit,
+#bf25-hero-section .bf25-hero__benefit {
+  padding: 4px 0 !important;
+  font-size: 13px !important;
+}
+
+/* Compress pricing section */
+section.bf25-hero .bf25-hero__pricing,
+#bf25-hero-section .bf25-hero__pricing {
+  padding: 10px !important;
+  margin-top: 10px !important;
+}
+
+section.bf25-hero .bf25-hero__pricing-row,
+#bf25-hero-section .bf25-hero__pricing-row {
+  margin-bottom: 4px !important;
+  font-size: 13px !important;
+}
+
+/* ---------------------------------------------------------------------
+   3. FLOATING CABLE - 25px More Left (Force Override)
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-floating-cable {
+  left: calc(3% - 35px) !important; /* Was 10px, now 35px total */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: calc(2% - 30px) !important; /* Was 5px, now 30px total */
+  }
+}
+
+/* END SLIDER SECTION FIXES */

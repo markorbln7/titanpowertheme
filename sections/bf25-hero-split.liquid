@@ -90,7 +90,7 @@
 
       <!-- CTA Row -->
       <div class="bf25-cta-row">
-        <a href="{{ cta_link }}" class="bf25-cta-button">
+        <a href="#bf25-hero-section" class="bf25-cta-button" data-scroll-to="slider">
           {{ cta_text }}
         </a>
         <div class="bf25-timer-inline">
@@ -900,6 +900,25 @@
       setTimeout(function() {
         Currency.convertAll(Currency.currentCurrency, Currency.currentCurrency);
       }, 100);
+    }
+  });
+
+  // Smooth scroll to slider section
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctaBtn = document.querySelector('.bf25-cta-button[data-scroll-to="slider"]');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.getElementById('bf25-hero-section');
+        if (target) {
+          const offset = 80; // Offset from top for better positioning
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     }
   });
 })();

@@ -65,7 +65,7 @@
       {%- assign is_center = false -%}
       {%- if forloop.index == 3 -%}{%- assign is_center = true -%}{%- endif -%}
       
-      <div class="ppc-card-wrapper bf25-product-card {% if is_center %}active{% endif %}"
+      <div class="ppc-card-wrapper {% if is_center %}active{% endif %}"
            data-index="{{ forloop.index0 }}"
            data-product-id="{{ product.id }}"
            data-variant-id="{{ variant.id }}"
@@ -89,37 +89,19 @@
               </button>
               
               <div class="ppc-product-image">
-                {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.top_new_shop_image.value | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% elsif product.metafields.custom.new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.new_shop_image.value | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% else %}
-                  <img src="{{ product.featured_image | image_url: width: 400 }}"
-                       alt="{{ product.title | escape }}"
-                       loading="lazy"
-                       width="200"
-                       height="200">
-                {% endif %}
+                <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
               </div>
               
               <h3 class="ppc-product-title">{{ product.title }}</h3>
               
               <div class="ppc-reviews-row">
-                <div class="ppc-reviews-line">
-                  <span class="ppc-stars">★★★★★</span>
-                  <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
-                </div>
-                <div class="ppc-stock-line" data-product-id="{{ product.id }}">
-                  <!-- Stock populated by JS -->
-                </div>
+                <span class="ppc-stars">★★★★★</span>
+                <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                <span class="ppc-reviews-divider">|</span>
+                <span class="ppc-stock-indicator">
+                  <span class="ppc-stock-dot"></span>
+                  <span class="ppc-stock-text bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
+                </span>
               </div>
               
               <div class="ppc-bullet-points">
@@ -144,27 +126,19 @@
             <div class="ppc-card-back">
               
               <div class="ppc-back-header">
-                {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.top_new_shop_image.value | image_url: width: 100 }}" alt="" width="50" height="50">
-                {% elsif product.metafields.custom.new_shop_image and section.settings.show_alt_images == true %}
-                  <img src="{{ product.metafields.custom.new_shop_image.value | image_url: width: 100 }}" alt="" width="50" height="50">
-                {% else %}
-                  <img src="{{ product.featured_image | image_url: width: 100 }}" alt="" width="50" height="50">
-                {% endif %}
-                <h3 class="ppc-back-title">{{ product.title }}</h3>
-                <p class="ppc-back-subtitle">Select options & pack size</p>
+                <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" width="40" height="40">
+                <h3>{{ product.title }}</h3>
+                <p>Select options & pack size</p>
               </div>
               
               {% if product.variants.size > 1 %}
               <div class="ppc-variant-row">
                 {% for option in product.options_with_values limit: 2 %}
-                  <div class="ppc-dropdown-wrapper">
                   <select class="ppc-variant-dropdown js-ppc-variant-select" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name }}">
                     {% for value in option.values %}
                       <option value="{{ value }}" {% if value == option.selected_value %}selected{% endif %}>{{ value }}</option>
                     {% endfor %}
                   </select>
-                  </div>
                 {% endfor %}
               </div>
               {% endif %}
@@ -324,7 +298,7 @@
                           <div class="bf25-reviews-stock-row">
                             <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
                             <span class="bf25-reviews-divider">|</span>
-                            <!-- Stock for back of card if needed -->
+                            <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
                           </div>
                         </div>
 

@@ -4691,3 +4691,111 @@ body.modal-open {
 .power-pack-section .ppc-dot {
   pointer-events: auto !important;
 }
+
+/* ============================================
+   FIX: Interactive Elements on Active Card
+   ============================================ */
+
+/* Force ALL interactive elements on active card to be clickable */
+.power-pack-section .ppc-card-wrapper.active .ppc-card-back,
+.power-pack-section .ppc-card-wrapper.active .ppc-pack-grid,
+.power-pack-section .ppc-card-wrapper.active .ppc-pack-btn,
+.power-pack-section .ppc-card-wrapper.active .js-ppc-pack-select,
+.power-pack-section .ppc-card-wrapper.active .ppc-variant-row,
+.power-pack-section .ppc-card-wrapper.active .ppc-variant-dropdown,
+.power-pack-section .ppc-card-wrapper.active select,
+.power-pack-section .ppc-card-wrapper.active .ppc-add-bundle,
+.power-pack-section .ppc-card-wrapper.active .js-ppc-add-bundle,
+.power-pack-section .ppc-card-wrapper.active .ppc-back-link,
+.power-pack-section .ppc-card-wrapper.active .js-ppc-flip-back,
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-cta,
+.power-pack-section .ppc-card-wrapper.active .js-ppc-flip-trigger,
+.power-pack-section .ppc-card-wrapper.active button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Also ensure card front and back are clickable on active */
+.power-pack-section .ppc-card-wrapper.active .ppc-card-front,
+.power-pack-section .ppc-card-wrapper.active .ppc-card-back {
+  pointer-events: auto !important;
+}
+
+/* Pack buttons need to be visually clickable */
+.power-pack-section .ppc-pack-btn {
+  cursor: pointer;
+  position: relative;
+}
+
+/* ============================================
+   FIX: Back Button & Card Back Layout
+   ============================================ */
+
+/* Ensure card back has proper layout */
+.power-pack-section .ppc-card-back {
+  display: flex;
+  flex-direction: column;
+  padding: 15px !important;
+  overflow: hidden;
+}
+
+/* Back link at bottom - smaller, always visible */
+.power-pack-section .ppc-back-link {
+  margin-top: auto;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.power-pack-section .js-ppc-flip-back {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 15px;
+  transition: color 0.3s ease;
+}
+
+.power-pack-section .js-ppc-flip-back:hover {
+  color: var(--ppc-gold, #D4AF37);
+}
+
+/* Reduce variant row height when there are 2 selects */
+.power-pack-section .ppc-variant-row {
+  margin-bottom: 10px !important;
+}
+
+.power-pack-section .ppc-variant-dropdown {
+  padding: 10px 30px 10px 12px !important;
+  font-size: 12px !important;
+}
+
+/* Reduce pack grid spacing to fit better */
+.power-pack-section .ppc-pack-grid {
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+}
+
+.power-pack-section .ppc-pack-btn {
+  padding: 12px 8px !important;
+}
+
+.power-pack-section .ppc-pack-qty {
+  font-size: 22px !important;
+}
+
+.power-pack-section .ppc-pack-discount {
+  font-size: 12px !important;
+}
+
+.power-pack-section .ppc-pack-gifts {
+  font-size: 10px !important;
+}
+
+/* Add to bundle button - smaller */
+.power-pack-section .ppc-add-bundle,
+.power-pack-section .js-ppc-add-bundle {
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  margin-bottom: 5px !important;
+}

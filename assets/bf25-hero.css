@@ -4748,3 +4748,145 @@ section.bf25-hero .bf25-hero__pricing-row,
 }
 
 /* END SLIDER SECTION FIXES */
+
+/* ===== BF25 SPACING & AUTO-EXPAND FIXES ===== */
+
+/* ISSUE 1: Remove max-height from tiers 1-4, only constrain tier 0 */
+section.bf25-hero .bf25-hero__card {
+  min-height: auto !important;
+  max-height: none !important;  /* Remove max-height for auto-expand */
+  height: auto !important;      /* Auto height based on content */
+  padding: 20px 20px !important;
+  overflow: visible !important; /* Ensure content is not cut off */
+}
+
+/* Tier 0 specific - smaller but fits content */
+section.bf25-hero .bf25-hero__card[data-active-tier="0"] {
+  min-height: 100px !important;  /* Minimum height for tier 0 */
+  max-height: none !important;   /* Allow expansion if needed */
+  padding: 12px 20px !important;  /* Reduced vertical padding */
+}
+
+/* Ensure pricing rows don't get cut off */
+section.bf25-hero .bf25-hero__pricing-row--savings {
+  display: flex !important;
+  align-items: center !important;
+  min-height: auto !important;
+  margin: 8px 0 !important;
+}
+
+/* ISSUE 3: Hero Section Spacing Improvements */
+
+/* Reduce Black Friday logo to 66% size */
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 66% !important;
+  width: 66% !important;
+  height: auto !important;
+  margin: 0 auto !important;
+}
+
+@media (max-width: 767px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 75% !important;  /* Slightly bigger on mobile */
+    width: 75% !important;
+  }
+}
+
+/* Move "This Shouldn't Exist" closer to logo */
+.bf25-hero-split .bf25-hero-headline {
+  margin-top: 8px !important;   /* Reduced from default */
+  margin-bottom: 16px !important;
+}
+
+/* Add breathing room to steps */
+.bf25-hero-split .bf25-hero-steps {
+  margin-top: 32px !important;
+  margin-bottom: 32px !important;
+  padding: 16px 0 !important;
+}
+
+/* More space above CTA button */
+.bf25-hero-split .bf25-cta-button {
+  margin-top: 40px !important;
+  margin-bottom: 24px !important;
+}
+
+/* Overall content spacing */
+.bf25-hero-split .bf25-hero-content {
+  padding: 40px 20px !important;
+}
+
+@media (min-width: 768px) {
+  .bf25-hero-split .bf25-hero-content {
+    padding: 60px 40px !important;
+  }
+}
+
+/* ISSUE 4: Slider Section Top Spacing */
+section.bf25-hero {
+  padding-top: 80px !important;  /* More space at top */
+}
+
+.bf25-hero__header {
+  padding-top: 40px !important;
+  margin-bottom: 40px !important;
+}
+
+/* Space above countdown timer */
+.bf25-hero__timer-section,
+.bf25-countdown-timer {
+  margin-top: 30px !important;
+}
+
+/* ISSUE 5: Bright Green Pulsing First Slider Bar */
+
+/* Keyframes for bright green pulse */
+@keyframes bf25-slider-pulse {
+  0% {
+    background: #60c655;
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.8),
+                0 0 15px rgba(96, 198, 85, 0.6),
+                0 0 30px rgba(96, 198, 85, 0.4);
+  }
+  50% {
+    background: #90ff80;  /* Brighter green */
+    box-shadow: 0 0 10px rgba(144, 255, 128, 1),
+                0 0 30px rgba(144, 255, 128, 0.8),
+                0 0 50px rgba(144, 255, 128, 0.6),
+                0 0 70px rgba(96, 198, 85, 0.4);
+  }
+  100% {
+    background: #60c655;
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.8),
+                0 0 15px rgba(96, 198, 85, 0.6),
+                0 0 30px rgba(96, 198, 85, 0.4);
+  }
+}
+
+/* Apply bright pulse to first segment */
+.bf25-hero__progress-segment:first-child {
+  animation: bf25-slider-pulse 2s ease-in-out infinite !important;
+  background: #60c655 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Make first segment even brighter when active/filled */
+.bf25-hero__progress-segment:first-child.is-filled {
+  animation: bf25-slider-pulse 1.5s ease-in-out infinite !important;
+  filter: brightness(1.3) !important;
+}
+
+/* Enhanced glow effect for first segment */
+.bf25-hero__progress-segment:first-child::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: radial-gradient(circle, rgba(144, 255, 128, 0.6) 0%, transparent 70%);
+  animation: bf25-slider-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}

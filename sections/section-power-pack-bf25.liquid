@@ -40,6 +40,185 @@
     </div>
   </div>
 
+{%- comment -%}
+  ============================================
+  POWER PACK COVERFLOW CAROUSEL
+  Prefix: ppc- (to avoid conflict with Power Pairs pp-)
+  ============================================
+{%- endcomment -%}
+
+{%- assign pp_collection = section.settings.collections.first -%}
+{%- assign pp_collection_obj = collections[pp_collection.handle] -%}
+
+<div class="ppc-section-header">
+  <h2 class="ppc-title">⭐ POWER PACKS</h2>
+  <p class="ppc-subtitle">Up to 85% OFF</p>
+</div>
+
+<div class="ppc-coverflow-stage">
+  <div class="ppc-coverflow-track" data-product-count="{{ pp_collection_obj.products.size }}">
+    
+    {% for product in pp_collection_obj.products limit: 8 %}
+      {%- assign variant = product.selected_or_first_available_variant -%}
+      {%- assign stock_level = variant.inventory_quantity | default: 0 -%}
+      {%- assign review_count = product.metafields.reviews.rating_count | default: product.metafields.loox.num_reviews | default: '1,000+' -%}
+      {%- assign description_raw = product.metafields.custom.product_description | default: '' -%}
+      {%- assign description_parts = description_raw | split: '|' -%}
+      {%- assign is_center = false -%}
+      {%- if forloop.index == 3 -%}{%- assign is_center = true -%}{%- endif -%}
+      
+      <div class="ppc-card-wrapper {% if is_center %}active{% endif %}"
+           data-index="{{ forloop.index0 }}"
+           data-product-id="{{ product.id }}"
+           data-variant-id="{{ variant.id }}"
+           data-product-handle="{{ product.handle }}">
+        
+        <div class="ppc-card-container">
+          <div class="ppc-flip-card" data-flippable="true">
+            
+            <!-- CARD FRONT -->
+            <div class="ppc-card-front">
+              
+              <div class="ppc-discount-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <span>UP TO 85% OFF</span>
+              </div>
+              
+              <button type="button" class="ppc-info-icon js-ppc-info-modal" data-product-id="{{ product.id }}" aria-label="View {{ product.title }} details">
+                <span>ⓘ</span>
+              </button>
+              
+              <div class="ppc-product-image">
+                <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
+                {% if product.tags contains 'bestseller' or forloop.index <= 4 %}
+                  <div class="ppc-bestseller-badge">
+                    <img src="{{ 'bestseller-badge.png' | asset_url }}" alt="Best Seller" width="45" height="45">
+                  </div>
+                {% endif %}
+              </div>
+              
+              <h3 class="ppc-product-title">{{ product.title }}</h3>
+              
+              <div class="ppc-reviews-row">
+                <span class="ppc-stars">★★★★★</span>
+                <span class="ppc-reviews-count">{{ review_count }} reviews</span>
+                <span class="ppc-reviews-divider">|</span>
+                <span class="ppc-stock-indicator">
+                  <span class="ppc-stock-dot"></span>
+                  <span class="ppc-stock-text">{{ stock_level }} left</span>
+                </span>
+              </div>
+              
+              <div class="ppc-bullet-points">
+                <div class="ppc-bullet-list">
+                  {% for feature in description_parts limit: 3 %}
+                    <div class="ppc-bullet-item">
+                      <span class="ppc-bullet-icon">⚡</span>
+                      <span>{{ feature | strip }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <div class="ppc-price-section">
+                <span class="ppc-price-current">{{ variant.price | money }}</span>
+                {% if variant.compare_at_price > variant.price %}
+                  <span class="ppc-price-compare">{{ variant.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+              
+              <button type="button" class="ppc-flip-cta js-ppc-flip-trigger">ADD PACKS →</button>
+              
+            </div>
+            <!-- END CARD FRONT -->
+            
+            <!-- CARD BACK -->
+            <div class="ppc-card-back">
+              
+              <div class="ppc-back-header">
+                <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" width="40" height="40">
+                <h3>{{ product.title }}</h3>
+                <p>Select options & pack size</p>
+              </div>
+              
+              <div class="ppc-variant-row">
+                {% for option in product.options_with_values limit: 2 %}
+                  <select class="ppc-variant-dropdown js-ppc-variant-select" data-option-index="{{ forloop.index0 }}" data-option-name="{{ option.name }}">
+                    {% for value in option.values %}
+                      <option value="{{ value }}" {% if value == option.selected_value %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                {% endfor %}
+                {% if product.options_with_values.size < 2 %}
+                  <select class="ppc-variant-dropdown" disabled style="visibility: hidden;"><option>-</option></select>
+                {% endif %}
+              </div>
+              
+              <div class="ppc-pack-title">Choose Pack Size</div>
+              
+              <div class="ppc-pack-grid">
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="4" data-discount="60">
+                  <span class="ppc-pack-qty">×4</span>
+                  <span class="ppc-pack-discount">60% OFF</span>
+                  <span class="ppc-pack-gifts">+1 Gift</span>
+                </button>
+                <button type="button" class="ppc-pack-btn popular js-ppc-pack-select" data-quantity="8" data-discount="70">
+                  <span class="ppc-pack-qty">×8</span>
+                  <span class="ppc-pack-discount">70% OFF</span>
+                  <span class="ppc-pack-gifts">+2 Gifts</span>
+                </button>
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="12" data-discount="80">
+                  <span class="ppc-pack-qty">×12</span>
+                  <span class="ppc-pack-discount">80% OFF</span>
+                  <span class="ppc-pack-gifts">+3 Gifts</span>
+                </button>
+                <button type="button" class="ppc-pack-btn js-ppc-pack-select" data-quantity="16" data-discount="85">
+                  <span class="ppc-pack-qty">×16</span>
+                  <span class="ppc-pack-discount">85% OFF</span>
+                  <span class="ppc-pack-gifts">+4 Gifts</span>
+                </button>
+              </div>
+              
+              <button type="button" class="ppc-add-to-bundle js-ppc-add-to-bundle" disabled>ADD TO BUNDLE</button>
+              
+              <div class="ppc-back-link">
+                <button type="button" class="js-ppc-flip-back">← Back</button>
+              </div>
+              
+            </div>
+            <!-- END CARD BACK -->
+            
+          </div>
+        </div>
+        
+        <div class="ppc-card-reflection" aria-hidden="true">
+          <div class="ppc-reflection-inner">
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="">
+          </div>
+        </div>
+        
+      </div>
+    {% endfor %}
+    
+  </div>
+</div>
+
+<div class="ppc-nav-controls">
+  <button type="button" class="ppc-nav-btn js-ppc-nav-prev" aria-label="Previous product"><span>←</span></button>
+  <button type="button" class="ppc-nav-btn js-ppc-nav-next" aria-label="Next product"><span>→</span></button>
+</div>
+
+<div class="ppc-dot-nav">
+  {%- for i in (1..8) -%}
+    <button type="button" class="ppc-dot js-ppc-dot {% if i == 3 %}active{% endif %}" data-index="{{ i | minus: 1 }}" aria-label="Go to product {{ i }}"></button>
+  {%- endfor -%}
+</div>
+
+{%- comment -%} END POWER PACK COVERFLOW {%- endcomment -%}
+
+
   <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}

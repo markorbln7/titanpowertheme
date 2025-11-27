@@ -4530,3 +4530,35 @@ body.show-sticky-cart .bf25-sticky-cart {
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 ENERGY TEXT + CABLE POSITION FIX
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Energy text animation - "You Save?" matches "Exist." */
+@keyframes bf25-energy-flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.bf25-energy-text {
+  color: #60c655 !important;
+  background: linear-gradient(90deg, #60c655 0%, #60c655 35%, #90ff80 45%, #c0ffc0 50%, #90ff80 55%, #60c655 65%, #60c655 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 15px rgba(96, 198, 85, 0.7)) !important;
+}
+
+/* Cable - moved left */
+.bf25-hero-split .bf25-floating-cable {
+  left: 3% !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: 2% !important;
+  }
+}

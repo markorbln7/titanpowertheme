@@ -89,19 +89,37 @@
               </button>
               
               <div class="ppc-product-image">
-                <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" loading="lazy" width="150" height="150">
+                {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                  <img src="{{ product.metafields.custom.top_new_shop_image | image_url: width: 400 }}"
+                       alt="{{ product.title | escape }}"
+                       loading="lazy"
+                       width="200"
+                       height="200">
+                {% elsif product.metafields.custom.new_shop_image and section.settings.show_alt_images == true %}
+                  <img src="{{ product.metafields.custom.new_shop_image | image_url: width: 400 }}"
+                       alt="{{ product.title | escape }}"
+                       loading="lazy"
+                       width="200"
+                       height="200">
+                {% else %}
+                  <img src="{{ product.featured_image | image_url: width: 400 }}"
+                       alt="{{ product.title | escape }}"
+                       loading="lazy"
+                       width="200"
+                       height="200">
+                {% endif %}
               </div>
               
               <h3 class="ppc-product-title">{{ product.title }}</h3>
               
               <div class="ppc-reviews-row">
-                <span class="ppc-stars">★★★★★</span>
-                <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
-                <span class="ppc-reviews-divider">|</span>
-                <span class="ppc-stock-indicator">
-                  <span class="ppc-stock-dot"></span>
-                  <span class="ppc-stock-text bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
-                </span>
+                <div class="ppc-reviews-line">
+                  <span class="ppc-stars">★★★★★</span>
+                  <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                </div>
+                <div class="ppc-stock-line">
+                  <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
+                </div>
               </div>
               
               <div class="ppc-bullet-points">
@@ -126,9 +144,15 @@
             <div class="ppc-card-back">
               
               <div class="ppc-back-header">
-                <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" width="40" height="40">
-                <h3>{{ product.title }}</h3>
-                <p>Select options & pack size</p>
+                {% if product.metafields.custom.top_new_shop_image and section.settings.show_alt_images == true %}
+                  <img src="{{ product.metafields.custom.top_new_shop_image | image_url: width: 100 }}" alt="" width="50" height="50">
+                {% elsif product.metafields.custom.new_shop_image and section.settings.show_alt_images == true %}
+                  <img src="{{ product.metafields.custom.new_shop_image | image_url: width: 100 }}" alt="" width="50" height="50">
+                {% else %}
+                  <img src="{{ product.featured_image | image_url: width: 100 }}" alt="" width="50" height="50">
+                {% endif %}
+                <h3 class="ppc-back-title">{{ product.title }}</h3>
+                <p class="ppc-back-subtitle">Select options & pack size</p>
               </div>
               
               {% if product.variants.size > 1 %}

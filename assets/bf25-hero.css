@@ -3421,3 +3421,248 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
 }
 
 /* END V3 URGENCY FINAL */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 COMPREHENSIVE FIX - All Issues Addressed
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FIX 1: URGENCY BAR - Social on SIDES of Battery Pill
+   HTML Structure: .bf25-urgency-strip > .bf25-urgency-group, .bf25-social-item, .bf25-social-item, .bf25-social-row-mobile
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 35px !important;
+    flex-wrap: nowrap !important;
+    padding: 16px 20px 20px !important;
+    background: #000 !important;
+  }
+
+  /* Urgency group (battery) - center with order 2 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group {
+    order: 2 !important;
+    padding: 14px 40px 16px !important;
+    background: linear-gradient(180deg, rgba(139, 41, 66, 0.18) 0%, rgba(100, 30, 50, 0.08) 100%) !important;
+    border: 1px solid rgba(139, 41, 66, 0.3) !important;
+    border-radius: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    position: relative !important;
+    box-shadow:
+      0 0 40px rgba(139, 41, 66, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* Top accent line on pill */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -1px !important;
+    left: 20% !important;
+    right: 20% !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, transparent, rgba(139, 41, 66, 0.6), transparent) !important;
+    border-radius: 2px !important;
+  }
+
+  /* First social item - LEFT with order 1 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(1) {
+    order: 1 !important;
+    display: flex !important;
+  }
+
+  /* Second social item - RIGHT with order 3 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(2) {
+    order: 3 !important;
+    display: flex !important;
+  }
+
+  /* Style social items */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    white-space: nowrap !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item strong {
+    color: #fff !important;
+    font-weight: 700 !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item svg {
+    width: 16px !important;
+    height: 16px !important;
+    fill: #60c655 !important;
+  }
+
+  /* Hide mobile social row on desktop */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: none !important;
+  }
+}
+
+/* Battery styling */
+.bf25-hero-split .bf25-urgency-label {
+  font-size: 11px !important;
+  color: #ff6b7a !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+.bf25-hero-split .bf25-battery-body {
+  width: 200px !important;
+  height: 36px !important;
+  background: rgba(15, 8, 10, 0.98) !important;
+  border: 2px solid #8B2942 !important;
+}
+
+.bf25-hero-split .bf25-battery-text {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+.bf25-hero-split .bf25-battery-fill {
+  background: linear-gradient(90deg, #5C1F2E, #7A2940, #6B2438) !important;
+}
+
+/* Mobile - stack with battery on top */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 14px 16px 18px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group {
+    order: 1 !important;
+    padding: 12px 28px 14px !important;
+    border-radius: 50px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    display: none !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: flex !important;
+    order: 2 !important;
+    gap: 24px !important;
+  }
+
+  .bf25-hero-split .bf25-social-row-mobile .bf25-social-item {
+    display: flex !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 2: LOGO - Much Bigger with Glow
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 380px !important;
+  height: auto !important;
+  filter: drop-shadow(0 0 25px rgba(96, 198, 85, 0.4)) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 280px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 3: "Exist." Animation - SLOW Energy Flow (4s)
+   --------------------------------------------------------------------- */
+
+@keyframes bf25-energy-slow {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.bf25-hero-split .bf25-energy-text {
+  position: relative !important;
+  display: inline-block !important;
+  color: transparent !important;
+  background: linear-gradient(90deg,
+    #60c655 0%,
+    #60c655 30%,
+    rgba(150, 255, 130, 1) 45%,
+    rgba(200, 255, 180, 1) 50%,
+    rgba(150, 255, 130, 1) 55%,
+    #60c655 70%,
+    #60c655 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  animation: bf25-energy-slow 4s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* ---------------------------------------------------------------------
+   FIX 4: Slider Header - Minimal Style
+   --------------------------------------------------------------------- */
+
+.bf25-hero .bf25-hero__header {
+  margin-bottom: 20px !important;
+}
+
+.bf25-hero .bf25-hero__heading {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #fff !important;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.3px !important;
+}
+
+.bf25-hero .bf25-hero__subheading {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero .bf25-hero__heading {
+    font-size: 20px !important;
+  }
+  .bf25-hero .bf25-hero__subheading {
+    font-size: 12px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 5: Collapsed Card - Reduced Height
+   --------------------------------------------------------------------- */
+
+.bf25-hero__card[data-active-tier="0"] {
+  min-height: 120px !important;
+  padding: 24px 30px !important;
+}
+
+.bf25-hero__default-message {
+  gap: 8px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] {
+    min-height: 100px !important;
+    padding: 20px 24px !important;
+  }
+}
+
+/* END COMPREHENSIVE FIX */

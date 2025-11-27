@@ -202,77 +202,6 @@ document.addEventListener('DOMContentLoaded', function () {
     goTo(state.activeIndex + direction);
   }
 
-  // === CLICK HANDLING FIXES ===
-  // Stop propagation on ALL back-of-card elements
-  function initializeClickProtection() {
-    // BULLETPROOF: When card is flipped, block ALL clicks from bubbling
-    section.querySelectorAll('.ppc-flip-card').forEach(flipCard => {
-      flipCard.addEventListener('click', (e) => {
-        // If card is flipped (showing back), stop ALL propagation
-        if (flipCard.classList.contains('flipped')) {
-          e.stopPropagation();
-        }
-      }, true); // Use capture phase to catch it first
-    });
-
-    // Protect entire card back from bubbling
-    section.querySelectorAll('.ppc-card-back').forEach(back => {
-      back.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-
-    // Protect pack selection buttons
-    section.querySelectorAll('.ppc-pack-btn, .js-ppc-pack-select').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-
-    // Protect variant dropdowns
-    section.querySelectorAll('.ppc-variant-dropdown, select').forEach(select => {
-      select.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-      select.addEventListener('mousedown', (e) => {
-        e.stopPropagation();
-      });
-    });
-
-    // Protect Add to Bundle button
-    section.querySelectorAll('.ppc-add-bundle, .js-ppc-add-bundle, .ppc-add-to-bundle, .js-ppc-add-to-bundle').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-
-    // Protect Back button
-    section.querySelectorAll('.ppc-back-btn, .js-ppc-back, .js-ppc-flip-back').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Flip card back to front
-        const wrapper = btn.closest('.ppc-card-wrapper');
-        if (wrapper) {
-          const flipCard = wrapper.querySelector('.ppc-flip-card');
-          if (flipCard) flipCard.classList.remove('flipped');
-        }
-      });
-    });
-
-    // Protect flip trigger button (ADD PACKS)
-    section.querySelectorAll('.js-ppc-flip-trigger, .ppc-flip-cta').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-
-    // Protect info icon
-    section.querySelectorAll('.ppc-info-icon, .bf25-product-info-icon').forEach(icon => {
-      icon.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
-  }
 
   // Arrow navigation
   if (prevBtn) {
@@ -615,8 +544,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Initialize click protection
-  initializeClickProtection();
 
   console.log('PPC Coverflow initialized:', { cards: cards.length, activeIndex: state.activeIndex });
 

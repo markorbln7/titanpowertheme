@@ -47,7 +47,7 @@
   ============================================
 {%- endcomment -%}
 
-{%- assign pp_collection = section.settings.collections.first -%}
+{%- assign pp_collection = section.settings.collections[0] -%}
 {%- assign pp_collection_obj = collections[pp_collection.handle] -%}
 
 <div class="ppc-section-header">

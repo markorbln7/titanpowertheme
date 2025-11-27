@@ -46,9 +46,9 @@
   Prefix: ppc- (to avoid conflict with Power Pairs pp-)
   ============================================
 {%- endcomment -%}
-
-{%- assign pp_collection = section.settings.collections[0] -%}
-{%- assign pp_collection_obj = collections[pp_collection.handle] -%}
+{% for collection in section.settings.collections limit: 1 %}
+  {%- assign pp_collection_obj = collections[collection.handle] -%}
+{% endfor %}
 <!-- DEBUG: pp_collection={{ pp_collection }} | pp_collection.handle={{ pp_collection.handle }} | pp_collection_obj={{ pp_collection_obj }} | products_count={{ pp_collection_obj.products.size }} -->
 
 <div class="ppc-section-header">
@@ -63,7 +63,7 @@
       {%- assign variant = product.selected_or_first_available_variant -%}
       {%- assign stock_level = variant.inventory_quantity | default: 0 -%}
       {%- assign review_count = product.metafields.reviews.rating_count | default: product.metafields.loox.num_reviews | default: '1,000+' -%}
-      {%- assign description_raw = product.metafields.custom.product_description | default: '' -%}
+      {%- assign description_raw = product.metafields.custom.short_features | default: product.description | strip_html | truncate: 100 -%}
       {%- assign description_parts = description_raw | split: '|' -%}
       {%- assign is_center = false -%}
       {%- if forloop.index == 3 -%}{%- assign is_center = true -%}{%- endif -%}

@@ -4266,3 +4266,160 @@ body.show-sticky-cart .bf25-sticky-cart {
 }
 
 /* END FLOATING PRODUCTS POLISH */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 STEPS - TIMELINE STYLE (Desktop + Mobile)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   BASE STYLES (All Screens)
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-steps {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 24px !important;
+}
+
+.bf25-hero-split .bf25-hero-step {
+  display: flex !important;
+  position: relative !important;
+}
+
+.bf25-hero-split .bf25-step-num {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  background: transparent !important;
+  border: 2px solid #60c655 !important;
+  color: #60c655 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Vertical line connector - BOTH Desktop and Mobile */
+.bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 13px !important;
+  width: 2px !important;
+  background: rgba(96, 198, 85, 0.25) !important;
+  z-index: 1 !important;
+}
+
+/* Currency value highlight */
+.bf25-hero-split .bf25-step-detail .money,
+.bf25-hero-split .bf25-currency-value {
+  color: #60c655 !important;
+  font-weight: 600 !important;
+}
+
+/* ---------------------------------------------------------------------
+   DESKTOP - Single Line + Timeline (15px gap)
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-hero-steps {
+    gap: 15px !important; /* 12px + 3px extra */
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    align-items: center !important;
+    gap: 14px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Line height for desktop (accounts for 15px gap) */
+  .bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+    top: 30px !important;
+    height: calc(100% + 13px) !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE - Stacked Text + Timeline + Indented
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-steps {
+    gap: 0 !important;
+    padding: 0 28px !important; /* Indent for centering */
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Line height for mobile */
+  .bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+    top: 30px !important;
+    height: calc(100% - 2px) !important;
+  }
+
+  /* Stack the text content vertically */
+  .bf25-hero-split .bf25-hero-step > span:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 3px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    display: block !important;
+    margin-bottom: 2px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 12px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+  }
+
+  /* Remove the dash on mobile (cleaner stacked look) */
+  .bf25-hero-split .bf25-step-detail::before {
+    content: '' !important;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-steps {
+    padding: 0 20px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 13px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 11px !important;
+  }
+}
+
+/* END STEPS TIMELINE */

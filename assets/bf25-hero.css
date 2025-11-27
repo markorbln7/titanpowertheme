@@ -2476,7 +2476,7 @@
 .bf25-hero .bf25-hero__slider-wrapper .progress-bar .progress-bar__segments .progress-bar__segment[data-segment="1"]:not(.is-filled),
 .progress-bar__segment[data-segment="1"]:not(.is-filled) {
   animation: bf25-cell-pulse-boost 1s ease-in-out infinite !important;
-  background: rgba(96, 198, 85, 0.2) !important;
+  background: #35ff2ec7 !important;  /* Updated to bright green as requested */
   border-radius: 8px !important;
 }
 
@@ -4661,7 +4661,7 @@ section.bf25-hero .bf25-hero__card,
 .bf25-hero .bf25-hero__module .bf25-hero__card,
 #bf25-hero-section .bf25-hero__card {
   min-height: auto !important;
-  max-height: 280px !important;
+  max-height: none !important;  /* REMOVED 280px constraint - auto-expand for all tiers */
   padding: 20px 20px !important;
 }
 
@@ -4669,7 +4669,8 @@ section.bf25-hero .bf25-hero__card,
 section.bf25-hero .bf25-hero__card[data-active-tier="0"],
 .bf25-hero .bf25-hero__module .bf25-hero__card[data-active-tier="0"],
 #bf25-hero-section .bf25-hero__card[data-active-tier="0"] {
-  max-height: 180px !important;
+  max-height: none !important;  /* Allow expansion even for tier 0 if needed */
+  min-height: 100px !important;  /* But keep minimum compact size */
   padding: 15px 20px !important;
 }
 
@@ -4785,6 +4786,14 @@ section.bf25-hero .bf25-hero__pricing-row--savings {
   margin: 0 auto !important;
 }
 
+/* Desktop only - align logo with headline text */
+@media (min-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    margin: 0 0 !important;
+    margin-left: -15px !important;  /* Align with text below */
+  }
+}
+
 @media (max-width: 767px) {
   .bf25-hero-split .bf25-hero-logo {
     max-width: 75% !important;  /* Slightly bigger on mobile */
@@ -4792,50 +4801,50 @@ section.bf25-hero .bf25-hero__pricing-row--savings {
   }
 }
 
-/* Move "This Shouldn't Exist" closer to logo */
+/* Move "This Shouldn't Exist" closer to logo - REDUCED SPACING */
 .bf25-hero-split .bf25-hero-headline {
-  margin-top: 8px !important;   /* Reduced from default */
-  margin-bottom: 16px !important;
+  margin-top: 5px !important;   /* Was 8px, now 5px (reduced by ~1/3) */
+  margin-bottom: 10px !important;  /* Was 16px, now 10px */
 }
 
-/* Add breathing room to steps */
+/* Add breathing room to steps - REDUCED SPACING */
 .bf25-hero-split .bf25-hero-steps {
-  margin-top: 32px !important;
-  margin-bottom: 32px !important;
-  padding: 16px 0 !important;
+  margin-top: 16px !important;  /* Was 32px, now 16px (reduced by half) */
+  margin-bottom: 16px !important;  /* Was 32px, now 16px */
+  padding: 8px 0 !important;  /* Was 16px, now 8px */
 }
 
-/* More space above CTA button */
+/* More space above CTA button - REDUCED SPACING */
 .bf25-hero-split .bf25-cta-button {
-  margin-top: 40px !important;
-  margin-bottom: 24px !important;
+  margin-top: 20px !important;  /* Was 40px, now 20px (reduced by half) */
+  margin-bottom: 12px !important;  /* Was 24px, now 12px */
 }
 
-/* Overall content spacing */
+/* Overall content spacing - REDUCED */
 .bf25-hero-split .bf25-hero-content {
-  padding: 40px 20px !important;
+  padding: 25px 20px !important;  /* Was 40px, now 25px top/bottom */
 }
 
 @media (min-width: 768px) {
   .bf25-hero-split .bf25-hero-content {
-    padding: 60px 40px !important;
+    padding: 35px 40px !important;  /* Was 60px, now 35px top/bottom */
   }
 }
 
-/* ISSUE 4: Slider Section Top Spacing */
+/* ISSUE 4: Slider Section Top Spacing - REDUCED */
 section.bf25-hero {
-  padding-top: 80px !important;  /* More space at top */
+  padding-top: 40px !important;  /* Was 80px, now 40px (reduced by half) */
 }
 
 .bf25-hero__header {
-  padding-top: 40px !important;
-  margin-bottom: 40px !important;
+  padding-top: 20px !important;  /* Was 40px, now 20px */
+  margin-bottom: 25px !important;  /* Was 40px, now 25px */
 }
 
-/* Space above countdown timer */
+/* Space above countdown timer - REDUCED */
 .bf25-hero__timer-section,
 .bf25-countdown-timer {
-  margin-top: 30px !important;
+  margin-top: 15px !important;  /* Was 30px, now 15px */
 }
 
 /* ISSUE 5: Bright Green Pulsing First Slider Bar */

@@ -4664,3 +4664,30 @@ body.modal-open {
   gap: 10px !important;
   margin-bottom: 15px !important;
 }
+
+/* ============================================
+   SURGICAL FIX: Click-Through Prevention
+   ============================================ */
+
+/* Non-active cards: NO pointer events - clicks pass through */
+.power-pack-section .ppc-card-wrapper {
+  pointer-events: none;
+}
+
+/* Active card: RECEIVES all clicks */
+.power-pack-section .ppc-card-wrapper.active {
+  pointer-events: auto;
+}
+
+/* Ensure all children of active card are clickable */
+.power-pack-section .ppc-card-wrapper.active * {
+  pointer-events: auto;
+}
+
+/* Navigation controls must remain clickable */
+.power-pack-section .ppc-nav-controls,
+.power-pack-section .ppc-nav-btn,
+.power-pack-section .ppc-dot-nav,
+.power-pack-section .ppc-dot {
+  pointer-events: auto !important;
+}

@@ -113,12 +113,13 @@
               <h3 class="ppc-product-title">{{ product.title }}</h3>
               
               <div class="ppc-reviews-row">
-                <span class="ppc-stars">★★★★★</span>
-                <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
-                <span class="ppc-reviews-divider">|</span>
-                <span class="ppc-stock-indicator">
+                <div class="ppc-reviews-line">
+                  <span class="ppc-stars">★★★★★</span>
+                  <span class="ppc-reviews-count bf25-rating-count" data-product-id="{{ product.id }}">Loading...</span>
+                </div>
+                <div class="ppc-stock-line">
                   <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
-                </span>
+                </div>
               </div>
               
               <div class="ppc-bullet-points">

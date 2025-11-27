@@ -3175,11 +3175,12 @@ body.modal-open {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 520px;
+  min-height: 580px;
   perspective: 1000px;
   position: relative;
   overflow: visible;
-  padding: 40px 0 80px;
+  padding: 60px 0 100px; /* Increased top and bottom padding */
+  margin-top: 20px; /* Extra space below header */
 }
 
 .power-pack-section .ppc-coverflow-track {
@@ -3197,8 +3198,7 @@ body.modal-open {
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-left: -140px;
-  margin-top: -260px;
+  transform-origin: center center;
   cursor: pointer;
   transform-style: preserve-3d;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -3209,11 +3209,18 @@ body.modal-open {
   z-index: 10;
 }
 
+/* When flipped, remove coverflow transforms and center the card */
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card.flipped {
+  /* Card stays in place when flipped */
+}
+
 /* Card Container for Flip */
 .power-pack-section .ppc-card-container {
   width: 280px;
   height: 520px;
   perspective: 1000px;
+  margin-left: -140px;
+  margin-top: -260px;
 }
 
 /* Flip Card */
@@ -3223,6 +3230,7 @@ body.modal-open {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
 }
 
 .power-pack-section .ppc-flip-card.flipped {
@@ -3302,12 +3310,23 @@ body.modal-open {
   border: 2px solid var(--ppc-gold);
   background: transparent;
   color: var(--ppc-gold);
-  font-size: 22px;
+  font-size: 20px;
+  line-height: 1;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  /* Ensure perfect centering */
+  text-align: center;
+}
+
+.power-pack-section .ppc-nav-btn span,
+.power-pack-section .ppc-nav-btn svg {
+  display: block;
+  line-height: 1;
+  margin-top: -2px; /* Optical adjustment */
 }
 
 .power-pack-section .ppc-nav-btn:hover {
@@ -3376,7 +3395,7 @@ body.modal-open {
   fill: #000;
 }
 
-/* Info Icon - Top Right Corner (Fixed Position) */
+/* Power Pack Info Icon - Gold Theme */
 .power-pack-section .ppc-info-icon,
 .power-pack-section .ppc-card-front .bf25-product-info-icon {
   position: absolute;
@@ -3385,30 +3404,58 @@ body.modal-open {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--ppc-gold);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid var(--ppc-gold);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ppc-gold);
   font-size: 12px;
   font-weight: 700;
-  z-index: 10;
+  z-index: 15;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
+  /* Prevent wobble */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .power-pack-section .ppc-info-icon:hover,
 .power-pack-section .ppc-card-front .bf25-product-info-icon:hover {
-  background: var(--ppc-gold);
-  transform: scale(1.1);
-  color: #000;
+  background: rgba(212, 175, 55, 0.2);
+  transform: scale(1.05) translateZ(0);
 }
 
 .power-pack-section .ppc-info-icon svg,
 .power-pack-section .bf25-product-info-icon svg {
   width: 18px;
   height: 18px;
+}
+
+/* Override green stroke with gold */
+.power-pack-section .ppc-info-icon svg circle,
+.power-pack-section .bf25-product-info-icon svg circle {
+  stroke: var(--ppc-gold) !important;
+}
+
+.power-pack-section .ppc-info-icon svg text,
+.power-pack-section .bf25-product-info-icon svg text {
+  fill: var(--ppc-gold) !important;
+}
+
+/* Pulse animation for visibility */
+.power-pack-section .ppc-card-wrapper.active .ppc-info-icon,
+.power-pack-section .ppc-card-wrapper.active .bf25-product-info-icon {
+  animation: ppc-info-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes ppc-info-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0);
+  }
 }
 
 /* Product Image - Even Larger */
@@ -3463,51 +3510,71 @@ body.modal-open {
   text-overflow: ellipsis;
 }
 
-/* Reviews Row with Stock */
+/* Reviews and Stock - Stacked Layout */
 .power-pack-section .ppc-reviews-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.power-pack-section .ppc-reviews-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .power-pack-section .ppc-stars {
   color: var(--ppc-gold);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 1px;
   text-shadow: 0 0 6px var(--ppc-gold-glow);
 }
 
 .power-pack-section .ppc-reviews-count {
   color: var(--ppc-text-muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .power-pack-section .ppc-reviews-divider {
-  color: var(--ppc-text-muted);
-  font-size: 10px;
+  display: none; /* Hide divider since stock is on new line */
 }
 
 .power-pack-section .ppc-stock-indicator {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 10px;
+  gap: 5px;
+  font-size: 11px;
 }
 
 .power-pack-section .ppc-stock-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ef4444;
-  animation: pp-stock-pulse 2s infinite;
+  display: none !important; /* Remove duplicate dot - JS adds one */
 }
 
 .power-pack-section .ppc-stock-text {
   color: #ef4444;
   font-weight: 600;
+}
+
+/* Stock text styling from JS-generated content */
+.power-pack-section .bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.power-pack-section .bf25-stock-placeholder .bf25-stock-dot,
+.power-pack-section .bf25-stock-placeholder .ppc-stock-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: ppc-stock-pulse 2s infinite;
+}
+
+@keyframes ppc-stock-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
 }
 
 @keyframes pp-stock-pulse {
@@ -3674,19 +3741,19 @@ body.modal-open {
   letter-spacing: 1px;
 }
 
-/* Pack Grid - 2x2 */
+/* Pack Grid - Enhanced Styling */
 .power-pack-section .ppc-pack-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  flex: 1;
+  gap: 12px;
+  margin-bottom: 15px;
 }
 
 .power-pack-section .ppc-pack-btn {
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px solid var(--ppc-gold-glow-subtle);
-  border-radius: 10px;
-  padding: 10px 6px;
+  padding: 15px 10px;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
@@ -3696,54 +3763,59 @@ body.modal-open {
   justify-content: center;
 }
 
-.power-pack-section .ppc-pack-btn:hover,
+.power-pack-section .ppc-pack-btn:hover {
+  border-color: var(--ppc-gold);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
 .power-pack-section .ppc-pack-btn.selected {
   border-color: var(--ppc-gold);
   background: rgba(212, 175, 55, 0.2);
-  transform: translateY(-1px);
+  box-shadow: 0 0 20px var(--ppc-gold-glow), inset 0 0 15px rgba(212, 175, 55, 0.1);
+  transform: scale(1.02);
 }
 
+/* Best/Popular tag */
 .power-pack-section .ppc-pack-btn.popular {
-  border-color: var(--ppc-gold);
-  background: rgba(212, 175, 55, 0.12);
+  position: relative;
 }
 
-/* BEST Badge - No Emoji */
 .power-pack-section .ppc-pack-btn.popular::before {
   content: 'BEST';
   position: absolute;
-  top: -6px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--ppc-gold), var(--ppc-gold-dark));
+  background: var(--ppc-gold);
   color: #000;
-  font-size: 7px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 6px;
-  letter-spacing: 0.5px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 10px;
 }
 
 .power-pack-section .ppc-pack-qty {
   display: block;
-  color: var(--ppc-text);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 800;
+  color: var(--ppc-text);
+  margin-bottom: 4px;
 }
 
 .power-pack-section .ppc-pack-discount {
   display: block;
-  color: var(--ppc-gold);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
+  color: var(--ppc-gold);
+  margin-bottom: 2px;
 }
 
 .power-pack-section .ppc-pack-gifts {
   display: block;
-  color: var(--ppc-cyan);
-  font-size: 9px;
+  font-size: 11px;
+  color: #7DD3FC; /* Cyan for gifts */
   font-weight: 600;
-  margin-top: 1px;
 }
 
 /* Add to Bundle Button */
@@ -4057,24 +4129,25 @@ body.modal-open {
   display: none !important;
 }
 
-/* Fix: Center section header */
+/* Fix: Center section header with proper spacing */
 .power-pack-section .ppc-section-header {
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 0;
+  position: relative;
+  z-index: 5;
 }
 
 .power-pack-section .ppc-title {
-  color: var(--ppc-gold);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
-  margin: 0 0 8px;
+  color: var(--ppc-gold);
   text-shadow: 0 0 30px var(--ppc-gold-glow);
+  margin-bottom: 8px;
 }
 
 .power-pack-section .ppc-subtitle {
-  color: var(--ppc-text);
   font-size: 16px;
-  margin: 0;
+  color: var(--ppc-text);
   opacity: 0.9;
 }
 
@@ -4113,24 +4186,25 @@ body.modal-open {
   flex-shrink: 0;
 }
 
-/* Fix: Center section header */
+/* Fix: Center section header with proper spacing */
 .power-pack-section .ppc-section-header {
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 0;
+  position: relative;
+  z-index: 5;
 }
 
 .power-pack-section .ppc-title {
-  color: var(--ppc-gold);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
-  margin: 0 0 8px;
+  color: var(--ppc-gold);
   text-shadow: 0 0 30px var(--ppc-gold-glow);
+  margin-bottom: 8px;
 }
 
 .power-pack-section .ppc-subtitle {
-  color: var(--ppc-text);
   font-size: 16px;
-  margin: 0;
+  color: var(--ppc-text);
   opacity: 0.9;
 }
 

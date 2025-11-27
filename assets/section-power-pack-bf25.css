@@ -3337,3 +3337,243 @@ body.modal-open {
   border-radius: 4px;
   background: linear-gradient(90deg, var(--pp-gold), var(--pp-gold-dark));
 }
+
+/* ============================================
+   CARD FRONT ELEMENTS
+   ============================================ */
+
+/* Discount Badge - Top Left */
+.power-pack-section .pp-discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, var(--pp-gold), var(--pp-gold-dark));
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--pp-gold-glow);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.power-pack-section .pp-discount-badge span {
+  color: #000;
+  font-weight: 800;
+  font-size: 10px;
+}
+
+.power-pack-section .pp-discount-badge svg {
+  width: 10px;
+  height: 10px;
+  fill: #000;
+}
+
+/* Info Icon - Top Right */
+.power-pack-section .pp-info-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--pp-gold-glow-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pp-gold);
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.power-pack-section .pp-info-icon:hover {
+  background: var(--pp-gold);
+  color: #000;
+}
+
+/* Product Image */
+.power-pack-section .pp-product-image {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px 0 12px;
+  position: relative;
+}
+
+.power-pack-section .pp-product-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px var(--pp-gold-glow)) drop-shadow(0 0 40px var(--pp-gold-glow-subtle));
+  transition: transform 0.4s ease;
+}
+
+.power-pack-section .pp-card-wrapper.active:hover .pp-product-image img {
+  transform: scale(1.08);
+}
+
+/* Best Seller Badge */
+.power-pack-section .pp-bestseller-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  width: 45px;
+  height: 45px;
+}
+
+.power-pack-section .pp-bestseller-badge img {
+  width: 100%;
+  height: 100%;
+  filter: none;
+}
+
+/* Product Title */
+.power-pack-section .pp-product-title {
+  color: var(--pp-text);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Reviews Row with Stock */
+.power-pack-section .pp-reviews-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.power-pack-section .pp-stars {
+  color: var(--pp-gold);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px var(--pp-gold-glow);
+}
+
+.power-pack-section .pp-reviews-count {
+  color: var(--pp-text-muted);
+  font-size: 10px;
+}
+
+.power-pack-section .pp-reviews-divider {
+  color: var(--pp-text-muted);
+  font-size: 10px;
+}
+
+.power-pack-section .pp-stock-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+}
+
+.power-pack-section .pp-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pp-stock-pulse 2s infinite;
+}
+
+.power-pack-section .pp-stock-text {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+@keyframes pp-stock-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Bullet Points - Centered Block */
+.power-pack-section .pp-bullet-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 auto;
+  padding: 0;
+}
+
+.power-pack-section .pp-bullet-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.power-pack-section .pp-bullet-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--pp-text-muted);
+}
+
+.power-pack-section .pp-bullet-icon {
+  color: var(--pp-gold);
+  font-size: 11px;
+  text-shadow: 0 0 8px var(--pp-gold-glow), 0 0 15px var(--pp-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Price Section */
+.power-pack-section .pp-price-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.power-pack-section .pp-price-current {
+  color: var(--pp-gold);
+  font-size: 26px;
+  font-weight: 800;
+  text-shadow: 0 0 15px var(--pp-gold-glow-subtle);
+}
+
+.power-pack-section .pp-price-compare {
+  color: #555;
+  font-size: 13px;
+  text-decoration: line-through;
+}
+
+/* Add Packs CTA Button */
+.power-pack-section .pp-flip-cta {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--pp-gold), var(--pp-gold-dark));
+  border: none;
+  border-radius: 22px;
+  padding: 11px 18px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--pp-gold-glow);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.power-pack-section .pp-flip-cta:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 30px var(--pp-gold-glow);
+}
+
+.power-pack-section .pp-flip-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

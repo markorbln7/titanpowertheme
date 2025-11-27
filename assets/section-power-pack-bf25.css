@@ -4333,3 +4333,213 @@ body.modal-open {
   background: rgba(212, 175, 55, 0.3);
   transform: scale(1.1);
 }
+
+/* ============================================
+   BULK FIX A: Styling Improvements
+   ============================================ */
+
+/* --- Reviews & Stock: Stacked Layout --- */
+.power-pack-section .ppc-reviews-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.power-pack-section .ppc-reviews-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.power-pack-section .ppc-stock-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Stock Color by Level --- */
+.power-pack-section .ppc-stock-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Hide any duplicate dots from old implementation */
+.power-pack-section .ppc-stock-dot {
+  display: none !important;
+}
+
+/* Stock colors applied via JS class or inline */
+.power-pack-section .ppc-stock-high,
+.power-pack-section .stock-high {
+  color: #22c55e;
+}
+
+.power-pack-section .ppc-stock-medium,
+.power-pack-section .stock-medium {
+  color: #f59e0b;
+}
+
+.power-pack-section .ppc-stock-low,
+.power-pack-section .stock-low {
+  color: #ef4444;
+}
+
+/* Inline stock dot from BF25 system */
+.power-pack-section .bf25-stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  animation: ppc-stock-pulse 2s infinite;
+}
+
+@keyframes ppc-stock-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* --- Nav Arrows: More Spacing --- */
+.power-pack-section .ppc-coverflow-stage {
+  padding-bottom: 100px !important;
+  margin-bottom: 20px;
+}
+
+.power-pack-section .ppc-nav-controls {
+  margin-top: 30px !important;
+  position: relative;
+  z-index: 25;
+}
+
+/* --- "UP TO 85% OFF" Badge: Bigger --- */
+.power-pack-section .ppc-badge,
+.power-pack-section .ppc-discount-badge {
+  font-size: 13px !important;
+  padding: 8px 14px !important;
+  font-weight: 700;
+}
+
+/* --- Variant Dropdown: Gold Theme --- */
+.power-pack-section .ppc-variant-dropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 12px 35px 12px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ppc-gold, #D4AF37);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--ppc-gold, #D4AF37);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23D4AF37'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
+.power-pack-section .ppc-variant-dropdown:hover,
+.power-pack-section .ppc-variant-dropdown:focus {
+  border-color: var(--ppc-gold, #D4AF37);
+  background-color: rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  outline: none;
+}
+
+.power-pack-section .ppc-variant-dropdown option {
+  background-color: #1a1a1a;
+  color: #D4AF37;
+  padding: 10px;
+}
+
+/* Variant row - equal width dropdowns */
+.power-pack-section .ppc-variant-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.power-pack-section .ppc-variant-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Pack Options: Bigger & Better --- */
+.power-pack-section .ppc-pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.power-pack-section .ppc-pack-btn {
+  padding: 18px 12px;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.power-pack-section .ppc-pack-btn:hover {
+  border-color: var(--ppc-gold, #D4AF37);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+.power-pack-section .ppc-pack-btn.selected {
+  border-color: var(--ppc-gold, #D4AF37);
+  background: rgba(212, 175, 55, 0.2);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.power-pack-section .ppc-pack-qty {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.power-pack-section .ppc-pack-discount {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ppc-gold, #D4AF37);
+  margin-bottom: 4px;
+}
+
+.power-pack-section .ppc-pack-gifts {
+  display: block;
+  font-size: 12px;
+  color: #7DD3FC;
+  font-weight: 600;
+}
+
+/* Popular/Best tag */
+.power-pack-section .ppc-pack-btn.popular::before {
+  content: 'BEST';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ppc-gold, #D4AF37);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 10px;
+}
+
+.power-pack-section .ppc-pack-btn.popular {
+  position: relative;
+}

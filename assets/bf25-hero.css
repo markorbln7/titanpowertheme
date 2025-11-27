@@ -3135,3 +3135,129 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
 }
 
 /* END BACKGROUND FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - V3 PREMIUM GLOW PILL URGENCY BAR
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Container */
+.bf25-hero-split .bf25-urgency-strip {
+  background: #000 !important;
+  padding: 0 !important;
+}
+
+/* Top section - Premium Glow Pill */
+.bf25-hero-split .bf25-urgency-group {
+  max-width: 550px !important;
+  margin: 16px auto 12px !important;
+  padding: 14px 36px 16px !important;
+  background: linear-gradient(180deg, rgba(139, 41, 66, 0.18) 0%, rgba(100, 30, 50, 0.08) 100%) !important;
+  border: 1px solid rgba(139, 41, 66, 0.3) !important;
+  border-radius: 60px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  position: relative !important;
+  box-shadow:
+    0 0 40px rgba(139, 41, 66, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Subtle top accent line */
+.bf25-hero-split .bf25-urgency-group::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 20% !important;
+  right: 20% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(139, 41, 66, 0.6), transparent) !important;
+  border-radius: 2px !important;
+}
+
+/* Label styling */
+.bf25-hero-split .bf25-urgency-label {
+  font-size: 11px !important;
+  color: #ff6b7a !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+/* Battery - prevent text wrapping */
+.bf25-hero-split .bf25-battery-body {
+  width: 200px !important;
+  height: 36px !important;
+  background: rgba(15, 8, 10, 0.98) !important;
+  border: 2px solid #8B2942 !important;
+}
+
+.bf25-hero-split .bf25-battery-text {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important; /* FIX: Prevent wrapping */
+}
+
+.bf25-hero-split .bf25-battery-fill {
+  background: linear-gradient(90deg, #5C1F2E, #7A2940, #6B2438) !important;
+}
+
+.bf25-hero-split .bf25-battery-cap {
+  background: #8B2942 !important;
+}
+
+/* Social row - contained below pill */
+.bf25-hero-split .bf25-social-row,
+.bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 50px !important;
+  padding: 14px 40px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.bf25-hero-split .bf25-social-item {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.bf25-hero-split .bf25-social-item strong {
+  color: #fff !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-group {
+    max-width: 90% !important;
+    padding: 12px 24px 14px !important;
+    margin: 12px auto 10px !important;
+    border-radius: 50px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    font-size: 9px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-body {
+    width: 160px !important;
+    height: 32px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-social-row,
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    padding: 12px 16px !important;
+    gap: 24px !important;
+  }
+
+  .bf25-hero-split .bf25-social-item {
+    font-size: 11px !important;
+  }
+}
+
+/* END V3 PREMIUM GLOW PILL */

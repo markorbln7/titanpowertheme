@@ -169,7 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function goTo(index) {
     if (state.isAnimating) return;
-    if (index < 0 || index >= state.totalCards) return;
+
+    // Infinite loop - wrap around
+    if (index < 0) {
+      index = state.totalCards - 1; // Go to last card
+    } else if (index >= state.totalCards) {
+      index = 0; // Go to first card
+    }
 
     state.isAnimating = true;
     state.activeIndex = index;
@@ -194,11 +200,17 @@ document.addEventListener('DOMContentLoaded', function () {
   // Click adjacent cards to navigate
   cards.forEach((card, index) => {
     card.addEventListener('click', (e) => {
+      // Don't navigate if clicking interactive elements
       if (e.target.closest('.js-ppc-flip-trigger') ||
-          e.target.closest('.js-ppc-info-modal') ||
-          e.target.closest('.ppc-card-back')) {
+          e.target.closest('.bf25-product-info-icon') ||
+          e.target.closest('.ppc-info-icon') ||
+          e.target.closest('.ppc-card-back') ||
+          e.target.closest('.ppc-flip-cta') ||
+          e.target.closest('button') ||
+          e.target.closest('select')) {
         return;
       }
+      // Only navigate if clicking on non-active card
       if (index !== state.activeIndex) goTo(index);
     });
   });
@@ -340,51 +352,154 @@ document.addEventListener('DOMContentLoaded', function () {
   section.querySelectorAll('.js-ppc-add-to-bundle').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
+      e.preventDefault();
+
       const card = btn.closest('.ppc-card-wrapper');
       const productId = card.dataset.productId;
       const variantId = card.dataset.variantId;
+      const productHandle = card.dataset.productHandle;
       const selection = selectedPacks.get(productId);
 
-      if (!selection) return;
+      if (!selection) {
+        console.warn('[PPC] No pack selected');
+        return;
+      }
 
       btn.disabled = true;
       const originalText = btn.textContent;
       btn.textContent = 'Adding...';
 
-      // Try BundleManager first, then fallback to cart
-      const addPromise = window.BF25BundleManager 
-        ? window.BF25BundleManager.addItem(variantId, selection.quantity)
-        : fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: parseInt(variantId), quantity: selection.quantity })
-          }).then(r => r.json());
+      // Get product title from card
+      const titleEl = card.querySelector('.ppc-product-title');
+      const productTitle = titleEl ? titleEl.textContent.trim() : 'Product';
 
-      addPromise
-        .then(() => {
-          btn.textContent = '✓ Added!';
-          setTimeout(() => {
-            btn.textContent = originalText;
-            btn.disabled = false;
-            // Reset selection
-            card.querySelectorAll('.ppc-pack-btn').forEach(b => b.classList.remove('selected'));
-            selectedPacks.delete(productId);
-            // Flip back
-            const flipCard = card.querySelector('.ppc-flip-card');
-            if (flipCard) flipCard.classList.remove('flipped');
-          }, 1500);
-        })
-        .catch((err) => {
-          console.error('Add to bundle failed:', err);
-          btn.textContent = 'Error - Retry';
-          setTimeout(() => {
-            btn.textContent = originalText;
-            btn.disabled = false;
-          }, 2000);
-        });
+      // Get price from card
+      const priceEl = card.querySelector('.ppc-price-current');
+      const priceText = priceEl ? priceEl.textContent : '0';
+      const price = parseFloat(priceText.replace(/[^0-9.,]/g, '').replace(',', '.')) * 100;
+
+      // Build productData object that BundleManager expects
+      const productData = {
+        variantId: String(variantId),
+        productId: String(productId),
+        title: productTitle,
+        handle: productHandle,
+        price: price,
+        compareAtPrice: price * 2, // Approximate
+        image: card.querySelector('.ppc-product-image img')?.src || '',
+        vendor: 'Titan Power Plus'
+      };
+
+      console.log('[PPC] Adding to bundle:', productData, 'qty:', selection.quantity);
+
+      // Try BundleManager first
+      if (window.BF25BundleManager && typeof window.BF25BundleManager.addItem === 'function') {
+        try {
+          const result = window.BF25BundleManager.addItem(productData, selection.quantity);
+
+          if (result && result.success !== false) {
+            btn.textContent = '✓ Added!';
+            console.log('[PPC] Successfully added to bundle');
+
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.disabled = false;
+              // Reset selection
+              card.querySelectorAll('.ppc-pack-btn').forEach(b => b.classList.remove('selected'));
+              selectedPacks.delete(productId);
+              // Flip back
+              const flipCard = card.querySelector('.ppc-flip-card');
+              if (flipCard) flipCard.classList.remove('flipped');
+            }, 1500);
+          } else {
+            throw new Error(result?.message || 'Add failed');
+          }
+        } catch (err) {
+          console.error('[PPC] BundleManager error:', err);
+          // Fallback to cart
+          addToCartFallback(variantId, selection.quantity, btn, card, originalText, productId);
+        }
+      } else {
+        // Fallback to direct cart add
+        addToCartFallback(variantId, selection.quantity, btn, card, originalText, productId);
+      }
     });
   });
 
+  // Fallback function for direct cart add
+  function addToCartFallback(variantId, quantity, btn, card, originalText, productId) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: parseInt(variantId),
+        quantity: quantity
+      })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Cart add failed');
+      return res.json();
+    })
+    .then(() => {
+      btn.textContent = '✓ Added!';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        card.querySelectorAll('.ppc-pack-btn').forEach(b => b.classList.remove('selected'));
+        selectedPacks.delete(productId);
+        const flipCard = card.querySelector('.ppc-flip-card');
+        if (flipCard) flipCard.classList.remove('flipped');
+      }, 1500);
+    })
+    .catch((err) => {
+      console.error('[PPC] Cart add failed:', err);
+      btn.textContent = 'Error - Retry';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 2000);
+    });
+  }
+
   console.log('PPC Coverflow initialized:', { cards: cards.length, activeIndex: state.activeIndex });
+
+  // ============================================
+  // MANUALLY TRIGGER REVIEW/STOCK POPULATION
+  // ============================================
+
+  // Wait for DOM and other scripts to initialize
+  setTimeout(() => {
+    // Find all our cards and trigger the existing population logic
+    section.querySelectorAll('.ppc-card-wrapper').forEach(card => {
+      const productId = card.dataset.productId;
+      if (!productId) return;
+
+      // Check if productData exists in window
+      const productData = window.productData?.[productId];
+
+      // Populate reviews
+      const ratingCount = card.querySelector('.bf25-rating-count');
+      if (ratingCount && productData) {
+        const reviews = productData.reviewCount || productData.totalReviews || 0;
+        ratingCount.textContent = `${reviews.toLocaleString()} reviews`;
+      }
+
+      // Populate stock using the existing stock display logic
+      const stockPlaceholder = card.querySelector('.bf25-stock-placeholder');
+      if (stockPlaceholder) {
+        // Generate random-ish stock number like the other cards do
+        const baseStock = Math.floor(Math.random() * 80) + 20; // 20-100
+        stockPlaceholder.innerHTML = `<span class="ppc-stock-dot"></span> ${baseStock} left`;
+
+        // Or if we have actual stock data
+        if (productData && productData.stockLevel !== undefined) {
+          const stock = productData.stockLevel > 100 ? Math.floor(Math.random() * 80) + 20 : productData.stockLevel;
+          stockPlaceholder.innerHTML = `${stock} left`;
+        }
+      }
+    });
+
+    console.log('[PPC] Manually populated reviews and stock');
+  }, 1000);
 
 })();

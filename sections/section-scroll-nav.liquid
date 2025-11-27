@@ -1,0 +1,372 @@
+{% comment %}
+  Scroll Navigation Component
+  - Smooth scroll to sections by ID or class
+  - Active state detection on scroll
+  - Sticky on scroll
+  - Horizontally scrollable on mobile
+{% endcomment %}
+
+<style>
+  .scroll-nav {
+    position: relative;
+    z-index: 100;
+    background: #000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .scroll-nav.is-sticky {
+    position: fixed;
+    top: 57px; /* Mobile: account for header */
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .scroll-nav.is-sticky {
+      top: 73px; /* Desktop: account for header */
+    }
+  }
+
+  .scroll-nav__spacer {
+    display: none;
+  }
+
+  .scroll-nav.is-sticky + .scroll-nav__spacer {
+    display: block;
+  }
+
+  .scroll-nav__container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .scroll-nav__container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-nav__btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .scroll-nav__btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #60c655;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+  }
+
+  .scroll-nav__btn:hover {
+    color: #ffffff;
+  }
+
+  .scroll-nav__btn.is-active {
+    color: #60c655;
+  }
+
+  .scroll-nav__btn.is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* Desktop: Center items if they fit */
+  @media (min-width: 768px) {
+    .scroll-nav__container {
+      justify-content: center;
+      padding: 14px 24px;
+    }
+
+    .scroll-nav__btn {
+      font-size: 12px;
+      padding: 10px 0;
+    }
+  }
+</style>
+
+<nav class="scroll-nav" id="ScrollNav-{{ section.id }}" data-scroll-nav>
+  <div class="scroll-nav__container">
+    {% for block in section.blocks %}
+      <button
+        class="scroll-nav__btn{% if forloop.first %} is-active{% endif %}"
+        data-scroll-target="{{ block.settings.target }}"
+        type="button"
+        {{ block.shopify_attributes }}
+      >
+        {{ block.settings.title }}
+      </button>
+    {% endfor %}
+  </div>
+</nav>
+<div class="scroll-nav__spacer" style="height: 0;" id="ScrollNavSpacer-{{ section.id }}"></div>
+
+<script>
+  (function() {
+    const nav = document.getElementById('ScrollNav-{{ section.id }}');
+    const spacer = document.getElementById('ScrollNavSpacer-{{ section.id }}');
+    const buttons = nav.querySelectorAll('.scroll-nav__btn');
+    const container = nav.querySelector('.scroll-nav__container');
+    
+    if (!nav || buttons.length === 0) return;
+
+    let targets = [];
+    let navHeight = nav.offsetHeight;
+    let navTop = nav.offsetTop;
+    let isSticky = false;
+    let ticking = false;
+    
+    // Get sticky offset based on screen size
+    function getStickyOffset() {
+      return window.innerWidth >= 768 ? 73 : 57;
+    }
+
+    // Find target element by ID or class
+    function findTarget(selector) {
+      if (!selector) return null;
+      
+      // Clean selector
+      const cleanSelector = selector.replace(/^[#.]/, '');
+      
+      // Try ID first
+      let target = document.getElementById(cleanSelector);
+      if (target) return target;
+      
+      // Try with # prefix
+      target = document.getElementById(selector.replace('#', ''));
+      if (target) return target;
+      
+      // Try as querySelector (class or complex selector)
+      try {
+        target = document.querySelector('#' + cleanSelector) || 
+                 document.querySelector('.' + cleanSelector) ||
+                 document.querySelector(selector);
+      } catch (e) {
+        // Invalid selector
+      }
+      
+      return target;
+    }
+
+    // Initialize targets
+    function initTargets() {
+      targets = [];
+      buttons.forEach((btn, index) => {
+        const targetSelector = btn.dataset.scrollTarget;
+        const target = findTarget(targetSelector);
+        
+        if (target) {
+          targets.push({ btn, target, index });
+        }
+      });
+      
+      console.log('[ScrollNav] Initialized', targets.length, 'targets');
+    }
+
+    // Handle click - smooth scroll
+    function handleClick(e) {
+      const btn = e.currentTarget;
+      const targetSelector = btn.dataset.scrollTarget;
+      const target = findTarget(targetSelector);
+
+      if (target) {
+        const stickyOffset = getStickyOffset();
+        const totalOffset = navHeight + stickyOffset + 20;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY - totalOffset;
+        
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
+
+        // Update active state immediately
+        buttons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        // Scroll button into view in nav
+        scrollButtonIntoView(btn);
+      }
+    }
+
+    // Scroll button into view within nav container
+    function scrollButtonIntoView(btn) {
+      const btnRect = btn.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
+      if (btnRect.left < containerRect.left) {
+        container.scrollBy({ left: btnRect.left - containerRect.left - 16, behavior: 'smooth' });
+      } else if (btnRect.right > containerRect.right) {
+        container.scrollBy({ left: btnRect.right - containerRect.right + 16, behavior: 'smooth' });
+      }
+    }
+
+    // Handle scroll - sticky + active detection
+    function handleScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateStickyState();
+          updateActiveState();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Update sticky state
+    function updateStickyState() {
+      const scrollY = window.scrollY;
+      
+      if (scrollY >= navTop && !isSticky) {
+        nav.classList.add('is-sticky');
+        spacer.style.height = navHeight + 'px';
+        isSticky = true;
+      } else if (scrollY < navTop && isSticky) {
+        nav.classList.remove('is-sticky');
+        spacer.style.height = '0';
+        isSticky = false;
+      }
+    }
+
+    // Update active button based on scroll position
+    function updateActiveState() {
+      if (targets.length === 0) return;
+      
+      const stickyOffset = getStickyOffset();
+      const viewportTop = window.scrollY + stickyOffset + navHeight + 100;
+      
+      let activeIndex = 0;
+      
+      // Find which section is currently in view
+      // Check from bottom to top to find the last section that has scrolled past
+      for (let i = 0; i < targets.length; i++) {
+        const { target } = targets[i];
+        const targetTop = target.getBoundingClientRect().top + window.scrollY;
+        
+        if (viewportTop >= targetTop) {
+          activeIndex = i;
+        }
+      }
+
+      // Update active button
+      const currentActive = nav.querySelector('.scroll-nav__btn.is-active');
+      const newActive = targets[activeIndex]?.btn;
+      
+      if (newActive && currentActive !== newActive) {
+        buttons.forEach(b => b.classList.remove('is-active'));
+        newActive.classList.add('is-active');
+        scrollButtonIntoView(newActive);
+      }
+    }
+
+    // Recalculate on resize
+    function handleResize() {
+      navHeight = nav.offsetHeight;
+      if (!isSticky) {
+        navTop = nav.offsetTop;
+      }
+    }
+
+    // Add event listeners
+    buttons.forEach(btn => btn.addEventListener('click', handleClick));
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Initialize after DOM is ready
+    function init() {
+      initTargets();
+      handleScroll();
+    }
+    
+    // Run init after a short delay to ensure all sections are loaded
+    if (document.readyState === 'complete') {
+      init();
+    } else {
+      window.addEventListener('load', init);
+    }
+    
+    // Also reinit when Shopify section is loaded/reloaded
+    document.addEventListener('shopify:section:load', init);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scroll Navigation",
+  "tag": "section",
+  "class": "section-scroll-nav",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Nav Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Section"
+        },
+        {
+          "type": "text",
+          "id": "target",
+          "label": "Target ID or Class",
+          "info": "Enter the ID (without #) or class (without .) of the section to scroll to",
+          "default": "section-id"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll Navigation",
+      "blocks": [
+        {
+          "type": "nav_item",
+          "settings": {
+            "title": "Section 1",
+            "target": "section-1"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "title": "Section 2",
+            "target": "section-2"
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "title": "Section 3",
+            "target": "section-3"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

@@ -7,8 +7,41 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
+    "section_scroll_nav_cdqHDX": {
+      "type": "section-scroll-nav",
+      "blocks": {
+        "nav_item_MfRqak": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Build your Deal",
+            "target": "bf25-hero-section"
+          }
+        },
+        "nav_item_XUA9wK": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Power Packs",
+            "target": "power-pairs"
+          }
+        },
+        "nav_item_Xbtcaf": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Power pairs",
+            "target": "PowerPairsBF25"
+          }
+        }
+      },
+      "block_order": [
+        "nav_item_MfRqak",
+        "nav_item_XUA9wK",
+        "nav_item_Xbtcaf"
+      ],
+      "name": "Scroll Navigation",
+      "settings": {}
+    },
     "sticky_cart_7W3hCL": {
       "type": "sticky-cart",
       "blocks": {
@@ -928,6 +961,7 @@
     }
   },
   "order": [
+    "section_scroll_nav_cdqHDX",
     "sticky_cart_7W3hCL",
     "game",
     "bf_promo_discount_AibFnrK",

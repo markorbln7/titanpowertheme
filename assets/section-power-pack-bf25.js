@@ -117,26 +117,37 @@ document.addEventListener('DOMContentLoaded', function () {
     transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
   };
 
-  let state = {
-    activeIndex: 2,
-    totalCards: 0,
-    isAnimating: false,
-    isDragging: false,
-    startX: 0,
-    currentX: 0
-  };
-
   const cards = section.querySelectorAll('.ppc-card-wrapper');
   const dots = section.querySelectorAll('.ppc-dot');
   const prevBtn = section.querySelector('.js-ppc-nav-prev');
   const nextBtn = section.querySelector('.js-ppc-nav-next');
 
   if (cards.length === 0) return;
-  state.totalCards = cards.length;
+
+  // Start centered instead of at index 0 or 2
+  let state = {
+    activeIndex: Math.floor(cards.length / 2), // Start centered
+    totalCards: cards.length,
+    isAnimating: false,
+    isDragging: false,
+    startX: 0,
+    currentX: 0
+  };
 
   function updatePositions() {
+    const totalCards = state.totalCards;
+
     cards.forEach((card, index) => {
-      const diff = index - state.activeIndex;
+      // Calculate shortest distance for infinite loop visual
+      let diff = index - state.activeIndex;
+
+      // Wrap-around calculation for infinite loop
+      if (diff > totalCards / 2) {
+        diff -= totalCards;
+      } else if (diff < -totalCards / 2) {
+        diff += totalCards;
+      }
+
       const isActive = index === state.activeIndex;
 
       const translateX = diff * CONFIG.translateX;
@@ -172,46 +183,131 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Infinite loop - wrap around
     if (index < 0) {
-      index = state.totalCards - 1; // Go to last card
+      index = state.totalCards - 1;
     } else if (index >= state.totalCards) {
-      index = 0; // Go to first card
+      index = 0;
     }
 
     state.isAnimating = true;
     state.activeIndex = index;
     updatePositions();
 
-    setTimeout(() => { state.isAnimating = false; }, 500);
+    setTimeout(() => {
+      state.isAnimating = false;
+    }, 500);
   }
 
   function navigate(direction) {
     goTo(state.activeIndex + direction);
   }
 
+  // === CLICK HANDLING FIXES ===
+  // Stop propagation on ALL back-of-card elements
+  function initializeClickProtection() {
+    // Protect entire card back from bubbling
+    section.querySelectorAll('.ppc-card-back').forEach(back => {
+      back.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Protect pack selection buttons
+    section.querySelectorAll('.ppc-pack-btn, .js-ppc-pack-select').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Protect variant dropdowns
+    section.querySelectorAll('.ppc-variant-dropdown, select').forEach(select => {
+      select.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      select.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Protect Add to Bundle button
+    section.querySelectorAll('.ppc-add-bundle, .js-ppc-add-bundle, .ppc-add-to-bundle, .js-ppc-add-to-bundle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Protect Back button
+    section.querySelectorAll('.ppc-back-btn, .js-ppc-back, .js-ppc-flip-back').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Flip card back to front
+        const wrapper = btn.closest('.ppc-card-wrapper');
+        if (wrapper) {
+          const flipCard = wrapper.querySelector('.ppc-flip-card');
+          if (flipCard) flipCard.classList.remove('flipped');
+        }
+      });
+    });
+
+    // Protect flip trigger button (ADD PACKS)
+    section.querySelectorAll('.js-ppc-flip-trigger, .ppc-flip-cta').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Protect info icon
+    section.querySelectorAll('.ppc-info-icon, .bf25-product-info-icon').forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+  }
+
   // Arrow navigation
-  if (prevBtn) prevBtn.addEventListener('click', () => navigate(-1));
-  if (nextBtn) nextBtn.addEventListener('click', () => navigate(1));
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigate(-1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigate(1);
+    });
+  }
 
   // Dot navigation
   dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goTo(index));
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goTo(index);
+    });
   });
 
-  // Click adjacent cards to navigate
+  // Improved card click handler
   cards.forEach((card, index) => {
     card.addEventListener('click', (e) => {
-      // Don't navigate if clicking interactive elements
-      if (e.target.closest('.js-ppc-flip-trigger') ||
-          e.target.closest('.bf25-product-info-icon') ||
-          e.target.closest('.ppc-info-icon') ||
-          e.target.closest('.ppc-card-back') ||
-          e.target.closest('.ppc-flip-cta') ||
+      // Don't navigate if clicking on interactive elements
+      if (e.target.closest('.ppc-card-back') ||
+          e.target.closest('.ppc-pack-btn') ||
+          e.target.closest('.ppc-variant-dropdown') ||
+          e.target.closest('select') ||
           e.target.closest('button') ||
-          e.target.closest('select')) {
+          e.target.closest('.ppc-info-icon') ||
+          e.target.closest('.bf25-product-info-icon') ||
+          e.target.closest('.js-ppc-flip-trigger') ||
+          e.target.closest('.ppc-flip-cta')) {
+        return; // Don't navigate
+      }
+
+      // Don't navigate if clicking on the active card
+      if (index === state.activeIndex) {
         return;
       }
-      // Only navigate if clicking on non-active card
-      if (index !== state.activeIndex) goTo(index);
+
+      // Navigate to clicked card
+      goTo(index);
     });
   });
 
@@ -347,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Find matching variant from window.productVariants if available
       if (window.productVariants && window.productVariants[productId]) {
         const variants = window.productVariants[productId];
-        const match = variants.find(v => 
+        const match = variants.find(v =>
           selectedOptions.every((opt, i) => v.options && v.options[i] === opt)
         );
         if (match) {
@@ -470,6 +566,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Initialize click protection
+  initializeClickProtection();
+
   console.log('PPC Coverflow initialized:', { cards: cards.length, activeIndex: state.activeIndex });
 
   // ============================================
@@ -497,100 +596,54 @@ document.addEventListener('DOMContentLoaded', function () {
         ratingCount.textContent = `${totalReviews.toLocaleString()} reviews`;
         console.log(`[PPC] Product ${productId}: ${totalReviews} reviews`);
       } else if (ratingCount) {
-        // Fallback: generate realistic review count
-        const fallbackReviews = Math.floor(Math.random() * 5000) + 8000; // 8000-13000
-        ratingCount.textContent = `${fallbackReviews.toLocaleString()} reviews`;
+        // Fallback - if no data, show stars only
+        ratingCount.textContent = '';
       }
     });
   }
 
-  // Function to populate stock display (matching bogo-builder.js logic)
+  // Function to populate stock from BF25 stock system
   function populateStock() {
-    section.querySelectorAll('.ppc-card-wrapper').forEach((card, index) => {
-      const stockPlaceholder = card.querySelector('.bf25-stock-placeholder');
-      if (!stockPlaceholder) return;
+    // Import or get stock function from bf25 system
+    if (window.bf25Utils && window.bf25Utils.getStock) {
+      section.querySelectorAll('.bf25-stock-placeholder').forEach(placeholder => {
+        const cardId = placeholder.dataset.cardId;
+        const stock = window.bf25Utils.getStock(cardId);
 
-      // Match the stock generation logic from bogo-builder.js
-      let stockLevel;
-      const random = Math.random();
-
-      if (random < 0.15) {
-        // 15% low stock (10-19)
-        stockLevel = Math.floor(Math.random() * 10) + 10;
-      } else if (random < 0.35) {
-        // 20% medium stock (20-50)
-        stockLevel = Math.floor(Math.random() * 31) + 20;
-      } else {
-        // 65% high stock (51-99)
-        stockLevel = Math.floor(Math.random() * 49) + 51;
-      }
-
-      // Store stock level on card for later updates
-      card.dataset.stockLevel = stockLevel;
-
-      // Determine color class
-      let colorClass = '';
-      let dotHtml = '<span class="ppc-stock-dot"></span> ';
-
-      if (stockLevel <= 15) {
-        colorClass = 'stock-low';
-        stockPlaceholder.style.color = '#ef4444';
-      } else if (stockLevel <= 30) {
-        colorClass = 'stock-medium';
-        stockPlaceholder.style.color = '#fb923c';
-      } else {
-        colorClass = 'stock-high';
-        stockPlaceholder.style.color = '#60c655';
-      }
-
-      stockPlaceholder.className = `ppc-stock-text bf25-stock-placeholder ${colorClass}`;
-      stockPlaceholder.innerHTML = `${dotHtml}${stockLevel} left`;
-    });
-
-    console.log('[PPC] Stock levels populated');
-  }
-
-  // Decrease stock periodically (matching bogo-builder.js behavior)
-  function decreaseRandomStock() {
-    const cards = section.querySelectorAll('.ppc-card-wrapper');
-    const randomCard = cards[Math.floor(Math.random() * cards.length)];
-
-    if (randomCard) {
-      const currentStock = parseInt(randomCard.dataset.stockLevel) || 50;
-      if (currentStock > 5) {
-        const decrease = Math.floor(Math.random() * 2) + 1; // 1-2
-        const newStock = Math.max(5, currentStock - decrease);
-        randomCard.dataset.stockLevel = newStock;
-
-        const stockPlaceholder = randomCard.querySelector('.bf25-stock-placeholder');
-        if (stockPlaceholder) {
-          // Update color based on new stock level
-          let colorClass = '';
-          if (newStock <= 15) {
-            colorClass = 'stock-low';
-            stockPlaceholder.style.color = '#ef4444';
-          } else if (newStock <= 30) {
-            colorClass = 'stock-medium';
-            stockPlaceholder.style.color = '#fb923c';
-          } else {
-            colorClass = 'stock-high';
-            stockPlaceholder.style.color = '#60c655';
-          }
-
-          stockPlaceholder.className = `ppc-stock-text bf25-stock-placeholder ${colorClass}`;
-          stockPlaceholder.innerHTML = `<span class="ppc-stock-dot"></span> ${newStock} left`;
+        if (stock) {
+          const { quantity, className } = stock;
+          placeholder.innerHTML = `<span class="bf25-stock-dot ${className}"></span><span>${quantity} left</span>`;
+          placeholder.classList.add(className);
         }
-      }
+      });
+    } else {
+      // Fallback fake stock (temporary for testing)
+      section.querySelectorAll('.bf25-stock-placeholder').forEach(placeholder => {
+        const randomStock = Math.floor(Math.random() * 30) + 5;
+        const stockClass = randomStock < 10 ? 'stock-low' : randomStock < 20 ? 'stock-medium' : 'stock-high';
+        placeholder.innerHTML = `<span class="bf25-stock-dot ${stockClass}"></span><span>${randomStock} left</span>`;
+        placeholder.classList.add(stockClass);
+      });
     }
   }
 
-  // Initialize reviews and stock after a delay
+  // Populate data after a short delay
   setTimeout(() => {
     populateReviews();
     populateStock();
+  }, 100);
 
-    // Start periodic stock decreases (every 30 seconds like bogo-builder)
-    setInterval(decreaseRandomStock, 30000);
-  }, 500);
+  // Re-populate if data arrives late
+  window.addEventListener('bf25DataLoaded', () => {
+    populateReviews();
+    populateStock();
+  });
 
 })();
+
+// Initialize Power Pack on DOM load (backup)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Any additional initialization if needed
+  });
+}

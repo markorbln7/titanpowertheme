@@ -4799,3 +4799,39 @@ body.modal-open {
   font-size: 14px !important;
   margin-bottom: 5px !important;
 }
+
+/* ============================================
+   FIX: Invisible Shield - Flip Card Click Swap
+   ============================================ */
+
+/* 1. FORCE INTERACTION SWAP ON FLIP */
+
+/* When Flipped: Front becomes a ghost (no clicks), moves to back of stack */
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card.flipped .ppc-card-front {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* When Flipped: Back becomes solid (clickable), moves to front of stack */
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card.flipped .ppc-card-back {
+  pointer-events: auto !important;
+  z-index: 100 !important;
+  transform: rotateY(180deg) translateZ(1px); /* Micro-boost in Z-space */
+}
+
+/* 2. NUCLEAR OVERRIDE FOR CHILDREN */
+/* Ensure no specific child rules (like buttons) are stuck at 'none' */
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card.flipped .ppc-card-back * {
+  pointer-events: auto !important;
+}
+
+/* 3. SAFETY FOR THE FRONT (When NOT flipped) */
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-front {
+  pointer-events: auto !important;
+  z-index: 100 !important;
+}
+
+.power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-back {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}

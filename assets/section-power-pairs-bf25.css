@@ -169,6 +169,7 @@ Performance Notes:
   min-height: 400px;
   position: relative;
   overflow: hidden;
+  padding-top: 0;
 }
 
 .pp-main-container {
@@ -223,6 +224,12 @@ Performance Notes:
   }
 }
 
+@media (max-width: 768px) {
+  .pp-header {
+    margin-bottom: 20px;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════
    BUNDLE GRID LAYOUT
    ═══════════════════════════════════════════════════════ */
@@ -256,6 +263,13 @@ Performance Notes:
   max-width: calc((100% - 10px) / 1.2);
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* Mobile: Remove bottom margin */
+@media (max-width: 768px) {
+  .pp-bundles-grid {
+    margin-bottom: 0;
+  }
 }
 
 /* Tablet and Desktop: 2x2 grid */
@@ -499,6 +513,13 @@ Performance Notes:
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .pp-bundle-card__image {
+    max-width: 60%;
+    margin: 0 auto;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1110,6 +1131,16 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
   max-height: 100vh !important;
   pointer-events: auto !important;
   z-index: 100001 !important;
+}
+
+/* Mobile: Set to 95vh */
+@media (max-width: 768px) {
+  .pp-bottom-sheet.active,
+  body:has(.pp-bottom-sheet.active) #pp-bottom-sheet,
+  body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
+    height: 95vh !important;
+    max-height: 95vh !important;
+  }
 }
 
 /* ─────────────────────────────────────────────────────
@@ -3538,6 +3569,15 @@ body:has(.pp-bottom-sheet.active) .pp-bottom-sheet {
 .pp-trust-badge:hover {
   color: var(--pp-text-primary);
   transform: translateY(-2px);
+}
+
+/* Mobile: 2x2 grid layout */
+@media (max-width: 768px) {
+  .pp-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--pp-space-md);
+  }
 }
 
 /* Desktop: Larger badges */

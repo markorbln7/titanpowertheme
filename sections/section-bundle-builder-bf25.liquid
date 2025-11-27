@@ -11,7 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 {% endif %}
 
-<section class="section-collections-with-nav section-explore dark-mode" data-section="bf25">
+<section class="section-collections-with-nav section-explore dark-mode !pb-0" data-section="bf25">
   <div class="gradient-mesh-bg"></div>
 
    {% if section.blocks.size > 0 %}
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[40px]">
+  <div class="section-collections-with-nav__wrapper max-w-[1200px] mx-auto grid gap-[40px] lg:gap-[60px] py-[0px] md:py-[40px] px-[10px] mb-0">
       {% for collection in section.settings.collections %}
         {% assign collection_obj = collections[collection.handle] %}
         <div class="collection" id="{{ collection_obj.handle  | strip }}">

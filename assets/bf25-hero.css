@@ -119,6 +119,13 @@
   /* Height constraint achieved by component compactness */
 }
 
+/* Mobile: Remove gap */
+@media (max-width: 768px) {
+  .bf25-hero__module {
+    gap: 0;
+  }
+}
+
 /* Gift Box Header */
 .bf25-hero__gifts-header {
   text-align: center;

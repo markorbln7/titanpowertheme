@@ -9,6 +9,39 @@
  */
 {
   "sections": {
+    "section_scroll_nav_cdqHDX": {
+      "type": "section-scroll-nav",
+      "blocks": {
+        "nav_item_MfRqak": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Build your Deal",
+            "target": "bf25-hero-section"
+          }
+        },
+        "nav_item_XUA9wK": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Power Packs",
+            "target": "power-pairs"
+          }
+        },
+        "nav_item_Xbtcaf": {
+          "type": "nav_item",
+          "settings": {
+            "title": "Power pairs",
+            "target": "PowerPairsBF25"
+          }
+        }
+      },
+      "block_order": [
+        "nav_item_MfRqak",
+        "nav_item_XUA9wK",
+        "nav_item_Xbtcaf"
+      ],
+      "name": "Scroll Navigation",
+      "settings": {}
+    },
     "sticky_cart_7W3hCL": {
       "type": "sticky-cart",
       "blocks": {
@@ -268,6 +301,37 @@
         "avg_price_retail": 40,
         "avg_price_shopify": 20,
         "enable_section": true
+      }
+    },
+    "section_mystery_box_JT4Pf3": {
+      "type": "section-mystery-box",
+      "blocks": {
+        "hotspot_V3CV7B": {
+          "type": "hotspot",
+          "settings": {
+            "eyebrow": "5% change to win",
+            "hotspot_title": "Titan Smart Buds",
+            "product": "titan-buds-pro",
+            "position_desktop_top": 27,
+            "position_desktop_left": 20,
+            "position_mobile_top": 50,
+            "position_mobile_left": 52,
+            "line_width_desktop": "",
+            "line_width_mobile": "0"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_V3CV7B"
+      ],
+      "disabled": true,
+      "name": "Mystery Box",
+      "settings": {
+        "master_product": "mistery-box-1",
+        "title": "Tech Essentials Box",
+        "subtitle": "Includes 1 Random Item or Bundle per Box",
+        "note": "Note: Colors are random and bundles may ship separately",
+        "image_desktop": "shopify://shop_images/Mystery_box.jpg"
       }
     },
     "section_bundle_builder_bf25_eMVmtq": {
@@ -928,6 +992,7 @@
     }
   },
   "order": [
+    "section_scroll_nav_cdqHDX",
     "sticky_cart_7W3hCL",
     "game",
     "bf_promo_discount_AibFnrK",
@@ -937,6 +1002,7 @@
     "titan_linked_image_A4GJp6",
     "limited_offers_jKBGqn",
     "section_bf25_hero_tLQyNk",
+    "section_mystery_box_JT4Pf3",
     "section_bundle_builder_bf25_eMVmtq",
     "section_collections_with_nav_EzNML8",
     "section_power_pairs_bf25_fmUJY6",

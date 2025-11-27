@@ -2205,3 +2205,62 @@
 }
 
 /* END V4 FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIX - Card Collapsed State Styling (Match Tier Boxes)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Match the tier box styling - dark with green border */
+.bf25-hero__card[data-active-tier="0"] {
+  background: linear-gradient(180deg, rgba(20, 25, 20, 0.95) 0%, rgba(10, 15, 10, 0.98) 100%) !important;
+  border: 1px solid rgba(96, 198, 85, 0.4) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 0 20px rgba(96, 198, 85, 0.1),
+    inset 0 1px 0 rgba(96, 198, 85, 0.1) !important;
+}
+
+/* Card header area when collapsed */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  background: transparent !important;
+  padding: 32px 24px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+    padding: 24px 16px !important;
+  }
+}
+
+/* Arrow - bigger and more prominent */
+.bf25-hero__default-message::before {
+  content: "↑" !important;
+  font-size: 28px !important;
+  color: #60c655 !important;
+  display: block !important;
+  margin-bottom: 12px !important;
+  text-shadow: 0 0 10px rgba(96, 198, 85, 0.5) !important;
+}
+
+/* Text - brighter and clearer */
+.bf25-hero__default-message::after {
+  content: "SLIDE BAR TO EXPLORE OFFERS" !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  letter-spacing: 3px !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__default-message::before {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+  .bf25-hero__default-message::after {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+}
+
+/* END V4 CARD STYLE FIX */

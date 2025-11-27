@@ -418,6 +418,21 @@
     "section_power_pairs_bf25_fmUJY6": {
       "type": "section-power-pairs-bf25",
       "blocks": {
+        "bundle_mUkcBd": {
+          "type": "bundle",
+          "settings": {
+            "bundle_id": "bundle-1",
+            "bundle_title": "THE ESSENTIALS",
+            "tier_level": "1",
+            "tier_badge_text": "<p>Tier 1 — 60% OFF</p>",
+            "avatar_tags": "Stocking stuffers | Office workers | Light travelers",
+            "multipliers": "1,2,3,4",
+            "bundle_image": "shopify://shop_images/Power_pairs_1_fa7cf3dc-6660-49a3-a042-61054ea9ffaa.png",
+            "number_of_items": 4,
+            "number_of_gifts": 1,
+            "learn_more_text": "Three cables that cover every device, plus the 45W plug that works in 200+ countries. Home, office, travel — sorted."
+          }
+        },
         "bundle_product_QBNFy3": {
           "type": "bundle_product",
           "settings": {
@@ -450,21 +465,6 @@
             "quantity": 1
           }
         },
-        "bundle_mUkcBd": {
-          "type": "bundle",
-          "settings": {
-            "bundle_id": "bundle-1",
-            "bundle_title": "THE ESSENTIALS",
-            "tier_level": "1",
-            "tier_badge_text": "<p>Tier 1 — 60% OFF</p>",
-            "avatar_tags": "Stocking stuffers | Office workers | Light travelers",
-            "multipliers": "1,2,3,4",
-            "bundle_image": "shopify://shop_images/Power_pairs_1_fa7cf3dc-6660-49a3-a042-61054ea9ffaa.png",
-            "number_of_items": 4,
-            "number_of_gifts": 1,
-            "learn_more_text": "Three cables that cover every device, plus the 45W plug that works in 200+ countries. Home, office, travel — sorted."
-          }
-        },
         "bundle_teEpeh": {
           "type": "bundle",
           "settings": {
@@ -477,6 +477,46 @@
             "number_of_items": 8,
             "number_of_gifts": 2,
             "learn_more_text": "From hotel room to coffee shop to airport lounge — you're covered. Wireless charging, fast charging, and a holder to keep it all untangled."
+          }
+        },
+        "bundle_product_fWyN6R": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-2",
+            "product": "1-x-titan-smart-cable™-black-friday",
+            "quantity": 1
+          }
+        },
+        "bundle_product_rKAgqF": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-2",
+            "product": "1-x-titan-smart-cable™-black-friday",
+            "quantity": 1
+          }
+        },
+        "bundle_product_KViEek": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-2",
+            "product": "1-x-titan-smart-cable™-black-friday",
+            "quantity": 1
+          }
+        },
+        "bundle_product_RHcxJM": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-2",
+            "product": "titan-45w-nano-pd-plug™",
+            "quantity": 1
+          }
+        },
+        "bundle_product_bK3fxQ": {
+          "type": "bundle_product",
+          "settings": {
+            "parent_bundle_id": "bundle-2",
+            "product": "prismcore",
+            "quantity": 1
           }
         },
         "bundle_PjXpWX": {
@@ -509,12 +549,17 @@
         }
       },
       "block_order": [
+        "bundle_mUkcBd",
         "bundle_product_QBNFy3",
         "bundle_product_brY7gz",
         "bundle_product_4iFxyq",
         "bundle_product_rymEaw",
-        "bundle_mUkcBd",
         "bundle_teEpeh",
+        "bundle_product_fWyN6R",
+        "bundle_product_rKAgqF",
+        "bundle_product_KViEek",
+        "bundle_product_RHcxJM",
+        "bundle_product_bK3fxQ",
         "bundle_PjXpWX",
         "bundle_rPYTmN"
       ],

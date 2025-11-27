@@ -3884,3 +3884,231 @@ body.show-sticky-cart .bf25-sticky-cart {
 }
 
 /* END FLOATING PRODUCTS V2 */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - REFINEMENTS V2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FLOATING PRODUCTS - 20% Bigger + Soft Green Glow
+   --------------------------------------------------------------------- */
+
+@keyframes bf25-float-slow-1 {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes bf25-float-slow-2 {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+.bf25-hero-split .bf25-floating-product {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  /* Soft green glow */
+  filter:
+    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 15px rgba(96, 198, 85, 0.15)) !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  overflow: visible !important;
+}
+
+/* ===== DESKTOP (1200px+) - 20% BIGGER ===== */
+/* Cable - closer to 85% */
+.bf25-hero-split .bf25-floating-cable {
+  width: 132px !important; /* Was 110px, +20% */
+  top: 12% !important;
+  left: 8% !important; /* Closer to center */
+  animation: bf25-float-slow-1 8s ease-in-out infinite !important;
+}
+
+/* Earbuds - moved RIGHT to not overlap % */
+.bf25-hero-split .bf25-floating-earbuds {
+  width: 114px !important; /* Was 95px, +20% */
+  bottom: 18% !important;
+  right: 3% !important; /* Further right - was 10% */
+  animation: bf25-float-slow-2 10s ease-in-out infinite !important;
+  animation-delay: -2s !important;
+}
+
+/* ===== LARGE DESKTOP (1400px+) ===== */
+@media (min-width: 1400px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 144px !important;
+    top: 10% !important;
+    left: 6% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 120px !important;
+    bottom: 15% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== MEDIUM DESKTOP (1024px - 1199px) ===== */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 108px !important;
+    top: 15% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 96px !important;
+    bottom: 20% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== TABLET (769px - 1023px) ===== */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 90px !important;
+    top: 18% !important;
+    left: 3% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 78px !important;
+    bottom: 22% !important;
+    right: 1% !important;
+  }
+}
+
+/* ===== MOBILE (768px and below) - BIGGER + Repositioned ===== */
+@media (max-width: 768px) {
+  /* Cable - moved DOWN from top, BIGGER */
+  .bf25-hero-split .bf25-floating-cable {
+    width: 75px !important; /* Was 55px - much bigger */
+    top: 12% !important; /* Was 8% - moved down */
+    left: 3% !important;
+  }
+  /* Earbuds - BIGGER, further from 85% */
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 70px !important; /* Was 50px - much bigger */
+    bottom: 2% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    top: 10% !important;
+    left: 2% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 58px !important;
+    bottom: 0% !important;
+    right: 1% !important;
+  }
+}
+
+/* ===== EXTRA SMALL (375px and below) ===== */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 55px !important;
+    top: 8% !important;
+    left: 1% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 50px !important;
+    bottom: -2% !important;
+    right: 0% !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   URGENCY BAR - Contained Social Proof (Closer to Battery)
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  /* Invisible container to keep everything together */
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 20px 20px !important;
+    background: #000 !important;
+  }
+
+  /* Container wrapper - invisible but keeps items together */
+  .bf25-hero-split .bf25-urgency-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important; /* Tight gap */
+    max-width: 750px !important;
+    padding: 12px 24px !important;
+    background: rgba(255, 255, 255, 0.01) !important; /* Nearly invisible */
+    border-radius: 50px !important;
+  }
+
+  /* If no container wrapper, use direct children styling */
+  .bf25-hero-split .bf25-urgency-strip {
+    gap: 18px !important; /* Reduced from 20px */
+  }
+
+  /* Social items closer */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    margin: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE STEPS - Centered + Better Descriptive Text
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-steps {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    width: 100% !important;
+    max-width: 320px !important; /* Wider for more text */
+    justify-content: flex-start !important;
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    gap: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 13px !important;
+  }
+
+  /* Ensure detail text is visible */
+  .bf25-hero-split .bf25-step-detail {
+    display: inline !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 13px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    color: #fff !important;
+  }
+}
+
+/* Extra small mobile - slightly smaller text */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 13px !important;
+    max-width: 300px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 12px !important;
+  }
+}
+
+/* END REFINEMENTS V2 */

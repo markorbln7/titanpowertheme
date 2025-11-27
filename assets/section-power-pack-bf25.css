@@ -4305,3 +4305,31 @@ body.modal-open {
 }
 
 /* END POWER PACK INTEGRATION FIXES */
+
+/* ============================================
+   Info Icon - Top Right Corner
+   ============================================ */
+.power-pack-section .ppc-info-icon,
+.power-pack-section .bf25-product-info-icon {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  left: auto !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--ppc-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.3s ease;
+}
+
+.power-pack-section .ppc-info-icon:hover,
+.power-pack-section .bf25-product-info-icon:hover {
+  background: rgba(212, 175, 55, 0.3);
+  transform: scale(1.1);
+}

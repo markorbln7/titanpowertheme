@@ -4543,3 +4543,124 @@ body.modal-open {
 .power-pack-section .ppc-pack-btn.popular {
   position: relative;
 }
+
+/* ============================================
+   MICRO-FIX C: Refinements
+   ============================================ */
+
+/* --- Info Icon: Fix Jitter, Gold Theme, Bigger --- */
+.power-pack-section .ppc-info-icon,
+.power-pack-section .bf25-product-info-icon {
+  /* Prevent jitter/wobble */
+  transform: translateZ(0) !important;
+  will-change: auto !important;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  /* Gold theme - remove green */
+  border-color: var(--ppc-gold, #D4AF37) !important;
+  box-shadow: none !important;
+  /* Slightly bigger */
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.power-pack-section .ppc-info-icon svg,
+.power-pack-section .bf25-product-info-icon svg {
+  width: 20px !important;
+  height: 20px !important;
+  /* Remove any animations causing jitter */
+  animation: none !important;
+}
+
+.power-pack-section .ppc-info-icon svg circle,
+.power-pack-section .bf25-product-info-icon svg circle {
+  stroke: var(--ppc-gold, #D4AF37) !important;
+  fill: none !important;
+}
+
+.power-pack-section .ppc-info-icon svg text,
+.power-pack-section .ppc-info-icon svg path,
+.power-pack-section .bf25-product-info-icon svg text,
+.power-pack-section .bf25-product-info-icon svg path {
+  fill: var(--ppc-gold, #D4AF37) !important;
+}
+
+/* Subtle pulse on active card only - smooth */
+.power-pack-section .ppc-card-wrapper.active .ppc-info-icon,
+.power-pack-section .ppc-card-wrapper.active .bf25-product-info-icon {
+  animation: ppc-icon-glow 3s ease-in-out infinite !important;
+}
+
+@keyframes ppc-icon-glow {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 12px 3px rgba(212, 175, 55, 0.3);
+  }
+}
+
+/* --- Product Image: 40% Bigger --- */
+.power-pack-section .ppc-product-image {
+  height: 260px !important;
+  margin: 5px 0 !important;
+}
+
+.power-pack-section .ppc-product-image img {
+  max-height: 240px !important;
+  width: auto !important;
+}
+
+@media (max-width: 767px) {
+  .power-pack-section .ppc-product-image {
+    height: 200px !important;
+  }
+  .power-pack-section .ppc-product-image img {
+    max-height: 180px !important;
+  }
+}
+
+/* --- Pack Buttons: Smaller Padding, BEST Not Filled --- */
+.power-pack-section .ppc-pack-btn {
+  padding: 14px 10px !important;
+}
+
+.power-pack-section .ppc-pack-qty {
+  font-size: 26px !important;
+  margin-bottom: 2px !important;
+}
+
+.power-pack-section .ppc-pack-discount {
+  font-size: 14px !important;
+  margin-bottom: 2px !important;
+}
+
+.power-pack-section .ppc-pack-gifts {
+  font-size: 11px !important;
+}
+
+/* BEST tag - just border highlight, NOT filled */
+.power-pack-section .ppc-pack-btn.popular {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 2px solid var(--ppc-gold, #D4AF37) !important;
+}
+
+/* Only fill when actually selected */
+.power-pack-section .ppc-pack-btn.selected {
+  background: rgba(212, 175, 55, 0.25) !important;
+  border: 2px solid var(--ppc-gold, #D4AF37) !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* --- Back Button: Ensure Visible --- */
+.power-pack-section .ppc-back-btn,
+.power-pack-section .js-ppc-back {
+  margin-top: 10px !important;
+  padding: 8px 20px !important;
+}
+
+/* --- Pack Grid: Slightly Less Gap --- */
+.power-pack-section .ppc-pack-grid {
+  gap: 10px !important;
+  margin-bottom: 15px !important;
+}

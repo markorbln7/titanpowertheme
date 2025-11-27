@@ -204,6 +204,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // === CLICK HANDLING FIXES ===
   // Stop propagation on ALL back-of-card elements
   function initializeClickProtection() {
+    // BULLETPROOF: When card is flipped, block ALL clicks from bubbling
+    section.querySelectorAll('.ppc-flip-card').forEach(flipCard => {
+      flipCard.addEventListener('click', (e) => {
+        // If card is flipped (showing back), stop ALL propagation
+        if (flipCard.classList.contains('flipped')) {
+          e.stopPropagation();
+        }
+      }, true); // Use capture phase to catch it first
+    });
+
     // Protect entire card back from bubbling
     section.querySelectorAll('.ppc-card-back').forEach(back => {
       back.addEventListener('click', (e) => {
@@ -288,6 +298,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // Improved card click handler
   cards.forEach((card, index) => {
     card.addEventListener('click', (e) => {
+      // If this card is flipped, block all navigation
+      const flipCard = card.querySelector('.ppc-flip-card');
+      if (flipCard && flipCard.classList.contains('flipped')) {
+        return;
+      }
+
       // Don't navigate if clicking on interactive elements
       if (e.target.closest('.ppc-card-back') ||
           e.target.closest('.ppc-pack-btn') ||
@@ -298,10 +314,10 @@ document.addEventListener('DOMContentLoaded', function () {
           e.target.closest('.bf25-product-info-icon') ||
           e.target.closest('.js-ppc-flip-trigger') ||
           e.target.closest('.ppc-flip-cta')) {
-        return; // Don't navigate
+        return;
       }
 
-      // Don't navigate if clicking on the active card
+      // Don't navigate if clicking on the active card (front side)
       if (index === state.activeIndex) {
         return;
       }

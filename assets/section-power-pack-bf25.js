@@ -135,16 +135,28 @@ document.addEventListener('DOMContentLoaded', function () {
   state.totalCards = cards.length;
 
   function updatePositions() {
+    const totalCards = state.totalCards;
+
     cards.forEach((card, index) => {
-      const diff = index - state.activeIndex;
-      const isActive = index === state.activeIndex;
+      // Calculate shortest distance considering wrap-around
+      let diff = index - state.activeIndex;
+
+      // Adjust diff for infinite loop visual
+      if (diff > totalCards / 2) {
+        diff -= totalCards;
+      } else if (diff < -totalCards / 2) {
+        diff += totalCards;
+      }
+
+      const isActive = diff === 0;
 
       const translateX = diff * CONFIG.translateX;
-      const translateZ = isActive ? CONFIG.translateZ : -CONFIG.translateZ;
+      const translateZ = isActive ? CONFIG.translateZ : -Math.abs(diff) * 50;
       const rotateY = diff * CONFIG.rotateY;
       const scale = isActive ? CONFIG.scaleActive : CONFIG.scaleInactive;
 
-      let opacity = Math.abs(diff) > 2 ? 0 : 1 - (Math.abs(diff) * 0.2);
+      // Always show at least 2 cards on each side
+      let opacity = Math.abs(diff) > 2 ? 0.3 : 1 - (Math.abs(diff) * 0.15);
       let brightness = isActive ? 1 : 0.7;
       const zIndex = isActive ? 10 : 10 - Math.abs(diff);
 

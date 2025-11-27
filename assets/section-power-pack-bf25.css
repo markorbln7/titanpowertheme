@@ -3170,7 +3170,7 @@ body.modal-open {
   display: none !important;
 }
 
-/* Coverflow Stage */
+/* Coverflow Stage - Increased bottom padding */
 .power-pack-section .ppc-coverflow-stage {
   display: flex;
   justify-content: center;
@@ -3179,7 +3179,7 @@ body.modal-open {
   perspective: 1000px;
   position: relative;
   overflow: visible;
-  padding: 40px 0;
+  padding: 40px 0 80px;
 }
 
 .power-pack-section .ppc-coverflow-track {
@@ -3241,6 +3241,7 @@ body.modal-open {
 
 /* Card Front Styling */
 .power-pack-section .ppc-card-front {
+  position: relative; /* Ensure positioned for absolute children */
   background: var(--ppc-card-bg);
   padding: 16px;
   border: 1px solid var(--ppc-gold-glow-subtle);
@@ -3284,12 +3285,14 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* Navigation Controls */
+/* Navigation Controls - Increased spacing to prevent overlap */
 .power-pack-section .ppc-nav-controls {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-top: 18px;
+  gap: 20px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 20;
 }
 
 .power-pack-section .ppc-nav-btn {
@@ -3373,16 +3376,17 @@ body.modal-open {
   fill: #000;
 }
 
-/* Info Icon - Top Right */
-.power-pack-section .ppc-info-icon {
+/* Info Icon - Top Right Corner (Fixed Position) */
+.power-pack-section .ppc-info-icon,
+.power-pack-section .ppc-card-front .bf25-product-info-icon {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid var(--ppc-gold-glow-subtle);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--ppc-gold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3394,24 +3398,34 @@ body.modal-open {
   transition: all 0.3s ease;
 }
 
-.power-pack-section .ppc-info-icon:hover {
+.power-pack-section .ppc-info-icon:hover,
+.power-pack-section .ppc-card-front .bf25-product-info-icon:hover {
   background: var(--ppc-gold);
+  transform: scale(1.1);
   color: #000;
 }
 
-/* Product Image */
+.power-pack-section .ppc-info-icon svg,
+.power-pack-section .bf25-product-info-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Product Image - Even Larger */
 .power-pack-section .ppc-product-image {
-  height: 180px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 28px 0 12px;
+  margin: 10px 0;
   position: relative;
 }
 
 .power-pack-section .ppc-product-image img {
-  max-height: 100%;
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   filter: drop-shadow(0 0 20px var(--ppc-gold-glow)) drop-shadow(0 0 40px var(--ppc-gold-glow-subtle));
   transition: transform 0.4s ease;
@@ -3848,7 +3862,7 @@ body.modal-open {
   }
   
   .power-pack-section .ppc-product-image {
-    height: 140px;
+    height: 180px;
     margin: 22px 0 8px;
   }
   
@@ -4264,15 +4278,9 @@ body.modal-open {
   }
 }
 
-/* FIX 4: Stock dot styling to match Bundle Builder */
+/* FIX 4: Hide duplicate stock dot - JS adds it dynamically */
 .power-pack-section .ppc-stock-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  margin-right: 4px;
-  animation: pulse 2s ease-in-out infinite;
+  display: none !important;
 }
 
 @keyframes pulse {
@@ -4295,7 +4303,7 @@ body.modal-open {
 
 /* FIX 6: Card position adjustments for better centering */
 .power-pack-section .ppc-card-wrapper {
-  margin-top: -240px !important; /* Slight adjustment up */
+  margin-top: -280px !important; /* Move cards up to prevent arrow overlap */
 }
 
 @media (max-width: 767px) {
@@ -4305,3 +4313,74 @@ body.modal-open {
 }
 
 /* END POWER PACK INTEGRATION FIXES */
+
+/* ============================================
+   POWER PACK VARIANT DROPDOWN PREMIUM STYLING
+   ============================================ */
+
+/* Premium Variant Dropdown Styling */
+.power-pack-section .ppc-variant-dropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 50% !important;
+  min-width: 0;
+  flex: 1;
+  padding: 12px 35px 12px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ppc-gold);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--ppc-gold);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23D4AF37'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
+.power-pack-section .ppc-variant-dropdown:hover {
+  border-color: var(--ppc-gold);
+  background-color: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 10px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-variant-dropdown:focus {
+  outline: none;
+  border-color: var(--ppc-gold);
+  box-shadow: 0 0 15px var(--ppc-gold-glow);
+}
+
+/* Style the dropdown options (limited browser support but helps) */
+.power-pack-section .ppc-variant-dropdown option {
+  background-color: #1a1a1a;
+  color: var(--ppc-gold);
+  padding: 10px;
+  font-size: 14px;
+}
+
+.power-pack-section .ppc-variant-dropdown option:checked,
+.power-pack-section .ppc-variant-dropdown option:hover {
+  background-color: rgba(212, 175, 55, 0.3);
+  color: var(--ppc-gold);
+}
+
+/* Variant row layout - ensure both dropdowns are 50% */
+.power-pack-section .ppc-variant-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+/* Force equal width */
+.power-pack-section .ppc-variant-row select {
+  flex: 1 1 50%;
+  max-width: calc(50% - 5px);
+}
+
+/* END VARIANT DROPDOWN PREMIUM STYLING */

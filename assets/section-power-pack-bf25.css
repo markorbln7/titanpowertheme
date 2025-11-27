@@ -4033,3 +4033,125 @@ body.modal-open {
     font-size: 18px;
   }
 }
+
+/* HIDE OLD PRODUCT GRID - Show only coverflow */
+.power-pack-section .section-collections-with-nav__wrapper {
+  display: none !important;
+}
+
+/* Fix: Center section header */
+.power-pack-section .ppc-section-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.power-pack-section .ppc-title {
+  color: var(--ppc-gold);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-subtitle {
+  color: var(--ppc-text);
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Fix: Center back card header image */
+.power-pack-section .ppc-back-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.power-pack-section .ppc-back-header img {
+  margin: 0 auto 8px;
+}
+
+/* Fix: Style ticks metafield output */
+.power-pack-section .ppc-bullet-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.power-pack-section .ppc-bullet-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+}
+
+.power-pack-section .ppc-bullet-points li::before {
+  content: '⚡';
+  color: var(--ppc-gold);
+  text-shadow: 0 0 8px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Fix: Center section header */
+.power-pack-section .ppc-section-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.power-pack-section .ppc-title {
+  color: var(--ppc-gold);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px var(--ppc-gold-glow);
+}
+
+.power-pack-section .ppc-subtitle {
+  color: var(--ppc-text);
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Fix: Center back card header image */
+.power-pack-section .ppc-back-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.power-pack-section .ppc-back-header img {
+  margin: 0 auto 8px;
+}
+
+/* Fix: Style ticks metafield output */
+.power-pack-section .ppc-bullet-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.power-pack-section .ppc-bullet-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--ppc-text-muted);
+}
+
+.power-pack-section .ppc-bullet-points li::before {
+  content: '⚡';
+  color: var(--ppc-gold);
+  text-shadow: 0 0 8px var(--ppc-gold-glow);
+  flex-shrink: 0;
+}
+
+/* Fix: Hide variant row when not needed */
+.power-pack-section .ppc-variant-row:empty {
+  display: none;
+}

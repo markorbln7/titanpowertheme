@@ -3775,3 +3775,261 @@ body.modal-open {
 .power-pack-section .pp-back-link button:hover {
   color: var(--pp-gold);
 }
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+/* Tablet and below */
+@media (max-width: 991px) {
+  .power-pack-section .pp-coverflow-stage {
+    min-height: 480px;
+    padding: 30px 0;
+  }
+  
+  .power-pack-section .pp-card-container {
+    width: 230px;
+    height: 420px;
+  }
+  
+  .power-pack-section .pp-card-wrapper {
+    margin-left: -115px;
+    margin-top: -210px;
+  }
+  
+  .power-pack-section .pp-card-reflection {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .power-pack-section .pp-coverflow-stage {
+    min-height: 440px;
+    padding: 25px 0;
+  }
+  
+  .power-pack-section .pp-card-container {
+    width: 190px;
+    height: 370px;
+  }
+  
+  .power-pack-section .pp-card-wrapper {
+    margin-left: -95px;
+    margin-top: -185px;
+  }
+  
+  /* Card Front Mobile */
+  .power-pack-section .pp-card-front {
+    padding: 12px;
+  }
+  
+  .power-pack-section .pp-discount-badge {
+    top: 8px;
+    left: 8px;
+    padding: 4px 7px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .pp-discount-badge span {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .pp-info-icon {
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  .power-pack-section .pp-product-image {
+    height: 85px;
+    margin: 22px 0 8px;
+  }
+  
+  .power-pack-section .pp-bestseller-badge {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .power-pack-section .pp-product-title {
+    font-size: 13px;
+  }
+  
+  .power-pack-section .pp-reviews-row {
+    margin-bottom: 6px;
+    gap: 5px;
+  }
+  
+  .power-pack-section .pp-stars {
+    font-size: 10px;
+  }
+  
+  .power-pack-section .pp-reviews-count,
+  .power-pack-section .pp-reviews-divider,
+  .power-pack-section .pp-stock-text {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .pp-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .power-pack-section .pp-bullet-item {
+    font-size: 9px;
+    margin-bottom: 2px;
+    gap: 5px;
+  }
+  
+  .power-pack-section .pp-bullet-icon {
+    font-size: 9px;
+  }
+  
+  .power-pack-section .pp-price-section {
+    margin: 6px 0;
+  }
+  
+  .power-pack-section .pp-price-current {
+    font-size: 20px;
+  }
+  
+  .power-pack-section .pp-price-compare {
+    font-size: 11px;
+  }
+  
+  .power-pack-section .pp-flip-cta {
+    padding: 9px 14px;
+    font-size: 10px;
+    border-radius: 18px;
+  }
+  
+  /* Card Back Mobile */
+  .power-pack-section .pp-card-back {
+    padding: 10px;
+  }
+  
+  .power-pack-section .pp-back-header {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .power-pack-section .pp-back-header img {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .power-pack-section .pp-back-header h3 {
+    font-size: 11px;
+  }
+  
+  .power-pack-section .pp-back-header p {
+    font-size: 8px;
+  }
+  
+  .power-pack-section .pp-variant-row {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .power-pack-section .pp-variant-dropdown {
+    padding: 7px 24px 7px 8px;
+    font-size: 10px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .pp-pack-title {
+    font-size: 8px;
+    margin: 4px 0 6px;
+  }
+  
+  .power-pack-section .pp-pack-grid {
+    gap: 5px;
+  }
+  
+  .power-pack-section .pp-pack-btn {
+    padding: 8px 4px;
+    border-radius: 8px;
+  }
+  
+  .power-pack-section .pp-pack-btn.popular::before {
+    font-size: 6px;
+    padding: 2px 5px;
+    top: -5px;
+  }
+  
+  .power-pack-section .pp-pack-qty {
+    font-size: 14px;
+  }
+  
+  .power-pack-section .pp-pack-discount {
+    font-size: 9px;
+  }
+  
+  .power-pack-section .pp-pack-gifts {
+    font-size: 7px;
+  }
+  
+  .power-pack-section .pp-add-to-bundle {
+    margin-top: 8px;
+    padding: 10px 12px;
+    font-size: 10px;
+    border-radius: 16px;
+  }
+  
+  .power-pack-section .pp-back-link button {
+    font-size: 8px;
+  }
+  
+  /* Navigation Mobile - WCAG Touch Targets */
+  .power-pack-section .pp-nav-controls {
+    margin-top: 12px;
+    gap: 14px;
+  }
+  
+  .power-pack-section .pp-nav-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  .power-pack-section .pp-dot-nav {
+    margin-top: 8px;
+    gap: 6px;
+  }
+  
+  .power-pack-section .pp-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .power-pack-section .pp-dot.active {
+    width: 22px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 374px) {
+  .power-pack-section .pp-card-container {
+    width: 170px;
+    height: 350px;
+  }
+  
+  .power-pack-section .pp-card-wrapper {
+    margin-left: -85px;
+    margin-top: -175px;
+  }
+  
+  .power-pack-section .pp-product-image {
+    height: 70px;
+  }
+  
+  .power-pack-section .pp-product-title {
+    font-size: 12px;
+  }
+  
+  .power-pack-section .pp-price-current {
+    font-size: 18px;
+  }
+}

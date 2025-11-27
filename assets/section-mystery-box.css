@@ -114,3 +114,12 @@
   cursor: not-allowed;
 }
 
+/* Mobile: Full width buttons */
+@media screen and (max-width: 767px) {
+  .mystery-box__add-to-cart,
+  .mystery-box__buynow {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+

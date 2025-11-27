@@ -48,13 +48,12 @@
   
   .filter-pills {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: nowrap;
     gap: 12px;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 12px 0;
-    padding-right: 100px; /* Show half of the last visible pill */
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;

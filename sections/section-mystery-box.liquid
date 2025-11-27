@@ -22,7 +22,7 @@ Clean, simple implementation with Tailwind CSS
   data-section-id="{{ section.id }}"
   data-section-type="mystery-box"
 >
-  <div class="bg-[#0a0a0a] py-[40px]">
+  <div class="bg-[#0a0a0a] py-[40px] px-[10px] md:px-0">
     <div class="max-w-[1446px] mx-auto bg-black border-2 glass-surface">
       <div class="grid grid-cols-1 lg:grid-cols-[57%_43%]">
         
@@ -100,33 +100,33 @@ Clean, simple implementation with Tailwind CSS
         </div>
 
         {%- comment -%} CONTENT AREA (RIGHT 40%) {%- endcomment -%}
-        <div class="p-8 lg:p-12 flex flex-col justify-center !pl-0">
+        <div class="md:p-8 p-4 lg:p-12 flex flex-col justify-center md:!pl-0">
           
           {%- comment -%} Title {%- endcomment -%}
           {%- if section.settings.title != blank -%}
-            <h2 class="text-white text-[40px] font-bold mb-2">
+            <h2 class="text-white md:text-[40px] text-[32px] font-bold mb-2">
               {{ section.settings.title }}
             </h2>
           {%- endif -%}
 
           {%- comment -%} Subtitle {%- endcomment -%}
           {%- if section.settings.subtitle != blank -%}
-            <p class="text-[#d1d1d1] text-[24px] mb-2">
+            <p class="text-[#d1d1d1] md:text-[24px] text-[18px] mb-2">
               {{ section.settings.subtitle }}
             </p>
           {%- endif -%}
 
           {%- comment -%} Note {%- endcomment -%}
           {%- if section.settings.note != blank -%}
-            <p class="text-[#d1d1d1] text-[16px] mb-2">
+            <p class="text-[#d1d1d1] md:text-[16px] text-[14px] mb-2">
               {{ section.settings.note }}
             </p>
           {%- endif -%}
 
           {%- comment -%} Pricing {%- endcomment -%}
           {%- if master_product != blank and main_variant -%}
-            <div class="flex items-end gap-4 mb-5">
-              <p class="text-[#60c655] text-[56px] font-bold leading-none">
+            <div class="flex md:items-end items-start flex-col md:flex-row gap-4 mb-5">
+              <p class="text-[#60c655] md:text-[42px] text-[32px] font-bold leading-none">
                 {{ main_variant.price | money }}
               </p>
               

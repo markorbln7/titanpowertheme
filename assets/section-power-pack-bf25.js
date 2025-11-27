@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
     isAnimating: false,
     isDragging: false,
     startX: 0,
-    currentX: 0
+    currentX: 0,
+    hasMoved: false  // Track if actual drag movement occurred
   };
 
   function updatePositions() {
@@ -331,36 +332,68 @@ document.addEventListener('DOMContentLoaded', function () {
   track.addEventListener('touchstart', (e) => {
     state.isDragging = true;
     state.startX = e.touches[0].clientX;
+    state.currentX = e.touches[0].clientX; // Initialize
+    state.hasMoved = false;
   }, { passive: true });
 
   track.addEventListener('touchmove', (e) => {
-    if (state.isDragging) state.currentX = e.touches[0].clientX;
+    if (state.isDragging) {
+      state.currentX = e.touches[0].clientX;
+      if (Math.abs(state.startX - state.currentX) > 10) {
+        state.hasMoved = true;
+      }
+    }
   }, { passive: true });
 
   track.addEventListener('touchend', () => {
     if (!state.isDragging) return;
     state.isDragging = false;
-    const diff = state.startX - state.currentX;
-    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+
+    // Only navigate if there was actual swipe movement
+    if (state.hasMoved) {
+      const diff = state.startX - state.currentX;
+      if (Math.abs(diff) > 50) {
+        navigate(diff > 0 ? 1 : -1);
+      }
+    }
+
+    state.hasMoved = false;
   });
 
   // Mouse drag
   track.addEventListener('mousedown', (e) => {
     state.isDragging = true;
     state.startX = e.clientX;
+    state.currentX = e.clientX; // Initialize to same position - no movement yet
+    state.hasMoved = false; // Track if actual movement occurred
     track.style.cursor = 'grabbing';
   });
 
   document.addEventListener('mousemove', (e) => {
-    if (state.isDragging) state.currentX = e.clientX;
+    if (state.isDragging) {
+      state.currentX = e.clientX;
+      // Only count as moved if we've dragged more than 10px
+      if (Math.abs(state.startX - state.currentX) > 10) {
+        state.hasMoved = true;
+      }
+    }
   });
 
   document.addEventListener('mouseup', () => {
     if (!state.isDragging) return;
     state.isDragging = false;
     track.style.cursor = 'grab';
-    const diff = state.startX - state.currentX;
-    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+
+    // Only navigate if there was actual dragging movement
+    if (state.hasMoved) {
+      const diff = state.startX - state.currentX;
+      if (Math.abs(diff) > 50) {
+        navigate(diff > 0 ? 1 : -1);
+      }
+    }
+
+    // Reset movement flag
+    state.hasMoved = false;
   });
 
   // Keyboard

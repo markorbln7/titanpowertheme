@@ -910,7 +910,7 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "8+ items",
-            "block_title": "75",
+            "block_title": "70",
             "gift_text": "+ 1 FREE GIFT",
             "eyebrow_position": false
           }
@@ -952,7 +952,7 @@
       "name": "Bf Promo Discount bf 2025",
       "settings": {
         "show_banner": false,
-        "section_title": "Build a Custom Pack",
+        "section_title": "CUSTOMISE YOUR STACK",
         "section_eyebrow": "The More You Add, More You Save"
       }
     },
@@ -962,16 +962,30 @@
       "settings": {
         "modal_display_mode": "power_packs",
         "use_popup": true,
-        "show_alt_images": true,
+        "show_alt_images": false,
         "collections": [
-          "plugs",
           "cables-byob",
+          "plugs",
           "premium-new",
           "wireless-new"
         ],
         "add_4_text": "4",
         "add_6_text": "8",
         "add_10_text": "12"
+      }
+    },
+    "bf_top_bar_hxgfNg": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #f2c054;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE up to 85%",
+        "show_banner": false
       }
     },
     "bf_promo_discount_2025_HncBNf": {
@@ -990,7 +1004,7 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "8+ items",
-            "block_title": "75",
+            "block_title": "70",
             "gift_text": "+ 1 FREE GIFT",
             "eyebrow_position": false
           }
@@ -1008,8 +1022,8 @@
           "type": "block_item",
           "settings": {
             "block_eyebrow": "4+ items",
-            "block_title": "60",
-            "gift_text": "+ 1 FREE GIFT",
+            "block_title": "85",
+            "gift_text": "+ 4 FREE GIFT",
             "eyebrow_position": false
           }
         }
@@ -1034,20 +1048,6 @@
         "show_banner": false,
         "section_title": "",
         "section_eyebrow": ""
-      }
-    },
-    "bf_top_bar_hxgfNg": {
-      "type": "bf-top-bar",
-      "custom_css": [
-        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
-        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        ".bf-top-bar {background-color: #f2c054;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
-      ],
-      "settings": {
-        "welcome_message": "Everything 50% OFF + SAVE up to 85%",
-        "show_banner": false
       }
     },
     "testimonial_slider_XJAQhD": {
@@ -1266,8 +1266,8 @@
     "bf_top_bar_8RrMkH",
     "bf_promo_discount_2025_8j4wb6",
     "section_bundle_builder_bf25_EPy4QM",
-    "bf_promo_discount_2025_HncBNf",
     "bf_top_bar_hxgfNg",
+    "bf_promo_discount_2025_HncBNf",
     "testimonial_slider_XJAQhD",
     "product_reviews_UYaUdq",
     "bf25_tier_cart_YJkXya"

@@ -2609,12 +2609,10 @@ class ExpansionManager {
             </div>
           ` : ''}
           <div class="pp-pricing-header__row">
-            <span class="pp-pricing-header__emoji">💰</span>
             <span class="pp-pricing-header__current">${this.formatMoney(pricing.subtotal)}</span>
             <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
           </div>
           <div class="pp-pricing-header__tier">
-            <span class="pp-pricing-header__tier-icon">⚡</span>
             <span>Tier ${pricing.achievedTier || bundle.tier || 1}: Unlock ${pricing.discountPercent}% OFF (${pricing.totalItems} items)</span>
           </div>
         </div>
@@ -2623,7 +2621,7 @@ class ExpansionManager {
 
         <div class="pp-products-section-v2">
           <div class="pp-products-section-v2__header">
-            <h3 class="pp-products-section-v2__title">📦 Your Bundle</h3>
+            <h3 class="pp-products-section-v2__title">Your Bundle</h3>
             <span class="pp-products-section-v2__count">${bundle.baseItemCount} items</span>
           </div>
           ${learnMoreHTML}

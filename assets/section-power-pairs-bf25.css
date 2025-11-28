@@ -672,6 +672,11 @@ Performance Notes:
   line-height: 1;
 }
 
+/* Premium cards: use gold instead of green */
+.pp-bundle-card--premium .pp-bundle-card__item-count {
+  color: var(--pp-accent-gold);
+}
+
 .pp-bundle-card__item-label {
   font-size: var(--pp-font-base);
   font-weight: var(--pp-font-weight-medium);
@@ -687,6 +692,11 @@ Performance Notes:
   font-weight: var(--pp-font-weight-bold);
   color: var(--pp-accent-primary);
   line-height: 1;
+}
+
+/* Premium cards: use gold instead of green */
+.pp-bundle-card--premium .pp-bundle-card__gifts-count {
+  color: var(--pp-accent-gold);
 }
 
 .pp-bundle-card__prices {
@@ -718,6 +728,12 @@ Performance Notes:
   background: rgba(96, 198, 85, 0.1);
   border-radius: var(--pp-radius-sm);
   display: inline-block;
+}
+
+/* Premium cards: use gold instead of green */
+.pp-bundle-card--premium .pp-bundle-card__savings {
+  color: var(--pp-accent-gold);
+  background: rgba(255, 215, 0, 0.1);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -765,6 +781,11 @@ Performance Notes:
 
 .pp-bundle-card__status-icon--ready {
   color: var(--pp-accent-primary);
+}
+
+/* Premium cards: use gold for ready status */
+.pp-bundle-card--premium .pp-bundle-card__status-icon--ready {
+  color: var(--pp-accent-gold);
 }
 
 .pp-bundle-card__status-icon--empty {
@@ -824,6 +845,12 @@ Performance Notes:
   overflow: hidden;
 }
 
+/* Premium cards: use gold gradient instead of green (matching ppc-card-front) */
+.pp-bundle-card--premium .pp-bundle-card__cta {
+  background: linear-gradient(135deg, #d4af37, #b8962e);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
+}
+
 /* View & Customize button - full width on mobile */
 .pp-bundle-card__cta--view {
   flex: none;
@@ -878,6 +905,12 @@ Performance Notes:
 .pp-bundle-card__cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(96, 198, 85, 0.4);
+}
+
+/* Premium cards: gold hover shadow */
+.pp-bundle-card--premium .pp-bundle-card__cta:hover {
+  background: linear-gradient(135deg, #d4af37, #b8962e);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
 }
 
 .pp-bundle-card__cta:active {
@@ -947,6 +980,11 @@ Performance Notes:
     #50b045 100%
   );
   animation: quickAddSuccess 0.3s ease;
+}
+
+/* Premium cards: gold success state */
+.pp-bundle-card--premium .pp-bundle-card__cta--success {
+  background: linear-gradient(135deg, #d4af37, #b8962e);
 }
 
 @keyframes quickAddSuccess {

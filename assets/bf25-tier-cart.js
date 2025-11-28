@@ -148,6 +148,30 @@
   ];
 
   // ============================================
+  // CURRENCY HELPER
+  // Get currency symbol dynamically
+  // ============================================
+  const getCurrencySymbol = () => {
+    // Try BOGOCurrency first (if available)
+    if (typeof BOGOCurrency !== 'undefined' && BOGOCurrency.getCurrencySymbol) {
+      return BOGOCurrency.getCurrencySymbol();
+    }
+    
+    // Try Shopify currency
+    if (window.Shopify?.currency?.symbol) {
+      return window.Shopify.currency.symbol;
+    }
+    
+    // Try cart currency
+    if (window.cart?.currency?.symbol) {
+      return window.cart.currency.symbol;
+    }
+    
+    // Fallback to EUR
+    return '€';
+  };
+
+  // ============================================
   // PERFORMANCE MONITORING SYSTEM
   // ============================================
 
@@ -1737,8 +1761,8 @@
             <h4 class="bf25sc-product-title">${item.title}</h4>
             ${item.variantTitle ? `<p class="bf25sc-product-variant">${item.variantTitle}</p>` : ''}
             <div class="bf25sc-product-prices">
-              <span class="bf25sc-price-discounted">€${discountedPrice.toFixed(2)}</span>
-              <span class="bf25sc-price-original">€${originalPrice.toFixed(2)}</span>
+              <span class="bf25sc-price-discounted">${getCurrencySymbol()}${discountedPrice.toFixed(2)}</span>
+              <span class="bf25sc-price-original">${getCurrencySymbol()}${originalPrice.toFixed(2)}</span>
             </div>
           </div>
           <div class="bf25sc-product-actions">
@@ -1817,7 +1841,7 @@
           <div class="bf25sc-product-info">
             <div class="bf25sc-product-prices">
               <span class="bf25sc-price-free">FREE</span>
-              <span class="bf25sc-price-original">€${(giftPrice / 100).toFixed(2)}</span>
+              <span class="bf25sc-price-original">${getCurrencySymbol()}${(giftPrice / 100).toFixed(2)}</span>
             </div>
           </div>
         `;
@@ -2815,7 +2839,8 @@
       // Placeholder: Will calculate actual cart savings in PROMPT 2
       const savings = giftValue;
 
-      this.elements.savingsAmount.textContent = `Save €${savings}`;
+      const currencySymbol = getCurrencySymbol();
+      this.elements.savingsAmount.textContent = `Save ${currencySymbol}${savings}`;
     }
 
     // ============================================

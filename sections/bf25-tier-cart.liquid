@@ -135,7 +135,7 @@
 
             <!-- Value Flash Overlay (existing - kept for compatibility) -->
             <span class="bf25sc-value-flash" data-value="{{ gift_value }}">
-              +€{{ gift_value }} Value
+              +{{ cart.currency.symbol }}{{ gift_value }} Value
             </span>
           </div>
           {% endif %}
@@ -159,7 +159,7 @@
     <!-- Savings Display (Center, 80px fixed) -->
     <div class="bf25sc-action-savings">
       <span class="bf25sc-action-savings__label">YOU SAVE</span>
-      <span class="bf25sc-action-savings__amount" id="bf25sc-savings-amount">€0</span>
+      <span class="bf25sc-action-savings__amount" id="bf25sc-savings-amount">{{ cart.currency.symbol }}0</span>
     </div>
 
     <!-- CTAs (Right, 75px total) -->

@@ -1214,6 +1214,10 @@
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.65); /* Darker/subtler text (BF25-8.9) */
   font-size: 14px;
+  display: block !important;
+}
+.bf25-description-inner .bf25-description-content li {
+  display: block !important;
 }
 
 .bf25-description-inner li::before {

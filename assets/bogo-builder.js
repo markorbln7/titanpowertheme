@@ -2888,14 +2888,14 @@ function initializeStockLevels() {
   const products = document.querySelectorAll('.product-card');
 
   products.forEach(function(card, index) {
-    // Vary stock levels: some high, some low
+    // Vary stock levels: all above 30
     let stockLevel;
     if (index % 3 === 0) {
-      // Low stock products (create urgency)
-      stockLevel = Math.floor(Math.random() * 11) + 10; // 10-20
+      // Medium stock products (31-50)
+      stockLevel = Math.floor(Math.random() * 20) + 31;
     } else {
-      // Higher stock products
-      stockLevel = Math.floor(Math.random() * 20) + 75; // 75-94
+      // Higher stock products (51-94)
+      stockLevel = Math.floor(Math.random() * 44) + 51;
     }
 
     card.dataset.stockLevel = stockLevel;
@@ -2944,10 +2944,10 @@ function decreaseRandomStock() {
   selected.forEach(function(card) {
     const currentStock = parseInt(card.dataset.stockLevel);
 
-    // Don't decrease below 5
-    if (currentStock > 5) {
+    // Don't decrease below 31 (stock must always be above 30)
+    if (currentStock > 31) {
       const decrease = Math.floor(Math.random() * 2) + 1; // 1-2
-      card.dataset.stockLevel = Math.max(5, currentStock - decrease);
+      card.dataset.stockLevel = Math.max(31, currentStock - decrease);
       updateStockDisplay(card);
     }
   });
@@ -6156,7 +6156,7 @@ function getTierForCount(pairCount) {
 // ========================================
 
 function updateStockDisplay(card) {
-  const stockLevel = parseInt(card.dataset.stockLevel) || Math.floor(Math.random() * 85) + 10;
+  const stockLevel = parseInt(card.dataset.stockLevel) || Math.floor(Math.random() * 64) + 31;
 
   // NEW: Target the placeholder next to reviews instead of image container
   const stockPlaceholder = card.querySelector('.bf25-stock-placeholder');
@@ -6229,10 +6229,10 @@ function decreaseRandomStock() {
   selected.forEach(card => {
     const currentStock = parseInt(card.dataset.stockLevel);
 
-    // Don't decrease below 5
-    if (currentStock > 5) {
+    // Don't decrease below 31 (stock must always be above 30)
+    if (currentStock > 31) {
       const decrease = Math.floor(Math.random() * 2) + 1; // 1-2
-      card.dataset.stockLevel = Math.max(5, currentStock - decrease);
+      card.dataset.stockLevel = Math.max(31, currentStock - decrease);
       updateStockDisplay(card);
     }
   });
@@ -6243,19 +6243,16 @@ function initializeStockLevels() {
   const products = document.querySelectorAll('.section-collections-with-nav__product');
 
   products.forEach((card, index) => {
-    // Vary stock levels: some high, some medium, some low
+    // Vary stock levels: all above 30
     let stockLevel;
     const random = Math.random();
 
-    if (random < 0.15) {
-      // 15% low stock (10-19)
-      stockLevel = Math.floor(Math.random() * 10) + 10;
-    } else if (random < 0.35) {
-      // 20% medium stock (20-49)
-      stockLevel = Math.floor(Math.random() * 30) + 20;
+    if (random < 0.3) {
+      // 30% medium stock (31-50)
+      stockLevel = Math.floor(Math.random() * 20) + 31;
     } else {
-      // 65% high stock (50-94)
-      stockLevel = Math.floor(Math.random() * 45) + 50;
+      // 70% high stock (51-94)
+      stockLevel = Math.floor(Math.random() * 44) + 51;
     }
 
     card.dataset.stockLevel = stockLevel;

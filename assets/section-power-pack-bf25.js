@@ -593,10 +593,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     } else {
-      // Fallback fake stock (temporary for testing)
+      // Fallback fake stock (temporary for testing) - all above 30
       section.querySelectorAll('.bf25-stock-placeholder').forEach(placeholder => {
-        const randomStock = Math.floor(Math.random() * 30) + 5;
-        const stockClass = randomStock < 10 ? 'stock-low' : randomStock < 20 ? 'stock-medium' : 'stock-high';
+        const randomStock = Math.floor(Math.random() * 64) + 31; // 31-94
+        const stockClass = randomStock <= 50 ? 'stock-medium' : 'stock-high';
         placeholder.innerHTML = `<span class="bf25-stock-dot ${stockClass}"></span><span>${randomStock} left</span>`;
         placeholder.classList.add(stockClass);
       });

@@ -27,7 +27,8 @@
     color: #ffffff;
     position: relative;
     padding: 60px 0;
-    min-height: 100vh;
+    padding-bottom: 20px !important;
+    /* min-height: 100vh; */
   }
   
   /* Gradient mesh removed for performance */
@@ -3060,6 +3061,7 @@ body.modal-open {
 .power-pack-section {
   background: var(--power-pack-bg);
   position: relative;
+  padding-bottom: 0 !important;
 }
 
 .power-pack-section::before {
@@ -3442,7 +3444,7 @@ body.modal-open {
   font-size: 16px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -4047,6 +4049,7 @@ body.modal-open {
 .power-pack-section .ppc-section-header {
   text-align: center;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .power-pack-section .ppc-title {
@@ -4103,6 +4106,7 @@ body.modal-open {
 .power-pack-section .ppc-section-header {
   text-align: center;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .power-pack-section .ppc-title {

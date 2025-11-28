@@ -208,6 +208,7 @@ Performance Notes:
   margin: 0 0 var(--pp-space-sm) 0;
   line-height: var(--pp-line-height-tight);
   letter-spacing: -0.02em;
+  padding-top: 20px;
 }
 
 .pp-header__subtitle {
@@ -885,6 +886,11 @@ Performance Notes:
 
 .pp-bundle-card__cta-text {
   font-size: var(--pp-font-base);
+}
+@media (max-width: 768px) {
+  .pp-bundle-card__cta-text {
+    font-size: 14px;
+  }
 }
 
 .pp-bundle-card__cta-icon {

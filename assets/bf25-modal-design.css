@@ -333,7 +333,7 @@
   position: absolute;
   top: var(--bf25-space-4);
   right: var(--bf25-space-4);
-  z-index: 10; /* Above content */
+  z-index: 999999 !important; /* Above all content */
 
   /* Sizing: Touch-optimized */
   width: var(--bf25-touch-target-min);

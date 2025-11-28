@@ -304,7 +304,9 @@
         "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
         ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
         ".max-w-\\[700px\\] {display: none;}",
-        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}",
+        ".custom-pack-wrapper {display: none;}",
+        "@media (max-width: 991px) {.custom-pack-wrapper {display: block; }}"
       ],
       "name": "Bf Promo Discount bf 2025",
       "settings": {
@@ -900,12 +902,13 @@
       "name": "Bf Promo Discount bf 2025",
       "settings": {
         "show_banner": false,
-        "section_title": "Keep Adding. <span class=\"bf25-energy-text\">Keep Saving</span>",
-        "section_eyebrow": "Every item gets you closer to 85%."
+        "section_title": "Keep Adding. Keep Saving",
+        "section_eyebrow": "Every item gets you closer to more gifts &  85%."
       }
     },
     "bf_top_bar_8RrMkH": {
       "type": "bf-top-bar",
+      "disabled": true,
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",

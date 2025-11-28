@@ -151,15 +151,42 @@
   // CURRENCY HELPER
   // Get currency symbol dynamically
   // ============================================
-  const getCurrencySymbol = () => {
+  const getCurrencySymbol = (cartData = null) => {
+    // If cart data is provided, use its currency
+    if (cartData && cartData.currency) {
+      const currencyCode = cartData.currency;
+      const symbolMap = {
+        'USD': '$', 'EUR': '€', 'GBP': '£', 'CAD': '$', 'AUD': '$',
+        'JPY': '¥', 'CNY': '¥', 'RSD': 'RSD', 'CHF': 'CHF', 'SEK': 'kr',
+        'NOK': 'kr', 'DKK': 'kr', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft'
+      };
+      if (symbolMap[currencyCode]) {
+        return symbolMap[currencyCode];
+      }
+      return currencyCode + ' ';
+    }
+    
     // Try BOGOCurrency first (if available)
     if (typeof BOGOCurrency !== 'undefined' && BOGOCurrency.getCurrencySymbol) {
       return BOGOCurrency.getCurrencySymbol();
     }
     
-    // Try Shopify currency
+    // Try Shopify currency symbol
     if (window.Shopify?.currency?.symbol) {
       return window.Shopify.currency.symbol;
+    }
+    
+    // Try Shopify currency active code
+    if (window.Shopify?.currency?.active) {
+      const currencyCode = window.Shopify.currency.active;
+      const symbolMap = {
+        'USD': '$', 'EUR': '€', 'GBP': '£', 'CAD': '$', 'AUD': '$',
+        'JPY': '¥', 'CNY': '¥', 'RSD': 'RSD', 'CHF': 'CHF', 'SEK': 'kr',
+        'NOK': 'kr', 'DKK': 'kr', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft'
+      };
+      if (symbolMap[currencyCode]) {
+        return symbolMap[currencyCode];
+      }
     }
     
     // Try cart currency
@@ -1340,7 +1367,8 @@
         console.log('[BF25 Cart] Applying cached state for instant render');
         this.updateVisualization(cachedState.itemCount);
         if (this.elements.savingsAmount) {
-          this.elements.savingsAmount.textContent = `Save €${cachedState.savings}`;
+          const currencySymbol = getCurrencySymbol();
+          this.elements.savingsAmount.textContent = `Save ${currencySymbol}${cachedState.savings}`;
         }
         this.handleEmptyState(cachedState.itemCount);
       }
@@ -1658,7 +1686,8 @@
 
         // Update savings display (BOGO-style format)
         if (this.elements.savingsAmount) {
-          const newText = `€${savingsEuros}`;
+          const currencySymbol = getCurrencySymbol();
+          const newText = `${currencySymbol}${savingsEuros}`;
 
           // Only animate if value changed
           if (this.elements.savingsAmount.textContent !== newText) {
@@ -3272,7 +3301,8 @@
 
         // Update savings display
         if (this.elements.savingsAmount) {
-          this.elements.savingsAmount.textContent = `Save €${savings}`;
+          const currencySymbol = getCurrencySymbol(cart);
+          this.elements.savingsAmount.textContent = `Save ${currencySymbol}${savings}`;
         }
 
         // Render products in expanded view
@@ -3375,7 +3405,8 @@
 
       // Update savings
       if (this.elements.savingsAmount) {
-        this.elements.savingsAmount.textContent = 'Save €0';
+        const currencySymbol = getCurrencySymbol();
+        this.elements.savingsAmount.textContent = `Save ${currencySymbol}0`;
       }
 
       // Disable buttons

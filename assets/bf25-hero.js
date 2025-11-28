@@ -40,11 +40,91 @@ class PowerSlider {
     const dataScript = document.getElementById('bf25HeroData');
     if (!dataScript) return null;
     try {
-      return JSON.parse(dataScript.textContent);
+      const data = JSON.parse(dataScript.textContent);
+      
+      // Convert currency values from EUR to shop currency
+      this.convertCurrencyValues(data);
+      
+      return data;
     } catch (error) {
       console.error('BF25 Hero: Failed to parse JSON data', error);
       return null;
     }
+  }
+
+  /**
+   * Convert EUR values to shop currency using BOGOCurrency or Shopify currency
+   */
+  convertCurrencyValues(data) {
+    // Get currency symbol and conversion rate
+    const currencySymbol = data.config.currency_symbol || '€';
+    let conversionRate = 1;
+    
+    // Try to get conversion rate from BOGOCurrency (if available)
+    if (typeof BOGOCurrency !== 'undefined') {
+      conversionRate = BOGOCurrency.getConversionRate();
+    } else if (window.Shopify?.currency?.rate) {
+      // Fallback to Shopify currency rate
+      conversionRate = window.Shopify.currency.rate;
+    } else if (window.Currency?.rates) {
+      // Fallback to Currency Converter app
+      const currentCurrency = window.Shopify?.currency?.active || 'EUR';
+      conversionRate = window.Currency.rates[currentCurrency] || 1;
+    }
+
+    // Helper to format money with currency symbol
+    const formatMoney = (amount) => {
+      const converted = amount * conversionRate;
+      // Format based on currency (no decimals for some currencies)
+      if (currencySymbol === '¥' || currencySymbol === 'RSD' || currencySymbol.includes('Ft')) {
+        return `${currencySymbol}${Math.round(converted)}`;
+      } else if (currencySymbol === '€') {
+        // European format: €23,00
+        return `${currencySymbol}${converted.toFixed(2).replace('.', ',')}`;
+      } else {
+        // Standard format: $23.00
+        return `${currencySymbol}${converted.toFixed(2)}`;
+      }
+    };
+
+    // Convert gift values and benefit_text
+    if (data.gifts) {
+      data.gifts.forEach(gift => {
+        // Convert value (EUR to current currency)
+        if (typeof gift.value === 'number') {
+          gift.original_value_eur = gift.value; // Keep original for reference
+          gift.value = gift.value * conversionRate;
+        }
+
+        // Convert benefit_text currency symbols and amounts
+        if (gift.benefit_text) {
+          // Replace EUR amounts with converted amounts
+          gift.benefit_text = gift.benefit_text.replace(
+            /€([\d.]+)\+?/g,
+            (match, amount) => {
+              const eurAmount = parseFloat(amount);
+              const converted = formatMoney(eurAmount);
+              // Handle "+" suffix for "€150+ value"
+              return match.includes('+') ? converted + '+' : converted;
+            }
+          );
+        }
+      });
+    }
+
+    // Convert config pricing values
+    if (data.config.avg_price_retail) {
+      data.config.avg_price_retail = data.config.avg_price_retail * conversionRate;
+    }
+    if (data.config.avg_price_shopify) {
+      data.config.avg_price_shopify = data.config.avg_price_shopify * conversionRate;
+    }
+
+    console.log('BF25 Hero: Currency converted', {
+      rate: conversionRate,
+      symbol: currencySymbol,
+      currency: window.Shopify?.currency?.active || 'EUR'
+    });
   }
 
   // Define the "Energy Flow" gradients for each tier
@@ -283,9 +363,10 @@ class PowerSlider {
       this.elements.giftsHeaderText.textContent = 'Slide to unlock Discounts + Free Gifts';
     } else if (unlockedCount === totalGifts) {
       // Remove confetti emoji, keep only present
-      const totalValue = this.gifts.reduce((sum, g) => sum + g.value, 0);
+      const totalValue = this.gifts.reduce((sum, g) => sum + (g.value || 0), 0);
+      const formattedValue = this.formatPrice(totalValue);
       this.elements.giftsHeaderText.textContent =
-        `🎁 All ${totalGifts} premium gifts unlocked! (€${totalValue.toFixed(0)}+ value)`;
+        `🎁 All ${totalGifts} premium gifts unlocked! (${formattedValue}+ value)`;
     } else {
       this.elements.giftsHeaderText.textContent =
         `${this.currentTier.display_label} + ${unlockedCount} FREE GIFT${unlockedCount > 1 ? 'S' : ''} UNLOCKED!`;

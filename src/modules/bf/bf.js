@@ -197,6 +197,60 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                         });
                     });
+
+                    // Variant selector change handler - update button's data-product-id
+                    const variantSelectors = popup.querySelectorAll('.variant-selector');
+                    const atcButton = popup.querySelector('.js-atc-bf');
+                    const checkoutButton = popup.querySelector('.js-checkout.js-atc-bf');
+                    
+                    if (variantSelectors.length > 0 && atcButton && window.productVariants) {
+                        // Get product ID from button's initial data-product-id (which is variant ID)
+                        const initialVariantId = atcButton.getAttribute('data-product-id');
+                        let productId = null;
+                        let productVariants = null;
+                        
+                        // Find which product this variant belongs to
+                        for (const [pid, variants] of Object.entries(window.productVariants)) {
+                            const variant = variants.find(v => String(v.id) === String(initialVariantId));
+                            if (variant) {
+                                productId = pid;
+                                productVariants = variants;
+                                break;
+                            }
+                        }
+                        
+                        if (productId && productVariants) {
+                            function updateButtonVariantId() {
+                                const selectedOptions = Array.from(variantSelectors).map(select => select.value);
+                                
+                                // Find matching variant
+                                const matchingVariant = productVariants.find(variant => {
+                                    if (!variant.options || variant.options.length !== selectedOptions.length) {
+                                        return false;
+                                    }
+                                    return variant.options.every((option, index) => {
+                                        return String(option).toLowerCase() === String(selectedOptions[index]).toLowerCase();
+                                    });
+                                });
+                                
+                                if (matchingVariant) {
+                                    atcButton.setAttribute('data-product-id', matchingVariant.id);
+                                    if (checkoutButton) {
+                                        checkoutButton.setAttribute('data-product-id', matchingVariant.id);
+                                    }
+                                    console.log('[BF.js] Updated button variant ID:', matchingVariant.id);
+                                }
+                            }
+                            
+                            // Listen for changes on all variant selectors
+                            variantSelectors.forEach(selector => {
+                                selector.addEventListener('change', updateButtonVariantId);
+                            });
+                            
+                            // Initial update
+                            updateButtonVariantId();
+                        }
+                    }
                 }
             });
         });

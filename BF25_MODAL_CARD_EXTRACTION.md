@@ -5601,7 +5601,7 @@ PRESERVED STRUCTURE:
         max: 999,
         multiplier: 0.57,
         displayLabel: "85% OFF",
-        label: "Bigfoot Unlock",
+        label: "Mystery Box Unlock",
         badge: "💎 FREE: Mystery Box + VIP Status"
       }
     ],

@@ -4951,7 +4951,7 @@ class ExpansionManager {
       1: 'Tier 1 Unlocked! Free 4-in-1 Cable included',
       2: 'Tier 2 Unlocked! Free Cable + Travel Case',
       3: 'Tier 3 Unlocked! Free Magnetic Set (Early Launch)',
-      4: 'BIGFOOT UNLOCKED! Free Mystery Box + VIP Status'
+      4: 'MYSTERY BOX UNLOCKED! Free Mystery Box + VIP Status'
     };
 
     return messages[tier] || '';

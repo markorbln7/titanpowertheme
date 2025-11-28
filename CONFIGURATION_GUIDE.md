@@ -282,7 +282,7 @@ const TIER_GIFTS = {
     { name: '4-in-1 Cable', value: 30 },
     { name: 'Medium Travel Case', value: 35 },
     { name: 'Magnetic Cable Set', value: 60 },
-    { name: 'BIGFOOT MYSTERY BOX', value: 150 }
+    { name: 'MYSTERY BOX', value: 150 }
   ]
 };
 ```

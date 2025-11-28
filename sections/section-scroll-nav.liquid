@@ -12,7 +12,21 @@
     z-index: 100;
     background: #000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    pointer-events: none;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .scroll-nav.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 200px;
   }
 
   .scroll-nav.is-sticky {
@@ -142,6 +156,56 @@
     // Get sticky offset based on screen size
     function getStickyOffset() {
       return window.innerWidth >= 768 ? 73 : 57;
+    }
+
+    // Hide nav until hero is 100% out of viewport
+    function initHeroObserver() {
+      const heroSection = document.querySelector('.bf25-hero-split');
+      if (!heroSection) {
+        // No hero found, show nav immediately
+        nav.classList.add('is-visible');
+        return;
+      }
+
+      // Check if hero is completely out of viewport (100% scrolled past)
+      function checkHeroPosition() {
+        const rect = heroSection.getBoundingClientRect();
+        // Hero is 100% out when its bottom is at or above the top of viewport
+        const isHeroCompletelyOut = rect.bottom <= 0;
+        
+        if (isHeroCompletelyOut) {
+          nav.classList.add('is-visible');
+        } else {
+          nav.classList.remove('is-visible');
+        }
+      }
+
+      // Check on load
+      checkHeroPosition();
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Show nav only when hero is 100% out of view (bottom <= 0)
+            const rect = heroSection.getBoundingClientRect();
+            if (rect.bottom <= 0) {
+              nav.classList.add('is-visible');
+            } else {
+              nav.classList.remove('is-visible');
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0
+        }
+      );
+
+      observer.observe(heroSection);
+      
+      // Also check on scroll for immediate feedback
+      window.addEventListener('scroll', checkHeroPosition, { passive: true });
     }
 
     // Find target element by ID or class
@@ -297,6 +361,7 @@
     // Initialize after DOM is ready
     function init() {
       initTargets();
+      initHeroObserver(); // Initialize hero observer
       handleScroll();
     }
     

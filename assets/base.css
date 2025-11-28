@@ -2732,7 +2732,7 @@ details[open] .modal-overlay::after {
 /* Header menu drawer */
 .header__icon--menu .icon {
   display: block;
-  position: absolute;
+  /* position: absolute; */
   opacity: 1;
   transform: scale(1);
   transition: transform 150ms ease, opacity 150ms ease;
@@ -3595,4 +3595,11 @@ html.bogo-checkout-mode .rebuy-modal {
     padding: 10px 14px;
     font-size: 15px;
   }
+}
+
+.aha--black-friday-2025 .header__icon--account {
+  display: none;
+}
+.aha--black-friday-2025 .header__icon--search {
+  display: none;
 }

@@ -4898,3 +4898,27 @@ section.bf25-hero {
   pointer-events: none;
   z-index: -1;
 }
+
+
+/* ============================================
+   PERFORMANCE FIX - Nov 28 2024
+   Disabling 60+ non-essential animations
+   SAFE TO REVERT: Just delete this block
+   ============================================ */
+
+.bf25-product-info-icon,
+.ppc-info-icon,
+.bf25-stock-dot,
+.stock-high,
+.stock-medium,
+.stock-low,
+.sparkle,
+.sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4,
+.bf25-hero__gift-rays,
+.bf25-hero__gift-glow-ring,
+.bf25-announcement-bar,
+.bf25-hero__scroll-hint__arrow,
+.bf25-subtle-pulse,
+.bf25-arrow-bounce {
+  animation: none !important;
+}

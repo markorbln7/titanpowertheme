@@ -65,7 +65,7 @@
         Add more. Pay less. Walk away with
         <span class="bf25-gift-value" data-usd-value="{{ gift_value_usd }}">
           <span class="money" data-currency-original="USD" data-currency="{{ cart.currency.iso_code }}">
-            ${{ gift_value_usd }}
+            {{ cart.currency.symbol }}{{ gift_value_usd }}
           </span>
         </span>
         in free gifts.
@@ -84,7 +84,7 @@
         </div>
         <div class="bf25-hero-step">
           <span class="bf25-step-num">3</span>
-          <span><strong>Unlock 4 free gifts</strong> <span class="bf25-step-detail">— up to <span class="money" data-currency-original="USD">${{ gift_value_usd }}</span> added free</span></span>
+          <span><strong>Unlock 4 free gifts</strong> <span class="bf25-step-detail">— up to <span class="money" data-currency-original="USD" data-usd-value="{{ gift_value_usd }}">{{ cart.currency.symbol }}{{ gift_value_usd }}</span> added free</span></span>
         </div>
       </div>
 
@@ -895,12 +895,67 @@
       });
     }
 
-    // Currency converter
-    if (typeof Currency !== 'undefined' && Currency.convertAll) {
-      setTimeout(function() {
-        Currency.convertAll(Currency.currentCurrency, Currency.currentCurrency);
-      }, 100);
+    // Currency converter - let it handle conversion
+    // Convert gift value - SAME LOGIC AS bf25-hero
+    function convertGiftValue() {
+      const giftValueEls = document.querySelectorAll('.bf25-gift-value .money, .bf25-step-detail .money');
+      if (!giftValueEls.length) return;
+      
+      // Get currency symbol (SAME as hero)
+      const currencySymbol = window.Shopify?.currency?.symbol || '{{ cart.currency.symbol }}' || '€';
+      
+      // Get conversion rate from USD to current currency
+      let conversionRate = 1;
+      const currentCurrency = window.Shopify?.currency?.active || 'USD';
+      
+      if (currentCurrency === 'USD') {
+        conversionRate = 1;
+      } else if (window.Currency && window.Currency.rates) {
+        // Currency converter: rates are from USD (base currency)
+        conversionRate = window.Currency.rates[currentCurrency] || 1;
+      } else if (window.Shopify?.currency?.rate) {
+        // Shopify rate: from shop base to current
+        conversionRate = window.Shopify.currency.rate;
+      } else if (typeof BOGOCurrency !== 'undefined') {
+        // BOGOCurrency converts from EUR, so: USD -> EUR -> current
+        // USD to EUR: divide by ~1.10
+        const usdToEur = 1 / 1.10;
+        const eurToCurrent = BOGOCurrency.getConversionRate();
+        conversionRate = usdToEur * eurToCurrent;
+      }
+      
+      // Format money (SAME as hero)
+      const formatMoney = (amount) => {
+        const converted = amount * conversionRate;
+        if (currencySymbol === '¥' || currencySymbol === 'RSD' || currencySymbol.includes('Ft')) {
+          return currencySymbol + Math.round(converted);
+        } else if (currencySymbol === '€') {
+          return currencySymbol + converted.toFixed(2).replace('.', ',');
+        } else {
+          return currencySymbol + converted.toFixed(2);
+        }
+      };
+      
+      giftValueEls.forEach(function(el) {
+        // Get USD value from element's own data attribute or parent's
+        let usdValue = parseFloat(el.dataset.usdValue);
+        if (!usdValue || isNaN(usdValue)) {
+          const parent = el.closest('[data-usd-value]');
+          usdValue = parseFloat(parent?.dataset?.usdValue);
+        }
+        if (!usdValue || isNaN(usdValue)) {
+          // Last resort: extract from initial text (before any conversion)
+          usdValue = parseFloat(el.textContent.replace(/[^\d.]/g, ''));
+        }
+        if (usdValue && !isNaN(usdValue) && usdValue < 10000) { // Sanity check: prevent millions
+          el.textContent = formatMoney(usdValue);
+        }
+      });
     }
+    
+    // Run conversion (SAME as hero - after data loads)
+    setTimeout(convertGiftValue, 100);
+    setTimeout(convertGiftValue, 500);
   });
 
   // Smooth scroll to slider section

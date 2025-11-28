@@ -4835,7 +4835,7 @@ body.modal-open {
 /* 3. SAFETY FOR THE FRONT (When NOT flipped) */
 .power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-front {
   pointer-events: auto !important;
-  z-index: 100 !important;
+  z-index: 99999999999999 !important;
 }
 
 .power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-back {

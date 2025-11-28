@@ -41,8 +41,8 @@
       ],
       "settings": {
         "show_banner": false,
-        "banner_image": "shopify://shop_images/Free_friday_sale_badge.png",
-        "section_title": "TITAN SHOP",
+        "banner_image": "shopify://shop_images/Gold_Friday.png",
+        "section_title": "",
         "section_eyebrow": ""
       }
     },
@@ -55,11 +55,12 @@
         ".bg-\\[\\#fff\\] {--tw-bg-opacity: 1; background-color: #141414;}",
         "text-\\[16px\\] {font-size: 14px; text-align: center; line-height: 1.2;}",
         ".mb-\\[20px\\] {margin-bottom: 10px; margin-top: -20px;}",
-        ".narrow .section-explore__buy-now {background-color: #60c655; color: #000 !important;}"
+        ".md\\:pt-\\[10px\\] {BACKGROUND-COLOR: #141414; }"
       ],
       "settings": {
-        "narrow_version": true,
+        "narrow_version": false,
         "section_title": "",
+        "explore_top_image": "shopify://shop_images/Black_Friday_Power_up_sale_badge33.png",
         "first_collection_label": "",
         "second_collection_label": "",
         "first_collection": "november-deals",
@@ -68,6 +69,7 @@
     },
     "bf_top_bar_rjbHwz": {
       "type": "bf-top-bar",
+      "disabled": true,
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
@@ -112,6 +114,7 @@
         "block_item_QyEYK3",
         "block_item_bLKDjF"
       ],
+      "disabled": true,
       "custom_css": [
         ".max-w-\\[1000px\\].mx-auto {display: none;}",
         ".flex-row {padding: 0px 0px 10px 0px;}",

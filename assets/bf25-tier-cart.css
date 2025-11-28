@@ -1109,7 +1109,7 @@
    ==================================== */
 .bf25sc-action-ctas {
   display: flex;
-  gap: 4px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -1144,7 +1144,7 @@
 
 /* View Button */
 .bf25sc-action-btn--view {
-  width: 65px;
+  flex: 1;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
@@ -1165,7 +1165,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .bf25sc-action-btn--buy {
-  width: 75px;
+  flex: 1;
   background: var(--bf25sc-tier-color);
   color: #000;
   font-weight: 700;
@@ -1341,6 +1341,38 @@
 /* ====================================
    RESPONSIVE ADJUSTMENTS
    ==================================== */
+
+/* Mobile: Reorganize layout - incentive and savings on one line, ctas below */
+@media (max-width: 767px) {
+  .bf25sc-sticky-cart__action-section {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    height: auto;
+    min-height: 37px;
+  }
+
+  .bf25sc-action-incentive {
+    grid-row: 1;
+    grid-column: 1;
+    flex: 1;
+  }
+
+  .bf25sc-action-savings {
+    grid-row: 1;
+    grid-column: 2;
+    flex-shrink: 0;
+  }
+
+  .bf25sc-action-ctas {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
 @media (min-width: 768px) {
   .bf25sc-sticky-cart__action-section {
     max-width: 800px;
@@ -1357,11 +1389,11 @@
   }
 
   .bf25sc-action-btn--view {
-    width: 75px;
+    flex: 1;
   }
 
   .bf25sc-action-btn--buy {
-    width: 90px;
+    flex: 1;
   }
 }
 
@@ -1374,75 +1406,6 @@
 /* ====================================
    MOBILE OPTIMIZATIONS (<375px)
    ==================================== */
-@media (max-width: 374px) {
-  /* Ultra-Compact Container */
-  .bf25sc-sticky-cart {
-    padding: 4px 8px;
-  }
-
-  /* Smaller Progress Bar */
-  .bf25sc-sticky-cart__progress-wrapper {
-    height: 24px;
-  }
-
-  .bf25sc-progress-bar {
-    height: 18px;
-  }
-
-  /* Smaller Tier Labels */
-  .bf25sc-tier-label__text {
-    font-size: 10px;
-    padding: 1px 4px;
-  }
-
-  /* Smaller Gift Icons */
-  .bf25sc-gift-slot {
-    width: 16px;
-    height: 16px;
-  }
-
-  .bf25sc-gift-icon {
-    font-size: 14px;
-  }
-
-  /* Compact Action Section */
-  .bf25sc-sticky-cart__action-section {
-    gap: 6px;
-    height: 32px;
-  }
-
-  /* Hide Savings on Tiny Screens */
-  .bf25sc-action-savings {
-    display: none;
-  }
-
-  /* Incentive Takes Available Space */
-  .bf25sc-action-incentive {
-    flex: 1;
-    min-width: 0; /* Allow shrinking */
-  }
-
-  /* Ultra-Compact Message */
-  .bf25sc-action-incentive__text {
-    font-size: 12px;
-    -webkit-line-clamp: 1; /* Force 1 line */
-  }
-
-  /* Smaller Buttons */
-  .bf25sc-action-btn {
-    font-size: 11px;
-    min-height: 28px;
-    padding: 4px 6px;
-  }
-
-  .bf25sc-action-btn--view {
-    width: 50px;
-  }
-
-  .bf25sc-action-btn--buy {
-    width: 60px;
-  }
-}
 
 /* ====================================
    TABLET OPTIMIZATIONS (768px - 1279px)
@@ -1464,11 +1427,11 @@
 
   /* Larger CTAs */
   .bf25sc-action-btn--view {
-    width: 80px;
+    flex: 1;
   }
 
   .bf25sc-action-btn--buy {
-    width: 100px;
+    flex: 1;
   }
 }
 
@@ -1502,11 +1465,11 @@
   }
 
   .bf25sc-action-btn--view {
-    width: 90px;
+    flex: 1;
   }
 
   .bf25sc-action-btn--buy {
-    width: 110px;
+    flex: 1;
   }
 
   /* Hover Effects Enhanced */

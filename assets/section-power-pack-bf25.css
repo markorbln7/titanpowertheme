@@ -3817,7 +3817,10 @@ body.modal-open {
   
   .power-pack-section .ppc-card-container {
     width: 220px;
-    height: 440px;
+    height: 480px;
+  }
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 70px !important;
   }
   
   .power-pack-section .ppc-card-wrapper {
@@ -4019,7 +4022,7 @@ body.modal-open {
 @media (max-width: 374px) {
   .power-pack-section .ppc-card-container {
     width: 170px;
-    height: 350px;
+    height: 520px;
   }
   
   .power-pack-section .ppc-card-wrapper {
@@ -4838,4 +4841,15 @@ body.modal-open {
 .power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-back {
   pointer-events: none !important;
   z-index: 0 !important;
+}
+@media (max-width: 767px) {
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 70px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 115px !important;
+  }
 }

@@ -1990,7 +1990,7 @@
         backdrop.setAttribute('data-checkpoint', checkpoint);
 
         // Format gift value for display
-        const valueDisplay = giftValue ? `€${(giftValue / 100).toFixed(2)} value` : '';
+        const valueDisplay = giftValue ? `${getCurrencySymbol()}${(giftValue / 100).toFixed(2)} value` : '';
 
         // Create celebration container with DISCOUNT + GIFT messaging (BF25-8.6)
         const celebration = document.createElement('div');

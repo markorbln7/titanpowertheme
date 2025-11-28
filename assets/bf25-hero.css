@@ -3632,7 +3632,7 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
   font-size: 14px !important;
   font-weight: 400 !important;
   font-style: normal !important;
-  color: rgba(255, 255, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.65) !important;
   margin-bottom: 0 !important;
 }
 
@@ -3724,12 +3724,11 @@ html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segmen
 
 /* FIX 4: Slider Header - More Minimal Subheader */
 .bf25-hero .bf25-hero__subheading {
-  font-size: 13px !important; /* Even smaller */
   font-weight: 400 !important;
   font-style: normal !important;
-  color: rgba(255, 255, 255, 0.3) !important; /* More subtle */
+  color: rgba(255, 255, 255, 0.65) !important; /* More subtle */
   letter-spacing: 0.5px !important;
-  text-transform: uppercase !important; /* All caps for minimal tech look */
+  font-size:16px !important;
 }
 
 @media (max-width: 768px) {

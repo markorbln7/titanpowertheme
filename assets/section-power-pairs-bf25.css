@@ -5411,3 +5411,20 @@ body.pp-swap-modal-open {
 /* ═══════════════════════════════════════════════════════
    END OF PROMPT 16: CROSS-BROWSER COMPATIBILITY
    ═══════════════════════════════════════════════════════ */
+
+/* ============================================
+   TEMPORARY FIX: Hide Buy Now button (Rebuy redirect issue)
+   Make Add to Deal button full width
+   ============================================ */
+
+.pp-action-buttons .pp-sheet-cta__button-main[data-action="add-to-cart"] {
+  display: none !important;
+}
+
+.pp-action-buttons {
+  grid-template-columns: 1fr !important;
+}
+
+.pp-action-buttons .pp-sheet-cta__button-deal {
+  width: 100% !important;
+}

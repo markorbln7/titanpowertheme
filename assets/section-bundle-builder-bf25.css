@@ -2,6 +2,15 @@
    BUNDLE BUILDER BF25 - PREMIUM DARK THEME
    ======================================== */
 
+/* Ensure BF25 content sits above snowfall background */
+.section-bundle-builder-bf25,
+.bf25-bundle-builder,
+.bf25-hero,
+.bf25-hero-split {
+  position: relative;
+  z-index: 1;
+}
+
    :root {
     --bf-dark-bg: #0a0a0a;
     --bf-card-bg: #1a1a1a;
@@ -15,50 +24,15 @@
     color: #ffffff;
     position: relative;
     padding: 60px 0;
-    min-height: 100vh;
+    padding-bottom: 20 !important;
+    /* min-height: 100vh; */
   }
   
-  /* Gradient Mesh Background */
-  .gradient-mesh-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-  }
-  
+  /* Gradient mesh removed for performance */
   .gradient-mesh-bg::before,
   .gradient-mesh-bg::after {
-    content: '';
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-    animation: float 20s ease-in-out infinite;
-  }
-  
-  .gradient-mesh-bg::before {
-    background: radial-gradient(circle, #60c655 0%, transparent 70%);
-    top: -300px;
-    left: -200px;
-  }
-  
-  .gradient-mesh-bg::after {
-    background: radial-gradient(circle, #60c655 0%, transparent 70%);
-    bottom: -300px;
-    right: -200px;
-    animation-delay: 10s;
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(100px, -50px) scale(1.1); }
-    66% { transform: translate(-50px, 100px) scale(0.9); }
+    display: none !important;
+    animation: none !important;
   }
   
   /* Filter Pills */
@@ -72,12 +46,17 @@
   
   .filter-pills {
     display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
     gap: 12px;
     overflow-x: auto;
+    overflow-y: hidden;
     padding: 12px 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
   }
   
   .filter-pills::-webkit-scrollbar {
@@ -98,6 +77,7 @@
     min-height: 48px;
     white-space: nowrap;
     position: relative;
+    scroll-snap-align: start;
   }
   
   .filter-pills .pill:hover {
@@ -111,8 +91,8 @@
     background: #60c655;
     color: #000000;
     border-color: #60c655;
-    box-shadow: 0 0 30px rgba(96, 198, 85, 0.5),
-                0 4px 12px rgba(96, 198, 85, 0.3);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.4),
+                0 4px 8px rgba(96, 198, 85, 0.25);
   }
   
   /* Collection Titles */
@@ -149,12 +129,16 @@
   /* Premium Product Cards with Green Glow */
   .dark-mode .section-collections-with-nav__product {
     background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
-    border: 2px solid rgba(96, 198, 85, 0.3);
+    border: none;
     border-radius: 24px;
     padding: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to allow glow */
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.35),
+      0 0 0 5px rgba(96, 198, 85, 0.1),
+      0 10px 35px rgba(0, 0, 0, 0.45);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   /* Green Glow Effect on Hover */
@@ -179,13 +163,43 @@
   
   .dark-mode .section-collections-with-nav__product:hover {
     transform: translateY(-8px);
-    border-color: rgba(96, 198, 85, 0.6);
-    box-shadow: 
-      0 0 40px rgba(96, 198, 85, 0.4),
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 0 60px rgba(96, 198, 85, 0.05);
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.5),
+      0 0 0 5px rgba(96, 198, 85, 0.15),
+      0 0 30px rgba(96, 198, 85, 0.3),
+      0 15px 40px rgba(0, 0, 0, 0.4);
   }
-  
+
+  /* S2 Selected State - Strong outer glow - ALL POSSIBLE CLASSES */
+  .dark-mode .section-collections-with-nav__product.is-selected,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"],
+  .dark-mode .section-collections-with-nav__product.selected,
+  .dark-mode .section-collections-with-nav__product.added,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.2),
+      0 0 50px rgba(96, 198, 85, 0.5),
+      0 0 80px rgba(96, 198, 85, 0.25),
+      0 15px 40px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-6px);
+  }
+
+  /* Selected + Hover state */
+  .dark-mode .section-collections-with-nav__product.is-selected:hover,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"]:hover,
+  .dark-mode .section-collections-with-nav__product.selected:hover,
+  .dark-mode .section-collections-with-nav__product.added:hover,
+  .dark-mode .section-collections-with-nav__product.added-to-bundle:hover {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 5px rgba(96, 198, 85, 0.25),
+      0 0 55px rgba(96, 198, 85, 0.55),
+      0 0 90px rgba(96, 198, 85, 0.3),
+      0 18px 45px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(-8px);
+  }
+
   /* Product Image with Glow */
   .dark-mode .section-collections-with-nav__product-image {
     position: relative;
@@ -225,46 +239,64 @@
     color: #ffffff !important;
   }
   
-  /* Bullet Points - White Text with Glowing Green Ticks */
-  .dark-mode .metafield-rich_text_field ul {
+  /* Feature List - Glowing Dots - ONLY ON PRODUCT CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
     list-style: none;
     padding: 0;
     margin: 12px 0;
   }
-  
-  .dark-mode .metafield-rich_text_field ul li {
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    justify-content: center;
     color: #ffffff;
     font-size: 14px;
     line-height: 1.6;
-    padding-left: 24px;
+    padding: 0;
     position: relative;
-    margin-bottom: 8px;
   }
-  
-  .dark-mode .metafield-rich_text_field ul li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #60c655;
-    font-weight: bold;
-    font-size: 16px;
-    text-shadow: 
-      0 0 10px rgba(96, 198, 85, 0.8),
-      0 0 20px rgba(96, 198, 85, 0.4);
-    animation: pulse-glow 2s ease-in-out infinite;
+
+  /* Glowing dot - using pseudo-element - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+  .dark-mode .section-collections-with-nav__product .product-feature::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60c655;
+    box-shadow:
+      0 0 8px rgba(96, 198, 85, 0.8),
+      0 0 16px rgba(96, 198, 85, 0.4);
+    flex-shrink: 0;
+    position: static;
   }
-  
-  @keyframes pulse-glow {
-    0%, 100% {
-      text-shadow: 
-        0 0 10px rgba(96, 198, 85, 0.8),
-        0 0 20px rgba(96, 198, 85, 0.4);
-    }
-    50% {
-      text-shadow: 
-        0 0 15px rgba(96, 198, 85, 1),
-        0 0 30px rgba(96, 198, 85, 0.6);
-    }
+
+  /* Feature text */
+  .bf25-card-feature-text,
+  .dark-mode .section-collections-with-nav__product .product-feature span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+  }
+
+  /* Hide old checkmark icons if present */
+  .bf25-card-feature .checkmark,
+  .bf25-card-feature svg.check-icon,
+  .bf25-card-feature .tick,
+  .dark-mode .section-collections-with-nav__product .product-feature .checkmark,
+  .dark-mode .section-collections-with-nav__product .product-feature svg {
+    display: none !important;
   }
   
   /* Price Display */
@@ -290,35 +322,59 @@
     text-decoration: line-through;
   }
   
-  /* Plus Button - Bottom Right, Rounded */
-  .dark-mode .arrow {
+  /* Circle CTA Button */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
     position: absolute;
     bottom: 24px;
     right: 24px;
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, #60c655 0%, #50b045 100%);
-    color: #000000;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50%;
     border: none;
-    border-radius: 16px;
-    font-size: 24px;
-    font-weight: 700;
+    background: linear-gradient(135deg, #60c655 0%, #4db348 100%);
+    color: #000;
+    font-size: 26px;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 
-      0 4px 12px rgba(96, 198, 85, 0.4),
-      0 0 20px rgba(96, 198, 85, 0.2);
+    box-shadow:
+      0 4px 18px rgba(96, 198, 85, 0.45),
+      0 0 25px rgba(96, 198, 85, 0.2);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
     z-index: 2;
   }
-  
-  .dark-mode .arrow:hover {
-    transform: scale(1.1) rotate(90deg);
-    box-shadow: 
-      0 6px 20px rgba(96, 198, 85, 0.6),
-      0 0 30px rgba(96, 198, 85, 0.4);
+
+  /* Fix plus sign vertical centering */
+  .dark-mode .section-collections-with-nav__product .arrow span,
+  .dark-mode .bf25-card-add-btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -2px; /* Optical centering for + character */
+  }
+
+  /* Hover state */
+  .dark-mode .section-collections-with-nav__product .arrow:hover,
+  .dark-mode .bf25-card-add-btn:hover {
+    background: linear-gradient(135deg, #70d665 0%, #60c655 100%);
+    transform: scale(1.1);
+    box-shadow:
+      0 6px 24px rgba(96, 198, 85, 0.55),
+      0 0 35px rgba(96, 198, 85, 0.3);
+  }
+
+  /* Active/pressed state */
+  .dark-mode .section-collections-with-nav__product .arrow:active,
+  .dark-mode .bf25-card-add-btn:active {
+    transform: scale(1.05);
   }
   
   /* Discount Badge - Enhanced Glow */
@@ -329,32 +385,276 @@
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 14px;
-    box-shadow: 
+    box-shadow:
       0 0 20px rgba(96, 198, 85, 0.6),
       0 4px 12px rgba(96, 198, 85, 0.3);
-    animation: badge-glow 3s ease-in-out infinite;
+    animation: badge-glow 6s ease-in-out infinite;
+    animation-play-state: paused; /* Paused by default for performance */
+  }
+
+  /* Activate badge glow on card hover */
+  .dark-mode .section-collections-with-nav__product:hover .discount_message,
+  .dark-mode .section-collections-with-nav__product:hover .bf25-discount-badge {
+    animation-play-state: running;
   }
   
+  /* Optimized badge-glow using opacity (GPU-accelerated) */
   @keyframes badge-glow {
     0%, 100% {
-      box-shadow: 
-        0 0 20px rgba(96, 198, 85, 0.6),
-        0 4px 12px rgba(96, 198, 85, 0.3);
+      opacity: 1;
     }
     50% {
-      box-shadow: 
-        0 0 30px rgba(96, 198, 85, 0.8),
-        0 4px 16px rgba(96, 198, 85, 0.5);
+      opacity: 0.85;
     }
   }
-  
+
+  /* Discount Badge with Inline SVG Lightning */
+  .bf25-discount-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #60c655 0%, #4db348 100%);
+    padding: 7px 12px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(96, 198, 85, 0.45);
+    z-index: 10;
+  }
+
+  .bf25-discount-text {
+    font-weight: 700;
+    font-size: 13px;
+    color: #000;
+    line-height: 1;
+  }
+
+  .bf25-lightning-svg {
+    width: 14px;
+    height: 14px;
+    color: #000;
+    flex-shrink: 0;
+  }
+
+  /* Mobile adjustments for new badge */
+  @media (max-width: 767px) {
+    .bf25-discount-badge {
+      padding: 6px 10px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+
+    .bf25-discount-text {
+      font-size: 11px;
+    }
+
+    .bf25-lightning-svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Mobile adjustments for glowing dots - ONLY ON CARDS */
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+    .dark-mode .section-collections-with-nav__product .product-feature {
+      gap: 8px;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+    .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+    .dark-mode .section-collections-with-nav__product .product-feature::before {
+      width: 5px;
+      height: 5px;
+    }
+
+    .bf25-card-feature-text,
+    .dark-mode .section-collections-with-nav__product .product-feature span {
+      font-size: 11px;
+    }
+  }
+
+  /* ===== STOCK INDICATOR RESTYLE ===== */
+  /* Container - inline with reviews */
+  .bf25-card-stock,
+  .bf25-stock-indicator,
+  [class*="stock-indicator"],
+  [class*="inventory-display"] {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  /* Stock dot */
+  .bf25-card-stock .bf25-stock-dot,
+  .bf25-stock-indicator .stock-dot,
+  [class*="stock-indicator"] span:first-child {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60c655;
+    box-shadow: 0 0 6px #60c655;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  /* Stock count text */
+  .bf25-card-stock .bf25-stock-count,
+  .bf25-stock-indicator .stock-count,
+  [class*="stock-indicator"] span:last-child {
+    font-size: 11px;
+    color: #60c655;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+
+  /* Color states - High (green) >50 */
+  [data-stock-level="high"] .bf25-stock-dot,
+  [data-stock-level="high"] .stock-dot {
+    background: #60c655;
+    box-shadow: 0 0 6px #60c655;
+  }
+  [data-stock-level="high"] .bf25-stock-count,
+  [data-stock-level="high"] .stock-count {
+    color: #60c655;
+  }
+
+  /* Color states - Medium (amber) 16-50 */
+  [data-stock-level="medium"] .bf25-stock-dot,
+  [data-stock-level="medium"] .stock-dot {
+    background: #fbbf24;
+    box-shadow: 0 0 6px #fbbf24;
+  }
+  [data-stock-level="medium"] .bf25-stock-count,
+  [data-stock-level="medium"] .stock-count {
+    color: #fbbf24;
+  }
+
+  /* Color states - Low (red) ≤15 */
+  [data-stock-level="low"] .bf25-stock-dot,
+  [data-stock-level="low"] .stock-dot {
+    background: #ef4444;
+    box-shadow: 0 0 6px #ef4444;
+  }
+  [data-stock-level="low"] .bf25-stock-count,
+  [data-stock-level="low"] .stock-count {
+    color: #ef4444;
+  }
+
+  /* ===== OPTIMIZED CARD SPACING ===== */
+
+  /* Reduce internal padding slightly */
+  .dark-mode .section-collections-with-nav__product {
+    padding: 18px !important; /* Reduced from 24px */
+  }
+
+  /* Tighter image container */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    margin-top: 32px !important; /* Reduced from 38px - still clears discount badge */
+    margin-bottom: 8px !important; /* Reduced from 10px */
+  }
+
+  /* Product image - SLIGHTLY LARGER */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 130px !important; /* Increased from ~115-120px */
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Tighter title spacing */
+  .dark-mode .section-collections-with-nav__product .product-title,
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .bf25-card-title {
+    margin-bottom: 2px !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    min-height: 38px !important; /* Reduced from 50px */
+  }
+
+  /* Reviews/meta row - compact */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-row {
+    margin: 4px 0 !important; /* Reduced from 6px */
+    gap: 10px !important; /* Slightly tighter */
+  }
+
+  /* Features list - tighter - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
+    margin: 8px 0 !important; /* Reduced from 12px */
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    margin-bottom: 4px !important; /* Reduced from 6px */
+  }
+
+  /* Price row - compact */
+  .bf25-card-price-row,
+  .dark-mode .section-collections-with-nav__product-prices,
+  .dark-mode .section-collections-with-nav__product .price-row {
+    margin-top: 10px !important; /* Reduced from 14px */
+    margin-bottom: 8px !important;
+  }
+
+  /* Price size - slightly smaller to save space */
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current,
+  .dark-mode .section-collections-with-nav__product .product-price {
+    font-size: 26px !important; /* Reduced from 28px */
+    line-height: 1 !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 14px !important; /* Reduced from 18px */
+  }
+
+  /* ===== PREVENT META ROW WRAPPING ===== */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-stock-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap !important; /* CRITICAL - prevent wrapping */
+    overflow: hidden; /* Hide if too wide rather than wrap */
+  }
+
+  /* Divider between reviews and stock */
+  .bf25-meta-divider,
+  .bf25-card-meta-row > .divider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  /* Ensure stock doesn't wrap internally */
+  .bf25-card-stock,
+  [class*="stock-indicator"] {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
   /* Responsive Grid */
   @media (max-width: 1024px) {
     .dark-mode .products {
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
-    
+
     .dark-mode .collection-title {
       font-size: 36px;
     }
@@ -378,6 +678,11 @@
       padding: 12px 24px;
       font-size: 14px;
     }
+    
+    .section-collections-with-nav.section-explore.dark-mode {
+      padding-top: 20px !important;
+      padding-bottom: 40px !important;
+    }
   }
   
   @media (max-width: 640px) {
@@ -392,7 +697,7 @@
     }
 
     .dark-mode .section-collections-with-nav__product {
-      padding: 16px;
+      padding: 14px !important; /* Even tighter on mobile */
     }
 
     /* Smaller font sizes for 2-column mobile layout */
@@ -405,7 +710,8 @@
       font-size: 20px !important;
     }
 
-    .dark-mode .metafield-rich_text_field ul li {
+    .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+    .dark-mode .bf25-product-card .metafield-rich_text_field ul li {
       font-size: 12px !important;
     }
 
@@ -706,4 +1012,4277 @@ aside.buy-now-popup[data-section="bf25"] {
 /* Body overflow hidden when modal open */
 body.modal-open {
   overflow: hidden !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 PRODUCT INFO ICON (BF25-INFO-ICON-001)
+   Pulsing info button in top-right corner of product cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Info Icon Container */
+.bf25-product-info-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20; /* Above product image but below modals */
+
+  /* Size */
+  width: 36px;
+  height: 36px;
+
+  /* Center the SVG */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+
+  /* Visual */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+
+  /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Smooth transitions */
+  transition: all 200ms ease;
+
+  /* Pulse animation - Optimized: paused by default for performance */
+  animation: bf25-info-pulse 5s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+/* Play info pulse on hover or when in viewport */
+.bf25-product-card:hover .bf25-product-info-icon,
+.dark-mode .section-collections-with-nav__product:hover .bf25-product-info-icon,
+.bf25-product-card:focus-within .bf25-product-info-icon,
+.bf25-product-info-icon.in-view {
+  animation-play-state: running;
+}
+
+/* Hover State */
+.bf25-product-info-icon:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.4);
+}
+
+/* Active/Click State */
+.bf25-product-info-icon:active {
+  transform: scale(0.95);
+}
+
+/* Focus State (keyboard navigation) */
+.bf25-product-info-icon:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+/* SVG Styling */
+.bf25-product-info-icon svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+  margin-top: 0px;
+  pointer-events: none; /* Let clicks pass through to parent */
+  display: block; /* Fix alignment issues */
+  overflow: visible; /* Ensure text renders properly */
+}
+
+/* SVG Text Vertical Alignment (BF25-INFO-ICON-FIX) */
+.bf25-product-info-icon svg text {
+  dominant-baseline: central; /* Better centering than 'middle' */
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Pulse Animation Keyframes - GPU-accelerated with transform + opacity */
+/* Lighter info pulse animation - 30% less intensive */
+@keyframes bf25-info-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(96, 198, 85, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px 2px rgba(96, 198, 85, 0.35);
+  }
+}
+
+/* Mobile Touch Target Enhancement */
+@media (max-width: 768px) {
+  .bf25-product-info-icon {
+    width: 44px;
+    height: 44px; /* Minimum touch target size */
+  }
+
+  .bf25-product-info-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-product-info-icon {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 QUICK-ADD VARIANT OVERLAY (BF25-QUICK-ADD-001)
+   Card-level variant selection for fast adding
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   Card State Management
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-card-default-state,
+.bf25-card-variant-state {
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.bf25-card-default-state {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bf25-card-variant-state {
+  position: absolute;
+  inset: 0;
+  z-index: 15; /* Above card content, below modal */
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+
+  /* Smooth animation with easing curve */
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* will-change removed for better performance - only use on actively animating elements */
+  /* will-change: opacity, transform; */
+
+  /* Dark glassmorphic background */
+  background: rgba(20, 20, 20, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* Match card border radius */
+  border-radius: inherit;
+
+  /* Green glow border */
+  border: 2px solid rgba(96, 198, 85, 0.3);
+  box-shadow:
+    0 0 20px rgba(96, 198, 85, 0.1),
+    inset 0 0 60px rgba(96, 198, 85, 0.03);
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+}
+
+/* Ensure hidden attribute doesn't block transition */
+.bf25-card-variant-state[hidden] {
+  display: flex !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Show state when active */
+.bf25-card-variant-state:not([hidden]) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Hide default state when variant overlay showing */
+.bf25-product-card:has(.bf25-card-variant-state:not([hidden])) .bf25-card-default-state {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Overlay Header
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bf25-variant-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.bf25-variant-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+
+  color: #fff;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.bf25-variant-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.bf25-variant-close svg {
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Variant Options Container
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-options-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(96, 198, 85, 0.3) transparent;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bf25-variant-options-container::-webkit-scrollbar-thumb {
+  background: rgba(96, 198, 85, 0.3);
+  border-radius: 2px;
+}
+
+/* Variant Option Group */
+.bf25-variant-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bf25-variant-option-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Variant Pills Grid */
+.bf25-variant-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.bf25-variant-pill {
+  min-height: 44px; /* Touch target */
+  padding: 10px 14px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bf25-variant-pill:hover:not(.is-disabled):not(.is-selected) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.bf25-variant-pill.is-selected {
+  background: #60c655;
+  border-color: #60c655;
+  color: #000;
+  font-weight: 600;
+}
+
+.bf25-variant-pill.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Add to Bundle Button
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-variant-add-btn {
+  width: 100%;
+  min-height: 52px;
+
+  background: #60c655;
+  border: none;
+  border-radius: 12px;
+
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+  transition: all 150ms ease;
+
+  /* Slight shadow for depth */
+  box-shadow: 0 4px 12px rgba(96, 198, 85, 0.3);
+}
+
+.bf25-variant-add-btn:hover:not(:disabled) {
+  background: #52b047;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(96, 198, 85, 0.4);
+}
+
+.bf25-variant-add-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.bf25-variant-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Loading state */
+.bf25-variant-add-btn.is-loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.bf25-variant-add-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+
+  animation: bf25-spin 0.6s linear infinite;
+}
+
+@keyframes bf25-spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Success state */
+.bf25-variant-add-btn.is-success {
+  background: #2ecc71;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mobile Optimizations
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .bf25-card-variant-state {
+    padding: 16px;
+  }
+
+  .bf25-variant-pills {
+    grid-template-columns: 1fr 1fr; /* 2 columns on mobile */
+  }
+
+  .bf25-variant-pill {
+    font-size: 13px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Accessibility
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .bf25-card-default-state,
+  .bf25-card-variant-state,
+  .bf25-variant-pill {
+    transition: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.bf25-variant-pill:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-close:focus {
+  outline: 2px solid #60c655;
+  outline-offset: 2px;
+}
+
+.bf25-variant-add-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Quick-Add Success Animation
+   ───────────────────────────────────────────────────────────────────── */
+
+.bf25-quick-add-success {
+  animation: bf25-quick-add-pulse 0.6s ease;
+}
+
+@keyframes bf25-quick-add-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(96, 198, 85, 0.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===================================================
+   BF25 CRITICAL LAYOUT FIXES
+   =================================================== */
+
+/* === ISSUE 1 FIX: STOCK INDICATOR POSITION & COLOR === */
+
+/* Reviews row - keep stars and count on same line with stock */
+.bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .product-rating,
+.dark-mode .section-collections-with-nav__product .reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+/* Stars row */
+.bf25-card-stars,
+.dark-mode .section-collections-with-nav__product .star-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* COMMENTED OUT - Conflicting with existing stock system
+.bf25-review-count-row,
+.dark-mode .section-collections-with-nav__product .review-count-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.bf25-review-stock-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.bf25-card-stock {
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  position: static !important;
+}
+
+.bf25-card-stock .bf25-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #60c655;
+  box-shadow: 0 0 6px #60c655;
+  flex-shrink: 0;
+}
+
+.bf25-card-stock .bf25-stock-count {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #60c655 !important;
+}
+*/
+
+/* ===== REVIEWS - MINIMAL GAP BETWEEN STARS AND COUNT ===== */
+
+/* Reviews container - no gap */
+.bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .bf25-card-reviews,
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge,
+.dark-mode .section-collections-with-nav__product .product-rating,
+.dark-mode .section-collections-with-nav__product .reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0 !important;
+  margin: 6px 0;
+}
+
+/* Stars wrapper - no bottom margin/padding */
+.bf25-product-rating-display,
+.bf25-rating-stars,
+.bf25-card-stars {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1;
+}
+
+/* Stars themselves */
+.bf25-rating-stars .stars-empty,
+.bf25-rating-stars .stars-filled,
+.dark-mode .section-collections-with-nav__product .jdgm-star,
+.dark-mode .section-collections-with-nav__product .star-rating,
+.dark-mode .section-collections-with-nav__product [class*="stars"] {
+  font-size: 14px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: #60c655;
+  text-shadow:
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 16px rgba(96, 198, 85, 0.4);
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Review count - VERY CLOSE to stars */
+.bf25-rating-count,
+.bf25-review-count,
+.dark-mode .section-collections-with-nav__product .review-count,
+.dark-mode .section-collections-with-nav__product .jdgm-prev-badge__text,
+.dark-mode .section-collections-with-nav__product [class*="review-count"] {
+  margin-top: 2px !important;
+  padding-top: 0 !important;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+}
+
+/* STOCK POSITIONING - Try to position next to reviews */
+/* Create flex container for reviews + stock if possible */
+.dark-mode .section-collections-with-nav__product .reviews-stock-wrapper,
+.dark-mode .section-collections-with-nav__product .meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Dynamic Stock Indicator - position inline */
+.bf25-stock-display,
+.stock-indicator,
+.dynamic-stock,
+[class*="stock-number"],
+.dark-mode .section-collections-with-nav__product .stock-wrapper {
+  font-size: 13px;
+  font-weight: 600;
+  /* Try to position inline with reviews */
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center;
+  margin-left: 8px;
+}
+
+/* Add bullet separator before stock if next to reviews */
+.bf25-stock-display::before,
+.stock-indicator::before,
+.dynamic-stock::before {
+  content: '•';
+  color: rgba(255, 255, 255, 0.3);
+  margin-right: 8px;
+  font-size: 10px;
+}
+
+/* Stock color states for EXISTING system */
+.bf25-stock-display.stock-high,
+[data-stock-level="high"] .stock-number,
+.stock-high {
+  color: #60c655 !important;
+}
+
+.bf25-stock-display.stock-medium,
+[data-stock-level="medium"] .stock-number,
+.stock-medium {
+  color: #fbbf24 !important;
+}
+
+.bf25-stock-display.stock-low,
+[data-stock-level="low"] .stock-number,
+.stock-low {
+  color: #ef4444 !important;
+}
+
+/* === ISSUE 2 FIX: PRICE OVERLAPPING BUTTON === */
+
+/* Price + Button Row - SPACE BETWEEN, not centered */
+.bf25-card-price-row,
+.dark-mode .section-collections-with-nav__product .price-row,
+.dark-mode .section-collections-with-nav__product .product-price-wrapper,
+.dark-mode .section-collections-with-nav__product-prices,
+.dark-mode .section-collections-with-nav__product .price-action-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important; /* KEY: pushes price left, button right */
+  gap: 12px !important;
+  margin-top: 12px !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+  position: relative !important;
+}
+
+/* Price group - LEFT aligned */
+.bf25-card-price-group,
+.dark-mode .section-collections-with-nav__product .price-group,
+.dark-mode .section-collections-with-nav__product .prices {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  text-align: left !important;
+}
+
+/* Current price */
+.bf25-card-price-current,
+.dark-mode .section-collections-with-nav__product-price,
+.dark-mode .section-collections-with-nav__product .price-current,
+.dark-mode .section-collections-with-nav__product .product-price {
+  color: #60c655 !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.3) !important;
+  line-height: 1 !important;
+  text-align: left !important;
+}
+
+/* Compare price - sits NEXT to current price, not behind button */
+.bf25-card-price-compare,
+.dark-mode .section-collections-with-nav__product-price-compared,
+.dark-mode .section-collections-with-nav__product .price-compare,
+.dark-mode .section-collections-with-nav__product .compare-price {
+  color: #555 !important;
+  font-size: 14px !important;
+  text-decoration: line-through !important;
+  text-align: left !important;
+}
+
+/* Button stays RIGHT - and NOT absolutely positioned */
+.dark-mode .section-collections-with-nav__product .arrow,
+.dark-mode .bf25-card-add-btn {
+  position: static !important; /* Remove absolute positioning */
+  margin-left: auto !important; /* Push to right */
+  flex-shrink: 0 !important;
+}
+
+/* === PRODUCT IMAGES - MUCH BIGGER (50% LARGER) WITH NATURAL FADING GLOW === */
+
+/* Product Image Container - fixed size, allows overflow */
+.dark-mode .section-collections-with-nav__product-image,
+.dark-mode .bf25-card-image-wrapper {
+  position: relative;
+  height: 180px !important; /* Container height increased for larger images */
+  min-height: 180px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 35px !important;
+  margin-bottom: 12px !important;
+  overflow: visible !important; /* KEY: allow image to overflow */
+}
+
+/* Product Image - MUCH LARGER (50% BIGGER) with NATURAL FADING GLOW */
+.dark-mode .section-collections-with-nav__product-image img,
+.dark-mode .bf25-card-image img {
+  max-height: 200px !important; /* Was ~130px, now 200px = ~50% bigger */
+  max-width: 130% !important; /* Allow more horizontal overflow */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  /* NATURAL FADING GLOW - 4 layers for smooth fade */
+  filter:
+    drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+    drop-shadow(0 0 20px rgba(96, 198, 85, 0.5))
+    drop-shadow(0 0 40px rgba(96, 198, 85, 0.25))
+    drop-shadow(0 0 60px rgba(96, 198, 85, 0.1)) !important;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Hover - slightly enhanced glow */
+.dark-mode .section-collections-with-nav__product:hover .section-collections-with-nav__product-image img {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 10px rgba(96, 198, 85, 1))
+    drop-shadow(0 0 25px rgba(96, 198, 85, 0.6))
+    drop-shadow(0 0 50px rgba(96, 198, 85, 0.3))
+    drop-shadow(0 0 70px rgba(96, 198, 85, 0.15)) !important;
+}
+
+/* ===================================================
+   BF25 CARD RESPONSIVE STYLES
+   =================================================== */
+
+/* ===== TABLET (max-width: 991px) ===== */
+@media (max-width: 991px) {
+  .dark-mode .section-collections-with-nav__product {
+    padding: 16px !important;
+    border-radius: 22px;
+  }
+
+  /* Tablet image container - proportionally sized for 50% bigger images */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 160px !important;
+    min-height: 160px !important;
+  }
+
+  /* Tablet images - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 180px !important; /* Proportional to desktop 200px */
+    max-width: 120% !important;
+  }
+
+  /* Button size */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    font-size: 24px;
+  }
+
+  /* Price */
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 24px !important;
+  }
+}
+
+/* ===== MOBILE (max-width: 767px) ===== */
+@media (max-width: 767px) {
+  /* MOBILE: Proportionally larger images (50% bigger) */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    height: 150px !important;  /* Increased proportionally */
+    min-height: 150px !important;
+    margin-top: 32px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 170px !important; /* Proportionally larger for mobile */
+    max-width: 125% !important;
+    /* Mobile-optimized glow */
+    filter:
+      drop-shadow(0 0 8px rgba(96, 198, 85, 0.9))
+      drop-shadow(0 0 18px rgba(96, 198, 85, 0.5))
+      drop-shadow(0 0 30px rgba(96, 198, 85, 0.2)) !important;
+  }
+  .dark-mode .section-collections-with-nav__product {
+    padding: 14px !important;
+    border-radius: 20px;
+    /* Slightly reduced double frame for mobile */
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.3),
+      0 0 0 4px rgba(96, 198, 85, 0.08),
+      0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .dark-mode .section-collections-with-nav__product:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0 0 0 2px rgba(96, 198, 85, 0.45),
+      0 0 0 4px rgba(96, 198, 85, 0.12),
+      0 0 20px rgba(96, 198, 85, 0.25),
+      0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Selected state - reduced glow for performance */
+  .dark-mode .section-collections-with-nav__product.is-selected,
+  .dark-mode .section-collections-with-nav__product[data-in-bundle="true"] {
+    box-shadow:
+      0 0 0 2px #60c655,
+      0 0 0 4px rgba(96, 198, 85, 0.15),
+      0 0 30px rgba(96, 198, 85, 0.35),
+      0 10px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+  }
+
+  /* Discount badge */
+  .bf25-discount-badge {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 5px 10px !important;
+    border-radius: 12px;
+    gap: 4px !important;
+  }
+
+  .bf25-discount-text {
+    font-size: 11px !important;
+  }
+
+  .bf25-lightning-svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Image container */
+  .dark-mode .section-collections-with-nav__product-image {
+    margin-top: 30px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Image size - still visible but compact */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 105px !important;
+    /* Reduced glow for mobile performance */
+    filter:
+      drop-shadow(0 0 8px rgba(96, 198, 85, 0.8))
+      drop-shadow(0 0 16px rgba(96, 198, 85, 0.4));
+  }
+
+  /* Title */
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+    min-height: 32px !important;
+  }
+
+  /* ===== CRITICAL: Reviews + Stock row - NEVER WRAP ===== */
+  .bf25-card-meta-row,
+  .dark-mode .section-collections-with-nav__product .reviews-stock-row,
+  .dark-mode .section-collections-with-nav__product .reviews-row {
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    margin: 4px 0 !important;
+  }
+
+  /* Smaller stars on mobile */
+  .dark-mode .section-collections-with-nav__product .star-rating {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  /* Review count */
+  .dark-mode .section-collections-with-nav__product .review-count {
+    font-size: 10px;
+  }
+
+  /* Divider */
+  .bf25-meta-divider {
+    height: 12px !important;
+  }
+
+  /* Stock indicator - compact */
+  .bf25-card-stock,
+  [class*="stock-indicator"] {
+    gap: 4px !important;
+  }
+
+  .bf25-stock-dot,
+  [class*="stock-indicator"] .stock-dot,
+  [class*="stock-indicator"] span:first-child {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .bf25-stock-count,
+  [class*="stock-indicator"] .stock-count,
+  [class*="stock-indicator"] span:last-child {
+    font-size: 10px !important;
+  }
+
+  /* Features - compact - ONLY ON CARDS */
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features,
+  .dark-mode .section-collections-with-nav__product .product-features {
+    margin: 6px 0 !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature,
+  .dark-mode .section-collections-with-nav__product .product-feature {
+    gap: 8px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .metafield-rich_text_field ul li::before,
+  .dark-mode .bf25-product-card .metafield-rich_text_field ul li::before,
+  .dark-mode .section-collections-with-nav__product .bf25-card-feature::before,
+  .dark-mode .section-collections-with-nav__product .product-feature::before {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  .bf25-card-feature-text,
+  .dark-mode .section-collections-with-nav__product .product-feature span {
+    font-size: 11px !important;
+  }
+
+  /* Price row - compact */
+  .bf25-card-price-row,
+  .dark-mode .section-collections-with-nav__product-prices,
+  .dark-mode .section-collections-with-nav__product .price-row {
+    margin-top: 8px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 22px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 12px !important;
+  }
+
+  /* Button */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 22px !important;
+  }
+
+  /* Info icon - stays in position */
+  .bf25-product-info-icon {
+    top: 10px !important;
+    right: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* ===== SMALL MOBILE (max-width: 374px) ===== */
+@media (max-width: 374px) {
+  /* Small mobile image container - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image,
+  .dark-mode .bf25-card-image-wrapper {
+    height: 140px !important;  /* Increased proportionally */
+    min-height: 140px !important;
+  }
+
+  /* Still zoomed on small screens - proportionally larger */
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 160px !important; /* Proportionally increased */
+    max-width: 115% !important;
+  }
+  .dark-mode .section-collections-with-nav__product {
+    padding: 12px !important;
+    border-radius: 18px;
+  }
+
+  .bf25-discount-badge {
+    padding: 4px 8px !important;
+    border-radius: 10px;
+  }
+
+  .bf25-discount-text {
+    font-size: 10px !important;
+  }
+
+  .bf25-lightning-svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 90px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    font-size: 13px !important;
+  }
+
+  /* Even tighter meta row */
+  .bf25-card-meta-row {
+    gap: 6px !important;
+  }
+
+  .bf25-stock-count,
+  [class*="stock-indicator"] .stock-count {
+    font-size: 9px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 20px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price-compared,
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    font-size: 11px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    font-size: 20px !important;
+  }
+
+  .bf25-product-info-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .bf25-product-info-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* ===== EXTRA SMALL (max-width: 320px) ===== */
+@media (max-width: 320px) {
+  .dark-mode .section-collections-with-nav__product {
+    padding: 10px !important;
+  }
+
+  /* Hide review count to save space, keep stars */
+  .dark-mode .section-collections-with-nav__product .review-count {
+    display: none;
+  }
+
+  .dark-mode .section-collections-with-nav__product-price,
+  .dark-mode .section-collections-with-nav__product .price-current {
+    font-size: 18px !important;
+  }
+
+  /* Tiny screens - still maintain zoom effect */
+  .dark-mode .section-collections-with-nav__product-image {
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 115px !important; /* Still zoomed even on tiny screens */
+    max-width: 105% !important;
+  }
+}
+
+/* ===================================================
+   BF25 MODAL DESCRIPTION - CLEAN SENTENCE FORMAT
+   =================================================== */
+
+/* Reset any flex/grid layout in modal descriptions */
+.bf25-modal-description,
+.bf25-product-modal .product-description,
+.bf25-card-variant-state .product-description,
+.bf25-modal .description-content,
+[class*="modal"] .metafield-rich_text_field ul,
+[class*="variant-state"] .metafield-rich_text_field ul,
+[class*="modal"] .product-features,
+[class*="modal"] .product-description {
+  /* Reset any 2-column or flex layout */
+  display: block !important;
+  columns: unset !important;
+  grid-template-columns: unset !important;
+}
+
+/* Modal feature/description items - clean single lines */
+.bf25-modal-description li,
+.bf25-modal-description p,
+.bf25-product-modal .product-description li,
+.bf25-product-modal .feature-item,
+.bf25-card-variant-state .description-item,
+[class*="modal"] .metafield-rich_text_field ul li,
+[class*="variant-state"] .metafield-rich_text_field ul li,
+[class*="modal"] .product-features li,
+[class*="modal"] .feature-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  text-align: left !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+}
+
+/* Modal bullet/tick - simple green tick, NO GLOW */
+.bf25-modal-description li::before,
+.bf25-product-modal .product-description li::before,
+[class*="modal"] .metafield-rich_text_field ul li::before,
+[class*="variant-state"] .metafield-rich_text_field ul li::before,
+[class*="modal"] .product-features li::before {
+  content: '✓' !important;
+  color: #60c655 !important;
+  font-weight: 600 !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  /* Remove any glow effects in modal */
+  text-shadow: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  position: static !important;
+  display: inline !important;
+}
+
+/* Modal description text - clean, readable */
+.bf25-modal-description span,
+.bf25-modal-description .feature-text,
+.bf25-product-modal .product-description .feature-text,
+[class*="modal"] .metafield-rich_text_field ul li span,
+[class*="variant-state"] .metafield-rich_text_field ul li span,
+[class*="modal"] .feature-name,
+[class*="modal"] .feature-description {
+  display: inline !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  line-height: 1.5 !important;
+}
+
+/* Remove any bold/label styling that created 2-column look */
+.bf25-modal-description .feature-name,
+.bf25-modal-description strong,
+[class*="modal"] .feature-label,
+[class*="modal"] .metafield-rich_text_field ul li strong,
+[class*="variant-state"] .metafield-rich_text_field ul li strong {
+  font-weight: 600 !important;
+  color: #fff !important;
+  display: inline !important;
+  width: auto !important;
+  min-width: unset !important;
+}
+
+/* Ensure colon appears naturally after bold text */
+.bf25-modal-description .feature-name::after,
+[class*="modal"] .metafield-rich_text_field ul li strong:first-child::after {
+  content: ': ';
+}
+
+/* Remove 2-column grid if present */
+[class*="modal"] .features-grid,
+[class*="modal"] .description-grid,
+.bf25-modal .feature-list,
+[class*="variant-state"] .features-grid {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+/* Remove definition list styling if present */
+[class*="modal"] dl,
+[class*="modal"] dt,
+[class*="modal"] dd {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+[class*="modal"] dt {
+  display: inline;
+  font-weight: 600;
+}
+
+[class*="modal"] dt::after {
+  content: ': ';
+}
+
+[class*="modal"] dd {
+  display: inline;
+  margin-left: 0;
+}
+
+/* Mobile modal */
+@media (max-width: 767px) {
+  .bf25-modal-description li,
+  .bf25-product-modal .product-description li,
+  [class*="modal"] .metafield-rich_text_field ul li,
+  [class*="variant-state"] .metafield-rich_text_field ul li,
+  [class*="modal"] .product-features li {
+    margin-bottom: 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ===================================================
+   BF25 INLINE STOCK INDICATOR - NEXT TO REVIEWS
+   =================================================== */
+
+/* Reviews + Stock row container - REFINED WITH DIVIDER */
+.bf25-reviews-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px !important;
+  margin-bottom: 12px !important; /* More space before bullet points */
+  padding-top: 0 !important;
+  flex-wrap: nowrap;
+}
+
+/* Review count */
+.bf25-reviews-stock-row .bf25-rating-count,
+.bf25-reviews-stock-row .bf25-review-count {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* Vertical divider */
+.bf25-reviews-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0 2px;
+}
+
+/* Stock placeholder */
+.bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+}
+
+/* Inline stock indicator */
+.bf25-stock-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bf25-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.bf25-stock-number {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+/* Color states (backup if inline styles don't apply) */
+.bf25-stock-inline.stock-high .bf25-stock-dot {
+  background: #60c655;
+  box-shadow: 0 0 6px #60c655;
+}
+.bf25-stock-inline.stock-high .bf25-stock-number {
+  color: #60c655;
+}
+
+.bf25-stock-inline.stock-medium .bf25-stock-dot {
+  background: #fbbf24;
+  box-shadow: 0 0 6px #fbbf24;
+}
+.bf25-stock-inline.stock-medium .bf25-stock-number {
+  color: #fbbf24;
+}
+
+.bf25-stock-inline.stock-low .bf25-stock-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+.bf25-stock-inline.stock-low .bf25-stock-number {
+  color: #ef4444;
+}
+
+/* HIDE old image badge - no longer needed */
+.section-collections-with-nav__product-image .stock-badge-circle {
+  display: none !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    gap: 6px;
+    margin-bottom: 10px !important;
+  }
+
+  .bf25-reviews-stock-row .bf25-rating-count,
+  .bf25-stock-number {
+    font-size: 11px;
+  }
+
+  .bf25-reviews-divider {
+    font-size: 11px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 374px) {
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== MODAL DESCRIPTION - FORCE INLINE SENTENCES ===== */
+
+/* Target the modal/popup description area */
+.bf25-modal-description,
+.bf25-product-modal .product-description,
+.bf25-card-variant-state .product-description,
+.mfp-content .product-description,
+.modal-content .product-description,
+[class*="modal"] .bf25-description,
+[class*="popup"] .product-description {
+  display: block !important;
+}
+
+/* Each feature/benefit row - MUST be single line with tick + inline text */
+.bf25-modal-description > div,
+.bf25-modal-description .feature-row,
+.bf25-modal-description .benefit-item,
+.bf25-product-modal .product-description > div,
+.bf25-card-variant-state .description-item,
+[class*="modal"] .product-description > div,
+[class*="modal"] .feature-item {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  margin-bottom: 16px !important;
+  text-align: left !important;
+}
+
+/* The tick/checkmark */
+.bf25-modal-description > div > span:first-child,
+.bf25-modal-description .feature-row > span:first-child,
+.bf25-modal-description .tick,
+.bf25-modal-description .checkmark,
+[class*="modal"] .product-description .tick {
+  flex-shrink: 0 !important;
+  width: auto !important;
+  min-width: unset !important;
+  color: #60c655 !important;
+  margin-right: 10px !important;
+}
+
+/* Feature name (bold part) - MUST BE INLINE, not block */
+.bf25-modal-description strong,
+.bf25-modal-description b,
+.bf25-modal-description .feature-name,
+.bf25-modal-description > div > span:nth-child(2),
+[class*="modal"] .product-description strong,
+[class*="modal"] .feature-name {
+  display: inline !important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  flex: none !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  white-space: normal !important;
+  margin-right: 0 !important;
+}
+
+/* Description text - MUST FLOW INLINE after the bold text */
+.bf25-modal-description .feature-description,
+.bf25-modal-description > div > span:last-child,
+[class*="modal"] .product-description .feature-text,
+[class*="modal"] .feature-description {
+  display: inline !important;
+  width: auto !important;
+  flex: none !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* If using definition lists (dl, dt, dd) */
+[class*="modal"] dl {
+  display: block !important;
+}
+
+[class*="modal"] dt {
+  display: inline !important;
+  float: none !important;
+  width: auto !important;
+  font-weight: 600 !important;
+}
+
+[class*="modal"] dt::after {
+  content: ' ';
+}
+
+[class*="modal"] dd {
+  display: inline !important;
+  margin-left: 0 !important;
+  margin-inline-start: 0 !important;
+}
+
+/* Remove any grid or table display */
+[class*="modal"] .product-description,
+[class*="modal"] .features-list,
+[class*="modal"] .benefits-list {
+  display: block !important;
+  grid-template-columns: unset !important;
+  columns: unset !important;
+}
+
+/* ===== MOBILE FIXES ===== */
+
+@media (max-width: 767px) {
+
+  /* INFO ICON - CLOSER TO CORNER */
+  .bf25-product-info-icon {
+    top: 6px !important;
+    right: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .bf25-product-info-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* PRODUCT IMAGES - 200% BIGGER (reduced from 300%) */
+  .dark-mode .section-collections-with-nav__product-image {
+    min-height: 150px !important;
+    height: 150px !important;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    overflow: visible !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 160px !important; /* Was ~70-80px, now 160px = 200% bigger */
+    max-width: 130% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Button - FORCE PERFECT CIRCLE */
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Price row - more space above, push down to fill space */
+  .dark-mode .section-collections-with-nav__product .price-row,
+  .dark-mode .section-collections-with-nav__product .product-price-wrapper,
+  .bf25-card-price-row {
+    margin-top: 16px !important;
+    padding-top: 8px;
+  }
+
+  /* Features/bullet points - more space below */
+  .dark-mode .section-collections-with-nav__product .product-features,
+  .dark-mode .section-collections-with-nav__product .bf25-card-features {
+    margin-bottom: 12px;
+  }
+
+  /* Reduce gap between title and stars */
+  .dark-mode .section-collections-with-nav__product .section-collections-with-nav__product-title,
+  .dark-mode .section-collections-with-nav__product .product-title {
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-card-reviews {
+    margin-top: 2px !important;
+  }
+
+  /* Discount badge - slightly smaller on mobile */
+  .bf25-discount-badge {
+    top: 8px !important;
+    left: 8px !important;
+    padding: 5px 10px !important;
+  }
+
+  .bf25-discount-text {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  /* Extra small mobile */
+
+  .bf25-product-info-icon {
+    top: 5px !important;
+    right: 5px !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image {
+    min-height: 130px !important;
+    height: 130px !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product-image img {
+    max-height: 140px !important;
+    max-width: 125% !important;
+  }
+
+  .dark-mode .section-collections-with-nav__product .arrow,
+  .dark-mode .bf25-card-add-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+  }
+}
+
+/* ===== STOCK - BELOW REVIEWS (SEPARATE ROW) ===== */
+
+/* Stock row - centered below review count */
+.bf25-stock-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+  margin-bottom: 10px;
+}
+
+/* Stock placeholder */
+.bf25-stock-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stock inline - smaller, subtle */
+.bf25-stock-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Stock dot - smaller */
+.bf25-stock-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Stock text - smaller */
+.bf25-stock-number {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* Mobile - even smaller */
+@media (max-width: 767px) {
+  .bf25-stock-row {
+    margin-top: 2px;
+    margin-bottom: 8px;
+  }
+
+  .bf25-stock-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== REVIEWS + STOCK - RESPONSIVE LAYOUT ===== */
+
+/* Desktop: Inline row */
+.bf25-reviews-stock-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+}
+
+/* Divider - visible on desktop */
+.bf25-reviews-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 767px) {
+  .bf25-reviews-stock-row {
+    flex-direction: column;
+    gap: 8px; /* More space between reviews and stock */
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  /* Hide divider on mobile */
+  .bf25-reviews-divider {
+    display: none;
+  }
+
+  /* Review count - add bottom spacing */
+  .bf25-reviews-stock-row .bf25-rating-count {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  /* Stock placeholder - add top padding */
+  .bf25-stock-placeholder {
+    padding-top: 2px;
+  }
+
+  /* Stock row - slightly smaller on mobile */
+  .bf25-stock-inline {
+    gap: 4px;
+  }
+
+  .bf25-stock-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .bf25-stock-number {
+    font-size: 10px;
+  }
+}
+
+/* ===== BULLET POINTS - AUTO-SCALE TO PREVENT WRAP ===== */
+
+/* Features container */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  margin: 8px 0;
+}
+
+/* Each feature item - prevent wrap, scale text */
+.dark-mode .section-collections-with-nav__product .product-feature,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature,
+.bf25-card-feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Feature text - responsive sizing */
+.dark-mode .section-collections-with-nav__product .product-feature span,
+.dark-mode .section-collections-with-nav__product .bf25-card-feature span,
+.bf25-card-feature-text {
+  font-size: clamp(9px, 2.8vw, 13px); /* Auto-scale: min 9px, prefer 2.8vw, max 13px */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tablet - slightly smaller */
+@media (max-width: 991px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(9px, 2.5vw, 12px);
+  }
+}
+
+/* Mobile - scale based on viewport */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(8px, 3vw, 11px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+
+  /* Dot slightly smaller too */
+  .dark-mode .section-collections-with-nav__product .product-feature::before,
+  .bf25-card-feature::before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* Small mobile - even smaller */
+@media (max-width: 374px) {
+  .dark-mode .section-collections-with-nav__product .product-feature span,
+  .bf25-card-feature-text {
+    font-size: clamp(7px, 3.2vw, 10px);
+  }
+
+  .dark-mode .section-collections-with-nav__product .product-feature,
+  .bf25-card-feature {
+    gap: 5px;
+  }
+}
+
+/* ===== CARD LAYOUT - PIN PRICE TO BOTTOM ===== */
+
+/* Card container - flex column, full height */
+.dark-mode .section-collections-with-nav__product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Default state wrapper - flex column, grow to fill */
+.bf25-card-default-state {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+/* Top part (image, title, reviews, features) - grows to push price down */
+.bf25-card-default-state .top-part,
+.section-collections-with-nav__product-details .top-part {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Features list - allow to grow/shrink */
+.dark-mode .section-collections-with-nav__product .product-features,
+.dark-mode .section-collections-with-nav__product .bf25-card-features {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Price row - ALWAYS at bottom, no grow */
+.dark-mode .section-collections-with-nav__product .price-row,
+.dark-mode .section-collections-with-nav__product .product-price-wrapper,
+.dark-mode .section-collections-with-nav__product .bf25-card-price-row,
+.section-collections-with-nav__product-prices {
+  margin-top: auto !important; /* Push to bottom */
+  flex-shrink: 0;
+  padding-top: 12px;
+}
+
+/* Compare price - ALWAYS reserve space even if empty */
+.dark-mode .section-collections-with-nav__product .price-compare,
+.dark-mode .section-collections-with-nav__product .compare-price,
+.dark-mode .section-collections-with-nav__product .compare-at-price {
+  min-height: 18px; /* Reserve space even when empty */
+  display: block;
+}
+
+/* If compare price is in a wrapper, ensure wrapper has min-height */
+.dark-mode .section-collections-with-nav__product .price-compare-wrapper {
+  min-height: 18px;
+}
+
+/* Ensure all cards in a row have same height */
+.section-collections-with-nav__products,
+.bf25-products-grid,
+[class*="product-grid"] {
+  display: grid;
+  align-items: stretch; /* All cards same height */
+}
+
+.section-collections-with-nav__products .section-collections-with-nav__product,
+.bf25-products-grid .bf25-product-card {
+  height: 100%;
+}
+
+/* Mobile - same principle */
+@media (max-width: 767px) {
+  .dark-mode .section-collections-with-nav__product .price-row,
+  .section-collections-with-nav__product-prices {
+    margin-top: auto !important;
+    padding-top: 10px;
+  }
+
+  .dark-mode .section-collections-with-nav__product .price-compare {
+    min-height: 16px;
+  }
+}
+
+/* ===== STAR RATING - SMOOTH FADING GLOW ===== */
+
+/* Stars container - allow glow to extend */
+.bf25-product-rating-display,
+.bf25-rating-stars,
+.bf25-card-stars {
+  position: relative;
+  display: inline-flex;
+  line-height: 1;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 2px 4px;
+}
+
+/* Empty stars (background) */
+.bf25-rating-stars .stars-empty {
+  color: rgba(96, 198, 85, 0.2);
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+/* Filled stars - smooth spread glow */
+.bf25-rating-stars .stars-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #60c655;
+  letter-spacing: 2px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  /* Smooth, multi-layer glow that fades gradually */
+  text-shadow:
+    0 0 2px rgba(96, 198, 85, 0.9),
+    0 0 6px rgba(96, 198, 85, 0.5),
+    0 0 12px rgba(96, 198, 85, 0.3),
+    0 0 20px rgba(96, 198, 85, 0.15),
+    0 0 30px rgba(96, 198, 85, 0.05);
+}
+
+/* Remove any background or border that might contain the glow */
+.bf25-product-rating-display,
+.bf25-rating-stars {
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  overflow: visible !important;
+}
+
+/* Hover - slightly enhanced glow */
+.dark-mode .section-collections-with-nav__product:hover .bf25-rating-stars .stars-filled {
+  text-shadow:
+    0 0 3px rgba(96, 198, 85, 1),
+    0 0 8px rgba(96, 198, 85, 0.6),
+    0 0 15px rgba(96, 198, 85, 0.4),
+    0 0 25px rgba(96, 198, 85, 0.2),
+    0 0 35px rgba(96, 198, 85, 0.08);
+}
+
+/* Mobile - slightly reduced glow for performance */
+@media (max-width: 767px) {
+  .bf25-rating-stars .stars-empty,
+  .bf25-rating-stars .stars-filled {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .bf25-rating-stars .stars-filled {
+    text-shadow:
+      0 0 3px rgba(96, 198, 85, 0.5),
+      0 0 8px rgba(96, 198, 85, 0.3),
+      0 0 14px rgba(96, 198, 85, 0.15);
+  }
+}
+
+/* ===== PARTIAL STAR FILL BASED ON RATING ===== */
+
+/* 5.0 stars = 100% width */
+.bf25-rating-stars[data-rating="5.0"] .stars-filled,
+.bf25-rating-stars[data-rating="5"] .stars-filled {
+  width: 100%;
+}
+
+/* 4.9 stars = 98% width */
+.bf25-rating-stars[data-rating="4.9"] .stars-filled {
+  width: 98%;
+}
+
+/* 4.8 stars = 96% width */
+.bf25-rating-stars[data-rating="4.8"] .stars-filled {
+  width: 96%;
+}
+
+/* 4.7 stars = 94% width */
+.bf25-rating-stars[data-rating="4.7"] .stars-filled {
+  width: 94%;
+}
+
+/* 4.6 stars = 92% width */
+.bf25-rating-stars[data-rating="4.6"] .stars-filled {
+  width: 92%;
+}
+
+/* 4.5 stars = 90% width */
+.bf25-rating-stars[data-rating="4.5"] .stars-filled {
+  width: 90%;
+}
+
+/* 4.4 stars = 88% width */
+.bf25-rating-stars[data-rating="4.4"] .stars-filled {
+  width: 88%;
+}
+
+/* 4.3 stars = 86% width */
+.bf25-rating-stars[data-rating="4.3"] .stars-filled {
+  width: 86%;
+}
+
+/* 4.2 stars = 84% width */
+.bf25-rating-stars[data-rating="4.2"] .stars-filled {
+  width: 84%;
+}
+
+/* 4.1 stars = 82% width */
+.bf25-rating-stars[data-rating="4.1"] .stars-filled {
+  width: 82%;
+}
+
+/* 4.0 stars = 80% width */
+.bf25-rating-stars[data-rating="4.0"] .stars-filled,
+.bf25-rating-stars[data-rating="4"] .stars-filled {
+  width: 80%;
+}
+
+/* 3.9 stars = 78% width */
+.bf25-rating-stars[data-rating="3.9"] .stars-filled {
+  width: 78%;
+}
+
+/* 3.8 stars = 76% width */
+.bf25-rating-stars[data-rating="3.8"] .stars-filled {
+  width: 76%;
+}
+
+/* 3.7 stars = 74% width */
+.bf25-rating-stars[data-rating="3.7"] .stars-filled {
+  width: 74%;
+}
+
+/* 3.6 stars = 72% width */
+.bf25-rating-stars[data-rating="3.6"] .stars-filled {
+  width: 72%;
+}
+
+/* 3.5 stars = 70% width */
+.bf25-rating-stars[data-rating="3.5"] .stars-filled {
+  width: 70%;
+}
+
+/* 3.4 stars = 68% width */
+.bf25-rating-stars[data-rating="3.4"] .stars-filled {
+  width: 68%;
+}
+
+/* 3.3 stars = 66% width */
+.bf25-rating-stars[data-rating="3.3"] .stars-filled {
+  width: 66%;
+}
+
+/* 3.2 stars = 64% width */
+.bf25-rating-stars[data-rating="3.2"] .stars-filled {
+  width: 64%;
+}
+
+/* 3.1 stars = 62% width */
+.bf25-rating-stars[data-rating="3.1"] .stars-filled {
+  width: 62%;
+}
+
+/* 3.0 stars = 60% width */
+.bf25-rating-stars[data-rating="3.0"] .stars-filled,
+.bf25-rating-stars[data-rating="3"] .stars-filled {
+  width: 60%;
+}
+
+/* Fallback for any rating value - use CSS variable if available */
+.bf25-rating-stars[data-rating] .stars-filled {
+  width: var(--star-fill-width, 80%);
+}
+
+/* =================================================== */
+/* BF25 MODAL - COMPLETE RESPONSIVE FIX (v1.0)         */
+/* Analysis by Gemini Deep Think                        */
+/* =================================================== */
+
+:root {
+  --bf25-modal-padding-mobile: 16px;
+  --bf25-close-btn-size: 44px;
+}
+
+/* --- Z-INDEX HIERARCHY FIX --- */
+/* Ensure proper stacking: Overlay < Modal Wrapper < Close Button */
+.buy-now-popup {
+  z-index: 99999 !important;
+}
+
+.buy-now-popup__wrapper {
+  z-index: 100000 !important;
+}
+
+.buy-now-popup .close-buy-now-popup {
+  z-index: 100001 !important;
+}
+
+/* --- Body Scroll Lock --- */
+/* Prevent background scrolling when modal is open (Crucial for iOS) */
+body.modal-open,
+body.bf25-modal-open,
+body:has(.buy-now-popup.active) {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =================================================== */
+/* ANIMATION SETUP (Desktop-First: Fade/Scale)         */
+/* =================================================== */
+
+/* Overlay: Transition setup */
+.buy-now-popup {
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Wrapper: Hidden State (Slightly scaled down) - Desktop */
+@media (min-width: 768px) {
+  .buy-now-popup__wrapper {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out !important;
+    /* Combine existing centering with scale animation */
+    transform: translate(-50%, -50%) scale(0.95) !important;
+  }
+
+  /* Wrapper: Active/Visible State (Scaled up) */
+  .buy-now-popup.active .buy-now-popup__wrapper,
+  .buy-now-popup[style*="display: block"] .buy-now-popup__wrapper,
+  .buy-now-popup:not([hidden]) .buy-now-popup__wrapper {
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* =================================================== */
+/* MOBILE STYLES (Max-width: 767px)                    */
+/* =================================================== */
+
+@media (max-width: 767px) {
+
+  /* --- Mobile Modal Container (Full Screen Override) --- */
+  .buy-now-popup__wrapper {
+    /* Full screen dimensions using DVH */
+    width: 100vw !important;
+    max-width: 100% !important;
+    height: 100dvh !important; /* Dynamic viewport height */
+    max-height: 100% !important;
+
+    /* Reset desktop positioning - use inset instead of transform */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    /* CRITICAL: Remove transform centering on mobile */
+    transform: none !important;
+
+    /* Remove desktop styling */
+    border-radius: 0 !important;
+    padding: 0 !important; /* Override py-[70px] */
+
+    /* Internal Layout Setup */
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+
+    /* iOS Safe Area Handling */
+    padding-top: env(safe-area-inset-top, 0) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+  }
+
+  /* --- Mobile Animation (Slide-Up) --- */
+  .buy-now-popup:not(.active):not([style*="display: block"]) .buy-now-popup__wrapper {
+    transform: translateY(100%) !important;
+  }
+
+  .buy-now-popup.active .buy-now-popup__wrapper,
+  .buy-now-popup[style*="display: block"] .buy-now-popup__wrapper {
+    transform: translateY(0) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+
+  /* --- Mobile Close Button (Fixed & Accessible) --- */
+  .buy-now-popup .close-buy-now-popup,
+  .buy-now-popup__wrapper .close-buy-now-popup,
+  .buy-now-popup [class*="close"] {
+    position: fixed !important;
+
+    /* Position accounting for safe area */
+    top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
+    right: 12px !important;
+
+    /* Accessibility: 44x44px minimum touch target */
+    width: var(--bf25-close-btn-size) !important;
+    height: var(--bf25-close-btn-size) !important;
+    min-width: var(--bf25-close-btn-size) !important;
+    min-height: var(--bf25-close-btn-size) !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+
+    /* Visual styling */
+    background-color: rgba(30, 30, 30, 0.9) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+    /* Icon color */
+    color: #fff !important;
+    fill: #fff !important;
+
+    /* Ensure clickable */
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* --- Mobile Content Body (Scrollable Area) --- */
+  .buy-now-popup__product-body {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    /* Reset desktop padding and apply mobile padding */
+    padding: var(--bf25-modal-padding-mobile) !important;
+    padding-top: 70px !important; /* Space for close button */
+    padding-bottom: 100px !important; /* Space for sticky footer */
+
+    /* Stack content vertically */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  /* Inner elements stack correctly */
+  .buy-now-popup__product-body figure,
+  .buy-now-popup__product-body .product-image,
+  .buy-now-popup__content {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Product image sizing */
+  .buy-now-popup__product-body figure img,
+  .buy-now-popup__product-body .product-image img {
+    max-height: 250px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  /* --- Mobile Footer/CTA (Sticky Bottom) --- */
+  .buy-now-popup__wrapper [class*="footer"],
+  .buy-now-popup__wrapper [class*="cta-row"],
+  .buy-now-popup__wrapper [class*="add-to-cart"],
+  .buy-now-popup__wrapper .modal-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: linear-gradient(to top, #1a1a1a 80%, transparent) !important;
+    padding: 15px !important;
+    padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 100001 !important;
+  }
+}
+
+/* =================================================== */
+/* SMALL MOBILE (Max-width: 374px)                     */
+/* =================================================== */
+
+@media (max-width: 374px) {
+  .buy-now-popup__product-body {
+    padding: 12px !important;
+    padding-top: 60px !important;
+    padding-bottom: 90px !important;
+    gap: 15px !important;
+  }
+
+  .buy-now-popup__product-body figure img {
+    max-height: 200px !important;
+  }
+}
+
+/* =================================================== */
+/* TABLET STYLES (768px - 991px)                       */
+/* =================================================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .buy-now-popup__wrapper {
+    width: 90vw !important;
+    max-width: 700px !important;
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .buy-now-popup__product-body {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+/* =================================================== */
+/* FALLBACK: Support for vh on older browsers          */
+/* =================================================== */
+
+@supports not (height: 100dvh) {
+  @media (max-width: 767px) {
+    .buy-now-popup__wrapper {
+      height: 100vh !important;
+      height: -webkit-fill-available !important;
+    }
+  }
+}
+
+/* =================================================== */
+/* BF25 MODAL - CRITICAL FIX v1.2                      */
+/* Fix: Overlay blocking modal + Mobile position       */
+/* =================================================== */
+
+/* --- FIX 1: OVERLAY Z-INDEX HIERARCHY --- */
+/* The #bf25-modal-overlay is a SEPARATE element that's blocking the modal */
+/* It must be BELOW the modal wrapper but clicks should still close modal */
+
+#bf25-modal-overlay,
+.bf25-modal-overlay {
+  z-index: 999 !important; /* Below modal wrapper (100000) */
+}
+
+/* Modal wrapper MUST be above the separate overlay */
+.buy-now-popup__wrapper {
+  z-index: 100000 !important;
+  position: fixed !important;
+}
+
+/* Close button above everything */
+.buy-now-popup .close-buy-now-popup,
+.buy-now-popup__wrapper .close-buy-now-popup {
+  z-index: 100002 !important;
+}
+
+/* The aside.buy-now-popup should also be high */
+.buy-now-popup {
+  z-index: 99999 !important;
+}
+
+/* --- FIX 2: MOBILE POSITION - FORCE RESET --- */
+@media (max-width: 767px) {
+
+  /* NUCLEAR OPTION: Force modal to top-left with no transforms */
+  .buy-now-popup__wrapper {
+    /* Reset ALL positioning */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    /* CRITICAL: Remove ANY transform */
+    transform: none !important;
+    -webkit-transform: none !important;
+
+    /* Full screen */
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+
+    /* Remove margins that might offset */
+    margin: 0 !important;
+
+    /* Remove any translate classes from Tailwind */
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+
+    /* Ensure visible */
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Also target with higher specificity */
+  aside.buy-now-popup .buy-now-popup__wrapper,
+  .buy-now-popup.active .buy-now-popup__wrapper,
+  [data-section="bf25"] .buy-now-popup__wrapper {
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+}
+
+/* --- FIX 3: CLOSE BUTTON STYLING (Premium Dark, Visible) --- */
+.buy-now-popup .close-buy-now-popup,
+.buy-now-popup__wrapper .close-buy-now-popup {
+  /* Dark glass effect - visible but premium */
+  background: rgba(20, 20, 20, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+
+  /* Gold/Green accent border for visibility */
+  border: 2px solid rgba(96, 198, 85, 0.5) !important;
+
+  /* Size */
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+
+  /* Shape */
+  border-radius: 50% !important;
+
+  /* Icon */
+  color: #fff !important;
+  fill: #fff !important;
+
+  /* Shadow for depth */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hover state */
+.buy-now-popup .close-buy-now-popup:hover {
+  background: rgba(96, 198, 85, 0.3) !important;
+  border-color: rgba(96, 198, 85, 0.8) !important;
+}
+
+/* Mobile positioning */
+@media (max-width: 767px) {
+  .buy-now-popup .close-buy-now-popup,
+  .buy-now-popup__wrapper .close-buy-now-popup {
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
+    right: 12px !important;
+  }
+}
+
+/* =================================================== */
+/* BF25 MODAL - ULTRA-HIGH SPECIFICITY OVERRIDE v1.3   */
+/* =================================================== */
+
+/* Desktop override class */
+html body .buy-now-popup .buy-now-popup__wrapper.bf25-modal-fixed {
+  z-index: 100000 !important;
+}
+
+/* Mobile override class - beats ALL Tailwind */
+@media (max-width: 767px) {
+  html body .buy-now-popup .buy-now-popup__wrapper.bf25-modal-mobile-fixed {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 100000 !important;
+  }
+}
+
+/* Overlay must be below modal */
+html body #bf25-modal-overlay.bf25-overlay-fixed {
+  z-index: 999 !important;
+}
+
+/* =================================================== */
+/* BF25 MODAL - MOBILE FIX v2.0 (Root Cause Fix)       */
+/* Issue: Content overflow causing left-shift           */
+/* Date: 2025-11-26                                     */
+/* =================================================== */
+
+/* --- Fix Overlay Blocking (Must be BELOW modal) --- */
+#bf25-modal-overlay,
+.bf25-modal-overlay {
+  z-index: 99998 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure modal is ABOVE overlay */
+.buy-now-popup {
+  z-index: 99999 !important;
+}
+
+.buy-now-popup__wrapper {
+  z-index: 100000 !important;
+}
+
+/* =================================================== */
+/* MOBILE FIXES (max-width: 767px)                     */
+/* =================================================== */
+
+@media (max-width: 767px) {
+
+  /* --- Parent Aside: Force Full Width --- */
+  aside.buy-now-popup,
+  .buy-now-popup {
+    width: 100vw !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* --- Wrapper: Ensure Full Coverage --- */
+  .buy-now-popup__wrapper {
+    width: 100vw !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    height: 100vh !important; /* Fallback */
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* --- Content Container: Constrain to Viewport --- */
+  .bf25-modal-content {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- Layout: Optimized Mobile Spacing --- */
+  .bf25-modal-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+    padding-bottom: 160px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* --- Image Section: Reset Centering --- */
+  .bf25-modal-image-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* --- Product Image: Reduced size for mobile --- */
+  .bf25-modal-image-container {
+    width: 100% !important;
+    max-width: 200px !important;
+    max-height: 180px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .bf25-modal-product-image {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 180px !important;
+    object-fit: contain !important;
+  }
+
+  .bf25-modal-image-section {
+    padding: 8px 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* --- Details Section: Reset Centering --- */
+  .bf25-modal-details-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- Description: Prevent Text Overflow --- */
+  .bf25-description-content,
+  .bf25-description-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* --- Fixed Footer: Dark Glass, Compact Thumb Zone --- */
+  .bf25-modal-footer-fixed {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    padding: 10px 16px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-top: 1px solid rgba(96, 198, 85, 0.15) !important;
+    z-index: 100001 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Progress tracker compact spacing */
+  .bf25-modal-footer-fixed .bf25-u5-tracker {
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-header {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-track {
+    height: 20px !important;
+  }
+
+  /* --- Quantity Stepper: Compact with Inline Message --- */
+  .bf25-quantity-section {
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-quantity-controls.bf25-individual-mode {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .bf25-quantity-controls .bf25-quantity-label {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-stepper-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .bf25-quantity-stepper {
+    flex: 0 0 auto !important;
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 40px !important;
+  }
+
+  .bf25-quantity-stepper .bf25-quantity-button {
+    width: 36px !important;
+    height: 40px !important;
+    min-width: 36px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .bf25-quantity-stepper .bf25-quantity-input {
+    width: 38px !important;
+    height: 40px !important;
+    font-size: 16px !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+
+  /* Tier hint message inline */
+  .bf25-tier-hint {
+    flex: 1 1 auto !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .bf25-tier-hint span {
+    color: #60c655 !important;
+    font-weight: 600 !important;
+  }
+
+  /* --- Add padding to content so footer doesn't cover it --- */
+  .bf25-modal-content {
+    padding-bottom: 140px !important;
+  }
+
+  /* --- Close Button: Premium Minimal Design --- */
+  .buy-now-popup .close-buy-now-popup,
+  .bf25-modal-close {
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
+    right: 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    z-index: 100002 !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .buy-now-popup .close-buy-now-popup:hover,
+  .buy-now-popup .close-buy-now-popup:active,
+  .bf25-modal-close:hover,
+  .bf25-modal-close:active {
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.05) !important;
+  }
+
+  .buy-now-popup .close-buy-now-popup svg,
+  .bf25-modal-close svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: rgba(255, 255, 255, 0.9) !important;
+    stroke-width: 2 !important;
+  }
+
+  /* --- Tier Buttons: FORCE 3-Across Horizontal --- */
+  .bf25-quantity-section .bf25-tier-buttons,
+  .bf25-quantity-controls .bf25-tier-buttons,
+  .bf25-power-packs-mode .bf25-tier-buttons,
+  .bf25-tier-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+    align-items: stretch !important;
+  }
+
+  .bf25-quantity-section .bf25-tier-button,
+  .bf25-quantity-controls .bf25-tier-button,
+  .bf25-power-packs-mode .bf25-tier-button,
+  .bf25-tier-button {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 10px 6px !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    min-height: 75px !important;
+    max-height: 85px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .bf25-tier-button-quantity {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    color: #fff !important;
+  }
+
+  .bf25-tier-button-label {
+    font-size: 9px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    opacity: 0.7 !important;
+  }
+
+  .bf25-tier-button-discount {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #60c655 !important;
+    margin-top: 2px !important;
+    display: block !important;
+  }
+
+  .bf25-tier-button-badge {
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 7px !important;
+    padding: 2px 6px !important;
+    white-space: nowrap !important;
+    background: #60c655 !important;
+    color: #000 !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+  }
+
+  .bf25-tier-button.is-selected {
+    border-color: #60c655 !important;
+    background: rgba(96, 198, 85, 0.1) !important;
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.25) !important;
+  }
+
+  .bf25-tier-button-check {
+    position: absolute !important;
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    color: #60c655 !important;
+  }
+
+  /* Power Packs mode container */
+  .bf25-quantity-controls.bf25-power-packs-mode {
+    width: 100% !important;
+  }
+
+  .bf25-quantity-controls.bf25-power-packs-mode .bf25-quantity-label {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+  }
+
+  /* --- Description: Fix Bullet Formatting --- */
+  .bf25-description-wrapper {
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-description-inner {
+    max-height: 80px !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 500px !important;
+  }
+
+  .bf25-description-content {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    padding: 0 4px !important;
+  }
+
+  /* Fix bullet formatting - keep bold inline with text */
+  .bf25-description-content ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .bf25-description-content li {
+    position: relative !important;
+    padding-left: 20px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+  }
+
+  .bf25-description-content li::before {
+    content: "✓" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: #60c655 !important;
+    font-weight: bold !important;
+  }
+
+  .bf25-description-content li strong {
+    color: #fff !important;
+    font-weight: 600 !important;
+    display: inline !important;
+  }
+
+  /* Learn More button - ensure visible */
+  .bf25-description-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    padding: 8px !important;
+    margin-top: 8px !important;
+    background: rgba(96, 198, 85, 0.1) !important;
+    border: 1px solid rgba(96, 198, 85, 0.3) !important;
+    border-radius: 6px !important;
+    color: #60c655 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .bf25-description-toggle:hover,
+  .bf25-description-toggle:active {
+    background: rgba(96, 198, 85, 0.2) !important;
+  }
+
+  .bf25-description-toggle .bf25-toggle-text {
+    display: inline !important;
+  }
+
+  .bf25-description-arrow {
+    transition: transform 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-arrow {
+    transform: rotate(180deg) !important;
+  }
+
+  /* --- Reviews Section: Spacing & Compact Layout --- */
+  .bf25-modal-reviews {
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .bf25-modal-reviews-section {
+    padding: 0 !important;
+  }
+
+  .bf25-reviews-header {
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-reviews-header h3 {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-reviews-scroll-area {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .bf25-review-card {
+    padding: 12px !important;
+    margin-bottom: 8px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 8px !important;
+  }
+
+  .bf25-review-content {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* --- Upsells: Compact Mobile Layout --- */
+  .bf25-upsells-section {
+    margin-top: 12px !important;
+  }
+
+  .bf25-upsells-title {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .bf25-upsells-grid {
+    gap: 8px !important;
+  }
+
+  .bf25-upsell-card {
+    padding: 10px !important;
+  }
+
+  /* --- Upsells Grid: Stack on Mobile --- */
+  .bf25-upsells-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .bf25-upsell-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* --- Reviews: Horizontal Scroll --- */
+  .bf25-reviews-scroll-area {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+  }
+
+  /* --- Body Scroll Lock (When Modal Open) --- */
+  body.modal-open,
+  body.bf25-modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none !important;
+  }
+}
+
+/* =================================================== */
+/* TABLET ADJUSTMENTS (768px - 991px)                  */
+/* =================================================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .bf25-modal-content {
+    max-width: 700px !important;
+    margin: 0 auto !important;
+  }
+
+  .bf25-modal-layout {
+    padding: 24px 32px !important;
+  }
+}
+
+/* === OVERLAY FIX - FORCE BELOW MODAL === */
+#bf25-modal-overlay,
+.bf25-modal-overlay,
+[class*="modal-overlay"] {
+  z-index: 99998 !important;
+  pointer-events: auto !important;
+}
+
+/* When modal is NOT active, hide overlay completely */
+.buy-now-popup:not(.active) ~ #bf25-modal-overlay,
+#bf25-modal-overlay:not(.active) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ============================================================ */
+/* BF25 MOBILE NUCLEAR OVERRIDES - HIGHEST PRIORITY             */
+/* Added: 2025-11-26 - Must be LAST in file                     */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* --- NUCLEAR: Tier Buttons FORCE 3-across (grid IS fine, just ensure columns) --- */
+  .bf25-tier-buttons,
+  div.bf25-tier-buttons,
+  .bf25-modal-container .bf25-tier-buttons,
+  .bf25-modal-content .bf25-tier-buttons,
+  .bf25-modal-details-section .bf25-tier-buttons,
+  .bf25-quantity-controls .bf25-tier-buttons,
+  .bf25-power-packs-mode .bf25-tier-buttons,
+  html body .bf25-tier-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: auto !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  /* Ensure buttons don't span multiple columns */
+  .bf25-tier-button,
+  button.bf25-tier-button,
+  .bf25-tier-buttons .bf25-tier-button,
+  .bf25-tier-buttons > .bf25-tier-button,
+  .bf25-modal-container .bf25-tier-button,
+  .bf25-modal-content .bf25-tier-button,
+  html body .bf25-tier-button {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 6px !important;
+    min-height: 75px !important;
+    position: relative !important;
+  }
+
+  .bf25-tier-button-quantity {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  .bf25-tier-button-label {
+    font-size: 9px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    opacity: 0.7 !important;
+    margin-top: 2px !important;
+  }
+
+  .bf25-tier-button-discount {
+    font-size: 10px !important;
+    color: #60c655 !important;
+    margin-top: 4px !important;
+  }
+
+  /* --- Tier Button Selected State: Checkmark visible --- */
+  .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-container .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-content .bf25-tier-button.is-selected .bf25-tier-button-check {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    bottom: 6px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #60c655 !important;
+    border-radius: 50% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  /* Ensure button has relative positioning for absolute checkmark */
+  .bf25-tier-button.is-selected {
+    position: relative !important;
+    padding-bottom: 30px !important;
+  }
+
+  /* --- Tier Buttons Section: Margin below --- */
+  .bf25-quantity-section,
+  .bf25-quantity-controls.bf25-power-packs-mode {
+    margin-bottom: 20px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* --- Most Popular Badge: Green glow (not gold) --- */
+  .bf25-tier-button-badge,
+  .bf25-tier-button.is-popular .bf25-tier-button-badge {
+    background: #60c655 !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-size: 8px !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    position: absolute !important;
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(96, 198, 85, 0.4) !important;
+    text-shadow: none !important;
+  }
+
+  /* Remove any gold/yellow styling */
+  .bf25-tier-button.is-popular {
+    border-color: rgba(96, 198, 85, 0.5) !important;
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.2) !important;
+  }
+
+  /* --- NUCLEAR: Footer with solid dark background --- */
+  .bf25-modal-footer-fixed,
+  div.bf25-modal-footer-fixed,
+  .bf25-modal-content .bf25-modal-footer-fixed {
+    border-top: none !important;
+    border: none !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5) !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(20, 20, 20, 0.75) 0%,
+      rgba(20, 20, 20, 0.95) 25%,
+      rgba(20, 20, 20, 0.99) 100%
+    ) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    padding: 16px 16px !important;
+    padding-top: 20px !important;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Progress tracker transparent - blends with modal */
+  .bf25-modal-footer-fixed .bf25-u5-tracker {
+    background: transparent !important;
+    background: rgba(0, 0, 0, 0) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-header {
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+    font-weight: 500 !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-track {
+    height: 28px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-bar {
+    height: 6px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 3px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-bar-fill {
+    background: linear-gradient(90deg, #60c655 0%, #7ddf71 100%) !important;
+    border-radius: 3px !important;
+  }
+
+  /* --- NUCLEAR: Layout height unrestricted --- */
+  .bf25-modal-layout,
+  div.bf25-modal-layout,
+  .bf25-modal-content .bf25-modal-layout {
+    max-height: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    padding-bottom: 180px !important;
+  }
+
+  /* Content scrolls, not layout */
+  .bf25-modal-content,
+  div.bf25-modal-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: 100% !important;
+    height: 100% !important;
+  }
+
+  /* ============================================================ */
+  /* DESCRIPTION: Inline format (not grid), reduced padding       */
+  /* ============================================================ */
+
+  .bf25-description-wrapper {
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+  }
+
+  .bf25-description-inner {
+    max-height: 85px !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 800px !important;
+  }
+
+  .bf25-description-content {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  /* Remove any grid/table layout on list */
+  .bf25-description-content ul,
+  .bf25-description-content .metafield-rich_text_field ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* List items - inline content, minimal left padding */
+  .bf25-description-content li,
+  .bf25-description-content .metafield-rich_text_field li {
+    display: block !important;
+    position: relative !important;
+    padding-left: 18px !important;
+    margin-bottom: 10px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Checkmark bullet */
+  .bf25-description-content li::before,
+  .bf25-description-content .metafield-rich_text_field li::before {
+    content: "✓" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    color: #60c655 !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+  }
+
+  /* CRITICAL: Bold text stays inline with rest of content */
+  .bf25-description-content li strong,
+  .bf25-description-content .metafield-rich_text_field li strong {
+    display: inline !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    float: none !important;
+    width: auto !important;
+    margin-right: 0 !important;
+  }
+
+  /* Ensure text after strong stays inline */
+  .bf25-description-content li *,
+  .bf25-description-content .metafield-rich_text_field li * {
+    display: inline !important;
+  }
+
+  /* ============================================================ */
+  /* LEARN MORE BUTTON - Force visible                            */
+  /* ============================================================ */
+
+  .bf25-description-toggle {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+    padding: 10px 16px !important;
+    background: rgba(96, 198, 85, 0.08) !important;
+    border: 1px solid rgba(96, 198, 85, 0.25) !important;
+    border-radius: 8px !important;
+    color: #60c655 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: background 0.2s ease !important;
+  }
+
+  .bf25-description-toggle:active {
+    background: rgba(96, 198, 85, 0.15) !important;
+  }
+
+  .bf25-description-toggle .bf25-toggle-text {
+    display: inline !important;
+  }
+
+  .bf25-description-toggle svg,
+  .bf25-description-toggle .bf25-description-arrow {
+    width: 16px !important;
+    height: 16px !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-toggle svg,
+  .bf25-description-wrapper.expanded .bf25-description-arrow {
+    transform: rotate(180deg) !important;
+  }
+
+  /* ============================================================ */
+  /* SECTION SPACING - Remove extra break lines                   */
+  /* ============================================================ */
+
+  /* Reduce space between tier buttons and upsells */
+  .bf25-quantity-section {
+    margin-bottom: 12px !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .bf25-quantity-controls.bf25-power-packs-mode {
+    margin-bottom: 8px !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+
+  /* Upsells section tighter to tier buttons */
+  .bf25-upsells-section {
+    margin-top: 8px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .bf25-upsells-title {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+  }
+
+}
+
+/* ============================================================ */
+/* BF25-MOB-015: DESCRIPTION INLINE + CHECKMARK POSITION        */
+/* Must be LAST to override line 2128 flex rules                */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* --- Override flex display causing two-column layout --- */
+  [class*="modal"] .metafield-rich_text_field ul li,
+  .bf25-modal-description li,
+  .bf25-product-modal .product-description li,
+  .bf25-description-content li,
+  .bf25-description-content .metafield-rich_text_field ul li,
+  html body [class*="modal"] .metafield-rich_text_field ul li {
+    display: block !important;
+    flex-direction: unset !important;
+    align-items: unset !important;
+    gap: unset !important;
+    flex-wrap: unset !important;
+    justify-content: unset !important;
+    padding-left: 22px !important;
+    position: relative !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* --- Checkmark as absolute positioned pseudo-element --- */
+  [class*="modal"] .metafield-rich_text_field ul li::before,
+  .bf25-description-content li::before,
+  .bf25-description-content .metafield-rich_text_field ul li::before,
+  html body [class*="modal"] .metafield-rich_text_field ul li::before {
+    content: "✓" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    display: block !important;
+    color: #60c655 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin-right: 0 !important;
+    flex-shrink: unset !important;
+  }
+
+  /* --- Force ALL text inside li to be inline --- */
+  [class*="modal"] .metafield-rich_text_field ul li strong,
+  [class*="modal"] .metafield-rich_text_field ul li span,
+  [class*="modal"] .metafield-rich_text_field ul li em,
+  .bf25-description-content li strong,
+  .bf25-description-content li span,
+  .bf25-description-content li *,
+  html body [class*="modal"] .metafield-rich_text_field ul li strong,
+  html body [class*="modal"] .metafield-rich_text_field ul li * {
+    display: inline !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    float: none !important;
+    flex: unset !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Bold text styling */
+  [class*="modal"] .metafield-rich_text_field ul li strong,
+  .bf25-description-content li strong {
+    color: #fff !important;
+    font-weight: 600 !important;
+  }
+
+  /* ============================================================ */
+  /* TIER BUTTON CHECKMARK - Bottom Left Corner                   */
+  /* ============================================================ */
+
+  .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-container .bf25-tier-button.is-selected .bf25-tier-button-check,
+  .bf25-modal-content .bf25-tier-button.is-selected .bf25-tier-button-check,
+  html body .bf25-tier-button.is-selected .bf25-tier-button-check {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    bottom: 6px !important;
+    left: 6px !important;
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    background: #60c655 !important;
+    border-radius: 50% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+
+  /* Ensure button has space for checkmark */
+  .bf25-tier-button.is-selected {
+    position: relative !important;
+    padding-bottom: 10px !important;
+    padding-left: 10px !important;
+  }
+
+}
+
+/* ============================================================ */
+/* BF25-MOB-016: FINAL POLISH - SPACING & STYLING               */
+/* ============================================================ */
+/* Final comprehensive polish pass for mobile modal elements    */
+/* Applied at end of file for maximum cascade priority          */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* ========================= */
+  /* QUANTITY STEPPER - COMPACT */
+  /* ========================= */
+  .bf25-qty-wrapper {
+    max-width: 100px !important;
+    width: 100px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .bf25-qty-wrapper .flex {
+    gap: 0 !important;
+    width: 100% !important;
+  }
+
+  .bf25-qty-wrapper button {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    border-radius: 4px !important;
+  }
+
+  .bf25-qty-wrapper input {
+    width: 44px !important;
+    max-width: 44px !important;
+    height: 28px !important;
+    padding: 0 2px !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 4px !important;
+  }
+
+  /* Inline message next to stepper */
+  .bf25-qty-message {
+    display: inline-block !important;
+    margin-left: 8px !important;
+    font-size: 11px !important;
+    color: #60c655 !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+  }
+
+  /* ========================= */
+  /* PACK BUTTONS - TIGHT GAP  */
+  /* ========================= */
+  .bf25-pack-buttons {
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    gap: 6px !important;
+  }
+
+  .bf25-pack-button {
+    flex: 1 !important;
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    min-height: unset !important;
+    height: auto !important;
+    border-radius: 6px !important;
+  }
+
+  .bf25-pack-button .pack-quantity {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .bf25-pack-button .pack-price {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+  }
+
+  .bf25-pack-button .pack-save {
+    font-size: 9px !important;
+    margin-top: 2px !important;
+    color: #60c655 !important;
+  }
+
+  /* ========================= */
+  /* UPSELLS - TIGHT SPACING   */
+  /* ========================= */
+  .bf25-upsells-container {
+    margin-top: 12px !important;
+    margin-bottom: 8px !important;
+    padding: 8px !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-radius: 8px !important;
+  }
+
+  .bf25-upsells-title {
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+  }
+
+  .bf25-upsells-list {
+    gap: 6px !important;
+  }
+
+  .bf25-upsell-item {
+    padding: 6px !important;
+    border-radius: 6px !important;
+    background: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .bf25-upsell-checkbox {
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 6px !important;
+  }
+
+  .bf25-upsell-content {
+    gap: 6px !important;
+  }
+
+  .bf25-upsell-image {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 4px !important;
+  }
+
+  .bf25-upsell-details {
+    flex: 1 !important;
+  }
+
+  .bf25-upsell-name {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .bf25-upsell-price {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #ff4747 !important;
+  }
+
+  .bf25-upsell-original {
+    font-size: 10px !important;
+    color: #999 !important;
+    text-decoration: line-through !important;
+    margin-left: 4px !important;
+  }
+
+  /* ========================= */
+  /* LEARN MORE - TEXT LINK    */
+  /* ========================= */
+  .bf25-learn-more {
+    display: inline-block !important;
+    margin-top: 8px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    color: #0066cc !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+
+  .bf25-learn-more:hover {
+    color: #0052a3 !important;
+    text-decoration: none !important;
+  }
+
+  /* Alternative positioning if in description */
+  .bf25-description-content .bf25-learn-more {
+    margin-left: 8px !important;
+    margin-top: 0 !important;
+  }
+
+  /* ========================= */
+  /* PROGRESS TRACKER - CLEAN  */
+  /* ========================= */
+  .bf25-progress-tracker {
+    background: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 8px 16px !important;
+    margin: 0 !important;
+  }
+
+  .bf25-tracker-content {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .bf25-tracker-label {
+    font-size: 10px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .bf25-tracker-status {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .bf25-tracker-count {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: white !important;
+  }
+
+  .bf25-tracker-tier {
+    font-size: 11px !important;
+    color: #FFD700 !important;
+    font-weight: 600 !important;
+    padding: 2px 6px !important;
+    background: rgba(255, 215, 0, 0.1) !important;
+    border-radius: 4px !important;
+  }
+
+  .bf25-tracker-discount {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #60c655 !important;
+    background: rgba(96, 198, 85, 0.1) !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+  }
+
+  /* ========================= */
+  /* ADD TO DEAL BUTTON        */
+  /* ========================= */
+  .bf25-add-to-deal {
+    width: 100% !important;
+    padding: 14px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    background: linear-gradient(135deg, #ff4747, #ff6b6b) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(255, 71, 71, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .bf25-add-to-deal:hover {
+    background: linear-gradient(135deg, #ff6b6b, #ff4747) !important;
+    box-shadow: 0 6px 16px rgba(255, 71, 71, 0.4) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .bf25-add-to-deal:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px rgba(255, 71, 71, 0.3) !important;
+  }
+
+  /* Button shine effect */
+  .bf25-add-to-deal::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    ) !important;
+    transform: rotate(45deg) !important;
+    transition: all 0.6s !important;
+  }
+
+  .bf25-add-to-deal:hover::before {
+    animation: shine 0.6s ease-in-out !important;
+  }
+
+  @keyframes shine {
+    from {
+      transform: rotate(45deg) translateX(-100%) !important;
+    }
+    to {
+      transform: rotate(45deg) translateX(100%) !important;
+    }
+  }
+
+  /* Loading state */
+  .bf25-add-to-deal.is-loading {
+    pointer-events: none !important;
+    opacity: 0.7 !important;
+  }
+
+  .bf25-add-to-deal.is-loading::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: -10px 0 0 -10px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-top-color: white !important;
+    border-radius: 50% !important;
+    animation: spin 0.8s linear infinite !important;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg) !important;
+    }
+  }
+
+  /* ========================= */
+  /* OVERALL SPACING CLEANUP   */
+  /* ========================= */
+  .bf25-modal-content {
+    padding: 12px !important;
+  }
+
+  .bf25-modal-body > * + * {
+    margin-top: 8px !important;
+  }
+
+  .bf25-section-divider {
+    margin: 12px 0 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Remove excessive margins */
+  .bf25-modal-content > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  .bf25-modal-content > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ============================================================ */
+/* END BF25-MOB-016: FINAL POLISH                               */
+/* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-017: DESCRIPTION EXPAND - PUSH CONTENT DOWN         */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* Description wrapper - must be in normal flow, not positioned */
+  .bf25-description-wrapper {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 16px !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+  }
+
+  /* Description inner - use height transition, not max-height with overflow */
+  .bf25-description-inner {
+    position: relative !important;
+    display: block !important;
+    overflow: hidden !important;
+    max-height: 75px !important;
+    transition: max-height 0.4s ease-out !important;
+  }
+
+  /* When expanded - allow full height */
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1000px !important;
+    overflow: visible !important;
+  }
+
+  /* Description content - normal flow */
+  .bf25-description-content {
+    position: relative !important;
+    display: block !important;
+  }
+
+  /* Fade effect at bottom when collapsed */
+  .bf25-description-inner::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 30px !important;
+    background: linear-gradient(to bottom, transparent, rgba(26, 26, 26, 1)) !important;
+    pointer-events: none !important;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Hide fade when expanded */
+  .bf25-description-wrapper.expanded .bf25-description-inner::after {
+    opacity: 0 !important;
+  }
+
+  /* Learn More toggle - in normal flow below description */
+  .bf25-description-toggle {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 8px !important;
+    padding: 6px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #60c655 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+  }
+
+  .bf25-description-toggle svg,
+  .bf25-description-toggle .bf25-description-arrow {
+    width: 14px !important;
+    height: 14px !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-toggle svg,
+  .bf25-description-wrapper.expanded .bf25-description-arrow {
+    transform: rotate(180deg) !important;
+  }
+
+  /* Change text when expanded */
+  .bf25-description-wrapper.expanded .bf25-toggle-text {
+    /* JS should change this to "Show Less" */
+  }
+
+  /* ============================================================ */
+  /* SECTIONS BELOW DESCRIPTION - Ensure they're in normal flow   */
+  /* ============================================================ */
+
+  .bf25-quantity-section,
+  .bf25-quantity-controls {
+    position: relative !important;
+    display: block !important;
+    z-index: 1 !important;
+  }
+
+  .bf25-upsells-section {
+    position: relative !important;
+    display: block !important;
+    z-index: 1 !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-017: DESCRIPTION EXPAND                         */
+/* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-018: COMPREHENSIVE POLISH - ALL REMAINING ISSUES    */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* ============================================================ */
+  /* 1. DESCRIPTION EXPAND - Force normal document flow           */
+  /* ============================================================ */
+
+  /* Modal body must allow content to grow */
+  .bf25-modal-body,
+  .bf25-modal-content,
+  .bf25-modal-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Description section in normal flow */
+  .bf25-description-wrapper,
+  .bf25-product-description-section {
+    position: relative !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .bf25-description-inner {
+    max-height: 80px !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s ease !important;
+  }
+
+  .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 2000px !important;
+  }
+
+  /* Sections below - must NOT be absolutely positioned */
+  .bf25-quantity-section,
+  .bf25-quantity-controls,
+  .bf25-upsells-section,
+  .bf25-reviews-section {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ============================================================ */
+  /* 2. PRICE - Smaller to fit discount on same line              */
+  /* ============================================================ */
+
+  .bf25-modal-content .bf25-price-current,
+  .bf25-modal-content .bf25-sale-price,
+  .bf25-pricing-card .bf25-price-current {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+
+  .bf25-modal-content .bf25-price-per-item {
+    font-size: 13px !important;
+  }
+
+  .bf25-modal-content .bf25-price-compare,
+  .bf25-modal-content .bf25-compare-price {
+    font-size: 14px !important;
+  }
+
+  .bf25-modal-content .bf25-discount-badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Price row - ensure everything fits on one line */
+  .bf25-price-row,
+  .bf25-pricing-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* ============================================================ */
+  /* 3. PRODUCT IMAGE - Bigger (~2x)                              */
+  /* ============================================================ */
+
+  .bf25-modal-product-image,
+  .bf25-modal-content .bf25-product-image-container {
+    max-width: 280px !important;
+    max-height: 220px !important;
+    margin: 0 auto 16px !important;
+  }
+
+  .bf25-modal-product-image img,
+  .bf25-modal-content .bf25-product-image-container img {
+    max-height: 220px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* ============================================================ */
+  /* 4. "PAIRS WELL WITH" - More visible text                     */
+  /* ============================================================ */
+
+  .bf25-upsells-title,
+  .bf25-upsells-section h3,
+  .bf25-upsells-section .section-title {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ============================================================ */
+  /* 5. UPSELL PRODUCT IMAGES - Bigger                            */
+  /* ============================================================ */
+
+  .bf25-upsell-card,
+  .bf25-upsell-item {
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+
+  .bf25-upsell-image,
+  .bf25-upsell-card .product-image,
+  .bf25-upsell-item img {
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px !important;
+    min-height: 70px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .bf25-upsell-info {
+    flex: 1 !important;
+  }
+
+  .bf25-upsell-title,
+  .bf25-upsell-card .product-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    color: #fff !important;
+  }
+
+  .bf25-upsell-price {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #60c655 !important;
+  }
+
+  /* ============================================================ */
+  /* 6. PROGRESS TRACKER - Reduce gap above                       */
+  /* ============================================================ */
+
+  .bf25-modal-footer-fixed {
+    padding-top: 10px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-u5-tracker {
+    margin-bottom: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .bf25-modal-footer-fixed .bf25-action-buttons {
+    margin-top: 8px !important;
+  }
+
+  /* ============================================================ */
+  /* 7. REVIEW STARS - Closer to product name                     */
+  /* ============================================================ */
+
+  .bf25-modal-content .bf25-product-title,
+  .bf25-modal-content .bf25-modal-title {
+    margin-bottom: 4px !important;
+  }
+
+  .bf25-modal-content .bf25-rating,
+  .bf25-modal-content .bf25-reviews-summary,
+  .bf25-modal-content .bf25-star-rating {
+    margin-top: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ============================================================ */
+  /* 8. REMOVE EXTRA COLON - ::after on strong                    */
+  /* ============================================================ */
+
+  /* Remove the colon added by ::after pseudo-element */
+  .bf25-description-content li strong::after,
+  .bf25-description-content .metafield-rich_text_field li strong::after,
+  [class*="modal"] .metafield-rich_text_field ul li strong::after,
+  .bf25-modal-description li strong::after {
+    content: none !important;
+    display: none !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-018: COMPREHENSIVE POLISH                       */
+/* ============================================================ */
+
+/* ============================================================ */
+/* BF25-MOB-FINAL-FIX: UNLOCK DOCUMENT FLOW                     */
+/* Root cause: wrapper had fixed 80px height causing overlay    */
+/* Date: 2025-11-26                                             */
+/* ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* 1. UNLOCK THE WRAPPER (Critical Fix for Overlay Issue) */
+  /* This ensures the wrapper physically grows in the DOM, pushing siblings down */
+  html body .bf25-description-wrapper {
+    height: auto !important;
+    min-height: 80px !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+  }
+
+  /* 2. UNLOCK THE PARENT CONTAINERS */
+  /* Stop flexbox from constraining the height. Convert to block flow. */
+  html body .bf25-modal-details-section,
+  html body .bf25-modal-layout {
+    height: auto !important;
+    max-height: none !important;
+    flex: none !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  /* 3. HANDLE SCROLLING AT THE ROOT LEVEL */
+  /* Since we removed internal scrolling, ensure content wrapper scrolls */
+  html body .bf25-modal-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    height: 100% !important;
+    padding-bottom: 160px !important;
+  }
+
+  /* 4. ENSURE SIBLINGS ARE FLOW AWARE */
+  html body .bf25-quantity-section,
+  html body .bf25-quantity-controls,
+  html body .bf25-upsells-section,
+  html body .bf25-reviews-section {
+    position: relative !important;
+    flex-shrink: 0 !important;
+    transform: none !important;
+    z-index: 1 !important;
+  }
+
+  /* 5. DESCRIPTION INNER - Controlled expand/collapse */
+  html body .bf25-description-inner {
+    max-height: 78px !important;
+    overflow: hidden !important;
+    transition: max-height 0.35s ease-out !important;
+  }
+
+  html body .bf25-description-wrapper.expanded .bf25-description-inner {
+    max-height: 1200px !important;
+  }
+
+}
+
+/* ============================================================ */
+/* END BF25-MOB-FINAL-FIX                                       */
+/* ============================================================ */
+/* ============================================
+   PERFORMANCE FIX - Nov 28 2024
+   Disabling non-essential animations for 60fps
+   ============================================ */
+
+.bf25-product-info-icon,
+.ppc-info-icon,
+.bf25-stock-dot,
+.stock-high,
+.stock-medium,
+.stock-low,
+.sparkle,
+.sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4,
+.bf25-hero__gift-rays,
+.bf25-hero__gift-glow-ring,
+.bf25-announcement-bar,
+.bf25-hero__scroll-hint__arrow,
+.bf25-subtle-pulse,
+.bf25-arrow-bounce {
+  animation: none !important;
 }

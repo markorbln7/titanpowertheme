@@ -63,6 +63,8 @@
   padding-right: 0 !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Vertical spacing for grid wrapper */
@@ -132,9 +134,33 @@
   }
 }
 
+/* Mobile: Prevent overflow */
+@media (max-width: 768px) {
+  .section-collections-with-nav__wrapper {
+    padding: var(--space-lg) 16px calc(120px + var(--space-xl)) 16px !important; /* Override all padding including shorthand */
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+    gap: 20px !important; /* Override Tailwind gap-[40px] on mobile */
+  }
+  
+  /* Also ensure parent section doesn't overflow */
+  .section-collections-with-nav {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .section-collections-with-nav.dark-mode {
     padding: 0 !important; /* ✅ Remove padding on mobile */
+  }
+  
+  .section-collections-with-nav.section-explore.dark-mode {
+    padding-top: 20px !important;
+    padding-bottom: 40px !important;
   }
 
   .tier-card {
@@ -468,7 +494,7 @@
 
   .battery-body {
     position: relative;
-    width: 300px;
+    width: 240px;
     height: 70px; /* Reduced from 80px */
     background: rgba(26, 26, 26, 0.95);
     border: 3px solid #60c655;
@@ -2213,6 +2239,18 @@
     max-width: 1400px !important;
     margin: 0 auto !important;
     padding: 0px 10px !important;
+  }
+  
+  /* Mobile override for wrapper - must come after the rule above */
+  @media (max-width: 768px) {
+    .section-collections-with-nav__wrapper {
+      padding: var(--space-lg) 16px calc(120px + var(--space-xl)) 16px !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden;
+      gap: 20px !important; /* Override Tailwind gap-[40px] on mobile */
+    }
   }
 
   {%- comment -%} ✅ BOGO-GLOW-STOCK-FIX-051: Product Cards - NO glow on border {%- endcomment -%}
@@ -8813,4 +8851,26 @@ body.template-page .main-content,
 body[class*="bogo"] main {
   margin-top: 0 !important;
   padding-top: 0 !important;
+}
+
+/* ============================================
+   PERFORMANCE FIX - Nov 28 2024
+   Disabling non-essential animations for 60fps
+   ============================================ */
+
+.bf25-product-info-icon,
+.ppc-info-icon,
+.bf25-stock-dot,
+.stock-high,
+.stock-medium,
+.stock-low,
+.sparkle,
+.sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4,
+.bf25-hero__gift-rays,
+.bf25-hero__gift-glow-ring,
+.bf25-announcement-bar,
+.bf25-hero__scroll-hint__arrow,
+.bf25-subtle-pulse,
+.bf25-arrow-bounce {
+  animation: none !important;
 }

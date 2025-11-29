@@ -119,6 +119,13 @@
   /* Height constraint achieved by component compactness */
 }
 
+/* Mobile: Remove gap */
+@media (max-width: 768px) {
+  .bf25-hero__module {
+    gap: 10px;
+  }
+}
+
 /* Gift Box Header */
 .bf25-hero__gifts-header {
   text-align: center;
@@ -180,7 +187,7 @@
   height: 100%;
   object-fit: contain;
   transition: all var(--duration-slow) var(--easing-premium);
-  will-change: filter, opacity, transform;
+  /* will-change: filter, opacity, transform; */ /* Removed - gift images don't animate constantly */
 
   /* LOCKED STATE: Blacked Out Silhouette (Requirement Met) */
   filter: brightness(0.1) grayscale(100%);
@@ -383,6 +390,7 @@
   );
   background-size: 200% 100%;
   animation: segmentFlow 2s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
   box-shadow: 0 0 12px var(--pb-glow-color),
               inset 0 0 8px var(--pb-glow-color);
 }
@@ -1256,6 +1264,7 @@
     rgba(224, 247, 255, 0.15) 100%
   );
   animation: rotateRays 8s linear infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes rotateRays {
@@ -1272,6 +1281,7 @@
   box-shadow: 0 0 20px rgba(224, 247, 255, 0.4),
               inset 0 0 20px rgba(224, 247, 255, 0.2);
   animation: pulseGlow 2s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes pulseGlow {
@@ -1303,6 +1313,7 @@
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(224, 247, 255, 0.8);
   animation: floatSparkle 3s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 .sparkle-1 {
@@ -1355,6 +1366,7 @@
 /* Breathing scale animation on entire mystery box */
 .bf25-hero__gift-box--mystery.is-unlocked {
   animation: breatheScale 3s ease-in-out infinite;
+  animation-play-state: paused; /* Performance: paused by default */
 }
 
 @keyframes breatheScale {
@@ -1459,4 +1471,3454 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   10. PERFORMANCE OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Activate hero animations when gift is revealed or unlocked */
+.bf25-hero__gift-overlay.is-revealed .bf25-hero__gift-rays,
+.bf25-hero__gift-overlay.is-revealed .bf25-hero__gift-glow-ring,
+.bf25-hero__gift-overlay.is-active .bf25-hero__gift-rays,
+.bf25-hero.gift-unlocked .bf25-hero__gift-rays,
+.bf25-hero.gift-unlocked .bf25-hero__gift-glow-ring,
+.bf25-hero__gift-box--mystery.is-unlocked {
+  animation-play-state: running;
+}
+
+/* Activate segment flow when progress bar is being filled */
+.bf25-hero__progress-bar.is-filling .bf25-hero__progress-segment.is-filled,
+.bf25-hero__progress-bar:hover .bf25-hero__progress-segment.is-filled {
+  animation-play-state: running;
+}
+
+/* Keep scroll/drag indicators always running (essential UX) */
+.bf25-hero__drag-arrow,
+.bf25-scroll-arrow,
+.bf25-pulse-dot,
+.bf25-hero__arrow-indicator {
+  animation-play-state: running !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - GIFT BOXES
+   Added: 2025-11-26
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Gift Container - Explicit Sizing */
+.bf25-hero__gifts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gifts {
+    gap: 10px;
+    padding: 0 12px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Gift Box - Larger, Explicit Size */
+.bf25-hero__gift-box {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box {
+    width: calc(25% - 7.5px);
+    min-width: 75px;
+  }
+}
+
+/* Image Wrapper - Darker Default State */
+.bf25-hero__gift-image-wrapper {
+  background: rgba(8, 8, 8, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  aspect-ratio: 1;
+  margin-bottom: 0; /* Remove gap - label goes inside */
+  position: relative;
+}
+
+/* Image - Much Darker Default */
+.bf25-hero__gift-image {
+  filter: brightness(0.05) grayscale(100%);
+  opacity: 0.5;
+  padding: 14px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-image {
+    padding: 8px;
+  }
+}
+
+/* Lock Icon - Brighter, Stays Centered */
+.bf25-hero__gift-box .icon-lock {
+  opacity: 0.45;
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-lock {
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+  }
+}
+
+/* Check Icon - MOVE TO TOP-RIGHT CORNER (not centered) */
+.bf25-hero__gift-box .icon-check {
+  top: 8px;
+  left: auto;
+  right: 8px;
+  transform: scale(0); /* Override the translate */
+  width: 26px;
+  height: 26px;
+  background: #60c655;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-check {
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+  }
+}
+
+/* Check Icon - Visible on Unlock */
+.bf25-hero__gift-box.is-unlocked .icon-check {
+  opacity: 1;
+  transform: scale(1); /* No translate needed - positioned with top/right */
+}
+
+/* Unlocked Image Wrapper */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper {
+  background: rgba(15, 15, 15, 0.9);
+  border-color: rgba(96, 198, 85, 0.5);
+  box-shadow: 0 0 20px rgba(96, 198, 85, 0.15),
+              inset 0 0 30px rgba(96, 198, 85, 0.03);
+}
+
+/* Unlocked Image */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image {
+  filter: brightness(1) grayscale(0%);
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Gift Label - INSIDE Box at Bottom */
+.bf25-hero__gift-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #60c655;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-label {
+    font-size: 9px;
+    padding: 5px 3px;
+  }
+}
+
+/* Label Visible on Unlock */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* END V4 GIFT BOXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - PROGRESS BAR
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Bar Container - Slightly Brighter Border */
+.progress-bar {
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 768px) {
+  .progress-bar {
+    height: 24px;
+    border-radius: 12px;
+    padding: 4px;
+  }
+}
+
+/* Segments Container */
+.progress-bar__segments {
+  gap: 4px;
+}
+
+/* Individual Segment - BRIGHTER Default */
+.progress-bar__segment {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+/* FIRST SEGMENT FLASH - When slider at 0 */
+@keyframes bf25-first-cell-flash {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.3);
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.3);
+  }
+  50% {
+    background: rgba(96, 198, 85, 0.7);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+}
+
+/* Flash first segment when NOT filled */
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-first-cell-flash 1.5s ease-in-out infinite;
+}
+
+/* Stop flashing when filled */
+.progress-bar__segment.is-filled {
+  animation: none;
+  background: linear-gradient(180deg, #7ed671, #60c655);
+  box-shadow: 0 0 8px rgba(96, 198, 85, 0.5);
+}
+
+/* Preserve tier-based colors for filled segments */
+.progress-bar__segment.is-filled {
+  background: linear-gradient(
+    90deg,
+    var(--color-tier-current, #60c655) 0%,
+    var(--color-tier-glow, #7ed671) 50%,
+    var(--color-tier-current, #60c655) 100%
+  );
+}
+
+/* Discount Labels - Dim by Default */
+.bf25-hero__discount-labels {
+  margin-bottom: 10px;
+}
+
+.bf25-hero__discount-label-item .bf25-hero__discount-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__discount-label-item .bf25-hero__discount-text {
+    font-size: 11px;
+  }
+}
+
+/* Active Discount Label */
+.bf25-hero__discount-label-item.is-active .bf25-hero__discount-text {
+  color: #60c655;
+  text-shadow: 0 0 12px rgba(96, 198, 85, 0.6);
+}
+
+/* Checkpoints */
+.bf25-hero__checkpoint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__checkpoint {
+    font-size: 10px;
+  }
+}
+
+.bf25-hero__checkpoint.is-active {
+  color: #60c655;
+}
+
+/* Hide Old Drag Indicator */
+.bf25-hero__drag-indicator {
+  display: none !important;
+}
+
+/* END V4 PROGRESS BAR */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SLIDER REDESIGN - BENEFITS CARD
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Card Base */
+.bf25-hero__card {
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(96, 198, 85, 0.15);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 24px 16px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card {
+    padding: 14px;
+    margin: 16px 12px 0;
+    border-radius: 12px;
+  }
+}
+
+/* TIER 0 - Collapsed State */
+.bf25-hero__card[data-active-tier="0"] {
+  padding: 0;
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+    padding: 18px 14px;
+  }
+}
+
+/* Restyle Default Message as "Slide" Prompt */
+.bf25-hero__default-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: bf25-subtle-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes bf25-subtle-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Hide the old "All products 50% OFF" and "Drag slider" text */
+.bf25-hero__default-subtitle,
+.bf25-hero__default-title {
+  display: none;
+}
+
+/* Add new "Slide" message via pseudo-element */
+.bf25-hero__default-message::before {
+  content: "→";
+  font-size: 20px;
+  color: #60c655;
+  animation: bf25-slide-arrow 1.2s ease-in-out infinite;
+}
+
+@keyframes bf25-slide-arrow {
+  0%, 100% { transform: translateX(-6px); opacity: 0.5; }
+  50% { transform: translateX(6px); opacity: 1; }
+}
+
+.bf25-hero__default-message::after {
+  content: "Slide bar to explore offers";
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__default-message::before {
+    font-size: 16px;
+  }
+  .bf25-hero__default-message::after {
+    content: "Slide to explore";
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Hide Tier Badge at Tier 0 */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__tier-badge {
+  display: none;
+}
+
+/* ACTIVE TIERS - Expanded Card */
+.bf25-hero__card[data-active-tier="1"],
+.bf25-hero__card[data-active-tier="2"],
+.bf25-hero__card[data-active-tier="3"],
+.bf25-hero__card[data-active-tier="4"] {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="1"],
+  .bf25-hero__card[data-active-tier="2"],
+  .bf25-hero__card[data-active-tier="3"],
+  .bf25-hero__card[data-active-tier="4"] {
+    padding: 14px;
+  }
+}
+
+/* Card Header */
+.bf25-hero__card-header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(96, 198, 85, 0.12);
+  margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card-header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Tier Name */
+.bf25-hero__tier-badge-text {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__tier-badge-text {
+    font-size: 12px;
+  }
+}
+
+/* Discount Value - Pulsing Glow */
+.bf25-hero__discount-label {
+  font-size: 32px;
+  font-weight: 800;
+  color: #60c655;
+  animation: bf25-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes bf25-glow-pulse {
+  0%, 100% { text-shadow: 0 0 25px rgba(96, 198, 85, 0.4); }
+  50% { text-shadow: 0 0 35px rgba(96, 198, 85, 0.6); }
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__discount-label {
+    font-size: 26px;
+  }
+}
+
+/* Benefits List - Tighter Gaps */
+.bf25-hero__benefits-list {
+  gap: 8px;
+  padding: 14px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__benefits-list {
+    gap: 6px;
+    padding: 10px 0;
+  }
+}
+
+.bf25-hero__benefit-item {
+  padding: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__benefit-item {
+    padding: 4px 0;
+  }
+}
+
+/* HIDE Est. Total and Per Item Pricing */
+.bf25-hero__pricing-row:first-child,
+.bf25-hero__pricing-row--per-item {
+  display: none !important;
+}
+
+/* Style Savings Row */
+.bf25-hero__pricing-row--savings {
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(96, 198, 85, 0.12), rgba(96, 198, 85, 0.04));
+  border: 1px solid rgba(96, 198, 85, 0.25);
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__pricing-row--savings {
+    padding: 12px;
+  }
+}
+
+.bf25-hero__pricing-row--savings .bf25-hero__pricing-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: #60c655;
+  text-shadow: 0 0 30px rgba(96, 198, 85, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__pricing-row--savings .bf25-hero__pricing-label {
+    font-size: 10px;
+  }
+  .bf25-hero__pricing-row--savings .bf25-hero__pricing-value {
+    font-size: 26px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 - HIDE UNNECESSARY ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Hide CTA Button */
+.bf25-hero__cta {
+  display: none !important;
+}
+
+/* Hide Gifts Header */
+.bf25-hero__gifts-header {
+  display: none !important;
+}
+
+/* Hide Card Footer (pricing wrapper - we styled savings separately) */
+.bf25-hero__card-footer {
+  margin-top: 16px;
+}
+
+/* END V4 CARD + HIDE ELEMENTS */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 - SCROLL HINT
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero__scroll-hint {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.bf25-hero__scroll-hint.is-visible {
+  opacity: 1;
+}
+
+.bf25-hero__scroll-hint__text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.bf25-hero__scroll-hint__arrow {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(96, 198, 85, 0.08);
+  border: 1px solid rgba(96, 198, 85, 0.2);
+  border-radius: 50%;
+  color: #60c655;
+  font-size: 18px;
+  animation: bf25-bounce 2s ease-in-out infinite;
+}
+
+@keyframes bf25-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__scroll-hint {
+    margin-top: 14px;
+    padding: 8px;
+  }
+  .bf25-hero__scroll-hint__text {
+    font-size: 10px;
+  }
+  .bf25-hero__scroll-hint__arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
+
+/* END V4 SCROLL HINT */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIXES - Visual Polish
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* FIX 1: Checkmark - Move to TOP-LEFT, BLACK tick */
+.bf25-hero__gift-box .icon-check {
+  top: 8px !important;
+  left: 8px !important;
+  right: auto !important;
+  transform: scale(0) !important;
+  color: #000 !important; /* Black tick */
+}
+
+.bf25-hero__gift-box.is-unlocked .icon-check {
+  transform: scale(1) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .icon-check {
+    top: 4px !important;
+    left: 4px !important;
+  }
+}
+
+/* FIX 2: Padlock - Center properly and BRIGHTEN */
+.bf25-hero__gift-status-icon {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 5;
+}
+
+.bf25-hero__gift-box .icon-lock {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  opacity: 0.7 !important; /* Brighter */
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* FIX 3: Hide black lip/gradient when NOT unlocked */
+.bf25-hero__gift-box:not(.is-unlocked) .bf25-hero__gift-label {
+  opacity: 0 !important;
+  background: transparent !important;
+}
+
+/* FIX 4: First cell flash - BRIGHTER */
+@keyframes bf25-first-cell-flash {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.5) !important;
+    box-shadow: 0 0 12px rgba(96, 198, 85, 0.5) !important;
+  }
+  50% {
+    background: rgba(96, 198, 85, 0.9) !important;
+    box-shadow: 0 0 20px rgba(96, 198, 85, 0.8) !important;
+  }
+}
+
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-first-cell-flash 1.5s ease-in-out infinite !important;
+}
+
+/* FIX 5: "Slide bar" message - BRIGHTER with UP arrow */
+.bf25-hero__default-message::before {
+  content: "↑" !important; /* Arrow pointing UP to bar */
+  font-size: 24px !important;
+  color: #60c655 !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+  animation: bf25-bounce-up 1s ease-in-out infinite !important;
+}
+
+@keyframes bf25-bounce-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.bf25-hero__default-message::after {
+  content: "SLIDE BAR TO EXPLORE OFFERS" !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.85) !important; /* Brighter */
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+/* Make the card collapsed strip brighter */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) !important;
+}
+
+/* FIX 6: Remove white glow from card */
+.bf25-hero__card {
+  box-shadow: none !important;
+}
+
+.bf25-hero__card[data-active-tier="1"],
+.bf25-hero__card[data-active-tier="2"],
+.bf25-hero__card[data-active-tier="3"],
+.bf25-hero__card[data-active-tier="4"] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important; /* Subtle dark shadow only */
+}
+
+/* FIX 7: Gold/Platinum overlay - ADD border-radius */
+.bf25-hero__gift-overlay {
+  border-radius: 12px !important; /* Match gift box corners */
+}
+
+/* Also fix the image wrapper overlay for tier colors */
+.bf25-hero__gift-box[data-gift-id="magnetic"].is-unlocked .bf25-hero__gift-image-wrapper::before,
+.bf25-hero__gift-box[data-gift-id="mystery"].is-unlocked .bf25-hero__gift-image-wrapper::before {
+  border-radius: 11px !important; /* Slightly less to fit inside border */
+}
+
+/* FIX 8: Gift image wrapper - ensure overflow hidden */
+.bf25-hero__gift-image-wrapper {
+  overflow: hidden !important;
+  border-radius: 12px !important;
+}
+
+/* FIX 9: Unlocked gifts - clean label styling */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-label {
+  opacity: 1 !important;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9)) !important;
+  padding: 20px 6px 8px !important; /* More padding top for gradient */
+  font-weight: 700 !important;
+}
+
+/* END V4 FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIX - Card Collapsed State Styling (Match Tier Boxes)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Match the tier box styling - dark with green border */
+.bf25-hero__card[data-active-tier="0"] {
+  background: linear-gradient(180deg, rgba(20, 25, 20, 0.95) 0%, rgba(10, 15, 10, 0.98) 100%) !important;
+  border: 1px solid rgba(96, 198, 85, 0.4) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 0 20px rgba(96, 198, 85, 0.1),
+    inset 0 1px 0 rgba(96, 198, 85, 0.1) !important;
+}
+
+/* Card header area when collapsed */
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  background: transparent !important;
+  padding: 32px 24px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+    padding: 24px 16px !important;
+  }
+}
+
+/* Arrow - bigger and more prominent */
+.bf25-hero__default-message::before {
+  content: "↑" !important;
+  font-size: 28px !important;
+  color: #60c655 !important;
+  display: block !important;
+  margin-bottom: 12px !important;
+  text-shadow: 0 0 10px rgba(96, 198, 85, 0.5) !important;
+}
+
+/* Text - brighter and clearer */
+.bf25-hero__default-message::after {
+  content: "SLIDE BAR TO EXPLORE OFFERS" !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  letter-spacing: 3px !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.3) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__default-message::before {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+  .bf25-hero__default-message::after {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+}
+
+/* END V4 CARD STYLE FIX */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 SURGICAL FIXES - Round 2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FIX A: First Cell Flash - CORRECT keyframes (no !important)
+   --------------------------------------------------------------------- */
+@keyframes bf25-cell-pulse {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.5);
+    box-shadow: 0 0 15px rgba(96, 198, 85, 0.6);
+  }
+  50% {
+    background: rgba(96, 198, 85, 1);
+    box-shadow: 0 0 25px rgba(96, 198, 85, 0.9);
+  }
+}
+
+/* Override with new animation name and higher specificity */
+.bf25-hero__slider-wrapper .progress-bar .progress-bar__segments .progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-cell-pulse 1.2s ease-in-out infinite !important;
+  background: rgba(96, 198, 85, 0.5) !important;
+}
+
+/* ---------------------------------------------------------------------
+   FIX B: Checkmark - Position relative to IMAGE WRAPPER, not status-icon
+   The trick: Use a pseudo-element on the gift box itself
+   --------------------------------------------------------------------- */
+
+/* Hide the original icon-check inside the centered container */
+.bf25-hero__gift-box .icon-check {
+  display: none !important;
+}
+
+/* Create NEW checkmark using pseudo-element on the image wrapper */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 26px;
+  height: 26px;
+  background: #60c655;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000; /* Black tick */
+  z-index: 10;
+  animation: bf25-check-pop 0.3s ease-out;
+}
+
+@keyframes bf25-check-pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box.is-unlocked .bf25-hero__gift-image-wrapper::after {
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX C: Padlock - Center properly with higher specificity
+   --------------------------------------------------------------------- */
+.bf25-hero__gift-box .bf25-hero__gift-status-icon {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.bf25-hero__gift-box .bf25-hero__gift-status-icon .icon-lock {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  opacity: 0.8 !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 50% !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__gift-box .bf25-hero__gift-status-icon .icon-lock {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* Hide padlock when unlocked */
+.bf25-hero__gift-box.is-unlocked .bf25-hero__gift-status-icon {
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) scale(0) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* ---------------------------------------------------------------------
+   FIX D: Card Collapsed State - Premium Styling (Match Tier Boxes)
+   --------------------------------------------------------------------- */
+.bf25-hero__card[data-active-tier="0"] {
+  background: linear-gradient(180deg,
+    rgba(15, 20, 15, 0.95) 0%,
+    rgba(8, 12, 8, 0.98) 100%
+  ) !important;
+  border: 1px solid rgba(96, 198, 85, 0.35) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 0 30px rgba(96, 198, 85, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+.bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+  background: transparent !important;
+  padding: 36px 24px !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] .bf25-hero__card-header {
+    padding: 28px 16px !important;
+    gap: 12px !important;
+  }
+}
+
+/* Arrow pointing up - bigger and glowing */
+.bf25-hero__default-message::before {
+  content: "↑" !important;
+  font-size: 32px !important;
+  color: #60c655 !important;
+  display: block !important;
+  margin-bottom: 12px !important;
+  text-shadow: 0 0 15px rgba(96, 198, 85, 0.7) !important;
+  animation: bf25-arrow-bounce 1s ease-in-out infinite !important;
+}
+
+@keyframes bf25-arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* Text - white and clear */
+.bf25-hero__default-message::after {
+  content: "SLIDE BAR TO EXPLORE OFFERS" !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 4px !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__default-message::before {
+    font-size: 26px !important;
+    margin-bottom: 8px !important;
+  }
+  .bf25-hero__default-message::after {
+    font-size: 13px !important;
+    letter-spacing: 2px !important;
+  }
+}
+
+/* END V4 SURGICAL FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIX - First Cell Flash BOOSTED
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Override with much more dramatic flash */
+@keyframes bf25-cell-pulse-boost {
+  0%, 100% {
+    background: rgba(96, 198, 85, 0.2);
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.2);
+  }
+  50% {
+    background: rgba(96, 198, 85, 1);
+    box-shadow:
+      0 0 30px rgba(96, 198, 85, 1),
+      0 0 60px rgba(96, 198, 85, 0.5),
+      inset 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* High specificity to ensure override */
+.bf25-hero .bf25-hero__slider-wrapper .progress-bar .progress-bar__segments .progress-bar__segment[data-segment="1"]:not(.is-filled),
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-cell-pulse-boost 1s ease-in-out infinite !important;
+  background: #35ff2ec7 !important;  /* Updated to bright green as requested */
+  border-radius: 8px !important;
+}
+
+/* END FLASH BOOST */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   V4 FIX - First Cell BRIGHTER GREEN
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@keyframes bf25-cell-bright-flash {
+  0%, 100% {
+    background: rgba(80, 160, 70, 0.25) !important;
+    box-shadow: 0 0 8px rgba(96, 198, 85, 0.3);
+  }
+  50% {
+    background: #7CFC00 !important; /* Lawn green - VERY bright */
+    box-shadow:
+      0 0 40px rgba(124, 252, 0, 0.9),
+      0 0 80px rgba(96, 198, 85, 0.5),
+      inset 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Nuclear specificity override */
+html body .bf25-hero .progress-bar .progress-bar__segments .progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-cell-bright-flash 1s ease-in-out infinite !important;
+  background: rgba(80, 160, 70, 0.25) !important;
+}
+
+/* Also target without full path */
+.progress-bar__segment[data-segment="1"]:not(.is-filled) {
+  animation: bf25-cell-bright-flash 1s ease-in-out infinite !important;
+}
+
+/* END BRIGHTER FLASH */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - SCALE UP OVERRIDES
+   Making 85% and "This Shouldn't Exist" more impactful
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   85% NUMBER - MASSIVE WITH GREEN GLOW
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-big-number {
+  font-size: 280px !important;
+  font-weight: 900 !important;
+  line-height: 0.85 !important;
+  letter-spacing: -8px !important;
+  text-shadow:
+    0 0 80px rgba(96, 198, 85, 0.3),
+    0 0 120px rgba(96, 198, 85, 0.15) !important;
+}
+
+/* % Symbol - Smaller, positioned nicely */
+.bf25-hero-split .bf25-percent {
+  font-size: 70px !important;
+  margin-left: 8px !important;
+  vertical-align: top !important;
+  margin-top: 30px !important;
+  display: inline-block !important;
+  text-shadow: 0 0 30px rgba(96, 198, 85, 0.5) !important;
+}
+
+/* Maximum Savings label */
+.bf25-hero-split .bf25-big-label {
+  font-size: 18px !important;
+  letter-spacing: 8px !important;
+  margin-top: 20px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 20px rgba(96, 198, 85, 0.4) !important;
+}
+
+/* Visual container - more padding for bigger number */
+.bf25-hero-split .bf25-hero-visual {
+  padding: 60px 40px !important;
+}
+
+/* Glow background - bigger for larger number */
+.bf25-hero-split .bf25-hero-visual::before {
+  width: 500px !important;
+  height: 500px !important;
+  background: radial-gradient(circle, rgba(96, 198, 85, 0.15) 0%, transparent 70%) !important;
+}
+
+/* ---------------------------------------------------------------------
+   HEADLINE - "This Shouldn't Exist" BIGGER
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-headline {
+  font-size: 52px !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+  margin-bottom: 16px !important;
+}
+
+/* "Exist." - Enhanced glow */
+.bf25-hero-split .bf25-energy-text {
+  font-size: 1.15em !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* Subline - slightly larger */
+.bf25-hero-split .bf25-hero-subline {
+  font-size: 17px !important;
+  margin-bottom: 10px !important;
+}
+
+/* Steps - slightly larger */
+.bf25-hero-split .bf25-hero-step {
+  font-size: 15px !important;
+  margin-bottom: 12px !important;
+}
+
+.bf25-hero-split .bf25-step-num {
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 13px !important;
+}
+
+/* ---------------------------------------------------------------------
+   TABLET - 769px to 1024px
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 200px !important;
+    letter-spacing: -6px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 55px !important;
+    margin-top: 20px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 15px !important;
+    letter-spacing: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 40px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   LARGE DESKTOP - 1200px+
+   --------------------------------------------------------------------- */
+
+@media (min-width: 1200px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 320px !important;
+    letter-spacing: -10px !important;
+    margin-left: 0 !important; /* Remove the weird offset */
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 80px !important;
+    margin-top: 40px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 20px !important;
+    letter-spacing: 10px !important;
+    margin-left: 0 !important; /* Remove offset */
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 58px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 18px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 600px !important;
+    height: 600px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE - 768px and below
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 160px !important;
+    letter-spacing: -5px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 45px !important;
+    margin-top: 15px !important;
+    margin-left: 4px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+    margin-top: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 36px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-energy-text {
+    font-size: 1.1em !important;
+  }
+
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 14px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 11px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 350px !important;
+    height: 350px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   EXTRA SMALL - 375px and below
+   --------------------------------------------------------------------- */
+
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-big-number {
+    font-size: 130px !important;
+    letter-spacing: -4px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 38px !important;
+    margin-top: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    font-size: 10px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 30px !important;
+  }
+}
+
+/* END HERO SPLIT SCALE UP */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - COMPREHENSIVE FIXES V2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FIX 1: DESKTOP - Contain 85% so it doesn't drift left
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-grid {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.bf25-hero-split .bf25-hero-visual-content {
+  margin-left: 0 !important;
+  text-align: center !important;
+}
+
+/* Remove the weird left margin on large screens */
+@media (min-width: 1200px) {
+  .bf25-hero-split .bf25-big-number {
+    margin-left: 0 !important;
+  }
+
+  .bf25-hero-split .bf25-big-label {
+    margin-left: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 2: URGENCY BAR - Redesigned Layout (Desktop)
+   "BLACK FRIDAY ENDS" on top, social proof on sides
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 20px 40px !important;
+    background: rgba(5, 5, 5, 0.98) !important;
+  }
+
+  /* Top row: BLACK FRIDAY ENDS label */
+  .bf25-hero-split .bf25-urgency-label {
+    order: -1 !important;
+    font-size: 12px !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Main row: Social + Battery + Social */
+  .bf25-hero-split .bf25-urgency-group {
+    display: contents !important;
+  }
+
+  /* Create a flex row for battery and social */
+  .bf25-hero-split .bf25-urgency-strip::before {
+    content: none !important;
+  }
+
+  /* Battery - Darker red, more prominent */
+  .bf25-hero-split .bf25-battery-body {
+    width: 200px !important;
+    height: 38px !important;
+    border-color: #993344 !important;
+    background: rgba(15, 10, 10, 0.98) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-cap {
+    background: #993344 !important;
+    height: 18px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-fill {
+    background: linear-gradient(90deg, #662233, #883344, #773344) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+  }
+
+  /* Social items - ensure visible */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    display: flex !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Desktop urgency layout - horizontal with social on sides */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: 12px 30px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-group {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    order: 0 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-container {
+    order: 1 !important;
+  }
+
+  /* Social items in row below */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:first-of-type {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:last-of-type {
+    grid-column: 3 !important;
+    grid-row: 2 !important;
+    justify-self: start !important;
+  }
+
+  /* Empty middle for spacing */
+  .bf25-hero-split .bf25-urgency-strip::after {
+    content: '' !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 200px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 3: MOBILE - Compress vertical space
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  /* Tighter visual section */
+  .bf25-hero-split .bf25-hero-visual {
+    padding: 20px 16px 15px !important;
+    min-height: auto !important;
+  }
+
+  /* Smaller glow */
+  .bf25-hero-split .bf25-hero-visual::before {
+    width: 280px !important;
+    height: 280px !important;
+  }
+
+  /* Tighter label spacing */
+  .bf25-hero-split .bf25-big-label {
+    margin-top: 8px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Tighter content section */
+  .bf25-hero-split .bf25-hero-content {
+    padding: 16px 16px 20px !important;
+  }
+
+  /* Smaller logo */
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 130px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Headline tighter */
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 32px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Subline - shorter for mobile */
+  .bf25-hero-split .bf25-hero-subline {
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Cheeky line tighter */
+  .bf25-hero-split .bf25-cheeky {
+    font-size: 11px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Steps - compress to fit on one line each */
+  .bf25-hero-split .bf25-hero-steps {
+    margin-bottom: 14px !important;
+    padding: 0 4px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    font-size: 10px !important;
+  }
+
+  /* Hide detail text on mobile to prevent wrapping */
+  .bf25-hero-split .bf25-step-detail {
+    display: none !important;
+  }
+
+  /* CTA row tighter */
+  .bf25-hero-split .bf25-cta-row {
+    gap: 8px !important;
+  }
+
+  .bf25-hero-split .bf25-cta-button {
+    padding: 12px 24px !important;
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-timer-inline {
+    font-size: 11px !important;
+  }
+
+  /* Mobile urgency bar - label above timer */
+  .bf25-hero-split .bf25-urgency-strip {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-group {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    font-size: 10px !important;
+    order: -1 !important;
+  }
+
+  /* Bigger timer on mobile */
+  .bf25-hero-split .bf25-battery-body {
+    width: 140px !important;
+    height: 30px !important;
+    border-color: #993344 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-cap {
+    background: #993344 !important;
+  }
+
+  .bf25-hero-split .bf25-battery-fill {
+    background: linear-gradient(90deg, #662233, #883344) !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-visual {
+    padding: 16px 12px 12px !important;
+  }
+
+  .bf25-hero-split .bf25-big-number {
+    font-size: 120px !important;
+  }
+
+  .bf25-hero-split .bf25-percent {
+    font-size: 35px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-content {
+    padding: 14px 14px 18px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-headline {
+    font-size: 28px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 10px !important;
+  }
+}
+
+/* END HERO SPLIT FIXES V2 */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 SLIDER HEADER - MINIMAL RESTYLE
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Main heading - cleaner, bolder */
+.bf25-hero__heading {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin-bottom: 8px !important;
+  letter-spacing: -0.5px !important;
+}
+
+/* Subheading - minimal, muted */
+.bf25-hero__subheading {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  margin-bottom: 28px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__heading {
+    font-size: 22px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .bf25-hero__subheading {
+    font-size: 13px !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Hide the gifts header text (we have the subheading) */
+.bf25-hero__gifts-header {
+  display: none !important;
+}
+
+/* END SLIDER HEADER RESTYLE */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - BACKGROUND & CONTAINMENT FIXES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Ensure full black background on the section wrapper */
+.bf25-hero-split {
+  background: #000 !important;
+}
+
+/* Hero grid - also black */
+.bf25-hero-split .bf25-hero-grid {
+  background: #000 !important;
+}
+
+/* Visual side - ensure no gaps */
+.bf25-hero-split .bf25-hero-visual {
+  background: #000 !important;
+}
+
+/* Content side - ensure no gaps */
+.bf25-hero-split .bf25-hero-content {
+  background: #000 !important;
+}
+
+/* Urgency strip - also needs containment */
+.bf25-hero-split .bf25-urgency-strip {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  background: #000 !important;
+}
+
+/* Social items - keep close to battery, don't drift */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px 40px !important;
+    padding: 18px 40px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Ensure social items stay near center */
+  .bf25-hero-split .bf25-urgency-strip::before,
+  .bf25-hero-split .bf25-urgency-strip::after {
+    content: none !important;
+  }
+}
+
+/* END BACKGROUND FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - V3 PREMIUM GLOW PILL URGENCY BAR
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Container */
+.bf25-hero-split .bf25-urgency-strip {
+  background: #000 !important;
+  padding: 0 !important;
+}
+
+/* Top section - Premium Glow Pill */
+.bf25-hero-split .bf25-urgency-group {
+  max-width: 550px !important;
+  margin: 16px auto 12px !important;
+  padding: 14px 36px 16px !important;
+  background: linear-gradient(180deg, rgba(139, 41, 66, 0.18) 0%, rgba(100, 30, 50, 0.08) 100%) !important;
+  border: 1px solid rgba(139, 41, 66, 0.3) !important;
+  border-radius: 60px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  position: relative !important;
+  box-shadow:
+    0 0 40px rgba(139, 41, 66, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Subtle top accent line */
+.bf25-hero-split .bf25-urgency-group::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 20% !important;
+  right: 20% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(139, 41, 66, 0.6), transparent) !important;
+  border-radius: 2px !important;
+}
+
+/* Label styling */
+.bf25-hero-split .bf25-urgency-label {
+  font-size: 11px !important;
+  color: #ff6b7a !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+/* Battery - prevent text wrapping */
+.bf25-hero-split .bf25-battery-body {
+  width: 200px !important;
+  height: 36px !important;
+  background: rgba(15, 8, 10, 0.98) !important;
+  border: 2px solid #8B2942 !important;
+}
+
+.bf25-hero-split .bf25-battery-text {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important; /* FIX: Prevent wrapping */
+}
+
+.bf25-hero-split .bf25-battery-fill {
+  background: linear-gradient(90deg, #5C1F2E, #7A2940, #6B2438) !important;
+}
+
+.bf25-hero-split .bf25-battery-cap {
+  background: #8B2942 !important;
+}
+
+/* Social row - contained below pill */
+.bf25-hero-split .bf25-social-row,
+.bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 50px !important;
+  padding: 14px 40px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.bf25-hero-split .bf25-social-item {
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.bf25-hero-split .bf25-social-item strong {
+  color: #fff !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-group {
+    max-width: 90% !important;
+    padding: 12px 24px 14px !important;
+    margin: 12px auto 10px !important;
+    border-radius: 50px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label {
+    font-size: 9px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-body {
+    width: 160px !important;
+    height: 32px !important;
+  }
+
+  .bf25-hero-split .bf25-battery-text {
+    font-size: 12px !important;
+  }
+
+  .bf25-hero-split .bf25-social-row,
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    padding: 12px 16px !important;
+    gap: 24px !important;
+  }
+
+  .bf25-hero-split .bf25-social-item {
+    font-size: 11px !important;
+  }
+}
+
+/* END V3 PREMIUM GLOW PILL */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO SPLIT - V3 URGENCY BAR FINAL (Social on Sides)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Reset any previous urgency styling */
+.bf25-hero-split .bf25-urgency-strip {
+  background: #000 !important;
+  padding: 16px 20px 20px !important;
+  display: block !important;
+}
+
+/* Main content wrapper */
+.bf25-hero-split .bf25-urgency-strip > * {
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+
+/* Row with social on sides of pill */
+.bf25-hero-split .bf25-urgency-row,
+.bf25-hero-split .bf25-urgency-strip {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 30px !important;
+}
+
+/* Hide stacked social items */
+.bf25-hero-split .bf25-urgency-bottom,
+.bf25-hero-split .bf25-social-row {
+  display: none !important;
+}
+
+/* Social items - inline on sides */
+.bf25-hero-split .bf25-social-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  white-space: nowrap !important;
+  order: 0 !important;
+}
+
+.bf25-hero-split .bf25-social-item:first-of-type {
+  order: 1 !important;
+}
+
+.bf25-hero-split .bf25-social-item:last-of-type {
+  order: 3 !important;
+}
+
+.bf25-hero-split .bf25-social-item strong {
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* Premium Glow Pill - center */
+.bf25-hero-split .bf25-urgency-group {
+  order: 2 !important;
+  padding: 14px 40px 16px !important;
+  background: linear-gradient(180deg, rgba(139, 41, 66, 0.18) 0%, rgba(100, 30, 50, 0.08) 100%) !important;
+  border: 1px solid rgba(139, 41, 66, 0.3) !important;
+  border-radius: 60px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  position: relative !important;
+  box-shadow:
+    0 0 40px rgba(139, 41, 66, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Top accent line */
+.bf25-hero-split .bf25-urgency-group::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 20% !important;
+  right: 20% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(139, 41, 66, 0.6), transparent) !important;
+  border-radius: 2px !important;
+}
+
+/* Label */
+.bf25-hero-split .bf25-urgency-label {
+  font-size: 11px !important;
+  color: #ff6b7a !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+/* Battery */
+.bf25-hero-split .bf25-battery-body {
+  width: 200px !important;
+  height: 36px !important;
+  background: rgba(15, 8, 10, 0.98) !important;
+  border: 2px solid #8B2942 !important;
+}
+
+.bf25-hero-split .bf25-battery-text {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+.bf25-hero-split .bf25-battery-fill {
+  background: linear-gradient(90deg, #5C1F2E, #7A2940, #6B2438) !important;
+}
+
+.bf25-hero-split .bf25-battery-cap {
+  background: #8B2942 !important;
+}
+
+/* Mobile - stack vertically */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 14px 16px 18px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-group {
+    order: 1 !important;
+    padding: 12px 28px 14px !important;
+    border-radius: 50px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-label { font-size: 9px !important; }
+  .bf25-hero-split .bf25-battery-body { width: 160px !important; height: 32px !important; }
+  .bf25-hero-split .bf25-battery-text { font-size: 12px !important; }
+
+  /* Social side by side on mobile */
+  .bf25-hero-split .bf25-social-item {
+    order: 2 !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 HERO LOGO - NEW SALE BADGE (BIGGER)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 280px !important;
+  height: auto !important;
+  filter: drop-shadow(0 0 20px rgba(96, 198, 85, 0.3)) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 200px !important;
+  }
+}
+
+/* END V3 URGENCY FINAL */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 COMPREHENSIVE FIX - All Issues Addressed
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FIX 1: URGENCY BAR - Social on SIDES of Battery Pill
+   HTML Structure: .bf25-urgency-strip > .bf25-urgency-group, .bf25-social-item, .bf25-social-item, .bf25-social-row-mobile
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 35px !important;
+    flex-wrap: nowrap !important;
+    padding: 16px 20px 20px !important;
+    background: #000 !important;
+  }
+
+  /* Urgency group (battery) - center with order 2 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group {
+    order: 2 !important;
+    padding: 14px 40px 16px !important;
+    background: linear-gradient(180deg, rgba(139, 41, 66, 0.18) 0%, rgba(100, 30, 50, 0.08) 100%) !important;
+    border: 1px solid rgba(139, 41, 66, 0.3) !important;
+    border-radius: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    position: relative !important;
+    box-shadow:
+      0 0 40px rgba(139, 41, 66, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* Top accent line on pill */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -1px !important;
+    left: 20% !important;
+    right: 20% !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, transparent, rgba(139, 41, 66, 0.6), transparent) !important;
+    border-radius: 2px !important;
+  }
+
+  /* First social item - LEFT with order 1 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(1) {
+    order: 1 !important;
+    display: flex !important;
+  }
+
+  /* Second social item - RIGHT with order 3 */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(2) {
+    order: 3 !important;
+    display: flex !important;
+  }
+
+  /* Style social items */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    white-space: nowrap !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item strong {
+    color: #fff !important;
+    font-weight: 700 !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item svg {
+    width: 16px !important;
+    height: 16px !important;
+    fill: #60c655 !important;
+  }
+
+  /* Hide mobile social row on desktop */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: none !important;
+  }
+}
+
+/* Battery styling */
+.bf25-hero-split .bf25-urgency-label {
+  font-size: 11px !important;
+  color: #ff6b7a !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+}
+
+.bf25-hero-split .bf25-battery-body {
+  width: 200px !important;
+  height: 36px !important;
+  background: rgba(15, 8, 10, 0.98) !important;
+  border: 2px solid #8B2942 !important;
+}
+
+.bf25-hero-split .bf25-battery-text {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+.bf25-hero-split .bf25-battery-fill {
+  background: linear-gradient(90deg, #5C1F2E, #7A2940, #6B2438) !important;
+}
+
+/* Mobile - stack with battery on top */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 14px 16px 18px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group {
+    order: 1 !important;
+    padding: 12px 28px 14px !important;
+    border-radius: 50px !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    display: none !important;
+  }
+
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: flex !important;
+    order: 2 !important;
+    gap: 24px !important;
+  }
+
+  .bf25-hero-split .bf25-social-row-mobile .bf25-social-item {
+    display: flex !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 2: LOGO - Much Bigger with Glow
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 380px !important;
+  height: auto !important;
+  filter: drop-shadow(0 0 25px rgba(96, 198, 85, 0.4)) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 280px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 3: "Exist." Animation - SLOW Energy Flow (4s)
+   --------------------------------------------------------------------- */
+
+@keyframes bf25-energy-slow {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.bf25-hero-split .bf25-energy-text {
+  position: relative !important;
+  display: inline-block !important;
+  color: transparent !important;
+  background: linear-gradient(90deg,
+    #60c655 0%,
+    #60c655 30%,
+    rgba(150, 255, 130, 1) 45%,
+    rgba(200, 255, 180, 1) 50%,
+    rgba(150, 255, 130, 1) 55%,
+    #60c655 70%,
+    #60c655 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  animation: bf25-energy-slow 4s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* ---------------------------------------------------------------------
+   FIX 4: Slider Header - Minimal Style
+   --------------------------------------------------------------------- */
+
+.bf25-hero .bf25-hero__header {
+  margin-bottom: 20px !important;
+}
+
+.bf25-hero .bf25-hero__heading {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #fff !important;
+  margin-bottom: 6px !important;
+  letter-spacing: -0.3px !important;
+}
+
+.bf25-hero .bf25-hero__subheading {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero .bf25-hero__heading {
+    font-size: 20px !important;
+  }
+  .bf25-hero .bf25-hero__subheading {
+    font-size: 12px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   FIX 5: Collapsed Card - Reduced Height
+   --------------------------------------------------------------------- */
+
+.bf25-hero__card[data-active-tier="0"] {
+  min-height: 120px !important;
+  padding: 24px 30px !important;
+}
+
+.bf25-hero__default-message {
+  gap: 8px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__card[data-active-tier="0"] {
+    min-height: 100px !important;
+    padding: 20px 24px !important;
+  }
+}
+
+/* END COMPREHENSIVE FIX */
+
+/* ---------------------------------------------------------------------
+   FINAL POLISH FIXES - BF25 Hero Split
+   --------------------------------------------------------------------- */
+
+/* FIX 1: Social Items CLOSER to Battery Pill (25px gap) */
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    gap: 25px !important; /* Reduced from 35px */
+  }
+}
+
+/* FIX 2: Logo MUCH BIGGER (500px+) and Shifted Left */
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 500px !important; /* Increased from 380px */
+  width: 100% !important;
+  height: auto !important;
+  margin-left: -20px !important; /* Shift left for better balance */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 320px !important; /* Proportionally bigger on mobile too */
+    margin-left: 0 !important;
+  }
+}
+
+/* FIX 3: 'Exist.' Energy Animation - WORKING VERSION */
+@keyframes bf25-energy-flow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.bf25-hero-split .bf25-energy-text {
+  background: linear-gradient(
+    90deg,
+    #60c655 0%,
+    #60c655 25%,
+    rgba(150, 255, 130, 1) 45%,
+    rgba(200, 255, 180, 1) 50%,
+    rgba(150, 255, 130, 1) 55%,
+    #60c655 75%,
+    #60c655 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 12px rgba(96, 198, 85, 0.8)) !important;
+}
+
+/* FIX 4: Slider Header - More Minimal Subheader */
+.bf25-hero .bf25-hero__subheading {
+  font-weight: 400 !important;
+  font-style: normal !important;
+  color: rgba(255, 255, 255, 0.65) !important; /* More subtle */
+  letter-spacing: 0.5px !important;
+  font-size:16px !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero .bf25-hero__subheading {
+    font-size: 11px !important;
+  }
+}
+
+/* FIX 5: Sticky Cart - Hidden Until Scrolled Past Interactive Section */
+.bf25-sticky-cart {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(100%) !important;
+  transition: all 0.3s ease-out !important;
+}
+
+body.show-sticky-cart .bf25-sticky-cart {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+/* END FINAL POLISH FIXES */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS V2 - SLOWER + BETTER POSITIONING
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* SLOW Bobbing Animations - 8-10 seconds */
+@keyframes bf25-float-slow-1 {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes bf25-float-slow-2 {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* Base styles */
+.bf25-hero-split .bf25-floating-product {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.6)) !important;
+}
+
+/* Allow overflow */
+.bf25-hero-split .bf25-hero-visual {
+  overflow: visible !important;
+}
+
+/* ===== DESKTOP DEFAULT (1200px+) ===== */
+.bf25-hero-split .bf25-floating-cable {
+  width: 110px !important;
+  top: 18% !important;
+  left: 12% !important;
+  animation: bf25-float-slow-1 8s ease-in-out infinite !important;
+}
+
+.bf25-hero-split .bf25-floating-earbuds {
+  width: 95px !important;
+  bottom: 20% !important;
+  right: 10% !important;
+  animation: bf25-float-slow-2 10s ease-in-out infinite !important;
+  animation-delay: -2s !important;
+}
+
+/* ===== LARGE DESKTOP (1400px+) ===== */
+@media (min-width: 1400px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 120px !important;
+    top: 15% !important;
+    left: 10% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 100px !important;
+    bottom: 18% !important;
+    right: 8% !important;
+  }
+}
+
+/* ===== MEDIUM DESKTOP (1024px - 1199px) ===== */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 90px !important;
+    top: 20% !important;
+    left: 8% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 80px !important;
+    bottom: 22% !important;
+    right: 6% !important;
+  }
+}
+
+/* ===== TABLET (769px - 1023px) ===== */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 75px !important;
+    top: 22% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 65px !important;
+    bottom: 25% !important;
+    right: 4% !important;
+  }
+}
+
+/* ===== MOBILE (768px and below) ===== */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 80px !important;
+    top: 8% !important;
+    left: 8% !important;
+  }
+  /* Earbuds FURTHER from 85% on mobile */
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 80px !important;
+    bottom: 5% !important;
+    right: 5% !important;
+  }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 60px !important;
+    top: 5% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 42px !important;
+    bottom: 2% !important;
+    right: 3% !important;
+  }
+}
+
+/* ===== EXTRA SMALL (375px and below) ===== */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 38px !important;
+    top: 3% !important;
+    left: 3% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 35px !important;
+    bottom: 0% !important;
+    right: 2% !important;
+  }
+}
+
+/* END FLOATING PRODUCTS V2 */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - REFINEMENTS V2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   FLOATING PRODUCTS - 20% Bigger + Soft Green Glow
+   --------------------------------------------------------------------- */
+
+@keyframes bf25-float-slow-1 {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes bf25-float-slow-2 {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+.bf25-hero-split .bf25-floating-product {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  /* Soft green glow */
+  filter:
+    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 15px rgba(96, 198, 85, 0.15)) !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  overflow: visible !important;
+}
+
+/* ===== DESKTOP (1200px+) - 20% BIGGER ===== */
+/* Cable - closer to 85% */
+.bf25-hero-split .bf25-floating-cable {
+  width: 132px !important; /* Was 110px, +20% */
+  top: 12% !important;
+  left: 8% !important; /* Closer to center */
+  animation: bf25-float-slow-1 8s ease-in-out infinite !important;
+}
+
+/* Earbuds - moved RIGHT to not overlap % */
+.bf25-hero-split .bf25-floating-earbuds {
+  width: 114px !important; /* Was 95px, +20% */
+  bottom: 18% !important;
+  right: 3% !important; /* Further right - was 10% */
+  animation: bf25-float-slow-2 10s ease-in-out infinite !important;
+  animation-delay: -2s !important;
+}
+
+/* ===== LARGE DESKTOP (1400px+) ===== */
+@media (min-width: 1400px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 144px !important;
+    top: 10% !important;
+    left: 6% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 120px !important;
+    bottom: 15% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== MEDIUM DESKTOP (1024px - 1199px) ===== */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 108px !important;
+    top: 15% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 96px !important;
+    bottom: 20% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== TABLET (769px - 1023px) ===== */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 90px !important;
+    top: 18% !important;
+    left: 3% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 78px !important;
+    bottom: 22% !important;
+    right: 1% !important;
+  }
+}
+
+/* ===== MOBILE (768px and below) - BIGGER + Repositioned ===== */
+@media (max-width: 768px) {
+  /* Cable - moved DOWN from top, BIGGER */
+  .bf25-hero-split .bf25-floating-cable {
+    width: 75px !important; /* Was 55px - much bigger */
+    top: 12% !important; /* Was 8% - moved down */
+    left: 3% !important;
+  }
+  /* Earbuds - BIGGER, further from 85% */
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 70px !important; /* Was 50px - much bigger */
+    bottom: 2% !important;
+    right: 2% !important;
+  }
+}
+
+/* ===== SMALL MOBILE (480px and below) ===== */
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    top: 10% !important;
+    left: 2% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 58px !important;
+    bottom: 0% !important;
+    right: 1% !important;
+  }
+}
+
+/* ===== EXTRA SMALL (375px and below) ===== */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 55px !important;
+    top: 8% !important;
+    left: 1% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 50px !important;
+    bottom: -2% !important;
+    right: 0% !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   URGENCY BAR - Contained Social Proof (Closer to Battery)
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  /* Invisible container to keep everything together */
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 20px 20px !important;
+    background: #000 !important;
+  }
+
+  /* Container wrapper - invisible but keeps items together */
+  .bf25-hero-split .bf25-urgency-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important; /* Tight gap */
+    max-width: 750px !important;
+    padding: 12px 24px !important;
+    background: rgba(255, 255, 255, 0.01) !important; /* Nearly invisible */
+    border-radius: 50px !important;
+  }
+
+  /* If no container wrapper, use direct children styling */
+  .bf25-hero-split .bf25-urgency-strip {
+    gap: 18px !important; /* Reduced from 20px */
+  }
+
+  /* Social items closer */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    margin: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE STEPS - Centered + Better Descriptive Text
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-steps {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    width: 100% !important;
+    max-width: 320px !important; /* Wider for more text */
+    justify-content: flex-start !important;
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+    gap: 10px !important;
+  }
+
+  .bf25-hero-split .bf25-step-num {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 13px !important;
+  }
+
+  /* Ensure detail text is visible */
+  .bf25-hero-split .bf25-step-detail {
+    display: inline !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 13px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    color: #fff !important;
+  }
+}
+
+/* Extra small mobile - slightly smaller text */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-step {
+    font-size: 13px !important;
+    max-width: 300px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 12px !important;
+  }
+}
+
+/* END REFINEMENTS V2 */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 URGENCY BAR - SOCIAL PROOF CLOSER TO BATTERY
+   Using CSS Grid with constrained width
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 769px) {
+  /* Override to CSS Grid layout */
+  .bf25-hero-split .bf25-urgency-strip {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: 20px !important;
+    max-width: 700px !important; /* Constrain width */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 16px 30px !important;
+  }
+
+  /* Battery - CENTER (order 2) */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-urgency-group {
+    order: 2 !important;
+    grid-column: 2 !important;
+  }
+
+  /* First social item (1M+ customers) - LEFT (order 1) */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(1) {
+    order: 1 !important;
+    grid-column: 1 !important;
+    justify-self: end !important; /* Align RIGHT towards battery */
+  }
+
+  /* Second social item (55K+ reviews) - RIGHT (order 3) */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item:nth-of-type(2) {
+    order: 3 !important;
+    grid-column: 3 !important;
+    justify-self: start !important; /* Align LEFT towards battery */
+  }
+
+  /* Hide mobile row on desktop */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: none !important;
+  }
+}
+
+/* Mobile - keep existing behavior */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-urgency-strip {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+  }
+
+  /* Hide direct social items on mobile (use mobile row instead) */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-item {
+    display: none !important;
+  }
+
+  /* Show mobile social row */
+  .bf25-hero-split .bf25-urgency-strip > .bf25-social-row-mobile {
+    display: flex !important;
+    gap: 24px !important;
+  }
+}
+
+/* END SOCIAL PROOF CLOSER */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - POLISH (Transparency, Rotation, Mobile)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* 80% opacity (20% transparent) + soft green glow */
+.bf25-hero-split .bf25-floating-product {
+  opacity: 0.8 !important;
+  filter: 
+    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 12px rgba(96, 198, 85, 0.12)) !important;
+}
+
+/* Cable - ROTATED 30 degrees */
+.bf25-hero-split .bf25-floating-cable {
+  transform-origin: center center !important;
+}
+
+@keyframes bf25-float-rotate-1 {
+  0%, 100% { transform: translateY(0) rotate(25deg); }
+  50% { transform: translateY(-10px) rotate(30deg); }
+}
+
+.bf25-hero-split .bf25-floating-cable {
+  animation: bf25-float-rotate-1 8s ease-in-out infinite !important;
+}
+
+/* ===== MOBILE - Bigger products, moved in ===== */
+@media (max-width: 768px) {
+  /* Cable - BIGGER, rotated, moved in */
+  .bf25-hero-split .bf25-floating-cable {
+    width: 85px !important; /* Was 75px */
+    top: 8% !important;
+    left: 5% !important;
+  }
+
+  /* Earbuds - BIGGER, moved in */
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 80px !important; /* Was 70px */
+    bottom: 5% !important;
+    right: 3% !important;
+  }
+
+  /* BLACK FRIDAY LOGO - CENTERED */
+  .bf25-hero-split .bf25-hero-content {
+    text-align: center !important;
+  }
+
+  .bf25-hero-split .bf25-hero-logo {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 300px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 75px !important;
+    top: 6% !important;
+    left: 3% !important;
+  }
+
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 70px !important;
+    bottom: 3% !important;
+    right: 2% !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    top: 5% !important;
+    left: 2% !important;
+  }
+
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 60px !important;
+    bottom: 2% !important;
+    right: 1% !important;
+  }
+}
+
+/* END FLOATING PRODUCTS POLISH */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 STEPS - TIMELINE STYLE (Desktop + Mobile)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   BASE STYLES (All Screens)
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-hero-steps {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 24px !important;
+}
+
+.bf25-hero-split .bf25-hero-step {
+  display: flex !important;
+  position: relative !important;
+}
+
+.bf25-hero-split .bf25-step-num {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  background: transparent !important;
+  border: 2px solid #60c655 !important;
+  color: #60c655 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Vertical line connector - BOTH Desktop and Mobile */
+.bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 13px !important;
+  width: 2px !important;
+  background: rgba(96, 198, 85, 0.25) !important;
+  z-index: 1 !important;
+}
+
+/* Currency value highlight */
+.bf25-hero-split .bf25-step-detail .money,
+.bf25-hero-split .bf25-currency-value {
+  color: #60c655 !important;
+  font-weight: 600 !important;
+}
+
+/* ---------------------------------------------------------------------
+   DESKTOP - Single Line + Timeline (15px gap)
+   --------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  .bf25-hero-split .bf25-hero-steps {
+    gap: 15px !important; /* 12px + 3px extra */
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    align-items: center !important;
+    gap: 14px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Line height for desktop (accounts for 15px gap) */
+  .bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+    top: 30px !important;
+    height: calc(100% + 13px) !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   MOBILE - Stacked Text + Timeline + Indented
+   --------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-hero-steps {
+    gap: 0 !important;
+    padding: 0 28px !important; /* Indent for centering */
+  }
+
+  .bf25-hero-split .bf25-hero-step {
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Line height for mobile */
+  .bf25-hero-split .bf25-hero-step:not(:last-child)::after {
+    top: 30px !important;
+    height: calc(100% - 2px) !important;
+  }
+
+  /* Stack the text content vertically */
+  .bf25-hero-split .bf25-hero-step > span:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 3px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    display: block !important;
+    margin-bottom: 2px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 12px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+  }
+
+  /* Remove the dash on mobile (cleaner stacked look) */
+  .bf25-hero-split .bf25-step-detail::before {
+    content: '' !important;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-hero-steps {
+    padding: 0 20px !important;
+  }
+
+  .bf25-hero-split .bf25-hero-step strong {
+    font-size: 13px !important;
+  }
+
+  .bf25-hero-split .bf25-step-detail {
+    font-size: 11px !important;
+  }
+}
+
+/* END STEPS TIMELINE */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 FLOATING PRODUCTS - REPOSITIONED (Safe Version)
+   Cable: bottom-left | Buds: top-right (moved down slightly)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Base */
+.bf25-hero-split .bf25-floating-product {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  opacity: 0.75 !important;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5)) !important;
+}
+
+.bf25-hero-split .bf25-hero-visual {
+  overflow: visible !important;
+}
+
+/* Animations - Cable keeps original angle */
+@keyframes bf25-float-cable {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(-3deg); }
+}
+
+@keyframes bf25-float-buds {
+  0%, 100% { transform: translateY(0) rotate(3deg); }
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* DESKTOP - Cable bottom-left, Buds top-right (lowered) */
+.bf25-hero-split .bf25-floating-cable {
+  width: 120px !important;
+  bottom: 18% !important;
+  left: 5% !important;
+  top: auto !important;
+  animation: bf25-float-cable 8s ease-in-out infinite !important;
+}
+
+.bf25-hero-split .bf25-floating-earbuds {
+  width: 105px !important;
+  top: 25% !important;
+  right: 6% !important;
+  bottom: auto !important;
+  animation: bf25-float-buds 10s ease-in-out infinite !important;
+}
+
+/* Large desktop 1400+ */
+@media (min-width: 1400px) {
+  .bf25-hero-split .bf25-floating-cable { width: 130px !important; left: 4% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 115px !important; top: 22% !important; right: 5% !important; }
+}
+
+/* Medium desktop */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .bf25-hero-split .bf25-floating-cable { width: 100px !important; left: 3% !important; bottom: 20% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 90px !important; top: 28% !important; right: 4% !important; }
+}
+
+/* Tablet */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .bf25-hero-split .bf25-floating-cable { width: 85px !important; left: 2% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 75px !important; top: 30% !important; right: 3% !important; }
+}
+
+/* MOBILE - Bigger, on-screen */
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    width: 65px !important;
+    bottom: 8% !important;
+    left: 5% !important;
+  }
+  .bf25-hero-split .bf25-floating-earbuds {
+    width: 60px !important;
+    top: 5% !important;
+    right: 5% !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .bf25-hero-split .bf25-floating-cable { width: 55px !important; left: 3% !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 50px !important; right: 3% !important; }
+}
+
+/* Extra small */
+@media (max-width: 375px) {
+  .bf25-hero-split .bf25-floating-cable { width: 48px !important; }
+  .bf25-hero-split .bf25-floating-earbuds { width: 45px !important; }
+}
+
+/* Energy text for "You Save" - matches "Exist." */
+.bf25-energy-text {
+  color: #60c655 !important;
+  background: linear-gradient(90deg, #60c655 0%, #60c655 35%, #90ff80 45%, #c0ffc0 50%, #90ff80 55%, #60c655 65%, #60c655 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 15px rgba(96, 198, 85, 0.7)) !important;
+}
+
+@keyframes bf25-energy-flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 ENERGY TEXT + CABLE POSITION FIX
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Energy text animation - "You Save?" matches "Exist." */
+@keyframes bf25-energy-flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.bf25-energy-text {
+  color: #60c655 !important;
+  background: linear-gradient(90deg, #60c655 0%, #60c655 35%, #90ff80 45%, #c0ffc0 50%, #90ff80 55%, #60c655 65%, #60c655 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: bf25-energy-flow 4s linear infinite !important;
+  filter: drop-shadow(0 0 15px rgba(96, 198, 85, 0.7)) !important;
+}
+
+/* Cable - moved left */
+.bf25-hero-split .bf25-floating-cable {
+  left: 3% !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: 2% !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 POLISH - Cable, Transparency, Header Size, Slider Box
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Cable - 10px more left */
+.bf25-hero-split .bf25-floating-cable {
+  left: calc(3% - 10px) !important;
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: calc(2% - 5px) !important;
+  }
+}
+
+/* Both products - 50% transparent */
+.bf25-hero-split .bf25-floating-product {
+  opacity: 0.5 !important;
+}
+
+/* ---------------------------------------------------------------------
+   Slider Section Header - 30% Bigger
+   --------------------------------------------------------------------- */
+
+.bf25-hero__heading {
+  font-size: 42px !important; /* ~30% bigger than ~32px */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero__heading {
+    font-size: 28px !important; /* Fits on one line */
+  }
+}
+
+@media (max-width: 375px) {
+  .bf25-hero__heading {
+    font-size: 24px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Slider Box - Smaller (SAFE: padding only, no height override)
+   --------------------------------------------------------------------- */
+
+.bf25-hero__card {
+  padding: 24px 20px !important; /* Reduced from larger padding */
+}
+
+.bf25-hero__card p,
+.bf25-hero__card .bf25-slide-text {
+  margin: 8px 0 0 0 !important; /* Tighter margins */
+}
+
+/* Arrow spacing */
+.bf25-hero__card svg,
+.bf25-hero__card .arrow {
+  margin-bottom: 4px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BF25 SLIDER SECTION FIXES - HIGH SPECIFICITY OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------------------------------------------------------------------
+   1. HEADER - 30% Bigger (Force Override)
+   --------------------------------------------------------------------- */
+
+section.bf25-hero .bf25-hero__heading,
+.bf25-hero .bf25-hero__container .bf25-hero__heading,
+#bf25-hero-section .bf25-hero__heading {
+  font-size: 42px !important;
+  line-height: 1.15 !important;
+}
+
+@media (max-width: 768px) {
+  section.bf25-hero .bf25-hero__heading,
+  .bf25-hero .bf25-hero__container .bf25-hero__heading,
+  #bf25-hero-section .bf25-hero__heading {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  section.bf25-hero .bf25-hero__heading,
+  .bf25-hero .bf25-hero__container .bf25-hero__heading,
+  #bf25-hero-section .bf25-hero__heading {
+    font-size: 24px !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   2. SLIDER CARD - 50% Shorter Height (Force Override)
+   --------------------------------------------------------------------- */
+
+section.bf25-hero .bf25-hero__card,
+.bf25-hero .bf25-hero__module .bf25-hero__card,
+#bf25-hero-section .bf25-hero__card {
+  min-height: auto !important;
+  max-height: none !important;  /* REMOVED 280px constraint - auto-expand for all tiers */
+  padding: 20px 20px !important;
+}
+
+/* Make tier 0 (instruction state) even smaller */
+section.bf25-hero .bf25-hero__card[data-active-tier="0"],
+.bf25-hero .bf25-hero__module .bf25-hero__card[data-active-tier="0"],
+#bf25-hero-section .bf25-hero__card[data-active-tier="0"] {
+  max-height: none !important;  /* Allow expansion even for tier 0 if needed */
+  min-height: 100px !important;  /* But keep minimum compact size */
+  padding: 15px 20px !important;
+}
+
+/* Compress internal spacing */
+section.bf25-hero .bf25-hero__card-header,
+#bf25-hero-section .bf25-hero__card-header {
+  margin-bottom: 12px !important;
+}
+
+section.bf25-hero .bf25-hero__card-content,
+#bf25-hero-section .bf25-hero__card-content {
+  padding: 8px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__card-footer,
+#bf25-hero-section .bf25-hero__card-footer {
+  margin-top: 12px !important;
+}
+
+/* Make default message smaller */
+section.bf25-hero .bf25-hero__default-message,
+#bf25-hero-section .bf25-hero__default-message {
+  margin: 8px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__default-title,
+#bf25-hero-section .bf25-hero__default-title {
+  font-size: 14px !important;
+  margin: 4px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__default-subtitle,
+#bf25-hero-section .bf25-hero__default-subtitle {
+  font-size: 13px !important;
+  margin: 4px 0 !important;
+}
+
+/* Reduce benefit list spacing */
+section.bf25-hero .bf25-hero__benefits,
+#bf25-hero-section .bf25-hero__benefits {
+  gap: 6px !important;
+  margin: 10px 0 !important;
+}
+
+section.bf25-hero .bf25-hero__benefit,
+#bf25-hero-section .bf25-hero__benefit {
+  padding: 4px 0 !important;
+  font-size: 13px !important;
+}
+
+/* Compress pricing section */
+section.bf25-hero .bf25-hero__pricing,
+#bf25-hero-section .bf25-hero__pricing {
+  padding: 10px !important;
+  margin-top: 10px !important;
+}
+
+section.bf25-hero .bf25-hero__pricing-row,
+#bf25-hero-section .bf25-hero__pricing-row {
+  margin-bottom: 4px !important;
+  font-size: 13px !important;
+}
+
+/* ---------------------------------------------------------------------
+   3. FLOATING CABLE - 25px More Left (Force Override)
+   --------------------------------------------------------------------- */
+
+.bf25-hero-split .bf25-floating-cable {
+  left: calc(3% - 35px) !important; /* Was 10px, now 35px total */
+}
+
+@media (max-width: 768px) {
+  .bf25-hero-split .bf25-floating-cable {
+    left: calc(2% - 30px) !important; /* Was 5px, now 30px total */
+  }
+}
+
+/* END SLIDER SECTION FIXES */
+
+/* ===== BF25 SPACING & AUTO-EXPAND FIXES ===== */
+
+/* ISSUE 1: Remove max-height from tiers 1-4, only constrain tier 0 */
+section.bf25-hero .bf25-hero__card {
+  min-height: auto !important;
+  max-height: none !important;  /* Remove max-height for auto-expand */
+  height: auto !important;      /* Auto height based on content */
+  padding: 20px 20px !important;
+  overflow: visible !important; /* Ensure content is not cut off */
+}
+
+/* Tier 0 specific - smaller but fits content */
+section.bf25-hero .bf25-hero__card[data-active-tier="0"] {
+  min-height: 100px !important;  /* Minimum height for tier 0 */
+  max-height: none !important;   /* Allow expansion if needed */
+  padding: 12px 20px !important;  /* Reduced vertical padding */
+}
+
+/* Ensure pricing rows don't get cut off */
+section.bf25-hero .bf25-hero__pricing-row--savings {
+  display: flex !important;
+  align-items: center !important;
+  min-height: auto !important;
+  margin: 8px 0 !important;
+}
+
+/* ISSUE 3: Hero Section Spacing Improvements */
+
+/* Reduce Black Friday logo to 66% size */
+.bf25-hero-split .bf25-hero-logo {
+  max-width: 66% !important;
+  width: 66% !important;
+  height: auto !important;
+  margin: 0 auto !important;
+}
+
+/* Desktop only - align logo with headline text */
+@media (min-width: 768px) {
+  .bf25-hero-split .bf25-hero-logo {
+    margin: 0 0 !important;
+    margin-left: -15px !important;  /* Align with text below */
+  }
+}
+
+@media (max-width: 767px) {
+  .bf25-hero-split .bf25-hero-logo {
+    max-width: 75% !important;  /* Slightly bigger on mobile */
+    width: 75% !important;
+  }
+}
+
+/* Move "This Shouldn't Exist" closer to logo - REDUCED SPACING */
+.bf25-hero-split .bf25-hero-headline {
+  margin-top: 5px !important;   /* Was 8px, now 5px (reduced by ~1/3) */
+  margin-bottom: 10px !important;  /* Was 16px, now 10px */
+}
+
+/* Add breathing room to steps - REDUCED SPACING */
+.bf25-hero-split .bf25-hero-steps {
+  margin-top: 16px !important;  /* Was 32px, now 16px (reduced by half) */
+  margin-bottom: 16px !important;  /* Was 32px, now 16px */
+  padding: 8px 0 !important;  /* Was 16px, now 8px */
+}
+
+/* More space above CTA button - REDUCED SPACING */
+.bf25-hero-split .bf25-cta-button {
+  margin-top: 20px !important;  /* Was 40px, now 20px (reduced by half) */
+  margin-bottom: 12px !important;  /* Was 24px, now 12px */
+}
+
+/* Overall content spacing - REDUCED */
+.bf25-hero-split .bf25-hero-content {
+  padding: 25px 20px !important;  /* Was 40px, now 25px top/bottom */
+}
+
+@media (min-width: 768px) {
+  .bf25-hero-split .bf25-hero-content {
+    padding: 35px 40px !important;  /* Was 60px, now 35px top/bottom */
+  }
+}
+
+/* ISSUE 4: Slider Section Top Spacing - REDUCED */
+section.bf25-hero {
+  padding-top: 40px !important;  /* Was 80px, now 40px (reduced by half) */
+}
+
+.bf25-hero__header {
+  padding-top: 20px !important;  /* Was 40px, now 20px */
+  margin-bottom: 25px !important;  /* Was 40px, now 25px */
+}
+
+/* Space above countdown timer - REDUCED */
+.bf25-hero__timer-section,
+.bf25-countdown-timer {
+  margin-top: 15px !important;  /* Was 30px, now 15px */
+}
+
+/* ISSUE 5: Bright Green Pulsing First Slider Bar */
+
+/* Keyframes for bright green pulse */
+@keyframes bf25-slider-pulse {
+  0% {
+    background: #60c655;
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.8),
+                0 0 15px rgba(96, 198, 85, 0.6),
+                0 0 30px rgba(96, 198, 85, 0.4);
+  }
+  50% {
+    background: #90ff80;  /* Brighter green */
+    box-shadow: 0 0 10px rgba(144, 255, 128, 1),
+                0 0 30px rgba(144, 255, 128, 0.8),
+                0 0 50px rgba(144, 255, 128, 0.6),
+                0 0 70px rgba(96, 198, 85, 0.4);
+  }
+  100% {
+    background: #60c655;
+    box-shadow: 0 0 5px rgba(96, 198, 85, 0.8),
+                0 0 15px rgba(96, 198, 85, 0.6),
+                0 0 30px rgba(96, 198, 85, 0.4);
+  }
+}
+
+/* Apply bright pulse to first segment */
+.bf25-hero__progress-segment:first-child {
+  animation: bf25-slider-pulse 2s ease-in-out infinite !important;
+  background: #60c655 !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Make first segment even brighter when active/filled */
+.bf25-hero__progress-segment:first-child.is-filled {
+  animation: bf25-slider-pulse 1.5s ease-in-out infinite !important;
+  filter: brightness(1.3) !important;
+}
+
+/* Enhanced glow effect for first segment */
+.bf25-hero__progress-segment:first-child::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: radial-gradient(circle, rgba(144, 255, 128, 0.6) 0%, transparent 70%);
+  animation: bf25-slider-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+/* ============================================
+   PERFORMANCE FIX - Nov 28 2024
+   Disabling 60+ non-essential animations
+   SAFE TO REVERT: Just delete this block
+   ============================================ */
+
+.bf25-product-info-icon,
+.ppc-info-icon,
+.bf25-stock-dot,
+.stock-high,
+.stock-medium,
+.stock-low,
+.sparkle,
+.sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4,
+.bf25-hero__gift-rays,
+.bf25-hero__gift-glow-ring,
+.bf25-announcement-bar,
+.bf25-hero__scroll-hint__arrow,
+.bf25-subtle-pulse,
+.bf25-arrow-bounce {
+  animation: none !important;
 }

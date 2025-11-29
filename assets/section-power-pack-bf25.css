@@ -27,7 +27,8 @@
     color: #ffffff;
     position: relative;
     padding: 60px 0;
-    min-height: 100vh;
+    padding-bottom: 20px !important;
+    /* min-height: 100vh; */
   }
   
   /* Gradient mesh removed for performance */
@@ -3060,6 +3061,7 @@ body.modal-open {
 .power-pack-section {
   background: var(--power-pack-bg);
   position: relative;
+  padding-bottom: 0 !important;
 }
 
 .power-pack-section::before {
@@ -3442,7 +3444,7 @@ body.modal-open {
   font-size: 16px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -3815,7 +3817,10 @@ body.modal-open {
   
   .power-pack-section .ppc-card-container {
     width: 220px;
-    height: 440px;
+    height: 480px;
+  }
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 70px !important;
   }
   
   .power-pack-section .ppc-card-wrapper {
@@ -4017,7 +4022,7 @@ body.modal-open {
 @media (max-width: 374px) {
   .power-pack-section .ppc-card-container {
     width: 170px;
-    height: 350px;
+    height: 520px;
   }
   
   .power-pack-section .ppc-card-wrapper {
@@ -4047,6 +4052,7 @@ body.modal-open {
 .power-pack-section .ppc-section-header {
   text-align: center;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .power-pack-section .ppc-title {
@@ -4103,6 +4109,7 @@ body.modal-open {
 .power-pack-section .ppc-section-header {
   text-align: center;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .power-pack-section .ppc-title {
@@ -4828,10 +4835,42 @@ body.modal-open {
 /* 3. SAFETY FOR THE FRONT (When NOT flipped) */
 .power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-front {
   pointer-events: auto !important;
-  z-index: 100 !important;
+  z-index: 99999999999999 !important;
 }
 
 .power-pack-section .ppc-card-wrapper.active .ppc-flip-card:not(.flipped) .ppc-card-back {
   pointer-events: none !important;
   z-index: 0 !important;
+}
+@media (max-width: 767px) {
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 70px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  .power-pack-section .ppc-nav-controls {
+    margin-top: 115px !important;
+  }
+}
+/* ============================================
+   PERFORMANCE FIX - Nov 28 2024
+   Disabling non-essential animations for 60fps
+   ============================================ */
+
+.bf25-product-info-icon,
+.ppc-info-icon,
+.bf25-stock-dot,
+.stock-high,
+.stock-medium,
+.stock-low,
+.sparkle,
+.sparkle-1, .sparkle-2, .sparkle-3, .sparkle-4,
+.bf25-hero__gift-rays,
+.bf25-hero__gift-glow-ring,
+.bf25-announcement-bar,
+.bf25-hero__scroll-hint__arrow,
+.bf25-subtle-pulse,
+.bf25-arrow-bounce {
+  animation: none !important;
 }

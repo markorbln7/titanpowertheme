@@ -4922,3 +4922,32 @@ section.bf25-hero {
 .bf25-arrow-bounce {
   animation: none !important;
 }
+
+/* ============================================
+   iOS Safe Area Fix - Cover gap when nav bar hides
+   ============================================ */
+
+/* Black overlay below sticky cart for iOS */
+.bf25-sticky-cart::after {
+  content: '';
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: #000;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Also extend sticky cart to respect safe area */
+.bf25-sticky-cart {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Ensure sticky cart has solid background */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bf25-sticky-cart {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+  }
+}

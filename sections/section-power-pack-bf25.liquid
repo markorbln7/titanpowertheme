@@ -387,6 +387,15 @@
                   </article>
 
                   {%- comment -%} Modal NOW renders outside article to fix z-index {%- endcomment -%}
+                  {%- comment -%}
+                    ═══════════════════════════════════════════════════════════════
+                    LEGACY POPUP DISABLED - Nov 29, 2024
+                    Reason: Replaced by bf25-expansion-core.js modal system
+                    This was causing iOS white flash + duplicate modals + performance issues
+                    Safe to remove after Jan 2025 if no issues reported
+                    ═══════════════════════════════════════════════════════════════
+                  {%- endcomment -%}
+                  {%- comment -%}
                   {% render 'buy-now-popup-bf25'
                     product_image: product.featured_image,
                     price: product.price,
@@ -407,6 +416,7 @@
                     grid_2_text: section.settings.add_6_text,
                     grid_3_text: section.settings.add_10_text
                   %}
+                  {%- endcomment -%}
                   {%- comment -%} BF25 Product Data Layer - Required for variant selection {%- endcomment -%}
                   <script>
                     // Initialize global objects if not exists

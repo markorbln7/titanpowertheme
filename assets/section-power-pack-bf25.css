@@ -4954,3 +4954,28 @@ body.modal-open {
 .ppc-card-front .bf25-product-info-icon {
   pointer-events: auto !important;
 }
+
+/* ============================================
+   iOS Safari Touch Fix - Power Pack Section ONLY
+   Targets only .ppc- prefixed elements (coverflow cards)
+   Does NOT affect bundle builder variant selection
+   ============================================ */
+
+/* Make flip button and info icon tappable on iOS */
+.ppc-coverflow-card .ppc-flip-cta,
+.ppc-coverflow-card .ppc-info-icon {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(96, 198, 85, 0.3);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* iOS needs explicit touchend handler - add via CSS cursor */
+@supports (-webkit-touch-callout: none) {
+  .ppc-coverflow-card .ppc-flip-cta,
+  .ppc-coverflow-card .ppc-info-icon {
+    cursor: pointer;
+  }
+}

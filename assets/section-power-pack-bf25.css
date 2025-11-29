@@ -4874,3 +4874,20 @@ body.modal-open {
 .bf25-arrow-bounce {
   animation: none !important;
 }
+
+/* ============================================
+   iOS Touch Fix - Prevent text selection on buttons
+   ============================================ */
+
+.ppc-flip-cta,
+.ppc-flip-cta *,
+.js-ppc-flip-trigger,
+.ppc-card-front,
+.ppc-card-back,
+.ppc-pack-btn {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}

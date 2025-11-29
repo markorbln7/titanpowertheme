@@ -1159,16 +1159,7 @@ class TierCalculator {
         </div>
       </div>
 
-      <!-- Total Row - De-emphasized -->
-      <div class="bf25-total-row">
-        <span class="bf25-total-label">Total:</span>
-        <span class="bf25-total-amount">${pricing.formatted.discountedTotal}</span>
-        ${comparePrice && comparePrice > basePrice ? `
-          <span class="bf25-total-savings">
-            (save ${this.formatPrice((comparePrice - pricing.discountedPricePerItem) * pricing.quantity)})
-          </span>
-        ` : ''}
-      </div>
+      <!-- Total Row removed for clarity - prices shown per item above -->
     `;
 
     priceContainer.innerHTML = html;
@@ -2781,9 +2772,8 @@ class ExpansionManager {
       this.state.update('productId', productId);  // MUST SET THIS
 
       // Set default quantity based on mode
-      // Power packs: Default to middle tier (8 items)
-      // Individual: Default to 1
-      const defaultQuantity = this.config.mode === 'power_packs' ? 8 : 1;
+      // Always start with 1 for clarity
+      const defaultQuantity = 1;
       this.state.update('quantity', defaultQuantity);
 
       // If product has variants, select first available variant

@@ -2826,7 +2826,7 @@ class ExpansionManager {
         </div>
         <div class="pp-sheet-summary__item">
           <span class="pp-sheet-summary__label">Total Price</span>
-          <span class="pp-sheet-summary__price">${this.formatMoney(pricing.finalPrice)}</span>
+          <span class="pp-sheet-summary__price">${formatDiscountedMoneyGlobal(pricing.finalPrice)}</span>
         </div>
       </div>
     `;
@@ -4766,7 +4766,7 @@ class ExpansionManager {
       </p>
       <div class="pp-success-details">
         <div class="pp-success-detail-item">
-          <strong>${pricing.totalItems} items</strong> • ${this.formatMoney(pricing.finalPrice)}
+          <strong>${pricing.totalItems} items</strong> • ${formatDiscountedMoneyGlobal(pricing.finalPrice)}
         </div>
         <div class="pp-success-detail-item">
           ${pricing.discountPercent}% OFF with code: <strong>${discountCode}</strong>

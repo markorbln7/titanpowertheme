@@ -705,14 +705,18 @@ class PowerPairsState {
       const baseSubtotal = this.calculateBaseSubtotal(processedProducts);
       const baseItemCount = processedProducts.reduce((sum, p) => sum + p.quantity, 0);
 
+      // Apply tier multiplier on initialization
+      const bundleTier = parseInt(bundle.tier) || 1;
+      const tierMultiplier = TIER_MULTIPLIERS[bundleTier] || 1;
+
       return {
         ...bundle,
         products: processedProducts,
-        multiplier: 1, // Default multiplier
+        multiplier: tierMultiplier, // Use tier multiplier instead of 1
         variantsComplete: variantsComplete,
         baseSubtotal: baseSubtotal,
         baseItemCount: baseItemCount,
-        currentPrice: baseSubtotal, // Will be updated with tier calculations in Prompt 11
+        currentPrice: baseSubtotal * tierMultiplier, // Apply tier discount on init
         currentItemCount: baseItemCount
       };
     });

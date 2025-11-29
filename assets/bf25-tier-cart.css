@@ -1089,18 +1089,22 @@
   100% { transform: scale(1); }
 }
 
-/* Hide label and increase amount on very small screens */
+/* Keep label visible on very small screens - just make it smaller */
 @media (max-width: 380px) {
   .bf25sc-action-savings {
-    min-width: 80px;
+    min-width: 70px;
+    flex-direction: column;
+    gap: 0;
   }
 
   .bf25sc-action-savings__label {
-    display: none;
+    font-size: 8px;
+    letter-spacing: 0.5px;
   }
 
   .bf25sc-action-savings__amount {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 1;
   }
 }
 

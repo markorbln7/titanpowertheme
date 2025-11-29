@@ -4921,10 +4921,14 @@ body.modal-open {
 
 /* Ensure clickable elements are above any overlays */
 .ppc-flip-cta,
-.ppc-info-icon,
-.bf25-product-info-icon,
 .ppc-pack-btn {
   position: relative !important;
+  z-index: 100 !important;
+}
+
+/* Info icons need absolute positioning to stay in corner */
+.ppc-info-icon,
+.bf25-product-info-icon {
   z-index: 100 !important;
 }
 

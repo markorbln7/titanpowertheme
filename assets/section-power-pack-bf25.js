@@ -663,3 +663,36 @@ if (document.readyState === 'loading') {
   setTimeout(attachFlipHandlers, 1500);
   setTimeout(attachFlipHandlers, 3000);
 })();
+
+/* ============================================
+   iOS Event Delegation Fix
+   Uses event delegation for reliable touch/click on iOS
+   ============================================ */
+(function() {
+  const section = document.querySelector('.power-pack-section, .ppc-section, [data-section-type="power-pack"]');
+  if (!section) return;
+
+  // Delegate click events
+  section.addEventListener('click', function(e) {
+    const flipTrigger = e.target.closest('.js-ppc-flip-trigger, .ppc-flip-cta');
+    if (flipTrigger) {
+      e.preventDefault();
+      const card = flipTrigger.closest('.ppc-flip-card');
+      if (card && !card.classList.contains('flipped')) {
+        card.classList.add('flipped');
+      }
+    }
+  }, true);
+
+  // Delegate touch events for iOS
+  section.addEventListener('touchend', function(e) {
+    const flipTrigger = e.target.closest('.js-ppc-flip-trigger, .ppc-flip-cta');
+    if (flipTrigger) {
+      e.preventDefault();
+      const card = flipTrigger.closest('.ppc-flip-card');
+      if (card && !card.classList.contains('flipped')) {
+        card.classList.add('flipped');
+      }
+    }
+  }, { passive: false, capture: true });
+})();

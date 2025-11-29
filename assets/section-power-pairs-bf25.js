@@ -712,7 +712,8 @@ class PowerPairsState {
       return {
         ...bundle,
         products: processedProducts,
-        multiplier: tierMultiplier, // Use tier multiplier instead of 1
+        multiplier: 1, // Quantity multiplier (1x, 2x, 3x) - NOT tier discount
+        tierMultiplier: tierMultiplier, // Tier discount for pricing only
         variantsComplete: variantsComplete,
         baseSubtotal: baseSubtotal,
         baseItemCount: baseItemCount,

@@ -2826,7 +2826,7 @@ class ExpansionManager {
         </div>
         <div class="pp-sheet-summary__item">
           <span class="pp-sheet-summary__label">Total Price</span>
-          <span class="pp-sheet-summary__price">${formatDiscountedMoneyGlobal(pricing.finalPrice)}</span>
+          <span class="pp-sheet-summary__price">${formatMoneyRockSolid(pricing.finalPrice)}</span>
         </div>
       </div>
     `;
@@ -4766,7 +4766,7 @@ class ExpansionManager {
       </p>
       <div class="pp-success-details">
         <div class="pp-success-detail-item">
-          <strong>${pricing.totalItems} items</strong> • ${formatDiscountedMoneyGlobal(pricing.finalPrice)}
+          <strong>${pricing.totalItems} items</strong> • ${formatMoneyRockSolid(pricing.finalPrice)}
         </div>
         <div class="pp-success-detail-item">
           ${pricing.discountPercent}% OFF with code: <strong>${discountCode}</strong>
@@ -4920,8 +4920,8 @@ class ExpansionManager {
     // Calculate total items with multiplier
     const totalItems = bundle.baseItemCount * bundle.multiplier;
 
-    // Determine achieved tier
-    const achievedTier = this.calculateTierFromItems(totalItems);
+    // Use bundle's preset tier (not calculated from items)
+    const achievedTier = parseInt(bundle.tier) || 1;
 
     // Get tier discount multiplier
     const tierMultiplier = TIER_MULTIPLIERS[achievedTier] || 1;

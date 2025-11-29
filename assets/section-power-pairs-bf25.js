@@ -1427,7 +1427,7 @@ class VariantModal {
             ${product.title}
           </h3>
           <div class="pp-variant-product-price">
-            ${this.formatMoney(product.selectedVariant.price)}
+            ${this.formatDiscountedMoney(product.selectedVariant.price)}
             <span style="font-size: 14px; color: var(--pp-text-secondary);"> × ${product.quantity}</span>
           </div>
         </div>
@@ -1498,7 +1498,7 @@ class VariantModal {
             </div>
             <div class="pp-variant-option-price">
               ${showComparePrice ? `<s style="opacity: 0.6; font-size: 11px;">${this.formatMoney(variant.compare_at_price)}</s> ` : ''}
-              ${this.formatMoney(variant.price)}
+              ${this.formatDiscountedMoney(variant.price)}
             </div>
           </div>
         </button>
@@ -1634,7 +1634,7 @@ class VariantModal {
 
     if (priceElement) {
       priceElement.innerHTML = `
-        ${this.formatMoney(product.selectedVariant.price)}
+        ${this.formatDiscountedMoney(product.selectedVariant.price)}
         <span style="font-size: 14px; color: var(--pp-text-secondary);"> × ${product.quantity}</span>
       `;
     }
@@ -1675,7 +1675,7 @@ class VariantModal {
     const variant = product.variants.find(v => v.id == variantId);
     if (variant) {
       announceToScreenReader(
-        `${variant.title} selected for ${product.title}. Price: ${this.formatMoney(variant.price)}`,
+        `${variant.title} selected for ${product.title}. Price: ${this.formatDiscountedMoney(variant.price)}`,
         'polite'
       );
     }
@@ -1787,6 +1787,20 @@ class VariantModal {
    * @returns {string} Formatted price
    */
   formatMoney(cents) {
+    return formatMoneyRockSolid(cents);
+  }
+
+  /**
+   * Format money with tier discount applied
+   * @param {number} cents - Price in cents
+   * @returns {string} Formatted discounted price
+   */
+  formatDiscountedMoney(cents) {
+    const bundle = this.state.getActiveBundle();
+    if (bundle) {
+      const tierMultiplier = TIER_MULTIPLIERS[bundle.tier] || 1;
+      cents = Math.round(cents * tierMultiplier);
+    }
     return formatMoneyRockSolid(cents);
   }
 }
@@ -2118,7 +2132,7 @@ class SwapModal {
           data-action="select-swap-product"
           role="button"
           tabindex="0"
-          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+          aria-label="Select ${product.title}, ${this.formatDiscountedMoney(product.price)}"
         >
           <img
             src="${product.image}"
@@ -2129,7 +2143,7 @@ class SwapModal {
           <h3 class="pp-swap-product-card__title">${product.title}</h3>
           <div class="pp-swap-product-card__price">
             ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
-            ${this.formatMoney(product.price)}
+            ${this.formatDiscountedMoney(product.price)}
           </div>
         </div>
       `;
@@ -2185,7 +2199,7 @@ class SwapModal {
           data-action="select-swap-product"
           role="button"
           tabindex="0"
-          aria-label="Select ${product.title}, ${this.formatMoney(product.price)}"
+          aria-label="Select ${product.title}, ${this.formatDiscountedMoney(product.price)}"
         >
           <img
             src="${product.image}"
@@ -2196,7 +2210,7 @@ class SwapModal {
           <h3 class="pp-swap-product-card__title">${product.title}</h3>
           <div class="pp-swap-product-card__price">
             ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
-            ${this.formatMoney(product.price)}
+            ${this.formatDiscountedMoney(product.price)}
           </div>
         </div>
       `;

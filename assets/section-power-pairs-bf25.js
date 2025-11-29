@@ -2144,7 +2144,7 @@ class SwapModal {
           data-action="select-swap-product"
           role="button"
           tabindex="0"
-          aria-label="Select ${product.title}, ${this.formatDiscountedMoney(product.price)}"
+          aria-label="Select ${product.title}, ${formatDiscountedMoneyGlobal(product.price)}"
         >
           <img
             src="${product.image}"
@@ -2155,7 +2155,7 @@ class SwapModal {
           <h3 class="pp-swap-product-card__title">${product.title}</h3>
           <div class="pp-swap-product-card__price">
             ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
-            ${this.formatDiscountedMoney(product.price)}
+            ${formatDiscountedMoneyGlobal(product.price)}
           </div>
         </div>
       `;
@@ -2211,7 +2211,7 @@ class SwapModal {
           data-action="select-swap-product"
           role="button"
           tabindex="0"
-          aria-label="Select ${product.title}, ${this.formatDiscountedMoney(product.price)}"
+          aria-label="Select ${product.title}, ${formatDiscountedMoneyGlobal(product.price)}"
         >
           <img
             src="${product.image}"
@@ -2222,7 +2222,7 @@ class SwapModal {
           <h3 class="pp-swap-product-card__title">${product.title}</h3>
           <div class="pp-swap-product-card__price">
             ${showComparePrice ? `<s style="opacity: 0.6; font-size: 13px; margin-right: 6px;">${this.formatMoney(product.compareAtPrice)}</s>` : ''}
-            ${this.formatDiscountedMoney(product.price)}
+            ${formatDiscountedMoneyGlobal(product.price)}
           </div>
         </div>
       `;

@@ -630,3 +630,36 @@ if (document.readyState === 'loading') {
     // Any additional initialization if needed
   });
 }
+/* ============================================
+   iOS Fix: Re-attach flip handlers after delay
+   Catches elements that load late on iOS Safari
+   ============================================ */
+(function iosFlipFix() {
+  function attachFlipHandlers() {
+    document.querySelectorAll('.js-ppc-flip-trigger').forEach(btn => {
+      // Remove existing to prevent duplicates
+      btn.removeEventListener('click', btn._flipHandler);
+      btn.removeEventListener('touchend', btn._touchHandler);
+      
+      btn._flipHandler = function(e) {
+        e.preventDefault();
+        const card = this.closest('.ppc-flip-card');
+        if (card) card.classList.add('flipped');
+      };
+      
+      btn._touchHandler = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.click();
+      };
+      
+      btn.addEventListener('click', btn._flipHandler);
+      btn.addEventListener('touchend', btn._touchHandler, { passive: false });
+    });
+  }
+  
+  // Run after various delays to catch late-loading elements
+  setTimeout(attachFlipHandlers, 500);
+  setTimeout(attachFlipHandlers, 1500);
+  setTimeout(attachFlipHandlers, 3000);
+})();

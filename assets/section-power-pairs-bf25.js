@@ -458,6 +458,22 @@
   }
 
   /**
+   * Format money with tier discount applied
+   * @param {number} cents - Price in cents
+   * @returns {string} Formatted discounted price
+   */
+  function formatDiscountedMoneyGlobal(cents) {
+    const bundle = window.PPState?.getActiveBundle?.();
+    if (bundle && bundle.tier) {
+      const tierMultipliers = { 1: 0.91, 2: 0.76, 3: 0.65, 4: 0.57 };
+      const tier = parseInt(bundle.tier) || 1;
+      const multiplier = tierMultipliers[tier] || 1;
+      cents = Math.round(cents * multiplier);
+    }
+    return formatMoneyRockSolid(cents);
+  }
+
+  /**
    * Request idle callback polyfill
    * @param {Function} callback - Function to run when idle
    */
@@ -1797,15 +1813,7 @@ class VariantModal {
    * @returns {string} Formatted discounted price
    */
   formatDiscountedMoney(cents) {
-    const bundle = window.PPState?.getActiveBundle?.();
-    if (bundle && bundle.tier) {
-      // Tier multipliers (must be defined here as TIER_MULTIPLIERS is not in scope)
-      const tierMultipliers = { 1: 0.91, 2: 0.76, 3: 0.65, 4: 0.57 };
-      const tier = parseInt(bundle.tier) || 1;
-      const multiplier = tierMultipliers[tier] || 1;
-      cents = Math.round(cents * multiplier);
-    }
-    return formatMoneyRockSolid(cents);
+    return formatDiscountedMoneyGlobal(cents);
   }
 }
 
@@ -2949,8 +2957,8 @@ class ExpansionManager {
             ${variantText}
 
             <div class="pp-product-compact-price-row">
-              <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${this.formatMoney(product.selectedVariant.price)} each, quantity ${product.quantity}">
-                <span aria-hidden="true">${this.formatMoney(product.selectedVariant.price)}</span>
+              <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${formatDiscountedMoneyGlobal(product.selectedVariant.price)} each, quantity ${product.quantity}">
+                <span aria-hidden="true">${formatDiscountedMoneyGlobal(product.selectedVariant.price)}</span>
               </div>
               
               <div class="pp-product-compact-qty-selector" data-product-id="${product.id}" data-product-index="${index}">

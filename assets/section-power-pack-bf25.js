@@ -350,6 +350,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const flipCard = card.querySelector('.ppc-flip-card');
       if (flipCard) flipCard.classList.add('flipped');
     });
+
+    // iOS Safari fix - add touch support
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.click(); // Trigger the existing click handler
+    }, { passive: false });
   });
 
   // Back buttons

@@ -2949,8 +2949,8 @@ class ExpansionManager {
             ${variantText}
 
             <div class="pp-product-compact-price-row">
-              <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${this.formatMoney(product.selectedVariant.price)} each, quantity ${product.quantity}">
-                <span aria-hidden="true">${this.formatMoney(product.selectedVariant.price)}</span>
+              <div id="product-price-${product.id}" class="pp-product-compact-price" aria-label="${product.title}, ${this.formatDiscountedMoney(product.selectedVariant.price)} each, quantity ${product.quantity}">
+                <span aria-hidden="true">${this.formatDiscountedMoney(product.selectedVariant.price)}</span>
               </div>
               
               <div class="pp-product-compact-qty-selector" data-product-id="${product.id}" data-product-index="${index}">

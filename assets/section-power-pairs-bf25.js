@@ -1797,8 +1797,8 @@ class VariantModal {
    * @returns {string} Formatted discounted price
    */
   formatDiscountedMoney(cents) {
-    const bundle = this.state.getActiveBundle();
-    if (bundle) {
+    const bundle = window.PPState?.getActiveBundle?.();
+    if (bundle && bundle.tier) {
       const tierMultiplier = TIER_MULTIPLIERS[bundle.tier] || 1;
       cents = Math.round(cents * tierMultiplier);
     }

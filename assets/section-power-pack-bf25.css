@@ -4950,9 +4950,3 @@ body.modal-open {
 .ppc-card-front .bf25-product-info-icon {
   pointer-events: auto !important;
 }
-
-/* Ensure overlay doesn't capture touches on iOS */
-.bf25-card-variant-state {
-  pointer-events: none !important;
-  touch-action: none !important;
-}

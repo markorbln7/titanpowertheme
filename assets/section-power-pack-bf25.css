@@ -4986,18 +4986,18 @@ body.modal-open {
    ============================================ */
 
 /* Ensure active card content is touchable */
-.ppc-coverflow-card.active .ppc-card-front,
-.ppc-coverflow-card.active .ppc-flip-cta,
-.ppc-coverflow-card.active .ppc-info-icon {
+.ppc-card-wrapper.active .ppc-card-front,
+.ppc-card-wrapper.active .ppc-flip-cta,
+.ppc-card-wrapper.active .ppc-info-icon {
   z-index: 9999 !important;
   pointer-events: auto !important;
 }
 
 /* Kill any invisible overlays on active card */
-.ppc-coverflow-card.active::before,
-.ppc-coverflow-card.active::after,
-.ppc-coverflow-card.active .ppc-card-front::before,
-.ppc-coverflow-card.active .ppc-card-front::after {
+.ppc-card-wrapper.active::before,
+.ppc-card-wrapper.active::after,
+.ppc-card-wrapper.active .ppc-card-front::before,
+.ppc-card-wrapper.active .ppc-card-front::after {
   pointer-events: none !important;
   z-index: -1 !important;
 }
@@ -5012,17 +5012,17 @@ body.modal-open {
 }
 
 /* Same for card back buttons when flipped */
-.ppc-coverflow-card.active .ppc-card-back,
-.ppc-coverflow-card.active .ppc-card-back .ppc-pack-btn,
-.ppc-coverflow-card.active .ppc-card-back button {
+.ppc-card-wrapper.active .ppc-card-back,
+.ppc-card-wrapper.active .ppc-card-back .ppc-pack-btn,
+.ppc-card-wrapper.active .ppc-card-back button {
   pointer-events: auto !important;
   z-index: 9999 !important;
 }
 
 /* Non-active cards should NOT capture touches */
-.ppc-coverflow-card:not(.active) {
+.ppc-card-wrapper:not(.active) {
   pointer-events: none !important;
 }
-.ppc-coverflow-card:not(.active) * {
+.ppc-card-wrapper:not(.active) * {
   pointer-events: none !important;
 }

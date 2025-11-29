@@ -4927,3 +4927,32 @@ body.modal-open {
   position: relative !important;
   z-index: 100 !important;
 }
+
+/* ============================================
+   iOS Fix - Elevate interactive elements above overlays
+   .bf25-card-variant-state overlay is z-index: 15
+   ============================================ */
+
+.ppc-flip-cta,
+.js-ppc-flip-trigger {
+  position: relative !important;
+  z-index: 50 !important;
+}
+
+.ppc-info-icon,
+.bf25-product-info-icon {
+  z-index: 50 !important;
+}
+
+/* Force pointer-events on iOS */
+.ppc-card-front .ppc-flip-cta,
+.ppc-card-front .ppc-info-icon,
+.ppc-card-front .bf25-product-info-icon {
+  pointer-events: auto !important;
+}
+
+/* Ensure overlay doesn't capture touches on iOS */
+.bf25-card-variant-state {
+  pointer-events: none !important;
+  touch-action: none !important;
+}

@@ -1799,8 +1799,11 @@ class VariantModal {
   formatDiscountedMoney(cents) {
     const bundle = window.PPState?.getActiveBundle?.();
     if (bundle && bundle.tier) {
-      const tierMultiplier = TIER_MULTIPLIERS[bundle.tier] || 1;
-      cents = Math.round(cents * tierMultiplier);
+      // Tier multipliers (must be defined here as TIER_MULTIPLIERS is not in scope)
+      const tierMultipliers = { 1: 0.91, 2: 0.76, 3: 0.65, 4: 0.57 };
+      const tier = parseInt(bundle.tier) || 1;
+      const multiplier = tierMultipliers[tier] || 1;
+      cents = Math.round(cents * multiplier);
     }
     return formatMoneyRockSolid(cents);
   }

@@ -2639,7 +2639,7 @@ class ExpansionManager {
             </div>
           ` : ''}
           <div class="pp-pricing-header__row">
-            <span class="pp-pricing-header__current">${this.formatMoney(pricing.subtotal)}</span>
+            <span class="pp-pricing-header__current">${this.formatMoney(pricing.finalPrice)}</span>
             <span class="pp-pricing-header__crossed">${this.formatMoney(pricing.compareAtSubtotal)}</span>
           </div>
           <div class="pp-pricing-header__tier">
@@ -4935,8 +4935,8 @@ class ExpansionManager {
     // Calculate final price with tier discount applied to regular price
     const finalPrice = Math.round(subtotal * tierMultiplier);
     
-    // Calculate savings: simply crossed minus current (no tier discount logic)
-    const savings = compareAtSubtotal - subtotal;
+    // Calculate savings: crossed price minus final price (including tier discount)
+    const savings = compareAtSubtotal - finalPrice;
 
     // Calculate discount percentage
     const discountPercent = Math.round((1 - tierMultiplier) * 100);

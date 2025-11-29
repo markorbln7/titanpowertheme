@@ -4891,3 +4891,39 @@ body.modal-open {
   -webkit-tap-highlight-color: transparent !important;
   touch-action: manipulation !important;
 }
+
+/* ============================================
+   iOS Touch Fix - Prevent text selection, enable taps
+   Affects: flip buttons, info icons, pack buttons, all interactive elements
+   ============================================ */
+
+.power-pack-section button,
+.power-pack-section [role="button"],
+.power-pack-section a,
+.ppc-flip-cta,
+.ppc-flip-cta *,
+.js-ppc-flip-trigger,
+.ppc-card-front,
+.ppc-card-back,
+.ppc-pack-btn,
+.ppc-info-icon,
+.bf25-product-info-icon,
+.ppc-nav-arrow,
+.ppc-nav-dot,
+.ppc-coverflow-card {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+}
+
+/* Ensure clickable elements are above any overlays */
+.ppc-flip-cta,
+.ppc-info-icon,
+.bf25-product-info-icon,
+.ppc-pack-btn {
+  position: relative !important;
+  z-index: 100 !important;
+}

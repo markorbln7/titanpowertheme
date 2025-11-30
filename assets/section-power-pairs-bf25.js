@@ -4926,17 +4926,20 @@ class ExpansionManager {
     // Get tier discount multiplier
     const tierMultiplier = TIER_MULTIPLIERS[achievedTier] || 1;
 
-    // Calculate compare-at subtotal (for crossed price display)
-    const compareAtSubtotal = window.PPState.calculateCompareAtSubtotal(bundle.products) * bundle.multiplier;
-    
     // Calculate regular subtotal (current prices) - BEFORE tier discount
     const subtotal = bundle.baseSubtotal * bundle.multiplier;
-    
-    // Calculate final price with tier discount applied to regular price
+
+    // Step 1: Calculate final price (what they pay) = subtotal × tierMultiplier
     const finalPrice = Math.round(subtotal * tierMultiplier);
-    
-    // Calculate savings: crossed price minus final price (including tier discount)
-    const savings = compareAtSubtotal - finalPrice;
+
+    // Step 2: Calculate savings FROM finalPrice using savings multiplier
+    // Formula: discountPercent / (100 - discountPercent)
+    const SAVINGS_MULTIPLIERS = { 0: 1.00, 1: 1.50, 2: 2.33, 3: 4.00, 4: 5.67 };
+    const savingsMultiplier = SAVINGS_MULTIPLIERS[achievedTier] || 1.00;
+    const savings = Math.round(finalPrice * savingsMultiplier);
+
+    // Step 3: Calculate compare-at price = finalPrice + savings
+    const compareAtSubtotal = finalPrice + savings;
 
     // Calculate discount percentage
     const discountPercent = Math.round((1 - tierMultiplier) * 100);

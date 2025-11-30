@@ -14,10 +14,10 @@
   // Tier multipliers (relative to base 50% OFF price)
   const TIER_MULTIPLIERS = {
     50: 1.00,   // Base - no additional discount
-    60: 0.91,   // Tier 1 (4+ items)
-    70: 0.76,   // Tier 2 (8+ items)
-    80: 0.65,   // Tier 3 (12+ items)
-    85: 0.57    // Tier 4 (16+ items)
+    60: 0.85,   // Tier 1 (4+ items)
+    70: 0.70,   // Tier 2 (8+ items)
+    80: 0.60,   // Tier 3 (12+ items)
+    85: 0.54    // Tier 4 (16+ items)
   };
 
   // Get current discount from BundleManager

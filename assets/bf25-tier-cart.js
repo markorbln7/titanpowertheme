@@ -1955,8 +1955,8 @@
         celebration.discountPercent
       );
 
-      // Wait 2.8s gap between celebrations (BF25-8.6)
-      await this.delay(2800);
+      // Wait 500ms gap between celebrations (BF25-8.6) - fast for excitement
+      await this.delay(500);
 
       // Process next in queue
       this.processCelebrationQueue();

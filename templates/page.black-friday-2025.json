@@ -51,48 +51,6 @@
       "name": "Scroll Navigation",
       "settings": {}
     },
-    "sticky_cart_7W3hCL": {
-      "type": "sticky-cart",
-      "blocks": {
-        "discount_block_cFiJdB": {
-          "type": "discount-block",
-          "settings": {
-            "item_count": 3,
-            "percentage_off": 55
-          }
-        },
-        "discount_block_zzHkXL": {
-          "type": "discount-block",
-          "settings": {
-            "item_count": 7,
-            "percentage_off": 70
-          }
-        },
-        "discount_block_tFL3T6": {
-          "type": "discount-block",
-          "settings": {
-            "item_count": 10,
-            "percentage_off": 80
-          }
-        }
-      },
-      "block_order": [
-        "discount_block_cFiJdB",
-        "discount_block_zzHkXL",
-        "discount_block_tFL3T6"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".savings {color: #000000; margin-bottom: -3px; background: linear-gradient(131deg, #c4d3d3, #fff 98%); box-shadow: 0 1px 5px rgb(0 0 0 / 15%); background: linear-gradient(131deg, #e0e0e0, #8ee584 98%);}",
-        ".py-\\[20px\\] {padding-top: 12px; padding-bottom: 12px;}",
-        ".tracking-bar-progress {height: 7px; box-shadow: 0 3px 10px rgb(0 0 0 / 8%);}",
-        "@media screen and (max-width: 768px) {.savings {margin-top: -16px; } .tracking-bar-progress {max-width: 100%; width: 330px; }}",
-        ".gap-\\[8px\\] {gap: 7px;}"
-      ],
-      "settings": {
-        "welcome_message": "Welcome to our store!"
-      }
-    },
     "game": {
       "type": "compare-table",
       "disabled": true,
@@ -142,49 +100,6 @@
         "banner_image": "shopify://shop_images/Black_Friday_Power_up_sale_badge33.png",
         "section_title": "",
         "section_eyebrow": ""
-      }
-    },
-    "bf_top_bar_YUNa4V": {
-      "type": "bf-top-bar",
-      "disabled": true,
-      "custom_css": [
-        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
-        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        ".bf-top-bar {background-color: #f2c054;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}"
-      ],
-      "settings": {
-        "welcome_message": "Everything 50% OFF + Save 80%  By Adding more",
-        "show_banner": false
-      }
-    },
-    "scroll_to_button_7LJcTQ": {
-      "type": "scroll-to-button",
-      "disabled": true,
-      "custom_css": [
-        ".my-\\[20px\\] {margin-top: 30px; margin-bottom: 20px;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655; color: #fff !important;}"
-      ],
-      "settings": {
-        "target_class": "section-collections-with-nav",
-        "button_text": "GET STARTED"
-      }
-    },
-    "titan_linked_image_A4GJp6": {
-      "type": "titan-linked-image",
-      "disabled": true,
-      "custom_css": [
-        ".shadow {box-shadow: none !important; max-width: 200px; align-items: center; margin-left: auto; margin-right: auto; margin-top: -90px; margin-bottom: 0px; background-color: #e4eaea;}",
-        ".max-w-screen-xl {background-color: #e4eaea;}",
-        "section.bg-\\[\\#d6e1e1\\].pt-\\[20px\\].pb-0.md\\:pt-\\[40px\\].md\\:pb-\\[60px\\] {background-color: #e4eaea;}",
-        "@media only screen and (max-width: 768px) {.mobile {display: block; max-width: 50%; } .pt-\\[20px\\] {margin-top: -80px; }}"
-      ],
-      "settings": {
-        "title": "",
-        "desktop_image": "shopify://shop_images/PRO_20_CODE.png",
-        "mobile_image": "shopify://shop_images/PRO_20_CODE.png",
-        "link": ""
       }
     },
     "limited_offers_jKBGqn": {
@@ -257,6 +172,19 @@
       }
     },
     "bf_top_bar_hxgfNg": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\].uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        "@media screen and (max-width: 749px) .text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\] {{font-size: 15px; }}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE up to 85%",
+        "show_banner": false
+      }
+    },
+    "bf_top_bar_wq6AnB": {
       "type": "bf-top-bar",
       "custom_css": [
         ".text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\].uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
@@ -1218,12 +1146,8 @@
   },
   "order": [
     "section_scroll_nav_cdqHDX",
-    "sticky_cart_7W3hCL",
     "game",
     "bf_promo_discount_AibFnrK",
-    "bf_top_bar_YUNa4V",
-    "scroll_to_button_7LJcTQ",
-    "titan_linked_image_A4GJp6",
     "limited_offers_jKBGqn",
     "bf25_hero_split_WcKrqx",
     "bf_top_bar_hxgfNg",
@@ -1235,6 +1159,7 @@
     "section_product_zigzag_bf_2025_NgGNnM",
     "bf_promo_discount_2025_8j4wb6",
     "bf_top_bar_8RrMkH",
+    "bf_top_bar_wq6AnB",
     "section_bundle_builder_bf25_EPy4QM",
     "bf_top_bar_YLhVGn",
     "bf_promo_discount_2025_HncBNf",

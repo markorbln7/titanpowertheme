@@ -1551,6 +1551,19 @@
         }
       });
 
+      // Close quantity controls when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.bf25sc-qty-controls') && !e.target.closest('.bf25sc-product-qty-badge')) {
+          document.querySelectorAll('.bf25sc-qty-controls.is-active').forEach(ctrl => {
+            ctrl.classList.remove('is-active');
+            ctrl.setAttribute('aria-hidden', 'true');
+          });
+          document.querySelectorAll('.bf25sc-product-qty-badge.is-editing').forEach(badge => {
+            badge.classList.remove('is-editing');
+          });
+        }
+      });
+
       // Initial render from BundleManager
       this.renderFromBundle();
 
@@ -1832,12 +1845,25 @@
 
         // Build card HTML
         card.innerHTML = `
+          <button type="button" class="bf25sc-product-remove" aria-label="Remove ${item.title}" data-variant-id="${item.variantId}">
+            <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
           <div class="bf25sc-product-image-container">
             ${item.image
               ? `<img src="${item.image}" alt="${item.title}" class="bf25sc-product-image" width="60" height="60">`
               : `<div class="bf25sc-product-placeholder">📦</div>`
             }
-            <span class="bf25sc-product-qty-badge">${item.quantity}</span>
+          </div>
+          <div class="bf25sc-product-qty-container" data-variant-id="${item.variantId}" data-quantity="${item.quantity}">
+            <span class="bf25sc-product-qty-badge" data-action="toggle-qty-edit">${item.quantity}</span>
+            <div class="bf25sc-qty-controls" aria-hidden="true">
+              <button type="button" class="bf25sc-qty-btn bf25sc-qty-minus" data-action="decrease" aria-label="Decrease quantity">−</button>
+              <span class="bf25sc-qty-value">${item.quantity}</span>
+              <button type="button" class="bf25sc-qty-btn bf25sc-qty-plus" data-action="increase" aria-label="Increase quantity">+</button>
+            </div>
+            <span class="bf25sc-qty-hint">Tap to edit</span>
           </div>
           <div class="bf25sc-product-info">
             <h4 class="bf25sc-product-title">${item.title}</h4>
@@ -1846,13 +1872,6 @@
               <span class="bf25sc-price-discounted">${getCurrencySymbol()}${discountedPrice.toFixed(2)}</span>
               <span class="bf25sc-price-original">${getCurrencySymbol()}${originalPrice.toFixed(2)}</span>
             </div>
-          </div>
-          <div class="bf25sc-product-actions">
-            <button type="button" class="bf25sc-product-remove" aria-label="Remove ${item.title}">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
           </div>
         `;
 
@@ -1864,6 +1883,64 @@
             e.stopPropagation();
             this.handleBundleRemove(item.variantId, item.title);
           });
+        }
+
+        // Add quantity toggle handler
+        const qtyContainer = card.querySelector('.bf25sc-product-qty-container');
+        const qtyBadge = card.querySelector('.bf25sc-product-qty-badge');
+        const qtyControls = card.querySelector('.bf25sc-qty-controls');
+
+        if (qtyBadge && qtyControls) {
+          // Toggle quantity editor on badge tap
+          qtyBadge.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = qtyControls.classList.contains('is-active');
+            // Close all other open qty editors
+            document.querySelectorAll('.bf25sc-qty-controls.is-active').forEach(ctrl => {
+              ctrl.classList.remove('is-active');
+              ctrl.setAttribute('aria-hidden', 'true');
+            });
+            document.querySelectorAll('.bf25sc-product-qty-badge.is-editing').forEach(badge => {
+              badge.classList.remove('is-editing');
+            });
+            // Toggle this one
+            if (!isOpen) {
+              qtyControls.classList.add('is-active');
+              qtyControls.setAttribute('aria-hidden', 'false');
+              qtyBadge.classList.add('is-editing');
+              // Mark as interacted for mobile hint
+              qtyContainer.classList.add('has-interacted');
+            }
+          });
+
+          // Handle +/- buttons
+          const minusBtn = card.querySelector('.bf25sc-qty-minus');
+          const plusBtn = card.querySelector('.bf25sc-qty-plus');
+          const qtyValue = card.querySelector('.bf25sc-qty-value');
+
+          if (minusBtn) {
+            minusBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const currentQty = parseInt(qtyValue.textContent, 10);
+              if (currentQty > 1) {
+                this.handleQuantityChange(item.variantId, currentQty - 1, item.title);
+              } else {
+                // If reducing to 0, remove the item
+                this.handleBundleRemove(item.variantId, item.title);
+              }
+            });
+          }
+
+          if (plusBtn) {
+            plusBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const currentQty = parseInt(qtyValue.textContent, 10);
+              this.handleQuantityChange(item.variantId, currentQty + 1, item.title);
+            });
+          }
         }
 
         scrollContainer.appendChild(card);
@@ -2276,6 +2353,54 @@
         if (card) {
           card.classList.remove('is-removing');
         }
+      }
+    }
+
+    /**
+     * Handle quantity change for a bundle item
+     * @param {string} variantId - Variant ID to update
+     * @param {number} newQuantity - New quantity
+     * @param {string} title - Product title for logging
+     */
+    async handleQuantityChange(variantId, newQuantity, title) {
+      console.log(`[BF25 Cart] Changing quantity for ${title} to ${newQuantity}`);
+
+      if (!window.BF25BundleManager) {
+        console.error('[BF25 Cart] BundleManager not available');
+        return;
+      }
+
+      try {
+        this.setState('updating');
+
+        // Update quantity in BundleManager
+        const result = window.BF25BundleManager.updateQuantity(variantId, newQuantity);
+        const success = result && result.success;
+
+        if (success) {
+          // Show feedback toast
+          if (window.BF25Toast) {
+            window.BF25Toast.show(`Updated quantity to ${newQuantity}`, {
+              type: 'success',
+              duration: 1500
+            });
+          }
+
+          // Re-render from bundle
+          this.renderFromBundle();
+        } else {
+          console.error('[BF25 Cart] Failed to update quantity');
+          if (window.BF25Toast) {
+            window.BF25Toast.show('Failed to update quantity', {
+              type: 'error',
+              duration: 2000
+            });
+          }
+        }
+      } catch (error) {
+        console.error('[BF25 Cart] Error changing quantity:', error);
+      } finally {
+        this.setState('idle');
       }
     }
 

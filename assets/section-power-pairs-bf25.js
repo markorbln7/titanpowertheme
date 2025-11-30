@@ -465,7 +465,7 @@
   function formatDiscountedMoneyGlobal(cents) {
     const bundle = window.PPState?.getActiveBundle?.();
     if (bundle && bundle.tier) {
-      const tierMultipliers = { 1: 0.85, 2: 0.70, 3: 0.60, 4: 0.54 };
+      const tierMultipliers = { 1: 0.80, 2: 0.65, 3: 0.58, 4: 0.52 };
       const tier = parseInt(bundle.tier) || 1;
       const multiplier = tierMultipliers[tier] || 1;
       cents = Math.round(cents * multiplier);
@@ -649,10 +649,10 @@
 
 // Tier discount multipliers (applied to subtotal)
 const TIER_MULTIPLIERS = {
-  1: 0.85,  // 15% OFF tier discount
-  2: 0.70,  // 30% OFF tier discount
-  3: 0.60,  // 40% OFF tier discount
-  4: 0.54   // 46% OFF tier discount
+  1: 0.80,  // 20% OFF tier discount
+  2: 0.65,  // 35% OFF tier discount
+  3: 0.58,  // 42% OFF tier discount
+  4: 0.52   // 48% OFF tier discount
 };
 
 // Tier icons

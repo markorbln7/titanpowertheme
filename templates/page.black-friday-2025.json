@@ -179,7 +179,7 @@
         ".bf25-hero-split .bf25-floating-product {display: none;}",
         ".bf25-hero-subline {display: none;}",
         ".bf25-cheeky {display: none;}",
-        ".bf25-hero-headline {font-weight: 800; font-family: 'Work Sans';}"
+        ".bf25-hero-headline {font-weight: 800; font-family: \"Work Sans\";}"
       ],
       "name": "BF25 Hero Split",
       "settings": {
@@ -259,10 +259,65 @@
     },
     "gift_display_section_bf25_qPiFLn": {
       "type": "gift-display-section-bf25",
-      "disabled": true,
+      "blocks": {
+        "gift_images_XEAwDA": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/4_in_1_cable_26558bb8-b664-40c2-b67b-86e485938d67.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "4 IN 1 CABLE",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Free",
+            "gift_price_product": "titan-100w-4-in-1-free",
+            "money_product": ""
+          }
+        },
+        "gift_images_VWKDFX": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/T119.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TURBO DOCK",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Free |",
+            "gift_price_product": "15w-wireless-turbo-dock",
+            "money_product": ""
+          }
+        },
+        "gift_images_pNJWAN": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/Untitled-3.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "UNRELEASED",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Free",
+            "gift_price_product": "magnetic-cable-free",
+            "money_product": ""
+          }
+        },
+        "gift_images_NRWLkM": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/holora-ad-alien_artifact_myste-17643243505814.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "MYSTERY BOX",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Free",
+            "gift_price_product": "mystery-gift-free",
+            "money_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_XEAwDA",
+        "gift_images_VWKDFX",
+        "gift_images_pNJWAN",
+        "gift_images_NRWLkM"
+      ],
       "name": "Gift Display Section bf25",
       "settings": {
-        "welcome_message": "Welcome to our store!",
+        "welcome_message": "",
         "set_inactive": false
       }
     },

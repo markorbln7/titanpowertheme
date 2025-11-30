@@ -110,6 +110,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Override external font-size styles for the top bar text */
+#shopify-section-template--19841134198962__bf_top_bar_hxgfNg .text-center.uppercase,
+.bf-top-bar p.text-center.uppercase {
+  font-size: 20px !important; /* Desktop size */
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  #shopify-section-template--19841134198962__bf_top_bar_hxgfNg .text-center.uppercase,
+  .bf-top-bar p.text-center.uppercase {
+    font-size: 15px !important; /* Mobile size */
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 400px) {
+  #shopify-section-template--19841134198962__bf_top_bar_hxgfNg .text-center.uppercase,
+  .bf-top-bar p.text-center.uppercase {
+    font-size: 13px !important; /* Small mobile size */
+    letter-spacing: 0.3px;
+  }
+}
 </style>
 
 {% if section.settings.show_banner %}

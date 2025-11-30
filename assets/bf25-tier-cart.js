@@ -1526,6 +1526,15 @@
       // Check for back button from checkout (session backup exists)
       this.handleCheckoutReturn();
 
+      // Handle iOS Safari bfcache restoration (back button from checkout)
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+          console.log('[BF25 Cart] 🔙 Page restored from bfcache (iOS back button)');
+          this.resetCheckoutButton();
+          this.handleCheckoutReturn();
+        }
+      });
+
       // Initial render from BundleManager
       this.renderFromBundle();
 
@@ -1629,11 +1638,27 @@
           }
 
           console.log('[BF25 Cart] ✓ Bundle restored, Shopify cart cleared');
+
+          // Reset checkout button state
+          this.resetCheckoutButton();
         }
 
       } catch (error) {
         console.error('[BF25 Cart] Error handling checkout return:', error);
       }
+    }
+
+    /**
+     * Reset checkout button to default state
+     * Called when returning from checkout via back button
+     */
+    resetCheckoutButton() {
+      if (this.elements?.btnBuy) {
+        this.elements.btnBuy.textContent = 'Buy Now';
+        this.elements.btnBuy.disabled = false;
+        console.log('[BF25 Cart] ✓ Checkout button reset');
+      }
+      this.setState('idle');
     }
 
     /**

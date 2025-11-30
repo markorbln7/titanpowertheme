@@ -2556,41 +2556,38 @@
    QUANTITY EDIT CONTROLS
    ==================================== */
 
-/* Quantity container - holds badge, controls, and hint */
+/* Quantity container - top-left corner */
 .bf25sc-product-qty-container {
   position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  top: -6px;
+  left: -6px;
   z-index: 15;
 }
 
-/* Quantity badge - tappable */
+/* Quantity badge - tappable, top-left */
 .bf25sc-product-qty-badge {
-  position: relative;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
   background: var(--bf25-accent, #60c655);
   color: #000;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  border-radius: 11px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, background 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .bf25sc-product-qty-badge:hover {
   transform: scale(1.1);
-  box-shadow: 0 3px 10px rgba(96, 198, 85, 0.4);
+}
+
+.bf25sc-product-qty-badge:active {
+  transform: scale(0.95);
 }
 
 .bf25sc-product-qty-badge.is-editing {
@@ -2598,38 +2595,37 @@
   color: #000;
 }
 
-/* Hint text */
-.bf25sc-qty-hint {
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.5);
+/* Carousel hint - single message at start */
+.bf25sc-qty-edit-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.bf25sc-qty-edit-hint span {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
 }
 
-.bf25sc-product-card:hover .bf25sc-qty-hint {
-  opacity: 1;
-}
-
-/* Mobile: Always show hint initially, fade after interaction */
-@media (max-width: 768px) {
-  .bf25sc-qty-hint {
-    opacity: 0.7;
-  }
-  .bf25sc-product-qty-container.has-interacted .bf25sc-qty-hint {
-    opacity: 0;
-  }
+/* Hide hint after user has interacted */
+.bf25sc-qty-edit-hint.is-hidden {
+  display: none;
 }
 
 /* Quantity controls - hidden by default */
 .bf25sc-qty-controls {
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
+  top: 100%;
+  left: 0;
+  transform: translateY(4px);
   display: flex;
   align-items: center;
   gap: 2px;
@@ -2650,7 +2646,7 @@
 .bf25sc-qty-controls.is-active {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(-4px) scale(1);
+  transform: translateY(4px) scale(1);
 }
 
 /* +/- buttons */
@@ -2690,15 +2686,15 @@
   color: #fff;
 }
 
-/* Remove button - moved to top-right corner */
+/* Remove button - small, subtle, top-right */
 .bf25sc-product-remove {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 20px;
-  height: 20px;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
   padding: 0;
-  background: rgba(239, 68, 68, 0.9);
+  background: rgba(100, 100, 100, 0.8);
   border: none;
   border-radius: 50%;
   color: #fff;
@@ -2707,29 +2703,29 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   z-index: 15;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .bf25sc-product-card:hover .bf25sc-product-remove,
 .bf25sc-product-card:focus-within .bf25sc-product-remove {
-  opacity: 1;
+  opacity: 0.7;
 }
 
 .bf25sc-product-remove:hover {
-  background: rgba(220, 38, 38, 1);
-  transform: scale(1.15);
+  background: rgba(239, 68, 68, 0.9);
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .bf25sc-product-remove:active {
   transform: scale(0.9);
 }
 
-/* Mobile: Always show remove button */
+/* Mobile: Show subtle remove button */
 @media (max-width: 768px) {
   .bf25sc-product-remove {
-    opacity: 0.8;
+    opacity: 0.5;
   }
 }
 

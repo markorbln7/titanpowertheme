@@ -1823,6 +1823,14 @@
 
       if (emptyState) emptyState.style.display = 'none';
 
+      // Add carousel hint at the start
+      if (items.length > 0) {
+        const hint = document.createElement('div');
+        hint.className = 'bf25sc-qty-edit-hint';
+        hint.innerHTML = `<span>Tap Quantity</span><span>to Change</span>`;
+        scrollContainer.appendChild(hint);
+      }
+
       // Get current discount for price display
       const discountMultiplier = 1 - (computed.discountPercent / 100);
 
@@ -1846,8 +1854,8 @@
         // Build card HTML
         card.innerHTML = `
           <button type="button" class="bf25sc-product-remove" aria-label="Remove ${item.title}" data-variant-id="${item.variantId}">
-            <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <svg width="8" height="8" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
             </svg>
           </button>
           <div class="bf25sc-product-image-container">
@@ -1863,7 +1871,6 @@
               <span class="bf25sc-qty-value">${item.quantity}</span>
               <button type="button" class="bf25sc-qty-btn bf25sc-qty-plus" data-action="increase" aria-label="Increase quantity">+</button>
             </div>
-            <span class="bf25sc-qty-hint">Tap to edit</span>
           </div>
           <div class="bf25sc-product-info">
             <h4 class="bf25sc-product-title">${item.title}</h4>

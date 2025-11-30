@@ -235,6 +235,7 @@
         "block_item_GXHiyC",
         "block_item_dqVeqb"
       ],
+      "disabled": true,
       "custom_css": [
         ".max-w-\\[1000px\\].mx-auto {display: none;}",
         ".flex-row {padding: 0px 0px 10px 0px;}",
@@ -273,6 +274,68 @@
       "settings": {
         "welcome_message": "Everything 50% OFF + SAVE up to 85%",
         "show_banner": false
+      }
+    },
+    "bf_promo_discount_2025_kbfkJJ": {
+      "type": "bf-promo-discount-2025",
+      "blocks": {
+        "block_item_ND8cmH": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "60",
+            "gift_text": "+ 1 FREE GIFT",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_U3wLnF": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "8+ items",
+            "block_title": "70",
+            "gift_text": "+ 1 FREE GIFT",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_kA9Gmb": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "12+ items",
+            "block_title": "80",
+            "gift_text": "+ 1 FREE GIFT",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_3XrAQP": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "85",
+            "gift_text": "+ 4 FREE GIFT",
+            "eyebrow_position": false
+          }
+        }
+      },
+      "block_order": [
+        "block_item_ND8cmH",
+        "block_item_U3wLnF",
+        "block_item_kA9Gmb",
+        "block_item_3XrAQP"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {display: none;}",
+        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
+      ],
+      "name": "Bf Promo Discount bf 2025",
+      "settings": {
+        "show_banner": false,
+        "section_title": "",
+        "section_eyebrow": ""
       }
     },
     "section_bf25_hero_tLQyNk": {
@@ -967,68 +1030,6 @@
         "section_eyebrow": ""
       }
     },
-    "bf_promo_discount_2025_kbfkJJ": {
-      "type": "bf-promo-discount-2025",
-      "blocks": {
-        "block_item_ND8cmH": {
-          "type": "block_item",
-          "settings": {
-            "block_eyebrow": "4+ items",
-            "block_title": "60",
-            "gift_text": "+ 1 FREE GIFT",
-            "eyebrow_position": false
-          }
-        },
-        "block_item_U3wLnF": {
-          "type": "block_item",
-          "settings": {
-            "block_eyebrow": "8+ items",
-            "block_title": "70",
-            "gift_text": "+ 1 FREE GIFT",
-            "eyebrow_position": false
-          }
-        },
-        "block_item_kA9Gmb": {
-          "type": "block_item",
-          "settings": {
-            "block_eyebrow": "12+ items",
-            "block_title": "80",
-            "gift_text": "+ 1 FREE GIFT",
-            "eyebrow_position": false
-          }
-        },
-        "block_item_3XrAQP": {
-          "type": "block_item",
-          "settings": {
-            "block_eyebrow": "4+ items",
-            "block_title": "85",
-            "gift_text": "+ 4 FREE GIFT",
-            "eyebrow_position": false
-          }
-        }
-      },
-      "block_order": [
-        "block_item_ND8cmH",
-        "block_item_U3wLnF",
-        "block_item_kA9Gmb",
-        "block_item_3XrAQP"
-      ],
-      "custom_css": [
-        ".max-w-\\[1000px\\].mx-auto {display: none;}",
-        ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
-        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
-        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
-        ".max-w-\\[700px\\] {display: none;}",
-        ".text-\\[\\#60c655\\] {--tw-text-opacity: 1; color: #60c655;}"
-      ],
-      "name": "Bf Promo Discount bf 2025",
-      "settings": {
-        "show_banner": false,
-        "section_title": "",
-        "section_eyebrow": ""
-      }
-    },
     "testimonial_slider_XJAQhD": {
       "type": "testimonial-slider",
       "blocks": {
@@ -1235,6 +1236,7 @@
     "bf25_hero_split_WcKrqx",
     "bf_promo_discount_2025_wVx3tP",
     "gift_display_section_bf25_qPiFLn",
+    "bf_promo_discount_2025_kbfkJJ",
     "bf_top_bar_hxgfNg",
     "section_bf25_hero_tLQyNk",
     "section_power_pack_bf25_mLajpe",
@@ -1247,7 +1249,6 @@
     "section_bundle_builder_bf25_EPy4QM",
     "bf_top_bar_YLhVGn",
     "bf_promo_discount_2025_HncBNf",
-    "bf_promo_discount_2025_kbfkJJ",
     "testimonial_slider_XJAQhD",
     "product_reviews_UYaUdq",
     "bf25_tier_cart_YJkXya"

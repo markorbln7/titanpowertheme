@@ -3684,7 +3684,7 @@ class ExpansionManager {
     // Update current price (subtotal before tier discount)
     const currentPriceElement = pricingHeader.querySelector('.pp-pricing-header__current');
     if (currentPriceElement) {
-      currentPriceElement.textContent = this.formatMoney(pricing.subtotal);
+      currentPriceElement.textContent = this.formatMoney(pricing.finalPrice);
     }
 
     // Update crossed price
@@ -3778,7 +3778,7 @@ class ExpansionManager {
     // Update current price
     const priceElement = bundleCard.querySelector('.pp-bundle-card__price');
     if (priceElement) {
-      priceElement.textContent = this.formatMoney(pricing.subtotal);
+      priceElement.textContent = this.formatMoney(pricing.finalPrice);
     }
 
     // Update compare price

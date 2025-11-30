@@ -465,7 +465,7 @@
   function formatDiscountedMoneyGlobal(cents) {
     const bundle = window.PPState?.getActiveBundle?.();
     if (bundle && bundle.tier) {
-      const tierMultipliers = { 1: 0.91, 2: 0.76, 3: 0.65, 4: 0.57 };
+      const tierMultipliers = { 1: 0.85, 2: 0.70, 3: 0.60, 4: 0.54 };
       const tier = parseInt(bundle.tier) || 1;
       const multiplier = tierMultipliers[tier] || 1;
       cents = Math.round(cents * multiplier);
@@ -649,10 +649,10 @@
 
 // Tier discount multipliers (applied to subtotal)
 const TIER_MULTIPLIERS = {
-  1: 0.91,  // 60% OFF total savings
-  2: 0.76,  // 70% OFF total savings
-  3: 0.65,  // 80% OFF total savings
-  4: 0.57   // 85% OFF total savings
+  1: 0.85,  // 15% OFF tier discount
+  2: 0.70,  // 30% OFF tier discount
+  3: 0.60,  // 40% OFF tier discount
+  4: 0.54   // 46% OFF tier discount
 };
 
 // Tier icons
@@ -3197,7 +3197,7 @@ class ExpansionManager {
       if (product && product.selectedVariant) {
         const priceElement = card.querySelector('.pp-product-compact-price span:first-child');
         if (priceElement) {
-          priceElement.textContent = this.formatMoney(product.selectedVariant.price);
+          priceElement.innerHTML = this.formatMoney(product.selectedVariant.price);
         }
 
         // Update aria-label
@@ -3684,13 +3684,13 @@ class ExpansionManager {
     // Update current price (subtotal before tier discount)
     const currentPriceElement = pricingHeader.querySelector('.pp-pricing-header__current');
     if (currentPriceElement) {
-      currentPriceElement.textContent = this.formatMoney(pricing.finalPrice);
+      currentPriceElement.innerHTML = this.formatMoney(pricing.finalPrice);
     }
 
     // Update crossed price
     const crossedPriceElement = pricingHeader.querySelector('.pp-pricing-header__crossed');
     if (crossedPriceElement) {
-      crossedPriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+      crossedPriceElement.innerHTML = this.formatMoney(pricing.compareAtSubtotal);
     }
 
     // Update savings row (new structure: savings on top, prices below)
@@ -3778,14 +3778,14 @@ class ExpansionManager {
     // Update current price
     const priceElement = bundleCard.querySelector('.pp-bundle-card__price');
     if (priceElement) {
-      priceElement.textContent = this.formatMoney(pricing.finalPrice);
+      priceElement.innerHTML = this.formatMoney(pricing.finalPrice);
     }
 
     // Update compare price
     const comparePriceElement = bundleCard.querySelector('.pp-bundle-card__compare-price');
     if (pricing.compareAtSubtotal > pricing.subtotal) {
       if (comparePriceElement) {
-        comparePriceElement.textContent = this.formatMoney(pricing.compareAtSubtotal);
+        comparePriceElement.innerHTML = this.formatMoney(pricing.compareAtSubtotal);
         comparePriceElement.style.display = '';
       } else {
         // Create compare price element if it doesn't exist
@@ -3793,7 +3793,7 @@ class ExpansionManager {
         if (pricesContainer) {
           const newComparePrice = document.createElement('span');
           newComparePrice.className = 'pp-bundle-card__compare-price';
-          newComparePrice.textContent = this.formatMoney(pricing.compareAtSubtotal);
+          newComparePrice.innerHTML = this.formatMoney(pricing.compareAtSubtotal);
           pricesContainer.appendChild(newComparePrice);
         }
       }
@@ -3805,7 +3805,7 @@ class ExpansionManager {
     const savingsElement = bundleCard.querySelector('.pp-bundle-card__savings');
     if (pricing.savings > 0) {
       if (savingsElement) {
-        savingsElement.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+        savingsElement.innerHTML = `Save ${this.formatMoney(pricing.savings)}`;
         savingsElement.style.display = '';
       } else {
         // Create savings element if it doesn't exist
@@ -3813,7 +3813,7 @@ class ExpansionManager {
         if (pricingContainer) {
           const newSavings = document.createElement('div');
           newSavings.className = 'pp-bundle-card__savings';
-          newSavings.textContent = `Save ${this.formatMoney(pricing.savings)}`;
+          newSavings.innerHTML = `Save ${this.formatMoney(pricing.savings)}`;
           pricingContainer.appendChild(newSavings);
         }
       }

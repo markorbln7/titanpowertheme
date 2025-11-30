@@ -308,30 +308,117 @@
         "button_text": "GET STARTED"
       }
     },
-    "section_collections_with_nav_EzNML8": {
-      "type": "section-collections-with-nav",
+    "bf_promo_discount_AibFnr": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_WmBdEV": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_D3V3fQ": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_gxwyeN": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_XTEFBY": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_WmBdEV",
+        "block_item_D3V3fQ",
+        "block_item_gxwyeN",
+        "block_item_XTEFBY"
+      ],
+      "disabled": true,
       "custom_css": [
-        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
-        ".js-buy-more {color: #000; font-weight: 700;}",
-        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box {background: #fbfbfb;}",
-        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
-        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
-        ".arrow {color: #000000; background: #f2c054;}",
-        ".section-collections-with-nav__product-price {color: #000000;}",
-        ".md\\:top-\\[-15px\\] {display: NONE;}"
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {}",
+        ".text-\\[\\#60C655\\] {--tw-text-opacity: 1; color: #60c655;}"
       ],
       "settings": {
-        "use_popup": true,
-        "show_alt_images": false,
-        "collections": [
-          "power-pairs"
-        ],
-        "add_4": "shopify://shop_images/MULTIBUY_OFFER_aDD_4X_3b63f045-a350-4b10-b134-c1d41bdd80d6.jpg",
-        "add_4_text": "4",
-        "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
-        "add_6_text": "6",
-        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
-        "add_10_text": "10"
+        "show_banner": true,
+        "banner_image": "shopify://shop_images/neon_2_1.png",
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "bf_promo_discount_2025_T7NzXk": {
+      "type": "bf-promo-discount-2025",
+      "blocks": {
+        "block_item_GyTGhk": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "60",
+            "gift_text": "+ FREE GIFT",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_8fMA9W": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "8+ items",
+            "block_title": "70",
+            "gift_text": "+ FREE GIFTS",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_GdKtiB": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "12+ items",
+            "block_title": "80",
+            "gift_text": "+ FREE GIFTS",
+            "eyebrow_position": false
+          }
+        },
+        "block_item_tqE6iQ": {
+          "type": "block_item",
+          "settings": {
+            "block_eyebrow": "16+ items",
+            "block_title": "85",
+            "gift_text": "+ FREE GIFTS",
+            "eyebrow_position": false
+          }
+        }
+      },
+      "block_order": [
+        "block_item_GyTGhk",
+        "block_item_8fMA9W",
+        "block_item_GdKtiB",
+        "block_item_tqE6iQ"
+      ],
+      "name": "Bf Promo Discount bf 2025",
+      "settings": {
+        "show_banner": true,
+        "banner_image": "shopify://shop_images/neon_2_1.png",
+        "section_title": "Build Your Black Friday Bundle",
+        "section_eyebrow": "Everything 50% OFF + SAVE 85%  BY BUNDLING"
       }
     },
     "gift_display_section_PDXACj": {
@@ -407,58 +494,6 @@
         "set_inactive": false
       }
     },
-    "bf_promo_discount_AibFnr": {
-      "type": "bf-promo-discount",
-      "blocks": {
-        "block_item_WmBdEV": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "3+ items",
-            "block_title": "55",
-            "eyebrow_position": true
-          }
-        },
-        "block_item_D3V3fQ": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "7+ items",
-            "block_title": "70",
-            "eyebrow_position": true
-          }
-        },
-        "block_item_XTEFBY": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "10+ items",
-            "block_title": "80",
-            "eyebrow_position": true
-          }
-        }
-      },
-      "block_order": [
-        "block_item_WmBdEV",
-        "block_item_D3V3fQ",
-        "block_item_XTEFBY"
-      ],
-      "custom_css": [
-        ".max-w-\\[1000px\\].mx-auto {display: none;}",
-        ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
-        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
-        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
-        ".max-w-\\[700px\\] {}",
-        ".text-\\[\\#60C655\\] {--tw-text-opacity: 1; color: #60c655;}"
-      ],
-      "settings": {
-        "show_banner": true,
-        "banner_image": "shopify://shop_images/neon_2_1.png",
-        "section_title": "",
-        "section_eyebrow": ""
-      }
-    },
     "bf_top_bar_8RrMkH": {
       "type": "bf-top-bar",
       "custom_css": [
@@ -472,6 +507,32 @@
       "settings": {
         "welcome_message": "Everything 50% OFF + SAVE 85%  BY BUNDLING",
         "show_banner": false
+      }
+    },
+    "section_collections_with_nav_EzNML8": {
+      "type": "section-collections-with-nav",
+      "custom_css": [
+        ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
+        ".js-buy-more {color: #000; font-weight: 700;}",
+        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box {background: #fbfbfb;}",
+        ".section-explore .buy-now-popup__upsell .buy-now-popup__upsell-box.active {background: #60c6550d;}",
+        ".bg-\\[\\#60c655\\] {background-color: #f2c054; color: #000; font-weight: 800;}",
+        ".arrow {color: #000000; background: #f2c054;}",
+        ".section-collections-with-nav__product-price {color: #000000;}",
+        ".md\\:top-\\[-15px\\] {display: NONE;}"
+      ],
+      "settings": {
+        "use_popup": true,
+        "show_alt_images": false,
+        "collections": [
+          "power-pairs"
+        ],
+        "add_4": "shopify://shop_images/MULTIBUY_OFFER_aDD_4X_3b63f045-a350-4b10-b134-c1d41bdd80d6.jpg",
+        "add_4_text": "4",
+        "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
+        "add_6_text": "6",
+        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
+        "add_10_text": "10"
       }
     },
     "section_product_zigzag_pJ4EYx": {
@@ -1065,10 +1126,11 @@
     "limited_offers_jKBGqn",
     "limited_offers_zbhK6h",
     "scroll_to_button_7LJcTQ",
-    "section_collections_with_nav_EzNML8",
-    "gift_display_section_PDXACj",
     "bf_promo_discount_AibFnr",
+    "bf_promo_discount_2025_T7NzXk",
+    "gift_display_section_PDXACj",
     "bf_top_bar_8RrMkH",
+    "section_collections_with_nav_EzNML8",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",
     "section_collections_with_nav_Xpintm",

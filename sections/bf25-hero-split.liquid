@@ -90,7 +90,7 @@
 
       <!-- CTA Row -->
       <div class="bf25-cta-row">
-        <a href="#bf25-hero-section" class="bf25-cta-button" data-scroll-to="slider">
+        <a href="#PowerPairsBF25" class="bf25-cta-button" data-scroll-to="power-pairs">
           {{ cta_text }}
         </a>
         <div class="bf25-timer-inline">
@@ -960,11 +960,11 @@
 
   // Smooth scroll to slider section
   document.addEventListener('DOMContentLoaded', function() {
-    const ctaBtn = document.querySelector('.bf25-cta-button[data-scroll-to="slider"]');
+    const ctaBtn = document.querySelector('.bf25-cta-button[data-scroll-to="power-pairs"]');
     if (ctaBtn) {
       ctaBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.getElementById('bf25-hero-section');
+        const target = document.getElementById('PowerPairsBF25');
         if (target) {
           const offset = 80; // Offset from top for better positioning
           const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;

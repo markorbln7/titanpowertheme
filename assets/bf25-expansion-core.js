@@ -801,11 +801,18 @@ class TierCalculator {
     // Get compare price for display reference (original retail price)
     const comparePrice = product.comparePrice || basePricePerItem;
 
-    // Get current tier
-    const currentTier = this.getTierForQuantity(quantity);
+    // Get existing bundle item count for tier calculation
+    const existingBundleItems = window.BF25BundleManager?.bundle?.computed?.itemCount || 0;
+    const combinedQuantity = existingBundleItems + quantity;
+
+    // Get current tier based on COMBINED quantity (existing + modal)
+    const currentTier = this.getTierForQuantity(combinedQuantity);
 
     if (this.config.debug) {
       console.log('💰 Pricing Calculation (BF25-FIX-018)');
+      console.log('   Existing bundle items:', existingBundleItems);
+      console.log('   Modal quantity:', quantity);
+      console.log('   Combined for tier:', combinedQuantity);
       console.log('   Quantity:', quantity);
       console.log('   Shopify Price (base):', this.formatPrice(basePricePerItem));
       console.log('   Compare Price (retail):', this.formatPrice(comparePrice));
@@ -841,9 +848,9 @@ class TierCalculator {
       console.log('   Savings:', this.formatPrice(savingsTotal));
     }
 
-    // Get next tier information
-    const nextTier = this.getNextTier(quantity);
-    const itemsToNextTier = this.getItemsToNextTier(quantity);
+    // Get next tier information based on combined quantity
+    const nextTier = this.getNextTier(combinedQuantity);
+    const itemsToNextTier = this.getItemsToNextTier(combinedQuantity);
 
     // Calculate potential next tier pricing (using multiplier on basePrice)
     let nextTierPricing = null;

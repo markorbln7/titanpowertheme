@@ -310,7 +310,6 @@
     },
     "section_collections_with_nav_EzNML8": {
       "type": "section-collections-with-nav",
-      "disabled": true,
       "custom_css": [
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
         ".js-buy-more {color: #000; font-weight: 700;}",
@@ -323,7 +322,7 @@
       ],
       "settings": {
         "use_popup": true,
-        "show_alt_images": true,
+        "show_alt_images": false,
         "collections": [
           "power-pairs"
         ],
@@ -333,6 +332,146 @@
         "add_6_text": "6",
         "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
         "add_10_text": "10"
+      }
+    },
+    "gift_display_section_PDXACj": {
+      "type": "gift-display-section",
+      "blocks": {
+        "gift_images_p8WriF": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
+            "product_number_unlocker": "1",
+            "pdp_hero_icon_title": "FREE SHIPPING",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "SHOP TODAY",
+            "gift_price_product": "",
+            "money_product": ""
+          }
+        },
+        "gift_images_rKPd7B": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_mystery_1.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "MYSTERY GIFT",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
+            "money_product": ""
+          }
+        },
+        "gift_images_4DTz49": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/dock_-_gift.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TURBO DOCK",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "pd",
+            "money_product": ""
+          }
+        },
+        "gift_images_yWcNKm": {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon": "shopify://shop_images/titan_cable_pro_free_gift.png",
+            "product_number_unlocker": "",
+            "pdp_hero_icon_title": "TITAN CABLE PRO",
+            "pdp_hero_icon_title_top": "",
+            "top_note": "Spend",
+            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
+            "money_product": ""
+          }
+        }
+      },
+      "block_order": [
+        "gift_images_p8WriF",
+        "gift_images_rKPd7B",
+        "gift_images_4DTz49",
+        "gift_images_yWcNKm"
+      ],
+      "custom_css": [
+        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
+        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
+        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
+        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
+        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
+        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
+        ".mt-\\[20px\\] {margin-top: 20px;}",
+        ".gift-overlay.is-active {background-color: #60c655;}"
+      ],
+      "settings": {
+        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
+        "set_inactive": false
+      }
+    },
+    "bf_promo_discount_AibFnr": {
+      "type": "bf-promo-discount",
+      "blocks": {
+        "block_item_WmBdEV": {
+          "type": "block_item",
+          "disabled": true,
+          "settings": {
+            "block_eyebrow": "3+ items",
+            "block_title": "55",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_D3V3fQ": {
+          "type": "block_item",
+          "disabled": true,
+          "settings": {
+            "block_eyebrow": "7+ items",
+            "block_title": "70",
+            "eyebrow_position": true
+          }
+        },
+        "block_item_XTEFBY": {
+          "type": "block_item",
+          "disabled": true,
+          "settings": {
+            "block_eyebrow": "10+ items",
+            "block_title": "80",
+            "eyebrow_position": true
+          }
+        }
+      },
+      "block_order": [
+        "block_item_WmBdEV",
+        "block_item_D3V3fQ",
+        "block_item_XTEFBY"
+      ],
+      "custom_css": [
+        ".max-w-\\[1000px\\].mx-auto {display: none;}",
+        ".flex-row {padding: 0px 0px 10px 0px;}",
+        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
+        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
+        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
+        ".max-w-\\[700px\\] {}",
+        ".text-\\[\\#60C655\\] {--tw-text-opacity: 1; color: #60c655;}"
+      ],
+      "settings": {
+        "show_banner": true,
+        "banner_image": "shopify://shop_images/neon_2_1.png",
+        "section_title": "",
+        "section_eyebrow": ""
+      }
+    },
+    "bf_top_bar_8RrMkH": {
+      "type": "bf-top-bar",
+      "custom_css": [
+        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
+        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
+        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
+        ".bf-top-bar {background-color: #60c655;}",
+        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}",
+        ".bg-\\[\\#60c655\\] {margin-top: 25px;}"
+      ],
+      "settings": {
+        "welcome_message": "Everything 50% OFF + SAVE 85%  BY BUNDLING",
+        "show_banner": false
       }
     },
     "section_product_zigzag_pJ4EYx": {
@@ -395,7 +534,6 @@
         "icons_repeater_3YzibB",
         "icons_repeater_P3UrXM"
       ],
-      "disabled": true,
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         ".font-bold {font-weight: 500; padding: 0px 10px 0px 10px;}",
@@ -472,7 +610,6 @@
         "icons_repeater_kcbHpE",
         "icons_repeater_wQnWyM"
       ],
-      "disabled": true,
       "custom_css": [
         ".product-zigzag__discount-box {color: #fff; font-size: 16px; line-height: 16px; font-weight: 600; transform: rotate(-10deg); font-style: italic; letter-spacing: 0px;}",
         "@media (max-width: 768px) {.product-zigzag__icon {margin-bottom: 0px; } .product-zigzag__buttons button, .product-zigzag__buttons a {height: 45px; width: 170px; margin-top: -15px; } .product-zigzag__upsell-products {gap: 10px; }}"
@@ -486,146 +623,6 @@
         "product_label": "Clean Office & Powered Up Devices",
         "discount_text": "4 Items 55% OFF",
         "reverse_layout": true
-      }
-    },
-    "bf_promo_discount_AibFnr": {
-      "type": "bf-promo-discount",
-      "blocks": {
-        "block_item_WmBdEV": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "3+ items",
-            "block_title": "55",
-            "eyebrow_position": true
-          }
-        },
-        "block_item_D3V3fQ": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "7+ items",
-            "block_title": "70",
-            "eyebrow_position": true
-          }
-        },
-        "block_item_XTEFBY": {
-          "type": "block_item",
-          "disabled": true,
-          "settings": {
-            "block_eyebrow": "10+ items",
-            "block_title": "80",
-            "eyebrow_position": true
-          }
-        }
-      },
-      "block_order": [
-        "block_item_WmBdEV",
-        "block_item_D3V3fQ",
-        "block_item_XTEFBY"
-      ],
-      "custom_css": [
-        ".max-w-\\[1000px\\].mx-auto {display: none;}",
-        ".flex-row {padding: 0px 0px 10px 0px;}",
-        ".text-\\[16px\\] {font-weight: 600; padding-top: 4px; letter-spacing: 0.2px;}",
-        "@media only screen and (max-width: 768px) {.text-\\[40px\\] {font-size: 44px; } .text-\\[16px\\] {font-size: 16px; }}",
-        ".custom-pack-wrapper {padding: 10px 10px; padding-bottom: 20px;}",
-        ".max-w-\\[700px\\] {}",
-        ".text-\\[\\#60C655\\] {--tw-text-opacity: 1; color: #60c655;}"
-      ],
-      "settings": {
-        "show_banner": true,
-        "banner_image": "shopify://shop_images/black_friday_power_up_sale_badge.png",
-        "section_title": "",
-        "section_eyebrow": "Build Your Black Friday Bundle"
-      }
-    },
-    "gift_display_section_PDXACj": {
-      "type": "gift-display-section",
-      "blocks": {
-        "gift_images_p8WriF": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/free-shipping_2a2192f7-cef9-42f8-b366-7f332706c772.webp",
-            "product_number_unlocker": "1",
-            "pdp_hero_icon_title": "FREE SHIPPING",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "SHOP TODAY",
-            "gift_price_product": "",
-            "money_product": ""
-          }
-        },
-        "gift_images_rKPd7B": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/FREE_GIFT_-_mystery_1.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "MYSTERY GIFT",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "9-in-1-cable-kit-do-not-delete",
-            "money_product": ""
-          }
-        },
-        "gift_images_4DTz49": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/dock_-_gift.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TURBO DOCK",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "pd",
-            "money_product": ""
-          }
-        },
-        "gift_images_yWcNKm": {
-          "type": "gift_images",
-          "settings": {
-            "pdp_hero_icon": "shopify://shop_images/titan_cable_pro_free_gift.png",
-            "product_number_unlocker": "",
-            "pdp_hero_icon_title": "TITAN CABLE PRO",
-            "pdp_hero_icon_title_top": "",
-            "top_note": "Spend",
-            "gift_price_product": "3-in-1-multi-cable-do-not-delete",
-            "money_product": ""
-          }
-        }
-      },
-      "block_order": [
-        "gift_images_p8WriF",
-        "gift_images_rKPd7B",
-        "gift_images_4DTz49",
-        "gift_images_yWcNKm"
-      ],
-      "custom_css": [
-        ".top-note.is-active {display: flex; flex-wrap: wrap; margin-top: -27px; font-size: 14px; text-align: CENTER;}",
-        ".crossed {text-decoration: none; color: #60c655; font-size: 15px;}",
-        ".top-note {padding: 2px 0px; width: 87%; line-height: 1.4;}",
-        ".gift-title_text {font-size: 15px; margin-top: 9px;}",
-        ".bf-text {font-size: 17px !important; font-weight: 700; color: #343434; text-align: center;}",
-        "@media only screen and (max-width: 768px) {.bf-gift-icon {display: none; }}",
-        ".mt-\\[20px\\] {margin-top: 20px;}",
-        ".gift-overlay.is-active {background-color: #60c655;}"
-      ],
-      "settings": {
-        "welcome_message": "Boost Cart Value to Unlock 4 FREE GIFTS!",
-        "set_inactive": false
-      }
-    },
-    "bf_top_bar_8RrMkH": {
-      "type": "bf-top-bar",
-      "custom_css": [
-        ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
-        ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
-        "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        ".bf-top-bar {background-color: #60c655;}",
-        ".bg-\\[\\#60c655\\] {--tw-bg-opacity: 1; background-color: #60c655;}",
-        ".bg-\\[\\#60c655\\] {margin-top: 25px;}"
-      ],
-      "settings": {
-        "welcome_message": "Everything 50% OFF + SAVE 85%  BY BUNDLING",
-        "show_banner": false
       }
     },
     "section_collections_with_nav_Xpintm": {
@@ -1069,11 +1066,11 @@
     "limited_offers_zbhK6h",
     "scroll_to_button_7LJcTQ",
     "section_collections_with_nav_EzNML8",
+    "gift_display_section_PDXACj",
+    "bf_promo_discount_AibFnr",
+    "bf_top_bar_8RrMkH",
     "section_product_zigzag_pJ4EYx",
     "section_product_zigzag_BFhezE",
-    "bf_promo_discount_AibFnr",
-    "gift_display_section_PDXACj",
-    "bf_top_bar_8RrMkH",
     "section_collections_with_nav_Xpintm",
     "gift_display_section_HhwPbQ",
     "bf_promo_discount_AibFnrL",

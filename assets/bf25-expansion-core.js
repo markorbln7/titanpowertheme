@@ -1007,13 +1007,35 @@ class TierCalculator {
    * Format price from cents to currency string
    *
    * @param {number} cents - Price in cents
-   * @returns {string} Formatted price (e.g., "€22.95")
+   * @returns {string} Formatted price (e.g., "$22.95")
    */
   formatPrice(cents) {
-    if (!cents || cents === 0) return '€0.00';
+    if (!cents || cents === 0) return this.getCurrencySymbol() + '0.00';
 
-    const euros = (cents / 100).toFixed(2);
-    return `€${euros}`;
+    const amount = (cents / 100).toFixed(2);
+    return `${this.getCurrencySymbol()}${amount}`;
+  }
+
+  /**
+   * Get currency symbol dynamically
+   * @returns {string} Currency symbol
+   */
+  getCurrencySymbol() {
+    // Try Shopify currency
+    if (window.Shopify?.currency?.active) {
+      const symbolMap = {
+        'USD': '$', 'EUR': '€', 'GBP': '£', 'CAD': '$', 'AUD': '$',
+        'JPY': '¥', 'CNY': '¥', 'CHF': 'CHF', 'SEK': 'kr', 'NOK': 'kr',
+        'DKK': 'kr', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft', 'RSD': 'RSD'
+      };
+      return symbolMap[window.Shopify.currency.active] || window.Shopify.currency.active + ' ';
+    }
+    // Try BOGOCurrency
+    if (typeof BOGOCurrency !== 'undefined' && BOGOCurrency.getCurrencySymbol) {
+      return BOGOCurrency.getCurrencySymbol();
+    }
+    // Fallback
+    return '€';
   }
 
   /**
@@ -5527,13 +5549,35 @@ class ExpansionManager {
    * Format price from cents to currency string
    *
    * @param {number} cents - Price in cents
-   * @returns {string} Formatted price (e.g., "€22.95")
+   * @returns {string} Formatted price (e.g., "$22.95")
    */
   formatPrice(cents) {
-    if (!cents || cents === 0) return '€0.00';
+    if (!cents || cents === 0) return this.getCurrencySymbol() + '0.00';
 
-    const euros = (cents / 100).toFixed(2);
-    return `€${euros}`;
+    const amount = (cents / 100).toFixed(2);
+    return `${this.getCurrencySymbol()}${amount}`;
+  }
+
+  /**
+   * Get currency symbol dynamically
+   * @returns {string} Currency symbol
+   */
+  getCurrencySymbol() {
+    // Try Shopify currency
+    if (window.Shopify?.currency?.active) {
+      const symbolMap = {
+        'USD': '$', 'EUR': '€', 'GBP': '£', 'CAD': '$', 'AUD': '$',
+        'JPY': '¥', 'CNY': '¥', 'CHF': 'CHF', 'SEK': 'kr', 'NOK': 'kr',
+        'DKK': 'kr', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft', 'RSD': 'RSD'
+      };
+      return symbolMap[window.Shopify.currency.active] || window.Shopify.currency.active + ' ';
+    }
+    // Try BOGOCurrency
+    if (typeof BOGOCurrency !== 'undefined' && BOGOCurrency.getCurrencySymbol) {
+      return BOGOCurrency.getCurrencySymbol();
+    }
+    // Fallback
+    return '€';
   }
 
   /**

@@ -51,6 +51,23 @@
       "name": "Scroll Navigation",
       "settings": {}
     },
+    "section_bf25_snowfall_Nyq7rR": {
+      "type": "section-bf25-snowfall",
+      "name": "BF25 Snowfall",
+      "settings": {
+        "enable_snowfall": true,
+        "show_overlay": true,
+        "overlay_opacity": 20,
+        "close_flakes": 2,
+        "midclose_flakes": 5,
+        "mid_flakes": 7,
+        "midfar_flakes": 8,
+        "far_flakes": 8,
+        "fall_speed": 4,
+        "wind_speed": 2,
+        "max_size": 12
+      }
+    },
     "game": {
       "type": "compare-table",
       "disabled": true,
@@ -836,7 +853,7 @@
         ".text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\].uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
         "@media (max-width: 768px) {.bf-top-bar {padding-top: 3px; padding-bottom: 3px; }}",
-        "@media screen and (max-width: 749px) .text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\] {{font-size: 15px!important; }}"
+        "@media screen and (max-width: 749px) .text-center.uppercase.md\\:text-\\[20px\\].text-\\[14px\\] {{font-size: 15px !important; }}"
       ],
       "settings": {
         "welcome_message": "Everything 50% OFF + SAVE up to 85%",
@@ -1131,26 +1148,10 @@
         "enable_testing": false,
         "position": "bottom"
       }
-    },
-    "section_bf25_snowfall_Nyq7rR": {
-      "type": "section-bf25-snowfall",
-      "name": "BF25 Snowfall",
-      "settings": {
-        "enable_snowfall": true,
-        "show_overlay": true,
-        "overlay_opacity": 20,
-        "close_flakes": 2,
-        "midclose_flakes": 5,
-        "mid_flakes": 7,
-        "midfar_flakes": 8,
-        "far_flakes": 8,
-        "fall_speed": 4,
-        "wind_speed": 2,
-        "max_size": 12
-      }
     }
   },
   "order": [
+    "section_bf25_snowfall_Nyq7rR",
     "section_scroll_nav_cdqHDX",
     "game",
     "bf_promo_discount_AibFnrK",
@@ -1171,7 +1172,6 @@
     "bf_promo_discount_2025_HncBNf",
     "testimonial_slider_XJAQhD",
     "product_reviews_UYaUdq",
-    "bf25_tier_cart_YJkXya",
-    "section_bf25_snowfall_Nyq7rR"
+    "bf25_tier_cart_YJkXya"
   ]
 }

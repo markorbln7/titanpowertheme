@@ -481,9 +481,11 @@ Performance Notes:
 
 @media (max-width: 767px) {
   .pp-bundle-card {
-    gap: var(--pp-space-md);
-    padding: var(--pp-space-md);
-    padding-top: calc(var(--pp-space-lg) + 4px); /* Extra space for overlapping badge */
+    gap: var(--pp-space-xs);
+    padding: var(--pp-space-sm);
+    padding-top: 20px; /* Space for overlapping badge */
+    margin-top: 14px; /* Allow badge to overflow above */
+    overflow: visible;
   }
 }
 
@@ -512,6 +514,12 @@ Performance Notes:
   display: flex;
   flex-direction: column;
   gap: var(--pp-space-md);
+}
+
+@media (max-width: 767px) {
+  .pp-bundle-card__content {
+    gap: var(--pp-space-xs);
+  }
 }
 
 /* Image area (right side of top row) */
@@ -611,8 +619,13 @@ Performance Notes:
 
 @media (max-width: 767px) {
   .pp-bundle-card__header {
-    margin-bottom: var(--pp-space-sm);
-    padding-top: var(--pp-space-sm);
+    margin-bottom: 4px;
+    padding-top: 0;
+  }
+
+  .pp-bundle-card__title {
+    font-size: var(--pp-font-lg);
+    margin-bottom: 0;
   }
 }
 
@@ -638,10 +651,10 @@ Performance Notes:
 @media (max-width: 767px) {
   .pp-bundle-card__badge {
     position: absolute;
-    top: -12px;
+    top: -14px;
     left: 16px;
-    z-index: 5;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   .pp-bundle-card__badge p {
@@ -699,7 +712,8 @@ Performance Notes:
 
 @media (max-width: 767px) {
   .pp-bundle-card__pricing {
-    padding-top: var(--pp-space-sm);
+    padding-top: 6px;
+    padding-bottom: 4px;
   }
 }
 
@@ -797,9 +811,11 @@ Performance Notes:
 
 @media (max-width: 767px) {
   .pp-bundle-card__avatars {
-    margin-bottom: var(--pp-space-sm);
-    padding-top: 8px;
+    margin-bottom: 4px;
+    padding-top: 6px;
+    padding-bottom: 0;
     font-size: var(--pp-font-xs);
+    border-top: none;
   }
 }
 
@@ -857,10 +873,17 @@ Performance Notes:
 
 .pp-bundle-card__cta-container {
   display: flex;
-  flex-direction: column; /* Mobile: Stack vertically */
-  gap: 10px; /* Mobile: 10px gap between buttons */
-  margin-top: auto; /* Push to bottom of card */
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
   width: 100%;
+}
+
+@media (max-width: 767px) {
+  .pp-bundle-card__cta-container {
+    gap: 8px;
+    margin-top: 0;
+  }
 }
 
 /* Desktop: Horizontal layout (side by side) */
@@ -5488,4 +5511,16 @@ body.pp-swap-modal-open {
   color: #ffffff !important;
   font-size: 28px !important;
   font-weight: 700 !important;
+}
+
+
+/* Mobile: Ensure parent containers allow overflow for badge */
+@media (max-width: 767px) {
+  .pp-bundle-grid {
+    overflow: visible;
+  }
+  
+  .pp-bundle-grid > * {
+    overflow: visible;
+  }
 }

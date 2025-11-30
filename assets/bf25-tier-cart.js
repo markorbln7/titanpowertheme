@@ -64,7 +64,7 @@
   // ============================================
   const GIFT_VARIANT_MAP = window.GIFT_VARIANT_MAP || {
     CABLE: 46748253520050,     // titan-100w-4-in-1-free (Tier 1+)
-    CASE: 44929561526450,      // travel-case-free (Tier 2+)
+    DOCK: 45338153222322,      // turbo-dock-free (Tier 2+)
     MAGNETIC: 45338148798642,  // magnetic-cable-free (Tier 3+)
     MYSTERY: 46748228190386    // mystery-gift-free (Tier 4)
   };
@@ -110,7 +110,7 @@
       glow: "rgba(127, 255, 0, 0.6)",
       gifts: [
         { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 }
+        { variantId: GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 }
       ]
     },
     {
@@ -124,7 +124,7 @@
       glow: "rgba(255, 215, 0, 0.7)",
       gifts: [
         { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 },
         { variantId: GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 }
       ],
       isDecoy: true
@@ -140,7 +140,7 @@
       glow: "rgba(224, 247, 255, 0.8)",
       gifts: [
         { variantId: GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 },
         { variantId: GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 },
         { variantId: GIFT_VARIANT_MAP.MYSTERY, name: "Mystery Box", emoji: "🎁", value: 150 }
       ]
@@ -3557,7 +3557,7 @@
       // Get gift product info
       const giftProducts = {
         1: { title: 'Free USB-C Cable', emoji: '🔌' },
-        2: { title: 'Free Protective Case', emoji: '📦' },
+        2: { title: 'Free Turbo Dock', emoji: '🔌' },
         3: { title: 'Free Magnetic Set', emoji: '🧲' },
         4: { title: 'Free Mystery Box', emoji: '🎁' }
       };
@@ -3695,7 +3695,7 @@
       // Gift product handles
       const giftHandles = [
         'bf25sc-free-cable',
-        'bf25sc-free-case',
+        'bf25sc-free-dock',
         'bf25sc-free-magnetic-set',
         'bf25sc-free-mystery-box'
       ];

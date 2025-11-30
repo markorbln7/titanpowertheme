@@ -74,9 +74,9 @@
           {% assign gift_image = "https://cdn.shopify.com/s/files/1/0640/1928/9498/files/cable-gift.png" %}
           {% if i == 8 %}
             {% assign gift_tier = 2 %}
-            {% assign gift_name = "Premium Travel Case" %}
+            {% assign gift_name = "Turbo Dock" %}
             {% assign gift_value = 35 %}
-            {% assign gift_image = "https://cdn.shopify.com/s/files/1/0640/1928/9498/files/case-gift.png" %}
+            {% assign gift_image = "https://cdn.shopify.com/s/files/1/0071/1727/5191/files/T119.png?v=1764472938" %}
           {% elsif i == 12 %}
             {% assign gift_tier = 3 %}
             {% assign gift_name = "Magnetic Cable Organizer" %}
@@ -242,11 +242,11 @@
       image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/4_in_1_top_image_a895a2f4-c7a7-4e8f-889a-883407938d24.png?v=1763844565'
     },
     8: {
-      variantId: '44929561526450',
-      title: 'Travel Case',
+      variantId: '45338153222322',
+      title: 'Turbo Dock',
       value: 3500,
       price: 3500,
-      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/Accessories_c231b53b-fd86-4714-b7bf-20dd5b47963e.png?v=1763844578'
+      image: 'https://cdn.shopify.com/s/files/1/0071/1727/5191/files/T119.png?v=1764472938'
     },
     12: {
       variantId: '45338148798642',
@@ -264,7 +264,7 @@
     },
     // Named keys for CartManager legacy code
     CABLE: '46748253520050',
-    CASE: '44929561526450',
+    DOCK: '45338153222322',
     MAGNETIC: '45338148798642',
     MYSTERY: '46748228190386'
   };
@@ -308,7 +308,7 @@
       glow: "rgba(127, 255, 0, 0.6)",
       gifts: [
         { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 }
+        { variantId: window.GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 }
       ],
       multiplier: 0.30
     },
@@ -323,7 +323,7 @@
       glow: "rgba(255, 215, 0, 0.7)",
       gifts: [
         { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 },
         { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 }
       ],
       multiplier: 0.20,
@@ -340,7 +340,7 @@
       glow: "rgba(224, 247, 255, 0.8)",
       gifts: [
         { variantId: window.GIFT_VARIANT_MAP.CABLE, name: "Cable", emoji: "🔌", value: 30 },
-        { variantId: window.GIFT_VARIANT_MAP.CASE, name: "Case", emoji: "📦", value: 35 },
+        { variantId: window.GIFT_VARIANT_MAP.DOCK, name: "Dock", emoji: "🔌", value: 35 },
         { variantId: window.GIFT_VARIANT_MAP.MAGNETIC, name: "Magnetic Set", emoji: "🧲", value: 60 },
         { variantId: window.GIFT_VARIANT_MAP.MYSTERY, name: "Mystery Box", emoji: "🎁", value: 150 }
       ],

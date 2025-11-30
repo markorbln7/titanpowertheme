@@ -40,34 +40,42 @@ Usage:
   endif
 
   comment
-    Calculate tier multiplier based on tier level
+    Calculate tier multiplier and savings multiplier based on tier level
   endcomment
   assign bundle_tier = tier | plus: 0
   case bundle_tier
     when 1
       assign tier_multiplier = 0.80
+      assign savings_multiplier = 1.50
     when 2
       assign tier_multiplier = 0.65
+      assign savings_multiplier = 2.33
     when 3
       assign tier_multiplier = 0.58
+      assign savings_multiplier = 4.00
     when 4
       assign tier_multiplier = 0.52
+      assign savings_multiplier = 5.67
     else
       assign tier_multiplier = 1.0
+      assign savings_multiplier = 1.0
   endcase
 
   comment
-    Apply tier multiplier to get discounted price
+    Step 1: Apply tier multiplier to get discounted price (what they pay)
   endcomment
   assign discounted_price = total_price | times: tier_multiplier | round
 
   comment
-    Calculate savings based on discounted price
+    Step 2: Calculate savings FROM discounted price
+    savings = discounted_price × savings_multiplier
   endcomment
-  assign savings = 0
-  if total_compare_price > discounted_price
-    assign savings = total_compare_price | minus: discounted_price
-  endif
+  assign savings = discounted_price | times: savings_multiplier | round
+
+  comment
+    Step 3: Calculate compare-at price = discounted_price + savings
+  endcomment
+  assign calculated_compare_price = discounted_price | plus: savings
 -%}
 
 <article
@@ -104,8 +112,8 @@ Usage:
         <div class="pp-bundle-card__prices">
           <span class="pp-bundle-card__price">{{ discounted_price | money }}</span>
 
-          {% if total_compare_price > discounted_price %}
-            <span class="pp-bundle-card__compare-price">{{ total_compare_price | money }}</span>
+          {% if calculated_compare_price > discounted_price %}
+            <span class="pp-bundle-card__compare-price">{{ calculated_compare_price | money }}</span>
           {% endif %}
         </div>
 

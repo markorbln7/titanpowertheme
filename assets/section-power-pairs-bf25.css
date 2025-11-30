@@ -479,12 +479,26 @@ Performance Notes:
   overflow: visible;
 }
 
+@media (max-width: 767px) {
+  .pp-bundle-card {
+    gap: var(--pp-space-md);
+    padding: var(--pp-space-md);
+    padding-top: calc(var(--pp-space-lg) + 4px); /* Extra space for overlapping badge */
+  }
+}
+
 /* Top row: Content left + Image right */
 .pp-bundle-card__top-row {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--pp-space-lg);
   align-items: start;
+}
+
+@media (max-width: 767px) {
+  .pp-bundle-card__top-row {
+    gap: var(--pp-space-sm);
+  }
 }
 
 @media (min-width: 768px) {
@@ -518,8 +532,12 @@ Performance Notes:
 
 @media (max-width: 768px) {
   .pp-bundle-card__image {
-    max-width: 60%;
+    max-width: 85%;
     margin: 0 auto;
+  }
+
+  .pp-bundle-card__image img {
+    transform: scale(1.25);
   }
 }
 
@@ -591,6 +609,13 @@ Performance Notes:
   margin-bottom: var(--pp-space-md);
 }
 
+@media (max-width: 767px) {
+  .pp-bundle-card__header {
+    margin-bottom: var(--pp-space-sm);
+    padding-top: var(--pp-space-sm);
+  }
+}
+
 .pp-bundle-card__title {
   font-size: var(--pp-font-xl);
   font-weight: var(--pp-font-weight-bold);
@@ -607,6 +632,21 @@ Performance Notes:
   font-size: var(--pp-font-sm);
   font-weight: var(--pp-font-weight-semibold);
   line-height: 1;
+}
+
+/* Mobile: Badge overlaps top of card */
+@media (max-width: 767px) {
+  .pp-bundle-card__badge {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .pp-bundle-card__badge p {
+    margin: 0;
+  }
 }
 
 /* Tier-specific badge colors */
@@ -655,6 +695,12 @@ Performance Notes:
   padding-top: var(--pp-space-md);
   padding-bottom: 0;
   border-top: 1px solid var(--pp-border-secondary);
+}
+
+@media (max-width: 767px) {
+  .pp-bundle-card__pricing {
+    padding-top: var(--pp-space-sm);
+  }
 }
 
 .pp-bundle-card__items {
@@ -747,6 +793,14 @@ Performance Notes:
   line-height: var(--pp-line-height-normal);
   border-top: 1px solid var(--pp-border-secondary);
   padding-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .pp-bundle-card__avatars {
+    margin-bottom: var(--pp-space-sm);
+    padding-top: 8px;
+    font-size: var(--pp-font-xs);
+  }
 }
 
 .pp-bundle-card__avatars-label {

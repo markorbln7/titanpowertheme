@@ -496,6 +496,7 @@
     },
     "bf_top_bar_8RrMkH": {
       "type": "bf-top-bar",
+      "disabled": true,
       "custom_css": [
         ".uppercase {letter-spacing: 0.5px; font-weight: 700; font-size: 17px;}",
         ".bf-top-bar {background-color: #60c655; margin-bottom: 0px; max-width: 1300px; padding-top: 10px; padding-bottom: 10px; margin-left: auto; margin-right: auto;}",
@@ -527,12 +528,12 @@
         "collections": [
           "power-pairs"
         ],
-        "add_4": "shopify://shop_images/MULTIBUY_OFFER_aDD_4X_3b63f045-a350-4b10-b134-c1d41bdd80d6.jpg",
+        "add_4": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box4_0a520df5-cb0b-411d-b76a-5fd78da24824.jpg",
         "add_4_text": "4",
-        "add_6": "shopify://shop_images/MULTIBUY_OFFER_aDD_6X_c9faf79a-c745-42bb-839f-aecaee09a145.jpg",
-        "add_6_text": "6",
-        "add_10": "shopify://shop_images/MULTIBUY_OFFER_aDD_10X_94828e0a-f443-4a75-a854-e722165a3328.jpg",
-        "add_10_text": "10"
+        "add_6": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box8_a45a2a33-c59f-4fb6-9f3d-ce1ef6095c55.jpg",
+        "add_6_text": "8",
+        "add_10": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box12.jpg",
+        "add_10_text": "12"
       }
     },
     "section_product_zigzag_pJ4EYx": {
@@ -764,12 +765,12 @@
           "plugs",
           "wireless-new"
         ],
-        "add_4": "shopify://shop_images/DISCOUNT_BOX_GET_3.png",
-        "add_4_text": "3",
-        "add_6": "shopify://shop_images/DISCOUNT_BOX_GET_7.png",
-        "add_6_text": "7",
-        "add_10": "shopify://shop_images/DISCOUNT_BOX_GET_10.png",
-        "add_10_text": "10"
+        "add_4": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box4_0a520df5-cb0b-411d-b76a-5fd78da24824.jpg",
+        "add_4_text": "4",
+        "add_6": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box8_a45a2a33-c59f-4fb6-9f3d-ce1ef6095c55.jpg",
+        "add_6_text": "8",
+        "add_10": "shopify://shop_images/MULTIBUY_OFFER_New_buy_box12.jpg",
+        "add_10_text": "12"
       }
     },
     "gift_display_section_HhwPbQ": {
@@ -850,6 +851,15 @@
     "bf_promo_discount_AibFnrL": {
       "type": "bf-promo-discount",
       "blocks": {
+        "block_item_tnmF4P": {
+          "type": "block_item",
+          "disabled": true,
+          "settings": {
+            "block_eyebrow": "4+ items",
+            "block_title": "",
+            "eyebrow_position": false
+          }
+        },
         "block_item_WmBdEV": {
           "type": "block_item",
           "settings": {
@@ -876,6 +886,7 @@
         }
       },
       "block_order": [
+        "block_item_tnmF4P",
         "block_item_WmBdEV",
         "block_item_D3V3fQ",
         "block_item_XTEFBY"

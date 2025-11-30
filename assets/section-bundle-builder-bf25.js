@@ -85,3 +85,80 @@ document.addEventListener('DOMContentLoaded', function () {
     section: bundleSection
   });
 });
+
+// ============================================
+// DYNAMIC TIER PRICING FOR PRODUCT CARDS
+// Updates prices and badges when tier changes
+// ============================================
+
+(function() {
+  'use strict';
+
+  const TIER_MULTIPLIERS = { 0: 1.0, 1: 0.85, 2: 0.70, 3: 0.60, 4: 0.54 };
+  const TIER_DISCOUNTS = { 0: "50%", 1: "60%", 2: "70%", 3: "80%", 4: "85%" };
+
+  let currentTier = 0;
+
+  // Format price using Shopify's money format
+  function formatMoney(cents) {
+    if (window.theme?.moneyFormat) {
+      const amount = (cents / 100).toFixed(2);
+      return window.theme.moneyFormat.replace(/\{\{[^}]*\}\}/g, amount);
+    }
+    // Fallback
+    const symbol = window.Shopify?.currency?.active === 'USD' ? '$' : '€';
+    return `${symbol}${(cents / 100).toFixed(2).replace('.', ',')}`;
+  }
+
+  // Update all product card prices based on tier
+  function updateCardPrices(tier) {
+    if (tier === currentTier) return;
+    currentTier = tier;
+
+    const multiplier = TIER_MULTIPLIERS[tier] || 1.0;
+    const discountText = TIER_DISCOUNTS[tier] || "50%";
+
+    console.log(`[BF25 Cards] Updating prices for Tier ${tier} (${discountText} OFF, multiplier: ${multiplier})`);
+
+    // Update all price elements
+    document.querySelectorAll('.section-collections-with-nav__product-price[data-base-price]').forEach(priceEl => {
+      const basePrice = parseInt(priceEl.dataset.basePrice, 10);
+      if (!isNaN(basePrice)) {
+        const newPrice = Math.round(basePrice * multiplier);
+        priceEl.innerHTML = formatMoney(newPrice);
+      }
+    });
+
+    // Update all discount badges
+    document.querySelectorAll('.bf25-discount-text[data-discount-badge]').forEach(badge => {
+      badge.textContent = `${discountText} OFF`;
+    });
+
+    console.log(`[BF25 Cards] ✓ Updated ${document.querySelectorAll('.section-collections-with-nav__product-price[data-base-price]').length} prices`);
+  }
+
+  // Listen for tier changes
+  document.addEventListener('bf25:tierUnlocked', (e) => {
+    updateCardPrices(e.detail.tier);
+  });
+
+  document.addEventListener('bf25:tierDowngraded', (e) => {
+    updateCardPrices(e.detail.currentTier);
+  });
+
+  document.addEventListener('bf25:tierChanged', (e) => {
+    updateCardPrices(e.detail.currentTier || e.detail.tier || 0);
+  });
+
+  // Initialize on page load - check current tier from BundleManager
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const bundle = window.BF25BundleManager?.getBundle?.();
+      if (bundle?.computed?.tierReached) {
+        updateCardPrices(bundle.computed.tierReached);
+      }
+    }, 500);
+  });
+
+  console.log('[BF25 Cards] Dynamic tier pricing initialized');
+})();

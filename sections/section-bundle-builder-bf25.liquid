@@ -68,7 +68,7 @@
                   <div class="bf25-card-default-state">
                     {% if product.metafields.custom.new_shop_discount_top and section.settings.show_alt_images == true %}
                       <div class="bf25-discount-badge">
-                        <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount_top }}</span>
+                        <span class="bf25-discount-text" data-discount-badge="true">50% OFF</span>
                         <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
                         </svg>
@@ -76,7 +76,7 @@
                     {% else %}
                       {% if product.metafields.custom.new_shop_discount %}
                         <div class="bf25-discount-badge">
-                          <span class="bf25-discount-text">{{ product.metafields.custom.new_shop_discount }}</span>
+                          <span class="bf25-discount-text" data-discount-badge="true">50% OFF</span>
                           <svg class="bf25-lightning-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M13 2L4 14h7v8l9-12h-7V2z"/>
                           </svg>
@@ -129,8 +129,14 @@
 
                           <!-- Reviews + Stock row (CSS will handle desktop inline vs mobile stacked) -->
                           <div class="bf25-reviews-stock-row">
-                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">Loading...</span>
-                            <span class="bf25-reviews-divider">|</span>
+                            {% assign review_count = product.metafields.reviews.rating_count | default: product.metafields.judgeme.review_count | default: 0 %}
+                            {% if review_count > 0 %}
+                              <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">{{ review_count }} reviews</span>
+                              <span class="bf25-reviews-divider">|</span>
+                            {% else %}
+                              <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}" style="display: none;"></span>
+                              <span class="bf25-reviews-divider" style="display: none;">|</span>
+                            {% endif %}
                             <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
                           </div>
                         </div>
@@ -140,7 +146,7 @@
                         {% endif %}
                         <div class="section-collections-with-nav__product-prices flex items-center flex-wrap text-center md:justify-between justify-center mt-[10px] gap-[10px] md:max-w-[85%] mx-auto !mt-[10px]">
                           <div clas="prices">
-                            <span class="section-collections-with-nav__product-price">{{ product.price | money }}</span>
+                            <span class="section-collections-with-nav__product-price" data-base-price="{{ product.price }}" data-product-id="{{ product.id }}">{{ product.price | money }}</span>
                             {% if product.compare_at_price  %}
                                 <span class="section-collections-with-nav__product-price-compared">{{ product.compare_at_price | money }}</span>
                             {% endif %}
@@ -377,7 +383,7 @@ PRESERVED STRUCTURE:
       {
         min: 4,
         max: 7,
-        multiplier: 0.91,
+        multiplier: 0.85,
         displayLabel: "60% OFF",
         label: "Better Deal",
         badge: "⚡ FREE: 4-in-1 Cable"
@@ -385,7 +391,7 @@ PRESERVED STRUCTURE:
       {
         min: 8,
         max: 11,
-        multiplier: 0.76,
+        multiplier: 0.70,
         displayLabel: "70% OFF",
         label: "Great Deal",
         badge: "🎁 FREE: Cable + Travel Case"
@@ -393,7 +399,7 @@ PRESERVED STRUCTURE:
       {
         min: 12,
         max: 15,
-        multiplier: 0.65,
+        multiplier: 0.60,
         displayLabel: "80% OFF",
         label: "Best Deal",
         badge: "🔥 FREE: Cables + Cases + Pre-Launch Set"
@@ -401,7 +407,7 @@ PRESERVED STRUCTURE:
       {
         min: 16,
         max: 999,
-        multiplier: 0.57,
+        multiplier: 0.54,
         displayLabel: "85% OFF",
         label: "Mystery Box Unlock",
         badge: "💎 FREE: Mystery Box + VIP Status"

@@ -70,6 +70,18 @@
   };
 
   // ============================================
+  // TIER PRICING CONFIGURATION
+  // ============================================
+  // Tier multipliers for total calculation
+  const TIER_MULTIPLIERS = {
+    0: 1.00,
+    1: 0.80,
+    2: 0.65,
+    3: 0.58,
+    4: 0.52
+  };
+
+  // ============================================
   // TIER CONFIGURATION
   // Core config now in window.BF25_TIERS (from inline script)
   // This extends it with UI-specific properties (colors, glows, etc.)
@@ -1697,11 +1709,17 @@
           nextGiftCheckpoint
         } = computed;
 
-        // Calculate savings in euros for display (guard against NaN)
-        const safeSavings = (typeof totalSavings === 'number' && !isNaN(totalSavings)) ? totalSavings : 0;
-        const giftValueCents = (totalGiftValue || 0);
-        const totalSavingsWithGifts = safeSavings + giftValueCents;
-        const savingsEuros = (totalSavingsWithGifts / 100).toFixed(0);
+        // Calculate TOTAL (what they pay) = baseSum × tierMultiplier
+        const tierMultiplier = TIER_MULTIPLIERS[tierReached] || 1.00;
+        const totalPayCents = Math.round(totalOriginalPrice * tierMultiplier);
+        const totalPayEuros = (totalPayCents / 100).toFixed(2);
+
+        // Calculate SAVINGS from the total they pay
+        // Formula: savings = total × (discountPercent / (100 - discountPercent))
+        const SAVINGS_MULTIPLIERS = { 0: 1.00, 1: 1.50, 2: 2.33, 3: 4.00, 4: 5.67 };
+        const savingsMultiplier = SAVINGS_MULTIPLIERS[tierReached] || 1.00;
+        const savingsCents = Math.round(totalPayCents * savingsMultiplier);
+        const savingsEuros = (savingsCents / 100).toFixed(0);
 
         console.log(`[BF25 Cart] Bundle: ${itemCount} items, Tier ${tierReached}, €${savingsEuros} savings`);
 
@@ -1716,8 +1734,8 @@
         // Update total price display
         const currencySymbol = getCurrencySymbol();
         if (this.elements.totalAmount) {
-          const totalAmount = (totalDiscountedPrice / 100).toFixed(2);
-          this.elements.totalAmount.textContent = `${currencySymbol}${totalAmount}`;
+          const newTotalText = `${currencySymbol}${totalPayEuros}`;
+          this.elements.totalAmount.textContent = newTotalText;
         }
 
         // Update savings display (BOGO-style format)
@@ -1749,8 +1767,7 @@
         this.updateIncentiveFromBundle(computed);
 
         // Cache state for page reload (instant render on next visit)
-        const totalAmount = (totalDiscountedPrice / 100).toFixed(2);
-        this.saveCachedState(itemCount, savingsEuros, totalAmount);
+        this.saveCachedState(itemCount, savingsEuros, totalPayEuros);
 
         // Set idle state
         this.setState('idle');

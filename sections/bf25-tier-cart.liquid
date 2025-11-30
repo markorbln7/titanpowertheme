@@ -156,10 +156,16 @@
       </span>
     </div>
 
-    <!-- Savings Display (Center, 80px fixed) -->
-    <div class="bf25sc-action-savings">
-      <span class="bf25sc-action-savings__label">YOU SAVE</span>
-      <span class="bf25sc-action-savings__amount" id="bf25sc-savings-amount">{{ cart.currency.symbol }}0</span>
+    <!-- Pricing Display (Total + Savings) -->
+    <div class="bf25sc-action-pricing">
+      <div class="bf25sc-action-total">
+        <span class="bf25sc-action-total__label">TOTAL</span>
+        <span class="bf25sc-action-total__amount" id="bf25sc-total-amount">{{ cart.currency.symbol }}0</span>
+      </div>
+      <div class="bf25sc-action-savings">
+        <span class="bf25sc-action-savings__label">YOU SAVE</span>
+        <span class="bf25sc-action-savings__amount" id="bf25sc-savings-amount">{{ cart.currency.symbol }}0</span>
+      </div>
     </div>
 
     <!-- CTAs (Right, 75px total) -->

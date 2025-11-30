@@ -1342,6 +1342,7 @@
         giftSlots: document.querySelectorAll('.bf25sc-gift-slot'),
         incentiveText: document.getElementById('bf25sc-incentive-text'),
         savingsAmount: document.getElementById('bf25sc-savings-amount'),
+        totalAmount: document.getElementById('bf25sc-total-amount'),
         btnView: document.getElementById('bf25sc-btn-view'),
         btnBuy: document.getElementById('bf25sc-btn-buy'),
         announcer: document.getElementById('bf25sc-cart-announcements')
@@ -1366,9 +1367,12 @@
       if (cachedState) {
         console.log('[BF25 Cart] Applying cached state for instant render');
         this.updateVisualization(cachedState.itemCount);
+        const currencySymbol = getCurrencySymbol();
+        if (this.elements.totalAmount && cachedState.total) {
+          this.elements.totalAmount.textContent = `${currencySymbol}${cachedState.total}`;
+        }
         if (this.elements.savingsAmount) {
-          const currencySymbol = getCurrencySymbol();
-          this.elements.savingsAmount.textContent = `Save ${currencySymbol}${cachedState.savings}`;
+          this.elements.savingsAmount.textContent = `${currencySymbol}${cachedState.savings}`;
         }
         this.handleEmptyState(cachedState.itemCount);
       }
@@ -1709,9 +1713,15 @@
           this.elements.container.setAttribute('data-active-tier', tierReached);
         }
 
+        // Update total price display
+        const currencySymbol = getCurrencySymbol();
+        if (this.elements.totalAmount) {
+          const totalAmount = (totalDiscountedPrice / 100).toFixed(2);
+          this.elements.totalAmount.textContent = `${currencySymbol}${totalAmount}`;
+        }
+
         // Update savings display (BOGO-style format)
         if (this.elements.savingsAmount) {
-          const currencySymbol = getCurrencySymbol();
           const newText = `${currencySymbol}${savingsEuros}`;
 
           // Only animate if value changed
@@ -1739,7 +1749,8 @@
         this.updateIncentiveFromBundle(computed);
 
         // Cache state for page reload (instant render on next visit)
-        this.saveCachedState(itemCount, savingsEuros);
+        const totalAmount = (totalDiscountedPrice / 100).toFixed(2);
+        this.saveCachedState(itemCount, savingsEuros, totalAmount);
 
         // Set idle state
         this.setState('idle');
@@ -3281,15 +3292,16 @@
     /**
      * Save cart state to localStorage
      */
-    saveCachedState(itemCount, savings) {
+    saveCachedState(itemCount, savings, total = null) {
       try {
         const data = {
           itemCount: itemCount,
           savings: savings,
+          total: total,
           timestamp: Date.now()
         };
         localStorage.setItem('bf25sc_cart_cache', JSON.stringify(data));
-        console.log('[BF25 Cart] State cached:', itemCount, 'items, €' + savings, 'savings');
+        console.log('[BF25 Cart] State cached:', itemCount, 'items, €' + savings, 'savings, €' + total, 'total');
       } catch (error) {
         console.warn('[BF25 Cart] Cache save failed:', error);
       }
@@ -3428,10 +3440,13 @@
         this.elements.incentiveText.innerHTML = 'Your cart is empty - Add <strong class="bf25sc-highlight">4 items</strong> to unlock <strong class="bf25sc-highlight">🔥 60% OFF</strong>!';
       }
 
-      // Update savings
+      // Update savings and total
+      const currencySymbol = getCurrencySymbol();
+      if (this.elements.totalAmount) {
+        this.elements.totalAmount.textContent = `${currencySymbol}0.00`;
+      }
       if (this.elements.savingsAmount) {
-        const currencySymbol = getCurrencySymbol();
-        this.elements.savingsAmount.textContent = `Save ${currencySymbol}0`;
+        this.elements.savingsAmount.textContent = `${currencySymbol}0`;
       }
 
       // Disable buttons

@@ -8,8 +8,8 @@
         font-weight: 900;
    }
   .custom-pack-wrapper {
-    max-width: 1000px; /* Reduced from 1400px (BF25-8.10b) */
-    padding: 40px 15px; /* Adjusted for 4th box visibility */
+    max-width: 1000px;
+    padding: 24px 15px;
     margin: 0 auto;
     background: #000000;
     overflow: visible;
@@ -120,14 +120,15 @@
     text-transform: lowercase !important;
   }
 
-  /* GIFT TEXT */
+  /* GIFT TEXT - BIGGER */
   .bf25-gift-text,
   .block-item .bf25-gift-text {
     color: #60c655 !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
-    margin-top: 8px !important;
+    margin-top: 10px !important;
     text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
   }
 
   /* Kill any inherited font-size on h3 or parent elements */
@@ -162,25 +163,25 @@
       padding: 12px 8px !important;
     }
 
-    /* Smaller discount number on desktop */
+    /* Larger discount number on desktop */
     .bf25-discount-number,
     .block-item .bf25-discount-number,
     .custom-pack-wrapper .bf25-discount-number {
-      font-size: 42px !important;
+      font-size: 56px !important;
     }
 
-    /* Items label - still readable on desktop */
+    /* Items label - prominent on desktop */
     .bf25-items-label,
     .block-item .bf25-items-label {
-      font-size: 13px !important;
-      margin-bottom: 4px !important;
+      font-size: 15px !important;
+      margin-bottom: 6px !important;
     }
 
-    /* Smaller gift text */
+    /* Gift text - readable on desktop */
     .bf25-gift-text,
     .block-item .bf25-gift-text {
-      font-size: 9px !important;
-      margin-top: 4px !important;
+      font-size: 13px !important;
+      margin-top: 8px !important;
     }
 
     /* Smaller % size */
@@ -213,7 +214,7 @@
   /* ========== MOBILE - SCALED DOWN ========== */
   @media (max-width: 768px) {
     .custom-pack-wrapper {
-      padding: 16px 8px; /* Reduced from 20px (20% less) */
+      padding: 12px 8px;
     }
 
     .block-items {
@@ -268,11 +269,11 @@
       margin-bottom: 3px !important;
     }
 
-    /* Gift text */
+    /* Gift text - bigger on mobile */
     .bf25-gift-text,
     .block-item .bf25-gift-text {
-      font-size: 7px !important;
-      margin-top: 3px !important;
+      font-size: 10px !important;
+      margin-top: 4px !important;
     }
 
     /* Suffix padding */

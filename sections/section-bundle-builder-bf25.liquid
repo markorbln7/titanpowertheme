@@ -129,14 +129,8 @@
 
                           <!-- Reviews + Stock row (CSS will handle desktop inline vs mobile stacked) -->
                           <div class="bf25-reviews-stock-row">
-                            {% assign review_count = product.metafields.reviews.rating_count | default: product.metafields.judgeme.review_count | default: 0 %}
-                            {% if review_count > 0 %}
-                              <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}">{{ review_count }} reviews</span>
-                              <span class="bf25-reviews-divider">|</span>
-                            {% else %}
-                              <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}" style="display: none;"></span>
-                              <span class="bf25-reviews-divider" style="display: none;">|</span>
-                            {% endif %}
+                            <span class="bf25-rating-count bf25-review-count" data-product-id="{{ product.id }}"></span>
+                            <span class="bf25-reviews-divider">|</span>
                             <span class="bf25-stock-placeholder" data-card-id="{{ product.id }}"></span>
                           </div>
                         </div>

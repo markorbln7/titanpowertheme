@@ -26,23 +26,34 @@
   }
 
   .block-item {
-    background: linear-gradient(135deg, rgba(96, 198, 85, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
-    border: 2px solid rgba(96, 198, 85, 0.3);
-    border-radius: 16px;
-    padding: 20px 16px; /* Reduced from 32px 20px (BF25-8.10b) */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 20px 16px;
     text-align: center;
-    transition: all 0.3s ease;
-    min-height: 160px; /* Reduced from 200px (BF25-8.10b) */
+    transition: opacity 0.2s ease;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+  }
+
+  /* Vertical line separator between items */
+  .block-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .block-item:hover {
-    border-color: rgba(96, 198, 85, 0.6);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(96, 198, 85, 0.2);
+    opacity: 0.85;
   }
 
   /* ========== BF25 TIER BOX - FORCED INDEPENDENT SIZING ========== */
@@ -99,20 +110,21 @@
     padding-bottom: 4px !important;
   }
 
-  /* ITEMS LABEL */
+  /* ITEMS LABEL - BIGGER */
   .bf25-items-label,
   .block-item .bf25-items-label {
     color: #60c655 !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     font-weight: 700 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 6px !important;
+    text-transform: lowercase !important;
   }
 
   /* GIFT TEXT */
   .bf25-gift-text,
   .block-item .bf25-gift-text {
     color: #60c655 !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     margin-top: 8px !important;
     text-transform: uppercase !important;
@@ -157,11 +169,11 @@
       font-size: 42px !important;
     }
 
-    /* Smaller items label */
+    /* Items label - still readable on desktop */
     .bf25-items-label,
     .block-item .bf25-items-label {
-      font-size: 10px !important;
-      margin-bottom: 2px !important;
+      font-size: 13px !important;
+      margin-bottom: 4px !important;
     }
 
     /* Smaller gift text */
@@ -212,9 +224,14 @@
     }
 
     .block-item {
-      padding: 6px 3px; /* Reduced from 8px (20% less) */
-      min-height: 96px; /* Reduced from 120px (20% less) */
-      border-radius: 8px;
+      padding: 8px 4px;
+      min-height: auto;
+      border-radius: 0;
+    }
+
+    /* Shorter separator line on mobile */
+    .block-item:not(:last-child)::after {
+      height: 50%;
     }
 
     /* Discount number - scaled down */
@@ -244,11 +261,11 @@
       font-size: 9px !important;
     }
 
-    /* Items label */
+    /* Items label - bigger on mobile */
     .bf25-items-label,
     .block-item .bf25-items-label {
-      font-size: 8px !important;
-      margin-bottom: 2px !important;
+      font-size: 11px !important;
+      margin-bottom: 3px !important;
     }
 
     /* Gift text */
@@ -316,8 +333,8 @@
             </div>
           </h3>
 
-          <!-- Gift text with auto-incrementing count (BF25-8.12b) -->
-          <div class="bf25-gift-text">+ {{ forloop.index }} FREE GIFT{% if forloop.index > 1 %}S{% endif %}</div>
+          <!-- Gift text with auto-incrementing count -->
+          <div class="bf25-gift-text">+ {{ forloop.index }} GIFT{% if forloop.index > 1 %}S{% endif %}</div>
 
           {% if block.settings.eyebrow_position %}
             <div class="text-[#60c655] text-[14px] md:text-[20px] leading-[1] font-semibold mt-2">

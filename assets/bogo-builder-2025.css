@@ -104,8 +104,7 @@
   position: relative;
   background: transparent;
   color: #ffffff;
-  overflow-x: clip; /* Prevent horizontal page scroll */
-  overflow-y: visible; /* Allow badges to extend */
+  overflow: hidden;
   padding-top: var(--space-lg); /* 32px */
   padding-bottom: var(--space-xl); /* 48px */
   padding-left: 0;
@@ -197,7 +196,7 @@
     position: relative;
     background: #ffffff00;
     color: #ffffff;
-    overflow: visible; /* ✅ Allow badges to extend outside */
+    overflow: hidden;
     padding: 25px 40px 56px; /* ✅ Top padding reduced to 25px for announcement bar removal */
     text-align: center;
     z-index: 1; /* ✅ Changed from 10 to 1 - just above starfield */
@@ -854,9 +853,7 @@
   .bogo-tier-showcase {
     margin: var(--space-lg) auto var(--space-xl); /* 32px top, 48px bottom */
     padding: 0;
-    padding-top: 20px; /* Space for badges to extend */
     text-align: center;
-    overflow: visible; /* Allow badges to extend outside */
   }
 
   .tier-showcase-title {
@@ -880,8 +877,6 @@
     gap: var(--space-md); /* 24px */
     margin-bottom: var(--space-lg); /* 32px */
     margin-top: var(--space-lg); /* 32px */
-    padding-top: 20px; /* Space for badges */
-    overflow: visible; /* Allow badges to extend */
   }
 
   /* Individual tier card */
@@ -1162,37 +1157,25 @@
 
   /* ✅ Text container with vertical centering */
   .feature-text {
-    flex: 1;
+    flex: 2;
     font-size: 12px;
     line-height: 1.4;
     color: #ffffff;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .tier-feature.included .feature-text {
     color: #ffffff;
   }
 
-  /* ✅ Excluded features - dark red styling */
-  .tier-feature.excluded {
-    background: rgba(180, 40, 50, 0.08); /* Even more transparent - CM-TIER-FIX-002 */
-    padding: 8px 10px;
-    border-radius: 8px;
-    margin: 3px 0;
-    border-bottom: none;
-  }
-
   .tier-feature.excluded .feature-text {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
   }
 
+  /* ✅ Excluded icons with reduced opacity */
   .tier-feature.excluded .feature-icon {
-    opacity: 1;
-    font-size: 14px;
+    opacity: 0.4;
   }
 
   /* ✅ Premium feature highlighting */
@@ -1258,13 +1241,12 @@
 
   /* ✅ SMALLER inline discount badges - compact and inline with text */
   .discount-badge-inline {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    margin-left: 4px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 800;
+    display: inline-block;
+    padding: 2px 6px; /* ✅ MUCH smaller padding */
+    margin-left: 6px;
+    border-radius: 6px; /* ✅ Smaller border radius */
+    font-size: 9px; /* ✅ SMALLER font - more compact */
+    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
@@ -1323,28 +1305,26 @@
   /* Tier savings */
   .tier-savings {
     text-align: center;
-    padding: 14px 12px;
+    padding: 12px; /* ✅ Reduced from 16px */
     background: rgba(96, 198, 85, 0.1);
     border-radius: 12px;
-    margin-top: 10px;
+    margin-bottom: 10px; /* ✅ Reduced from 12px */
   }
 
   .savings-label {
-    font-size: 10px;
+    font-size: 11px; /* ✅ Reduced from 12px */
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-    display: block;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px; /* ✅ Reduced from 4px */
   }
 
   .savings-amount {
-    font-size: 22px;
+    font-size: 28px; /* ✅ Reduced from 32px */
     font-weight: 900;
     color: #60c655;
-    display: block;
-    margin-top: 4px;
-    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.4);
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.4); /* ✅ Glow effect */
   }
 
   .savings-amount.highlight {
@@ -1456,42 +1436,50 @@
      Horizontal slider showing 1.3 cards
      ======================================== */
   @media (max-width: 768px) {
-    /* ✅ Allow badge overflow */
-    .bogo-tier-showcase {
-      overflow: visible;
-      padding-top: 20px;
-    }
-
     .tier-cards-container {
       display: flex !important;
       flex-direction: row;
       gap: 16px;
-      padding: 20px 16px 16px 16px !important; /* Top for badges, minimal bottom */
+      padding: 32px 16px !important;
       max-width: 100%;
       margin: 0;
       overflow-x: auto;
-      overflow-y: clip; /* ✅ Clip content without creating scroll - allows badges */
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      scrollbar-width: none; /* Hide scrollbar on Firefox */
+      -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
+      position: relative; /* For fade gradient positioning */
     }
-
+    
     /* Hide scrollbar on Chrome/Safari */
     .tier-cards-container::-webkit-scrollbar {
       display: none;
     }
+    
+    /* ✅ Visual hint: Fade gradient on right edge */
+    .tier-cards-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
 
     .tier-card {
-      /* ✅ Narrower cards to show next card hint (75vw) - CM-TIER-FIX-002 */
-      width: 75vw;
-      min-width: 75vw;
-      max-width: 300px;
+      /* ✅ Wider cards: 92vw width, max 360px */
+      width: 92vw;
+      min-width: 92vw;
+      max-width: 360px;
       flex-shrink: 0;
       padding: 14px 12px;
       scroll-snap-align: start;
-      min-height: auto;
+      min-height: auto; /* Remove fixed height */
       margin-top: 14px;
       display: flex;
       flex-direction: column;
@@ -1908,8 +1896,7 @@
     text-align: center;
     width: 100%;
     max-width: 600px;
-    height: auto; /* Changed from 100% */
-    max-height: 100%; /* Fill available space */
+    max-height: calc(100vh - 40px); /* Fit viewport with padding */
     background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
     border: 3px solid #60c655;
     border-radius: 24px;
@@ -1920,31 +1907,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 24px;
+    justify-content: flex-start;
+    gap: 20px;
     overflow-y: auto; /* Scrollable if needed */
     overflow-x: hidden;
     animation: celebrationPop 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
     cursor: default;
     pointer-events: auto;
+    box-sizing: border-box;
   }
   @keyframes celebrationPop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
 
   /* Celebration Badge - Scaled Appropriately (BOGO-CELEBRATION-MODAL-026) */
   .celebration-badge {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: clamp(80px, 15vw, 120px);
-    height: clamp(80px, 15vw, 120px);
-    background: linear-gradient(135deg, #60c655 0%, #50b645 100%);
-    border-radius: 50%;
-    margin-bottom: clamp(16px, 3vh, 24px);
-    box-shadow: 0 8px 24px rgba(96, 198, 85, 0.5);
-    border: 4px solid rgba(96, 198, 85, 0.3);
-    animation: badgeFloat 2000ms ease-in-out infinite;
+    display: none; /* Hidden - removed crown icon */
   }
 
   @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -1973,7 +1949,7 @@
     font-size: clamp(24px, 5vw, 42px);
     font-weight: 900;
     color: #fff;
-    margin-bottom: clamp(12px, 2vh, 20px);
+    margin-bottom: 0;
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -1984,12 +1960,155 @@
   @keyframes messageGlow { 0%, 100% { text-shadow: 0 0 20px rgba(96, 198, 85, 0.6); } 50% { text-shadow: 0 0 40px rgba(96, 198, 85, 1); } }
 
   .celebration-submessage {
-    font-size: clamp(14px, 3vw, 20px);
+    font-size: 24px;
     font-weight: 700;
     color: #60c655;
-    margin-bottom: clamp(20px, 4vh, 32px);
+    margin-bottom: 0;
     line-height: 1.4;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ✅ GIFTS SEPARATOR */
+  .celebration-gifts-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gifts-plus {
+    font-size: 32px;
+    font-weight: 700;
+    color: #60c655;
+    line-height: 1;
+  }
+
+  .tier-celebration-overlay.tier-4 .gifts-plus {
+    color: #E0F7FF;
+  }
+
+  /* ✅ FREE GIFTS DISPLAY */
+  .celebration-gifts {
+    display: flex;
+    gap: clamp(16px, 3vw, 24px);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .celebration-gift {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 140px;
+    max-width: 180px;
+    animation: giftPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  }
+
+  .celebration-gift:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .celebration-gift:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  @keyframes giftPopIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .gift-image-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .celebration-gift:hover .gift-image-wrapper {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .gift-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gift-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #60c655 0%, #4a9e3f 100%);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(96, 198, 85, 0.5);
+    z-index: 1;
+    display: none;
+  }
+
+  .gift-info {
+    text-align: center;
+  }
+
+  .gift-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .gift-value {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    .celebration-gifts {
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .celebration-gift {
+      min-width: 120px;
+      max-width: 140px;
+    }
+
+    .gift-image-wrapper {
+      width: 100px;
+      height: 100px;
+    }
+
+    .gift-title {
+      font-size: 12px;
+    }
+
+    .gift-value {
+      font-size: 11px;
+    }
   }
 
   /* Savings Box - Compact (BOGO-CELEBRATION-MODAL-026) */
@@ -1998,7 +2117,7 @@
     border: 2px solid rgba(96, 198, 85, 0.4);
     border-radius: 16px;
     padding: clamp(16px, 3vh, 24px);
-    margin-bottom: clamp(20px, 4vh, 32px);
+    margin-bottom: 0;
     width: 100%;
     max-width: 400px;
   }
@@ -2020,6 +2139,12 @@
     text-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);
   }
 
+  /* Platinum tier savings color */
+  .tier-celebration-overlay.tier-4 .savings-total {
+    color: #E0F7FF;
+    text-shadow: 0 4px 12px rgba(224, 247, 255, 0.5);
+  }
+
   /* Action Buttons - Responsive Stacking (BOGO-CELEBRATION-MODAL-026) */
   .celebration-buttons {
     display: flex;
@@ -2027,7 +2152,7 @@
     gap: 12px;
     width: 100%;
     max-width: 400px;
-    margin-top: clamp(16px, 3vh, 24px);
+    margin-top: 0;
   }
 
   .btn-celebration-continue {
@@ -2143,6 +2268,7 @@
 
     .celebration-content {
       max-width: calc(100vw - 20px);
+      max-height: calc(100vh - 20px); /* Fit viewport with padding */
       padding: 32px 24px;
     }
 
@@ -2154,7 +2280,13 @@
   /* Very Small Screens (BOGO-CELEBRATION-MODAL-026) */
   @media (max-width: 480px) {
     .tier-celebration-overlay {
-      padding: 40px 12px 90px 12px;
+      padding: 12px;
+    }
+
+    .celebration-content {
+      max-height: calc(100vh - 24px); /* Fit viewport with padding */
+      padding: 24px 16px;
+      gap: 10px;
     }
 
     .celebration-badge {
@@ -2166,11 +2298,13 @@
   /* Landscape Orientation - More Compact (BOGO-CELEBRATION-MODAL-026) */
   @media (max-height: 600px) and (orientation: landscape) {
     .tier-celebration-overlay {
-      padding: 20px 20px 80px 20px;
+      padding: 20px;
     }
 
     .celebration-content {
+      max-height: calc(100vh - 40px); /* Fit viewport with padding */
       padding: 16px;
+      gap: 0;
     }
 
     .celebration-badge {
@@ -2185,13 +2319,13 @@
     }
 
     .celebration-submessage {
-      font-size: 14px;
-      margin-bottom: 16px;
+      font-size: 24px;
+      margin-bottom: 0;
     }
 
     .celebration-savings {
       padding: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
 
     .savings-total {
@@ -2199,7 +2333,7 @@
     }
 
     .celebration-buttons {
-      margin-top: 12px;
+      margin-top: 0;
       gap: 8px;
     }
 
@@ -2307,6 +2441,16 @@
     white-space: nowrap;
     display: flex;
     align-items: center;
+  }
+  .celebration-gifts-separator {
+    margin-top: -20px;
+    margin-bottom: -20px;
+  }
+  @media (max-width: 768px) {
+    .celebration-gifts-separator {
+      margin-top: -10px;
+      margin-bottom: -20px;
+    }
   }
 
   /* Warning badge styling */
@@ -4544,7 +4688,6 @@
     /* Tier showcase mobile - Already styled as slider above, just adjust padding */
     .tier-cards-container {
       padding: 0 16px !important; /* ✅ Consistent padding for slider */
-      padding-bottom: 60px !important;
     }
 
     .tier-card.most-popular {
@@ -9133,47 +9276,4 @@ body[class*="bogo"] main {
 .bf25-subtle-pulse,
 .bf25-arrow-bounce {
   animation: none !important;
-}
-
-/* ============================================
-   CM-TIER-FIX-003 - Green row + Gold badge + Alignment
-   ============================================ */
-
-/* ✅ Force green background on highlight rows - even inside gold-styled cards */
-.tier-card .tier-feature.included.highlight {
-  background: rgba(96, 198, 85, 0.15) !important; /* Green, not gold */
-}
-
-/* Ensure discount badge inside can still be gold */
-.discount-badge-inline.gold {
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
-  color: #000 !important;
-}
-
-/* ✅ Vertical alignment - cards without badges align with badged cards */
-.tier-card.tier-1,
-.tier-card.tier-2 {
-  margin-top: 45px; /* Align with cards that have badges */
-}
-
-/* Cards WITH badges already have padding-top for badge clearance */
-.tier-card.most-popular,
-.tier-card.best-value,
-.tier-card.platinum-tier {
-  margin-top: 20px; /* Original margin for badge clearance */
-}
-
-@media (max-width: 768px) {
-  .tier-card.tier-1,
-  .tier-card.tier-2 {
-    margin-top: 40px;
-  }
-
-  /* Consistent mobile card width */
-  .tier-card {
-    width: 75vw !important;
-    min-width: 75vw !important;
-    max-width: 300px !important;
-    flex: 0 0 75vw !important;
-  }
 }

@@ -3,8 +3,8 @@
 {{ 'bogo-builder-2025.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Currency will be converted by JavaScript - store values in cents {%- endcomment -%}
-{% assign tier1_savings_cents = 3247 %}
-{% assign tier2_savings_cents = 6398 %}
+{% assign tier1_savings_cents = 3000 %}
+{% assign tier2_savings_cents = 6000 %}
 {% assign tier3_savings_cents = 11105 %}
 {% assign tier4_savings_cents = 15605 %}
 {% assign shipping_value_cents = 499 %}
@@ -48,7 +48,7 @@
 
       {%- comment -%} Main Headline {%- endcomment -%}
       <h1 class="hero-headline hero-headline--main">
-        <span class="free-gradient"></span> SALE IS LIVE! 🔥
+        <span class="free-gradient">CYBER MONDAY</span> SALE IS LIVE! 🔥
       </h1>
 
       {%- comment -%} ✅ MOVED: Countdown Timer (Now directly under headline) {%- endcomment -%}
@@ -78,17 +78,17 @@
           {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 1: Starter {%- endcomment -%}
           <div class="tier-card tier-1" data-tier="1">
             <div class="tier-header">
-              <div class="tier-icon">⚡</div>
+              <div class="tier-icon">🎯</div>
               <div class="tier-name">Starter</div>
               <div class="tier-requirement">1 Pair</div>
             </div>
 
             <div class="tier-features">
-              <div class="tier-feature included highlight">
+              <div class="tier-feature included">
                 <span class="feature-icon">✅</span>
                 <span class="feature-text">Buy 1 Get 1 free</span>
               </div>
-              <div class="tier-feature included premium">
+              <div class="tier-feature included">
                 <span class="feature-icon">🚚</span>
                 <span class="feature-text">FREE Standard Shipping</span>
               </div>
@@ -100,10 +100,6 @@
                 <span class="feature-icon">❌</span>
                 <span class="feature-text">No Bonus Cable</span>
               </div>
-              <div class="tier-feature excluded">
-                <span class="feature-icon">❌</span>
-                <span class="feature-text">No Turbo Dock</span>
-              </div>
             </div>
 
             <div class="tier-savings">
@@ -112,8 +108,10 @@
             </div>
           </div>
 
-          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 2: Value Pack (NO BADGE) {%- endcomment -%}
-          <div class="tier-card tier-2" data-tier="2">
+          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 2: Most Popular (DECOY) {%- endcomment -%}
+          <div class="tier-card tier-2 most-popular" data-tier="2">
+            <div class="popular-badge">⭐ MOST POPULAR</div>
+
             <div class="tier-header">
               <div class="tier-icon">🔥</div>
               <div class="tier-name">Value Pack</div>
@@ -133,15 +131,11 @@
                 <span class="feature-icon">❌</span>
                 <span class="feature-text">No Bonus Cable</span>
               </div>
-              <div class="tier-feature excluded">
-                <span class="feature-icon">❌</span>
-                <span class="feature-text">No Turbo Dock</span>
-              </div>
             </div>
 
             <div class="tier-savings">
               <div class="savings-label">Total Savings</div>
-              <div class="savings-amount"><span class="bogo-currency" data-amount="{{ tier2_savings_cents }}">€60</span>+</div>
+              <div class="savings-amount highlight"><span class="bogo-currency" data-amount="{{ tier2_savings_cents }}">€60</span>+</div>
             </div>
 
             <div class="tier-upgrade-hint">
@@ -149,12 +143,12 @@
             </div>
           </div>
 
-          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 3: Ultimate (MOST POPULAR - GOLD STYLING) {%- endcomment -%}
+          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 3: Ultimate (TARGET) {%- endcomment -%}
           <div class="tier-card tier-3 best-value" data-tier="3">
-            <div class="best-badge">👑 MOST POPULAR</div>
+            <div class="best-badge">👑 BEST VALUE</div>
 
             <div class="tier-header">
-              <div class="tier-icon">👑</div>
+              <div class="tier-icon">💎</div>
               <div class="tier-name">Ultimate</div>
               <div class="tier-requirement">3 Pairs</div>
             </div>
@@ -172,10 +166,6 @@
                 <span class="feature-icon">🎁</span>
                 <span class="feature-text">FREE Titan Smart Cable<br><span class="feature-value">(<span class="bogo-currency" data-amount="{{ cable_value_cents }}">$25</span> value)</span></span>
               </div>
-              <div class="tier-feature excluded">
-                <span class="feature-icon">❌</span>
-                <span class="feature-text">No Turbo Dock</span>
-              </div>
             </div>
 
             <div class="tier-savings">
@@ -188,12 +178,12 @@
             </div>
           </div>
 
-          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 4: Platinum (BEST VALUE) {%- endcomment -%}
+          {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 4: Platinum (ULTIMATE PLUS) {%- endcomment -%}
           <div class="tier-card tier-4 platinum-tier" data-tier="4">
-            <div class="platinum-badge">💎 BEST VALUE</div>
+            <div class="platinum-badge">💎 PLATINUM</div>
 
             <div class="tier-header">
-              <div class="tier-icon">💎</div>
+              <div class="tier-icon">⭐</div>
               <div class="tier-name">Platinum</div>
               <div class="tier-requirement">4+ Pairs</div>
             </div>
@@ -201,7 +191,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 4+ Get 4+ free <span class="discount-badge-inline platinum">+15% OFF</span></span>
+                <span class="feature-text">Buy 4 Get 4 free <span class="discount-badge-inline platinum">+15% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -695,6 +685,12 @@
   <!-- ========================================== -->
   <!-- BOGO JAVASCRIPT - CRITICAL: MUST BE INSIDE SECTION -->
   <!-- ========================================== -->
+<script>
+  // Inject asset URLs for gift images
+  window.bogoConfig = window.bogoConfig || {};
+  window.bogoConfig.cableImageUrl = '{{ "cabfree.png" | asset_url }}';
+  window.bogoConfig.dockImageUrl = '{{ "freedock.png" | asset_url }}';
+</script>
 <script src="{{ 'bogo-builder-2025.js' | asset_url }}" defer></script>
 
 <script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
@@ -837,6 +833,14 @@
       </div>
       <h2 class="celebration-message"></h2>
       <p class="celebration-submessage"></p>
+      <div class="celebration-gifts-separator" id="celebration-gifts-separator" style="display: none;">
+        <span class="gifts-plus">+</span>
+      </div>
+      {%- comment -%} ✅ FREE GIFTS DISPLAY {%- endcomment -%}
+      <div class="celebration-gifts" id="celebration-gifts">
+        {%- comment -%} Gift images will be populated by JavaScript {%- endcomment -%}
+      </div>
+      
       <div class="celebration-savings">
         <div class="savings-breakdown"></div>
         <div class="savings-total"></div>

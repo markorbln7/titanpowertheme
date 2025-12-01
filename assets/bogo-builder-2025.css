@@ -104,7 +104,8 @@
   position: relative;
   background: transparent;
   color: #ffffff;
-  overflow: hidden;
+  overflow-x: clip; /* Prevent horizontal page scroll */
+  overflow-y: visible; /* Allow badges to extend */
   padding-top: var(--space-lg); /* 32px */
   padding-bottom: var(--space-xl); /* 48px */
   padding-left: 0;
@@ -1465,36 +1466,21 @@
       display: flex !important;
       flex-direction: row;
       gap: 16px;
-      padding: 32px 16px !important;
-      padding-top: 20px !important; /* Space for badges */
+      padding: 20px 16px 16px 16px !important; /* Top for badges, minimal bottom */
       max-width: 100%;
       margin: 0;
       overflow-x: auto;
-      overflow-y: visible; /* Allow badge overflow */
+      overflow-y: clip; /* ✅ Clip content without creating scroll - allows badges */
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      position: relative;
     }
 
     /* Hide scrollbar on Chrome/Safari */
     .tier-cards-container::-webkit-scrollbar {
       display: none;
-    }
-
-    /* ✅ Visual hint: Fade gradient on right edge */
-    .tier-cards-container::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 40px;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
-      pointer-events: none;
-      z-index: 2;
     }
 
     .tier-card {

@@ -3659,6 +3659,16 @@ class ExpansionManager {
         console.log('✅ Open animation complete');
       }
 
+      // CRITICAL: Cancel the animation to clear 'fill: forwards' styles
+      // This allows CSS .is-active styles to take full control of positioning
+      containerAnimation.cancel();
+
+      // Re-ensure is-active class for CSS positioning
+      this.container.classList.add('is-active');
+
+      // Force a reflow to ensure CSS is applied correctly
+      void this.container.offsetHeight;
+
       // Hide original card to prevent visual artifacts
       card.style.visibility = 'hidden';
 
@@ -3667,6 +3677,10 @@ class ExpansionManager {
 
       // Animation complete
       this.state.update('isAnimating', false);
+
+      if (this.config.debug) {
+        console.log('✅ Animation styles cleared, CSS now controls positioning');
+      }
     };
 
     // Handle animation errors

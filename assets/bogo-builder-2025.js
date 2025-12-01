@@ -5988,7 +5988,7 @@ class TierCelebrations {
         message: 'TIER 3 UNLOCKED!',
         submessage: '10% OFF + FREE Shipping + FREE Cable!',
         breakdown: `BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(2500)})`,
-        buttonText: 'Add 1 More Pair for Platinum Tier!'
+        buttonText: 'Add 1 More Pair for FREE Turbo Dock!'
       };
     } else if (tier === 4) {
       config = {
@@ -6034,18 +6034,17 @@ class TierCelebrations {
     secondaryBtn.textContent = 'Continue Shopping';
     secondaryBtn.type = 'button';
     
-    // ✅ PRIMARY BUTTON: Check if overlay has tier-3 or tier-4 class
+    // ✅ PRIMARY BUTTON: Only Tier 4 goes to checkout, others just close modal
     primaryBtn.onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
       
-      const isTier3 = this.overlay.classList.contains('tier-3');
       const isTier4 = this.overlay.classList.contains('tier-4') || tier === 4;
-      console.log(`🎉 Primary button clicked. Tier: ${tier}, Has tier-3 class: ${isTier3}, Has tier-4: ${isTier4}`);
+      console.log(`🎉 Primary button clicked. Tier: ${tier}, Has tier-4: ${isTier4}`);
       
       this.closeCelebration(tier, 'continue');
       
-      if ((isTier3 || isTier4) && typeof proceedToCheckout === 'function') {
+      if (isTier4 && typeof proceedToCheckout === 'function') {
         console.log(`✅ TIER ${tier}: Going to checkout`);
         proceedToCheckout();
       } else {

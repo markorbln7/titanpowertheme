@@ -7464,7 +7464,7 @@ body.bogo-checkout-mode .rebuy-modal {
 /* ✅ BOGO-V2-POLISH: Main Container with Premium Gradient */
 .bogo-sticky-cart-v2 {
   position: fixed;
-  bottom: 50px;
+  bottom: 0px;
   left: 0;
   right: 0;
   background: linear-gradient(180deg, rgba(10, 10, 10, 1) 0%, rgb(0 0 0 / 90%) 100%);
@@ -7474,6 +7474,12 @@ body.bogo-checkout-mode .rebuy-modal {
   min-height: 120px;
   backdrop-filter: blur(8px);
   animation: cartSlideUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (max-width: 768px) {
+  .bogo-sticky-cart-v2 {
+    bottom: 50px;
+  }
 }
 
 /* Entrance animation */

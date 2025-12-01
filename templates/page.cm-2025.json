@@ -20,7 +20,9 @@
     "bogo_builder_2024_W3QwGp": {
       "type": "cm-builder-2025",
       "custom_css": [
-        ".battery-body, .battery-head {background: rgba(26, 26, 26, 0.95); border: 3px solid #c8102e;}"
+        ".battery-body,.battery-head {background: rgba(26, 26, 26, 0.95); border: 3px solid #c8102e;}",
+        "@media (max-width: 768px) {.bf-badge {max-width: 5500px; margin-bottom: 10px; margin-top: -50px; }}",
+        "@media (max-width: 640px) {.hero-headline {font-size: 25px; }}"
       ],
       "name": "BOGO Builder 2024",
       "settings": {

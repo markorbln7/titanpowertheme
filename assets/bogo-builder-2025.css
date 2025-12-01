@@ -196,12 +196,7 @@
     position: relative;
     background: #ffffff00;
     color: #ffffff;
-<<<<<<< Updated upstream
-    overflow: visible; /* ✅ Changed from hidden - allows tier badges to show */
-    overflow-x: hidden; /* Prevent horizontal page scroll */
-=======
-    overflow: visible; /* Allow content to extend */
->>>>>>> Stashed changes
+    overflow: visible; /* ✅ Allow badges to extend outside */
     padding: 25px 40px 56px; /* ✅ Top padding reduced to 25px for announcement bar removal */
     text-align: center;
     z-index: 1; /* ✅ Changed from 10 to 1 - just above starfield */
@@ -858,7 +853,9 @@
   .bogo-tier-showcase {
     margin: var(--space-lg) auto var(--space-xl); /* 32px top, 48px bottom */
     padding: 0;
+    padding-top: 20px; /* Space for badges to extend */
     text-align: center;
+    overflow: visible; /* Allow badges to extend outside */
   }
 
   .tier-showcase-title {
@@ -882,6 +879,8 @@
     gap: var(--space-md); /* 24px */
     margin-bottom: var(--space-lg); /* 32px */
     margin-top: var(--space-lg); /* 32px */
+    padding-top: 20px; /* Space for badges */
+    overflow: visible; /* Allow badges to extend */
   }
 
   /* Individual tier card */

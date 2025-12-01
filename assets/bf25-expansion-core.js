@@ -3659,15 +3659,51 @@ class ExpansionManager {
         console.log('✅ Open animation complete');
       }
 
-      // CRITICAL: Cancel the animation to clear 'fill: forwards' styles
-      // This allows CSS .is-active styles to take full control of positioning
+      // CRITICAL FIX: Aggressively reset modal position for CSS control
+      // ─────────────────────────────────────────────────────────────────
+
+      // 1. Cancel animation to clear 'fill: forwards' styles
       containerAnimation.cancel();
 
-      // Re-ensure is-active class for CSS positioning
+      // 2. Remove any inline styles that might conflict with CSS
+      this.container.style.transform = '';
+      this.container.style.transformOrigin = '';
+      this.container.style.top = '';
+      this.container.style.left = '';
+      this.container.style.width = '';
+      this.container.style.height = '';
+      this.container.style.opacity = '';
+      this.container.style.borderRadius = '';
+
+      // 3. Temporarily remove is-active to force CSS recalculation
+      this.container.classList.remove('is-active');
+
+      // 4. Force browser reflow
+      void this.container.offsetHeight;
+
+      // 5. Re-add is-active for proper CSS positioning
       this.container.classList.add('is-active');
 
-      // Force a reflow to ensure CSS is applied correctly
+      // 6. Force another reflow to ensure styles are applied
       void this.container.offsetHeight;
+
+      // 7. On mobile, explicitly set correct final position as backup
+      if (window.innerWidth <= 768) {
+        // Double-check mobile positioning
+        requestAnimationFrame(() => {
+          this.container.style.transform = 'translateZ(0)';
+          this.container.style.top = '0';
+          this.container.style.left = '0';
+          this.container.style.width = '100vw';
+          this.container.style.height = '100dvh';
+
+          // Force scroll to top of modal content
+          const content = this.container.querySelector('.bf25-modal-content');
+          if (content) {
+            content.scrollTop = 0;
+          }
+        });
+      }
 
       // Hide original card to prevent visual artifacts
       card.style.visibility = 'hidden';
@@ -3679,7 +3715,7 @@ class ExpansionManager {
       this.state.update('isAnimating', false);
 
       if (this.config.debug) {
-        console.log('✅ Animation styles cleared, CSS now controls positioning');
+        console.log('✅ Modal position forcefully reset, CSS now controls');
       }
     };
 

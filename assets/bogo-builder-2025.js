@@ -6731,7 +6731,7 @@ async function proceedToCheckout() {
       }
     });
 
-    // Step 3: Add bonus cable for Tier 3 (Preserving existing logic)
+    // Step 3: Add bonus cable for Tier 3+ (Preserving existing logic)
     if (pairCount >= 3) {
       const bonusCableVariantId = window.bogoConfig?.tier3BonusVariantId || '43480190943410';
       items.push({
@@ -6740,6 +6740,20 @@ async function proceedToCheckout() {
         properties: {
           '_bonus_item': 'FREE Tier 3 Bonus',
           '_tier_3_bonus': 'Titan Smart Cable',
+          '_free_gift': 'true'
+        }
+      });
+    }
+
+    // Step 3.5: Add bonus Turbo Dock for Tier 4
+    if (pairCount >= 4) {
+      const bonusDockVariantId = window.bogoConfig?.tier4BonusVariantId || '45338153222322';
+      items.push({
+        id: bonusDockVariantId,
+        quantity: 1,
+        properties: {
+          '_bonus_item': 'FREE Tier 4 Bonus',
+          '_tier_4_bonus': 'Turbo Dock',
           '_free_gift': 'true'
         }
       });
@@ -6853,9 +6867,12 @@ function getBOGODiscountCodes(pairCount) {
   } else if (pairCount === 2) {
     // Tier 2: BOGO + 5% OFF + Free Premium Shipping
     return 'BOGO2025,TIER2-5OFF,FREESHIP';
-  } else if (pairCount >= 3) {
+  } else if (pairCount === 3) {
     // Tier 3: BOGO + 10% OFF + Free Cable + Free Premium Shipping
     return 'BOGO2025,TIER3-10OFF,FREECABLE2025,FREESHIP';
+  } else if (pairCount >= 4) {
+    // Tier 4: BOGO + 15% OFF + Free Cable + Free Turbo Dock + Free Premium Shipping
+    return 'BOGO2025,TIER4-15OFF,FREECABLE2025,FREEDOCK2025,FREESHIP';
   }
   return '';
 }
@@ -7140,7 +7157,13 @@ function redirectToCheckoutWithCodes(pairCount) {
   let codes = ['BOGO2025']; // Always include BOGO
 
   // Add tier-specific benefits
-  if (pairCount >= 3) {
+  if (pairCount >= 4) {
+    // Tier 4: 15% OFF + Free Cable + Free Turbo Dock + Free Premium Shipping
+    codes.push('TIER4-15OFF');    // 15% discount
+    codes.push('FREECABLE2025');  // Free Titan Smart Cable ($25.00 value)
+    codes.push('FREEDOCK2025');   // Free Turbo Dock
+    codes.push('FREESHIP');       // Free premium shipping ($4.95 value)
+  } else if (pairCount >= 3) {
     // Tier 3: 10% OFF + Free Cable + Free Premium Shipping
     codes.push('TIER3-10OFF');    // 10% discount
     codes.push('FREECABLE2025');  // Free Titan Smart Cable ($25.00 value)

@@ -444,7 +444,7 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
 // ===========================================
 // COUNTDOWN TIMER - Battery Progress Bar
-// Fixed End Date: Monday, November 17, 2025, 5:00 PM GMT
+// Fixed End Date: Tuesday, December 2, 2025, 12:00 AM PST (8:00 AM UTC)
 // Auto-hides when timer reaches zero
 // ===========================================
 (function() {
@@ -453,8 +453,8 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
   if (!countdownText || !batteryFill) return;
 
-  // ⚠️ FIXED END DATE: Monday, November 17, 2025, 5:00 PM GMT
-  const SALE_END = new Date('2025-11-17T17:00:00Z').getTime();
+  // ⚠️ FIXED END DATE: Tuesday, December 2, 2025, 12:00 AM PST (8:00 AM UTC)
+  const SALE_END = new Date('2025-12-02T08:00:00Z').getTime();
 
   // Calculate sale start (72 hours before end date for battery percentage)
   const SALE_DURATION_MS = 72 * 60 * 60 * 1000; // 72 hours
@@ -1295,7 +1295,7 @@ function updateTooltipBreakdown() {
   const BONUS_GIFT_VALUE = 35.00; // €35
   let totalSavings = bogoSavings + tierDiscount;
   if (currentTier >= 2) totalSavings += 4.99;
-  if (currentTier >= 3) totalSavings += 18.95;
+  if (currentTier >= 3) totalSavings += 25.00;
   if (currentTier >= 4) totalSavings += BONUS_GIFT_VALUE;
 
   document.getElementById('tooltip-total').textContent = formatMoney(totalSavings);
@@ -1631,7 +1631,7 @@ function updateStickyCart() {
 
     // 1.3 Value Adds (in cents)
     const SHIPPING_VALUE_CENTS = 499;  // €4.99
-    const CABLE_VALUE_CENTS = 1895;     // €18.95
+    const CABLE_VALUE_CENTS = 2500;     // $25.00
     const BONUS_GIFT_VALUE_CENTS = 3500; // €35.00
 
     if (currentTier >= 2) {
@@ -1640,7 +1640,7 @@ function updateStickyCart() {
     }
     if (currentTier >= 3) {
       totalSavingsCents += CABLE_VALUE_CENTS;
-      console.log('Added Cable: €18.95');
+      console.log('Added Cable: $25.00');
     }
     if (currentTier >= 4) {
       totalSavingsCents += BONUS_GIFT_VALUE_CENTS;
@@ -1740,7 +1740,7 @@ function updateStickyCart() {
     if (currentTier === 1) {
       updateIncentiveMessage('🚚 <strong>Add 1 pair</strong> for +5% OFF & FREE Premium Shipping!');
     } else if (currentTier === 2) {
-      updateIncentiveMessage(`🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (${BOGOCurrency.convert(1895)})!`);
+      updateIncentiveMessage(`🎁 <strong>Add 1 pair</strong> for +10% OFF & FREE Titan Cable (${BOGOCurrency.convert(2500)})!`);
     } else if (currentTier === 3) {
       updateIncentiveMessage(`💎 <strong>Add 1 pair</strong> for +15% OFF & FREE Bonus Gift (${BOGOCurrency.convert(3500)})!`);
     } else if (currentTier >= 4) {
@@ -2145,7 +2145,7 @@ function updatePartitionedPricing() {
   const shippingSavingsCents = pairCount >= 2 ? 499 : 0; // €4.99
 
   // Bonus cable value
-  const cableSavingsCents = pairCount >= 3 ? 1895 : 0; // €18.95
+  const cableSavingsCents = pairCount >= 3 ? 2500 : 0; // $25.00
 
   // Bonus gift value (Tier 4)
   const bonusGiftSavingsCents = pairCount >= 4 ? 3500 : 0; // €35.00
@@ -2157,7 +2157,7 @@ function updatePartitionedPricing() {
   console.log('BOGO:', bogoDiscountCents, '(€' + (bogoDiscountCents / 100).toFixed(2) + ')');
   console.log('Tier:', tierDiscountCents, '(€' + (tierDiscountCents / 100).toFixed(2) + ')');
   console.log('Shipping:', shippingSavingsCents > 0 ? shippingSavingsCents + ' (€4.99)' : '0');
-  console.log('Cable:', cableSavingsCents > 0 ? cableSavingsCents + ' (€18.95)' : '0');
+  console.log('Cable:', cableSavingsCents > 0 ? cableSavingsCents + ' ($25.00)' : '0');
   console.log('Bonus Gift:', bonusGiftSavingsCents > 0 ? bonusGiftSavingsCents + ' (€35.00)' : '0');
   console.log('TOTAL:', totalSavingsCents, '(€' + (totalSavingsCents / 100).toFixed(2) + ')');
   console.log('========================================\n');
@@ -2346,7 +2346,7 @@ function updateReviewProgressBar(pairCount) {
       nextBenefit.textContent = '⭐ Add 1 more pair → FREE Premium Shipping + 5% OFF';
     } else if (pairCount === 2) {
       currentStatus.textContent = '⭐ Tier 2 Activated - 5% OFF + FREE Shipping';
-      nextBenefit.textContent = `👑 Add 1 more pair → Extra 5% + FREE ${BOGOCurrency.convert(1895)} Cable`;
+      nextBenefit.textContent = `👑 Add 1 more pair → Extra 5% + FREE ${BOGOCurrency.convert(2500)} Cable`;
     } else if (pairCount === 3) {
       currentStatus.textContent = '👑 Tier 3 Activated - 10% OFF + FREE Cable';
       nextBenefit.textContent = `💎 Add 1 more pair → Extra 5% + FREE ${BOGOCurrency.convert(3500)} Bonus Gift`;
@@ -2408,7 +2408,7 @@ function updateReviewHeaderSavings() {
 
   // Add bonus cable value
   if (pairCount >= 3) {
-    totalSavings += 1895; // €18.95 in cents
+    totalSavings += 2500; // $25.00 in cents
   }
 
   // Add bonus gift value (Tier 4)
@@ -5987,7 +5987,7 @@ class TierCelebrations {
         icon: '👑',
         message: 'TIER 3 UNLOCKED!',
         submessage: '10% OFF + FREE Shipping + FREE Cable!',
-        breakdown: `BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(1895)})`,
+        breakdown: `BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(2500)})`,
         buttonText: 'Add 1 More Pair for Platinum Tier!'
       };
     } else if (tier === 4) {
@@ -5995,7 +5995,7 @@ class TierCelebrations {
         icon: '💎',
         message: 'PLATINUM TIER UNLOCKED!',
         submessage: '15% OFF + FREE Shipping + FREE Cable + FREE Bonus Gift!',
-        breakdown: `BOGO Savings<br>+ 15% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(1895)})<br>+ FREE Travel Case (${BOGOCurrency.convert(3500)})`,
+        breakdown: `BOGO Savings<br>+ 15% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(2500)})<br>+ FREE Turbo Dock (${BOGOCurrency.convert(3500)})`,
         buttonText: 'Checkout Now - Maximum Savings!'
       };
     } else {
@@ -6119,7 +6119,7 @@ class TierCelebrations {
     
     // 4. Add value bonuses
     const shippingSavings = tier >= 2 ? 499 : 0;
-    const cableSavings = tier >= 3 ? 1895 : 0;
+    const cableSavings = tier >= 3 ? 2500 : 0;
     const bonusGiftSavings = tier >= 4 ? 3500 : 0;
     
     // 5. Total savings (all in cents)
@@ -7143,7 +7143,7 @@ function redirectToCheckoutWithCodes(pairCount) {
   if (pairCount >= 3) {
     // Tier 3: 10% OFF + Free Cable + Free Premium Shipping
     codes.push('TIER3-10OFF');    // 10% discount
-    codes.push('FREECABLE2025');  // Free Titan Smart Cable (€14.95 value)
+    codes.push('FREECABLE2025');  // Free Titan Smart Cable ($25.00 value)
     codes.push('FREESHIP');       // Free premium shipping ($4.95 value)
   } else if (pairCount >= 2) {
     // Tier 2: 5% OFF + Free Premium Shipping

@@ -1,139 +1,588 @@
-{{ 'section-pdp-hero-master.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  ═══════════════════════════════════════════════════════════════════
+  BF25 UNIFIED GIFT & TIERS SECTION
+  Combines gift display with discount tiers in one cohesive section
+  SCOPED: All styles use .bf25-unified-gifts prefix to avoid conflicts
+  ═══════════════════════════════════════════════════════════════════
+{% endcomment %}
+
 {% liquid
-    comment
-      Section Variables
-    endcomment
-    assign giftRepeater = section.blocks | where: 'type', 'gift_images'
-  %}
-  {% if section.settings.welcome_message %}
-    <div class="bf-special-block mt-[10px]">
-      <img width="100%" height="auto" src="https://cdn.prod.website-files.com/65de5f112dbd7f7bdfc2f7b0/6724fdda94d57f82bf0c2f9a_bf-gift-icon.svg" loading="lazy" alt="" class="bf-gift-icon">
-      <p class="bf-text">
-        {{ section.settings.welcome_message }}
-      </p>
-    </div>
-  {% endif %}
-  <div class="gift-unlocker max-w-[400px] mx-auto mt-[20px] px-[10px]">
-    <div data-gift="titles" class="gift-titles">
+  assign giftRepeater = section.blocks | where: 'type', 'gift_images'
+%}
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   BF25 UNIFIED GIFTS SECTION - SCOPED STYLES
+   All classes prefixed with .bf25-unified-gifts to avoid conflicts
+   ═══════════════════════════════════════════════════════════════════ */
+
+.bf25-unified-gifts {
+  background: linear-gradient(180deg, #e8f5e9 0%, #d7f0d5 100%);
+  padding: 32px 16px;
+  font-family: "Work Sans", sans-serif;
+}
+
+.bf25-unified-gifts__container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.bf25-unified-gifts__header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.bf25-unified-gifts__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.bf25-unified-gifts__title-icon {
+  font-size: 24px;
+}
+
+/* Grid Layout */
+.bf25-unified-gifts__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Individual Tier Column */
+.bf25-unified-gifts__tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px;
+  position: relative;
+  text-align: center;
+}
+
+/* Vertical separator between tiers */
+.bf25-unified-gifts__tier:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ─────────────────────────────────────────────────────
+   TOP SECTION: Tier Info (items + discount + gift count)
+   ───────────────────────────────────────────────────── */
+.bf25-unified-gifts__tier-info {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Items label: "4+ items" */
+.bf25-unified-gifts__items-label {
+  color: #2e7d32;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* Discount row: "60 % OFF" */
+.bf25-unified-gifts__discount-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+.bf25-unified-gifts__discount-number {
+  font-size: 52px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 0.9;
+}
+
+.bf25-unified-gifts__discount-suffix {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 6px;
+}
+
+.bf25-unified-gifts__percent {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.bf25-unified-gifts__off-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: #666;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Gift count: "+ 1 GIFT" */
+.bf25-unified-gifts__gift-count {
+  color: #2e7d32;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────
+   BOTTOM SECTION: Gift Product Display
+   ───────────────────────────────────────────────────── */
+.bf25-unified-gifts__product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Product image container */
+.bf25-unified-gifts__product-image-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 140px;
+  aspect-ratio: 1;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: visible;
+  background: linear-gradient(180deg, #f8fdf8 0%, #e8f5e9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Confetti overlay */
+.bf25-unified-gifts__confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bf25-unified-gifts__confetti img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product image */
+.bf25-unified-gifts__product-image {
+  position: relative;
+  z-index: 2;
+  width: 85%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.bf25-unified-gifts__tier:hover .bf25-unified-gifts__product-image {
+  transform: scale(1.05);
+}
+
+/* Product name */
+.bf25-unified-gifts__product-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* Struck price */
+.bf25-unified-gifts__product-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e53935;
+  text-decoration: line-through;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLET STYLES (769px - 1024px)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bf25-unified-gifts__tier {
+    padding: 16px 10px;
+  }
+
+  .bf25-unified-gifts__discount-number {
+    font-size: 44px;
+  }
+
+  .bf25-unified-gifts__product-image-wrap {
+    max-width: 120px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DESKTOP STYLES (1025px+)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (min-width: 1025px) {
+  .bf25-unified-gifts {
+    padding: 40px 24px;
+  }
+
+  .bf25-unified-gifts__title {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .bf25-unified-gifts__tier {
+    padding: 24px 16px;
+  }
+
+  .bf25-unified-gifts__discount-number {
+    font-size: 64px;
+  }
+
+  .bf25-unified-gifts__percent {
+    font-size: 16px;
+  }
+
+  .bf25-unified-gifts__off-text {
+    font-size: 10px;
+  }
+
+  .bf25-unified-gifts__items-label {
+    font-size: 17px;
+  }
+
+  .bf25-unified-gifts__gift-count {
+    font-size: 15px;
+  }
+
+  .bf25-unified-gifts__product-image-wrap {
+    max-width: 160px;
+  }
+
+  .bf25-unified-gifts__product-name {
+    font-size: 12px;
+  }
+
+  .bf25-unified-gifts__product-price {
+    font-size: 15px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE STYLES (max 768px)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .bf25-unified-gifts {
+    padding: 24px 12px;
+  }
+
+  .bf25-unified-gifts__title {
+    font-size: 18px;
+  }
+
+  .bf25-unified-gifts__grid {
+    gap: 0;
+    border-radius: 12px;
+  }
+
+  .bf25-unified-gifts__tier {
+    padding: 14px 6px;
+  }
+
+  .bf25-unified-gifts__items-label {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .bf25-unified-gifts__discount-row {
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .bf25-unified-gifts__discount-number {
+    font-size: 32px;
+  }
+
+  .bf25-unified-gifts__discount-suffix {
+    padding-bottom: 4px;
+  }
+
+  .bf25-unified-gifts__percent {
+    font-size: 10px;
+  }
+
+  .bf25-unified-gifts__off-text {
+    font-size: 7px;
+  }
+
+  .bf25-unified-gifts__gift-count {
+    font-size: 9px;
+  }
+
+  .bf25-unified-gifts__tier-info {
+    margin-bottom: 10px;
+  }
+
+  .bf25-unified-gifts__product-image-wrap {
+    max-width: 70px;
+    margin-bottom: 8px;
+  }
+
+  .bf25-unified-gifts__product-name {
+    font-size: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .bf25-unified-gifts__product-price {
+    font-size: 10px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SMALL MOBILE (max 400px)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  .bf25-unified-gifts__title {
+    font-size: 16px;
+  }
+
+  .bf25-unified-gifts__discount-number {
+    font-size: 26px;
+  }
+
+  .bf25-unified-gifts__items-label {
+    font-size: 9px;
+  }
+
+  .bf25-unified-gifts__gift-count {
+    font-size: 8px;
+  }
+
+  .bf25-unified-gifts__product-image-wrap {
+    max-width: 60px;
+  }
+
+  .bf25-unified-gifts__product-name {
+    font-size: 7px;
+  }
+
+  .bf25-unified-gifts__product-price {
+    font-size: 9px;
+  }
+}
+</style>
+
+<section class="bf25-unified-gifts">
+  <div class="bf25-unified-gifts__container">
+
+    {% comment %} Section Header {% endcomment %}
+    {% if section.settings.welcome_message %}
+      <header class="bf25-unified-gifts__header">
+        <h2 class="bf25-unified-gifts__title">
+          <span class="bf25-unified-gifts__title-icon">🎁</span>
+          {{ section.settings.welcome_message }}
+        </h2>
+      </header>
+    {% endif %}
+
+    {% comment %} Tier Grid {% endcomment %}
+    <div class="bf25-unified-gifts__grid">
       {% for block in giftRepeater %}
-          {% assign prHandle = block.settings.money_product %}
-          <div data-money="{{ all_products[prHandle].price }}" class="gift_title font-normal font-italic{% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
-            <div class="gift-title_text">{{block.settings.pdp_hero_icon_title_top}}
-              {% unless block.settings.product_number_unlocker == '1'  %}
-                <div class="color-[#60c655] color-titan-green">{{ all_products[prHandle].price | money }}</div>
-              {% endunless %}
+        {% assign prHandle = block.settings.money_product %}
+        {% assign giftPriceHandle = block.settings.gift_price_product %}
+        {% assign tierIndex = forloop.index %}
+
+        {% comment %} Calculate tier values based on index {% endcomment %}
+        {% case tierIndex %}
+          {% when 1 %}
+            {% assign itemsLabel = "4+ items" %}
+            {% assign discountNum = "60" %}
+            {% assign giftCount = 1 %}
+          {% when 2 %}
+            {% assign itemsLabel = "8+ items" %}
+            {% assign discountNum = "70" %}
+            {% assign giftCount = 2 %}
+          {% when 3 %}
+            {% assign itemsLabel = "12+ items" %}
+            {% assign discountNum = "80" %}
+            {% assign giftCount = 3 %}
+          {% when 4 %}
+            {% assign itemsLabel = "16+ items" %}
+            {% assign discountNum = "85" %}
+            {% assign giftCount = 4 %}
+          {% else %}
+            {% assign itemsLabel = "4+ items" %}
+            {% assign discountNum = "60" %}
+            {% assign giftCount = tierIndex %}
+        {% endcase %}
+
+        <div class="bf25-unified-gifts__tier" {{ block.shopify_attributes }}>
+
+          {% comment %} TOP: Tier Info {% endcomment %}
+          <div class="bf25-unified-gifts__tier-info">
+            <div class="bf25-unified-gifts__items-label">{{ itemsLabel }}</div>
+
+            <div class="bf25-unified-gifts__discount-row">
+              <span class="bf25-unified-gifts__discount-number">{{ discountNum }}</span>
+              <div class="bf25-unified-gifts__discount-suffix">
+                <span class="bf25-unified-gifts__percent">%</span>
+                <span class="bf25-unified-gifts__off-text">OFF</span>
+              </div>
             </div>
+
+            <div class="bf25-unified-gifts__gift-count">+ {{ giftCount }} GIFT{% if giftCount > 1 %}S{% endif %}</div>
           </div>
+
+          {% comment %} BOTTOM: Gift Product {% endcomment %}
+          <div class="bf25-unified-gifts__product">
+            <div class="bf25-unified-gifts__product-image-wrap">
+              {% comment %} Confetti animation {% endcomment %}
+              <div class="bf25-unified-gifts__confetti">
+                <img src="{{ 'conf.gif' | asset_img_url }}" alt="" loading="lazy" width="100" height="100">
+              </div>
+
+              {% comment %} Product image {% endcomment %}
+              {% if block.settings.pdp_hero_icon %}
+                <img
+                  class="bf25-unified-gifts__product-image"
+                  src="{{ block.settings.pdp_hero_icon | img_url: 'medium' }}"
+                  srcset="{{ block.settings.pdp_hero_icon | img_url: 'small' }} 100w,
+                          {{ block.settings.pdp_hero_icon | img_url: 'medium' }} 200w,
+                          {{ block.settings.pdp_hero_icon | img_url: 'large' }} 400w"
+                  sizes="(max-width: 768px) 70px, 160px"
+                  alt="{{ block.settings.pdp_hero_icon_title | default: 'Free Gift' }}"
+                  loading="lazy"
+                  width="160"
+                  height="160"
+                >
+              {% endif %}
+            </div>
+
+            {% comment %} Product name {% endcomment %}
+            <div class="bf25-unified-gifts__product-name">
+              {{ block.settings.pdp_hero_icon_title | default: 'FREE GIFT' }}
+            </div>
+
+            {% comment %} Struck price {% endcomment %}
+            {% if giftPriceHandle != blank %}
+              <div class="bf25-unified-gifts__product-price">
+                {{ all_products[giftPriceHandle].price | money }}
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
       {% endfor %}
     </div>
-    <div class="gift-unlocker-wrapper gift-blocks bigger-spacing">
-       {% for block in giftRepeater %}
-        {% assign prHandle = block.settings.money_product %}
-           <div data-money="{{ all_products[prHandle].price }}" class="gift_card
-            {% if section.settings.set_inactive == true  %}
-              padlock-active
-            {% endif %}
-              {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}
-              {% unless section.settings.set_inactive == true  %}
-                is-active
-              {% endunless %}" data-gift="{{ block.settings.product_number_unlocker }}">
-               <div class="gift-overlay {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}"></div>
-                 <div class="conf is-active">
-                   <img width="100" height="auto" src="{{ 'conf.gif' | asset_img_url }}">
-                 </div>
-               <div class="top-note {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}">{{ block.settings.top_note }} <div class="crossed">{{ all_products[block.settings.gift_price_product].price | money }}</div></div>
-               <img class="gift_image {% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %} {% unless section.settings.set_inactive == true  %}is-active{% endunless %}" width="100%" height="auto" src="{{ block.settings.pdp_hero_icon | img_url:'master' }}" class="gift_image">
-               <div class="gift-locker">
-                 <div class="gift-lockings w-embed">
-                   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 18.6 18.6" style="enable-background:new 0 0 18.6 18.6;" xml:space="preserve" width="100%" height="100%">
-                   <path fill="CurrentColor" d="M14.6,11c0,0.8,0,1.6,0,2.4c0,0.8-0.3,1.4-0.8,2c-0.8,0.9-1.9,1.4-3.1,1.6c-1.1,0.2-2.3,0.2-3.4-0.1
-                   c-0.9-0.3-1.8-0.7-2.5-1.4c-0.6-0.6-1-1.4-0.9-2.3c0-1.5,0-3,0-4.4c0-0.9,0.4-1.5,1.2-1.9c0.1,0,0.1-0.1,0.1-0.2c0-1,0.2-2,0.7-2.9
-                   c0.5-0.9,1.1-1.6,2-2c1.2-0.6,2.4-0.4,3.5,0.5c0.8,0.6,1.2,1.4,1.6,2.3c0.3,0.7,0.4,1.4,0.4,2.2c0,0.1,0,0.1,0.1,0.2
-                   c0.8,0.4,1.2,1,1.2,1.8C14.6,9.5,14.6,10.3,14.6,11C14.6,11,14.6,11,14.6,11z M9.3,6.7C9.3,6.7,9.3,6.7,9.3,6.7c0.7,0,1.4,0,2,0
-                   c0.4,0,0.4,0,0.3-0.4c-0.1-0.8-0.3-1.6-0.8-2.2c-0.5-0.7-1.2-0.9-2-0.8c-0.6,0.1-1,0.5-1.3,1C7.1,5,6.9,5.8,6.9,6.6
-                   c0,0.1,0,0.2,0.1,0.2C7.8,6.7,8.5,6.7,9.3,6.7z M9.3,13.8C9.3,13.8,9.3,13.8,9.3,13.8c0.2,0,0.4,0,0.7,0c0.1,0,0.2,0,0.2-0.2
-                   c0-0.3,0-0.7,0-1c0-0.1,0-0.2,0.1-0.3c0.9-0.7,0.7-2.2-0.4-2.6c-0.7-0.3-1.5,0-1.9,0.6c-0.4,0.6-0.2,1.5,0.4,1.9
-                   c0.1,0.1,0.1,0.1,0.1,0.2c0,0.4,0,0.7,0,1.1c0,0.1,0,0.2,0.1,0.1C8.8,13.8,9,13.8,9.3,13.8z"></path>
-                   </svg>
-                 </div>
-               </div>
-           </div>
-       {% endfor %}
-    </div>
-    <div data-gift="titles" class="gift-titles">
-     {% for block in giftRepeater %}
-         <div data-money="{{ all_products[prHandle].price }}" class="gift_title font-normal font-italic{% if block.settings.product_number_unlocker == '1'  %}is-active{% endif %}" data-gift="{{ block.settings.product_number_unlocker }}">
-           <div class="gift-title_text">{{block.settings.pdp_hero_icon_title}}</div>
-         </div>
-     {% endfor %}
-   </div>
- </div>
- {% schema %}
+
+  </div>
+</section>
+
+{% schema %}
 {
-    "name": "Gift Display Section bf25",
-    "settings": [
-      {
-        "type": "text",
-        "id": "welcome_message",
-        "label": "Welcome Message",
-        "default": "Welcome to our store!"
-      },
-      {
-        "type": "checkbox",
-        "id": "set_inactive",
-        "label": "Set Inactive States",
-        "default": false
-      }
-    ],
-    "blocks": [
+  "name": "BF25 Unified Gift Tiers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "welcome_message",
+      "label": "Section Title",
+      "default": "Stack Deals to Unlock FREE GIFTS!"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gift_images",
+      "name": "Gift Tier",
+      "settings": [
         {
-            "type": "gift_images",
-            "name": "Gift Image",
-            "settings": [
-              {
-                "type": "image_picker",
-                "id": "pdp_hero_icon",
-                "label": "Gift icon"
-              },
-              {
-                "type": "text",
-                "id": "product_number_unlocker",
-                "label": "Product number unlocker"
-              },
-              {
-                "type": "text",
-                "id": "pdp_hero_icon_title",
-                "label": "Gallery icon title"
-              },
-              {
-                "type": "text",
-                "id": "pdp_hero_icon_title_top",
-                "label": "Gallery Top title"
-              },
-              {
-                "type": "text",
-                "id": "top_note",
-                "label": "Top Note",
-                "default": "Free $9.95"
-              },
-              {
-                "type": "product",
-                "id": "gift_price_product",
-                "label": "Gift Product"
-              },
-              {
-                "type": "product",
-                "id": "money_product",
-                "label": "Money Goal Product"
-              }
-            ]
+          "type": "image_picker",
+          "id": "pdp_hero_icon",
+          "label": "Gift Image"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_title",
+          "label": "Gift Name",
+          "default": "FREE GIFT"
+        },
+        {
+          "type": "product",
+          "id": "gift_price_product",
+          "label": "Gift Product (for price)"
+        },
+        {
+          "type": "product",
+          "id": "money_product",
+          "label": "Money Goal Product"
+        },
+        {
+          "type": "text",
+          "id": "product_number_unlocker",
+          "label": "Tier Number (1-4)",
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "pdp_hero_icon_title_top",
+          "label": "Top Title (legacy)"
+        },
+        {
+          "type": "text",
+          "id": "top_note",
+          "label": "Top Note (legacy)",
+          "default": "Free"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "BF25 Unified Gift Tiers",
+      "category": "Black Friday 2025",
+      "blocks": [
+        {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon_title": "4-IN-1 CABLE",
+            "product_number_unlocker": "1"
           }
-    ],
-    "presets": [
-      {
-        "name": "Gift Display Section bf25",
-        "category": "Theme Settings"
-      }
-    ]
-  }
+        },
+        {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon_title": "TURBO DOCK",
+            "product_number_unlocker": "2"
+          }
+        },
+        {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon_title": "UNRELEASED",
+            "product_number_unlocker": "3"
+          }
+        },
+        {
+          "type": "gift_images",
+          "settings": {
+            "pdp_hero_icon_title": "MYSTERY BOX",
+            "product_number_unlocker": "4"
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}

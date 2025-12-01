@@ -104,7 +104,7 @@
   position: relative;
   background: transparent;
   color: #ffffff;
-  overflow: visible; /* Allow content to extend */
+  overflow: hidden;
   padding-top: var(--space-lg); /* 32px */
   padding-bottom: var(--space-xl); /* 48px */
   padding-left: 0;
@@ -196,12 +196,8 @@
     position: relative;
     background: #ffffff00;
     color: #ffffff;
-<<<<<<< Updated upstream
     overflow: visible; /* ✅ Changed from hidden - allows tier badges to show */
     overflow-x: hidden; /* Prevent horizontal page scroll */
-=======
-    overflow: visible; /* Allow content to extend */
->>>>>>> Stashed changes
     padding: 25px 40px 56px; /* ✅ Top padding reduced to 25px for announcement bar removal */
     text-align: center;
     z-index: 1; /* ✅ Changed from 10 to 1 - just above starfield */
@@ -1466,20 +1462,36 @@
       display: flex !important;
       flex-direction: row;
       gap: 16px;
-      padding: 20px 16px 0 16px !important; /* Top padding for badges, no bottom padding */
+      padding: 32px 16px !important;
+      padding-top: 20px !important; /* Space for badges */
       max-width: 100%;
       margin: 0;
-      overflow: auto hidden; /* x: auto (scroll), y: hidden (no vertical scroll) */
+      overflow-x: auto;
+      overflow-y: visible; /* Allow badge overflow */
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      position: relative;
     }
 
     /* Hide scrollbar on Chrome/Safari */
     .tier-cards-container::-webkit-scrollbar {
       display: none;
+    }
+
+    /* ✅ Visual hint: Fade gradient on right edge */
+    .tier-cards-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
+      pointer-events: none;
+      z-index: 2;
     }
 
     .tier-card {
@@ -4543,7 +4555,6 @@
     /* Tier showcase mobile - Already styled as slider above, just adjust padding */
     .tier-cards-container {
       padding: 0 16px !important; /* ✅ Consistent padding for slider */
-      padding-bottom: 60px !important;
     }
 
     .tier-card.most-popular {
@@ -9135,12 +9146,24 @@ body[class*="bogo"] main {
 }
 
 /* ============================================
-   CM-TIER-FIX-001 - Vertical Alignment Fix
-   Cards without badges need top margin
+   CM-TIER-FIX-003 - Green row + Gold badge + Alignment
    ============================================ */
+
+/* ✅ Force green background on highlight rows - even inside gold-styled cards */
+.tier-card .tier-feature.included.highlight {
+  background: rgba(96, 198, 85, 0.15) !important; /* Green, not gold */
+}
+
+/* Ensure discount badge inside can still be gold */
+.discount-badge-inline.gold {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+  color: #000 !important;
+}
+
+/* ✅ Vertical alignment - cards without badges align with badged cards */
 .tier-card.tier-1,
-.tier-card.tier-2:not(.most-popular) {
-  margin-top: 40px; /* Match the space taken by badges on other cards */
+.tier-card.tier-2 {
+  margin-top: 45px; /* Align with cards that have badges */
 }
 
 /* Cards WITH badges already have padding-top for badge clearance */
@@ -9152,7 +9175,15 @@ body[class*="bogo"] main {
 
 @media (max-width: 768px) {
   .tier-card.tier-1,
-  .tier-card.tier-2:not(.most-popular) {
-    margin-top: 35px;
+  .tier-card.tier-2 {
+    margin-top: 40px;
+  }
+
+  /* Consistent mobile card width */
+  .tier-card {
+    width: 75vw !important;
+    min-width: 75vw !important;
+    max-width: 300px !important;
+    flex: 0 0 75vw !important;
   }
 }

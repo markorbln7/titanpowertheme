@@ -9277,3 +9277,46 @@ body[class*="bogo"] main {
 .bf25-arrow-bounce {
   animation: none !important;
 }
+
+/* ============================================
+   CM-TIER-CARDS RESTORED FIXES - 2025-12-01
+   ============================================ */
+
+/* ✅ Force green background on highlight rows - even inside gold-styled cards */
+.tier-card .tier-feature.included.highlight {
+  background: rgba(96, 198, 85, 0.15) !important; /* Green, not gold */
+}
+
+/* Ensure discount badge inside can still be gold */
+.discount-badge-inline.gold {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+  color: #000 !important;
+}
+
+/* ✅ Vertical alignment - cards without badges align with badged cards */
+.tier-card.tier-1,
+.tier-card.tier-2 {
+  margin-top: 45px; /* Align with cards that have badges */
+}
+
+/* Cards WITH badges already have padding-top for badge clearance */
+.tier-card.most-popular,
+.tier-card.best-value,
+.tier-card.platinum-tier {
+  margin-top: 20px; /* Original margin for badge clearance */
+}
+
+@media (max-width: 768px) {
+  .tier-card.tier-1,
+  .tier-card.tier-2 {
+    margin-top: 40px;
+  }
+
+  /* ✅ Narrower cards to show next card hint (75vw) */
+  .tier-card {
+    width: 75vw !important;
+    min-width: 75vw !important;
+    max-width: 300px !important;
+    flex: 0 0 75vw !important;
+  }
+}

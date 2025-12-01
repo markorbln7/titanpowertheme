@@ -1157,25 +1157,37 @@
 
   /* ✅ Text container with vertical centering */
   .feature-text {
-    flex: 2;
+    flex: 1;
     font-size: 12px;
     line-height: 1.4;
     color: #ffffff;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .tier-feature.included .feature-text {
     color: #ffffff;
   }
 
-  .tier-feature.excluded .feature-text {
-    color: rgba(255, 255, 255, 0.4);
+  /* ✅ Excluded features - dark red styling */
+  .tier-feature.excluded {
+    background: rgba(180, 40, 50, 0.2);
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin: 3px 0;
+    border-bottom: none;
   }
 
-  /* ✅ Excluded icons with reduced opacity */
+  .tier-feature.excluded .feature-text {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
   .tier-feature.excluded .feature-icon {
-    opacity: 0.4;
+    opacity: 1;
+    font-size: 14px;
   }
 
   /* ✅ Premium feature highlighting */
@@ -1241,12 +1253,13 @@
 
   /* ✅ SMALLER inline discount badges - compact and inline with text */
   .discount-badge-inline {
-    display: inline-block;
-    padding: 2px 6px; /* ✅ MUCH smaller padding */
-    margin-left: 6px;
-    border-radius: 6px; /* ✅ Smaller border radius */
-    font-size: 9px; /* ✅ SMALLER font - more compact */
-    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    margin-left: 4px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
@@ -1305,26 +1318,28 @@
   /* Tier savings */
   .tier-savings {
     text-align: center;
-    padding: 12px; /* ✅ Reduced from 16px */
+    padding: 14px 12px;
     background: rgba(96, 198, 85, 0.1);
     border-radius: 12px;
-    margin-bottom: 10px; /* ✅ Reduced from 12px */
+    margin-top: 10px;
   }
 
   .savings-label {
-    font-size: 11px; /* ✅ Reduced from 12px */
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 3px; /* ✅ Reduced from 4px */
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    display: block;
   }
 
   .savings-amount {
-    font-size: 28px; /* ✅ Reduced from 32px */
+    font-size: 22px;
     font-weight: 900;
     color: #60c655;
-    line-height: 1;
-    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.4); /* ✅ Glow effect */
+    display: block;
+    margin-top: 4px;
+    text-shadow: 0 2px 8px rgba(96, 198, 85, 0.4);
   }
 
   .savings-amount.highlight {
@@ -1436,28 +1451,35 @@
      Horizontal slider showing 1.3 cards
      ======================================== */
   @media (max-width: 768px) {
+    /* ✅ Allow badge overflow */
+    .bogo-tier-showcase {
+      overflow: visible;
+      padding-top: 20px;
+    }
+
     .tier-cards-container {
       display: flex !important;
       flex-direction: row;
       gap: 16px;
       padding: 32px 16px !important;
+      padding-top: 20px !important; /* Space for badges */
       max-width: 100%;
       margin: 0;
       overflow-x: auto;
-      overflow-y: hidden;
+      overflow-y: visible; /* Allow badge overflow */
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-      scrollbar-width: none; /* Hide scrollbar on Firefox */
-      -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
-      position: relative; /* For fade gradient positioning */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      position: relative;
     }
-    
+
     /* Hide scrollbar on Chrome/Safari */
     .tier-cards-container::-webkit-scrollbar {
       display: none;
     }
-    
+
     /* ✅ Visual hint: Fade gradient on right edge */
     .tier-cards-container::after {
       content: '';
@@ -1472,14 +1494,14 @@
     }
 
     .tier-card {
-      /* ✅ Wider cards: 92vw width, max 360px */
-      width: 92vw;
-      min-width: 92vw;
-      max-width: 360px;
+      /* ✅ Narrower cards to show next card hint (82vw) */
+      width: 82vw;
+      min-width: 82vw;
+      max-width: 320px;
       flex-shrink: 0;
       padding: 14px 12px;
       scroll-snap-align: start;
-      min-height: auto; /* Remove fixed height */
+      min-height: auto;
       margin-top: 14px;
       display: flex;
       flex-direction: column;

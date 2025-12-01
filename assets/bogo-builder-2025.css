@@ -8819,9 +8819,9 @@ body.bogo-checkout-mode .rebuy-modal {
 
 /* Close button */
 .lightbox-close {
-  position: absolute;
-  top: -60px;
-  right: 10px;
+  position: fixed; /* FIXED - stays in viewport regardless of zoom */
+  top: 20px; /* Fixed distance from top of screen */
+  right: 20px; /* Fixed distance from right of screen */
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
@@ -8872,18 +8872,18 @@ body.bogo-checkout-mode .rebuy-modal {
   /* Enable pinch-to-zoom on mobile */
   touch-action: pinch-zoom;
 
-  /* 1.5x zoom for better detail view */
-  transform: scale(1.5);
+  /* Subtle zoom for better detail view */
+  transform: scale(1.15);
   transform-origin: center center;
 }
 
 @keyframes imagePop {
   from {
-    transform: scale(1.35); /* Start at 90% of final 1.5x */
+    transform: scale(1.035); /* Start at 90% of final 1.15x */
     opacity: 0;
   }
   to {
-    transform: scale(1.5); /* End at 1.5x zoom */
+    transform: scale(1.15); /* End at 1.15x zoom */
     opacity: 1;
   }
 }
@@ -8891,18 +8891,18 @@ body.bogo-checkout-mode .rebuy-modal {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .lightbox-close {
-    top: -70px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     width: 48px;
     height: 48px;
   }
 
   .lightbox-image {
-    max-width: 130vw;
-    max-height: 130vh;
+    max-width: 95vw;
+    max-height: 95vh;
     padding: 24px;
     border-radius: 16px;
-    transform: scale(1.5);
+    transform: scale(1.15);
     transform-origin: center center;
   }
 

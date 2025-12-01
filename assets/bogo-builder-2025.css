@@ -1175,7 +1175,7 @@
 
   /* ✅ Excluded features - dark red styling */
   .tier-feature.excluded {
-    background: rgba(180, 40, 50, 0.12); /* More transparent - CM-TIER-FIX-001 */
+    background: rgba(180, 40, 50, 0.08); /* Even more transparent - CM-TIER-FIX-002 */
     padding: 8px 10px;
     border-radius: 8px;
     margin: 3px 0;
@@ -1495,10 +1495,10 @@
     }
 
     .tier-card {
-      /* ✅ Narrower cards to show next card hint (82vw) */
-      width: 82vw;
-      min-width: 82vw;
-      max-width: 320px;
+      /* ✅ Narrower cards to show next card hint (75vw) - CM-TIER-FIX-002 */
+      width: 75vw;
+      min-width: 75vw;
+      max-width: 300px;
       flex-shrink: 0;
       padding: 14px 12px;
       scroll-snap-align: start;

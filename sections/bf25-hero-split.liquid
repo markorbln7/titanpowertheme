@@ -48,8 +48,8 @@
     <div class="bf25-hero-content">
       <!-- Logo -->
       <img
-        src="https://cdn.shopify.com/s/files/1/0071/1727/5191/files/neon_2_1.png?v=1764249758"
-        alt="Black Friday Power Up Sale"
+        src="https://titanpowerplus.com/cdn/shop/t/254/assets/cmbadge.png?v=20632159920927008551764600025"
+        alt="Cyber Monday Power Up Sale"
         class="bf25-hero-logo"
         loading="eager"
         width="200"
@@ -108,7 +108,7 @@
     <div class="bf25-urgency-group">
       <div class="bf25-urgency-label">
         <span class="bf25-pulse-dot"></span>
-        <span>Black Friday Ends</span>
+        <span>Cyber Monday Ends</span>
       </div>
       <div class="bf25-battery-container">
         <div class="bf25-battery-body">
@@ -811,7 +811,11 @@
     if (!section) return;
 
     if (!state.show) {
-      if (state.ended) section.style.display = 'none';
+      // Only hide timer elements, NOT the entire section
+      const timerElements = section.querySelectorAll('.bf25-timer-inline, .bf25-urgency-strip, .bf25-battery-container, .bf25-countdown-short, .bf25-countdown-battery');
+      timerElements.forEach(el => {
+        if (el) el.style.display = 'none';
+      });
       return;
     }
 

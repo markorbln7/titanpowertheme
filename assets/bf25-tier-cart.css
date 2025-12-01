@@ -92,7 +92,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 6px var(--bf25sc-space-lg);  /* Reduced top padding from 8px to 6px for compact layout */
+  padding: 6px var(--bf25sc-space-lg);
+  padding-bottom: 8px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   gap: var(--bf25sc-space-xs);
 
   /* Smooth Transitions */
@@ -102,6 +104,45 @@
 
   /* Performance Optimizations - BF25-8.4: Removed permanent will-change */
   contain: layout paint style;
+}
+
+/* Safe area handling for devices with navigation bars */
+@media (max-width: 768px) {
+  .bf25sc-sticky-cart {
+    padding-bottom: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Extra padding for tall phones / foldables */
+@media (max-width: 768px) and (min-height: 700px) {
+  .bf25sc-sticky-cart {
+    padding-bottom: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Tablets and larger foldables */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bf25sc-sticky-cart {
+    padding-bottom: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Large screens (like Z Fold unfolded) */
+@media (min-width: 1025px) {
+  .bf25sc-sticky-cart {
+    padding-bottom: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* iOS/Android safe area support check */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bf25sc-sticky-cart {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
 }
 
 /* ====================================

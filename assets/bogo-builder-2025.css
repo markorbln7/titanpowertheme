@@ -1175,7 +1175,7 @@
 
   /* ✅ Excluded features - dark red styling */
   .tier-feature.excluded {
-    background: rgba(180, 40, 50, 0.2);
+    background: rgba(180, 40, 50, 0.12); /* More transparent - CM-TIER-FIX-001 */
     padding: 8px 10px;
     border-radius: 8px;
     margin: 3px 0;
@@ -9143,4 +9143,27 @@ body[class*="bogo"] main {
 .bf25-subtle-pulse,
 .bf25-arrow-bounce {
   animation: none !important;
+}
+
+/* ============================================
+   CM-TIER-FIX-001 - Vertical Alignment Fix
+   Cards without badges need top margin
+   ============================================ */
+.tier-card.tier-1,
+.tier-card.tier-2:not(.most-popular) {
+  margin-top: 40px; /* Match the space taken by badges on other cards */
+}
+
+/* Cards WITH badges already have padding-top for badge clearance */
+.tier-card.most-popular,
+.tier-card.best-value,
+.tier-card.platinum-tier {
+  margin-top: 20px; /* Original margin for badge clearance */
+}
+
+@media (max-width: 768px) {
+  .tier-card.tier-1,
+  .tier-card.tier-2:not(.most-popular) {
+    margin-top: 35px;
+  }
 }

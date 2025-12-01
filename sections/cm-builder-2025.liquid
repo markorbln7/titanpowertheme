@@ -3,8 +3,8 @@
 {{ 'bogo-builder-2025.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Currency will be converted by JavaScript - store values in cents {%- endcomment -%}
-{% assign tier1_savings_cents = 3000 %}
-{% assign tier2_savings_cents = 6000 %}
+{% assign tier1_savings_cents = 3247 %}
+{% assign tier2_savings_cents = 6398 %}
 {% assign tier3_savings_cents = 11105 %}
 {% assign tier4_savings_cents = 15605 %}
 {% assign shipping_value_cents = 499 %}
@@ -78,7 +78,7 @@
           {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 1: Starter {%- endcomment -%}
           <div class="tier-card tier-1" data-tier="1">
             <div class="tier-header">
-              <div class="tier-icon">🎯</div>
+              <div class="tier-icon">⚡</div>
               <div class="tier-name">Starter</div>
               <div class="tier-requirement">1 Pair</div>
             </div>
@@ -162,7 +162,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 3 Get 3 free <span class="discount-badge-inline green">+10% OFF</span></span>
+                <span class="feature-text">Buy 3 Get 3 free <span class="discount-badge-inline gold">+10% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>
@@ -189,8 +189,8 @@
           </div>
 
           {%- comment -%} ✅ BOGO-TIER-CARDS-UPDATE-052: Tier 4: Platinum (BEST VALUE) {%- endcomment -%}
-          <div class="tier-card tier-4 best-value" data-tier="4">
-            <div class="best-badge">👑 BEST VALUE</div>
+          <div class="tier-card tier-4 platinum-tier" data-tier="4">
+            <div class="platinum-badge">💎 BEST VALUE</div>
 
             <div class="tier-header">
               <div class="tier-icon">💎</div>
@@ -201,7 +201,7 @@
             <div class="tier-features">
               <div class="tier-feature included highlight">
                 <span class="feature-icon">✅</span>
-                <span class="feature-text">Buy 4 Get 4 free <span class="discount-badge-inline green">+15% OFF</span></span>
+                <span class="feature-text">Buy 4 Get 4 free <span class="discount-badge-inline platinum">+15% OFF</span></span>
               </div>
               <div class="tier-feature included premium">
                 <span class="feature-icon">✨</span>

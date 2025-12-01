@@ -8029,6 +8029,10 @@ function closeImageLightbox() {
   console.log('✅ Lightbox closed');
 }
 
+// Expose lightbox functions globally for HTML onclick handlers
+window.openImageLightbox = openImageLightbox;
+window.closeImageLightbox = closeImageLightbox;
+
 /**
  * Initialize lightbox on page load
  */

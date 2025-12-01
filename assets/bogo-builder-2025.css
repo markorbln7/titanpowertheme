@@ -8852,8 +8852,8 @@ body.bogo-checkout-mode .rebuy-modal {
 
 /* The zoomed image */
 .lightbox-image {
-  max-width: 120vw;  /* Increased to allow zoom */
-  max-height: 120vh; /* Increased to allow zoom */
+  max-width: 85vw;
+  max-height: 85vh;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -8871,19 +8871,16 @@ body.bogo-checkout-mode .rebuy-modal {
 
   /* Enable pinch-to-zoom on mobile */
   touch-action: pinch-zoom;
-
-  /* Subtle zoom for better detail view */
-  transform: scale(1.15);
-  transform-origin: center center;
+  /* NO transform on desktop - already large enough */
 }
 
 @keyframes imagePop {
   from {
-    transform: scale(1.035); /* Start at 90% of final 1.15x */
+    transform: scale(0.9);
     opacity: 0;
   }
   to {
-    transform: scale(1.15); /* End at 1.15x zoom */
+    transform: scale(1);
     opacity: 1;
   }
 }
@@ -8898,11 +8895,11 @@ body.bogo-checkout-mode .rebuy-modal {
   }
 
   .lightbox-image {
-    max-width: 95vw;
-    max-height: 95vh;
+    max-width: 92vw;
+    max-height: 92vh;
     padding: 24px;
     border-radius: 16px;
-    transform: scale(1.15);
+    transform: scale(1.4); /* 1.4x zoom on mobile only */
     transform-origin: center center;
   }
 

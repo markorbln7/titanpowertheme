@@ -11,7 +11,7 @@
 {% liquid
   assign gift_value_usd = section.settings.gift_value_usd | default: 275
   assign end_date_friday = section.settings.friday_end | default: '2025-11-29T07:59:59Z'
-  assign end_date_sunday = section.settings.sunday_end | default: '2025-12-01T07:59:59Z'
+  assign end_date_sunday = section.settings.sunday_end | default: '2025-12-02T07:59:59Z'
   assign headline_start = section.settings.headline_start | default: "This Shouldn't"
   assign headline_energy = section.settings.headline_energy | default: "Exist."
   assign cta_link = section.settings.cta_link | default: "#bf25-bundle-builder"
@@ -811,11 +811,13 @@
     if (!section) return;
 
     if (!state.show) {
-      // Only hide timer elements, NOT the entire section
-      const timerElements = section.querySelectorAll('.bf25-timer-inline, .bf25-urgency-strip, .bf25-battery-container, .bf25-countdown-short, .bf25-countdown-battery');
-      timerElements.forEach(el => {
-        if (el) el.style.display = 'none';
-      });
+      // Timer not active - hide timer elements but keep section visible
+      if (state.ended) {
+        const timerElements = section.querySelectorAll('.bf25-timer-inline, .bf25-urgency-strip');
+        timerElements.forEach(el => {
+          if (el) el.style.display = 'none';
+        });
+      }
       return;
     }
 

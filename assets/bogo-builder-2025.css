@@ -104,7 +104,7 @@
   position: relative;
   background: transparent;
   color: #ffffff;
-  overflow: hidden;
+  overflow: visible; /* Allow content to extend */
   padding-top: var(--space-lg); /* 32px */
   padding-bottom: var(--space-xl); /* 48px */
   padding-left: 0;
@@ -196,8 +196,12 @@
     position: relative;
     background: #ffffff00;
     color: #ffffff;
+<<<<<<< Updated upstream
     overflow: visible; /* ✅ Changed from hidden - allows tier badges to show */
     overflow-x: hidden; /* Prevent horizontal page scroll */
+=======
+    overflow: visible; /* Allow content to extend */
+>>>>>>> Stashed changes
     padding: 25px 40px 56px; /* ✅ Top padding reduced to 25px for announcement bar removal */
     text-align: center;
     z-index: 1; /* ✅ Changed from 10 to 1 - just above starfield */
@@ -1462,36 +1466,20 @@
       display: flex !important;
       flex-direction: row;
       gap: 16px;
-      padding: 32px 16px !important;
-      padding-top: 20px !important; /* Space for badges */
+      padding: 20px 16px 0 16px !important; /* Top padding for badges, no bottom padding */
       max-width: 100%;
       margin: 0;
-      overflow-x: auto;
-      overflow-y: visible; /* Allow badge overflow */
+      overflow: auto hidden; /* x: auto (scroll), y: hidden (no vertical scroll) */
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      position: relative;
     }
 
     /* Hide scrollbar on Chrome/Safari */
     .tier-cards-container::-webkit-scrollbar {
       display: none;
-    }
-
-    /* ✅ Visual hint: Fade gradient on right edge */
-    .tier-cards-container::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 40px;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
-      pointer-events: none;
-      z-index: 2;
     }
 
     .tier-card {
@@ -4555,6 +4543,7 @@
     /* Tier showcase mobile - Already styled as slider above, just adjust padding */
     .tier-cards-container {
       padding: 0 16px !important; /* ✅ Consistent padding for slider */
+      padding-bottom: 60px !important;
     }
 
     .tier-card.most-popular {

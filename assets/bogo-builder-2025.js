@@ -382,7 +382,7 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 
   function initStars() {
     stars = [];
-    const starCount = Math.min(300, Math.floor((canvas.width * canvas.height) / 4000));
+    const starCount = Math.min(75, Math.floor((canvas.width * canvas.height) / 10000));
 
     for (let i = 0; i < starCount; i++) {
       stars.push({

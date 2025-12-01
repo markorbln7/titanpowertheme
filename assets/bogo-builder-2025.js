@@ -5965,6 +5965,58 @@ class TierCelebrations {
     this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
   }
 
+  /**
+   * Render gift images for the tier
+   * @param {number} tier - Tier number
+   */
+  renderGiftImages(tier) {
+    const giftsContainer = this.overlay.querySelector('#celebration-gifts');
+    if (!giftsContainer) return;
+
+    // Clear existing gifts
+    giftsContainer.innerHTML = '';
+
+    const gifts = [];
+
+    // Tier 3: Free Cable
+    if (tier >= 3) {
+      const cableImage = window.bogoConfig?.cableImageUrl || '';
+      gifts.push({
+        image: cableImage,
+        title: 'FREE Titan Smart Cable',
+        value: BOGOCurrency.convert(2500)
+      });
+    }
+
+    // Tier 4: Free Turbo Dock
+    if (tier >= 4) {
+      const dockImage = window.bogoConfig?.dockImageUrl || '';
+      gifts.push({
+        image: dockImage,
+        title: 'FREE Turbo Dock',
+        value: BOGOCurrency.convert(3500)
+      });
+    }
+
+    // Render gifts
+    if (gifts.length > 0) {
+      giftsContainer.style.display = 'flex';
+      gifts.forEach((gift, index) => {
+        const giftEl = document.createElement('div');
+        giftEl.className = 'celebration-gift';
+        giftEl.innerHTML = `
+          <div class="gift-image-wrapper">
+            <img src="${gift.image}" alt="${gift.title}" class="gift-image" loading="lazy">
+            <div class="gift-badge">FREE</div>
+          </div>
+        `;
+        giftsContainer.appendChild(giftEl);
+      });
+    } else {
+      giftsContainer.style.display = 'none';
+    }
+  }
+
   celebrate(tier) {
     console.log(`🎉 ========================================`);
     console.log(`🎉 CELEBRATE CALLED WITH TIER: ${tier}`);
@@ -5986,7 +6038,7 @@ class TierCelebrations {
       config = {
         icon: '👑',
         message: 'TIER 3 UNLOCKED!',
-        submessage: '10% OFF + FREE Shipping + FREE Cable!',
+        submessage: '10% OFF + FREE Shipping',
         breakdown: `BOGO Savings<br>+ 10% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(2500)})`,
         buttonText: 'Add 1 More Pair for FREE Turbo Dock!'
       };
@@ -5994,7 +6046,7 @@ class TierCelebrations {
       config = {
         icon: '💎',
         message: 'PLATINUM TIER UNLOCKED!',
-        submessage: '15% OFF + FREE Shipping + FREE Cable + FREE Bonus Gift!',
+        submessage: '15% OFF + FREE Shipping',
         breakdown: `BOGO Savings<br>+ 15% Extra Discount<br>+ FREE Premium Shipping (${BOGOCurrency.convert(499)})<br>+ FREE Titan Smart Cable (${BOGOCurrency.convert(2500)})<br>+ FREE Turbo Dock (${BOGOCurrency.convert(3500)})`,
         buttonText: 'Checkout Now - Maximum Savings!'
       };
@@ -6009,14 +6061,31 @@ class TierCelebrations {
       };
     }
 
-    this.overlay.querySelector('.badge-icon').textContent = config.icon;
-    this.overlay.querySelector('.badge-tier').textContent = `Tier ${tier}`;
+    // Hide badge (crown icon)
+    const badgeEl = this.overlay.querySelector('.celebration-badge');
+    if (badgeEl) {
+      badgeEl.style.display = 'none';
+    }
+    
     this.overlay.querySelector('.celebration-message').textContent = config.message;
     this.overlay.querySelector('.celebration-submessage').textContent = config.submessage;
     this.overlay.querySelector('.savings-breakdown').innerHTML = config.breakdown;
 
     const savings = this.calculateTierSavings(tier);
     this.overlay.querySelector('.savings-total').textContent = BOGOCurrency.formatMoney(Math.round(savings * 100));
+
+    // ✅ Show "+" separator if there are gifts
+    const giftsSeparator = this.overlay.querySelector('#celebration-gifts-separator');
+    if (giftsSeparator) {
+      if (tier >= 3) {
+        giftsSeparator.style.display = 'block';
+      } else {
+        giftsSeparator.style.display = 'none';
+      }
+    }
+
+    // ✅ Render gift images
+    this.renderGiftImages(tier);
 
     // ✅ Clean button setup - clone to remove old event listeners
     const primaryBtnOld = this.overlay.querySelector('.btn-celebration-continue.primary');

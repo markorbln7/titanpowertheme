@@ -685,6 +685,12 @@
   <!-- ========================================== -->
   <!-- BOGO JAVASCRIPT - CRITICAL: MUST BE INSIDE SECTION -->
   <!-- ========================================== -->
+<script>
+  // Inject asset URLs for gift images
+  window.bogoConfig = window.bogoConfig || {};
+  window.bogoConfig.cableImageUrl = '{{ "cabfree.png" | asset_url }}';
+  window.bogoConfig.dockImageUrl = '{{ "freedock.png" | asset_url }}';
+</script>
 <script src="{{ 'bogo-builder-2025.js' | asset_url }}" defer></script>
 
 <script src="{{ 'section-collections-with-nav.js' | asset_url }}" defer="defer"></script>
@@ -827,6 +833,14 @@
       </div>
       <h2 class="celebration-message"></h2>
       <p class="celebration-submessage"></p>
+      <div class="celebration-gifts-separator" id="celebration-gifts-separator" style="display: none;">
+        <span class="gifts-plus">+</span>
+      </div>
+      {%- comment -%} ✅ FREE GIFTS DISPLAY {%- endcomment -%}
+      <div class="celebration-gifts" id="celebration-gifts">
+        {%- comment -%} Gift images will be populated by JavaScript {%- endcomment -%}
+      </div>
+      
       <div class="celebration-savings">
         <div class="savings-breakdown"></div>
         <div class="savings-total"></div>

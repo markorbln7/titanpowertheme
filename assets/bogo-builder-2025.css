@@ -7478,7 +7478,8 @@ body.bogo-checkout-mode .rebuy-modal {
 
 @media (max-width: 768px) {
   .bogo-sticky-cart-v2 {
-    bottom: 50px;
+    bottom: 0;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -8378,7 +8379,7 @@ body.bogo-checkout-mode .rebuy-modal {
   /* Enable flexbox wrapping for stacked layout */
   .sticky-cart-container {
     flex-wrap: wrap; /* KEY: Allows elements to wrap to new row */
-    padding: 14px 16px 16px; /* Compact vertical padding */
+    padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px)); /* Safe-area for phone nav bars */
     gap: 12px; /* Tighter gaps */
     min-height: 140px; /* Taller to accommodate 2 rows */
   }

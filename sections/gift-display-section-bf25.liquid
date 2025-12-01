@@ -18,7 +18,7 @@
 
 .bf25-unified-gifts {
   background: linear-gradient(180deg, #e8f5e9 0%, #d7f0d5 100%);
-  padding: 32px 16px;
+  padding: 24px 16px;
   font-family: "Work Sans", sans-serif;
 }
 
@@ -235,40 +235,40 @@
    ═══════════════════════════════════════════════════════════════════ */
 @media (min-width: 1025px) {
   .bf25-unified-gifts {
-    padding: 40px 24px;
+    padding: 28px 24px;
   }
 
   .bf25-unified-gifts__title {
-    font-size: 26px;
-    margin-bottom: 8px;
+    font-size: 24px;
+    margin-bottom: 6px;
   }
 
   .bf25-unified-gifts__tier {
-    padding: 24px 16px;
+    padding: 18px 16px;
   }
 
   .bf25-unified-gifts__discount-number {
-    font-size: 64px;
+    font-size: 56px;
   }
 
   .bf25-unified-gifts__percent {
-    font-size: 16px;
-  }
-
-  .bf25-unified-gifts__off-text {
-    font-size: 10px;
-  }
-
-  .bf25-unified-gifts__items-label {
-    font-size: 17px;
-  }
-
-  .bf25-unified-gifts__gift-count {
     font-size: 15px;
   }
 
+  .bf25-unified-gifts__off-text {
+    font-size: 9px;
+  }
+
+  .bf25-unified-gifts__items-label {
+    font-size: 16px;
+  }
+
+  .bf25-unified-gifts__gift-count {
+    font-size: 14px;
+  }
+
   .bf25-unified-gifts__product-image-wrap {
-    max-width: 160px;
+    max-width: 140px;
   }
 
   .bf25-unified-gifts__product-name {
@@ -276,16 +276,30 @@
   }
 
   .bf25-unified-gifts__product-price {
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  .bf25-unified-gifts__tier-info {
+    margin-bottom: 12px;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   MOBILE STYLES (max 768px)
+   MOBILE STYLES (max 768px) - FULL WIDTH, LARGER
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
   .bf25-unified-gifts {
-    padding: 24px 12px;
+    padding: 20px 0;
+  }
+
+  .bf25-unified-gifts__container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .bf25-unified-gifts__header {
+    padding: 0 16px;
+    margin-bottom: 16px;
   }
 
   .bf25-unified-gifts__title {
@@ -294,15 +308,25 @@
 
   .bf25-unified-gifts__grid {
     gap: 0;
-    border-radius: 12px;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.6);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .bf25-unified-gifts__tier {
-    padding: 14px 6px;
+    padding: 16px 8px;
+  }
+
+  .bf25-unified-gifts__tier:not(:last-child)::after {
+    height: 85%;
+    background: rgba(0, 0, 0, 0.1);
   }
 
   .bf25-unified-gifts__items-label {
-    font-size: 11px;
+    font-size: 12px;
     margin-bottom: 4px;
   }
 
@@ -312,7 +336,7 @@
   }
 
   .bf25-unified-gifts__discount-number {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .bf25-unified-gifts__discount-suffix {
@@ -320,66 +344,70 @@
   }
 
   .bf25-unified-gifts__percent {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .bf25-unified-gifts__off-text {
-    font-size: 7px;
+    font-size: 8px;
   }
 
   .bf25-unified-gifts__gift-count {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .bf25-unified-gifts__tier-info {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .bf25-unified-gifts__product-image-wrap {
-    max-width: 70px;
+    max-width: 80px;
     margin-bottom: 8px;
   }
 
   .bf25-unified-gifts__product-name {
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.3px;
   }
 
   .bf25-unified-gifts__product-price {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SMALL MOBILE (max 400px)
+   SMALL MOBILE (max 400px) - STILL READABLE
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
   .bf25-unified-gifts__title {
     font-size: 16px;
   }
 
+  .bf25-unified-gifts__tier {
+    padding: 14px 4px;
+  }
+
   .bf25-unified-gifts__discount-number {
-    font-size: 26px;
+    font-size: 30px;
   }
 
   .bf25-unified-gifts__items-label {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .bf25-unified-gifts__gift-count {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .bf25-unified-gifts__product-image-wrap {
-    max-width: 60px;
+    max-width: 65px;
   }
 
   .bf25-unified-gifts__product-name {
-    font-size: 7px;
+    font-size: 8px;
   }
 
   .bf25-unified-gifts__product-price {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 </style>

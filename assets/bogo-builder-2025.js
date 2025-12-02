@@ -345,7 +345,7 @@ function showBogoToast(message, type = 'success', duration = 3000) {
   //   console.error('❌ Starfield canvas NOT FOUND! Element #starfield-canvas-full missing.');
   //   return;
   // }
-  // return; // Exit early - starfield not used (ENABLED for CM2025)
+  return; // Exit early - starfield not used
 
   console.log('✅ Canvas found:', canvas);
   console.log('Canvas dimensions:', canvas.offsetWidth, 'x', canvas.offsetHeight);

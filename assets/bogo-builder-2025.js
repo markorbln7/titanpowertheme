@@ -337,15 +337,13 @@ function showBogoToast(message, type = 'success', duration = 3000) {
 // STARFIELD ANIMATION - GPU Accelerated
 // ===========================================
 (function() {
-  // Starfield disabled - canvas element removed from template
-  // console.log('🌌 Starfield: Initializing...');
-
-  // const canvas = document.getElementById('starfield-canvas-full');
-  // if (!canvas) {
-  //   console.error('❌ Starfield canvas NOT FOUND! Element #starfield-canvas-full missing.');
-  //   return;
-  // }
-  return; // Exit early - starfield not used
+  // Starfield enabled
+  console.log('🌌 Starfield: Initializing...');
+  const canvas = document.getElementById('starfield-canvas-full');
+  if (!canvas) {
+    console.error('❌ Starfield canvas NOT FOUND! Element #starfield-canvas-full missing.');
+    return;
+  }
 
   console.log('✅ Canvas found:', canvas);
   console.log('Canvas dimensions:', canvas.offsetWidth, 'x', canvas.offsetHeight);

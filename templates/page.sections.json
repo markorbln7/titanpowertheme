@@ -14,23 +14,9 @@
       "disabled": true,
       "settings": {}
     },
-    "vault_promo_7GbWMk": {
-      "type": "vault-promo",
-      "disabled": true,
-      "custom_css": [
-        "[class*=\"pt-\"][class*=\"80px\"] {padding-top: 70px;}"
-      ],
-      "settings": {
-        "title": "Black Friday Countdown",
-        "subtitle": "Our Best Offers Every  72 hrs",
-        "description": "Flash Sales, mystery gifts, 80% off, and new products",
-        "main_image": "shopify://shop_images/titan_power_logo_faded.png",
-        "bleed_image": "shopify://shop_images/The_titan_vaults_top_image_19a1e552-c8f4-4786-a98f-c40a05b62e65.png",
-        "top_image": "shopify://shop_images/BFCM_badge_2024_COUNTDOWN_PNG_-_compressed_b86df29f-0577-4ee0-8c6d-5f586b5c20db.png"
-      }
-    },
     "bf_promo_discount_qW44Mb": {
       "type": "bf-promo-discount",
+      "disabled": true,
       "custom_css": [
         ".flex-row {display: none;}",
         ".max-w-\\[1000px\\] {max-width: 500px; margin-top: 0px;}",
@@ -40,7 +26,7 @@
         ".max-w-\\[700px\\] {max-width: 400px;}"
       ],
       "settings": {
-        "show_banner": false,
+        "show_banner": true,
         "banner_image": "shopify://shop_images/Gold_Friday.png",
         "section_title": "",
         "section_eyebrow": ""
@@ -58,7 +44,7 @@
         ".section-explore__buy-now {background-color: #60c655; color: #fff !important;}"
       ],
       "settings": {
-        "narrow_version": false,
+        "narrow_version": true,
         "section_title": "",
         "explore_top_image": "shopify://shop_images/V_day_sale_badge.png",
         "first_collection_label": "",
@@ -365,7 +351,6 @@
   },
   "order": [
     "game",
-    "vault_promo_7GbWMk",
     "bf_promo_discount_qW44Mb",
     "section_explore_7JQkGw",
     "bf_promo_discount_2025_BVzxmi",

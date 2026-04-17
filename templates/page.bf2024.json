@@ -55,6 +55,29 @@
       "disabled": true,
       "settings": {}
     },
+    "section_explore_apmLbb": {
+      "type": "section-explore",
+      "custom_css": [
+        "img.h-full.w-full.object-contain {padding: 40px;}",
+        ".section-explore__product-content.relative.h-\\[350px\\].w-full.mx-auto.hidden.lg\\:\\!block {margin-top: -20px; margin-bottom: -40px;}",
+        ".px-\\[20px\\] {width: 70%; font-weight: 800;}",
+        "text-\\[16px\\] {font-size: 14px; text-align: center; line-height: 1.2;}",
+        ".mb-\\[20px\\] {margin-bottom: -400px; margin-top: -20px;}",
+        ".md\\:pt-\\[10px\\] {background-color: #000;}",
+        ".section-explore__buy-now {background-color: #f2c054; color: #000 !important;}",
+        "img.w-full.h-full.object-cover {padding-top: 30px;}"
+      ],
+      "name": "Explore the lineup",
+      "settings": {
+        "narrow_version": false,
+        "section_title": "",
+        "explore_top_image": "shopify://shop_images/Anniversary_Sale_badge_2025_PNG_-_condensed.png",
+        "first_collection_label": "For Desktop",
+        "second_collection_label": "For travel",
+        "first_collection": "",
+        "second_collection": ""
+      }
+    },
     "bf_promo_discount_AibFnrK": {
       "type": "bf-promo-discount",
       "blocks": {
@@ -94,7 +117,7 @@
         ".custom-pack-wrapper {padding: 1px 10px;}"
       ],
       "settings": {
-        "show_banner": true,
+        "show_banner": false,
         "banner_image": "shopify://shop_images/Anniversary_Sale_badge_2025_PNG_-_condensed.png",
         "section_title": "",
         "section_eyebrow": ""
@@ -344,7 +367,7 @@
         "air_tabs_8NEtjJ"
       ],
       "custom_css": [
-        ".offers-list__single--url {background-color: #F2C054; color: #000;}",
+        ".offers-list__single--url {background-color: #f2c054; color: #000;}",
         ".timer {color: #60c655; display: none;}",
         "img.w-full.desktop {display: none !important;}",
         ".offers-title {font-size: 54px; color: #2e2a39; font-weight: 600; font-family: \"Raleway\", sans-serif; text-transform: capitalize;}",
@@ -1040,6 +1063,7 @@
   "order": [
     "sticky_cart_7W3hCL",
     "game",
+    "section_explore_apmLbb",
     "bf_promo_discount_AibFnrK",
     "bf_top_bar_YUNa4V",
     "bf_promo_discount_fjxfqV",

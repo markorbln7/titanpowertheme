@@ -1,6 +1,85 @@
 <!doctype html>
   <html class="no-js no-scroll-x" lang="{{ request.locale.iso_code }}">
     <head>
+      {%- comment -%}
+        Holora Pixel — theme.liquid <head> snippet (paste-ready).
+        Place HIGH in <head>, before other analytics, so attribution is captured on
+        the very first paint. The serving route/install step substitutes:
+          t.titanpowerplus.com   e.g. px.holora.ai   (host that serves hp.js + collector)
+          ebc8c8da76b6c0db476d3e1fdcee1a10   the store's Holora site token
+        Everything is wrapped in try/catch: zero errors on non-Shopify pages.
+      {%- endcomment -%}
+      <script>
+      (function () {
+        // (a) Async stub — queues calls until hp.js loads, then replays them.
+        window.holora = window.holora || function () {
+          (holora.q = holora.q || []).push(arguments);
+        };
+
+        // (b) First-touch attribution -> Shopify cart attributes.
+        // WHY cart attributes: the Web Pixel sandbox + the order webhook cannot read
+        // the storefront querystring/localStorage. Stamping click-ids, utms, the
+        // client_id and a stable event_id onto the CART makes them ride along into
+        // checkout and the order payload — giving the SERVER one shared event_id to
+        // dedup the browser 'purchase' event against the order webhook.
+        try {
+          var CLICK = ["fbclid", "gclid", "ttclid", "msclkid"];
+          var UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+          var params = new URLSearchParams(location.search);
+
+          // Stable per-session event id for purchase<->webhook dedup (mint once).
+          var peid = null;
+          try { peid = sessionStorage.getItem("_hl_peid"); } catch (e) {}
+          if (!peid) {
+            peid = (window.crypto && crypto.randomUUID)
+              ? crypto.randomUUID()
+              : ("hp-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10));
+            try { sessionStorage.setItem("_hl_peid", peid); } catch (e) {}
+          }
+
+          // Client id mirror written by hp.js (may be absent on first ever hit).
+          var clientId = null;
+          try { clientId = localStorage.getItem("_hlid"); } catch (e) {}
+
+          // Collect candidate attributes from the URL (+ ids we always want set).
+          var attrs = {};
+          CLICK.concat(UTM).forEach(function (k) {
+            var v = params.get(k);
+            if (v) attrs[k] = v;
+          });
+          attrs["event_id"] = peid;
+          if (clientId) attrs["client_id"] = clientId;
+
+          // Debounce: only POST /cart/update.js when there are NEW values not already
+          // synced this session (avoids hammering the cart API on every page).
+          var synced = {};
+          try { synced = JSON.parse(sessionStorage.getItem("_hl_cart_synced") || "{}") || {}; } catch (e) {}
+          var changed = {};
+          var hasChange = false;
+          Object.keys(attrs).forEach(function (k) {
+            if (synced[k] !== attrs[k]) { changed[k] = attrs[k]; hasChange = true; }
+          });
+
+          // Only run on Shopify storefronts (cart endpoint present). Guarded so this
+          // is a silent no-op on any non-Shopify page.
+          var isShopify = !!(window.Shopify || document.querySelector('script[src*="cdn.shopify"]'));
+          if (hasChange && isShopify) {
+            fetch("/cart/update.js", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ attributes: changed })
+            }).then(function () {
+              try {
+                var merged = Object.assign({}, synced, changed);
+                sessionStorage.setItem("_hl_cart_synced", JSON.stringify(merged));
+              } catch (e) {}
+            }).catch(function () {});
+          }
+        } catch (e) { /* non-Shopify or blocked storage — ignore */ }
+      })();
+      </script>
+      <script async src="https://t.titanpowerplus.com/v1/px/js/ebc8c8da76b6c0db476d3e1fdcee1a10/hp.js"></script>
+
       {{ 'special-buds.css' | asset_url | stylesheet_tag }}
 
 

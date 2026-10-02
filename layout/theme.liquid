@@ -13,7 +13,7 @@
     {% render 'vwo' %}
     {% render 'seo' %}
 
-    {% render 'meta-tags' →%}
+    {% render 'meta-tags' %}
 
 
     {% render 'theme-head-scripts' %}
@@ -96,3 +96,13 @@
     {% render 'footer-scripts' %}
     </body>
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'meta-tags' →%}"
+  to: "{% render 'meta-tags' %}"
+  position: 261..285
+{% endcomment %}

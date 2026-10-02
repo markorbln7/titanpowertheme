@@ -27,10 +27,7 @@
           <div class="triple-image-{{block.id}}" style="
                                                                           align-self: center;
                                                                       ">
-            {%render 'titan-image'
-          image: block.settings.image;
-          mobile_image: block.settings.mobile_image 
-          %}
+            {% render 'titan-image', image: block.settings.image, mobile_image: block.settings.mobile_image %}
 
 
           </div>
@@ -318,4 +315,15 @@ margin: auto;
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%render 'titan-image'\n          image: block.settings.image;\n          mobile_image:
+    block.settings.mobile_image \n          %}"
+  to: "{% render 'titan-image', image: block.settings.image, mobile_image: block.settings.mobile_image
+    %}"
+  position: 1362..1460
+{%- endcomment -%}

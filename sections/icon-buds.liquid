@@ -27,13 +27,7 @@
         <div class="swiper-slide">
           <div class="mainimg-{{block.id}}">
         
-              {% render 'titan-image',
-          image: block.settings.main_image,
-      
-            </div>
-          </div>
-        </div>
-            {%endfor %}
+              {% render 'titan-image', image: block.settings.main_image %}
       </div>
 
     </div>
@@ -189,4 +183,14 @@
     ]
   }
 
-  {% endschema %}
+  {% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'titan-image',\n          image: block.settings.main_image,\n      \n
+    \           </div>\n          </div>\n        </div>\n            {%endfor %}"
+  to: "{% render 'titan-image', image: block.settings.main_image %}"
+  position: 1275..1335
+{%- endcomment -%}
